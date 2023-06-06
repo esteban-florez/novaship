@@ -7,6 +7,8 @@ interface RouteProps {
   path: string
 }
 
+const activeLink = 'ms-[0.8rem] w-full rounded-l-md bg-base-200 text-white'
+
 export default function Aside() {
   const router = usePathname()
 
@@ -15,7 +17,7 @@ export default function Aside() {
   }
 
   return (
-    <ul className='menu min-h-screen gap-5 border-r'>
+    <ul className='menu min-h-screen gap-5 border-r bg-neutral-100'>
       {/* Page icon */}
       <li>
         <Link href='/'>
@@ -36,11 +38,7 @@ export default function Aside() {
         </Link>
       </li>
       {/* Home */}
-      <li
-        className={
-          routeIs({ path: '/' }) ? 'relative rounded-md border bg-base-200' : ''
-        }
-      >
+      <li className={routeIs({ path: '/' }) ? activeLink : ''}>
         <Link href='/'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -60,8 +58,8 @@ export default function Aside() {
         </Link>
       </li>
       {/* Jobs */}
-      <li>
-        <Link href='/'>
+      <li className={routeIs({ path: '/trabajos' }) ? activeLink : ''}>
+        <Link href='/trabajos'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             className='h-6 w-6'
@@ -80,7 +78,7 @@ export default function Aside() {
         </Link>
       </li>
       {/* Projects */}
-      <li>
+      <li className={routeIs({ path: '/proyectos' }) ? activeLink : ''}>
         <Link href='/'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -100,7 +98,7 @@ export default function Aside() {
         </Link>
       </li>
       {/* Pasantias */}
-      <li>
+      <li className={routeIs({ path: '/pasantias' }) ? activeLink : ''}>
         <Link href='/'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -120,7 +118,7 @@ export default function Aside() {
         </Link>
       </li>
       {/* Marketplace */}
-      <li>
+      <li className={routeIs({ path: '/marketplace' }) ? activeLink : ''}>
         <Link href='/'>
           <svg
             xmlns='http://www.w3.org/2000/svg'

@@ -1,8 +1,9 @@
 import Link from 'next/link'
+import { title } from '../fonts'
 
 export default function Navbar() {
   return (
-    <div className='navbar border-b bg-base-100'>
+    <div className='navbar border-b bg-neutral-100'>
       <div className='navbar-start'>
         <button className='btn-ghost btn-circle btn'>
           <svg
@@ -22,7 +23,7 @@ export default function Navbar() {
         </button>
         <Link
           href='/'
-          className='btn-ghost btn text-left text-xl normal-case'
+          className={`${title.className} btn-ghost btn text-left text-xl normal-case`}
         >
           PasantíasApp
         </Link>

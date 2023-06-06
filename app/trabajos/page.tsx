@@ -1,16 +1,16 @@
 import Link from 'next/link'
 
-export default function Home() {
+export default function Trabajos() {
   return (
     <div>
       <section>
         <span>
-          ~ /{' '}
+          ~ / <Link href='/'>Inicio</Link> /{' '}
           <Link
-            href='/'
-            className='font-bold text-sky-600'
+            href='/trabajos'
+            className='font-bold text-sky-400'
           >
-            Inicio
+            Trabajos
           </Link>
         </span>
       </section>
