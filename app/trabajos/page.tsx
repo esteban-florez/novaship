@@ -1,19 +1,12 @@
-import Link from 'next/link'
+import RouteMap from '../components/RouteMap'
 
 export default function Trabajos() {
   return (
     <div>
-      <section>
-        <span>
-          ~ / <Link href='/'>Inicio</Link> /{' '}
-          <Link
-            href='/trabajos'
-            className='font-bold text-sky-400'
-          >
-            Trabajos
-          </Link>
-        </span>
-      </section>
+      <RouteMap
+        paths={['inicio', 'trabajos']}
+        currentPath={'trabajos'}
+      />
       <section className='mt-4 flex flex-row gap-2 p-4'>
         <div className='basis-2/6 rounded-md bg-neutral-300 p-4 text-white'>
           <h5 className='mb-1 border-b px-2 font-bold'>Title</h5>
