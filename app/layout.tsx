@@ -17,12 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang='es'>
-      <body className={`${text.className} container bg-base-200`}>
+      <body className={`${text.className} bg-[#1d1916]`}>
         <div className='flex min-w-[100vw] flex-row items-start'>
           <Aside />
           <div className='w-full flex-col'>
             <Navbar />
-            <main className='p-4'>{children}</main>
+            <main className='container mx-auto w-full p-4'>{children}</main>
             <Footer />
           </div>
         </div>
