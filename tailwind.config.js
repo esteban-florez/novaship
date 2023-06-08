@@ -14,9 +14,14 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        black: '#1d1916',
+        white: '#f3f4f6',
+        gray_notification: '#8c8a9a',
+        gray_divisor: '#413e3e',
+        light_purple: '#c8c6dc',
+      },
     },
   },
-  plugins: [
-    daisyui
-  ],
+  plugins: [daisyui],
 }
