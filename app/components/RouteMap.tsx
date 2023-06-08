@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import styles from './RouteMap.module.css'
-import { capitalize } from '../utils/helpers'
 
 interface RouteProps {
   paths: string[]
@@ -10,7 +9,6 @@ interface RouteProps {
 const linkActive = 'font-bold text-sky-400'
 
 export default function RoutePath({ paths, currentPath }: RouteProps) {
-  // ! no-underline not working (link underline)
   return (
     <section className={`${styles.breadcrumbs} text-sm`}>
       <ul>
@@ -20,11 +18,11 @@ export default function RoutePath({ paths, currentPath }: RouteProps) {
             <li key={path}>
               <Link
                 href={`/${path === 'inicio' ? '' : path}`}
-                className={`no-underline hover:no-underline ${
+                className={`capitalize no-underline hover:no-underline ${
                   path === currentPath ? linkActive : ''
                 }`}
               >
-                {capitalize(path)}
+                {path}
               </Link>
             </li>
           )
