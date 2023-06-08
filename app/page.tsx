@@ -9,7 +9,7 @@ export default function Home() {
         currentPath={'inicio'}
       />
       <section className='my-4 grid grid-cols-3 p-4'>
-        <div className='stats col-span-3 bg-[#c8c6dc] shadow'>
+        <div className='stats col-span-3 bg-light_purple shadow'>
           <div className='stat'>
             <div className='stat-figure text-primary'>
               <svg
@@ -72,15 +72,15 @@ export default function Home() {
         </div>
 
         <div className='row-span-1 mt-4 grid gap-4'>
-          <div className='rounded-lg border bg-[#f3f4f6] p-4'>
+          <div className='rounded-lg border bg-white p-4'>
             <h4 className={title.className}>Title</h4>
             <p className={text.className}>Lorem ipsum lorem ipsumlorem ipsum</p>
           </div>
-          <div className='rounded-lg border bg-[#f3f4f6] p-4'>
+          <div className='rounded-lg border bg-white p-4'>
             <h4 className={title.className}>Title</h4>
             <p className={text.className}>Lorem ipsum lorem ipsumlorem ipsum</p>
           </div>
-          <div className='rounded-lg border bg-[#f3f4f6] p-4'>
+          <div className='rounded-lg border bg-white p-4'>
             <h4 className={title.className}>Title</h4>
             <p className={text.className}>Lorem ipsum lorem ipsumlorem ipsum</p>
           </div>

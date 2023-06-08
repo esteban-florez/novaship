@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='es'>
-      <body className={`${text.className} bg-[#1d1916]`}>
+      <body className={`${text.className} bg-black`}>
         <div className='flex min-w-[100vw] flex-row items-start'>
           <Aside />
           <div className='w-full flex-col'>

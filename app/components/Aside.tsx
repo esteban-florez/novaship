@@ -7,7 +7,7 @@ interface RouteProps {
 }
 
 const activeLink =
-  'ms-[0.8rem] w-full rounded-l-xl bg-[#1d1916] py-2 font-bold text-white'
+  'ms-[0.8rem] w-full rounded-l-xl bg-black py-2 font-bold text-white'
 
 export default function Aside() {
   const router = usePathname()
@@ -17,7 +17,7 @@ export default function Aside() {
   }
 
   return (
-    <ul className='menu min-h-screen gap-5 bg-[#c8c6dc]'>
+    <ul className='menu min-h-screen gap-5 bg-light_purple'>
       {/* Page icon */}
       <li className='gap-4 text-black'>
         <Link
