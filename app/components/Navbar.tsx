@@ -1,9 +1,22 @@
+'use client'
+
 import Link from 'next/link'
+import { useState } from 'react'
 import { title } from '../fonts'
+import ProfileNavbarModal from './ProfileModalNavbar'
 
 export default function Navbar() {
+  const [profileModal, setProfileModal] = useState(false)
+
+  const handleClick = () => {
+    setProfileModal(!profileModal)
+  }
+
   return (
-    <div className='navbar border-b-2 border-[#413e3e] bg-[#1d1916]'>
+    /**
+     * ! <nav> doesn't work, only <div> must be fixed.
+     */
+    <div className='navbar border-b-2 border-gray_divisor bg-black'>
       {/* Page icon */}
       <div className='navbar-start'>
         <button className='btn-ghost btn-circle btn'>
@@ -24,7 +37,7 @@ export default function Navbar() {
         </button>
         <Link
           href='/'
-          className={`${title.className} btn-ghost btn text-left text-xl normal-case text-[#f3f4f6]`}
+          className={`${title.className} btn-ghost btn text-left text-xl normal-case text-white`}
         >
           PasantíasApp
         </Link>
@@ -36,7 +49,7 @@ export default function Navbar() {
           <div className='indicator'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              className='h-[2rem] w-[2rem] fill-[#f3f4f6]'
+              className='h-[2rem] w-[2rem] fill-white'
               fill='none'
               viewBox='0 0 512 512'
               stroke='currentColor'
@@ -49,7 +62,7 @@ export default function Navbar() {
               />
             </svg>
 
-            <span className='badge badge-xs indicator-item right-0 top-2 h-[0.6rem] w-4 border bg-[#8c8a9a]'></span>
+            <span className='badge badge-xs indicator-item right-0 top-2 h-[0.6rem] w-4 border bg-gray_notification'></span>
           </div>
         </button>
 
@@ -58,7 +71,7 @@ export default function Navbar() {
           <div className='indicator'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              className='h-[2rem] w-[2rem] fill-[#f3f4f6]'
+              className='h-[2rem] w-[2rem] fill-white'
               fill='none'
               viewBox='0 0 448 512'
               stroke='currentColor'
@@ -71,17 +84,23 @@ export default function Navbar() {
               />
             </svg>
 
-            <span className='badge badge-xs indicator-item right-1 top-2 h-[0.6rem] w-4 border bg-[#8c8a9a]'></span>
+            <span className='badge badge-xs indicator-item right-1 top-2 h-[0.6rem] w-4 border bg-gray_notification'></span>
           </div>
         </button>
 
         {/* Profile */}
-        <button className='btn-ghost btn-circle btn'>
+        <button
+          onClick={handleClick}
+          className={`btn-ghost btn-circle btn ${
+            profileModal ? 'relative' : ''
+          }`}
+        >
           <div className='placeholder avatar'>
-            <div className='w-10 rounded-full bg-[#f3f4f6] text-neutral-content'>
+            <div className='w-10 rounded-full bg-white text-neutral-content'>
               <span>MX</span>
             </div>
           </div>
+          {profileModal && <ProfileNavbarModal />}
         </button>
       </div>
     </div>
