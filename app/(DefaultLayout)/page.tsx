@@ -1,5 +1,5 @@
-import RouteMap from './components/RouteMap'
-import { text, title } from './fonts'
+import RouteMap from '../components/RouteMap'
+import { text, title } from '../fonts'
 
 export default function Home() {
   return (

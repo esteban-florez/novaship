@@ -1,8 +1,8 @@
 import '@/styles/globals.css'
-import { text } from './fonts'
-import Aside from './components/Aside'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import { text } from '../fonts'
+import Aside from '../components/Aside'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 
 export const metadata = {
   title: 'PasantíasApp',
