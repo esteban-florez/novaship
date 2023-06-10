@@ -61,9 +61,7 @@ export default function Aside() {
         </Link>
       </li>
       {/* Jobs */}
-      <li
-        className={routeIs({ path: '/jobs' }) ? activeLink : 'text-black'}
-      >
+      <li className={routeIs({ path: '/jobs' }) ? activeLink : 'text-black'}>
         <Link href="/jobs">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -84,9 +82,9 @@ export default function Aside() {
       </li>
       {/* Projects */}
       <li
-        className={routeIs({ path: '/proyectos' }) ? activeLink : 'text-black'}
+        className={routeIs({ path: '/projects' }) ? activeLink : 'text-black'}
       >
-        <Link href="/">
+        <Link href="/projects">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"

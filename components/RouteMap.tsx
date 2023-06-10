@@ -1,19 +1,38 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import styles from '@/styles/RouteMap.module.css'
-
-interface RouteProps {
-  paths: string[]
-  currentPath: string
-}
+import TranslatedRoutes from '@/translations/es'
 
 const linkActive = 'font-bold text-sky-400'
 
-export default function RoutePath({ paths, currentPath }: RouteProps) {
+interface RouteProps {
+  width: boolean
+}
+
+export default function RoutePath({ width }: RouteProps) {
+  const router = usePathname()
+
+  const structuredPath = () => {
+    const routes = router.split('/')
+    const currentRoutes = routes.filter((route) => route !== '')
+
+    return ['home', ...currentRoutes]
+  }
+
+  const currentPaths = structuredPath()
+  const currentPath = structuredPath().pop()
+
   return (
-    <section className={`${styles.breadcrumbs} text-sm`}>
+    <div
+      className={`${styles.breadcrumbs} flex ${
+        width ? 'w-full' : 'w-3/6'
+      } items-center justify-start p-4 text-sm`}
+    >
       <ul>
         <li>~</li>
-        {paths.map((path) => {
+        {currentPaths.map((path) => {
           return (
             <li key={path}>
               <Link
@@ -22,12 +41,12 @@ export default function RoutePath({ paths, currentPath }: RouteProps) {
                   path === currentPath ? linkActive : ''
                 }`}
               >
-                {path}
+                {TranslatedRoutes({ route: path })}
               </Link>
             </li>
           )
         })}
       </ul>
-    </section>
+    </div>
   )
 }

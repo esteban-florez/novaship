@@ -1,12 +1,9 @@
-import RouteMap from '@/components/RouteMap'
+import Subnavbar from '@/components/layout/Subnavbar'
 
 export default function HomePage() {
   return (
     <>
-      <RouteMap
-        paths={['home']}
-        currentPath="home"
-      />
+      <Subnavbar options={false} />
       <section className="my-4 grid grid-cols-3 p-4">
         <div className="stats col-span-3 bg-light_purple shadow">
           <div className="stat">
@@ -25,13 +22,9 @@ export default function HomePage() {
                 ></path>
               </svg>
             </div>
-            <div className="stat-title font-title text-black">
-              Total Likes
-            </div>
+            <div className="stat-title font-title text-black">Total Likes</div>
             <div className="stat-value text-primary">25.6K</div>
-            <div className="stat-desc text-black">
-              21% more than last month
-            </div>
+            <div className="stat-desc text-black">21% more than last month</div>
           </div>
 
           <div className="stat">
@@ -50,23 +43,15 @@ export default function HomePage() {
                 ></path>
               </svg>
             </div>
-            <div className="stat-title font-title text-black">
-              Page Views
-            </div>
+            <div className="stat-title font-title text-black">Page Views</div>
             <div className="stat-value text-secondary">2.6M</div>
-            <div className="stat-desc text-black">
-              21% more than last month
-            </div>
+            <div className="stat-desc text-black">21% more than last month</div>
           </div>
 
           <div className="stat">
             <div className="stat-value text-black">86%</div>
-            <div className="stat-title font-title text-black">
-              Tasks done
-            </div>
-            <div className="stat-desc text-secondary">
-              31 tasks remaining
-            </div>
+            <div className="stat-title font-title text-black">Tasks done</div>
+            <div className="stat-desc text-secondary">31 tasks remaining</div>
           </div>
         </div>
 
