@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import styles from './RouteMap.module.css'
+import styles from '@/styles/RouteMap.module.css'
 
 interface RouteProps {
   paths: string[]
@@ -17,7 +17,7 @@ export default function RoutePath({ paths, currentPath }: RouteProps) {
           return (
             <li key={path}>
               <Link
-                href={`/${path === 'inicio' ? '' : path}`}
+                href={`/${path === 'home' ? '' : path}`}
                 className={`capitalize no-underline hover:no-underline ${
                   path === currentPath ? linkActive : ''
                 }`}

@@ -21,6 +21,10 @@ module.exports = {
         gray_divisor: '#413e3e',
         light_purple: '#c8c6dc',
       },
+      fontFamily: {
+        inter: ['var(--font-inter)'],
+        title: ['var(--font-title)'],
+      },
     },
   },
   plugins: [daisyui],

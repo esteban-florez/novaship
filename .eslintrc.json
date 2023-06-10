@@ -11,6 +11,12 @@
       "next/core-web-vitals"
   ],
   "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "error"
+      }
+    }
   ],
   "parserOptions": {
       "ecmaVersion": "latest",
@@ -23,7 +29,7 @@
       "react"
   ],
   "rules": {
-    "space-before-function-paren": ["error", {
+    "@typescript-eslint/space-before-function-paren": ["error", {
       "anonymous": "always",
       "named": "never",
       "asyncArrow": "always"
@@ -31,7 +37,12 @@
     "dot-location": ["error", "property"],
     "comma-dangle": ["error", "always-multiline"],
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/space-before-function-paren": "off",
-    "@typescript-eslint/comma-dangle": ["error", "always-multiline"]
+    "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
+    "jsx-quotes": ["error", "prefer-double"],
+    "react/jsx-curly-brace-presence": ["error", {
+      "props": "never",
+      "children": "never",
+      "propElementValues": "always"
+    }]
   }
 }
