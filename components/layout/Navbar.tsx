@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { title } from '@/app/fonts'
 import ProfileDropdown from '../ProfileDropdown'
 
 export default function Navbar() {

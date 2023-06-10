@@ -13,7 +13,7 @@ export default function MainLayout({
       <Aside />
       <div className="w-full flex-col">
         <Navbar />
-        <main className="container mx-auto w-full p-4">
+        <main className="container mx-auto w-full">
           {children}
         </main>
         <Footer />
