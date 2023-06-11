@@ -1,9 +1,10 @@
 type Routes = Record<string, string>
 
 const routes: Routes = {
-  home: 'inicio',
-  jobs: 'trabajos',
-  projects: 'proyectos',
+  home: "inicio",
+  jobs: "trabajos",
+  projects: "proyectos",
+  chats: "conversaciones",
 }
 
 interface RoutesProps {
