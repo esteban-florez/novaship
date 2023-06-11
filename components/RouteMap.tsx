@@ -36,7 +36,7 @@ export default function RoutePath({ width }: Props) {
               <Link
                 href={`/${path}`}
                 className={`capitalize no-underline hover:no-underline ${
-                  path === currentPath ? "font-bold text-sky-400" : "text-white"
+                  path === currentPath ? "font-bold text-primary" : "text-white"
                 }`}
               >
                 {TranslatedRoutes({ route: path })}

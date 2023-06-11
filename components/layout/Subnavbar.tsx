@@ -8,7 +8,7 @@ interface NavbarProps {
 
 export default function Subnavbar({ options }: NavbarProps) {
   return (
-    <section className="flex items-center justify-between bg-primary/50">
+    <section className="flex items-center justify-between bg-primary/25">
       <RouteMap width={options} />
       {options && (
         <div className="flex w-3/6 items-center justify-end gap-2 p-4 text-sm">
