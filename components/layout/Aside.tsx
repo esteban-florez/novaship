@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 interface RouteProps {
   path: string
 }
 
 const activeLink =
-  'ms-[0.8rem] w-full rounded-l-xl bg-black py-2 font-bold text-white'
+  "ms-[0.8rem] w-full rounded-l-xl bg-base-100 py-2 font-bold text-white"
 
 export default function Aside() {
   const router = usePathname()
@@ -17,7 +17,7 @@ export default function Aside() {
   }
 
   return (
-    <ul className="menu min-h-screen gap-5 bg-light-purple">
+    <ul className="menu min-h-screen gap-5 bg-primary">
       {/* Page icon */}
       <li className="gap-4 text-black">
         <Link
@@ -41,7 +41,7 @@ export default function Aside() {
         </Link>
       </li>
       {/* Home */}
-      <li className={routeIs({ path: '/' }) ? activeLink : 'text-black'}>
+      <li className={routeIs({ path: "/" }) ? activeLink : "text-black"}>
         <Link href="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +61,7 @@ export default function Aside() {
         </Link>
       </li>
       {/* Jobs */}
-      <li className={routeIs({ path: '/jobs' }) ? activeLink : 'text-black'}>
+      <li className={routeIs({ path: "/jobs" }) ? activeLink : "text-black"}>
         <Link href="/jobs">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@ export default function Aside() {
       </li>
       {/* Projects */}
       <li
-        className={routeIs({ path: '/projects' }) ? activeLink : 'text-black'}
+        className={routeIs({ path: "/projects" }) ? activeLink : "text-black"}
       >
         <Link href="/projects">
           <svg
@@ -104,7 +104,7 @@ export default function Aside() {
       </li>
       {/* Pasantias */}
       <li
-        className={routeIs({ path: '/pasantias' }) ? activeLink : 'text-black'}
+        className={routeIs({ path: "/pasantias" }) ? activeLink : "text-black"}
       >
         <Link href="/">
           <svg
@@ -127,7 +127,7 @@ export default function Aside() {
       {/* Marketplace */}
       <li
         className={
-          routeIs({ path: '/marketplace' }) ? activeLink : 'text-black'
+          routeIs({ path: "/marketplace" }) ? activeLink : "text-black"
         }
       >
         <Link href="/">

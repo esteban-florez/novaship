@@ -3,7 +3,7 @@ export default function SearchInput() {
     <input
       type="text"
       placeholder="Buscar"
-      className="input-bordered input input-sm w-3/6 max-w-xs rounded-full bg-white/50 text-white focus:bg-white"
+      className="input-bordered input input-sm w-3/6 max-w-xs rounded-full bg-white/50 text-white transition-colors hover:bg-white focus:bg-white"
     />
   )
 }
