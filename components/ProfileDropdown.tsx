@@ -26,7 +26,7 @@ function ProfileDropdown() {
       onClick={(e) => {
         e.stopPropagation()
       }}
-      className="absolute right-0 top-14 flex flex-col whitespace-nowrap rounded-lg bg-white px-6 py-4 shadow-xl"
+      className="absolute right-0 top-14 z-50 flex flex-col whitespace-nowrap rounded-lg bg-white px-6 py-4 shadow-xl"
     >
       {/* Username */}
       <span className="text-start text-xs text-gray-400">
