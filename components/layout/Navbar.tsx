@@ -1,21 +1,12 @@
-'use client'
-
-import Link from 'next/link'
-import { useState } from 'react'
-import ProfileDropdown from '../ProfileDropdown'
+import Link from "next/link"
+import ProfileIcon from "@/components/ProfileDropdown"
 
 export default function Navbar() {
-  const [dropdownIsOpen, setDropdownIsOpen] = useState<boolean>(false)
-
-  const handleClick = (): void => {
-    setDropdownIsOpen(!dropdownIsOpen)
-  }
-
   return (
     /**
      * ! <nav> doesn't work, only <div> must be fixed.
      */
-    <div className="navbar border-b-2 border-gray-divisor bg-black">
+    <div className="navbar border-b-2 border-gray-500 bg-base-100">
       {/* Page icon */}
       <div className="navbar-start">
         <button className="btn-ghost btn-circle btn">
@@ -44,26 +35,28 @@ export default function Navbar() {
 
       {/* Messages */}
       <div className="navbar-end mr-4 gap-2">
-        <button className="btn-ghost btn-circle btn">
-          <div className="indicator">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-[2rem] w-[2rem] fill-white"
-              fill="none"
-              viewBox="0 0 512 512"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M64 0C28.7 0 0 28.7 0 64V352c0 35.3 28.7 64 64 64h96v80c0 6.1 3.4 11.6 8.8 14.3s11.9 2.1 16.8-1.5L309.3 416H448c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64z"
-              />
-            </svg>
+        <Link href="/chats">
+          <button className="btn-ghost btn-circle btn">
+            <div className="indicator">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-[2rem] w-[2rem] fill-white"
+                fill="none"
+                viewBox="0 0 512 512"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M64 0C28.7 0 0 28.7 0 64V352c0 35.3 28.7 64 64 64h96v80c0 6.1 3.4 11.6 8.8 14.3s11.9 2.1 16.8-1.5L309.3 416H448c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64z"
+                />
+              </svg>
 
-            <span className="badge badge-xs indicator-item right-0 top-2 h-[0.6rem] w-4 border bg-gray-notification"></span>
-          </div>
-        </button>
+              <span className="badge badge-xs indicator-item right-0 top-2 h-[0.6rem] w-4 border bg-secondary"></span>
+            </div>
+          </button>
+        </Link>
 
         {/* Notification */}
         <button className="btn-ghost btn-circle btn">
@@ -83,24 +76,12 @@ export default function Navbar() {
               />
             </svg>
 
-            <span className="badge badge-xs indicator-item right-1 top-2 h-[0.6rem] w-4 border bg-gray-notification"></span>
+            <span className="badge badge-xs indicator-item right-1 top-2 h-[0.6rem] w-4 border bg-secondary"></span>
           </div>
         </button>
 
         {/* Profile */}
-        <button
-          onClick={handleClick}
-          className={`btn-ghost btn-circle btn ${
-            dropdownIsOpen ? 'relative' : ''
-          }`}
-        >
-          <div className="placeholder avatar">
-            <div className="w-10 rounded-full bg-white text-neutral-content">
-              <span>MX</span>
-            </div>
-          </div>
-          {dropdownIsOpen && <ProfileDropdown />}
-        </button>
+        <ProfileIcon />
       </div>
     </div>
   )

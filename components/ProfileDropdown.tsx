@@ -1,6 +1,26 @@
-import Link from 'next/link'
+"use client"
 
-export default function ProfileDropdown() {
+import Link from "next/link"
+import { useState } from "react"
+import AvatarIcon from "./AvatarIcon"
+
+interface Props {
+  path: string
+  name: string
+}
+
+function DropdownOption({ path, name }: Props) {
+  return (
+    <Link
+      href={`/${path}`}
+      className="border-l py-2 text-start indent-2 text-xs normal-case text-gray-400 hover:border-l-2 hover:border-primary hover:bg-primary/25"
+    >
+      {name}
+    </Link>
+  )
+}
+
+function ProfileDropdown() {
   return (
     <div
       onClick={(e) => {
@@ -9,38 +29,28 @@ export default function ProfileDropdown() {
       className="absolute right-0 top-14 flex flex-col whitespace-nowrap rounded-lg bg-white px-6 py-4 shadow-xl"
     >
       {/* Username */}
-      <span className="text-start text-xs text-neutral-content">
+      <span className="text-start text-xs text-gray-400">
         Nombre y apellido
       </span>
       <h5 className="mb-3 mt-2 text-center text-black">Username</h5>
 
-      <span className="pt-2 text-start text-xs text-neutral-content">
-        Opciones
-      </span>
-      <Link
-        href="/profile"
-        className="border-l py-2 text-start indent-2 text-xs normal-case hover:border-l-2 hover:border-light-purple hover:bg-light-purple/25"
-      >
-        Ver perfil
-      </Link>
-      <Link
-        href="/profile"
-        className="border-l py-2 text-start indent-2 text-xs normal-case hover:border-l-2 hover:border-light-purple hover:bg-light-purple/25"
-      >
-        Relleno x1
-      </Link>
-      <Link
-        href="/profile"
-        className="border-l py-2 text-start indent-2 text-xs normal-case hover:border-l-2 hover:border-light-purple hover:bg-light-purple/25"
-      >
-        Relleno x2
-      </Link>
-      <Link
-        href="/profile"
-        className="border-l py-2 text-start indent-2 text-xs normal-case hover:border-l-2 hover:border-light-purple hover:bg-light-purple/25"
-      >
-        Relleno x3
-      </Link>
+      <span className="pt-2 text-start text-xs text-gray-400">Opciones</span>
+      <DropdownOption
+        path="profile"
+        name="Ver perfil"
+      />
+      <DropdownOption
+        path=""
+        name="Relleno x1"
+      />
+      <DropdownOption
+        path=""
+        name="Relleno x2"
+      />
+      <DropdownOption
+        path=""
+        name="Relleno x3"
+      />
 
       {/* Logout */}
       <Link
@@ -50,5 +60,23 @@ export default function ProfileDropdown() {
         Cerrar sesión
       </Link>
     </div>
+  )
+}
+
+export default function ProfileIcon() {
+  const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
+
+  const handleClick = (): void => {
+    setDropdownIsOpen(!dropdownIsOpen)
+  }
+
+  return (
+    <button
+      onClick={handleClick}
+      className={`btn-ghost btn-circle btn ${dropdownIsOpen ? "relative" : ""}`}
+    >
+      <AvatarIcon username="MX" />
+      {dropdownIsOpen && <ProfileDropdown />}
+    </button>
   )
 }
