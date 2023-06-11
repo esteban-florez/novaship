@@ -5,13 +5,11 @@ import Link from 'next/link'
 import styles from '@/styles/RouteMap.module.css'
 import TranslatedRoutes from '@/translations/es'
 
-const linkActive = 'font-bold text-sky-400'
-
-interface RouteProps {
+interface Props {
   width: boolean
 }
 
-export default function RoutePath({ width }: RouteProps) {
+export default function RoutePath({ width }: Props) {
   const router = usePathname()
 
   const structuredPath = () => {
@@ -38,7 +36,7 @@ export default function RoutePath({ width }: RouteProps) {
               <Link
                 href={`/${path === 'home' ? '' : path}`}
                 className={`capitalize no-underline hover:no-underline ${
-                  path === currentPath ? linkActive : ''
+                  path === currentPath ? 'font-bold text-sky-400' : ''
                 }`}
               >
                 {TranslatedRoutes({ route: path })}

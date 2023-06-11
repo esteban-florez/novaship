@@ -17,7 +17,7 @@ export default function Aside() {
   }
 
   return (
-    <ul className="menu min-h-screen gap-5 bg-light_purple">
+    <ul className="menu min-h-screen gap-5 bg-light-purple">
       {/* Page icon */}
       <li className="gap-4 text-black">
         <Link

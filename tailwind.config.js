@@ -17,12 +17,12 @@ module.exports = {
       colors: {
         black: '#1d1916',
         white: '#f3f4f6',
-        gray_notification: '#8c8a9a',
-        gray_divisor: '#413e3e',
-        light_purple: '#c8c6dc',
+        'gray-notification': '#8c8a9a',
+        'gray-divisor': '#413e3e',
+        'light-purple': '#c8c6dc',
       },
       fontFamily: {
-        inter: ['var(--font-inter)'],
+        inter: ['var(--font-default)'],
         title: ['var(--font-title)'],
       },
     },

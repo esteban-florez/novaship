@@ -5,7 +5,7 @@ export default function HomePage() {
     <>
       <Subnavbar options={false} />
       <section className="my-4 grid grid-cols-3 p-4">
-        <div className="stats col-span-3 bg-light_purple shadow">
+        <div className="stats col-span-3 bg-light-purple shadow">
           <div className="stat">
             <div className="stat-figure text-primary">
               <svg

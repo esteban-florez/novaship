@@ -15,7 +15,7 @@ export default function Navbar() {
     /**
      * ! <nav> doesn't work, only <div> must be fixed.
      */
-    <div className="navbar border-b-2 border-gray_divisor bg-black">
+    <div className="navbar border-b-2 border-gray-divisor bg-black">
       {/* Page icon */}
       <div className="navbar-start">
         <button className="btn-ghost btn-circle btn">
@@ -61,7 +61,7 @@ export default function Navbar() {
               />
             </svg>
 
-            <span className="badge badge-xs indicator-item right-0 top-2 h-[0.6rem] w-4 border bg-gray_notification"></span>
+            <span className="badge badge-xs indicator-item right-0 top-2 h-[0.6rem] w-4 border bg-gray-notification"></span>
           </div>
         </button>
 
@@ -83,7 +83,7 @@ export default function Navbar() {
               />
             </svg>
 
-            <span className="badge badge-xs indicator-item right-1 top-2 h-[0.6rem] w-4 border bg-gray_notification"></span>
+            <span className="badge badge-xs indicator-item right-1 top-2 h-[0.6rem] w-4 border bg-gray-notification"></span>
           </div>
         </button>
 

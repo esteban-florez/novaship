@@ -6,7 +6,7 @@ import { Inter, Josefin_Sans } from 'next/font/google'
 export const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-default',
 })
 
 export const josefin = Josefin_Sans({
@@ -18,7 +18,7 @@ export const josefin = Josefin_Sans({
 export const metadata: Metadata = {
   title: {
     template: '%s | PasantíasApp',
-    absolute: 'PasantíasApp',
+    default: 'PasantíasApp',
   },
   description: 'Aplicación de pasantías, ofertas laborales y gestión de proyectos.',
 }
@@ -29,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${inter.variable} ${josefin.variable} font-inter`} data-theme="dark">
-      <body className="bg-black">
+    <html lang="es" className={`${inter.variable} ${josefin.variable} font-default`} data-theme="dark">
+      <body>
         {children}
       </body>
     </html>

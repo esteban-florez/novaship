@@ -2,11 +2,13 @@
 .breadcrumbs > ol {
   display: flex;
 }
+
 .breadcrumbs > ul > li,
 .breadcrumbs > ol > li {
   display: flex;
   align-items: center;
 }
+
 .breadcrumbs > ul > li + *:before,
 .breadcrumbs > ol > li + *:before {
   content: '/';
