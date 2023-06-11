@@ -7,7 +7,7 @@ interface RouteProps {
 }
 
 const activeLink =
-  "ms-[0.8rem] w-full rounded-l-xl bg-base-100 py-2 font-bold text-white"
+  "ms-[0.5rem] w-full rounded-l-xl bg-base-100 py-2 font-bold text-white"
 
 export default function Aside() {
   const router = usePathname()
