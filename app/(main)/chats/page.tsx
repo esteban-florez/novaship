@@ -1,25 +1,25 @@
-import AvatarIcon from "@/components/AvatarIcon"
-import Subnavbar from "@/components/layout/Subnavbar"
+import AvatarIcon from '@/components/AvatarIcon'
+import Subnavbar from '@/components/layout/Subnavbar'
 
 interface ChatProps {
-  isActive: boolean
+  isActive?: boolean
   name: string
   message: string
-  lastConnection?: number
+  lastConnection?: number | null
   chatIsOpen?: boolean
 }
 
 function ChatBubble({
-  isActive,
+  isActive = false,
   name,
   message,
-  lastConnection,
-  chatIsOpen,
+  lastConnection = null,
+  chatIsOpen = false,
 }: ChatProps) {
   return (
     <button
-      className={`mb-3 mt-2 flex w-full flex-row items-center justify-center text-left px-2 py-1 text-white hover:bg-white/50 rounded-md ${
-        chatIsOpen && "bg-white/50"
+      className={`mb-3 mt-2 flex w-full flex-row items-center justify-center rounded-md px-2 py-1 text-left text-white hover:bg-white/50 ${
+        chatIsOpen ? 'bg-white/50' : ''
       }`}
     >
       <AvatarIcon
@@ -32,14 +32,14 @@ function ChatBubble({
         <h5 className="font-semibold">{name}</h5>
         <p
           className={`truncate text-xs ${
-            chatIsOpen ? "text-neutral-100" : "text-neutral-300"
+            chatIsOpen ? 'text-neutral-100' : 'text-neutral-300'
           }`}
         >
           {message}
         </p>
       </div>
       <span className="w-1/6 text-xs text-neutral-200">
-        {lastConnection !== undefined ? lastConnection + " hrs" : ""}
+        {lastConnection !== null ? `${lastConnection} hrs` : ''}
       </span>
     </button>
   )
@@ -47,7 +47,7 @@ function ChatBubble({
 
 function MessageWasSent() {
   return (
-    <div className="flex justify-center items-center gap-1 absolute -bottom-5 left-0">
+    <div className="absolute -bottom-5 left-0 flex items-center justify-center gap-1">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="mx-auto h-4 w-4 fill-white/50"
@@ -66,17 +66,17 @@ function MessageWasSent() {
     </div>
   )
 }
+
 interface MessageReceivedProps {
-  color?: boolean
-  readded?: boolean
+  isRead?: boolean
 }
 
-function MessageWasReceived({ color, readded }: MessageReceivedProps) {
+function MessageWasReceived({ isRead = false }: MessageReceivedProps) {
   return (
-    <div className="flex justify-center items-center gap-1 absolute -bottom-5 left-0">
+    <div className="absolute -bottom-5 left-0 flex items-center justify-center gap-1">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className={`mx-auto h-4 w-4 ${color ? "fill-white" : "fill-white/50"}`}
+        className={`mx-auto h-4 w-4 ${isRead ? 'fill-white' : 'fill-white/50'}`}
         fill="none"
         viewBox="0 0 448 512"
         stroke="currentColor"
@@ -90,8 +90,8 @@ function MessageWasReceived({ color, readded }: MessageReceivedProps) {
       </svg>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className={`mx-auto h-4 w-4 absolute -left-2 ${
-          color ? "fill-white" : "fill-white/50"
+        className={`absolute -left-2 mx-auto h-4 w-4 ${
+          isRead ? 'fill-white' : 'fill-white/50'
         }`}
         fill="none"
         viewBox="0 0 448 512"
@@ -106,10 +106,10 @@ function MessageWasReceived({ color, readded }: MessageReceivedProps) {
       </svg>
       <span
         className={`text-sm font-semibold ${
-          color ? "text-white" : "text-white/50"
+          isRead ? 'text-white' : 'text-white/50'
         }`}
       >
-        {readded ? "Leído" : "Enviado"}
+        {isRead ? 'Leído' : 'Enviado'}
       </span>
     </div>
   )
@@ -121,18 +121,19 @@ interface MessageProps {
   status?: string
 }
 function ChatMessage({ orientation, message, status }: MessageProps) {
+  const orientationClass = `chat-${orientation === 'friend' ? 'start' : 'end'}`
+
   return (
-    <div className={`chat chat-${orientation === "friend" ? "start" : "end"}`}>
-      <div className="relative chat-bubble bg-white/50 text-white/80">
+    <div className={`chat ${orientationClass}`}>
+      <div className="chat-bubble relative bg-white/50 text-white/80">
         {message}
-        {orientation === "friend" && status === "sent" && <MessageWasSent />}
-        {orientation === "friend" && status === "received" && (
+        {orientation === 'friend' && status === 'sent' && <MessageWasSent />}
+        {orientation === 'friend' && status === 'received' && (
           <MessageWasReceived />
         )}
-        {orientation === "friend" && status === "readded" && (
+        {orientation === 'friend' && status === 'isRead' && (
           <MessageWasReceived
-            color={true}
-            readded={true}
+            isRead
           />
         )}
       </div>
@@ -151,9 +152,9 @@ export default function ChatsPage() {
               <input
                 type="search"
                 placeholder="Buscar"
-                className="input-bordered input px-[1.75rem] input-sm rounded-full focus:outline-none focus:bg-white/80 bg-white/60"
+                className="input-bordered input input-sm rounded-full bg-white/60 px-[1.75rem] focus:bg-white/80 focus:outline-none"
               />
-              <span className="absolute top-2 left-2">
+              <span className="absolute left-2 top-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="mx-auto h-4 w-4 fill-white/50"
@@ -189,39 +190,35 @@ export default function ChatsPage() {
           </div>
 
           <ChatBubble
-            isActive={false}
             name="Joseph Monter"
             message="Buenos días, nos comunicamos con usted para informarle que ha sido contrado por la empresa."
             lastConnection={24}
-            chatIsOpen={true}
+            chatIsOpen
           />
           <ChatBubble
-            isActive={true}
+            isActive
             name="Maria Alvarez"
             message="Aún le falta par..."
           />
           <ChatBubble
-            isActive={false}
             name="Julio Santeur"
             message="Texto largo de pruebas para los 3 puntos"
             lastConnection={10}
           />
           <ChatBubble
-            isActive={false}
             name="Usuario relleno"
             message="Texto largo de pruebas para los 3 puntos"
             lastConnection={3}
           />
           <ChatBubble
-            isActive={false}
             name="Usuario relleno"
             message="Texto largo de pruebas para los 3 puntos"
             lastConnection={1}
           />
         </div>
         <div className="w-full flex-col rounded-xl bg-primary/25">
-          <header className="flex justify-between items-center border-b-2 border-gray-100/25 px-4 py-2 font-bold text-white">
-            <div className="flex items-center gap-2 justify-start">
+          <header className="flex items-center justify-between border-b-2 border-gray-100/25 px-4 py-2 font-bold text-white">
+            <div className="flex items-center justify-start gap-2">
               <AvatarIcon username="Joseph Monter" />
               <div className="flex flex-col">
                 <h3 className="text-xl font-semibold">Joseph Monter</h3>
@@ -230,7 +227,7 @@ export default function ChatsPage() {
                 </h6>
               </div>
             </div>
-            <button className="btn btn-ghost btn-circle">
+            <button className="btn-ghost btn-circle btn">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 fill-white"
@@ -250,7 +247,7 @@ export default function ChatsPage() {
           <main
             className="p-4 "
             style={{
-              height: "calc(75vw - 21rem)",
+              height: 'calc(75vw - 21rem)',
             }}
           >
             {/* <div className="chat chat-start">
@@ -262,7 +259,7 @@ export default function ChatsPage() {
             <ChatMessage
               orientation="friend"
               message="Mensaje #1"
-              status="readded"
+              status="isRead"
             />
             <ChatMessage
               orientation="user"
@@ -277,7 +274,7 @@ export default function ChatsPage() {
           </main>
           <footer className="flex items-center justify-between border-t-2 border-gray-100/25">
             <div className="ms-4">
-              <button className="btn btn-sm border-none btn-circle bg-primary/75">
+              <button className="btn-sm btn-circle btn border-none bg-primary/75">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4 fill-gray-100/75"
@@ -294,10 +291,10 @@ export default function ChatsPage() {
                 </svg>
               </button>
             </div>
-            <div className="flex w-full items-center py-2 px-4">
+            <div className="flex w-full items-center px-4 py-2">
               <textarea
                 rows={1}
-                className="rounded-full font-semibold bg-primary/25 text-white textarea-md w-full text-sm resize-none focus:bg-white/30 outline-0"
+                className="textarea-md w-full resize-none rounded-full bg-primary/25 text-sm font-semibold text-white outline-0 focus:bg-white/30"
                 placeholder="Escribe tu mensaje aquí..."
               ></textarea>
             </div>

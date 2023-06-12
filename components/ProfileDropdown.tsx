@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { useState } from "react"
-import AvatarIcon from "./AvatarIcon"
+import Link from 'next/link'
+import { useState } from 'react'
+import AvatarIcon from './AvatarIcon'
 
 interface Props {
   path: string
@@ -73,7 +73,7 @@ export default function ProfileIcon() {
   return (
     <button
       onClick={handleClick}
-      className={`btn-ghost btn-circle btn ${dropdownIsOpen ? "relative" : ""}`}
+      className={`btn-ghost btn-circle btn ${dropdownIsOpen ? 'relative' : ''}`}
     >
       <AvatarIcon username="MX" />
       {dropdownIsOpen && <ProfileDropdown />}

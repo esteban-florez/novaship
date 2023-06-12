@@ -1,6 +1,6 @@
-import RouteMap from "@/components/RouteMap"
-import SearchInput from "@/components/SearchInput"
-import FilterOptions from "@/components/FilterOptions"
+import RouteMap from '@/components/RouteMap'
+import SearchInput from '@/components/SearchInput'
+import FilterOptions from '@/components/FilterOptions'
 
 interface NavbarProps {
   options: boolean

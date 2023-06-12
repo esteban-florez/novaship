@@ -1,5 +1,5 @@
-import Link from "next/link"
-import ProfileIcon from "@/components/ProfileDropdown"
+import Link from 'next/link'
+import ProfileIcon from '@/components/ProfileDropdown'
 
 export default function Navbar() {
   return (

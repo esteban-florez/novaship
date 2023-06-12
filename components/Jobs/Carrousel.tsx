@@ -1,59 +1,59 @@
-"use client"
+'use client'
 
-import { useState } from "react"
+import { useState } from 'react'
 
 const data = [
   {
     isActive: true,
-    title: "Diseñador gráfico",
-    "sub-title": "Diseño | Presencial | Jornada completa",
+    title: 'Diseñador gráfico',
+    'sub-title': 'Diseño | Presencial | Jornada completa',
     description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.",
-    owner: "Diseñadores unidos",
-    ubication: "Aragua, La Victoria",
+      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.',
+    owner: 'Diseñadores unidos',
+    ubication: 'Aragua, La Victoria',
   },
   {
     isActive: false,
-    title: "Carpintero",
-    "sub-title": "Carpintería | Presencial | Jornada completa",
+    title: 'Carpintero',
+    'sub-title': 'Carpintería | Presencial | Jornada completa',
     description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.",
-    owner: "Amueblados Las Mercedes",
-    ubication: "Aragua, Las Mercedes",
+      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.',
+    owner: 'Amueblados Las Mercedes',
+    ubication: 'Aragua, Las Mercedes',
   },
   {
     isActive: false,
-    title: "Contador con experiencia",
-    "sub-title": "Contaduría | Online | Medio tiempo",
+    title: 'Contador con experiencia',
+    'sub-title': 'Contaduría | Online | Medio tiempo',
     description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.",
-    owner: "Finanzas Latinas",
-    ubication: "Aragua, Las Mercedes",
+      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.',
+    owner: 'Finanzas Latinas',
+    ubication: 'Aragua, Las Mercedes',
   },
   {
     isActive: false,
-    title: "Trabajo relleno",
-    "sub-title": "Contaduría | Online | Medio tiempo",
+    title: 'Trabajo relleno',
+    'sub-title': 'Contaduría | Online | Medio tiempo',
     description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.",
-    owner: "Finanzas Latinas",
-    ubication: "Aragua, Las Mercedes",
+      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.',
+    owner: 'Finanzas Latinas',
+    ubication: 'Aragua, Las Mercedes',
   },
   {
     isActive: false,
-    title: "Más relleno",
-    "sub-title": "Contaduría | Online | Medio tiempo",
+    title: 'Más relleno',
+    'sub-title': 'Contaduría | Online | Medio tiempo',
     description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.",
-    owner: "Finanzas Latinas",
-    ubication: "Aragua, Las Mercedes",
+      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.',
+    owner: 'Finanzas Latinas',
+    ubication: 'Aragua, Las Mercedes',
   },
 ]
 
 export default function Carrousel() {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const slideInactive = "w-4 h-4 rounded-full bg-primary/50"
-  const slideActive = "w-6 h-4 rounded-full bg-primary"
+  const slideInactive = 'w-4 h-4 rounded-full bg-primary/50'
+  const slideActive = 'w-6 h-4 rounded-full bg-primary'
 
   const renderJobs = () => {
     const start = currentSlide * 1
@@ -63,16 +63,16 @@ export default function Carrousel() {
       return (
         <section
           key={jobs.title}
-          className="p-8 w-full flex-grow-0 flex-shrink-1"
+          className="shrink-1 w-full grow-0 p-8"
         >
-          <div className="relative flex bg-primary/25 rounded-xl w-full">
+          <div className="relative flex w-full rounded-xl bg-primary/25">
             <button
               onClick={() => {
                 currentSlide === 0
                   ? setCurrentSlide(data.length - 1)
                   : setCurrentSlide(currentSlide - 1)
               }}
-              className="absolute rounded-md top-[45%] left-0 p-2 hover:bg-black/50 transition-colors"
+              className="absolute left-0 top-[45%] rounded-md p-2 transition-colors hover:bg-black/50"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -89,20 +89,20 @@ export default function Carrousel() {
                 />
               </svg>
             </button>
-            <div className="flex-col w-3/6 py-8 px-10">
+            <div className="w-3/6 flex-col px-10 py-8">
               <header>
-                <h3 className="text-2xl font-title font-bold text-white">
+                <h3 className="font-title text-2xl font-bold text-white">
                   {jobs.title}
                 </h3>
-                <h6 className="-mt-2 text-neutral-300 font-semibold">
-                  {jobs["sub-title"]}
+                <h6 className="-mt-2 font-semibold text-neutral-300">
+                  {jobs['sub-title']}
                 </h6>
               </header>
               <main className="my-4">
                 <p className="line-clamp-3 text-sm">{jobs.description}</p>
               </main>
               <footer className="flex flex-row justify-between gap-4">
-                <div className="flex flex-row justify-center items-center gap-2">
+                <div className="flex flex-row items-center justify-center gap-2">
                   <div className="placeholder avatar">
                     <div className="h-8 w-8 rounded-full bg-white text-neutral-content">
                       <span></span>
@@ -117,12 +117,12 @@ export default function Carrousel() {
                     </small>
                   </div>
                 </div>
-                <button className="btn btn-sm w-2/6 btn-outline btn-w-xl btn-primary">
+                <button className="btn-w-xl btn-primary btn-outline btn-sm btn w-2/6">
                   Ver más
                 </button>
               </footer>
             </div>
-            <ul className="flex absolute left-2/4 bottom-5 gap-2">
+            <ul className="absolute bottom-5 left-2/4 flex gap-2">
               <li
                 className={`${
                   currentSlide === 0 ? slideActive : slideInactive
@@ -149,9 +149,9 @@ export default function Carrousel() {
                 }`}
               ></li>
             </ul>
-            <div className="flex-col relative w-3/6">
-              <div className="absolute right-[65%] top-0 bg-primary w-1/6 h-3/6 rounded-bl-full"></div>
-              <div className="absolute right-0 top-0 bg-primary w-4/6 h-full rounded-e-xl rounded-bl-[20%]"></div>
+            <div className="relative w-3/6 flex-col">
+              <div className="absolute right-[65%] top-0 h-3/6 w-1/6 rounded-bl-full bg-primary"></div>
+              <div className="absolute right-0 top-0 h-full w-4/6 rounded-e-xl rounded-bl-[20%] bg-primary"></div>
             </div>
             <button
               onClick={() => {
@@ -159,7 +159,7 @@ export default function Carrousel() {
                   ? setCurrentSlide(0)
                   : setCurrentSlide(currentSlide + 1)
               }}
-              className="absolute rounded-md top-[45%] right-0 hover:bg-black/50 transition-colors p-2"
+              className="absolute right-0 top-[45%] rounded-md p-2 transition-colors hover:bg-black/50"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

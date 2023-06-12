@@ -1,25 +1,18 @@
-# General
+# To-Do
 
-- Svg icons library needed
-- App name
+- Añadir iconos de SVG
+- Decidir nombre de app
+- Dropdown de notificaciones
+- Interfaz de pasantías
+- Interfaz de Marketplace
+- Convertir "divs decorativos" a SVG
 
-# Aside component
+  ## Aside
+  - Mejorar estilo de los items
+  - Icono de avión de papel. Eliminar o cambiar?
 
-- Must have sticky class but it destroys the layout
-- Item style should be improved
-- Airpaper icon. Delete or change?
+  ## ChatPage
+  - Mensajes deberían ir de abajo hacia arriba
 
-# Chat component
-
-- Message should begin from bottom to up
-
-# Navbar component
-
-- Burger icon needs interactivity
-
-# TODO
-
-- Notifications dropdown
-- Interships UI
-- Marketplace UI
-- Convert "UI's image" to svg
+  ## Navbar
+  - Icono de hamburguesa necesita interactividad (Esteban)

@@ -1,7 +1,7 @@
-import "@/styles/globals.css"
-import Aside from "@/components/layout/Aside"
-import Navbar from "@/components/layout/Navbar"
-import Footer from "@/components/layout/Footer"
+import '@/styles/globals.css'
+import Aside from '@/components/layout/Aside'
+import Navbar from '@/components/layout/Navbar'
+import Footer from '@/components/layout/Footer'
 
 export default function MainLayout({
   children,
