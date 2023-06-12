@@ -1,0 +1,18 @@
+{
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma",
+    "editor.formatOnSave": true,
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "eslint.format.enable": true,
+  "editor.tabSize": 2,
+  "files.eol": "\n",
+  "eslint.run": "onSave",
+}
