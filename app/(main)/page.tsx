@@ -5,7 +5,7 @@ export default function HomePage() {
     <>
       <Subnavbar options={false} />
       <section className="my-4 grid grid-cols-3 p-4">
-        <div className="bg-primary stats col-span-3 shadow">
+        <div className="stats col-span-3 bg-primary shadow">
           <div className="stat">
             <div className="stat-figure text-primary">
               <svg
@@ -23,7 +23,7 @@ export default function HomePage() {
               </svg>
             </div>
             <div className="stat-title font-title text-black">Total Likes</div>
-            <div className="stat-value text-primary">25.6K</div>
+            <div className="stat-value text-black">25.6K</div>
             <div className="stat-desc text-black">21% more than last month</div>
           </div>
 

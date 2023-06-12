@@ -15,8 +15,12 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       fontFamily: {
-        inter: ['var(--font-default)'],
+        default: ['var(--font-default)'],
         title: ['var(--font-title)'],
+      },
+      colors: {
+        black: '#1d1916',
+        white: '#f3f4f6',
       },
     },
   },
@@ -26,8 +30,6 @@ module.exports = {
         custom_theme: {
           primary: '#c8c6dc',
           secondary: '#8c8a9a',
-          black: '#1d1916',
-          white: '#f3f4f6',
           neutral: '#4b5563',
           'base-100': '#323334',
           info: '#2f72ee',

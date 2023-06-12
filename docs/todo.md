@@ -16,3 +16,10 @@
 
   ## Navbar
   - Icono de hamburguesa necesita interactividad (Esteban)
+
+
+### posible tema:
+primary: '#ac5fdb',
+secondary: '#e3a2ee',
+neutral: '#3c3541',
+'base-100': '#27242b',

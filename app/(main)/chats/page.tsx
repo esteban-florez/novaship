@@ -47,7 +47,7 @@ function ChatBubble({
 
 function MessageWasSent() {
   return (
-    <div className="absolute -bottom-5 left-0 flex items-center justify-center gap-1">
+    <div className="flex-center absolute -bottom-5 left-0 gap-1">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="mx-auto h-4 w-4 fill-white/50"
@@ -73,7 +73,7 @@ interface MessageReceivedProps {
 
 function MessageWasReceived({ isRead = false }: MessageReceivedProps) {
   return (
-    <div className="absolute -bottom-5 left-0 flex items-center justify-center gap-1">
+    <div className="flex-center absolute -bottom-5 left-0 gap-1">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className={`mx-auto h-4 w-4 ${isRead ? 'fill-white' : 'fill-white/50'}`}
