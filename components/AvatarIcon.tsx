@@ -3,20 +3,25 @@ import { capitalizeString } from '@/utils/text'
 interface Props {
   username: string
   status?: boolean
-  width?: string
+  width?: number | null
   showStatus?: boolean
 }
 
 export default function AvatarIcon({
   username,
-  status,
-  width,
-  showStatus,
+  status = false,
+  width = null,
+  showStatus = false,
 }: Props) {
+  const widths = [
+    'w-1/6', 'w-2/6', 'w-3/6',
+    'w-4/6', 'w-5/6', 'w-6/6',
+  ]
+
   return (
     <div
-      className={`placeholder avatar ${status ? 'relative' : ''} ${
-        width !== undefined ? `w-${width}/6` : ''
+      className={`placeholder avatar ${(status !== null) ? 'relative' : ''} ${
+        width !== null ? `${widths[width + 1]}` : ''
       }`}
     >
       <div className="h-10 w-10 rounded-full bg-white text-neutral-content">

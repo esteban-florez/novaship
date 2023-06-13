@@ -63,7 +63,7 @@ export default function Carrousel() {
       return (
         <section
           key={jobs.title}
-          className="shrink-1 w-full grow-0 p-8"
+          className="w-full grow-0 p-8"
         >
           <div className="relative flex w-full rounded-xl bg-primary/25">
             <button
@@ -117,7 +117,7 @@ export default function Carrousel() {
                     </small>
                   </div>
                 </div>
-                <button className="btn-w-xl btn-primary btn-outline btn-sm btn w-2/6">
+                <button className="btn-primary btn-outline btn-sm btn w-2/6">
                   Ver más
                 </button>
               </footer>

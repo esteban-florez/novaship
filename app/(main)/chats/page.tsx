@@ -25,7 +25,7 @@ function ChatBubble({
       <AvatarIcon
         username={name}
         status={isActive}
-        width="1"
+        width={1}
         showStatus={true}
       />
       <div className="flex w-4/6 flex-col px-2">
