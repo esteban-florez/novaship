@@ -3,16 +3,9 @@ import Link from 'next/link'
 export default function SignupPage() {
   return (
     <section className="flex bg-white/10 p-8">
-      {/* Image left top  */}
-      <div className="absolute left-0 top-0 h-3/6 w-32 flex-col rounded-br-[50px] bg-primary"></div>
-      <div className="absolute left-20 top-0 h-1/6 w-32 flex-col rounded-b-[100px] bg-primary"></div>
-
-      {/* Form */}
       <div className="flex-col">
         <header className="">
-          <h2
-            className="text-center font-title text-4xl font-bold text-white"
-          >
+          <h2 className="text-center font-title text-4xl font-bold text-white">
             Registrarme
           </h2>
         </header>
@@ -20,10 +13,7 @@ export default function SignupPage() {
           <form className="mx-auto">
             <div className="mb-3 flex gap-4">
               <div className="w-3/6">
-                <label
-                  htmlFor="name"
-                  className="text-white/80"
-                >
+                <label htmlFor="name" className="text-white/80">
                   Nombre
                 </label>
                 <input
@@ -34,10 +24,7 @@ export default function SignupPage() {
                 />
               </div>
               <div className="w-3/6">
-                <label
-                  htmlFor="lastName"
-                  className="text-white/80"
-                >
+                <label htmlFor="lastName" className="text-white/80">
                   Apellido
                 </label>
                 <input
@@ -50,10 +37,7 @@ export default function SignupPage() {
             </div>
             <div className="mb-3 flex gap-4">
               <div className="w-3/6">
-                <label
-                  htmlFor="name"
-                  className="text-white/80"
-                >
+                <label htmlFor="name" className="text-white/80">
                   Contraseña
                 </label>
                 <input
@@ -64,10 +48,7 @@ export default function SignupPage() {
                 />
               </div>
               <div className="w-3/6">
-                <label
-                  htmlFor="lastName"
-                  className="text-white/80"
-                >
+                <label htmlFor="lastName" className="text-white/80">
                   Confirmar contraseña
                 </label>
                 <input
@@ -80,10 +61,7 @@ export default function SignupPage() {
             </div>
             <div className="mb-3 flex gap-4">
               <div className="w-full">
-                <label
-                  htmlFor="email"
-                  className="text-white/80"
-                >
+                <label htmlFor="email" className="text-white/80">
                   Correo electrónico
                 </label>
                 <input
@@ -96,9 +74,7 @@ export default function SignupPage() {
             </div>
           </form>
         </div>
-
         <div className="divider"></div>
-
         <footer className="flex flex-col gap-4">
           <button className="btn-ghost btn w-full rounded-sm bg-primary text-black hover:text-white">
             Registrarme
@@ -110,10 +86,6 @@ export default function SignupPage() {
           </Link>
         </footer>
       </div>
-
-      {/* Image bottom right */}
-      <div className="absolute bottom-0 right-0 h-3/6 w-32 rotate-180 flex-col rounded-br-[50px] bg-primary"></div>
-      <div className="absolute bottom-0 right-20 h-2/6 w-48 rotate-180 flex-col rounded-br-[100px] bg-primary"></div>
     </section>
   )
 }

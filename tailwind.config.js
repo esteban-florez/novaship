@@ -18,24 +18,26 @@ module.exports = {
         default: ['var(--font-default)'],
         title: ['var(--font-title)'],
       },
-      colors: {
-        black: '#1d1916',
-        white: '#f3f4f6',
-      },
     },
   },
   daisyui: {
     themes: [
       {
-        custom_theme: {
-          primary: '#c8c6dc',
-          secondary: '#8c8a9a',
-          neutral: '#4b5563',
-          'base-100': '#323334',
-          info: '#2f72ee',
-          success: '#1c9c6d',
-          warning: '#fcd34d',
-          error: '#f03d19',
+        dark: {
+          'color-scheme': 'dark',
+          primary: '#7c3aed',
+          'primary-content': '#ffffff',
+          secondary: '#1fb2ad',
+          'secondary-content': '#ffffff',
+          accent: '#e879f9',              // alternativa -> fde047 pink
+          'accent-content': '#ffffff',
+          neutral: '#2a323c',
+          'neutral-focus': '#242b33',
+          'neutral-content': '#A6ADBB',
+          'base-100': '#1d232a',
+          'base-200': '#191e24',
+          'base-300': '#15191e',
+          'base-content': '#A6ADBB',
         },
       },
     ],

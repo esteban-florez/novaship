@@ -120,11 +120,10 @@ interface MessageProps {
   message: string
   status?: string
 }
-function ChatMessage({ orientation, message, status }: MessageProps) {
-  const orientationClass = `chat-${orientation === 'friend' ? 'start' : 'end'}`
 
+function ChatMessage({ orientation, message, status }: MessageProps) {
   return (
-    <div className={`chat ${orientationClass}`}>
+    <div className={`chat ${orientation === 'friend' ? 'chat-start' : 'chat-end'}`}>
       <div className="chat-bubble relative bg-white/50 text-white/80">
         {message}
         {orientation === 'friend' && status === 'sent' && <MessageWasSent />}

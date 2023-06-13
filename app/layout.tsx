@@ -43,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${inter.variable} ${josefin.variable} font-default`} data-theme="custom_theme">
+    <html lang="es" className={`${inter.variable} ${josefin.variable} font-default`} data-theme="dark">
       <body>
         {children}
       </body>

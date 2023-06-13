@@ -7,79 +7,65 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <section className="flex bg-white/10 p-8">
-      {/* Image left top  */}
-      <div className="absolute left-0 top-0 h-3/6 w-32 flex-col rounded-br-[50px] bg-primary"></div>
-      <div className="absolute left-20 top-0 h-1/6 w-32 flex-col rounded-b-[100px] bg-primary"></div>
-
-      {/* Form */}
-      <div className="flex-col">
-        <header className="">
-          <h2
-            className="text-center font-title text-4xl font-bold text-white"
-          >
-            Iniciar Sesión
-          </h2>
-        </header>
-        <div className="my-5 flex">
-          <form className="mx-auto">
-            <div className="mb-3">
-              <label
-                htmlFor="email"
-                className="text-white/80"
-              >
-                Correo electrónico
-              </label>
-              <input
-                type="text"
-                id="email"
-                placeholder="josephtorres@gmail.com"
-                className="input w-full rounded-sm bg-white"
-              />
-            </div>
-            <div className="mb-3">
-              <label
-                htmlFor="password"
-                className="text-white/80"
-              >
-                Contraseña
-              </label>
-              <input
-                type="password"
-                id="password"
-                placeholder="********"
-                className="input w-full rounded-sm bg-white"
-              />
-            </div>
-          </form>
+    <section className="z-10 mx-2 flex max-w-md flex-col rounded-xl bg-base-200 px-4 py-6 shadow-md md:px-8">
+      <h2 className="text-center font-title text-2xl font-bold text-white md:text-4xl">
+        ¡Tu plataforma de ofertas de trabajo!
+      </h2>
+      <form className="mx-auto w-full pt-4">
+        <div className="form-control w-full">
+          <label htmlFor="email" className="label font-semibold">
+            Correo electrónico:
+          </label>
+          <input
+            type="text"
+            id="email"
+            placeholder="correo@ejemplo.com"
+            className="input-bordered input w-full rounded-lg bg-base-300"
+          />
         </div>
-
-        <div className="divider"></div>
-
-        <footer className="flex flex-col gap-4">
-          <button className="btn-ghost btn w-full rounded-sm bg-primary text-black hover:text-white">
+        <div className="form-control mt-4 w-full">
+          <label htmlFor="password" className="label font-semibold">
+            Contraseña:
+          </label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Ingresa tu contraseña..."
+            className="input-bordered input w-full rounded-lg bg-base-300"
+          />
+        </div>
+        <div className="flex flex-col gap-4">
+          <button type="submit" className="btn-primary btn mt-8 w-full md:w-auto">
             Iniciar sesión
           </button>
-          <div className="flex flex-row justify-between gap-2">
-            <Link
-              href="/signup"
-              className="flex w-3/6 flex-col items-center justify-center rounded-sm py-2 transition-colors hover:bg-gray-200 hover:text-black"
-            >
-              Registrarme
-            </Link>
-            <Link
-              href="/password-recover"
-              className="flex w-3/6 flex-col items-center justify-center rounded-sm py-2 text-sm transition-colors hover:bg-gray-200 hover:text-black"
-            >
-              ¿Olvidaste tu contraseña?
-            </Link>
-          </div>
-        </footer>
-      </div>
-
-      {/* Image bottom right */}
-      <div className="absolute bottom-0 right-0 h-3/6 w-32 rotate-180 flex-col rounded-br-[50px] bg-primary"></div>
-      <div className="absolute bottom-0 right-20 h-2/6 w-48 rotate-180 flex-col rounded-br-[100px] bg-primary"></div>
+          <Link
+            href="/login"
+            className="text-center text-sm underline"
+          >
+            Olvidé mi contraseña
+          </Link>
+        </div>
+      </form>
+      <div className="divider divider-vertical my-2"></div>
+      <footer className="flex flex-col gap-4">
+        <p className="text-center font-title text-xl font-semibold text-white">
+          ¿No posees una cuenta?
+        </p>
+        <div className="flex w-full flex-col gap-2">
+          <Link
+            href="/signup"
+            className="btn-accent btn w-full border-2"
+          >
+            Regístrate
+          </Link>
+          <Link
+            href="/signup"
+            className="btn-secondary btn w-full border-2"
+          >
+            Regístrate
+          </Link>
+        </div>
+      </footer>
     </section>
   )
 }
