@@ -54,12 +54,6 @@ export default function LoginPage() {
         <div className="flex w-full flex-col gap-2">
           <Link
             href="/signup"
-            className="btn-accent btn w-full border-2"
-          >
-            Regístrate
-          </Link>
-          <Link
-            href="/signup"
             className="btn-secondary btn w-full border-2"
           >
             Regístrate

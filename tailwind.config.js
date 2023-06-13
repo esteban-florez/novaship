@@ -21,6 +21,7 @@ module.exports = {
     },
   },
   daisyui: {
+    logs: false,
     themes: [
       {
         dark: {
@@ -29,8 +30,7 @@ module.exports = {
           'primary-content': '#ffffff',
           secondary: '#1fb2ad',
           'secondary-content': '#ffffff',
-          accent: '#e879f9',              // alternativa -> fde047 pink
-          'accent-content': '#ffffff',
+          accent: '#fde047',
           neutral: '#2a323c',
           'neutral-focus': '#242b33',
           'neutral-content': '#A6ADBB',
