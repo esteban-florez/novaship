@@ -1,3 +1,3 @@
 # App de Pasantías
 
-Aplicación web para la gestión de pasantías, orfetas de trabajo y proyectos.
+Aplicación web para la gestión virtual de pasantías, orfetas de trabajo y proyectos.
