@@ -33,7 +33,7 @@ export default function AvatarIcon({
             className={`absolute left-0.5 top-0.5 h-3 w-3 rounded-full ${
               status ? 'bg-green-300' : 'bg-gray-200'
             }`}
-          ></span>
+          />
         </span>
       )}
     </div>

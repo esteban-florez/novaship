@@ -2,21 +2,21 @@
 
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import styles from '@/styles/RouteMap.module.css'
+import styles from '@/styles/Breadcrumbs.module.css'
 import translatedRoutes from '@/translations/es'
 
 interface Props {
   width: boolean
 }
 
-export default function RoutePath({ width }: Props) {
-  const router = usePathname()
+export default function Breadcrumbs({ width }: Props) {
+  const pathname = usePathname()
 
   const structuredPath = () => {
-    const routes = router.split('/')
-    const currentRoutes = routes.filter((route) => route !== '')
+    const segments = pathname.split('/')
+    const currentSegments = segments.filter(segment => segment !== '')
 
-    return ['home', ...currentRoutes]
+    return ['home', ...currentSegments]
   }
 
   const currentPaths = structuredPath()
@@ -34,7 +34,7 @@ export default function RoutePath({ width }: Props) {
           return (
             <li key={path}>
               <Link
-                href={`/${path}`}
+                href={path === 'home' ? '/' : `/${path}`}
                 className={`capitalize no-underline hover:no-underline ${
                   path === currentPath ? 'font-bold text-primary' : 'text-white'
                 }`}

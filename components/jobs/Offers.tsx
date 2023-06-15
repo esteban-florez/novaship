@@ -36,7 +36,7 @@ export default function Offers({
             <div className="flex flex-row items-center justify-center gap-2">
               <div className="placeholder avatar">
                 <div className="h-8 w-8 rounded-full bg-white text-neutral-content">
-                  <span></span>
+                  <span />
                 </div>
               </div>
               <div className="flex flex-col">

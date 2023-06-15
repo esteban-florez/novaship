@@ -53,7 +53,7 @@ export default function Navbar() {
                 />
               </svg>
 
-              <span className="badge badge-xs indicator-item right-0 top-2 h-[0.6rem] w-4 border bg-secondary"></span>
+              <span className="badge badge-xs indicator-item right-0 top-2 h-[0.6rem] w-4 border bg-secondary" />
             </div>
           </button>
         </Link>
@@ -76,7 +76,7 @@ export default function Navbar() {
               />
             </svg>
 
-            <span className="badge badge-xs indicator-item right-1 top-2 h-[0.6rem] w-4 border bg-secondary"></span>
+            <span className="badge badge-xs indicator-item right-1 top-2 h-[0.6rem] w-4 border bg-secondary" />
           </div>
         </button>
 

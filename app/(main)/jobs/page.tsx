@@ -104,7 +104,7 @@ const data = [
 export default function JobsPage() {
   return (
     <>
-      <Subnavbar options={true} />
+      <Subnavbar options />
       <Carrousel />
       <section className="join mb-4 px-6">
         <button className="btn-ghost btn-active btn-md join-item btn text-lg font-semibold normal-case text-white">

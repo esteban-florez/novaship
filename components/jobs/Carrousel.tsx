@@ -105,7 +105,7 @@ export default function Carrousel() {
                 <div className="flex flex-row items-center justify-center gap-2">
                   <div className="placeholder avatar">
                     <div className="h-8 w-8 rounded-full bg-white text-neutral-content">
-                      <span></span>
+                      <span />
                     </div>
                   </div>
                   <div className="flex flex-col">
@@ -127,31 +127,31 @@ export default function Carrousel() {
                 className={`${
                   currentSlide === 0 ? slideActive : slideInactive
                 }`}
-              ></li>
+              />
               <li
                 className={`${
                   currentSlide === 1 ? slideActive : slideInactive
                 }`}
-              ></li>
+              />
               <li
                 className={`${
                   currentSlide === 2 ? slideActive : slideInactive
                 }`}
-              ></li>
+              />
               <li
                 className={`${
                   currentSlide === 3 ? slideActive : slideInactive
                 }`}
-              ></li>
+              />
               <li
                 className={`${
                   currentSlide === 4 ? slideActive : slideInactive
                 }`}
-              ></li>
+              />
             </ul>
             <div className="relative w-3/6 flex-col">
-              <div className="absolute right-[65%] top-0 h-3/6 w-1/6 rounded-bl-full bg-primary"></div>
-              <div className="absolute right-0 top-0 h-full w-4/6 rounded-e-xl rounded-bl-[20%] bg-primary"></div>
+              <div className="absolute right-[65%] top-0 h-3/6 w-1/6 rounded-bl-full bg-primary" />
+              <div className="absolute right-0 top-0 h-full w-4/6 rounded-e-xl rounded-bl-[20%] bg-primary" />
             </div>
             <button
               onClick={() => {

@@ -74,7 +74,7 @@ export default function SignupPage() {
             </div>
           </form>
         </div>
-        <div className="divider"></div>
+        <div className="divider" />
         <footer className="flex flex-col gap-4">
           <button className="btn-ghost btn w-full rounded-sm bg-primary text-black hover:text-white">
             Registrarme

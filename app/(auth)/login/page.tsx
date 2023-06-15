@@ -46,7 +46,7 @@ export default function LoginPage() {
           </Link>
         </div>
       </form>
-      <div className="divider divider-vertical my-2"></div>
+      <div className="divider divider-vertical my-2" />
       <footer className="flex flex-col gap-4">
         <p className="text-center font-title text-xl font-semibold text-white">
           ¿No posees una cuenta?

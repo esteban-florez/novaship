@@ -26,7 +26,7 @@ function ChatBubble({
         username={name}
         status={isActive}
         width={1}
-        showStatus={true}
+        showStatus
       />
       <div className="flex w-4/6 flex-col px-2">
         <h5 className="font-semibold">{name}</h5>
@@ -295,7 +295,7 @@ export default function ChatsPage() {
                 rows={1}
                 className="textarea-md w-full resize-none rounded-full bg-primary/25 text-sm font-semibold text-white outline-0 focus:bg-white/30"
                 placeholder="Escribe tu mensaje aquí..."
-              ></textarea>
+              />
             </div>
           </footer>
         </div>
