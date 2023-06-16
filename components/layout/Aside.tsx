@@ -41,7 +41,7 @@ const SIDEBAR_LINKS = [
 function AsideLink({ link, active }: React.PropsWithChildren<{ link: LinkData, active: boolean }>) {
   return (
     <li className={active ? '-me-2 rounded-l-xl bg-base-200 font-bold' : ''}>
-      <Link href={link.href} className={`py-4 ${active ? 'active bg-transparent text-white' : ''}`}>
+      <Link href={link.href} className={`py-4 ${active ? 'active pointer-events-none bg-transparent text-white' : ''}`}>
         {link.icon}
         {link.title}
       </Link>
