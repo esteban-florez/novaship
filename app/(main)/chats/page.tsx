@@ -1,5 +1,7 @@
 import AvatarIcon from '@/components/AvatarIcon'
 import Subnavbar from '@/components/layout/Subnavbar'
+import { EllipsisHorizontalIcon, PlusIcon } from '@heroicons/react/24/solid'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
 interface ChatProps {
   isActive?: boolean
@@ -25,7 +27,6 @@ function ChatBubble({
       <AvatarIcon
         username={name}
         status={isActive}
-        width={1}
         showStatus
       />
       <div className="flex w-4/6 flex-col px-2">
@@ -145,47 +146,18 @@ export default function ChatsPage() {
     <>
       <Subnavbar options={false} />
       <section className="my-8 flex min-h-[70vh] w-full gap-4 px-8">
-        <div className="w-2/6 max-w-[18rem] rounded-xl bg-primary/25 p-4 pt-2">
+        <div className="w-2/6 max-w-xs rounded-xl bg-neutral p-4 pt-2">
           <div className="mb-6 mt-2 flex w-full flex-row justify-around gap-2">
-            <div className="relative w-5/6">
+            <div className="relative w-full">
               <input
                 type="search"
                 placeholder="Buscar"
-                className="input-bordered input input-sm rounded-full bg-white/60 px-[1.75rem] focus:bg-white/80 focus:outline-none"
+                className="input-bordered input input-sm w-full rounded-full pl-8 focus:ring-1 focus:ring-primary"
               />
-              <span className="absolute left-2 top-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="mx-auto h-4 w-4 fill-white/50"
-                  fill="none"
-                  viewBox="0 0 512 512"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-                  />
-                </svg>
+              <span className="absolute left-2 top-2 mx-auto">
+                <MagnifyingGlassIcon className="h-5 w-5" />
               </span>
             </div>
-            <button className="btn-ghost btn-sm btn-circle bg-white/60">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="mx-auto h-4 w-4 fill-white"
-                fill="none"
-                viewBox="0 0 512 512"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
-                />
-              </svg>
-            </button>
           </div>
 
           <ChatBubble
@@ -215,7 +187,7 @@ export default function ChatsPage() {
             lastConnection={1}
           />
         </div>
-        <div className="w-full flex-col rounded-xl bg-primary/25">
+        <div className="w-full flex-col rounded-xl bg-neutral">
           <header className="flex items-center justify-between border-b-2 border-gray-100/25 px-4 py-2 font-bold text-white">
             <div className="flex items-center justify-start gap-2">
               <AvatarIcon username="Joseph Monter" />
@@ -227,20 +199,7 @@ export default function ChatsPage() {
               </div>
             </div>
             <button className="btn-ghost btn-circle btn">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 fill-white"
-                fill="none"
-                viewBox="0 0 448 512"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
-                />
-              </svg>
+              <EllipsisHorizontalIcon className="h-8 w-8 stroke-white" />
             </button>
           </header>
           <main
@@ -249,12 +208,6 @@ export default function ChatsPage() {
               height: 'calc(75vw - 21rem)',
             }}
           >
-            {/* <div className="chat chat-start">
-              <div className="chat-bubble bg-white/50 text-black/80">#fix</div>
-            </div>
-            <div className="chat chat-end">
-              <div className="chat-bubble bg-white/50 text-black/80">#fix</div>
-            </div> */}
             <ChatMessage
               orientation="friend"
               message="Mensaje #1"
@@ -271,32 +224,15 @@ export default function ChatsPage() {
               status="received"
             />
           </main>
-          <footer className="flex items-center justify-between border-t-2 border-gray-100/25">
-            <div className="ms-4">
-              <button className="btn-sm btn-circle btn border-none bg-primary/75">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 fill-gray-100/75"
-                  fill="none"
-                  viewBox="0 0 448 512"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className="flex w-full items-center px-4 py-2">
-              <textarea
-                rows={1}
-                className="textarea-md w-full resize-none rounded-full bg-primary/25 text-sm font-semibold text-white outline-0 focus:bg-white/30"
-                placeholder="Escribe tu mensaje aquí..."
-              />
-            </div>
+          <footer className="flex items-center justify-between gap-2 border-t-2 border-gray-700 p-4">
+            <button className="btn-primary btn-sm btn-circle btn">
+              <PlusIcon className="h-6 w-6 stroke-2" />
+            </button>
+            <textarea
+              rows={1}
+              className="textarea-md w-full resize-none rounded-full bg-base-200 text-sm font-semibold text-white outline-none focus:ring focus:ring-primary"
+              placeholder="Escribe tu mensaje aquí..."
+            />
           </footer>
         </div>
       </section>

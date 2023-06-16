@@ -1,5 +1,6 @@
 # To-Do
 
+- Crear tipos para props cuyo valor son un conjunto específico de strings
 - Añadir iconos de SVG
 - Decidir nombre de app
 - Dropdown de notificaciones
