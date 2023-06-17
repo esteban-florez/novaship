@@ -75,7 +75,7 @@ export default function ProfileIcon() {
       onClick={handleClick}
       className={`btn-ghost btn-circle btn ${dropdownIsOpen ? 'relative' : ''}`}
     >
-      <AvatarIcon username="Maximiliano Xorches" usernameLength={2} />
+      <AvatarIcon username="Maximiliano Xorches" usernameLength={2} bgColor="white" />
       {dropdownIsOpen && <ProfileDropdown />}
     </button>
   )
