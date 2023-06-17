@@ -14,7 +14,7 @@ interface Props {
 function Notification({ username, bgIcon, time, children }: Props) {
   return (
     <li className="flex items-center gap-2 p-1 pe-2 last:pt-1 odd:pb-2 even:pb-2">
-      <AvatarIcon username={username} bgColor={bgIcon} />
+      <AvatarIcon username={username} bgColor={bgIcon} usernameLength={2} />
       <div className="max-w-xs flex-col pe-4 text-start">
         <p className="truncate text-xs normal-case text-slate-700">{children}</p>
         <small className="text-xs text-neutral-content">Hace {time} minutos</small>

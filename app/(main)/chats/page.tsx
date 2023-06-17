@@ -28,6 +28,7 @@ function ChatBubble({
         username={name}
         status={isActive}
         showStatus
+        usernameLength={2}
       />
       <div className="flex w-4/6 flex-col px-2">
         <h5 className="font-semibold">{name}</h5>
@@ -190,7 +191,7 @@ export default function ChatsPage() {
         <div className="w-full flex-col rounded-xl bg-neutral">
           <header className="flex items-center justify-between border-b-2 border-gray-100/25 px-4 py-2 font-bold text-white">
             <div className="flex items-center justify-start gap-2">
-              <AvatarIcon username="Joseph Monter" />
+              <AvatarIcon username="Joseph Monter" usernameLength={2} />
               <div className="flex flex-col">
                 <h3 className="text-xl font-semibold">Joseph Monter</h3>
                 <h6 className="text-xs text-neutral-300">
