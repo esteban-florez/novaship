@@ -2,7 +2,7 @@ type Routes = Record<string, string>
 
 const routes: Routes = {
   home: 'inicio',
-  jobs: 'trabajos',
+  offers: 'ofertas',
   projects: 'proyectos',
   chats: 'conversaciones',
 }

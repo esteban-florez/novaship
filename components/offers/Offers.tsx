@@ -14,8 +14,8 @@ export default function Offers({
   location,
 }: Props) {
   return (
-    <section className="mb-4 max-w-xs break-inside-avoid rounded-xl">
-      <div className="relative flex w-full rounded-xl bg-primary/25">
+    <section className="mb-4 max-w-xs break-inside-avoid rounded-xl bg-base-300">
+      <div className="relative flex w-full rounded-xl">
         <div className="w-full flex-col p-6">
           <header>
             <h3 className="font-title text-xl font-bold text-white">{title}</h3>

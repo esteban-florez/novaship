@@ -1,6 +1,7 @@
-import Carrousel from '@/components/jobs/Carrousel'
-import Offers from '@/components/jobs/Offers'
+import Carrousel from '@/components/offers/Carrousel'
+import Offers from '@/components/offers/Offers'
 import Subnavbar from '@/components/layout/Subnavbar'
+import { type Metadata } from 'next'
 
 const data = [
   {
@@ -101,7 +102,11 @@ const data = [
   },
 ]
 
-export default function JobsPage() {
+export const metadata: Metadata = {
+  title: 'Ofertas',
+}
+
+export default function OffersPage() {
   return (
     <>
       <Subnavbar options />
