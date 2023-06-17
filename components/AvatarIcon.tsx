@@ -4,18 +4,18 @@ interface Props {
   username: string
   status?: boolean
   showStatus?: boolean
-  bgColor: string
+  bgColor?: string
 }
 
 export default function AvatarIcon({
   username,
   status = false,
   showStatus = false,
-  bgColor,
+  bgColor = 'white',
 }: Props) {
   return (
     <div className={`placeholder avatar ${(status !== null) ? 'relative' : ''}`}>
-      <div className={`bg- h-10 w-10 rounded-full${bgColor} text-neutral-content`}>
+      <div className={`h-10 w-10 rounded-full ${bgColor} text-neutral-content`}>
         <span>{capitalizeString(username)}</span>
       </div>
       {showStatus && (

@@ -28,7 +28,6 @@ function ChatBubble({
         username={name}
         status={isActive}
         showStatus
-        bgColor="white"
       />
       <div className="flex w-4/6 flex-col px-2">
         <h5 className="font-semibold">{name}</h5>
