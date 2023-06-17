@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import ProfileIcon from '@/components/ProfileDropdown'
-import { Bars3Icon, ChatBubbleOvalLeftIcon, BellIcon } from '@heroicons/react/24/solid'
+import { Bars3Icon, ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid'
+import NotificationIcon from '../NotificationDropdown'
 
 export default function Navbar() {
   return (
@@ -20,12 +21,7 @@ export default function Navbar() {
             <span className="badge badge-xs indicator-item right-1 top-3 border bg-secondary" />
           </div>
         </Link>
-        <button className="btn-ghost btn-circle btn">
-          <div className="indicator">
-            <BellIcon className="h-6 w-6 text-white" />
-            <span className="badge badge-xs indicator-item right-1 top-3 border bg-secondary" />
-          </div>
-        </button>
+        <NotificationIcon />
         <ProfileIcon />
       </div>
     </div>
