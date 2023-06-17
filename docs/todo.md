@@ -3,7 +3,6 @@
 - Crear tipos para props cuyo valor son un conjunto específico de strings
 - Añadir iconos de SVG
 - Decidir nombre de app
-- Dropdown de notificaciones
 - Interfaz de pasantías
 - Interfaz de Marketplace
 - Convertir "divs decorativos" a SVG
@@ -11,7 +10,6 @@
   ## Aside
 
   - Mejorar estilo de los items
-  - Icono de avión de papel. Eliminar o cambiar?
 
   ## ChatPage
 
@@ -20,7 +18,6 @@
   ## Navbar
 
   - Icono de hamburguesa necesita interactividad (Esteban)
-  - Dropdowns deben cerrarse si se hace clic fuera de ellos.
 
 ### posible tema:
 
