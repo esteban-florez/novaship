@@ -7,14 +7,14 @@ import AvatarIcon from './AvatarIcon'
 interface Props {
   username: string
   time: number
-  bgColor: string
+  bg?: string
   children: React.ReactNode
 }
 
-function Notification({ username, bgColor, time, children }: Props) {
+function Notification({ username, bg = 'bg-white', time, children }: Props) {
   return (
     <li className="flex items-center gap-2 p-1 pe-2 last:pt-1 odd:pb-2 even:pb-2">
-      <AvatarIcon username={username} bgColor={bgColor} usernameLength={2} />
+      <AvatarIcon username={username} bg={bg} usernameLength={2} />
       <div className="max-w-xs flex-col pe-4 text-start">
         <p className="truncate text-xs normal-case text-slate-700">{children}</p>
         <small className="text-xs text-neutral-content">Hace {time} minutos</small>
@@ -34,16 +34,16 @@ function NotificationDropdown() {
       <li className="p-2">
         <h3 className="text-start text-lg text-gray-400">Notificaciones</h3>
       </li>
-      <Notification username="Martin Max" time={5} bgColor="neutral">
+      <Notification username="Martin Max" time={5} bg="bg-neutral">
         Has sido aceptado para la vacante de la empresa "BeautifulDreams", contáctese con nosotros para más información.
       </Notification>
-      <Notification username="APP" time={27} bgColor="primary">
+      <Notification username="APP" time={27} bg="bg-primary">
         Se han publicado nuevas ofertas de trabajo, echa un vistazo.
       </Notification>
-      <Notification username="APP" time={58} bgColor="primary">
+      <Notification username="APP" time={58} bg="bg-primary">
         Se ha actualizado la app, dale un vistazo a los nuevos cambios.
       </Notification>
-      <Notification username="Andrea Samirez" time={17} bgColor="neutral">
+      <Notification username="Andrea Samirez" time={17} bg="bg-primary">
         Le ha dado like a tu perfil.
       </Notification>
     </ul>
