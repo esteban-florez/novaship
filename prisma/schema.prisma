@@ -15,6 +15,9 @@ model User {
   phone    String          @unique
   projects Membership[]
   tasks    Participation[]
+  sended   Message[]       @relation(name: "sender")
+  received Message[]       @relation(name: "receiver")
+  files    File[]
 }
 
 model Project {
@@ -27,6 +30,8 @@ model Project {
   members     Membership[]
   tasks       Task[]
   release     Release?
+  messages    Message[]
+  files       File[]
 }
 
 model Release {
@@ -64,6 +69,7 @@ model Task {
   project      Project         @relation(fields: [projectId], references: [id])
   projectId    Int
   participants Participation[]
+  messages     Message[]
 }
 
 model Subtask {
@@ -73,6 +79,29 @@ model Subtask {
   status      Status @default(PENDING)
   task        Task   @relation(fields: [taskId], references: [id])
   taskId      Int
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  content    String   @db.Text
+  seen       Boolean  @default(false)
+  sender     User     @relation(name: "sender", fields: [senderId], references: [id])
+  senderId   Int
+  receiver   User     @relation(name: "receiver", fields: [receiverId], references: [id])
+  receiverId Int
+  project    Project? @relation(fields: [projectId], references: [id])
+  projectId  Int
+  task       Task?    @relation(fields: [taskId], references: [id])
+  taskId     Int
+}
+
+model File {
+  id        Int     @id @default(autoincrement())
+  src       String
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId Int
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
 }
 
 model Category {

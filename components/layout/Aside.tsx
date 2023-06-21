@@ -27,7 +27,7 @@ const SIDEBAR_LINKS = [
     icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
   },
   {
-    href: '/',
+    href: '/internships',
     title: 'Pasantías',
     icon: <AcademicCapIcon className="h-6 w-6" />,
   },

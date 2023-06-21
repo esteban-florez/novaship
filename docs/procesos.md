@@ -1,18 +1,18 @@
 # Proyectos
   ## Registro de un proyecto
-  Se pueden registrar proyectos, el usuario que lo registre se convierte en responsable del proyecto.
+  Se pueden registrar proyectos, el usuario que lo registre se convierte en responsable del proyecto. También puede crear el proyecto en nombre de una empresa, si es gerente de dicha empresa.
   
   ## Visiblidad del proyecto
-  El responsable puede hacerlo público, para ser descubierto por todos usuarios de la app, o privado, solo para los miembros.  
+  El responsable puede hacerlo público, para ser descubierto por todos usuarios de la app, o privado, solo para los miembros.
   
   ## Equipo de trabajo
-  El responsable puede añadir a todos los usuarios que participen en el desarrollo del proyecto.
+  El responsable puede añadir a todos los usuarios que participen en el desarrollo del proyecto, y se podrá enviar mensajes personales por un chat a un compañero de equipo. 
   
   ## Captación de nuevos miembros
-  Se pueden buscar entre los aspirantes que tengan las habilidades para incluirlos en el equipo de trabajo.
+  Se puede buscar entre los aspirantes que tengan las habilidades para incluirlos en el equipo de trabajo.
   
   ## Comunicación entre miembros
-  Se tendrá un chat de proyecto para comunicación entre miembros, y de igual modo se podrá hablar directamente con algún miembro del equipo.
+  Se tendrá un chat de proyecto para comunicación entre miembros, donde todos podrán ver los mensajes, y se podrá dividir en canales según las tareas.
 
   ## Gestión de documentación
   Los miembros del equipo pueden subir distintos archivos para que están disponibles para los demás, y realizar cambios.
@@ -28,7 +28,7 @@
 
 # Aspirantes
   ## Listado de aspirantes
-  Las empresas y los proyectos podrán acceder al listado de los aspirantes a puestos de trabajo, ya sean pasantes o no.
+  Las empresas y los proyectos podrán acceder al listado de los aspirantes a puestos de trabajo, ya sean pasantes o no, y también podrán comunicarse con ellos mediante un chat.
   
   ## Perfil laboral
   Los aspirantes podrán tener un perfil laboral donde figure sus información personal, habilidades, etc.
@@ -52,8 +52,8 @@
   ## Registrar empresa
   Se puede registrar una empresa en la apicación.
   
-  ## Añadir personal
-  Se puede añadir diferentes usuarios de la aplicación a la empresa, para que puedan intervenir en procesos de contratacion, etc.
+  ## Personal de empresa
+  Se puede añadir diferentes usuarios de la aplicación a la empresa, para que puedan intervenir en procesos de contratacion, etc. Se podrán envíar mensajes personales entre los usuarios que pertenezacan a la empresa.
   
   ## Roles en la empresa
   Se pueden asignar distintos roles a los miembros de la empresa, que se encargan de diferentes actividades (gerente, reclutador, entrevistador).
