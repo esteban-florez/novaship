@@ -13,7 +13,7 @@ function DropdownOption({ path, name }: Props) {
   return (
     <Link
       href={`/${path}`}
-      className="border-l py-2 text-start indent-2 text-xs normal-case text-gray-400 hover:border-l-2 hover:border-primary hover:bg-primary/25"
+      className="border-l-4 py-2 text-start indent-2 text-xs normal-case text-gray-400 hover:border-primary hover:bg-primary/25"
     >
       {name}
     </Link>
@@ -26,20 +26,20 @@ function ProfileDropdown() {
       onClick={(e) => {
         e.stopPropagation()
       }}
-      className="absolute right-0 top-14 z-50 flex flex-col whitespace-nowrap rounded-lg bg-white px-6 py-4 shadow-xl"
+      className="absolute right-0 top-14 z-50 flex flex-col whitespace-nowrap rounded-lg border-gray-400 bg-neutral px-6 py-4 text-center shadow-xl"
     >
       {/* Username */}
-      <span className="text-start text-xs text-gray-400">
+      <span className="text-start text-xs text-neutral-content">
         Nombre y apellido
       </span>
-      <h5 className="mb-3 mt-2 text-center text-black">Username</h5>
+      <h5 className="mb-3 mt-2 text-center text-xs text-white">Maximiliano Xavier</h5>
 
-      <span className="pt-2 text-start text-xs text-gray-400">Opciones</span>
+      <span className="pt-2 text-start text-xs text-neutral-content">Opciones</span>
       <DropdownOption
         path="profile"
         name="Ver perfil"
       />
-      <DropdownOption
+      {/* <DropdownOption
         path=""
         name="Relleno x1"
       />
@@ -50,12 +50,12 @@ function ProfileDropdown() {
       <DropdownOption
         path=""
         name="Relleno x3"
-      />
+      /> */}
 
       {/* Logout */}
       <Link
         href="/login"
-        className="mt-6 rounded-sm bg-gray-200 py-2 normal-case shadow-sm transition-colors hover:bg-gray-500 hover:text-white"
+        className="mt-6 rounded-sm bg-secondary py-2 normal-case text-white shadow-sm transition-colors hover:bg-primary"
       >
         Cerrar sesión
       </Link>
