@@ -13,11 +13,11 @@ interface Props {
 
 function Notification({ username, bg = 'bg-white', time, children }: Props) {
   return (
-    <li className="flex items-center gap-2 p-1 pe-2 last:pt-1 odd:pb-2 even:pb-2">
+    <li className="flex w-80 max-w-xs items-center gap-2 py-1 pe-6 ps-4 last:pt-1 odd:pb-2 even:pb-2 hover:bg-neutral-focus">
       <AvatarIcon username={username} bg={bg} usernameLength={2} />
-      <div className="max-w-xs flex-col pe-4 text-start">
-        <p className="truncate text-xs normal-case text-slate-700">{children}</p>
-        <small className="text-xs text-neutral-content">Hace {time} minutos</small>
+      <div className="flex flex-col text-start">
+        <p className="line-clamp-2 text-xs normal-case text-white">{children}.</p>
+        <small className="text-xs normal-case text-neutral-content">Hace {time} minutos.</small>
       </div>
     </li>
   )
@@ -29,22 +29,25 @@ function NotificationDropdown() {
       onClick={(e) => {
         e.stopPropagation()
       }}
-      className="absolute right-0 top-14 z-50 flex max-w-sm flex-col whitespace-normal rounded-lg bg-white p-2 shadow-xl"
+      className="absolute right-0 top-14 z-50 flex max-w-xs flex-col whitespace-normal rounded-lg border border-gray-600 bg-neutral py-2"
     >
-      <li className="p-2">
-        <h3 className="text-start text-lg text-gray-400">Notificaciones</h3>
+      <li className="px-4 pb-4 pt-2">
+        <h3 className="text-md text-start text-gray-400">Notificaciones</h3>
       </li>
-      <Notification username="Martin Max" time={5} bg="bg-neutral">
-        Has sido aceptado para la vacante de la empresa "BeautifulDreams", contáctese con nosotros para más información.
+      <Notification username="Martin Max" time={5} bg="bg-white">
+        Has sido aceptado para la vacante de la empresa "BeautifulDreams", contáctese con nosotros para más información
       </Notification>
       <Notification username="APP" time={27} bg="bg-primary">
-        Se han publicado nuevas ofertas de trabajo, echa un vistazo.
+        Se han publicado nuevas ofertas de trabajo, echa un vistazo
       </Notification>
-      <Notification username="APP" time={58} bg="bg-primary">
-        Se ha actualizado la app, dale un vistazo a los nuevos cambios.
+      <Notification username="APP" time={57} bg="bg-primary">
+        Se ha actualizado la app, dale un vistazo a los nuevos cambios
       </Notification>
-      <Notification username="Andrea Samirez" time={17} bg="bg-primary">
-        Le ha dado like a tu perfil.
+      <Notification username="Andrea Samirez" time={17} bg="bg-white">
+        Le ha dado like a tu perfil
+      </Notification>
+      <Notification username="APP" time={0} bg="bg-primary">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo fugit quas beatae, iusto consequuntur nesciunt ut. Eius ab, labore, dolores soluta et repellat, iure quis minima doloribus esse molestias velit
       </Notification>
     </ul>
   )
