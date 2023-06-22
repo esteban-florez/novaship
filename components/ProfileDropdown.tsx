@@ -26,7 +26,7 @@ function ProfileDropdown() {
       onClick={(e) => {
         e.stopPropagation()
       }}
-      className="absolute right-0 top-14 z-50 flex flex-col whitespace-nowrap rounded-lg border-gray-400 bg-neutral px-6 py-4 text-center shadow-xl"
+      className="absolute right-0 top-14 z-50 flex flex-col whitespace-nowrap rounded-lg border border-gray-600 bg-neutral px-6 py-4 text-center"
     >
       {/* Username */}
       <span className="text-start text-xs text-neutral-content">
@@ -55,7 +55,7 @@ function ProfileDropdown() {
       {/* Logout */}
       <Link
         href="/login"
-        className="mt-6 rounded-sm bg-secondary py-2 normal-case text-white shadow-sm transition-colors hover:bg-primary"
+        className="btn-secondary btn-sm btn mt-6 normal-case transition-colors hover:btn-primary"
       >
         Cerrar sesión
       </Link>
