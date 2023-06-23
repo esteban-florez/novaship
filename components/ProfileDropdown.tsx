@@ -22,44 +22,36 @@ function DropdownOption({ path, name }: Props) {
 
 function ProfileDropdown() {
   return (
-    <div
+    <ul
       onClick={(e) => {
         e.stopPropagation()
       }}
-      className="absolute right-0 top-14 z-50 flex flex-col whitespace-nowrap rounded-lg border border-gray-600 bg-neutral px-6 py-4 text-center"
+      className="absolute left-0 top-16 z-50 flex w-full flex-col whitespace-nowrap rounded-lg border border-gray-600 bg-neutral px-6 py-4 sm:left-auto sm:right-0 sm:top-14 sm:w-auto sm:max-w-xs"
     >
-      {/* Username */}
-      <span className="text-start text-xs text-neutral-content">
-        Nombre y apellido
-      </span>
-      <h5 className="mb-3 mt-2 text-center text-xs text-white">Maximiliano Xavier</h5>
+      <li>
+        <span className="text-start text-xs text-neutral-content">
+          Nombre y apellido
+        </span>
+        <h5 className="mb-3 mt-2 text-center text-xs text-white">Maximiliano Xavier</h5>
+      </li>
 
-      <span className="pt-2 text-start text-xs text-neutral-content">Opciones</span>
-      <DropdownOption
-        path="profile"
-        name="Ver perfil"
-      />
-      {/* <DropdownOption
-        path=""
-        name="Relleno x1"
-      />
-      <DropdownOption
-        path=""
-        name="Relleno x2"
-      />
-      <DropdownOption
-        path=""
-        name="Relleno x3"
-      /> */}
+      <li className="flex flex-col">
+        <span className="pt-2 text-start text-xs text-neutral-content">Opciones</span>
+        <DropdownOption
+          path="profile"
+          name="Ver perfil"
+        />
+      </li>
 
-      {/* Logout */}
-      <Link
-        href="/login"
-        className="btn-secondary btn-sm btn mt-6 normal-case transition-colors hover:btn-primary"
-      >
-        Cerrar sesión
-      </Link>
-    </div>
+      <li>
+        <Link
+          href="/login"
+          className="btn-secondary btn-sm btn mt-6 w-full normal-case transition-colors hover:btn-primary"
+        >
+          Cerrar sesión
+        </Link>
+      </li>
+    </ul>
   )
 }
 
@@ -73,7 +65,7 @@ export default function ProfileIcon() {
   return (
     <button
       onClick={handleClick}
-      className={`btn-ghost btn-circle btn ${dropdownIsOpen ? 'relative' : ''}`}
+      className="btn-ghost btn-circle btn sm:relative"
     >
       <AvatarIcon username="Maximiliano Xorches" usernameLength={2} />
       {dropdownIsOpen && <ProfileDropdown />}
