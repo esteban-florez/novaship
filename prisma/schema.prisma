@@ -8,16 +8,34 @@ datasource db {
 }
 
 model User {
-  id       Int             @id @default(autoincrement())
-  name     String
-  surname  String
-  email    String          @unique
-  phone    String          @unique
-  projects Membership[]
-  tasks    Participation[]
-  sended   Message[]       @relation(name: "sender")
-  received Message[]       @relation(name: "receiver")
-  files    File[]
+  id             Int             @id @default(autoincrement())
+  name           String
+  surname        String
+  email          String          @unique
+  phone          String          @unique
+  bio            String?
+  address        String?
+  image          String?
+  profile        Profile?
+  country        Country         @relation(fields: [countryId], references: [id])
+  countryId      Int
+  memberships    Membership[]
+  participations Participation[]
+  sended         Message[]       @relation(name: "sender")
+  received       Message[]       @relation(name: "receiver")
+  files          File[]
+  employments    Employee[]
+  institutes     Institute[]
+}
+
+model Membership {
+  id         Int         @id @default(autoincrement())
+  isLeader   Boolean     @default(false)
+  user       User        @relation(fields: [userId], references: [id])
+  userId     Int
+  project    Project     @relation(fields: [projectId], references: [id])
+  projectId  Int
+  interviews Interview[]
 }
 
 model Project {
@@ -26,29 +44,14 @@ model Project {
   description String
   image       String?      @unique
   visibility  Visibility
-  categories  Category[]
-  members     Membership[]
+  company     Company?     @relation(fields: [companyId], references: [id])
+  companyId   Int?
+  memberships Membership[]
+  fields      Field[]
   tasks       Task[]
   release     Release?
   messages    Message[]
   files       File[]
-}
-
-model Release {
-  id        Int     @id @default(autoincrement())
-  link      String? @unique
-  price     Float?
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId Int     @unique
-}
-
-model Membership {
-  id        Int     @id @default(autoincrement())
-  isLeader  Boolean @default(false)
-  user      User    @relation(fields: [userId], references: [id])
-  userId    Int
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId Int
 }
 
 model Participation {
@@ -61,37 +64,45 @@ model Participation {
 }
 
 model Task {
-  id           Int             @id @default(autoincrement())
-  title        String
-  description  String
-  status       Status?
-  subtasks     Subtask[]
-  project      Project         @relation(fields: [projectId], references: [id])
-  projectId    Int
-  participants Participation[]
-  messages     Message[]
+  id             Int             @id @default(autoincrement())
+  title          String
+  description    String
+  status         TaskStatus?
+  subtasks       Subtask[]
+  project        Project         @relation(fields: [projectId], references: [id])
+  projectId      Int
+  participations Participation[]
+  messages       Message[]
 }
 
 model Subtask {
-  id          Int    @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   title       String
   description String
-  status      Status @default(PENDING)
-  task        Task   @relation(fields: [taskId], references: [id])
+  status      TaskStatus @default(PENDING)
+  task        Task       @relation(fields: [taskId], references: [id])
   taskId      Int
 }
 
+model Release {
+  id        Int     @id @default(autoincrement())
+  link      String? @unique
+  price     Float
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId Int     @unique
+}
+
 model Message {
-  id         Int      @id @default(autoincrement())
-  content    String   @db.Text
-  seen       Boolean  @default(false)
-  sender     User     @relation(name: "sender", fields: [senderId], references: [id])
+  id         Int       @id @default(autoincrement())
+  content    String    @db.Text
+  seen       DateTime?
+  sender     User      @relation(name: "sender", fields: [senderId], references: [id])
   senderId   Int
-  receiver   User     @relation(name: "receiver", fields: [receiverId], references: [id])
+  receiver   User      @relation(name: "receiver", fields: [receiverId], references: [id])
   receiverId Int
-  project    Project? @relation(fields: [projectId], references: [id])
+  project    Project?  @relation(fields: [projectId], references: [id])
   projectId  Int
-  task       Task?    @relation(fields: [taskId], references: [id])
+  task       Task?     @relation(fields: [taskId], references: [id])
   taskId     Int
 }
 
@@ -100,14 +111,173 @@ model File {
   src       String
   project   Project @relation(fields: [projectId], references: [id])
   projectId Int
-  author    User    @relation(fields: [authorId], references: [id])
-  authorId  Int
+  author    User    @relation(fields: [userId], references: [id])
+  userId    Int
 }
 
-model Category {
-  id      Int       @id @default(autoincrement())
-  title   String    @unique
-  project Project[]
+model Profile {
+  id          Int          @id @default(autoincrement())
+  // Quizás title pueda ser una tabla de titulaciones, por ahora un string normal.
+  title       String
+  curriculum  String?
+  schedule    Json
+  description String       @db.Text
+  fields      Field[]
+  skills      Skill[]
+  experiences Experience[]
+  candidacies Candidate[]
+  internships Intern[]
+  reviews     Review[]
+  user        User         @relation(fields: [userId], references: [id])
+  userId      Int          @unique
+}
+
+model Experience {
+  id          Int      @id @default(autoincrement())
+  name        String
+  post        String
+  description String?  @db.Text
+  phone       String?
+  from        DateTime
+  to          DateTime
+  profile     Profile  @relation(fields: [profileId], references: [id])
+  profileId   Int
+}
+
+model Company {
+  id            Int        @id @default(autoincrement())
+  name          String
+  description   String     @db.Text
+  email         String?    @unique
+  phone         String?    @unique
+  address       String?
+  image         String?
+  verified      DateTime?
+  certification String?
+  country       Country    @relation(fields: [countryId], references: [id])
+  countryId     Int
+  projects      Project[]
+  employees     Employee[]
+  offers        Offer[]
+}
+
+model Employee {
+  id        Int     @id @default(autoincrement())
+  role      Role
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId Int
+}
+
+model Review {
+  id        Int     @id @default(autoincrement())
+  content   String  @db.Text
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId Int
+}
+
+model Candidate {
+  id           Int           @id @default(autoincrement())
+  description  String?       @db.Text
+  profile      Profile       @relation(fields: [profileId], references: [id])
+  profileId    Int
+  postulations Postulation[]
+}
+
+model Intern {
+  id           Int           @id @default(autoincrement())
+  description  String?       @db.Text
+  profile      Profile       @relation(fields: [profileId], references: [id])
+  profileId    Int
+  postulations Postulation[]
+  institue     Institute     @relation(fields: [instituteId], references: [id])
+  instituteId  Int
+}
+
+model Offer {
+  id           Int           @id @default(autoincrement())
+  title        String
+  description  String        @db.Text
+  location     Location
+  hours        Int?
+  schedule     Schedule?
+  type         Target?
+  company      Company       @relation(fields: [companyId], references: [id])
+  companyId    Int
+  fields       Field[]
+  skills       Skill[]
+  salaries     Salary[]
+  postulations Postulation[]
+}
+
+model Postulation {
+  id          Int                @id @default(autoincrement())
+  status      PostulationStatus?
+  offer       Offer              @relation(fields: [offerId], references: [id])
+  offerId     Int
+  candidate   Candidate?         @relation(fields: [candidateId], references: [id])
+  candidateId Int?
+  intern      Intern?            @relation(fields: [internId], references: [id])
+  internId    Int?
+  interviews  Interview[]
+  // quizas podría ligarse a un reclutador de la empresa
+}
+
+model Interview {
+  id            Int         @id @default(autoincrement())
+  date          DateTime
+  link          String
+  interviewer   Membership  @relation(fields: [membershipId], references: [id])
+  membershipId  Int
+  postulation   Postulation @relation(fields: [postulationId], references: [id])
+  postulationId Int
+}
+
+model Salary {
+  id      Int    @id @default(autoincrement())
+  target  Target
+  amount  Float
+  offer   Offer  @relation(fields: [offerId], references: [id])
+  offerId Int
+}
+
+model Institute {
+  id            Int       @id @default(autoincrement())
+  name          String
+  description   String    @db.Text
+  address       String
+  certification String
+  email         String?   @unique
+  phone         String?   @unique
+  image         String?
+  verified      DateTime?
+  interns       Intern[]
+  director      User      @relation(fields: [userId], references: [id])
+  userId        Int
+}
+
+model Field {
+  id       Int       @id @default(autoincrement())
+  title    String    @unique
+  projects Project[]
+  profiles Profile[]
+  offers   Offer[]
+}
+
+model Skill {
+  id       Int       @id @default(autoincrement())
+  title    String
+  profiles Profile[]
+  offers   Offer[]
+}
+
+model Country {
+  id        Int       @id @default(autoincrement())
+  name      String
+  code      String
+  users     User[]
+  companies Company[]
 }
 
 enum Visibility {
@@ -115,8 +285,41 @@ enum Visibility {
   PRIVATE
 }
 
-enum Status {
+enum TaskStatus {
   PENDING
-  IN_PROCESS
+  PROCESS
   DONE
+}
+
+enum Role {
+  OWNER
+  RECRUITER
+}
+
+enum Target {
+  ALL
+  INTERNS
+  CANDIDATS
+}
+
+enum Location {
+  REMOTE
+  ONSITE
+  HYBRID
+}
+
+enum Schedule {
+  FULLTIME
+  PARTTIME
+}
+
+enum PostulationStatus {
+  PENDING
+  REJECTED
+  ACCEPTED
+}
+
+enum Plaform {
+  MEET
+  ZOOM
 }

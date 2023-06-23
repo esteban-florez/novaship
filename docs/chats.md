@@ -9,3 +9,6 @@ Un chat en el cual el gerente de la empresa podrá contactar directamente con el
 
 # Chat entre miembros empresa o proyecto: 
 Un chat personal que solo puede existir entre miembros de una misma empresa o proyecto.
+
+# Chat entre comprador-vendedor:
+Un chat personal entre alguien interesado en comprar una adaptación de un proyecto, y la persona que lo vende, ya sea empresa o usuario normal.
