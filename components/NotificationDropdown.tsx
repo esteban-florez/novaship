@@ -13,7 +13,7 @@ interface Props {
 
 function Notification({ username, bg = 'bg-white', time, children }: Props) {
   return (
-    <li className="flex w-80 max-w-xs items-center gap-2 py-1 pe-6 ps-4 last:pt-1 odd:pb-2 even:pb-2 hover:bg-neutral-focus">
+    <li className="flex w-80 max-w-xs items-center gap-2 py-1 pe-6 ps-4 last:mb-2 last:pt-1 odd:pb-2 even:pb-2 hover:bg-neutral-focus">
       <AvatarIcon username={username} bg={bg} usernameLength={2} />
       <div className="flex flex-col text-start">
         <p className="line-clamp-2 text-xs normal-case text-white">{children}.</p>
@@ -29,11 +29,12 @@ function NotificationDropdown() {
       onClick={(e) => {
         e.stopPropagation()
       }}
-      className="absolute left-0 top-16 z-50 flex w-full flex-col whitespace-normal rounded-lg border border-gray-600 bg-neutral py-2 sm:left-auto sm:right-0 sm:top-14 sm:w-auto sm:max-w-xs md:right-0"
+      className="absolute left-0 top-16 z-50 flex w-full flex-col whitespace-normal rounded-lg border border-gray-600 bg-neutral sm:left-auto sm:right-0 sm:top-14 sm:w-auto sm:max-w-xs md:right-0"
     >
-      <li className="px-4 pb-4 pt-2">
-        <h3 className="text-start text-gray-400">Notificaciones</h3>
+      <li className="mb-2 bg-primary p-4 shadow">
+        <h3 className="text-white">Notificaciones</h3>
       </li>
+
       <Notification username="Martin Max" time={5} bg="bg-white">
         Has sido aceptado para la vacante de la empresa "BeautifulDreams", contáctese con nosotros para más información
       </Notification>
@@ -49,6 +50,10 @@ function NotificationDropdown() {
       <Notification username="APP" time={0} bg="bg-primary">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo fugit quas beatae, iusto consequuntur nesciunt ut. Eius ab, labore, dolores soluta et repellat, iure quis minima doloribus esse molestias velit
       </Notification>
+
+      <li className="border-t border-gray-600 py-4 hover:bg-neutral-focus">
+        <span className="text-secondary hover:text-primary">Ver más</span>
+      </li>
     </ul>
   )
 }
