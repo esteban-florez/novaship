@@ -25,6 +25,7 @@ model User {
   received       Message[]       @relation(name: "receiver")
   files          File[]
   employments    Employee[]
+  institutes     Institute[]
 }
 
 model Membership {
@@ -177,11 +178,11 @@ model Review {
 }
 
 model Candidate {
-  id          Int           @id @default(autoincrement())
-  description String?       @db.Text
-  profile     Profile       @relation(fields: [profileId], references: [id])
-  profileId   Int
-  Postulation Postulation[]
+  id           Int           @id @default(autoincrement())
+  description  String?       @db.Text
+  profile      Profile       @relation(fields: [profileId], references: [id])
+  profileId    Int
+  postulations Postulation[]
 }
 
 model Intern {
@@ -190,7 +191,8 @@ model Intern {
   profile      Profile       @relation(fields: [profileId], references: [id])
   profileId    Int
   postulations Postulation[]
-  // Institute
+  institue     Institute     @relation(fields: [instituteId], references: [id])
+  instituteId  Int
 }
 
 model Offer {
@@ -238,6 +240,21 @@ model Salary {
   amount  Float
   offer   Offer  @relation(fields: [offerId], references: [id])
   offerId Int
+}
+
+model Institute {
+  id            Int       @id @default(autoincrement())
+  name          String
+  description   String    @db.Text
+  address       String
+  certification String
+  email         String?   @unique
+  phone         String?   @unique
+  image         String?
+  verified      DateTime?
+  interns       Intern[]
+  director      User      @relation(fields: [userId], references: [id])
+  userId        Int
 }
 
 model Field {
