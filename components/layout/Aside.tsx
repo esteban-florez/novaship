@@ -49,7 +49,7 @@ export default function Aside() {
   const pathname = usePathname()
 
   return (
-    <ul className="menu min-h-screen gap-3 bg-neutral shadow">
+    <ul className="menu hidden min-h-screen gap-3 bg-neutral shadow sm:block">
       <li className="menu-title">
         <Link
           href="/"
