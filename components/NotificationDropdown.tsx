@@ -29,10 +29,10 @@ function NotificationDropdown() {
       onClick={(e) => {
         e.stopPropagation()
       }}
-      className="absolute right-0 top-14 z-50 flex max-w-xs flex-col whitespace-normal rounded-lg border border-gray-600 bg-neutral py-2"
+      className="absolute left-0 top-16 z-50 flex w-full flex-col whitespace-normal rounded-lg border border-gray-600 bg-neutral py-2 sm:left-auto sm:right-0 sm:top-14 sm:w-auto sm:max-w-xs md:right-0"
     >
       <li className="px-4 pb-4 pt-2">
-        <h3 className="text-md text-start text-gray-400">Notificaciones</h3>
+        <h3 className="text-start text-gray-400">Notificaciones</h3>
       </li>
       <Notification username="Martin Max" time={5} bg="bg-white">
         Has sido aceptado para la vacante de la empresa "BeautifulDreams", contáctese con nosotros para más información
@@ -63,7 +63,7 @@ export default function NotificationIcon() {
   return (
     <button
       onClick={handleClick}
-      className={`btn-ghost btn-circle btn ${dropdownIsOpen ? 'relative' : ''}`}
+      className="btn-ghost btn-circle btn sm:relative"
     >
       <div className="indicator">
         <BellIcon className="h-6 w-6 text-white" />

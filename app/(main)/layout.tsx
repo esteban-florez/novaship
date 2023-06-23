@@ -10,7 +10,7 @@ export default function MainLayout({
   return (
     <div className="flex w-full flex-row items-start">
       <Aside />
-      <div className="w-full flex-col">
+      <div className="relative w-full flex-col sm:static">
         <Navbar />
         <main className="w-full">{children}</main>
       </div>
