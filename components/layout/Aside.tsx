@@ -49,18 +49,20 @@ export default function Aside() {
   const pathname = usePathname()
 
   return (
-    <ul className="menu hidden min-h-screen gap-3 bg-neutral shadow sm:block">
-      <li className="menu-title">
-        <Link
-          href="/"
-          className="text-left font-title text-xl normal-case text-white"
-        >
-          PasantíasApp
-        </Link>
-      </li>
-      {SIDEBAR_LINKS.map(link => (
-        <AsideLink key={link.href} link={link} active={pathname === link.href} />
-      ))}
-    </ul>
+    <aside className="sticky top-0 h-screen">
+      <ul className="menu hidden h-full gap-3 bg-neutral shadow sm:block">
+        <li className="menu-title">
+          <Link
+            href="/"
+            className="text-left font-title text-xl normal-case text-white"
+          >
+            PasantíasApp
+          </Link>
+        </li>
+        {SIDEBAR_LINKS.map(link => (
+          <AsideLink key={link.href} link={link} active={pathname === link.href} />
+        ))}
+      </ul>
+    </aside>
   )
 }
