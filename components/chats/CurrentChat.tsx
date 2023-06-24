@@ -4,7 +4,7 @@ import BubbleMessage from './BubbleMessage'
 
 function ChatHeader() {
   return (
-    <header className="flex items-center justify-between border-b-2 border-gray-100/25 px-4 py-2 font-bold text-white">
+    <header className="flex items-center justify-between rounded-t-xl border-b-2 border-gray-100/25 bg-primary/50 px-4 py-2 font-bold text-white">
       <div className="flex items-center justify-start gap-2">
         <AvatarIcon username="Joseph Monter" usernameLength={2} />
         <div className="flex flex-col">
@@ -24,19 +24,21 @@ function ChatHeader() {
 function ChatContent({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className="flex flex-col p-4"
+      className="flex flex-col justify-end p-4"
       style={{
         height: 'calc(75vw - 21rem)',
       }}
     >
-      {children}
+      <div className="h-full overflow-y-auto pe-2">
+        {children}
+      </div>
     </div>
   )
 }
 
 function ChatFooter() {
   return (
-    <footer className="flex items-center justify-between gap-2 border-t-2 border-gray-700 p-4">
+    <footer className="flex items-center justify-between gap-2 border-t-2 border-gray-700 bg-primary/10 p-4">
       <button className="btn-primary btn-sm btn-circle btn">
         <PlusIcon className="h-6 w-6 stroke-2" />
       </button>
@@ -58,6 +60,16 @@ export default function CurrentChat() {
         <BubbleMessage message="This is a test" status="isRead" />
         <BubbleMessage fromCurrentUser message="This is a test" status="isRead" />
         <BubbleMessage message="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto tenetur, temporibus commodi dolorum sunt nemo expedita. Qui eius cupiditate exercitationem? Culpa ducimus amet quaerat aliquam fugiat? Obcaecati non dolores soluta?" status="isSent" />
+        <BubbleMessage message="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto tenetur, temporibus commodi dolorum sunt nemo expedita. Qui eius cupiditate exercitationem? Culpa ducimus amet quaerat aliquam fugiat? Obcaecati non dolores soluta?" status="isSent" />
+        <BubbleMessage message="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto tenetur, temporibus commodi dolorum sunt nemo expedita. Qui eius cupiditate exercitationem? Culpa ducimus amet quaerat aliquam fugiat? Obcaecati non dolores soluta?" status="isSent" />
+        <BubbleMessage message="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto tenetur, temporibus commodi dolorum sunt nemo expedita. Qui eius cupiditate exercitationem? Culpa ducimus amet quaerat aliquam fugiat? Obcaecati non dolores soluta?" status="isSent" />
+        <BubbleMessage message="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto tenetur, temporibus commodi dolorum sunt nemo expedita. Qui eius cupiditate exercitationem? Culpa ducimus amet quaerat aliquam fugiat? Obcaecati non dolores soluta?" status="isSent" />
+        <BubbleMessage message="This is a test" status="isRead" />
+        <BubbleMessage message="This is a test" status="isRead" />
+        <BubbleMessage message="This is a test" status="isRead" />
+        <BubbleMessage message="This is a test" status="isRead" />
+        <BubbleMessage message="This is a test" status="isRead" />
+        <BubbleMessage message="This is a test" status="isRead" />
       </ChatContent>
       <ChatFooter />
     </div>

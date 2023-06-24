@@ -18,8 +18,8 @@ function ChatBubble({
 }: Props) {
   return (
     <button
-      className={`mb-3 mt-2 flex w-full flex-row items-center justify-center rounded-md px-2 py-1 text-left text-white hover:bg-white/50 ${
-        chatIsOpen ? 'bg-white/50' : ''
+      className={`my-2 flex w-full flex-row items-center justify-center rounded-md p-2 text-left text-white last:mb-4 hover:bg-white/40 ${
+        chatIsOpen ? 'bg-white/40' : ''
       }`}
     >
       <AvatarIcon
@@ -45,48 +45,56 @@ function ChatBubble({
   )
 }
 
+function SearchChatInput() {
+  return (
+    <div className="mb-2 flex w-full flex-row justify-around gap-2 rounded-t-xl border-b-2 border-gray-600 bg-primary/10 p-4">
+      <div className="relative w-full">
+        <input
+          type="text"
+          placeholder="Buscar conversación"
+          className="input input-sm w-full rounded-full bg-base-200 pl-8 text-sm font-semibold text-white outline-none transition-colors delay-150 focus:ring focus:ring-primary"
+        />
+        <span className="absolute left-2 top-1.5 mx-auto">
+          <MagnifyingGlassIcon className="h-5 w-5" />
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export default function ChatsBar() {
   return (
-    <div className="w-2/6 max-w-xs rounded-xl bg-neutral p-4 pt-2">
-      <div className="mb-6 mt-2 flex w-full flex-row justify-around gap-2">
-        <div className="relative w-full">
-          <input
-            type="search"
-            placeholder="Buscar"
-            className="input-bordered input input-sm w-full rounded-full pl-8 transition-colors delay-150 hover:bg-white focus:ring-1 focus:ring-primary"
-          />
-          <span className="absolute left-2 top-1.5 mx-auto">
-            <MagnifyingGlassIcon className="h-5 w-5" />
-          </span>
-        </div>
-      </div>
+    <div className="w-2/6 max-w-xs rounded-xl bg-neutral ">
+      <SearchChatInput />
 
-      <ChatBubble
-        name="Joseph Monter"
-        message="Buenos días, nos comunicamos con usted para informarle que ha sido contrado por la empresa."
-        lastConnection={24}
-        chatIsOpen
-      />
-      <ChatBubble
-        isActive
-        name="Maria Alvarez"
-        message="Aún le falta par..."
-      />
-      <ChatBubble
-        name="Julio Santeur"
-        message="Texto largo de pruebas para los 3 puntos"
-        lastConnection={10}
-      />
-      <ChatBubble
-        name="Usuario relleno"
-        message="Texto largo de pruebas para los 3 puntos"
-        lastConnection={3}
-      />
-      <ChatBubble
-        name="Usuario relleno"
-        message="Texto largo de pruebas para los 3 puntos"
-        lastConnection={1}
-      />
+      <div className="px-2">
+        <ChatBubble
+          name="Joseph Monter"
+          message="Buenos días, nos comunicamos con usted para informarle que ha sido contrado por la empresa."
+          lastConnection={24}
+          chatIsOpen
+        />
+        <ChatBubble
+          isActive
+          name="Maria Alvarez"
+          message="Aún le falta par..."
+        />
+        <ChatBubble
+          name="Julio Santeur"
+          message="Texto largo de pruebas para los 3 puntos"
+          lastConnection={10}
+        />
+        <ChatBubble
+          name="Usuario relleno"
+          message="Texto largo de pruebas para los 3 puntos"
+          lastConnection={3}
+        />
+        <ChatBubble
+          name="Usuario relleno"
+          message="Texto largo de pruebas para los 3 puntos"
+          lastConnection={1}
+        />
+      </div>
     </div>
   )
 }
