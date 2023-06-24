@@ -8,7 +8,7 @@ function ChatHeader() {
       <div className="flex items-center justify-start gap-2">
         <AvatarIcon username="Joseph Monter" usernameLength={2} />
         <div className="flex flex-col">
-          <h3 className="text-xl font-semibold">Joseph Monter</h3>
+          <h3 className="sm:text-md text-xl font-semibold">Joseph Monter</h3>
           <h6 className="text-xs text-neutral-300">
             Última vez conectado hace 24 horas
           </h6>
@@ -53,7 +53,7 @@ function ChatFooter() {
 
 export default function CurrentChat() {
   return (
-    <div className="w-full flex-col rounded-xl bg-neutral">
+    <div className="hidden flex-col rounded-xl bg-neutral sm:block sm:w-full">
       <ChatHeader />
       <ChatContent>
         <BubbleMessage message="Buenos días, nos comunicamos con usted para acordar la entrevista para la oferta" status="isRead" />

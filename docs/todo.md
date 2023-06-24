@@ -17,3 +17,4 @@
   ## Chats
 
   - El input de mensaje debe ajustarse al alto del mensaje
+  - Falta hacerlo responsive

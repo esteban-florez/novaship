@@ -64,7 +64,7 @@ function SearchChatInput() {
 
 export default function ChatsBar() {
   return (
-    <div className="w-2/6 max-w-xs rounded-xl bg-neutral ">
+    <div className="w-full rounded-xl bg-neutral sm:w-2/6 sm:max-w-xs xl:max-w-xl">
       <SearchChatInput />
 
       <div className="px-2">
