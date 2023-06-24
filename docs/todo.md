@@ -1,7 +1,6 @@
 # To-Do
 
 - Crear tipos para props cuyo valor son un conjunto específico de strings
-- Decidir nombre de app
 - Interfaz de pasantías
 - Interfaz de Marketplace
 - Convertir "divs decorativos" a SVG
