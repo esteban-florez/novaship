@@ -24,7 +24,7 @@ function ChatHeader() {
 function ChatContent({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className="flex flex-col justify-end p-4"
+      className="flex flex-col justify-end px-4"
       style={{
         height: 'calc(75vw - 21rem)',
       }}
@@ -70,6 +70,8 @@ export default function CurrentChat() {
         <BubbleMessage message="This is a test" status="isRead" />
         <BubbleMessage message="This is a test" status="isRead" />
         <BubbleMessage message="This is a test" status="isRead" />
+        <BubbleMessage fromCurrentUser message="Prueba #1" status="isReceived" />
+        <BubbleMessage fromCurrentUser message="Prueba #2" status="isSent" />
       </ChatContent>
       <ChatFooter />
     </div>

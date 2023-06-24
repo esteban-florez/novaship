@@ -30,7 +30,7 @@ function CheckMessage({ status, statusDirection, time }: MessageStatus) {
 
 export default function BubbleMessage({ status, fromCurrentUser = false, message }: Props) {
   return (
-    <div className={`chat ${fromCurrentUser ? 'chat-end' : 'chat-start'}`}>
+    <div className={`chat first:mt-4 last:mb-4 ${fromCurrentUser ? 'chat-end' : 'chat-start'}`}>
       <div className={`chat-bubble ${fromCurrentUser ? 'bg-primary' : 'bg-white/30'}`}>
         <p className="flex-row text-sm  text-white/80">
           {message}
