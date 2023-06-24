@@ -56,7 +56,7 @@ export default function Aside() {
             href="/"
             className="text-left font-title text-xl normal-case text-white"
           >
-            PasantíasApp
+            novaship
           </Link>
         </li>
         {SIDEBAR_LINKS.map(link => (
