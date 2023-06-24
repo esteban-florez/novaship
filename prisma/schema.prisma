@@ -8,34 +8,39 @@ datasource db {
 }
 
 model User {
-  id             Int             @id @default(autoincrement())
-  name           String
-  surname        String
-  email          String          @unique
-  phone          String          @unique
-  bio            String?
-  address        String?
-  image          String?
-  profile        Profile?
-  country        Country         @relation(fields: [countryId], references: [id])
-  countryId      Int
-  memberships    Membership[]
-  participations Participation[]
-  sended         Message[]       @relation(name: "sender")
-  received       Message[]       @relation(name: "receiver")
-  files          File[]
-  employments    Employee[]
-  institutes     Institute[]
+  id          Int          @id @default(autoincrement())
+  name        String
+  surname     String
+  ci          Int          @unique
+  email       String       @unique
+  phone       String       @unique
+  bio         String?
+  address     String?
+  image       String?
+  profile     Profile?
+  country     Country      @relation(fields: [countryId], references: [id])
+  countryId   Int
+  memberships Membership[]
+  sended      Message[]    @relation(name: "sender")
+  received    Message[]    @relation(name: "receiver")
+  employments Employee[]
+  institutes  Institute[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Membership {
-  id         Int         @id @default(autoincrement())
-  isLeader   Boolean     @default(false)
-  user       User        @relation(fields: [userId], references: [id])
-  userId     Int
-  project    Project     @relation(fields: [projectId], references: [id])
-  projectId  Int
-  interviews Interview[]
+  id             Int             @id @default(autoincrement())
+  isLeader       Boolean         @default(false)
+  user           User            @relation(fields: [userId], references: [id])
+  userId         Int
+  project        Project         @relation(fields: [projectId], references: [id])
+  projectId      Int
+  interviews     Interview[]
+  files          File[]
+  participations Participation[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 }
 
 model Project {
@@ -52,15 +57,19 @@ model Project {
   release     Release?
   messages    Message[]
   files       File[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Participation {
-  id       Int     @id @default(autoincrement())
-  isLeader Boolean @default(false)
-  user     User    @relation(fields: [userId], references: [id])
-  userId   Int
-  task     Task    @relation(fields: [taskId], references: [id])
-  taskId   Int
+  id           Int        @id @default(autoincrement())
+  isLeader     Boolean    @default(false)
+  membership   Membership @relation(fields: [membershipId], references: [id])
+  membershipId Int
+  task         Task       @relation(fields: [taskId], references: [id])
+  taskId       Int
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }
 
 model Task {
@@ -73,6 +82,8 @@ model Task {
   projectId      Int
   participations Participation[]
   messages       Message[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 }
 
 model Subtask {
@@ -82,14 +93,18 @@ model Subtask {
   status      TaskStatus @default(PENDING)
   task        Task       @relation(fields: [taskId], references: [id])
   taskId      Int
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model Release {
-  id        Int     @id @default(autoincrement())
-  link      String? @unique
+  id        Int      @id @default(autoincrement())
+  preview   String?  @unique
   price     Float
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId Int     @unique
+  project   Project  @relation(fields: [projectId], references: [id])
+  projectId Int      @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Message {
@@ -98,21 +113,25 @@ model Message {
   seen       DateTime?
   sender     User      @relation(name: "sender", fields: [senderId], references: [id])
   senderId   Int
-  receiver   User      @relation(name: "receiver", fields: [receiverId], references: [id])
-  receiverId Int
+  receiver   User?     @relation(name: "receiver", fields: [receiverId], references: [id])
+  receiverId Int?
   project    Project?  @relation(fields: [projectId], references: [id])
-  projectId  Int
+  projectId  Int?
   task       Task?     @relation(fields: [taskId], references: [id])
-  taskId     Int
+  taskId     Int?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
 
 model File {
-  id        Int     @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   src       String
-  project   Project @relation(fields: [projectId], references: [id])
+  project   Project    @relation(fields: [projectId], references: [id])
   projectId Int
-  author    User    @relation(fields: [userId], references: [id])
-  userId    Int
+  author    Membership @relation(fields: [authorId], references: [id])
+  authorId  Int
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model Profile {
@@ -130,6 +149,8 @@ model Profile {
   reviews     Review[]
   user        User         @relation(fields: [userId], references: [id])
   userId      Int          @unique
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Experience {
@@ -142,6 +163,8 @@ model Experience {
   to          DateTime
   profile     Profile  @relation(fields: [profileId], references: [id])
   profileId   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Company {
@@ -159,22 +182,28 @@ model Company {
   projects      Project[]
   employees     Employee[]
   offers        Offer[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 }
 
 model Employee {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   role      Role
-  user      User    @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   userId    Int
-  company   Company @relation(fields: [companyId], references: [id])
+  company   Company  @relation(fields: [companyId], references: [id])
   companyId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Review {
-  id        Int     @id @default(autoincrement())
-  content   String  @db.Text
-  profile   Profile @relation(fields: [profileId], references: [id])
+  id        Int      @id @default(autoincrement())
+  content   String   @db.Text
+  profile   Profile  @relation(fields: [profileId], references: [id])
   profileId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Candidate {
@@ -183,6 +212,8 @@ model Candidate {
   profile      Profile       @relation(fields: [profileId], references: [id])
   profileId    Int
   postulations Postulation[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Intern {
@@ -193,6 +224,8 @@ model Intern {
   postulations Postulation[]
   institue     Institute     @relation(fields: [instituteId], references: [id])
   instituteId  Int
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Offer {
@@ -209,6 +242,8 @@ model Offer {
   skills       Skill[]
   salaries     Salary[]
   postulations Postulation[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Postulation {
@@ -222,24 +257,31 @@ model Postulation {
   internId    Int?
   interviews  Interview[]
   // quizas podría ligarse a un reclutador de la empresa
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
 }
 
 model Interview {
   id            Int         @id @default(autoincrement())
   date          DateTime
   link          String
+  platform      Platform
   interviewer   Membership  @relation(fields: [membershipId], references: [id])
   membershipId  Int
   postulation   Postulation @relation(fields: [postulationId], references: [id])
   postulationId Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
 
 model Salary {
-  id      Int    @id @default(autoincrement())
-  target  Target
-  amount  Float
-  offer   Offer  @relation(fields: [offerId], references: [id])
-  offerId Int
+  id        Int      @id @default(autoincrement())
+  target    Target
+  amount    Float
+  offer     Offer    @relation(fields: [offerId], references: [id])
+  offerId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Institute {
@@ -255,21 +297,27 @@ model Institute {
   interns       Intern[]
   director      User      @relation(fields: [userId], references: [id])
   userId        Int
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Field {
-  id       Int       @id @default(autoincrement())
-  title    String    @unique
-  projects Project[]
-  profiles Profile[]
-  offers   Offer[]
+  id        Int       @id @default(autoincrement())
+  title     String    @unique
+  projects  Project[]
+  profiles  Profile[]
+  offers    Offer[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Skill {
-  id       Int       @id @default(autoincrement())
-  title    String
-  profiles Profile[]
-  offers   Offer[]
+  id        Int       @id @default(autoincrement())
+  title     String
+  profiles  Profile[]
+  offers    Offer[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Country {
@@ -278,6 +326,8 @@ model Country {
   code      String
   users     User[]
   companies Company[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 enum Visibility {
@@ -319,7 +369,7 @@ enum PostulationStatus {
   ACCEPTED
 }
 
-enum Plaform {
+enum Platform {
   MEET
   ZOOM
 }

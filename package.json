@@ -11,14 +11,15 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@heroicons/react": "^2.0.18",
+    "@heroicons/react": "2.0.18",
     "@imbios/next-pwa": "1.1.1",
-    "@prisma/client": "^4.15.0",
+    "@prisma/client": "4.15.0",
     "@types/node": "20.2.3",
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
     "next": "13.4.3",
+    "next-auth": "4.22.1",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -29,26 +30,28 @@
     "daisyui": "3.1.0",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.3",
-    "eslint-config-standard-jsx": "^11.0.0",
+    "eslint-config-standard-jsx": "11.0.0",
     "eslint-config-standard-with-typescript": "35.0.0",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-n": "15.7.0",
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-tailwindcss": "3.12.1",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.2",
-    "prisma": "^4.15.0",
+    "husky": "8.0.3",
+    "lint-staged": "13.2.2",
+    "prisma": "4.15.0",
+    "prisma-dbml-generator": "0.10.0",
     "ts-standard": "12.0.2",
+    "tsc-files": "^1.1.3",
     "typescript": "5.1.3"
   },
   "ts-standard": {
     "project": "./tsconfig.json"
   },
   "lint-staged": {
-    "app/**/*.{ts,tsx}": "eslint --cache --fix",
-    "components/**/*.{ts,tsx}": "eslint --cache --fix",
-    "utils/**/*.{ts,tsx}": "eslint --cache --fix",
-    "translations/**/*.{ts,tsx}": "eslint --cache --fix"
+    "*.{ts,tsx}": [
+      "tsc-files --noEmit",
+      "eslint --cache --fix"
+    ]
   }
 }
