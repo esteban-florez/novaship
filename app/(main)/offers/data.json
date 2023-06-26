@@ -1,0 +1,110 @@
+[
+  {
+    "id": 0,
+    "title": "Relleno 1",
+    "categories": [
+      "Manualidades",
+      "Presencial",
+      "Medio tiempo",
+      "Experimentado"
+    ],
+    "description": "Lorem ipsum dolor sit amet cont, temporibus in corrupti!",
+    "owner": "Nombre",
+    "ubication": "Aragua, La Victoria"
+  },
+  {
+    "id": 1,
+    "title": "Relleno 2",
+    "categories": ["Diseño", "Online"],
+    "description": "Lorem ipsum dolor sit a",
+    "owner": "Nombre",
+    "ubication": "Aragua, La Victoria"
+  },
+  {
+    "id": 2,
+    "title": "Relleno 3",
+    "categories": ["Marketing", "Medio tiempo", "Experimentado"],
+    "description": "Lorem ipsum dolor sit amet conscorrupti!",
+    "owner": "Nombre",
+    "ubication": "Aragua, La Victoria"
+  },
+  {
+    "id": 3,
+    "title": "Relleno 4",
+    "categories": [
+      "Social manager",
+      "Online",
+      "Jornada completa",
+      "Experimentado"
+    ],
+    "description": "ipsum voluptatum sit perferendis nulla ad rerum facilis alias commodi ea asperiores. Omnis numquam reiciendis iste velit, temporibus in corrupti!",
+    "owner": "Nombre",
+    "ubication": "Aragua, La Victoria"
+  },
+  {
+    "id": 4,
+    "title": "Relleno 5",
+    "categories": ["Diseñador", "Presencial", "Medio tiempo", "Experimentado"],
+    "description": "Lorem ipsun corrupti!",
+    "owner": "Nombre",
+    "ubication": "Aragua, La Victoria"
+  },
+  {
+    "id": 5,
+    "title": "Relleno 6",
+    "categories": ["Electricista", "Presencial", "Medio tiempo"],
+    "description": "Lorem ipsum dolor sit amet conscorrupti!",
+    "owner": "Nombre",
+    "ubication": "Aragua, La Victoria"
+  },
+  {
+    "id": 6,
+    "title": "Relleno 7",
+    "categories": [
+      "Programador",
+      "Online",
+      "Jornada completa",
+      "Experimentado"
+    ],
+    "description": "Lorem ipsum dolor sit amet conscorrupti!",
+    "owner": "Nombre",
+    "ubication": "Aragua, La Victoria"
+  },
+  {
+    "id": 7,
+    "title": "Relleno 8",
+    "categories": ["Diseñador", "Online", "Medio tiempo", "Principiante"],
+    "description": "Lorem ipsum dolor sit amet conscorrupti!",
+    "owner": "Nombre",
+    "ubication": "Aragua, La Victoria"
+  },
+  {
+    "id": 8,
+    "title": "Relleno 9",
+    "categories": ["Arquitecto", "Presencial", "Medio tiempo", "Experimentado"],
+    "description": "Lorem ipsum dolor sit amet consectei ipsum voluptatum sit perferendis nulla ad rerum facilis alias commodi ea asperiores. Omnis numquam reiciendis iste velit, temporibus in corrupti!",
+    "owner": "Nombre",
+    "ubication": "Aragua, La Victoria"
+  },
+  {
+    "id": 9,
+    "title": "Relleno 10",
+    "categories": [
+      "Profesor",
+      "Presencial",
+      "Jornada completa",
+      "Experimentado"
+    ],
+    "description": "Lorem ipsum dolor sit amet consectetur adi quas ipsum vlit, temporibus in corrupti!",
+    "owner": "Nombre",
+    "ubication": "Aragua, La Victoria"
+  },
+  {
+    "id": 10,
+    "title": "Relleno 11",
+    "categories": ["Contador", "Online", "Pago por horas", "Experimentado"],
+    "description": "Lorem ipsum dolor sit amet consectetur aditi!",
+    "owner": "Nombre",
+    "ubication": "Aragua, La Victoria"
+  }
+]
