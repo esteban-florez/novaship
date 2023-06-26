@@ -1,0 +1,42 @@
+[
+  {
+    "isActive": true,
+    "title": "Diseñador gráfico",
+    "categories": "Diseño | Presencial | Jornada completa",
+    "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.",
+    "owner": "Diseñadores unidos",
+    "ubication": "Aragua, La Victoria"
+  },
+  {
+    "isActive": false,
+    "title": "Carpintero",
+    "categories": "Carpintería | Presencial | Jornada completa",
+    "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.",
+    "owner": "Amueblados Las Mercedes",
+    "ubication": "Aragua, Las Mercedes"
+  },
+  {
+    "isActive": false,
+    "title": "Contador con experiencia",
+    "categories": "Contaduría | Online | Medio tiempo",
+    "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.",
+    "owner": "Finanzas Latinas",
+    "ubication": "Aragua, Las Mercedes"
+  },
+  {
+    "isActive": false,
+    "title": "Trabajo relleno",
+    "categories": "Contaduría | Online | Medio tiempo",
+    "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.",
+    "owner": "Finanzas Latinas",
+    "ubication": "Aragua, Las Mercedes"
+  },
+  {
+    "isActive": false,
+    "title": "Más relleno",
+    "categories": "Contaduría | Online | Medio tiempo",
+    "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quidem, repellendus obcaecati expedita porro, officia quo nostrum magnam excepturi adipisci repudiandae itaque ea veritatis sequi vitae saepe. Velit, tempora deleniti.",
+    "owner": "Finanzas Latinas",
+    "ubication": "Aragua, Las Mercedes"
+  }
+]
