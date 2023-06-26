@@ -1,10 +1,8 @@
-import Subnavbar from '@/components/layout/Subnavbar'
 import { HeartIcon, EyeIcon, ClipboardDocumentListIcon } from '@heroicons/react/24/outline'
 
 export default function HomePage() {
   return (
     <>
-      <Subnavbar options={false} />
       <section className="my-4 grid grid-cols-3 p-4">
         <div className="stats col-span-3 bg-neutral shadow">
           <div className="stat">

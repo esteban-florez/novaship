@@ -1,4 +1,4 @@
-import Subnavbar from '@/components/layout/Subnavbar'
+import FilterOptions from '@/components/layout/FilterOptions'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function IntenshipsPage() {
   return (
     <>
-      <Subnavbar options />
+      <FilterOptions />
       <h2>Pasantías</h2>
     </>
   )
