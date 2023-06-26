@@ -2,14 +2,9 @@
 
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import styles from '@/styles/Breadcrumbs.module.css'
 import translatedRoutes from '@/translations/es'
 
-interface Props {
-  width: boolean
-}
-
-export default function Breadcrumbs({ width }: Props) {
+export default function Breadcrumbs() {
   const pathname = usePathname()
 
   const structuredPath = () => {
@@ -23,16 +18,12 @@ export default function Breadcrumbs({ width }: Props) {
   const currentPath = structuredPath().pop()
 
   return (
-    <div
-      className={`${styles.breadcrumbs} flex ${
-        width ? 'w-3/6' : 'w-full'
-      } items-center justify-start p-4 text-sm`}
-    >
-      <ul>
-        <li>~</li>
+    <div className="hidden items-center justify-start p-4 text-sm sm:flex">
+      <ul className="flex">
+        <li className="flex items-center">~</li>
         {currentPaths.map((path) => {
           return (
-            <li key={path}>
+            <li key={path} className="flex items-center before:me-3 before:ms-2 before:block before:opacity-90 before:content-['/']">
               <Link
                 href={path === 'home' ? '/' : `/${path}`}
                 className={`capitalize no-underline hover:no-underline ${
