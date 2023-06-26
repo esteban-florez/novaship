@@ -49,8 +49,8 @@ export default function Aside() {
   const pathname = usePathname()
 
   return (
-    <aside className="sticky top-0 h-screen">
-      <ul className="menu hidden h-full gap-3 bg-neutral shadow sm:block">
+    <aside className="sticky top-0 hidden h-screen sm:block">
+      <ul className="menu h-full gap-3 bg-neutral shadow">
         <li className="menu-title">
           <Link
             href="/"
