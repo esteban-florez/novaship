@@ -67,7 +67,8 @@
         "children": "never",
         "propElementValues": "always"
       }
-    ]
+    ],
+    "tailwindcss/no-custom-classname": "error"
   },
   "ignorePatterns": "next-env.d.ts"
 }

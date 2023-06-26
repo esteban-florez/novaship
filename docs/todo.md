@@ -4,6 +4,7 @@
 - Interfaz de pasantías
 - Interfaz de Marketplace
 - Convertir "divs decorativos" a SVG
+- Definir los onDelete y onUpdate en Prisma Schema.
 
   ## Aside
 
