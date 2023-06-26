@@ -8,25 +8,27 @@ datasource db {
 }
 
 model User {
-  id          Int          @id @default(autoincrement())
-  name        String
-  surname     String
-  ci          Int          @unique
-  email       String       @unique
-  phone       String       @unique
-  bio         String?
-  address     String?
-  image       String?
-  profile     Profile?
-  country     Country      @relation(fields: [countryId], references: [id])
-  countryId   Int
-  memberships Membership[]
-  sended      Message[]    @relation(name: "sender")
-  received    Message[]    @relation(name: "receiver")
-  employments Employee[]
-  institutes  Institute[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id            Int          @id @default(autoincrement())
+  name          String
+  ci            Int          @unique
+  email         String       @unique
+  emailVerified DateTime?
+  phone         String       @unique
+  bio           String?
+  address       String?
+  image         String?
+  profile       Profile?
+  country       Country      @relation(fields: [countryId], references: [id])
+  countryId     Int
+  memberships   Membership[]
+  sended        Message[]    @relation(name: "sender")
+  received      Message[]    @relation(name: "receiver")
+  employments   Employee[]
+  institutes    Institute[]
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
 
 model Membership {
@@ -372,4 +374,42 @@ enum PostulationStatus {
 enum Platform {
   MEET
   ZOOM
+}
+
+// NextAuth.js models
+// Intente hacer los userId Int para ver si puedo hacer los ids autoincrement(), pero si no toca cambiar a cuid()
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            Int
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
