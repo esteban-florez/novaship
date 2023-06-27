@@ -70,5 +70,5 @@
     ],
     "tailwindcss/no-custom-classname": "error"
   },
-  "ignorePatterns": "next-env.d.ts"
+  "ignorePatterns": ["next-env.d.ts", "tailwind.config.js"]
 }
