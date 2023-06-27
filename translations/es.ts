@@ -5,6 +5,7 @@ const routes: Routes = {
   offers: 'ofertas',
   projects: 'proyectos',
   chats: 'conversaciones',
+  profile: 'perfil',
 }
 
 interface RoutesProps {
