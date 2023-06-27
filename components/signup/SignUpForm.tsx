@@ -18,11 +18,11 @@ export default function SignUpForm() {
 
     const user = await response.json()
 
-    const signinReponse = await signIn('credentials', { redirect: false, email: user.email })
+    const signinResponse = await signIn('credentials', { redirect: false, email: user.email })
 
-    if (signinReponse === undefined) throw new Error('Error in signin')
+    if (signinResponse === undefined) throw new Error('SigIn Error')
 
-    if (signinReponse.ok) {
+    if (signinResponse.ok) {
       router.push('/')
     }
   }
