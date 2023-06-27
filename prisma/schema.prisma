@@ -8,18 +8,17 @@ datasource db {
 }
 
 model User {
-  id            Int          @id @default(autoincrement())
+  id            String       @id @default(cuid())
   name          String
-  ci            Int          @unique
+  surname       String
   email         String       @unique
   emailVerified DateTime?
-  phone         String       @unique
+  password      String
+  phone         String?      @unique
   bio           String?
   address       String?
   image         String?
   profile       Profile?
-  country       Country      @relation(fields: [countryId], references: [id])
-  countryId     Int
   memberships   Membership[]
   sended        Message[]    @relation(name: "sender")
   received      Message[]    @relation(name: "receiver")
@@ -35,7 +34,7 @@ model Membership {
   id             Int             @id @default(autoincrement())
   isLeader       Boolean         @default(false)
   user           User            @relation(fields: [userId], references: [id])
-  userId         Int
+  userId         String
   project        Project         @relation(fields: [projectId], references: [id])
   projectId      Int
   interviews     Interview[]
@@ -114,9 +113,9 @@ model Message {
   content    String    @db.Text
   seen       DateTime?
   sender     User      @relation(name: "sender", fields: [senderId], references: [id])
-  senderId   Int
+  senderId   String
   receiver   User?     @relation(name: "receiver", fields: [receiverId], references: [id])
-  receiverId Int?
+  receiverId String?
   project    Project?  @relation(fields: [projectId], references: [id])
   projectId  Int?
   task       Task?     @relation(fields: [taskId], references: [id])
@@ -150,7 +149,7 @@ model Profile {
   internships Intern[]
   reviews     Review[]
   user        User         @relation(fields: [userId], references: [id])
-  userId      Int          @unique
+  userId      String       @unique
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 }
@@ -179,8 +178,6 @@ model Company {
   image         String?
   verifiedAt    DateTime?
   certification String?
-  country       Country    @relation(fields: [countryId], references: [id])
-  countryId     Int
   projects      Project[]
   employees     Employee[]
   offers        Offer[]
@@ -193,7 +190,7 @@ model Employee {
   id        Int      @id @default(autoincrement())
   role      Role?
   user      User     @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    String
   company   Company  @relation(fields: [companyId], references: [id])
   companyId Int
   createdAt DateTime @default(now())
@@ -291,7 +288,7 @@ model Institute {
   verifiedAt    DateTime?
   interns       Intern[]
   director      User      @relation(fields: [userId], references: [id])
-  userId        Int
+  userId        String
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -311,16 +308,6 @@ model Skill {
   title     String
   profiles  Profile[]
   offers    Offer[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
-model Country {
-  id        Int       @id @default(autoincrement())
-  name      String
-  code      String
-  users     User[]
-  companies Company[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -373,7 +360,7 @@ enum Platform {
 
 model Account {
   id                String  @id @default(cuid())
-  userId            Int
+  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -393,7 +380,7 @@ model Account {
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       Int
+  userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
