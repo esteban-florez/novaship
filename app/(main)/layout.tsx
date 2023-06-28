@@ -15,12 +15,5 @@ export default function MainLayout({
         <main>{children}</main>
       </div>
     </div>
-    // <div className="flex w-full flex-row items-start">
-    //   <Aside />
-    //   <div className="relative w-full flex-col sm:static">
-    //     <Navbar />
-    //     <main className="w-full">{children}</main>
-    //   </div>
-    // </div>
   )
 }
