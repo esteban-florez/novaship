@@ -6,6 +6,7 @@ import prisma from '@/prisma/client'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { type NextAuthOptions } from 'next-auth'
 import { type Adapter } from 'next-auth/adapters'
+import { compare } from 'bcrypt'
 global.crypto ??= crypto
 
 export const authOptions: NextAuthOptions = {
@@ -23,17 +24,25 @@ export const authOptions: NextAuthOptions = {
         email: {},
         password: {},
       },
-      authorize(credentials) {
-        console.log(credentials)
-        return {
-          id: '1',
-          name: 'Esteban Florez',
-          email: 'email@example.com',
-          image: null,
+      // @ts-expect-error Because this package is not typesafe at all.
+      async authorize({ email, password }: { email: string, password: string }) {
+        const user = await prisma.user.findUnique({ where: { email } })
+
+        if (user === null) {
+          return null
         }
+
+        if (!await compare(password, user.password)) {
+          return null
+        }
+
+        return user
       },
     }),
   ],
+  session: {
+    strategy: 'jwt',
+  },
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

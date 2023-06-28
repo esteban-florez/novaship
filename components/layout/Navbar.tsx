@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import ProfileIcon from '@/components/ProfileDropdown'
+import ProfileDropdown from '@/components/ProfileDropdown'
 import { Bars3Icon, ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid'
 import NotificationIcon from '../NotificationDropdown'
 import Breadcrumbs from '../Breadcrumbs'
@@ -25,7 +25,7 @@ export default function Navbar() {
           </div>
         </Link>
         <NotificationIcon />
-        <ProfileIcon />
+        <ProfileDropdown />
       </div>
     </nav>
   )

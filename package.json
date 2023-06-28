@@ -54,7 +54,7 @@
   "lint-staged": {
     "*.{ts,tsx}": [
       "tsc-files --noEmit --incremental false",
-      "eslint . --cache --fix"
+      "eslint --cache --fix"
     ]
   }
 }
