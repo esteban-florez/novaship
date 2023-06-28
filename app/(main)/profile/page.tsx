@@ -15,12 +15,12 @@ export default function ProfilePage() {
   const [companyFormIsOpen, setCompanyFormIsOpen] = useState(false)
   const [instituteFormIsOpen, setInstituteFormIsOpen] = useState(false)
 
-  const btnActive = 'w-full sm:w-2/6 grid h-20 flex-grow card bg-primary rounded-box place-items-center'
-  const btnInactive = 'w-full sm:w-2/6 grid h-20 flex-grow card bg-neutral hover:bg-primary rounded-box place-items-center'
+  const btnActive = 'w-full sm:w-2/6 grid h-20 bg-primary rounded-box place-items-center'
+  const btnInactive = 'w-full sm:w-2/6 grid h-20 bg-neutral hover:bg-primary rounded-box place-items-center'
 
   return (
     <section className="my-4 p-4 lg:px-16 lg:py-8">
-      <div className="mb-6 flex w-full gap-x-4">
+      <div className="mb-6 flex w-full flex-col gap-4 sm:flex-row">
         <button
           onClick={() => {
             setProfileFormIsOpen(!profileFormIsOpen)
