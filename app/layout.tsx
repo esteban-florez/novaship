@@ -31,8 +31,8 @@ export const josefin = localFont({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | novaship',
-    default: 'novaship',
+    template: '%s | Novaship',
+    default: 'Novaship',
   },
   description: 'Aplicación de pasantías, ofertas laborales y gestión de proyectos.',
 }
