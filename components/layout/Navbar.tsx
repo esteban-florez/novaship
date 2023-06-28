@@ -6,7 +6,7 @@ import Breadcrumbs from '../Breadcrumbs'
 
 export default function Navbar() {
   return (
-    <nav className="navbar border-b-2 border-gray-500 bg-base-100">
+    <nav className="navbar bg-neutral">
       <div className="navbar-start">
         <button className="btn-ghost btn-circle btn">
           <Bars3Icon className="h-6 w-6" />
