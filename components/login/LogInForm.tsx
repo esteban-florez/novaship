@@ -5,6 +5,7 @@ import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
+import GoogleSignUpButton from '../GoogleSignUpButton'
 
 export default function LogInForm() {
   const [showAlert, setShowAlert] = useState<boolean>(useSearchParams().has('registered'))
@@ -67,6 +68,7 @@ export default function LogInForm() {
         >
           Olvidé mi contraseña
         </Link>
+        <GoogleSignUpButton />
       </div>
     </form>
   )

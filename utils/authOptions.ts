@@ -17,6 +17,19 @@ const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      httpOptions: {
+        timeout: 100000,
+      },
+      profile(profile) {
+        console.log('Profile', profile)
+        return {
+          id: '',
+          name: profile.given_name,
+          surname: profile.family_name,
+          email: profile.email,
+          image: profile.picture,
+        }
+      },
     }),
     CredentialsProvider({
       credentials: {
@@ -28,11 +41,7 @@ const authOptions: NextAuthOptions = {
         // TODO -> input validation
         const user = await prisma.user.findUnique({ where: { email } })
 
-        if (user === null) {
-          return null
-        }
-
-        if (!await compare(password, user.password)) {
+        if (user === null || user.password === null || !await compare(password, user.password)) {
           return null
         }
 

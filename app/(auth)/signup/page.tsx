@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { type Metadata } from 'next'
 import SignUpForm from '@/components/signup/SignUpForm'
+import GoogleSignUpButton from '@/components/GoogleSignUpButton'
 
 export const metadata: Metadata = {
   title: 'Registrarse',
@@ -15,12 +16,7 @@ export default async function SignUpPage() {
       <SignUpForm />
       <div className="divider divider-vertical" />
       <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-        <Link
-          href="/login"
-          className="btn-neutral btn w-full md:w-auto"
-        >
-          Iniciar Sesión con Google
-        </Link>
+        <GoogleSignUpButton />
         <Link
           href="/login"
           className="underline"
