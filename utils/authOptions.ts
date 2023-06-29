@@ -23,7 +23,7 @@ const authOptions: NextAuthOptions = {
       profile(profile) {
         console.log('Profile', profile)
         return {
-          id: '',
+          id: 'null',
           name: profile.given_name,
           surname: profile.family_name,
           email: profile.email,
