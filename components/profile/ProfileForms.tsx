@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import CompanyForm from './CompanyForm'
 import InstituteForm from './InstituteForm'
