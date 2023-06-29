@@ -1,10 +1,10 @@
 # To-Do
 
-- Crear tipos para props cuyo valor son un conjunto específico de strings
 - Interfaz de pasantías
 - Interfaz de Marketplace
 - Convertir "divs decorativos" a SVG
 - Definir los onDelete y onUpdate en Prisma Schema.
+- Hacer middleware de autenticación.
 
   ## Aside
 
