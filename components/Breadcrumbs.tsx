@@ -21,16 +21,20 @@ export default function Breadcrumbs() {
     <div className="hidden items-center justify-start p-4 text-sm sm:flex">
       <ul className="flex">
         <li className="flex items-center">~</li>
-        {currentPaths.map(path => (
-          <li key={path} className="flex items-center before:me-3 before:ms-2 before:block before:opacity-90 before:content-['/']">
-            <Link
-              href={path === 'home' ? '/' : `/${path}`}
-              className={`capitalize no-underline hover:no-underline ${path === currentPath ? 'font-bold text-primary' : 'text-white'}`}
-            >
-              {routes[path]}
-            </Link>
-          </li>
-        ))}
+        {currentPaths.map(path => {
+          return (
+            <li key={path} className="flex items-center before:me-3 before:ms-2 before:block before:opacity-90 before:content-['/']">
+              <Link
+                href={path === 'home' ? '/' : `/${path}`}
+                className={`capitalize no-underline hover:text-accent hover:no-underline ${
+                  path === currentPath ? 'font-bold text-primary' : ''
+                }`}
+              >
+                {routes[path]}
+              </Link>
+            </li>
+          )
+        })}
       </ul>
     </div>
   )

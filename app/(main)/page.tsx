@@ -1,10 +1,11 @@
 import { HeartIcon, EyeIcon, ClipboardDocumentListIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
 
 export default function HomePage() {
   return (
-    <>
-      <section className="my-4 grid grid-cols-3 p-4">
-        <div className="stats col-span-3 bg-neutral shadow">
+    <section className="p-8">
+      <div className="mb-8 mt-4 grid grid-cols-3">
+        <div className="stats col-span-1 bg-neutral shadow sm:col-span-3">
           <div className="stat">
             <div className="stat-figure">
               <HeartIcon className="h-8 w-8 stroke-primary stroke-2" />
@@ -30,7 +31,18 @@ export default function HomePage() {
             <div className="stat-desc">31 tasks remaining</div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+      <div className="flex w-full">
+        <Link href="/profile" className="card rounded-box grid h-20 w-full grow place-items-center bg-neutral hover:bg-primary sm:w-3/6">
+          <h5 className="font-bold">¿Tiene una empresa y desea registrarla?</h5>
+          <span>Inscríbase aquí</span>
+        </Link>
+        <div className="divider divider-horizontal">O</div>
+        <Link href="/profile" className="card rounded-box grid h-20 w-full grow place-items-center bg-neutral hover:bg-primary sm:w-3/6">
+          <h5 className="font-bold">¿Es director de una institución?</h5>
+          <span>Inscríbase aquí</span>
+        </Link>
+      </div>
+    </section>
   )
 }

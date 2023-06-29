@@ -35,8 +35,8 @@ const SIDEBAR_LINKS = [
 
 function AsideLink({ link, active }: React.PropsWithChildren<{ link: LinkData, active: boolean }>) {
   return (
-    <li className={active ? '-me-2 rounded-l-xl bg-base-200 font-bold' : ''}>
-      <Link href={link.href} className={`py-4 ${active ? 'active pointer-events-none bg-transparent text-white' : ''}`}>
+    <li className={active ? '-me-12 rounded-l-xl bg-base-100 font-extrabold' : ''}>
+      <Link href={link.href} className={`py-4 ${active ? 'active pointer-events-none bg-transparent' : ''}`}>
         {link.icon}
         {link.title}
       </Link>
@@ -50,11 +50,11 @@ export default function Aside() {
 
   return (
     <aside className="sticky top-0 hidden h-screen sm:block">
-      <ul className="menu h-full gap-3 bg-neutral shadow">
+      <ul className="menu h-full bg-neutral p-6 shadow">
         <li className="menu-title">
           <Link
             href="/"
-            className="text-left font-title text-xl normal-case text-white"
+            className="text-left font-title text-xl normal-case"
           >
             novaship
           </Link>

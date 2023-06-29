@@ -4,8 +4,8 @@ interface Props {
 
 export default function Content({ description }: Props) {
   return (
-    <main className="my-4 bg-white/10 p-4 backdrop-blur-lg">
-      <p className="line-clamp-3 text-sm text-white">{description}</p>
+    <main className="my-4 w-2/4 rounded-lg bg-white/10 p-4">
+      <p className="line-clamp-3 text-sm">{description}</p>
     </main>
   )
 }
