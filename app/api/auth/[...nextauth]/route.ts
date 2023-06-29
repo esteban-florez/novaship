@@ -26,6 +26,7 @@ export const authOptions: NextAuthOptions = {
       },
       // @ts-expect-error Because this package is not typesafe at all.
       async authorize({ email, password }: { email: string, password: string }) {
+        // TODO -> input validation
         const user = await prisma.user.findUnique({ where: { email } })
 
         if (user === null) {

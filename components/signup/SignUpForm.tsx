@@ -7,16 +7,18 @@ export default function SignUpForm() {
 
   async function handleSubmit(event: FormSubmitEvent) {
     event.preventDefault()
-    const formData = new FormData(event.target)
+    const form = event.target
+    const { action, method } = form
+    const formData = new FormData(form)
 
-    const response = await fetch(event.target.action, {
+    const response = await fetch(action, {
       body: formData,
-      method: event.target.method,
+      method,
     })
 
     // TODO -> error handling
-    if (response.status === 201) {
-      router.push('/login?registered=1')
+    if (response.status === 200) {
+      router.push('/login?registered')
     }
   }
 

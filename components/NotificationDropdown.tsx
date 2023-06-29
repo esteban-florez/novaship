@@ -61,7 +61,7 @@ function NotificationDropdown() {
 export default function NotificationIcon() {
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
 
-  const handleClick = (): void => {
+  const handleClick = () => {
     setDropdownIsOpen(!dropdownIsOpen)
   }
 
