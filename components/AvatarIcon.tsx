@@ -1,7 +1,9 @@
 import { capitalizeString } from '@/utils/text'
+import Image from 'next/image'
 
 interface Props {
   username: string
+  image?: string
   status?: boolean
   showStatus?: boolean
   bg?: string
@@ -10,15 +12,18 @@ interface Props {
 
 export default function AvatarIcon({
   username,
+  image = '',
   status = false,
   showStatus = false,
   usernameLength,
   bg = 'bg-white',
 }: Props) {
+  const avatarContent = image !== '' ? <Image src={image} alt={image} /> : <span>{capitalizeString(username, usernameLength)}</span>
+
   return (
     <div className={`placeholder avatar ${(status !== null) ? 'relative' : ''}`}>
       <div className={`h-10 w-10 rounded-full text-neutral-content ${bg}`}>
-        <span>{capitalizeString(username, usernameLength)}</span>
+        {avatarContent}
       </div>
       {showStatus && (
         <span className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-neutral">
