@@ -1,4 +1,4 @@
-import InputSimple from '../InputSimple'
+import InputSimple from '../forms/inputs/Input'
 import { CloudArrowUpIcon } from '@heroicons/react/24/solid'
 
 function ImageInput() {
@@ -31,8 +31,8 @@ function NameSection() {
         <p className="text-sm">Añada el nombre de la institución, recuerde colocarlo como fue registrado legalmente.</p>
       </div>
       <div className="mt-4 lg:form-control lg:mt-0 lg:w-2/4">
-        <InputSimple id="companyName" type="text" label="Nombre" placeholder="UPTA Federico Brito Figueroa" classes="w-full input input-md focus:ring focus:ring-primary mb-3" />
-        <InputSimple id="companyEmail" type="email" label="Correo electrónico" placeholder="correoinstitucional@gmail.com" classes="w-full input input-md focus:ring focus:ring-primary" />
+        <InputSimple id="companyName" name="temp" type="text" label="Nombre" placeholder="UPTA Federico Brito Figueroa" classes="w-full input input-md focus:ring focus:ring-primary mb-3" />
+        <InputSimple id="companyEmail" name="temp" type="email" label="Correo electrónico" placeholder="correoinstitucional@gmail.com" classes="w-full input input-md focus:ring focus:ring-primary" />
       </div>
     </div>
   )
@@ -81,7 +81,7 @@ function ContactSection() {
             </div>
           </div>
         </div>
-        <InputSimple id="address" type="text" label="Dirección" placeholder="Calle Bolívar cruce con Paez" classes="w-full input input-md focus:ring focus:ring-primary mb-3" />
+        <InputSimple id="address" name="temp" type="text" label="Dirección" placeholder="Calle Bolívar cruce con Paez" classes="w-full input input-md focus:ring focus:ring-primary mb-3" />
       </div>
     </div>
   )
