@@ -5,7 +5,7 @@ import FormSection from '@/components/forms/FormSection'
 import InputSimple from '@/components/forms/inputs/Input'
 import Textarea from '@/components/forms/inputs/Textarea'
 import { useCurrentUser } from '@/hook/useCurrentUser'
-import { User } from '@prisma/client'
+import { type User } from '@prisma/client'
 
 interface PersonalDataProps {
   name: string

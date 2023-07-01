@@ -3,20 +3,20 @@ import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   const res = await request.json()
-  const email = res?.email ?? ''
+  const email: string = res?.email
 
-  if (!email) {
+  if (email !== '' && email !== null && email !== undefined) {
     return NextResponse.json({
       status: 400,
-      message: 'Email is missing'
+      message: 'Email is missing',
     })
   }
 
   const user = await prisma.user.findUnique({
-    where: { email }
+    where: { email },
   })
 
-  if (user) {
+  if (user != null) {
     return NextResponse.json(user)
   }
 }
