@@ -3,26 +3,24 @@ import Image from 'next/image'
 
 interface Props {
   username: string
-  image?: string
+  image?: string | null
   status?: boolean
   showStatus?: boolean
-  bg?: string
   usernameLength: number
 }
 
 export default function AvatarIcon({
   username,
-  image = '',
+  image = null,
   status = false,
   showStatus = false,
   usernameLength,
-  bg = 'bg-white',
 }: Props) {
-  const avatarContent = image !== '' ? <Image src={image} alt={image} /> : <span>{capitalizeString(username, usernameLength)}</span>
+  const avatarContent = image !== null ? <Image src={image} alt="Foto de perfil" /> : <span>{capitalizeString(username, usernameLength)}</span>
 
   return (
     <div className={`placeholder avatar ${(status !== null) ? 'relative' : ''}`}>
-      <div className={`h-10 w-10 rounded-full text-neutral-content ${bg}`}>
+      <div className="h-10 w-10 rounded-full bg-white text-gray-600">
         {avatarContent}
       </div>
       {showStatus && (

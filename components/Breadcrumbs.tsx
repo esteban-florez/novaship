@@ -19,7 +19,7 @@ export default function Breadcrumbs() {
 
   return (
     <div className="hidden items-center justify-start p-4 text-sm sm:flex">
-      <ul className="flex">
+      <ul className="flex font-bold">
         <li className="flex items-center">~</li>
         {currentPaths.map(path => {
           return (
@@ -27,7 +27,7 @@ export default function Breadcrumbs() {
               <Link
                 href={path === 'home' ? '/' : `/${path}`}
                 className={`capitalize no-underline hover:text-accent hover:no-underline ${
-                  path === currentPath ? 'font-bold text-primary' : ''
+                  path === currentPath ? 'text-primary' : ''
                 }`}
               >
                 {routes[path]}

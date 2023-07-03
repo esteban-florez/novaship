@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import ProfileDropdown from '@/components/ProfileDropdown'
+import ProfileDropdown from '@/components/layout/ProfileDropdown'
 import { Bars3Icon, ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid'
-import NotificationIcon from '../NotificationDropdown'
+import NotificationDropdown from '../NotificationDropdown'
 import Breadcrumbs from '../Breadcrumbs'
 
-export default function Navbar() {
+export default async function Navbar() {
   return (
-    <nav className="navbar bg-neutral">
+    <nav className="navbar bg-neutral shadow-md">
       <div className="navbar-start">
         <button className="btn-ghost btn-circle btn">
           <Bars3Icon className="h-6 w-6" />
@@ -24,7 +24,7 @@ export default function Navbar() {
             <span className="badge badge-xs indicator-item right-1 top-3 border bg-secondary" />
           </div>
         </Link>
-        <NotificationIcon />
+        <NotificationDropdown />
         <ProfileDropdown />
       </div>
     </nav>

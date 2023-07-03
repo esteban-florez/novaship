@@ -11,10 +11,10 @@ interface Props {
   children: React.ReactNode
 }
 
-function Notification({ username, bg = 'bg-white', time, children }: Props) {
+function Notification({ username, time, children }: Props) {
   return (
     <li className="flex w-80 max-w-xs items-center gap-2 py-1 pe-6 ps-4 last:mb-2 last:pt-1 odd:pb-2 even:pb-2 hover:bg-neutral-focus">
-      <AvatarIcon username={username} bg={bg} usernameLength={2} />
+      <AvatarIcon username={username} usernameLength={2} />
       <div className="flex flex-col text-start">
         <p className="line-clamp-2 text-xs normal-case text-white">{children}.</p>
         <small className="text-xs normal-case text-neutral-content">Hace {time} minutos.</small>
@@ -23,7 +23,7 @@ function Notification({ username, bg = 'bg-white', time, children }: Props) {
   )
 }
 
-function NotificationDropdown() {
+function NotificationDropdownMenu() {
   return (
     <ul
       onClick={(e) => {
@@ -35,19 +35,19 @@ function NotificationDropdown() {
         <h3 className="text-white">Notificaciones</h3>
       </li>
 
-      <Notification username="Martin Max" time={5} bg="bg-white">
+      <Notification username="Martin Max" time={5}>
         Has sido aceptado para la vacante de la empresa "BeautifulDreams", contáctese con nosotros para más información
       </Notification>
-      <Notification username="APP" time={27} bg="bg-primary">
+      <Notification username="APP" time={27}>
         Se han publicado nuevas ofertas de trabajo, echa un vistazo
       </Notification>
-      <Notification username="APP" time={57} bg="bg-primary">
+      <Notification username="APP" time={57}>
         Se ha actualizado la app, dale un vistazo a los nuevos cambios
       </Notification>
-      <Notification username="Andrea Samirez" time={17} bg="bg-white">
+      <Notification username="Andrea Samirez" time={17}>
         Le ha dado like a tu perfil
       </Notification>
-      <Notification username="APP" time={0} bg="bg-primary">
+      <Notification username="APP" time={0}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo fugit quas beatae, iusto consequuntur nesciunt ut. Eius ab, labore, dolores soluta et repellat, iure quis minima doloribus esse molestias velit
       </Notification>
 
@@ -58,7 +58,7 @@ function NotificationDropdown() {
   )
 }
 
-export default function NotificationIcon() {
+export default function NotificationDropdown() {
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
 
   const handleClick = () => {
@@ -74,7 +74,7 @@ export default function NotificationIcon() {
         <BellIcon className="h-6 w-6 text-white" />
         {!dropdownIsOpen && <span className="badge badge-xs indicator-item right-1 top-3 border bg-secondary" />}
       </div>
-      {dropdownIsOpen && <NotificationDropdown />}
+      {dropdownIsOpen && <NotificationDropdownMenu />}
     </button>
   )
 }
