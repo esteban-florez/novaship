@@ -18,3 +18,6 @@
 
   - El input de mensaje debe ajustarse al alto del mensaje
   - Falta hacerlo responsive
+
+  ## Inicio
+  - Responsive a botones de registro de perfil 
