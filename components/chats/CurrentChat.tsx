@@ -1,21 +1,21 @@
-import { EllipsisHorizontalIcon, PlusIcon } from '@heroicons/react/24/solid'
+import { EllipsisHorizontalIcon, FaceSmileIcon, PaperAirplaneIcon, PhotoIcon } from '@heroicons/react/24/solid'
 import AvatarIcon from '../AvatarIcon'
 import BubbleMessage from './BubbleMessage'
 
 function ChatHeader() {
   return (
-    <header className="flex items-center justify-between rounded-t-xl border-b-2 border-gray-100/25 bg-primary/50 px-4 py-2 font-bold text-white">
+    <header className="flex items-center justify-between rounded-t-xl bg-primary px-4 py-2 font-bold">
       <div className="flex items-center justify-start gap-2">
         <AvatarIcon username="Joseph Monter" usernameLength={2} />
         <div className="flex flex-col">
-          <h3 className="text-xl font-semibold sm:text-base">Joseph Monter</h3>
+          <h3 className="text-xl font-semibold text-primary-content sm:text-base">Joseph Monter</h3>
           <h6 className="text-xs text-neutral-300">
             Última vez conectado hace 24 horas.
           </h6>
         </div>
       </div>
-      <button className="btn-ghost btn-circle btn">
-        <EllipsisHorizontalIcon className="h-8 w-8 stroke-white" />
+      <button className="btn-ghost btn-circle btn hover:bg-gray-300">
+        <EllipsisHorizontalIcon className="h-10 w-10" />
       </button>
     </header>
   )
@@ -38,15 +38,17 @@ function ChatContent({ children }: { children: React.ReactNode }) {
 
 function ChatFooter() {
   return (
-    <footer className="flex items-center justify-between gap-2 border-t-2 border-gray-700 bg-primary/10 p-4">
-      <button className="btn-primary btn-sm btn-circle btn">
-        <PlusIcon className="h-6 w-6 stroke-2" />
+    <footer className="flex items-start rounded-lg px-3 py-2">
+      <button type="button" className="inline-flex justify-center rounded-lg p-2 hover:bg-gray-600 hover:text-primary">
+        <PhotoIcon className="h-6 w-6" />
       </button>
-      <textarea
-        rows={1}
-        className="textarea-md w-full resize-none rounded-full bg-base-200 text-sm font-semibold text-white outline-none focus:ring focus:ring-primary"
-        placeholder="Escribe tu mensaje aquí..."
-      />
+      <button type="button" className="rounded-lg p-2 hover:bg-gray-600 hover:text-primary">
+        <FaceSmileIcon className="h-6 w-6" />
+      </button>
+      <textarea rows={1} className="mx-4 w-full resize-y rounded-lg border border-neutral bg-base-200 p-2.5 text-sm focus:outline-none focus:ring focus:ring-primary" placeholder="Escribe tu mensaje aquí..." />
+      <button type="submit" className="inline-flex justify-center rounded-full p-2 hover:bg-gray-600 hover:text-primary">
+        <PaperAirplaneIcon className="h-6 w-6 hover:fill-primary" />
+      </button>
     </footer>
   )
 }
