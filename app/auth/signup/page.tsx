@@ -18,7 +18,7 @@ export default async function SignUpPage() {
       <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
         <GoogleSignUpButton />
         <Link
-          href="/login"
+          href="/auth/login"
           className="underline"
         >
           Ya tengo una cuenta

@@ -11,7 +11,7 @@ global.crypto ??= crypto
 const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
   pages: {
-    signIn: '/login',
+    signIn: '/auth/login',
   },
   providers: [
     GoogleProvider({

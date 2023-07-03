@@ -20,7 +20,7 @@ export default function LoginPage() {
         </p>
         <div className="flex w-full flex-col gap-2">
           <Link
-            href="/signup"
+            href="/auth/signup"
             className="btn-secondary btn w-full border-2"
           >
             Regístrate

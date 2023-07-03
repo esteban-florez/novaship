@@ -63,7 +63,7 @@ export default function LogInForm() {
           Iniciar sesión
         </button>
         <Link
-          href="/login"
+          href="/auth/login"
           className="text-center text-sm underline"
         >
           Olvidé mi contraseña
