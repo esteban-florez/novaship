@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import AvatarIcon from './AvatarIcon'
 import { useSession } from 'next-auth/react'
 
@@ -64,6 +64,15 @@ export default function ProfileIcon() {
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
   const { data } = useSession()
   const username = data?.user?.name ?? ''
+  const profileRef = useRef<HTMLButtonElement>(null)
+
+  const handleOutsideClick = (e: MouseEvent) => {
+    if ((profileRef.current != null) && dropdownIsOpen && !profileRef.current.contains(e.target as HTMLButtonElement)) {
+      setDropdownIsOpen(false)
+    }
+  }
+
+  document.addEventListener('mousedown', handleOutsideClick)
 
   const handleClick = (): void => {
     setDropdownIsOpen(!dropdownIsOpen)
@@ -71,6 +80,7 @@ export default function ProfileIcon() {
 
   return (
     <button
+      ref={profileRef}
       onClick={handleClick}
       className="btn-ghost btn-circle btn sm:relative"
     >

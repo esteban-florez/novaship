@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { BellIcon } from '@heroicons/react/24/solid'
 import AvatarIcon from './AvatarIcon'
 
@@ -60,6 +60,15 @@ function NotificationDropdown() {
 
 export default function NotificationIcon() {
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
+  const notificationRef = useRef<HTMLButtonElement>(null)
+
+  const handleOutsideClick = (e: MouseEvent) => {
+    if ((notificationRef.current != null) && dropdownIsOpen && !notificationRef.current.contains(e.target as HTMLButtonElement)) {
+      setDropdownIsOpen(false)
+    }
+  }
+
+  document.addEventListener('mousedown', handleOutsideClick)
 
   const handleClick = () => {
     setDropdownIsOpen(!dropdownIsOpen)
@@ -67,6 +76,7 @@ export default function NotificationIcon() {
 
   return (
     <button
+      ref={notificationRef}
       onClick={handleClick}
       className="btn-ghost btn-circle btn sm:relative"
     >
