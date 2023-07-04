@@ -1,7 +1,8 @@
 export const routes: Record<string, string> = {
-  home: 'inicio',
-  offers: 'ofertas',
-  projects: 'proyectos',
-  chats: 'conversaciones',
-  profile: 'perfil',
+  home: 'Inicio',
+  offers: 'Ofertas',
+  projects: 'Proyectos',
+  chats: 'Conversaciones',
+  profile: 'Perfil',
+  internships: 'Pasantías',
 }

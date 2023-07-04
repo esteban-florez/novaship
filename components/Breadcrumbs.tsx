@@ -26,7 +26,7 @@ export default function Breadcrumbs() {
             <li key={path} className="flex items-center before:me-3 before:ms-2 before:block before:opacity-90 before:content-['/']">
               <Link
                 href={path === 'home' ? '/' : `/${path}`}
-                className={`capitalize no-underline hover:text-accent hover:no-underline ${
+                className={`hover:text-accent hover:underline ${
                   path === currentPath ? 'text-primary' : ''
                 }`}
               >

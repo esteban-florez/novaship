@@ -67,8 +67,8 @@ function ContactSection() {
           <span className="label-text">Teléfono</span>
         </label>
         <div className="join w-full">
-          <select className="select join-item focus:ring focus:ring-primary">
-            <option disabled selected>Código</option>
+          <select defaultValue="" className="select join-item focus:ring focus:ring-primary">
+            <option value="" disabled>Código</option>
             <option>0412</option>
             <option>0414</option>
             <option>0416</option>

@@ -32,12 +32,12 @@ export default function HomePage() {
       </div>
 
       <div className="flex-center flex w-full flex-col text-center sm:flex-row">
-        <Link href="/profile" className="card rounded-box grid h-20 w-full grow place-items-center bg-neutral hover:bg-primary sm:w-3/6">
+        <Link href="/profile" className="card rounded-box grid h-20 w-full grow place-items-center bg-neutral transition-all hover:brightness-125 sm:w-3/6">
           <h5 className="font-bold">¿Tiene una empresa y desea registrarla?</h5>
           <span>Inscríbase aquí</span>
         </Link>
         <div className="divider divider-horizontal mx-auto font-bold sm:px-4">O</div>
-        <Link href="/profile" className="card rounded-box grid h-20 w-full grow place-items-center bg-neutral hover:bg-primary sm:w-3/6">
+        <Link href="/profile" className="card rounded-box grid h-20 w-full grow place-items-center bg-neutral transition-all hover:brightness-125 sm:w-3/6">
           <h5 className="font-bold">¿Es director de una institución?</h5>
           <span>Inscríbase aquí</span>
         </Link>
