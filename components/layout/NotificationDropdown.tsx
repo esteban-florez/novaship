@@ -27,8 +27,8 @@ export default function NotificationDropdown() {
       className="btn-ghost btn-circle btn sm:relative"
     >
       <div className="indicator">
-        <BellIcon className="h-6 w-6 text-white" />
-        {!dropdownIsOpen && <span className="badge badge-xs indicator-item right-1 top-3 border bg-secondary" />}
+        <BellIcon className="h-6 w-6" />
+        {!dropdownIsOpen && <span className="badge badge-xs indicator-item right-1 top-3 border bg-success" />}
       </div>
       {dropdownIsOpen && <NotificationDropdownMenu />}
     </button>

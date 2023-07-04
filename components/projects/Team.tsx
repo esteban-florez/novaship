@@ -8,7 +8,7 @@ function Members() {
         <div className="flex flex-row gap-2">
           <AvatarIcon username="Myriam Yaqueno" status showStatus usernameLength={2} />
           <div className="flex flex-col">
-            <h3 className="font-title text-base font-bold text-white sm:text-lg">Myriam Yaqueno</h3>
+            <h3 className="font-title text-base font-bold sm:text-lg">Myriam Yaqueno</h3>
             <p className="line-clamp-6 text-xs">Miembro</p>
           </div>
         </div>

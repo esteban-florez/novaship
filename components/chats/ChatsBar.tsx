@@ -16,7 +16,7 @@ function ChatBubble({
   lastConnection = null,
   chatIsOpen = false,
 }: Props) {
-  const buttonClasses = 'my-2 p-2 flex w-full items-center justify-center rounded-md text-white last:mb-4 hover:bg-neutral-400'
+  const buttonClasses = 'my-2 p-2 flex w-full items-center justify-center rounded-md last:mb-4 hover:bg-neutral-400'
 
   return (
     <button className={`${buttonClasses} ${chatIsOpen ? 'bg-neutral-400' : ''}`}>
@@ -50,7 +50,7 @@ function SearchChatInput() {
         <input
           type="text"
           placeholder="Buscar conversación"
-          className="input input-sm w-full rounded-full bg-base-200 pl-8 text-sm font-semibold text-white outline-none transition-colors delay-150 focus:ring focus:ring-primary"
+          className="input input-sm w-full rounded-full bg-base-200 pl-8 text-sm font-semibold outline-none transition-colors delay-150 focus:ring focus:ring-primary"
         />
         <span className="absolute left-2 top-1.5 mx-auto">
           <MagnifyingGlassIcon className="h-5 w-5" />

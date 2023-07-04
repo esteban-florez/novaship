@@ -13,7 +13,7 @@ export default function Footer({ owner, ubication }: Props) {
           </div>
         </div>
         <div className="flex flex-col">
-          <h5 className="font-title text-sm font-bold text-white/90 lg:text-base">{owner}</h5>
+          <h5 className="font-title text-sm font-bold lg:text-base">{owner}</h5>
           <small className="-mt-2 font-semibold">{ubication}</small>
         </div>
       </div>

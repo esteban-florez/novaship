@@ -11,7 +11,7 @@ export default function Footer({ owner, ubication }: Props) {
           <div className="h-8 w-8 rounded-full bg-white" />
         </div>
         <div className="flex flex-col">
-          <h5 className="font-title text-sm font-bold text-white">
+          <h5 className="font-title text-sm font-bold">
             {owner}
           </h5>
           <small className="-mt-2 text-xs font-semibold">

@@ -9,7 +9,7 @@ export default function NotificationDropdownMenu() {
       className="absolute left-0 top-16 z-50 flex w-full flex-col whitespace-normal rounded-lg border border-gray-600 bg-neutral sm:left-auto sm:right-0 sm:top-14 sm:w-auto sm:max-w-xs md:right-0"
     >
       <li className="mb-2 bg-primary p-4 shadow">
-        <h3 className="text-white">Notificaciones</h3>
+        <h3 className="">Notificaciones</h3>
       </li>
 
       <Notification username="Martin Max" time={5}>

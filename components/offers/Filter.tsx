@@ -6,8 +6,8 @@ interface Props {
 }
 
 function Btn({ content, isActive = false }: Props) {
-  const activeClasses = 'btn-active text-white'
-  const inactiveClasses = 'hover:btn-active hover:text-white'
+  const activeClasses = 'btn-active'
+  const inactiveClasses = 'hover:btn-active hover:'
 
   return (
     <button className={`${isActive ? activeClasses : inactiveClasses} btn-ghost btn-sm btn text-sm font-semibold normal-case sm:btn-md sm:text-lg`}>

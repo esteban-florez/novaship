@@ -6,7 +6,7 @@ import NotificationDropdown from './NotificationDropdown'
 
 export default async function Navbar() {
   return (
-    <nav className="navbar bg-neutral shadow-md">
+    <nav className="navbar bg-white shadow-md">
       <div className="navbar-start">
         <button className="btn-ghost btn-circle btn">
           <Bars3Icon className="h-6 w-6" />
@@ -20,8 +20,8 @@ export default async function Navbar() {
           className="btn-ghost btn-circle btn"
         >
           <div className="indicator">
-            <ChatBubbleOvalLeftIcon className="h-6 w-6 text-white" />
-            <span className="badge badge-xs indicator-item right-1 top-3 border bg-secondary" />
+            <ChatBubbleOvalLeftIcon className="h-6 w-6" />
+            <span className="badge badge-xs indicator-item right-1 top-3 bg-success" />
           </div>
         </Link>
         <NotificationDropdown />

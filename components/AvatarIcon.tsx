@@ -20,7 +20,7 @@ export default function AvatarIcon({
 
   return (
     <div className={`placeholder avatar ${(status !== null) ? 'relative' : ''}`}>
-      <div className="h-10 w-10 rounded-full bg-white text-gray-600">
+      <div className="h-10 w-10 rounded-full bg-base-300 text-gray-600">
         {avatarContent}
       </div>
       {showStatus && (

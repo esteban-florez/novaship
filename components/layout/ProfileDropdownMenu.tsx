@@ -15,7 +15,7 @@ export default function ProfileDropdownMenu({ username }: DropdownProps) {
       className="absolute left-0 top-16 z-50 flex w-full cursor-default flex-col gap-4 whitespace-nowrap rounded-lg border border-gray-600 bg-neutral px-6 py-4 normal-case sm:left-auto sm:right-0 sm:top-14 sm:w-auto sm:max-w-xs"
     >
       <li>
-        <h5 className="text-lg font-semibold text-white">{username}</h5>
+        <h5 className="text-lg font-semibold">{username}</h5>
       </li>
 
       <li>
