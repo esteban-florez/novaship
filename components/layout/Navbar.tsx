@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import ProfileDropdown from '@/components/layout/ProfileDropdown'
-import { Bars3Icon, ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid'
+import { Bars3Icon } from '@heroicons/react/24/solid'
+import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/outline'
 import Breadcrumbs from '../Breadcrumbs'
 import NotificationDropdown from './NotificationDropdown'
 
-export default async function Navbar() {
+export default function Navbar() {
   return (
     <nav className="navbar bg-white shadow-md">
       <div className="navbar-start">
@@ -25,6 +26,7 @@ export default async function Navbar() {
           </div>
         </Link>
         <NotificationDropdown />
+        {/* @ts-expect-error Server Component */}
         <ProfileDropdown />
       </div>
     </nav>
