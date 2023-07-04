@@ -1,25 +1,35 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import AvatarIcon from '../AvatarIcon'
 import ProfileDropdownMenu from './ProfileDropdownMenu'
 import { useSession } from 'next-auth/react'
 
 export default function ProfileDropdown() {
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
-  const { data, status } = useSession()
+  const { data } = useSession()
   const username = data?.user?.name ?? ''
+  const profileRef = useRef<HTMLButtonElement>(null)
 
-  if (status === 'unauthenticated') {
-    throw new Error('Unauthenticated user')
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (profileRef.current === null) return
+
+    const notClickedOnButton = !profileRef.current.contains(e.target as HTMLButtonElement)
+
+    if (dropdownIsOpen && notClickedOnButton) {
+      setDropdownIsOpen(false)
+    }
   }
 
-  const handleClick = () => {
+  document.addEventListener('mousedown', handleOutsideClick)
+
+  const handleClick = (): void => {
     setDropdownIsOpen(!dropdownIsOpen)
   }
 
   return (
     <button
+      ref={profileRef}
       onClick={handleClick}
       className="btn-ghost btn-circle btn sm:relative"
     >

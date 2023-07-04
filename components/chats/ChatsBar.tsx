@@ -16,19 +16,17 @@ function ChatBubble({
   lastConnection = null,
   chatIsOpen = false,
 }: Props) {
+  const buttonClasses = 'my-2 p-2 flex w-full items-center justify-center rounded-md text-white last:mb-4 hover:bg-neutral-400'
+
   return (
-    <button
-      className={`my-2 flex w-full flex-row items-center justify-center rounded-md p-2 text-left text-white last:mb-4 hover:bg-white/40 ${
-        chatIsOpen ? 'bg-white/40' : ''
-      }`}
-    >
+    <button className={`${buttonClasses} ${chatIsOpen ? 'bg-neutral-400' : ''}`}>
       <AvatarIcon
         username={name}
         status={isActive}
         showStatus
         usernameLength={2}
       />
-      <div className="flex w-4/6 flex-col px-2">
+      <div className="flex w-4/6 flex-col px-2 text-left">
         <h5 className="font-semibold">{name}</h5>
         <p
           className={`truncate text-xs ${
@@ -47,7 +45,7 @@ function ChatBubble({
 
 function SearchChatInput() {
   return (
-    <div className="mb-2 flex w-full flex-row justify-around gap-2 rounded-t-xl border-b-2 border-gray-600 bg-primary/10 p-4">
+    <div className="mb-2 flex w-full flex-row justify-around gap-2 p-4">
       <div className="relative w-full">
         <input
           type="text"

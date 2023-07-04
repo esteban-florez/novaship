@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import ProfileDropdown from '@/components/layout/ProfileDropdown'
 import { Bars3Icon, ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid'
-import NotificationDropdown from '../NotificationDropdown'
 import Breadcrumbs from '../Breadcrumbs'
+import NotificationDropdown from './NotificationDropdown'
 
 export default async function Navbar() {
   return (

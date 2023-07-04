@@ -6,10 +6,6 @@
 - Definir los onDelete y onUpdate en Prisma Schema.
 - Hacer middleware de autenticación.
 
-  ## Aside
-
-  - Mejorar estilo de los items
-
   ## Navbar
 
   - Icono de hamburguesa necesita interactividad (Esteban)

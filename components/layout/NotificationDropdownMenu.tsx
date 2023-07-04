@@ -1,29 +1,6 @@
-'use client'
+import Notification from './Notification'
 
-import { useState } from 'react'
-import { BellIcon } from '@heroicons/react/24/solid'
-import AvatarIcon from './AvatarIcon'
-
-interface Props {
-  username: string
-  time: number
-  bg?: string
-  children: React.ReactNode
-}
-
-function Notification({ username, time, children }: Props) {
-  return (
-    <li className="flex w-80 max-w-xs items-center gap-2 py-1 pe-6 ps-4 last:mb-2 last:pt-1 odd:pb-2 even:pb-2 hover:bg-neutral-focus">
-      <AvatarIcon username={username} usernameLength={2} />
-      <div className="flex flex-col text-start">
-        <p className="line-clamp-2 text-xs normal-case text-white">{children}.</p>
-        <small className="text-xs normal-case text-neutral-content">Hace {time} minutos.</small>
-      </div>
-    </li>
-  )
-}
-
-function NotificationDropdownMenu() {
+export default function NotificationDropdownMenu() {
   return (
     <ul
       onClick={(e) => {
@@ -55,26 +32,5 @@ function NotificationDropdownMenu() {
         <span className="text-secondary hover:text-primary">Ver más</span>
       </li>
     </ul>
-  )
-}
-
-export default function NotificationDropdown() {
-  const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
-
-  const handleClick = () => {
-    setDropdownIsOpen(!dropdownIsOpen)
-  }
-
-  return (
-    <button
-      onClick={handleClick}
-      className="btn-ghost btn-circle btn sm:relative"
-    >
-      <div className="indicator">
-        <BellIcon className="h-6 w-6 text-white" />
-        {!dropdownIsOpen && <span className="badge badge-xs indicator-item right-1 top-3 border bg-secondary" />}
-      </div>
-      {dropdownIsOpen && <NotificationDropdownMenu />}
-    </button>
   )
 }
