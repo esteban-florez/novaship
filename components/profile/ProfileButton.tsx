@@ -5,8 +5,8 @@ type Props = React.PropsWithChildren<{
 }>
 
 export default function ProfileButton({ form, selectedForm, setSelectedForm, children }: Props) {
-  const btnActive = 'w-full sm:w-2/6 grid h-20 bg-primary rounded-box place-items-center'
-  const btnInactive = 'w-full sm:w-2/6 grid h-20 bg-neutral hover:bg-primary rounded-box place-items-center'
+  const btnActive = 'tab-lg tab-active btn normal-case'
+  const btnInactive = 'tab-lg tab'
 
   return (
     <button

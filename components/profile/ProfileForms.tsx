@@ -5,6 +5,7 @@ import CompanyForm from './CompanyForm'
 import InstituteForm from './InstituteForm'
 import UserForm from './UserForm'
 import ProfileButton from './ProfileButton'
+import ProfessionalForm from './ProfessionalForm'
 
 export default function ProfileForms() {
   const [selectedForm, setSelectedForm] = useState<ProfileFormsType>('profile')
@@ -13,17 +14,25 @@ export default function ProfileForms() {
     profile: <UserForm />,
     company: <CompanyForm />,
     institute: <InstituteForm />,
+    professional: <ProfessionalForm />,
   }
 
   return (
     <>
-      <div className="mb-6 flex w-full flex-col gap-4 sm:flex-row">
+      <div className="tabs tabs-boxed mb-6 items-center">
         <ProfileButton
-          form="company"
+          form="profile"
           selectedForm={selectedForm}
           setSelectedForm={setSelectedForm}
         >
           Perfil personal
+        </ProfileButton>
+        <ProfileButton
+          form="professional"
+          selectedForm={selectedForm}
+          setSelectedForm={setSelectedForm}
+        >
+          Perfil profesional
         </ProfileButton>
         <ProfileButton
           form="company"

@@ -1,3 +1,5 @@
+import SearchInput from '../SearchInput'
+
 interface Props {
   content: string
   isActive?: boolean
@@ -11,16 +13,6 @@ function Btn({ content, isActive = false }: Props) {
     <button className={`${isActive ? activeClasses : inactiveClasses} btn-ghost btn-sm btn text-sm font-semibold normal-case sm:btn-md sm:text-lg`}>
       {content}
     </button>
-  )
-}
-
-function SearchInput() {
-  return (
-    <input
-      type="text"
-      placeholder="Buscar"
-      className="input input-sm max-w-sm rounded-full bg-gray-600 text-white outline-none transition-colors delay-150 focus:bg-base-100 focus:ring focus:ring-primary"
-    />
   )
 }
 

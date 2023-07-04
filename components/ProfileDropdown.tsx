@@ -3,13 +3,18 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import AvatarIcon from './AvatarIcon'
+import { useSession } from 'next-auth/react'
 
-interface Props {
+interface OptionsProps {
   path: string
   name: string
 }
 
-function DropdownOption({ path, name }: Props) {
+interface DropdownProps {
+  username: string
+}
+
+function DropdownOption({ path, name }: OptionsProps) {
   return (
     <Link
       href={`/${path}`}
@@ -20,7 +25,7 @@ function DropdownOption({ path, name }: Props) {
   )
 }
 
-function ProfileDropdown() {
+function ProfileDropdown({ username }: DropdownProps) {
   return (
     <ul
       onClick={(e) => {
@@ -32,7 +37,7 @@ function ProfileDropdown() {
         <span className="text-start text-xs text-neutral-content">
           Nombre y apellido
         </span>
-        <h5 className="mb-3 mt-2 text-center text-xs text-white">Maximiliano Xavier</h5>
+        <h5 className="mb-3 mt-2 text-center text-xs text-white">{username}</h5>
       </li>
 
       <li className="flex flex-col">
@@ -57,6 +62,8 @@ function ProfileDropdown() {
 
 export default function ProfileIcon() {
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
+  const { data } = useSession()
+  const username = data?.user?.name ?? ''
 
   const handleClick = (): void => {
     setDropdownIsOpen(!dropdownIsOpen)
@@ -67,8 +74,8 @@ export default function ProfileIcon() {
       onClick={handleClick}
       className="btn-ghost btn-circle btn sm:relative"
     >
-      <AvatarIcon username="Maximiliano Xorches" usernameLength={2} />
-      {dropdownIsOpen && <ProfileDropdown />}
+      <AvatarIcon username={username} usernameLength={2} />
+      {dropdownIsOpen && <ProfileDropdown username={username} />}
     </button>
   )
 }

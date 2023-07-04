@@ -1,4 +1,4 @@
-import InputSimple from '../InputSimple'
+import InputSimple from '../forms/inputs/Input'
 import { CloudArrowUpIcon } from '@heroicons/react/24/solid'
 
 function ImageInput() {
@@ -31,8 +31,8 @@ function NameSection() {
         <p className="text-sm">Añada el nombre de su empresa, recuerde colocarlo como fue registrado legalmente.</p>
       </div>
       <div className="mt-4 lg:form-control lg:mt-0 lg:w-2/4">
-        <InputSimple id="companyName" type="text" label="Nombre" placeholder="Distribuidora y comcercializadora Santander" classes="w-full input input-md focus:ring focus:ring-primary mb-3" />
-        <InputSimple id="companyEmail" type="email" label="Correo electrónico" placeholder="correoempresarial@gmail.com" classes="w-full input input-md focus:ring focus:ring-primary" />
+        <InputSimple id="companyName" name="temp" type="text" label="Nombre" placeholder="Distribuidora y comcercializadora Santander" classes="w-full input input-md focus:ring focus:ring-primary mb-3" />
+        <InputSimple id="companyEmail" name="temp" type="email" label="Correo electrónico" placeholder="correoempresarial@gmail.com" classes="w-full input input-md focus:ring focus:ring-primary" />
       </div>
     </div>
   )
@@ -81,8 +81,8 @@ function ContactSection() {
             </div>
           </div>
         </div>
-        <InputSimple id="companyAddress" type="text" label="Dirección" placeholder="Urb. Santander" classes="w-full input input-md focus:ring focus:ring-primary mb-3" />
-        <InputSimple id="companyCountry" type="text" label="País" placeholder="Venezuela" classes="w-full input input-md focus:ring focus:ring-primary" />
+        <InputSimple id="companyAddress" name="temp" type="text" label="Dirección" placeholder="Urb. Santander" classes="w-full input input-md focus:ring focus:ring-primary mb-3" />
+        <InputSimple id="companyCountry" name="temp" type="text" label="País" placeholder="Venezuela" classes="w-full input input-md focus:ring focus:ring-primary" />
       </div>
     </div>
   )
