@@ -36,7 +36,7 @@ export default function SignUpForm() {
             id="name"
             name="name"
             placeholder="Ej. Luis"
-            className="input-bordered input w-full rounded-lg bg-base-300"
+            className="input-bordered input w-full bg-base-200"
           />
         </div>
         <div className="form-control w-full">
@@ -48,7 +48,7 @@ export default function SignUpForm() {
             id="surname"
             name="surname"
             placeholder="Ej. Pérez"
-            className="input-bordered input w-full rounded-lg bg-base-300"
+            className="input-bordered input w-full bg-base-200"
           />
         </div>
         <div className="form-control w-full">
@@ -60,7 +60,7 @@ export default function SignUpForm() {
             id="email"
             name="email"
             placeholder="correo@ejemplo.com"
-            className="input-bordered input w-full rounded-lg bg-base-300"
+            className="input-bordered input w-full bg-base-200"
           />
         </div>
         <div className="form-control w-full">
@@ -72,7 +72,7 @@ export default function SignUpForm() {
             id="password"
             name="password"
             placeholder="Ingresa tu contraseña..."
-            className="input-bordered input w-full rounded-lg bg-base-300"
+            className="input-bordered input w-full bg-base-200"
           />
         </div>
       </div>

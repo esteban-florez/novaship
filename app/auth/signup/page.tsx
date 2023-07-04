@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default async function SignUpPage() {
   return (
-    <section className="z-10 mx-2 flex flex-col rounded-xl bg-base-200 px-4 py-6 shadow-md md:px-8">
-      <h2 className="text-center font-title text-2xl font-bold text-white md:text-4xl">
+    <section className="z-10 mx-2 flex flex-col rounded-xl bg-base-100 px-4 py-6 shadow-md md:px-8">
+      <h2 className="text-center font-title text-2xl font-bold md:text-4xl">
         ¡Regístrate!
       </h2>
       <SignUpForm />

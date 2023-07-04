@@ -30,9 +30,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${inter.variable} ${josefin.variable} font-default`} data-theme="dark">
+    <html lang="es" className={`${inter.variable} ${josefin.variable} h-full bg-base-200 font-default`} data-theme="light">
       <SessionProvider>
-        <body>
+        <body className="h-full">
           {children}
         </body>
       </SessionProvider>

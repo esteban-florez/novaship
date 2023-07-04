@@ -1,4 +1,5 @@
 import daisyui from 'daisyui'
+import themes from 'daisyui/src/theming/themes'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -20,37 +21,18 @@ module.exports = {
     logs: false,
     themes: [
       {
-        dark: {
-          'color-scheme': 'dark',
+        light: {
+          ...themes["[data-theme=light]"],
           primary: '#a55eea',
           'primary-content': '#ffffff',
           secondary: '#45aaf2',
           'secondary-content': '#ffffff',
           accent: '#2bcbba',
-          neutral: '#2a323c',
-          'neutral-focus': '#242b33',
-          'neutral-content': '#A6ADBB',
-          'base-100': '#1d232a',
-          'base-200': '#191e24',
-          'base-300': '#15191e',
-          'base-content': '#A6ADBB',
+          // 'base-100': '#E5E7EB',
+          // 'base-200': '#F3F4F6',
+          // 'base-300': '#D1D5DB',
+          // 'base-content': '#1C1917',
         },
-
-        // light: {
-        //   'color-scheme': 'light',
-        // primary: '#a55eea',
-        // 'primary-content': '#ffffff',
-        // secondary: '#45aaf2',
-        // 'secondary-content': '#ffffff',
-        // accent: '#2bcbba',
-        //   neutral: '#FFFFFF', 
-        //   'neutral-focus': '#242b33',
-        //   'neutral-content': '#A6ADBB',
-        //   'base-100': '#E5E7EB',
-        //   'base-200': '#F3F4F6',
-        //   'base-300': '#D1D5DB',
-        //   'base-content': '#1C1917',
-        // },
       },
     ],
   },
