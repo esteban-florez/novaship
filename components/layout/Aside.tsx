@@ -49,10 +49,10 @@ export default function Aside() {
 
   return (
     <aside className="sticky top-0 hidden h-screen flex-col bg-white shadow-md sm:flex">
-      <div className="bg-white py-[18px] text-center text-black">
+      <div className="py-[18px] text-center">
         <Link
           href="/"
-          className="font-title text-2xl font-bold normal-case"
+          className="rounded-full bg-primary px-4 py-2 font-title text-2xl font-bold normal-case text-white shadow-md"
         >
           novaship
         </Link>

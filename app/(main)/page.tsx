@@ -4,7 +4,7 @@ import Link from 'next/link'
 export default function HomePage() {
   return (
     <section className="flex-center flex-col p-8">
-      <div className="stats stats-vertical mb-8 w-full bg-neutral shadow sm:stats-horizontal">
+      <div className="stats stats-vertical mb-8 w-full shadow sm:stats-horizontal">
         <div className="stat">
           <div className="stat-figure">
             <HeartIcon className="h-8 w-8 stroke-primary stroke-2" />
@@ -32,15 +32,15 @@ export default function HomePage() {
       </div>
 
       <div className="flex-center flex w-full flex-col text-center sm:flex-row">
-        <Link href="/profile" className="card rounded-box grid h-20 w-full grow place-items-center bg-neutral transition-all hover:brightness-125 sm:w-3/6">
+        <div className="card rounded-box grid w-full grow place-items-center border-x-4 border-primary bg-white p-8 shadow-md transition-all hover:brightness-125 sm:w-3/6">
           <h5 className="font-bold">¿Tiene una empresa y desea registrarla?</h5>
-          <span>Inscríbase aquí</span>
-        </Link>
+          <Link className="btn-primary btn mt-4" href="/profile">Registrar empresa</Link>
+        </div>
         <div className="divider divider-horizontal mx-auto font-bold sm:px-4">O</div>
-        <Link href="/profile" className="card rounded-box grid h-20 w-full grow place-items-center bg-neutral transition-all hover:brightness-125 sm:w-3/6">
+        <div className="card rounded-box grid w-full grow place-items-center border-x-4 border-primary bg-white p-8 shadow-md transition-all hover:brightness-125 sm:w-3/6">
           <h5 className="font-bold">¿Es director de una institución?</h5>
-          <span>Inscríbase aquí</span>
-        </Link>
+          <Link className="btn-primary btn mt-4" href="/profile">Registrar institución</Link>
+        </div>
       </div>
     </section>
   )
