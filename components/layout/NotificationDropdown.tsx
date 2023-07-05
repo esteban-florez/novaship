@@ -3,7 +3,7 @@ import NotificationDropdownMenu from './NotificationDropdownMenu'
 
 export default function NotificationDropdown() {
   return (
-    <div className="dropdown-end dropdown">
+    <div className="dropdown-end dropdown z-20">
       <label tabIndex={0} className="btn-ghost btn-circle btn">
         <div className="indicator">
           <BellIcon className="h-6 w-6" />

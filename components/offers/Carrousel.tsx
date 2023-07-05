@@ -37,7 +37,7 @@ export default function Carrousel() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagen de fondo carrusel" className="absolute right-0 top-0 h-full w-full object-cover" />
-          <div className="z-10 h-full w-full border-4 border-base-300 px-6 py-8 backdrop-blur-sm backdrop-brightness-50 sm:px-12">
+          <div className="z-10 h-full w-full px-6 py-8 backdrop-blur-sm backdrop-brightness-50 sm:px-12">
             <div className="w-full flex-row">
               <Header title={jobs.title} jobs={jobs.categories} />
               <Content description={jobs.description} />

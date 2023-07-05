@@ -1,6 +1,6 @@
-import Content from './Card/Content'
-import Footer from './Card/Footer'
-import Header from './Card/Header'
+import Content from './Offer/Content'
+import Footer from './Offer/Footer'
+import Header from './Offer/Header'
 
 interface Props {
   title: string
@@ -18,7 +18,7 @@ export default function Offer({
   ubication,
 }: Props) {
   return (
-    <section className="mb-4 break-inside-avoid rounded-xl bg-base-300">
+    <section className="mb-4 break-inside-avoid rounded-xl bg-white shadow">
       <div className="relative flex w-full rounded-xl">
         <div className="w-full flex-col">
           <Header title={title} categories={categories} />

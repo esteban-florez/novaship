@@ -18,8 +18,8 @@ export default function Footer({ owner, ubication }: Props) {
         </div>
       </div>
 
-      <div className="flex-center order-2 mt-2 flex-row lg:order-none lg:mt-0">
-        <button className="btn-primary btn text-sm lg:text-base">
+      <div className="flex-center order-2 mt-2 w-full flex-row md:w-auto lg:order-none lg:mt-0">
+        <button className="btn-primary btn w-full text-sm lg:w-auto lg:text-base">
           Ver más
         </button>
       </div>
