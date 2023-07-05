@@ -33,17 +33,23 @@ export default function Carrousel() {
       return (
         <section
           key={jobs.title}
-          className="flex w-full grow-0 flex-col bg-gradient-to-r from-base-300 from-15% to-primary/50 px-6 py-8 sm:px-12"
+          className="flex w-full grow-0 flex-col"
         >
-          <div className="w-full flex-row">
-            <Header title={jobs.title} jobs={jobs.categories} />
-            <Content description={jobs.description} />
-            <Footer owner={jobs.owner} ubication={jobs.ubication} />
-          </div>
-          <div className="mt-4 flex w-full flex-row items-center justify-center gap-4">
-            <Btn left onClick={handleLeftBtnClick} />
-            <Dots currentSlide={currentSlide} />
-            <Btn right onClick={handleRightBtnClick} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagen de fondo carrusel" className="absolute right-0 top-0 h-full w-full object-cover" />
+          <div className="z-10 h-full w-full border-4 border-base-300 px-6 py-8 backdrop-blur-sm backdrop-brightness-50 sm:px-12">
+            <div className="w-full flex-row">
+              <Header title={jobs.title} jobs={jobs.categories} />
+              <Content description={jobs.description} />
+              <Footer owner={jobs.owner} ubication={jobs.ubication} />
+            </div>
+            <div className="mt-4 flex w-full flex-row items-center justify-center gap-4">
+              <div className="flex rounded-lg bg-white/25">
+                <Btn left onClick={handleLeftBtnClick} />
+                <Dots currentSlide={currentSlide} />
+                <Btn right onClick={handleRightBtnClick} />
+              </div>
+            </div>
           </div>
         </section>
       )

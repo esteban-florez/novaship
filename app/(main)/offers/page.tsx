@@ -14,6 +14,7 @@ export default function OffersPage() {
   return (
     <>
       <Carrousel />
+      <div className="card card-body bg-white" />
       <Filter />
       <div className="mx-auto mb-4 w-full columns-1 gap-4 px-8 md:columns-2 lg:columns-3">
         {offers.map((offer) => {
