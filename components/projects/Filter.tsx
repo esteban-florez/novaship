@@ -29,7 +29,7 @@ function ActionButton({ children, color }: Props) {
 
 export default function Filter() {
   return (
-    <section className="my-8 mb-4 flex w-full flex-wrap items-center gap-2">
+    <section className="my-8 mb-4 flex w-full flex-wrap items-center gap-2 rounded-lg bg-white p-1">
       <div className="flex-center flex-wrap gap-x-2">
         <NavButton isActive>
           Archivos

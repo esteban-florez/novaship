@@ -4,7 +4,7 @@ import CurrentChat from '@/components/chats/CurrentChat'
 export default function ChatsPage() {
   return (
     <>
-      <section className="my-8 flex min-h-[70vh] w-full gap-4 px-8">
+      <section className="chat-height mb-8 mt-4 flex w-full gap-4 px-8">
         <ChatsBar />
         <CurrentChat />
       </section>
