@@ -14,7 +14,16 @@ const FORM_STATUS: Record<string, JSX.Element | null> = {
   none: null,
 }
 
-export default function UserForm({ name, surname, email, phone, address, bio }: UserProfileForm) {
+interface Props {
+  name: string
+  surname: string
+  email: string
+  phone: string
+  address: string
+  bio: string
+}
+
+export default function UserForm({ name, surname, email, phone, address, bio }: Props) {
   const [showAlert, setShowAlert] = useState('none')
 
   useEffect(() => {
