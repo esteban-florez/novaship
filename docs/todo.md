@@ -23,3 +23,4 @@
 
   - Campo de curriculum en /professional.
   - Crud para /professional, /institute, /company
+  - Falta input file para /professional, /institue, /company

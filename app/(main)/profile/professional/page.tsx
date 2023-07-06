@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   title: 'Perfil profesional',
 }
 
-export default function UserProfilePage() {
+export default function ProfessionalProfilePage() {
   return <ProfessionalForm />
 }
