@@ -1,55 +1,29 @@
 'use client'
 
-import { useState } from 'react'
-import CompanyForm from './CompanyForm'
-import InstituteForm from './InstituteForm'
-import UserForm from './UserForm'
-import ProfileButton from './ProfileButton'
-import ProfessionalForm from './ProfessionalForm'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function ProfileForms() {
-  const [selectedForm, setSelectedForm] = useState<ProfileFormsType>('profile')
-
-  const forms: Record<ProfileFormsType, React.ReactNode> = {
-    profile: <UserForm />,
-    company: <CompanyForm />,
-    institute: <InstituteForm />,
-    professional: <ProfessionalForm />,
-  }
+  const currentPath = usePathname()
+  const activeClasses = 'tab-lg tab-active btn normal-case font-bold'
+  const inactiveClasses = 'tab-lg tab hover:tab-active'
 
   return (
     <>
-      <div className="tabs tabs-boxed mb-6 items-center">
-        <ProfileButton
-          form="profile"
-          selectedForm={selectedForm}
-          setSelectedForm={setSelectedForm}
-        >
+      <div className="tabs tabs-boxed mb-6 items-center justify-between bg-base-100">
+        <Link href="/profile/user" className={`${currentPath === '/profile/user' ? activeClasses : inactiveClasses}`}>
           Perfil personal
-        </ProfileButton>
-        <ProfileButton
-          form="professional"
-          selectedForm={selectedForm}
-          setSelectedForm={setSelectedForm}
-        >
+        </Link>
+        <Link href="/profile/professional" className={`${currentPath === '/profile/professional' ? activeClasses : inactiveClasses}`}>
           Perfil profesional
-        </ProfileButton>
-        <ProfileButton
-          form="company"
-          selectedForm={selectedForm}
-          setSelectedForm={setSelectedForm}
-        >
-          Perfil de empresa
-        </ProfileButton>
-        <ProfileButton
-          form="institute"
-          selectedForm={selectedForm}
-          setSelectedForm={setSelectedForm}
-        >
-          Perfil de institución
-        </ProfileButton>
+        </Link>
+        <Link href="/profile/institute" className={`${currentPath === '/profile/institute' ? activeClasses : inactiveClasses}`}>
+          Perfil institucional
+        </Link>
+        <Link href="/profile/company" className={`${currentPath === '/profile/company' ? activeClasses : inactiveClasses}`}>
+          Perfil empresarial
+        </Link>
       </div>
-      {forms[selectedForm]}
     </>
   )
 }

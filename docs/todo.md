@@ -14,3 +14,7 @@
 
   - El input de mensaje debe ajustarse al alto del mensaje
   - Falta hacerlo responsive
+
+  ## Projects
+
+  - Iconos para cada archivo.extension, doc, xlc, txt, etc

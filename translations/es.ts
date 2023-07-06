@@ -5,4 +5,5 @@ export const routes: Record<string, string> = {
   chats: 'Conversaciones',
   profile: 'Perfil',
   internships: 'Pasantías',
+  user: 'Usuario',
 }

@@ -5,7 +5,6 @@ import ProfileDropdownMenu from './ProfileDropdownMenu'
 
 export default async function ProfileDropdown() {
   const session = await getServerSession(authOptions)
-  console.log(session)
   const username = session?.user?.name ?? ''
 
   return (

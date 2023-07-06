@@ -12,7 +12,7 @@ export default function ProfileDropdownMenu({ username }: DropdownProps) {
   return (
     <div className="dropdown-content z-10 flex w-max flex-col gap-3 rounded-lg border border-base-300 bg-white p-6 shadow-md">
       <h5 className="text-center text-lg font-semibold">{username}</h5>
-      <Link className="flex gap-1 text-sm font-semibold" href="/profile">
+      <Link className="flex gap-1 text-sm font-semibold" href="/profile/user">
         <EyeIcon className="h-5 w-5" />
         Ver perfil
       </Link>
