@@ -5,3 +5,12 @@
 .flex-center {
   @apply flex items-center justify-center;
 }
+
+.chat-height {
+  height: calc(100vh - 7.5rem);
+  overflow: hidden;
+}
+
+.chat-grid {
+  grid-template-rows: 60px 1fr 60px;
+}
