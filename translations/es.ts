@@ -6,4 +6,7 @@ export const routes: Record<string, string> = {
   profile: 'Perfil',
   internships: 'Pasantías',
   user: 'Usuario',
+  professional: 'Profesional',
+  instute: 'Institución',
+  company: 'Compañía',
 }

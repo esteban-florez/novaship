@@ -18,3 +18,8 @@
   ## Projects
 
   - Iconos para cada archivo.extension, doc, xlc, txt, etc
+
+  ## Profile
+
+  - Campo de curriculum en /professional.
+  - Crud para /professional, /institute, /company

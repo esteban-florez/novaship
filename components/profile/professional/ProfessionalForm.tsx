@@ -1,11 +1,11 @@
 'use client'
 
-import PersonalSection from './PersonalSection'
-import ContactSection from './ContactSection'
-import BiographySection from './BiographySection'
 import { useEffect, useState } from 'react'
 import Toast from '@/components/Toast'
+import TitleSection from './TitleSection'
 import ButtonSection from '../ButtonSection'
+import AboutMeSection from './AboutMeSection'
+import ExperienceSection from './ExperienceSection'
 
 const FORM_STATUS: Record<string, JSX.Element | null> = {
   sending: <Toast type="info" message="Su perfil está siendo actualizado, espere unos momentos." />,
@@ -14,16 +14,7 @@ const FORM_STATUS: Record<string, JSX.Element | null> = {
   none: null,
 }
 
-interface Props {
-  name: string
-  surname: string
-  email: string
-  phone: string
-  address: string
-  bio: string
-}
-
-export default function UserForm({ name, surname, email, phone, address, bio }: Props) {
+export default function ProfessionalForm() {
   const [showAlert, setShowAlert] = useState('none')
 
   useEffect(() => {
@@ -36,12 +27,12 @@ export default function UserForm({ name, surname, email, phone, address, bio }: 
     setShowAlert('sending')
     event.preventDefault()
     const form = event.target
-    const { action } = form
+    const { action, method } = form
     const formData = new FormData(form)
 
     const response = await fetch(action, {
       body: formData,
-      method: 'PUT',
+      method,
     })
 
     if (response.status === 401) {
@@ -55,12 +46,12 @@ export default function UserForm({ name, surname, email, phone, address, bio }: 
   }
 
   return (
-    <form method="POST" onSubmit={handleSubmit} action="/api/profile/user" className="w-full rounded-lg bg-base-100 p-4">
+    <form method="POST" onSubmit={handleSubmit} action="/api/profile/professional" className="w-full rounded-lg bg-base-100 p-4">
       {showAlert !== 'none' && FORM_STATUS[showAlert]}
-      <h2 className="mb-4 text-2xl font-bold">Perfil Personal</h2>
-      <PersonalSection name={name} surname={surname} />
-      <ContactSection email={email} phone={phone} address={address} />
-      <BiographySection bio={bio} />
+      <h2 className="mb-4 text-2xl font-bold">Perfil Profesional</h2>
+      <TitleSection />
+      <AboutMeSection />
+      <ExperienceSection />
       <ButtonSection />
     </form>
   )
