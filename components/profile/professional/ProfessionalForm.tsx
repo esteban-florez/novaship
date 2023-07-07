@@ -1,27 +1,25 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Toast from '@/components/Toast'
 import TitleSection from './TitleSection'
 import ButtonSection from '../ButtonSection'
 import AboutMeSection from './AboutMeSection'
 import ExperienceSection from './ExperienceSection'
 
-const FORM_STATUS: Record<string, JSX.Element | null> = {
-  sending: <Toast type="info" message="Su perfil está siendo actualizado, espere unos momentos." />,
-  failed: <Toast type="error" message="No se ha podido actualizar su perfil, intente de nuevo en unos momentos." />,
-  succeded: <Toast type="success" message="Su perfil ha sido actualizado exitosamente." />,
-  none: null,
-}
-
 export default function ProfessionalForm() {
   const [showAlert, setShowAlert] = useState('none')
 
-  useEffect(() => {
-    setTimeout(() => {
-      setShowAlert('none')
-    }, 10000)
-  }, [showAlert])
+  const handleCloseToast = () => {
+    setShowAlert('none')
+  }
+
+  const FORM_STATUS: Record<string, JSX.Element | null> = {
+    sending: <Toast type="info" message="Su perfil está siendo actualizado, espere unos momentos" onClose={handleCloseToast} />,
+    failed: <Toast type="error" message="No se ha podido actualizar su perfil, intente de nuevo en unos momentos" onClose={handleCloseToast} />,
+    succeded: <Toast type="success" message="Su perfil ha sido actualizado exitosamente" onClose={handleCloseToast} />,
+    none: null,
+  }
 
   async function handleSubmit(event: FormSubmitEvent) {
     setShowAlert('sending')
