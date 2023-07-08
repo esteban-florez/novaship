@@ -2,7 +2,6 @@
 
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { signIn } from 'next-auth/react'
-import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import GoogleSignUpButton from '../GoogleSignUpButton'
@@ -44,7 +43,7 @@ export default function LogInForm() {
           type="text"
           id="email"
           placeholder="correo@ejemplo.com"
-          className="input-bordered input w-full rounded-lg bg-base-300"
+          className="input-bordered input w-full bg-base-200"
         />
       </div>
       <div className="form-control mt-4 w-full">
@@ -55,19 +54,13 @@ export default function LogInForm() {
           type="password"
           id="password"
           placeholder="Ingresa tu contraseña..."
-          className="input-bordered input w-full rounded-lg bg-base-300"
+          className="input-bordered input w-full bg-base-200"
         />
       </div>
       <div className="flex flex-col gap-4">
         <button type="submit" className="btn-primary btn mt-8 w-full md:w-auto">
           Iniciar sesión
         </button>
-        <Link
-          href="/auth/login"
-          className="text-center text-sm underline"
-        >
-          Olvidé mi contraseña
-        </Link>
         <GoogleSignUpButton />
       </div>
     </form>

@@ -7,6 +7,8 @@ interface Props {
   status?: boolean
   showStatus?: boolean
   usernameLength: number
+  bg?: string
+  text?: string
 }
 
 export default function AvatarIcon({
@@ -15,12 +17,14 @@ export default function AvatarIcon({
   status = false,
   showStatus = false,
   usernameLength,
+  bg = 'bg-primary',
+  text = 'text-white',
 }: Props) {
   const avatarContent = image !== null ? <Image src={image} alt="Foto de perfil" /> : <span>{capitalizeString(username, usernameLength)}</span>
 
   return (
     <div className={`placeholder avatar ${(status !== null) ? 'relative' : ''}`}>
-      <div className="h-10 w-10 rounded-full bg-white text-gray-600">
+      <div className={`h-10 w-10 rounded-full ${bg} ${text}`}>
         {avatarContent}
       </div>
       {showStatus && (

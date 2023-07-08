@@ -9,8 +9,8 @@ type NavButtonProps = React.PropsWithChildren<{
 }>
 
 function NavButton({ children, isActive = false }: NavButtonProps) {
-  const activeClasses = 'btn-active text-white'
-  const inactiveClasses = 'hover:btn-active hover:text-white'
+  const activeClasses = 'btn-active'
+  const inactiveClasses = 'hover:btn-active hover:'
 
   return (
     <button className={`${isActive ? activeClasses : inactiveClasses} btn-ghost btn-sm btn text-sm font-semibold normal-case sm:btn-md sm:text-lg`}>
@@ -29,7 +29,7 @@ function ActionButton({ children, color }: Props) {
 
 export default function Filter() {
   return (
-    <section className="my-8 mb-4 flex w-full flex-wrap items-center gap-2">
+    <section className="my-8 mb-4 flex w-full flex-wrap items-center gap-2 rounded-lg bg-white p-1">
       <div className="flex-center flex-wrap gap-x-2">
         <NavButton isActive>
           Archivos

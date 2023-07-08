@@ -4,7 +4,7 @@ interface Props {
 
 export default function Dots({ currentSlide }: Props) {
   const slideInactive = 'w-4 h-4 rounded-full bg-white/70'
-  const slideActive = 'w-6 h-4 rounded-full bg-primary'
+  const slideActive = 'w-6 h-4 rounded-full bg-primary border-white border'
 
   return (
     <ul className="flex-center gap-2">

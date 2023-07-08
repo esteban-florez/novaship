@@ -2,16 +2,10 @@ import Notification from './Notification'
 
 export default function NotificationDropdownMenu() {
   return (
-    <ul
-      onClick={(e) => {
-        e.stopPropagation()
-      }}
-      className="absolute left-0 top-16 z-50 flex w-full flex-col whitespace-normal rounded-lg border border-gray-600 bg-neutral sm:left-auto sm:right-0 sm:top-14 sm:w-auto sm:max-w-xs md:right-0"
-    >
-      <li className="mb-2 bg-primary p-4 shadow">
-        <h3 className="text-white">Notificaciones</h3>
-      </li>
-
+    <div className="dropdown-content z-10 rounded-lg border border-base-200 bg-white shadow-md">
+      <div className="mb-2 rounded-t-lg bg-primary p-4 text-white shadow">
+        <h3 className="text-center font-semibold uppercase">Notificaciones</h3>
+      </div>
       <Notification username="Martin Max" time={5}>
         Has sido aceptado para la vacante de la empresa "BeautifulDreams", contáctese con nosotros para más información
       </Notification>
@@ -27,10 +21,9 @@ export default function NotificationDropdownMenu() {
       <Notification username="APP" time={0}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo fugit quas beatae, iusto consequuntur nesciunt ut. Eius ab, labore, dolores soluta et repellat, iure quis minima doloribus esse molestias velit
       </Notification>
-
-      <li className="border-t border-gray-600 py-4 hover:bg-neutral-focus">
-        <span className="text-secondary hover:text-primary">Ver más</span>
-      </li>
-    </ul>
+      <button className="w-full rounded-b-lg border-t border-base-300 py-4 text-center hover:bg-base-300">
+        <span className="font-bold text-primary">Ver más</span>
+      </button>
+    </div>
   )
 }

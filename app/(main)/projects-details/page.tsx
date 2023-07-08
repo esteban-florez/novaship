@@ -19,7 +19,7 @@ export default function ProjectsPage() {
         </div>
         <div className="md:col-span-2">
           <div className="flex flex-col gap-4">
-            <div className="flex h-80 flex-col gap-2 rounded-lg bg-neutral p-5" />
+            <div className="flex h-80 flex-col gap-2 rounded-lg bg-neutral-300 p-5" />
             <TeamGroup />
           </div>
         </div>

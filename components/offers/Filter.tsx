@@ -1,24 +1,9 @@
 import SearchInput from '../SearchInput'
-
-interface Props {
-  content: string
-  isActive?: boolean
-}
-
-function Btn({ content, isActive = false }: Props) {
-  const activeClasses = 'btn-active text-white'
-  const inactiveClasses = 'hover:btn-active hover:text-white'
-
-  return (
-    <button className={`${isActive ? activeClasses : inactiveClasses} btn-ghost btn-sm btn text-sm font-semibold normal-case sm:btn-md sm:text-lg`}>
-      {content}
-    </button>
-  )
-}
+import FilterButtons from './Carrousel/FilterButtons'
 
 function PublishButton() {
   return (
-    <button className="btn-primary btn-sm btn w-full border-none sm:btn-wide">
+    <button className="btn-primary btn-sm btn w-full md:btn-md md:w-auto">
       Publicar
     </button>
   )
@@ -26,15 +11,21 @@ function PublishButton() {
 
 export default function Filter() {
   return (
-    <section className="my-8 flex w-full flex-wrap items-center gap-2 px-8">
-      <div className="flex-center mb-4 flex-wrap gap-x-2 gap-y-4">
-        <Btn content="Todos" isActive />
-        <Btn content=" Mis ofertas de trabajo" />
-        <Btn content="Trabajos aplicados" />
-        <Btn content="Filtrar por" />
-        <SearchInput />
+    <section className="flex w-full flex-col items-center justify-between gap-2 xl:flex-row">
+      <div className="hidden gap-x-1 gap-y-4 md:flex">
+        <FilterButtons />
       </div>
-      <div className="flex w-full items-center justify-center sm:ms-auto sm:w-auto sm:justify-end">
+      <div className="collapse-arrow collapse bg-base-200 md:hidden">
+        <input type="checkbox" />
+        <p className="collapse-title font-semibold">
+          Categorías
+        </p>
+        <div className="collapse-content flex flex-col gap-2">
+          <FilterButtons />
+        </div>
+      </div>
+      <div className="flex flex-col items-center justify-between gap-4 md:w-full md:flex-row xl:w-auto">
+        <SearchInput />
         <PublishButton />
       </div>
     </section>
