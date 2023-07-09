@@ -5,7 +5,7 @@ import TeamGroup from '@/components/projects-details/Team'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Proyectos',
+  title: 'Detalles de Proyecto',
 }
 
 export default function ProjectsPage() {

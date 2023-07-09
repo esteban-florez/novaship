@@ -1,35 +1,9 @@
+import { ActionButton, NavButton } from '../Buttons'
 import SearchInput from '../SearchInput'
-
-type Props = React.PropsWithChildren<{
-  color: string
-}>
-
-type NavButtonProps = React.PropsWithChildren<{
-  isActive?: boolean
-}>
-
-function NavButton({ children, isActive = false }: NavButtonProps) {
-  const activeClasses = 'btn-active'
-  const inactiveClasses = 'hover:btn-active hover:'
-
-  return (
-    <button className={`${isActive ? activeClasses : inactiveClasses} btn-ghost btn-sm btn text-sm font-semibold normal-case sm:btn-md sm:text-lg`}>
-      {children}
-    </button>
-  )
-}
-
-function ActionButton({ children, color }: Props) {
-  return (
-    <button className={`${color} btn-sm btn border-none px-6`}>
-      {children}
-    </button>
-  )
-}
 
 export default function Filter() {
   return (
-    <section className="my-8 mb-4 flex w-full flex-wrap items-center gap-2 rounded-lg bg-white p-1">
+    <section className="my-5 flex w-full flex-wrap items-center gap-2 rounded-lg">
       <div className="flex-center flex-wrap gap-x-2">
         <NavButton isActive>
           Archivos

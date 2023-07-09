@@ -22,8 +22,8 @@ export default function Archive() {
           Viernes / 30-06-2023
         </h3>
         <div className="flex flex-row gap-4">
-          <div className="w-1 rounded-sm bg-white" />
-          <div className="flex w-full flex-col gap-2 py-2">
+          <div className="ml-1 w-1 rounded-sm bg-black" />
+          <div className="flex w-full flex-col gap-2 py-3">
             <Doc />
             <Doc />
           </div>
@@ -32,8 +32,8 @@ export default function Archive() {
           Miércoles / 28-06-2023
         </h3>
         <div className="flex flex-row gap-4">
-          <div className="w-1 rounded-sm bg-white" />
-          <div className="flex w-full flex-col gap-2 py-2">
+          <div className="ml-1 w-1 rounded-sm bg-black" />
+          <div className="flex w-full flex-col gap-2 py-3">
             <Doc />
             <Doc />
           </div>

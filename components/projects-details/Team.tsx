@@ -20,7 +20,7 @@ function Members() {
 export default function TeamGroup() {
   return (
     <>
-      <div className="container bg-white">
+      <div className="container">
         <header className="rounded-t-lg bg-accent px-5 py-4">
           <div className="flex justify-between align-middle">
             <h4 className="font-title text-xl font-bold text-black sm:text-xl">Equipo de trabajo</h4>
@@ -28,12 +28,12 @@ export default function TeamGroup() {
             <EllipsisVerticalIcon className="h-7 text-black" />
           </div>
         </header>
-        <main className="flex flex-col gap-3 rounded-b-lg bg-white/10 p-4">
+        <main className="flex flex-col gap-3 rounded-b-lg bg-white p-4">
           <p className="line-clamp-6 text-sm font-bold">Total miembros: 3</p>
           <p className="line-clamp-6 text-sm font-bold">Activos - 2</p>
           <Members />
           <Members />
-          <button className="btn-accent btn-outline btn w-full sm:text-base">
+          <button className="btn-accent btn-outline btn-sm btn mt-1 sm:text-base">
             Ver chat
           </button>
         </main>
