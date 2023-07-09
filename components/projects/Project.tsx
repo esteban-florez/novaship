@@ -1,26 +1,14 @@
 import Card from './Card'
 
-interface Props {
-  title: string
-  categories: string[]
-  description: string
-  owner: string
-  ubication: string
-}
-
-export default function Project({
-  title,
-  categories,
-  description,
-  owner,
-  ubication,
-}: Props) {
+export default function Project() {
   return (
     <>
-      <section className="mb-4 break-inside-avoid rounded-xl bg-base-300">
+      <section className="mb-4 rounded-xl bg-base-300">
         <div className="relative flex w-full rounded-xl">
           <div className="w-full flex-col">
-            <Card title={title} categories={categories} owner={owner} ubication={ubication} description={description} />
+            <Card title="Hola wapo" categories={['OLASASA', 'OLASSA']} owner="Juan" ubication="Los Cocos" description="Lorem ipsum incolorun dolorum" />
+            <Card title="Hola wapo" categories={['OLASASA', 'OLASSA']} owner="Juan" ubication="Los Cocos" description="Lorem ipsum incolorun dolorum" />
+            <Card title="Hola wapo" categories={['OLASASA', 'OLASSA']} owner="Juan" ubication="Los Cocos" description="Lorem ipsum incolorun dolorum" />
           </div>
         </div>
       </section>
