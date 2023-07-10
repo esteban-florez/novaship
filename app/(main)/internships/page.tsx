@@ -33,12 +33,11 @@ export default function IntenshipsPage() {
                   <h3 className="text-xl font-bold">Luis Fernández</h3>
                 </div>
                 <div className="mt-3">
-                  <span className="badge badge-primary badge-outline me-2 py-1 font-semibold">
-                    Programación
-                  </span>
-                  <span className="badge badge-primary badge-outline me-2 py-1 font-semibold">
-                    JavaScript
-                  </span>
+                  {['Programación', 'JavaScript'].map(skill => (
+                    <span key={skill} className="badge badge-primary badge-outline me-2 py-1 font-semibold">
+                      {skill}
+                    </span>
+                  ))}
                 </div>
                 <p className="mt-3 line-clamp-3">Estudiante de 4to Trayecto de Ingeniería Informática en la UPT Aragua, La Victoria.</p>
                 <div className="card-actions mt-3">

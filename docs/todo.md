@@ -6,6 +6,7 @@
 - Definir los onDelete y onUpdate en Prisma Schema.
 - Hacer middleware de autenticación.
 - Añadir validaciones front y back.
+- Mover "/projects-details" a "/projects/:id/"
 
   ## Navbar
 
