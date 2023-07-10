@@ -14,22 +14,22 @@ export default function OffersPage() {
   return (
     <>
       <Carrousel />
-      <div className="card card-body m-2 bg-white shadow">
+      <div className="px-4">
         <Filter />
-      </div>
-      <div className="mx-auto my-4 w-full columns-1 gap-4 px-4 md:columns-2 lg:columns-3">
-        {offers.map((offer) => {
-          return (
-            <Offer
-              key={offer.id}
-              title={offer.title}
-              categories={offer.categories}
-              description={offer.description}
-              owner={offer.owner}
-              ubication={offer.ubication}
-            />
-          )
-        })}
+        <div className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg md:columns-2 lg:columns-3 xl:rounded-tl-none xl:bg-white xl:p-6">
+          {offers.map((offer) => {
+            return (
+              <Offer
+                key={offer.id}
+                title={offer.title}
+                categories={offer.categories}
+                description={offer.description}
+                owner={offer.owner}
+                ubication={offer.ubication}
+              />
+            )
+          })}
+        </div>
       </div>
     </>
   )

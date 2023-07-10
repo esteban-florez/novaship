@@ -1,5 +1,4 @@
 import Content from './Offer/Content'
-import Footer from './Offer/Footer'
 import Header from './Offer/Header'
 
 interface Props {
@@ -18,12 +17,11 @@ export default function Offer({
   ubication,
 }: Props) {
   return (
-    <section className="mb-4 break-inside-avoid rounded-xl bg-white shadow">
+    <section className="mb-4 break-inside-avoid rounded-xl bg-base-200 shadow">
       <div className="relative flex w-full rounded-xl">
         <div className="w-full flex-col">
           <Header title={title} categories={categories} />
-          <Content description={description} />
-          <Footer owner={owner} ubication={ubication} />
+          <Content description={description} owner={owner} ubication={ubication} />
         </div>
       </div>
     </section>
