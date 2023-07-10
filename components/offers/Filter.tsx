@@ -3,7 +3,7 @@ import FilterButtons from './Carrousel/FilterButtons'
 
 function PublishButton() {
   return (
-    <button className="btn-primary btn-sm btn w-full md:btn-md md:w-auto">
+    <button className="btn-primary btn-sm btn h-8 w-full py-2 sm:w-40 md:w-auto">
       Publicar
     </button>
   )
@@ -11,11 +11,11 @@ function PublishButton() {
 
 export default function Filter() {
   return (
-    <section className="flex w-full flex-col items-center justify-between gap-2 xl:flex-row">
-      <div className="hidden gap-x-1 gap-y-4 md:flex">
+    <section className="mb-4 flex w-full flex-col items-center justify-between gap-4 pt-4 md:flex-row xl:mb-0 xl:gap-2">
+      <div className="hidden gap-x-1 gap-y-4 xl:flex">
         <FilterButtons />
       </div>
-      <div className="collapse-arrow collapse bg-base-200 md:hidden">
+      <div className="collapse-arrow collapse rounded-lg bg-white xl:hidden">
         <input type="checkbox" />
         <p className="collapse-title font-semibold">
           Categorías
@@ -24,7 +24,7 @@ export default function Filter() {
           <FilterButtons />
         </div>
       </div>
-      <div className="flex flex-col items-center justify-between gap-4 md:w-full md:flex-row xl:w-auto">
+      <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row md:place-items-start md:justify-end xl:w-auto">
         <SearchInput />
         <PublishButton />
       </div>

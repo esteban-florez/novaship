@@ -5,6 +5,7 @@
 - Convertir "divs decorativos" a SVG
 - Definir los onDelete y onUpdate en Prisma Schema.
 - Hacer middleware de autenticación.
+- Añadir validaciones front y back.
 
   ## Navbar
 
@@ -14,3 +15,24 @@
 
   - El input de mensaje debe ajustarse al alto del mensaje
   - Falta hacerlo responsive
+
+  ## Projects
+
+  - Iconos para cada archivo.extension, doc, xlc, txt, etc
+
+  ## Profile
+
+  - Campo de curriculum en /professional.
+  - Crud para /professional, /institute, /company
+  - Falta input file para /professional, /institue, /company
+
+  ### Professional
+
+  - Función para añadir n campos de experiencias.
+  - Crear perfil profesional como opcional.
+  - Quitar la creación automatica de perfil en /signup
+
+  ## Toast
+
+  - Ajustar el ancho del mensaje
+  - Instalar sonner
