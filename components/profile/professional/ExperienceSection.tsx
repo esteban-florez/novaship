@@ -4,7 +4,7 @@ import InputSimple from '@/components/forms/inputs/Input'
 export default function ExperienceSection() {
   return (
     <FormSection title="Experiencias" description="Mencione sus experiencias laborales.">
-      <InputSimple id="experiences" name="experiences" type="text" placeholder="Ingeniero en Sistemas" label="Experiencias" />
+      <InputSimple id="" name="" type="text" placeholder="Ingeniero en Sistemas" label="Experiencias" />
     </FormSection>
   )
 }

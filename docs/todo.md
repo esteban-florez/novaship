@@ -25,6 +25,11 @@
   - Crud para /professional, /institute, /company
   - Falta input file para /professional, /institue, /company
 
+  ### Professional
+
+  - Función para añadir n campos de experiencias.
+
   ## Toast
 
   - Ajustar el ancho del mensaje
+  - Instalar sonner

@@ -3,7 +3,7 @@ import { hash } from 'bcrypt'
 import { type Prisma } from '@prisma/client'
 import { NextResponse } from 'next/server'
 
-export async function POST(req: Request) {
+export async function PUT(req: Request) {
   // TODO -> input validation
   const body = await req.formData()
   const data = Object.fromEntries(body.entries()) as unknown as Prisma.UserCreateInput
@@ -21,6 +21,31 @@ export async function POST(req: Request) {
   let user
   try {
     user = await prisma.user.create({ data })
+    const profile = await prisma.profile.create({
+      data: {
+        title: '',
+        description: '',
+        schedule: { monday: {}, tuesday: {}, wednesday: {}, thursday: {}, friday: {}, saturday: {}, sunday: {} },
+        user: {
+          connect: {
+            id: user?.id,
+          },
+        },
+      },
+    })
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        profile: {
+          connect: {
+            id: profile.id,
+          },
+        },
+      },
+    })
   } catch (error) {
     return NextResponse.error()
   }
