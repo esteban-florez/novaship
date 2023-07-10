@@ -1,4 +1,4 @@
-import { ActionButton, NavButton } from '../Buttons'
+import { ActionButton, NavButton } from '../FilterButtons'
 import SearchInput from '../SearchInput'
 
 export default function Filter() {

@@ -4,24 +4,28 @@ import { EllipsisVerticalIcon } from '@heroicons/react/24/solid'
 export default function ProjectDetails() {
   return (
     <>
-      <div className="mt-12 flex flex-col gap-2 rounded-lg bg-white p-5 shadow-md">
-        <div className="relative flex w-full flex-row justify-end gap-6">
-          <div className="absolute -bottom-2 -left-5 grid h-36 w-64 place-items-center rounded-md rounded-bl-none bg-slate-300">
-            <button className="btn-ghost btn">
-              <PlusCircleIcon className="h-8 w-8" />
-              <p>Añadir imagen</p>
+      <div className="grid grid-cols-6 rounded-lg shadow-md">
+        <div className="col-span-6 flex h-36 place-items-center justify-center rounded-lg rounded-b-none bg-neutral-300 md:col-span-2 md:h-full md:rounded-b-lg md:rounded-r-none">
+          <button className="btn-ghost btn">
+            <PlusCircleIcon className="h-6 w-6" />
+            <p className="text-sm">Añadir imagen</p>
+          </button>
+        </div>
+        <div className="col-span-6 flex flex-col rounded-lg rounded-t-none bg-white py-4 md:col-span-4 md:rounded-l-none md:rounded-t-lg">
+          <div className="flex justify-between">
+            <div className="container pl-5">
+              <h3 className="font-title text-base font-bold sm:text-2xl">Mi proyecto</h3>
+              <p className="line-clamp-6 text-xs sm:text-sm">Responsable: Myriam Yaqueno</p>
+              <p className="line-clamp-6 text-xs sm:text-sm">Fecha: 20/06/2023</p>
+            </div>
+            <button className="btn-ghost btn px-0 pr-2">
+              <EllipsisVerticalIcon className="h-8 w-8" />
             </button>
           </div>
-          <div className="flex w-4/6 justify-between">
-            <div className="container pl-2">
-              <h3 className="font-title text-base font-bold sm:text-2xl">Mi proyecto</h3>
-              <p className="-my-1 line-clamp-6 text-base">Responsable: Myriam Yaqueno</p>
-              <p className="line-clamp-6 text-base">Fecha: 20/06/2023</p>
-            </div>
-            <EllipsisVerticalIcon className="h-8 w-8" />
-          </div>
+          <p className="line-clamp-6 px-5 pt-4 text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, cumque deserunt ea impedit necessitatibus esse ab excepturi, possimus debitis deleniti alias aut vitae quidem temporibus cupiditate, autem dolores quo eius?
+          </p>
         </div>
-        <p className="line-clamp-6 p-2 pt-4 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, cumque deserunt ea impedit necessitatibus esse ab excepturi, possimus debitis deleniti alias aut vitae quidem temporibus cupiditate, autem dolores quo eius?</p>
       </div>
     </>
   )

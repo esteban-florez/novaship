@@ -7,11 +7,11 @@ type NavButtonProps = React.PropsWithChildren<{
 }>
 
 export function NavButton({ children, isActive = false }: NavButtonProps) {
-  const activeClasses = 'btn-active bg-white hover:bg-neutral-300'
+  const activeClasses = 'btn-active bg-white border-none rounded-b-none hover:bg-zinc-400'
   const inactiveClasses = 'hover:btn-active btn-ghost hover:'
 
   return (
-    <button className={`${isActive ? activeClasses : inactiveClasses} btn-sm btn text-sm font-semibold normal-case sm:btn-md sm:text-lg`}>
+    <button className={`${isActive ? activeClasses : inactiveClasses} btn-md btn text-sm font-semibold normal-case sm:btn-lg sm:text-lg`}>
       {children}
     </button>
   )

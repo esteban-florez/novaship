@@ -11,17 +11,15 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <>
-      <div className="my-4 grid grid-cols-1 gap-4 px-8 md:grid-cols-6">
-        <div className="md:col-span-4">
+      <div className="my-4 grid grid-cols-10 gap-4 px-6">
+        <div className="col-span-10 lg:col-span-7">
           <ProjectDetails />
           <Filter />
           <Archive />
         </div>
-        <div className="md:col-span-2">
-          <div className="flex flex-col gap-4">
-            <div className="flex h-80 flex-col gap-2 rounded-lg bg-neutral-300 p-5" />
-            <TeamGroup />
-          </div>
+        <div className="hidden gap-4 lg:col-span-3 lg:flex lg:flex-col">
+          <div className="flex h-80 flex-col gap-2 rounded-lg bg-neutral-300 p-5" />
+          <TeamGroup />
         </div>
       </div>
     </>

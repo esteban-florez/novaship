@@ -17,7 +17,7 @@ function Doc() {
 export default function Archive() {
   return (
     <>
-      <div className="flex flex-col gap-2 rounded-lg bg-white p-5 shadow">
+      <div className="flex flex-col gap-2 rounded-lg rounded-tl-none bg-white p-6 shadow">
         <h3 className="font-title text-lg font-bold sm:text-xl">
           Viernes / 30-06-2023
         </h3>
