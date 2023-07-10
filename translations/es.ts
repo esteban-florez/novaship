@@ -7,6 +7,6 @@ export const routes: Record<string, string> = {
   internships: 'Pasantías',
   user: 'Usuario',
   professional: 'Profesional',
-  instute: 'Institución',
+  institute: 'Institución',
   company: 'Compañía',
 }

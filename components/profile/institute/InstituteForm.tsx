@@ -5,8 +5,11 @@ import Toast from '@/components/Toast'
 import ButtonSection from '../ButtonSection'
 import PersonalSection from './PersonalSection'
 import ContactSection from './ContactSection'
+import { type Institute } from '@prisma/client'
 
-export default function InsituteForm() {
+type Props = Pick<Institute, 'name' | 'address' | 'description' | 'email' | 'phone'>
+
+export default function InsituteForm({ name, address, description, email, phone }: Props) {
   const [showAlert, setShowAlert] = useState('none')
 
   const handleCloseToast = () => {
@@ -24,12 +27,12 @@ export default function InsituteForm() {
     setShowAlert('sending')
     event.preventDefault()
     const form = event.target
-    const { action, method } = form
+    const { action } = form
     const formData = new FormData(form)
 
     const response = await fetch(action, {
       body: formData,
-      method,
+      method: 'PUT',
     })
 
     if (response.status === 401) {
@@ -46,8 +49,8 @@ export default function InsituteForm() {
     <form method="POST" onSubmit={handleSubmit} action="/api/profile/institute" className="w-full rounded-lg bg-base-100 p-4">
       {showAlert !== 'none' && FORM_STATUS[showAlert]}
       <h2 className="mb-4 text-2xl font-bold">Perfil Institucional</h2>
-      <PersonalSection />
-      <ContactSection />
+      <PersonalSection name={name} description={description} />
+      <ContactSection phone={phone} address={address} email={email} />
       <ButtonSection />
     </form>
   )
