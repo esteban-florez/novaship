@@ -6,15 +6,9 @@ import BiographySection from './BiographySection'
 import { useState } from 'react'
 import Toast from '@/components/Toast'
 import ButtonSection from '../ButtonSection'
+import { type User } from '@prisma/client'
 
-interface Props {
-  name: string
-  surname: string
-  email: string
-  phone: string
-  address: string
-  bio: string
-}
+type Props = Pick<User, 'name' | 'surname' | 'email' | 'phone' | 'address' | 'bio'>
 
 export default function UserForm({ name, surname, email, phone, address, bio }: Props) {
   const [showAlert, setShowAlert] = useState('none')

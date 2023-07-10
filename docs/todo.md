@@ -5,6 +5,7 @@
 - Convertir "divs decorativos" a SVG
 - Definir los onDelete y onUpdate en Prisma Schema.
 - Hacer middleware de autenticación.
+- Añadir validaciones front y back.
 
   ## Navbar
 
@@ -28,6 +29,8 @@
   ### Professional
 
   - Función para añadir n campos de experiencias.
+  - Crear perfil profesional como opcional.
+  - Quitar la creación automatica de perfil en /signup
 
   ## Toast
 

@@ -4,10 +4,10 @@ import { type Prisma } from '@prisma/client'
 import { getServerSession } from 'next-auth'
 import { NextResponse } from 'next/server'
 
-export async function PUT(req: Request) {
+export async function POST(req: Request) {
   const session = await getServerSession(authOptions)
   const body = await req.formData()
-  const data = Object.fromEntries(body.entries()) as unknown as Prisma.ProfileUpdateInput
+  const data = Object.fromEntries(body.entries()) as unknown as Prisma.CompanyCreateInput
 
   try {
     const user = await prisma.user.findUnique({
@@ -16,11 +16,18 @@ export async function PUT(req: Request) {
       },
     })
 
-    await prisma.profile.update({
-      where: {
+    if (user === null) {
+      return NextResponse.json({ message: 'Must sign in' }, { status: 401 })
+    }
+
+    const company = await prisma.company.create({ data })
+
+    await prisma.employee.create({
+      data: {
+        role: 'OWNER',
+        companyId: company.id,
         userId: user?.id,
       },
-      data,
     })
   } catch (error) {
     return NextResponse.json('error', {
