@@ -6,7 +6,7 @@ function Members() {
     <>
       <div className="rounded-xl bg-base-200 px-6 py-3">
         <div className="flex flex-row gap-2">
-          <AvatarIcon username="Myriam Yaqueno" status showStatus usernameLength={2} />
+          <AvatarIcon username="Myriam Yaqueno" status showStatus />
           <div className="flex flex-col">
             <h3 className="font-title text-base font-bold sm:text-lg">Myriam Yaqueno</h3>
             <p className="line-clamp-6 text-xs">Miembro</p>

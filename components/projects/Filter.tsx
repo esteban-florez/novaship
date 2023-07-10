@@ -13,7 +13,7 @@ function NavButton({ children, isActive = false }: NavButtonProps) {
   const inactiveClasses = 'hover:btn-active hover:'
 
   return (
-    <button className={`${isActive ? activeClasses : inactiveClasses} btn-ghost btn-sm btn text-sm font-semibold normal-case sm:btn-md sm:text-lg`}>
+    <button className={`${isActive ? activeClasses : inactiveClasses} btn-ghost btn-sm btn text-sm font-semibold sm:btn-md sm:text-lg`}>
       {children}
     </button>
   )

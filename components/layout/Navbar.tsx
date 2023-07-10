@@ -26,7 +26,6 @@ export default function Navbar() {
           </div>
         </Link>
         <NotificationDropdown />
-        {/* @ts-expect-error Server Component */}
         <ProfileDropdown />
       </div>
     </nav>

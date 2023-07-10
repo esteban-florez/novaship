@@ -6,7 +6,6 @@ interface Props {
   image?: string | null
   status?: boolean
   showStatus?: boolean
-  usernameLength: number
   bg?: string
   text?: string
 }
@@ -16,11 +15,10 @@ export default function AvatarIcon({
   image = null,
   status = false,
   showStatus = false,
-  usernameLength,
   bg = 'bg-primary',
   text = 'text-white',
 }: Props) {
-  const avatarContent = image !== null ? <Image src={image} alt="Foto de perfil" /> : <span>{capitalizeString(username, usernameLength)}</span>
+  const avatarContent = image !== null ? <Image src={image} alt="Foto de perfil" /> : <span>{capitalizeString(username, 2)}</span>
 
   return (
     <div className={`placeholder avatar ${(status !== null) ? 'relative' : ''}`}>
@@ -31,7 +29,7 @@ export default function AvatarIcon({
         <span className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-neutral">
           <span
             className={`absolute left-0.5 top-0.5 h-3 w-3 rounded-full ${
-              status ? 'bg-green-300' : 'bg-gray-200'
+              status ? 'bg-green-300' : 'bg-neutral-200'
             }`}
           />
         </span>

@@ -5,13 +5,12 @@ import ProfileDropdownMenu from './ProfileDropdownMenu'
 
 export default async function ProfileDropdown() {
   const session = await getServerSession(authOptions)
-  console.log(session)
   const username = session?.user?.name ?? ''
 
   return (
     <div className="dropdown-end dropdown z-20">
       <label tabIndex={0} className="btn-ghost btn-circle btn">
-        <AvatarIcon username={username} usernameLength={2} />
+        <AvatarIcon username={username} />
       </label>
       <ProfileDropdownMenu username={username} />
     </div>

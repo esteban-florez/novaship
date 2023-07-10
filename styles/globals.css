@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.btn {
+  @apply normal-case;
+}
+
 .flex-center {
   @apply flex items-center justify-center;
 }
