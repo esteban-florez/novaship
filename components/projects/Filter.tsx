@@ -1,26 +1,33 @@
+import { AdjustmentsHorizontalIcon, PlusIcon } from '@heroicons/react/24/outline'
 import { ActionButton, NavButton } from '../FilterButtons'
 import SearchInput from '../SearchInput'
 
 export default function Filter() {
   return (
-    <section className="my-8 mb-4 flex w-full flex-wrap items-center gap-2">
-      <div className="flex-center flex-wrap gap-x-2">
-        <NavButton isActive>
-          Todos
-        </NavButton>
-        <NavButton>
-          Mis proyectos
-        </NavButton>
-      </div>
-      <div className="flex w-full items-center justify-center gap-3 sm:ms-auto sm:w-auto sm:justify-end">
-        <SearchInput />
-        <ActionButton color="btn-secondary">
-          Filtrar
-        </ActionButton>
-        <ActionButton color="btn-primary">
-          Agregar
-        </ActionButton>
-      </div>
-    </section>
+    <>
+      <section className="mt-5 flex w-full flex-col flex-wrap gap-2 rounded-lg xl:flex-row xl:items-center">
+        <div className="order-2 gap-x-2 xl:order-none">
+          <NavButton isActive>
+            Mis proyectos
+          </NavButton>
+          <NavButton>
+            Todos
+          </NavButton>
+        </div>
+        <div className="order-1 flex w-full flex-col items-center justify-between gap-3 sm:ms-auto sm:flex-row sm:pb-3 xl:w-auto">
+          <SearchInput />
+          <div className="flex w-full flex-row justify-between gap-2 pb-2 sm:w-auto sm:pb-0">
+            <ActionButton color="btn-secondary">
+              <AdjustmentsHorizontalIcon className="h-6 w-6 sm:flex" />
+              <p className="flex sm:hidden md:flex md:flex-row">Filtrar</p>
+            </ActionButton>
+            <ActionButton color="btn-primary">
+              <PlusIcon className="flex h-6 w-6" />
+              <p className="flex sm:hidden md:flex md:flex-row">Agregar</p>
+            </ActionButton>
+          </div>
+        </div>
+      </section>
+    </>
   )
 }
