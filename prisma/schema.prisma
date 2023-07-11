@@ -237,7 +237,7 @@ model Offer {
   description  String        @db.Text
   mode         Mode
   hours        Int?
-  schedule     Schedule?
+  schedule     Schedule
   salary       Float
   target       Target
   company      Company       @relation(fields: [companyId], references: [id])
