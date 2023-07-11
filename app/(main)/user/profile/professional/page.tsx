@@ -2,7 +2,7 @@ import AvatarIcon from '@/components/AvatarIcon'
 import GoBackBtn from '@/components/GoBackBtn'
 import { UserCircleIcon } from '@heroicons/react/24/outline'
 
-export default function ViewUserProfessionalPage() {
+export default function ViewUserProfessionalProfilePage() {
   return (
     <>
       <div className="m-4 flex justify-end rounded-md bg-white p-4">
