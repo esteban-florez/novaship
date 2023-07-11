@@ -7,6 +7,7 @@
 - Hacer middleware de autenticación.
 - Añadir validaciones front y back.
 - Mover "/projects-details" a "/projects/:id/"
+- DRY en los forms del perfil.
 
   ## Navbar
 

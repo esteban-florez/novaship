@@ -32,12 +32,12 @@ model User {
 }
 
 model Membership {
-  id             Int             @id @default(autoincrement())
+  id             String          @id @default(cuid())
   isLeader       Boolean         @default(false)
   user           User            @relation(fields: [userId], references: [id])
   userId         String
   project        Project         @relation(fields: [projectId], references: [id])
-  projectId      Int
+  projectId      String
   interviews     Interview[]
   files          File[]
   participations Participation[]
@@ -46,13 +46,13 @@ model Membership {
 }
 
 model Project {
-  id          Int          @id @default(autoincrement())
+  id          String       @id @default(cuid())
   title       String       @unique
   description String
   image       String?      @unique
   visibility  Visibility
   company     Company?     @relation(fields: [companyId], references: [id])
-  companyId   Int?
+  companyId   String?
   memberships Membership[]
   fields      Field[]
   tasks       Task[]
@@ -64,24 +64,24 @@ model Project {
 }
 
 model Participation {
-  id           Int        @id @default(autoincrement())
+  id           String     @id @default(cuid())
   isLeader     Boolean    @default(false)
   membership   Membership @relation(fields: [membershipId], references: [id])
-  membershipId Int
+  membershipId String
   task         Task       @relation(fields: [taskId], references: [id])
-  taskId       Int
+  taskId       String
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 }
 
 model Task {
-  id             Int             @id @default(autoincrement())
+  id             String          @id @default(cuid())
   title          String
   description    String
   status         TaskStatus?
   subtasks       Subtask[]
   project        Project         @relation(fields: [projectId], references: [id])
-  projectId      Int
+  projectId      String
   participations Participation[]
   messages       Message[]
   createdAt      DateTime        @default(now())
@@ -89,28 +89,28 @@ model Task {
 }
 
 model Subtask {
-  id          Int        @id @default(autoincrement())
+  id          String     @id @default(cuid())
   title       String
   description String
   status      TaskStatus @default(PENDING)
   task        Task       @relation(fields: [taskId], references: [id])
-  taskId      Int
+  taskId      String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
 
 model Release {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   preview   String?  @unique
   price     Float
   project   Project  @relation(fields: [projectId], references: [id])
-  projectId Int      @unique
+  projectId String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Message {
-  id         Int       @id @default(autoincrement())
+  id         String    @id @default(cuid())
   content    String    @db.Text
   seen       DateTime?
   sender     User      @relation(name: "sender", fields: [senderId], references: [id])
@@ -118,26 +118,26 @@ model Message {
   receiver   User?     @relation(name: "receiver", fields: [receiverId], references: [id])
   receiverId String?
   project    Project?  @relation(fields: [projectId], references: [id])
-  projectId  Int?
+  projectId  String?
   task       Task?     @relation(fields: [taskId], references: [id])
-  taskId     Int?
+  taskId     String?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
 
 model File {
-  id        Int        @id @default(autoincrement())
+  id        String     @id @default(cuid())
   src       String
   project   Project    @relation(fields: [projectId], references: [id])
-  projectId Int
+  projectId String
   author    Membership @relation(fields: [authorId], references: [id])
-  authorId  Int
+  authorId  String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }
 
 model Profile {
-  id          Int          @id @default(autoincrement())
+  id          String       @id @default(cuid())
   // Quizás title pueda ser una tabla de titulaciones, por ahora un string normal.
   title       String
   curriculum  String?
@@ -156,7 +156,7 @@ model Profile {
 }
 
 model Experience {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(cuid())
   name        String
   role        String
   description String?  @db.Text
@@ -164,13 +164,13 @@ model Experience {
   from        DateTime
   to          DateTime
   profile     Profile  @relation(fields: [profileId], references: [id])
-  profileId   Int
+  profileId   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
 model Company {
-  id            Int        @id @default(autoincrement())
+  id            String     @id @default(cuid())
   name          String
   description   String     @db.Text
   email         String     @unique
@@ -188,51 +188,51 @@ model Company {
 }
 
 model Employee {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   role      Role?
   user      User     @relation(fields: [userId], references: [id])
   userId    String
   company   Company  @relation(fields: [companyId], references: [id])
-  companyId Int
+  companyId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Review {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   content   String   @db.Text
   profile   Profile  @relation(fields: [profileId], references: [id])
-  profileId Int
+  profileId String
   company   Company  @relation(fields: [companyId], references: [id])
-  companyId Int
+  companyId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Candidate {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(cuid())
   description  String?       @db.Text
   profile      Profile       @relation(fields: [profileId], references: [id])
-  profileId    Int
+  profileId    String
   postulations Postulation[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }
 
 model Intern {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(cuid())
   description  String?       @db.Text
   profile      Profile       @relation(fields: [profileId], references: [id])
-  profileId    Int
+  profileId    String
   postulations Postulation[]
   institue     Institute     @relation(fields: [instituteId], references: [id])
-  instituteId  Int
+  instituteId  String
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }
 
 model Offer {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(cuid())
   title        String
   description  String        @db.Text
   mode         Mode
@@ -241,7 +241,7 @@ model Offer {
   salary       Float
   target       Target
   company      Company       @relation(fields: [companyId], references: [id])
-  companyId    Int
+  companyId    String
   fields       Field[]
   skills       Skill[]
   postulations Postulation[]
@@ -250,14 +250,14 @@ model Offer {
 }
 
 model Postulation {
-  id          Int                @id @default(autoincrement())
+  id          String             @id @default(cuid())
   status      PostulationStatus?
   offer       Offer              @relation(fields: [offerId], references: [id])
-  offerId     Int
+  offerId     String
   candidate   Candidate?         @relation(fields: [candidateId], references: [id])
-  candidateId Int?
+  candidateId String?
   intern      Intern?            @relation(fields: [internId], references: [id])
-  internId    Int?
+  internId    String?
   interviews  Interview[]
   // quizas podría ligarse a un reclutador de la empresa
   createdAt   DateTime           @default(now())
@@ -265,20 +265,20 @@ model Postulation {
 }
 
 model Interview {
-  id            Int         @id @default(autoincrement())
+  id            String      @id @default(cuid())
   date          DateTime
   link          String
   platform      Platform
   interviewer   Membership  @relation(fields: [membershipId], references: [id])
-  membershipId  Int
+  membershipId  String
   postulation   Postulation @relation(fields: [postulationId], references: [id])
-  postulationId Int
+  postulationId String
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 }
 
 model Institute {
-  id            Int       @id @default(autoincrement())
+  id            String    @id @default(cuid())
   name          String
   description   String    @db.Text
   address       String
@@ -295,7 +295,7 @@ model Institute {
 }
 
 model Field {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(cuid())
   title     String    @unique
   projects  Project[]
   profiles  Profile[]
@@ -305,7 +305,7 @@ model Field {
 }
 
 model Skill {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(cuid())
   title     String
   profiles  Profile[]
   offers    Offer[]

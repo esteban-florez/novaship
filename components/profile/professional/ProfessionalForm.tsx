@@ -50,7 +50,8 @@ export default function ProfessionalForm({ title, description }: Props) {
   return (
     <form method="POST" onSubmit={handleSubmit} action="/api/profile/professional" className="w-full rounded-lg bg-base-100 p-4">
       {showAlert !== 'none' && FORM_STATUS[showAlert]}
-      <h2 className="mb-4 text-2xl font-bold">Perfil Profesional</h2>
+      <h2 className="text-2xl font-bold">Perfil Profesional</h2>
+      <div className="divider divider-vertical mt-2" />
       <TitleSection title={title} />
       <AboutMeSection description={description} />
       <ExperienceSection />

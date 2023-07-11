@@ -49,7 +49,8 @@ export default function UserForm({ name, surname, email, phone, address, bio }: 
   return (
     <form method="POST" onSubmit={handleSubmit} action="/api/profile/user" className="w-full rounded-lg bg-base-100 p-4">
       {showAlert !== 'none' && FORM_STATUS[showAlert]}
-      <h2 className="mb-4 text-2xl font-bold">Perfil Personal</h2>
+      <h2 className="text-2xl font-bold">Perfil Personal</h2>
+      <div className="divider divider-vertical mt-2" />
       <PersonalSection name={name} surname={surname} />
       <ContactSection email={email} phone={phone} address={address} />
       <BiographySection bio={bio} />
