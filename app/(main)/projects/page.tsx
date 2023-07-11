@@ -14,11 +14,11 @@ export default function ProjectsPage() {
     <>
       <div className="px-4">
         <Filter />
-        <section className="mx-auto mb-2 w-full columns-1 gap-4 rounded-lg rounded-tl-none bg-white p-6">
+        <section className="mx-auto w-full columns-1 gap-4 rounded-lg rounded-tl-none bg-white p-6 pb-4">
           {projects.map((project) => {
             return (
               // eslint-disable-next-line react/jsx-key
-              <section className="flex w-full flex-col gap-3">
+              <section className="mb-3 flex w-full flex-col gap-3">
                 <Card
                   key={project.id}
                   title={project.title}
