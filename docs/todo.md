@@ -9,6 +9,7 @@
 - Mover "/projects-details" a "/projects/:id/"
 - DRY en los forms del perfil.
 - Correr "prisma migrate dev" (migracion no funcionando).
+- Instalar sonner (Reemplazando el <Toast>)
 
   ## Navbar
 
@@ -37,5 +38,4 @@
 
   ## Toast
 
-  - Ajustar el ancho del mensaje
-  - Instalar sonner
+  - Ajustar el ancho del mensaje  

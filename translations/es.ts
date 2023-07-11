@@ -1,6 +1,7 @@
 export const routes: Record<string, string> = {
   home: 'Inicio',
   offers: 'Ofertas',
+  offer: 'Oferta',
   projects: 'Proyectos',
   chats: 'Conversaciones',
   profile: 'Perfil',
@@ -9,4 +10,6 @@ export const routes: Record<string, string> = {
   professional: 'Profesional',
   institute: 'Institución',
   company: 'Compañía',
+  create: 'Registrar',
+  project: 'Proyecto',
 }
