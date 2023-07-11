@@ -45,7 +45,8 @@ export default function InsituteForm() {
   return (
     <form method="POST" onSubmit={handleSubmit} action="/api/profile/company" className="w-full rounded-lg bg-base-100 p-4">
       {showAlert !== 'none' && FORM_STATUS[showAlert]}
-      <h2 className="mb-4 text-2xl font-bold">Perfil Empresarial</h2>
+      <h2 className="text-2xl font-bold">Perfil Empresarial</h2>
+      <div className="divider divider-vertical mt-2" />
       <PersonalSection />
       <ContactSection />
       <ButtonSection />

@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 interface Props {
   description: string
   owner: string
@@ -18,9 +20,9 @@ export default function Content({ description, owner, ubication }: Props) {
             <small className="-mt-1 text-xs">{ubication}</small>
           </div>
         </div>
-        <button className="btn-warning btn-sm btn w-full text-xs sm:w-2/6">
+        <Link href="/projects/project" className="btn-warning btn-sm btn w-full text-xs sm:w-2/6">
           Ver más
-        </button>
+        </Link>
       </div>
     </main>
   )

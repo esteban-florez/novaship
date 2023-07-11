@@ -1,6 +1,9 @@
 import Filter from '@/components/projects/Filter'
-import Project from '@/components/projects/Project'
+import data from './data-projects.json'
 import { type Metadata } from 'next'
+import Card from '@/components/projects/Card'
+
+const projects = data
 
 export const metadata: Metadata = {
   title: 'Proyectos',
@@ -9,11 +12,23 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <>
-      <div className="mb-4 px-8">
+      <div className="px-4">
         <Filter />
-        <div className="mx-auto my-4 w-full columns-1 gap-4 md:columns-2 lg:columns-3">
-          <Project />
-        </div>
+        <section className="mx-auto w-full columns-1 gap-4 rounded-lg rounded-tl-none bg-white p-6 pb-4">
+          {projects.map((project) => {
+            return (
+              // eslint-disable-next-line react/jsx-key
+              <section className="mb-3 flex w-full flex-col gap-3">
+                <Card
+                  key={project.id}
+                  title={project.title}
+                  owner={project.owner}
+                  status={project.status}
+                />
+              </section>
+            )
+          })}
+        </section>
       </div>
     </>
   )

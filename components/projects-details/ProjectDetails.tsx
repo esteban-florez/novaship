@@ -5,8 +5,8 @@ export default function ProjectDetails() {
   return (
     <>
       <div className="grid grid-cols-6 rounded-lg shadow-md">
-        <div className="col-span-6 flex h-36 place-items-center justify-center rounded-lg rounded-b-none bg-neutral-300 md:col-span-2 md:h-full md:rounded-b-lg md:rounded-r-none">
-          <button className="btn-ghost btn">
+        <div className="col-span-6 flex h-36 place-items-center justify-center rounded-lg rounded-b-none bg-neutral md:col-span-2 md:h-full md:rounded-b-lg md:rounded-r-none">
+          <button className="btn-ghost btn text-white">
             <PlusCircleIcon className="h-6 w-6" />
             <p className="text-sm">Añadir imagen</p>
           </button>

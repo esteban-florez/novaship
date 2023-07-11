@@ -1,11 +1,12 @@
+import Link from 'next/link'
 import SearchInput from '../SearchInput'
 import FilterButtons from './Carrousel/FilterButtons'
 
 function PublishButton() {
   return (
-    <button className="btn-primary btn-sm btn h-8 w-full py-2 sm:w-40 md:w-auto">
+    <Link href="/offers/create" className="btn-primary btn-sm btn h-8 w-full py-2 sm:w-40 md:w-auto">
       Publicar
-    </button>
+    </Link>
   )
 }
 
