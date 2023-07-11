@@ -7,7 +7,7 @@ interface Props {
 
 export default function Footer({ owner, ubication }: Props) {
   return (
-    <footer className="mt-4 flex flex-col justify-between gap-2 sm:flex-row md:w-11/12 lg:w-2/5 lg:gap-8">
+    <footer className="mt-4 flex flex-col justify-between gap-2 sm:flex-row md:w-5/6 lg:w-2/5 lg:gap-8">
       <div className="order-1 flex flex-row items-center justify-start gap-2 rounded-lg lg:order-none">
         <div className="placeholder avatar">
           <div className="h-8 w-8 rounded-full bg-white text-neutral-content lg:h-10 lg:w-10">

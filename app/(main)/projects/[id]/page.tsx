@@ -18,7 +18,7 @@ export default function ProjectsPage() {
           <Archive />
         </div>
         <div className="hidden gap-4 lg:col-span-3 lg:flex lg:flex-col">
-          <div className="flex h-80 flex-col gap-2 rounded-lg bg-neutral-300 p-5" />
+          <div className="flex h-72 flex-col gap-2 rounded-lg bg-neutral-300 p-5" />
           <TeamGroup />
         </div>
       </div>

@@ -17,7 +17,7 @@ export default function Offer({
   ubication,
 }: Props) {
   return (
-    <section className="mb-4 break-inside-avoid rounded-xl bg-base-200 shadow">
+    <section className="mb-4 break-inside-avoid rounded-xl border border-solid border-zinc-300 shadow">
       <div className="relative flex w-full rounded-xl">
         <div className="w-full flex-col">
           <Header title={title} categories={categories} />
