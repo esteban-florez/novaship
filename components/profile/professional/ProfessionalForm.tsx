@@ -8,6 +8,8 @@ import AboutMeSection from './AboutMeSection'
 import ExperienceSection from './ExperienceSection'
 import { type Profile } from '@prisma/client'
 import ScheduleSection from './ScheduleSection'
+import Link from 'next/link'
+import { EyeIcon } from '@heroicons/react/24/outline'
 
 type Props = Pick<Profile, 'title' | 'description'>
 
@@ -50,7 +52,14 @@ export default function ProfessionalForm({ title, description }: Props) {
   return (
     <form method="POST" onSubmit={handleSubmit} action="/api/profile/professional" className="w-full rounded-lg bg-base-100 p-4">
       {showAlert !== 'none' && FORM_STATUS[showAlert]}
-      <h2 className="mb-4 text-2xl font-bold">Perfil Profesional</h2>
+      <div className="mb-4 flex flex-row items-center justify-between">
+        <h2 className="text-2xl font-bold">Perfil Profesional</h2>
+        <div className="tooltip" data-tip="Ver perfil">
+          <Link href="/user/profile/professional" className="btn-ghost btn">
+            <EyeIcon className="h-6 w-6" />
+          </Link>
+        </div>
+      </div>
       <TitleSection title={title} />
       <AboutMeSection description={description} />
       <ExperienceSection />
