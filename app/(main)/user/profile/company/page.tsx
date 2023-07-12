@@ -88,8 +88,8 @@ export default function ViewCompanyProfilePage() {
                     </label>
                   </th>
                   <th>Nombre</th>
-                  <th>Director</th>
-                  <th>Pasantes</th>
+                  <th>Gerente</th>
+                  <th>Empleados</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -104,11 +104,11 @@ export default function ViewCompanyProfilePage() {
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
-                          <AvatarIcon username="US" />
+                          <AvatarIcon username="DC" />
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">Universidad Santander</div>
+                        <div className="font-bold">Distribuidora Carcy</div>
                       </div>
                     </div>
                   </td>
@@ -132,11 +132,11 @@ export default function ViewCompanyProfilePage() {
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
-                          <AvatarIcon username="UC" />
+                          <AvatarIcon username="FU" />
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">Universidad de Caracas</div>
+                        <div className="font-bold">Farmacéutica Unión</div>
                       </div>
                     </div>
                   </td>
@@ -160,11 +160,11 @@ export default function ViewCompanyProfilePage() {
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
-                          <AvatarIcon username="TC" />
+                          <AvatarIcon username="CA" />
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">Tecnológico Central de Vargas</div>
+                        <div className="font-bold">Comercializadora Almíbar</div>
                       </div>
                     </div>
                   </td>
