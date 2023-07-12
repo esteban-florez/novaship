@@ -4,7 +4,7 @@ import { type Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 
 export const metadata: Metadata = {
-  title: 'Perfil profesional',
+  title: 'Registrar perfil profesional',
 }
 
 export default async function ProfessionalProfilePage() {

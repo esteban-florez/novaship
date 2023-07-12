@@ -16,6 +16,9 @@ export default function Navbar() {
       </div>
 
       <div className="navbar-end mr-4 gap-1">
+        <div className="me-4">
+          {new Date().toLocaleDateString('es', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </div>
         <Link
           href="/chats"
           className="btn-ghost btn-circle btn"

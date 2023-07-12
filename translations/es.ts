@@ -12,4 +12,5 @@ export const routes: Record<string, string> = {
   company: 'Compañía',
   create: 'Registrar',
   project: 'Proyecto',
+  admin: 'Administración',
 }

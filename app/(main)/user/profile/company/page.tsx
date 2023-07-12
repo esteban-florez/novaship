@@ -1,14 +1,13 @@
 import AvatarIcon from '@/components/AvatarIcon'
 import GoBackBtn from '@/components/GoBackBtn'
-import InputSimple from '@/components/forms/inputs/Input'
-import { BuildingOfficeIcon, EnvelopeIcon, PlusCircleIcon, PlusIcon, StarIcon, UsersIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import { AcademicCapIcon, EnvelopeIcon, PlusCircleIcon, StarIcon, UsersIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Perfil institucional',
+  title: 'Perfil empresarial',
 }
 
-export default function InstituteProfilePage() {
+export default function ViewCompanyProfilePage() {
   return (
     <>
       <div className="m-4 flex justify-end rounded-md bg-white p-4">
@@ -26,7 +25,7 @@ export default function InstituteProfilePage() {
           </div>
           <div className="flex w-full flex-col md:w-3/4">
             <div className="p-4">
-              <h4 className="border-b text-lg font-bold">Universidad Santander</h4>
+              <h4 className="border-b text-lg font-bold">Comercializadora Bolívar</h4>
               <p className="mt-4 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, nemo dolores ab quasi dolorum sapiente autem veritatis eius dicta eos, aperiam id praesentium quisquam fuga illo, nam maxime placeat porro.</p>
             </div>
             <div className="flex flex-col gap-4 p-4 md:flex-row">
@@ -36,8 +35,8 @@ export default function InstituteProfilePage() {
                     <StarIcon className="h-6 w-6 fill-secondary" />
                   </div>
                   <div className="ms-4 flex-col">
-                    <h6 className="text-sm font-semibold md:text-base">Director</h6>
-                    <span className="text-xs md:text-base">Fredy Gómez</span>
+                    <h6 className="text-sm font-semibold md:text-base">Gerente</h6>
+                    <span className="text-xs md:text-base">José Álvarez</span>
                   </div>
                 </div>
                 <div className="flex rounded-md border bg-gray-100 p-4 shadow">
@@ -46,7 +45,7 @@ export default function InstituteProfilePage() {
                   </div>
                   <div className="ms-4 flex-col">
                     <h6 className="text-sm font-semibold md:text-base">Correo electrónico</h6>
-                    <span className="text-xs md:text-base">institucional@gmail.com</span>
+                    <span className="text-xs md:text-base">empresarial@gmail.com</span>
                   </div>
                 </div>
               </div>
@@ -56,17 +55,17 @@ export default function InstituteProfilePage() {
                     <UsersIcon className="h-6 w-6 fill-secondary" />
                   </div>
                   <div className="ms-4 flex-col">
-                    <h6 className="text-sm font-semibold md:text-base">Pasantes afiliadas</h6>
-                    <span className="text-xs md:text-base">109</span>
+                    <h6 className="text-sm font-semibold md:text-base">Empleados</h6>
+                    <span className="text-xs md:text-base">53</span>
                   </div>
                 </div>
                 <div className="flex rounded-md border bg-gray-100 p-4 shadow">
                   <div className="flex-center flex-col">
-                    <BuildingOfficeIcon className="h-6 w-6 fill-secondary" />
+                    <AcademicCapIcon className="h-6 w-6 fill-secondary" />
                   </div>
                   <div className="ms-4 flex-col">
-                    <h6 className="text-sm font-semibold md:text-base">Empresas afiliadas</h6>
-                    <span className="text-xs md:text-base">6</span>
+                    <h6 className="text-sm font-semibold md:text-base">Instituciones afiliadas</h6>
+                    <span className="text-xs md:text-base">11</span>
                   </div>
                 </div>
               </div>
@@ -76,39 +75,7 @@ export default function InstituteProfilePage() {
         <div className="mt-3 border-t p-4">
           <div className="flex items-center justify-between">
             <div className="flex-col">
-              <h4 className="font-semibold">Pasantes</h4>
-            </div>
-            <div className="flex-col">
-              <label htmlFor="addIntern" className="btn-primary btn-sm btn border-none px-6">
-                <PlusIcon className="h-6 w-6" />
-                Añadir pasantes
-              </label>
-              <input type="checkbox" id="addIntern" className="modal-toggle" />
-              <div className="modal p-0">
-                <div className="modal-box p-0">
-                  <h3 className="bg-primary p-4 text-center text-lg font-bold text-white">Listado de pasantes</h3>
-                  <div className="px-4 py-2">
-                    <InputSimple id="" label="Pasantes" name="" placeholder="José Gómez" />
-                    <h6 className="mt-4 font-semibold">Pasantes seleccionados (3)</h6>
-                    <div className="mt-2 flex items-center justify-between rounded-md border bg-gray-100 p-2">
-                      <p>Juan Montes</p>
-                      <XMarkIcon className="h-6 w-6" />
-                    </div>
-                    <div className="mt-2 flex items-center justify-between rounded-md border bg-gray-100 p-2">
-                      <p>Andrea Silva</p>
-                      <XMarkIcon className="h-6 w-6" />
-                    </div>
-                    <div className="mt-2 flex items-center justify-between rounded-md border bg-gray-100 p-2">
-                      <p>Lucas Gómez</p>
-                      <XMarkIcon className="h-6 w-6" />
-                    </div>
-                  </div>
-                  <div className="modal-action p-4">
-                    <button className="btn-primary btn-sm btn px-6">Afiliar</button>
-                    <label htmlFor="addIntern" className="btn-sm btn px-6">Cerrar</label>
-                  </div>
-                </div>
-              </div>
+              <h4 className="font-semibold">Instituciones</h4>
             </div>
           </div>
           <div className="overflow-x-auto">
@@ -121,6 +88,9 @@ export default function InstituteProfilePage() {
                     </label>
                   </th>
                   <th>Nombre</th>
+                  <th>Gerente</th>
+                  <th>Empleados</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -134,12 +104,21 @@ export default function InstituteProfilePage() {
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
-                          <AvatarIcon username="AT" />
+                          <AvatarIcon username="DC" />
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">Andrés Torres</div>
+                        <div className="font-bold">Distribuidora Carcy</div>
                       </div>
+                    </div>
+                  </td>
+                  <td>Pepe Gómez</td>
+                  <td>102</td>
+                  <td>
+                    <div className="tooltip" data-tip="Remover">
+                      <button className="btn-ghost btn">
+                        <XMarkIcon className="h-6 w-6" />
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -153,12 +132,21 @@ export default function InstituteProfilePage() {
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
-                          <AvatarIcon username="AA" />
+                          <AvatarIcon username="FU" />
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">Andrea Alvarado</div>
+                        <div className="font-bold">Farmacéutica Unión</div>
                       </div>
+                    </div>
+                  </td>
+                  <td>Andrea Valles</td>
+                  <td>49</td>
+                  <td>
+                    <div className="tooltip" data-tip="Remover">
+                      <button className="btn-ghost btn">
+                        <XMarkIcon className="h-6 w-6" />
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -172,31 +160,21 @@ export default function InstituteProfilePage() {
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
-                          <AvatarIcon username="LM" />
+                          <AvatarIcon username="CA" />
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">Lucía Montes</div>
+                        <div className="font-bold">Comercializadora Almíbar</div>
                       </div>
                     </div>
                   </td>
-                </tr>
-                <tr className="hover">
-                  <th>
-                    <label>
-                      <input type="checkbox" className="checkbox" />
-                    </label>
-                  </th>
+                  <td>Marta Torres</td>
+                  <td>67</td>
                   <td>
-                    <div className="flex items-center space-x-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <AvatarIcon username="PG" />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-bold">Pedro Gómez</div>
-                      </div>
+                    <div className="tooltip" data-tip="Remover">
+                      <button className="btn-ghost btn">
+                        <XMarkIcon className="h-6 w-6" />
+                      </button>
                     </div>
                   </td>
                 </tr>
