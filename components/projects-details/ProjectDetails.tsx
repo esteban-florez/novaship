@@ -23,7 +23,7 @@ export default function ProjectDetails() {
             </button>
           </div>
           <p className="line-clamp-6 px-5 pt-4 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, cumque deserunt ea impedit necessitatibus esse ab excepturi, possimus debitis deleniti alias aut vitae quidem temporibus cupiditate, autem dolores quo eius?
+            El siguiente sistema se esta realizando con el fin de tener una contabilidad más organizada
           </p>
         </div>
       </div>
