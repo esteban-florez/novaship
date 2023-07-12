@@ -52,14 +52,14 @@ export default function ProfessionalForm({ title, description }: Props) {
   return (
     <form method="POST" onSubmit={handleSubmit} action="/api/profile/professional" className="w-full rounded-lg bg-base-100 p-4">
       {showAlert !== 'none' && FORM_STATUS[showAlert]}
-      <div className="mb-4 flex flex-row items-center justify-between">
+      <div className="flex flex-row items-center justify-between">
         <h2 className="text-2xl font-bold">Perfil Profesional</h2>
-        <div className="tooltip" data-tip="Ver perfil">
-          <Link href="/user/profile/professional" className="btn-ghost btn">
-            <EyeIcon className="h-6 w-6" />
-          </Link>
-        </div>
+        <Link href="/user/profile/professional" className="btn-secondary btn-sm btn border-none px-6">
+          <EyeIcon className="h-6 w-6" />
+          Ver perfil
+        </Link>
       </div>
+      <div className="divider divider-vertical mt-2" />
       <TitleSection title={title} />
       <AboutMeSection description={description} />
       <ExperienceSection />

@@ -8,8 +8,13 @@ import ContactSection from './ContactSection'
 import { type Institute } from '@prisma/client'
 import Link from 'next/link'
 import { EyeIcon } from '@heroicons/react/24/outline'
+import { type Metadata } from 'next'
 
 type Props = Pick<Institute, 'name' | 'address' | 'description' | 'email' | 'phone'>
+
+export const metadata: Metadata = {
+  title: 'Registrar institución',
+}
 
 export default function InsituteForm({ name, address, description, email, phone }: Props) {
   const [showAlert, setShowAlert] = useState('none')
@@ -50,14 +55,14 @@ export default function InsituteForm({ name, address, description, email, phone 
   return (
     <form method="POST" onSubmit={handleSubmit} action="/api/profile/institute" className="w-full rounded-lg bg-base-100 p-4">
       {showAlert !== 'none' && FORM_STATUS[showAlert]}
-      <div className="mb-4 flex flex-row items-center justify-between">
+      <div className="flex flex-row items-center justify-between">
         <h2 className="text-2xl font-bold">Perfil Institucional</h2>
-        <div className="tooltip" data-tip="Ver perfil">
-          <Link href="/user/profile/institute" className="btn-ghost btn">
-            <EyeIcon className="h-6 w-6" />
-          </Link>
-        </div>
+        <Link href="/user/profile/institute" className="btn-secondary btn-sm btn border-none px-6">
+          <EyeIcon className="h-6 w-6" />
+          Ver perfil
+        </Link>
       </div>
+      <div className="divider divider-vertical mt-2" />
       <PersonalSection name={name} description={description} />
       <ContactSection phone={phone} address={address} email={email} />
       <ButtonSection />

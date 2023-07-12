@@ -1,8 +1,12 @@
 import AvatarIcon from '@/components/AvatarIcon'
 import GoBackBtn from '@/components/GoBackBtn'
 import InputSimple from '@/components/forms/inputs/Input'
-import { PhotoIcon } from '@heroicons/react/24/outline'
-import { BuildingOfficeIcon, EnvelopeIcon, StarIcon, UsersIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import { BuildingOfficeIcon, EnvelopeIcon, PlusCircleIcon, PlusIcon, StarIcon, UsersIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import { type Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Perfil institucional',
+}
 
 export default function ViewUserInstituteProfilePage() {
   return (
@@ -12,9 +16,12 @@ export default function ViewUserInstituteProfilePage() {
       </div>
       <div className="m-4 rounded-md bg-white p-4">
         <div className="flex w-full flex-col gap-4 md:flex-row">
-          <div className="flex-center flex w-full flex-row text-center md:w-1/4 md:flex-col">
-            <div className="flex-center w-full rounded-md border shadow">
-              <PhotoIcon className="h-64 w-64" />
+          <div className="mt-4 flex w-full items-start text-center md:w-1/4 md:flex-col">
+            <div className="flex-center h-36 w-full rounded-md border bg-neutral shadow">
+              <button className="btn-ghost btn text-white">
+                <PlusCircleIcon className="h-6 w-6" />
+                <p className="text-sm">Añadir imagen</p>
+              </button>
             </div>
           </div>
           <div className="flex w-full flex-col md:w-3/4">
@@ -72,7 +79,10 @@ export default function ViewUserInstituteProfilePage() {
               <h4 className="font-semibold">Pasantes</h4>
             </div>
             <div className="flex-col">
-              <label htmlFor="addIntern" className="btn-primary btn">Añadir pasantes</label>
+              <label htmlFor="addIntern" className="btn-primary btn-sm btn border-none px-6">
+                <PlusIcon className="h-6 w-6" />
+                Añadir pasantes
+              </label>
               <input type="checkbox" id="addIntern" className="modal-toggle" />
               <div className="modal p-0">
                 <div className="modal-box p-0">
@@ -94,7 +104,8 @@ export default function ViewUserInstituteProfilePage() {
                     </div>
                   </div>
                   <div className="modal-action p-4">
-                    <label htmlFor="addIntern" className="btn">Cerrar</label>
+                    <button className="btn-primary btn-sm btn px-6">Afiliar</button>
+                    <label htmlFor="addIntern" className="btn-sm btn px-6">Cerrar</label>
                   </div>
                 </div>
               </div>
@@ -113,7 +124,7 @@ export default function ViewUserInstituteProfilePage() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr className="hover">
                   <th>
                     <label>
                       <input type="checkbox" className="checkbox" />
@@ -132,7 +143,7 @@ export default function ViewUserInstituteProfilePage() {
                     </div>
                   </td>
                 </tr>
-                <tr>
+                <tr className="hover">
                   <th>
                     <label>
                       <input type="checkbox" className="checkbox" />
@@ -151,7 +162,7 @@ export default function ViewUserInstituteProfilePage() {
                     </div>
                   </td>
                 </tr>
-                <tr>
+                <tr className="hover">
                   <th>
                     <label>
                       <input type="checkbox" className="checkbox" />
@@ -170,7 +181,7 @@ export default function ViewUserInstituteProfilePage() {
                     </div>
                   </td>
                 </tr>
-                <tr>
+                <tr className="hover">
                   <th>
                     <label>
                       <input type="checkbox" className="checkbox" />

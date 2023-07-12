@@ -11,13 +11,14 @@ export const metadata: Metadata = {
 export default function CompanyProfilePage() {
   return (
     <div className="w-full bg-base-100 p-4">
-      <div className="mb-4 flex flex-row items-center justify-between">
+      <div className="flex flex-row items-center justify-between">
         <h2 className="text-2xl font-bold">Mis empresas registradas</h2>
-        <Link href="/profile/company/create" className="btn-secondary btn">
+        <Link href="/profile/company/create" className="btn-secondary btn-sm btn border-none px-6">
           <PlusIcon className="h-6 w-6" />
           Registrar
         </Link>
       </div>
+      <div className="divider divider-vertical mt-2" />
       <div className="overflow-x-auto">
         <table className="table">
           <thead>
