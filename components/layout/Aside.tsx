@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon } from '@heroicons/react/24/outline'
+import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 
 interface LinkData {
   href: string
@@ -17,6 +17,11 @@ const SIDEBAR_LINKS = [
     icon: <HomeIcon className="h-6 w-6" />,
   },
   {
+    href: '/internships',
+    title: 'Pasantías',
+    icon: <AcademicCapIcon className="h-6 w-6" />,
+  },
+  {
     href: '/offers',
     title: 'Ofertas',
     icon: <BriefcaseIcon className="h-6 w-6" />,
@@ -27,9 +32,9 @@ const SIDEBAR_LINKS = [
     icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
   },
   {
-    href: '/internships',
-    title: 'Pasantías',
-    icon: <AcademicCapIcon className="h-6 w-6" />,
+    href: '/admin',
+    title: 'Administración',
+    icon: <ShieldCheckIcon className="h-6 w-6" />,
   },
 ]
 

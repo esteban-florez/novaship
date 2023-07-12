@@ -1,6 +1,11 @@
 import AvatarIcon from '@/components/AvatarIcon'
 import GoBackBtn from '@/components/GoBackBtn'
 import { UserCircleIcon } from '@heroicons/react/24/outline'
+import { type Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Perfil profesinal',
+}
 
 export default function ViewUserProfessionalProfilePage() {
   return (
