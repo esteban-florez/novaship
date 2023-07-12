@@ -62,7 +62,9 @@ export default function CompanyProfilePage() {
               <th>
                 <button className="btn-ghost btn-xs btn">
                   <div className="tooltip" data-tip="Ver perfil">
-                    <EyeIcon className="h-6 w-6" />
+                    <Link href="/user/profile/company">
+                      <EyeIcon className="h-6 w-6" />
+                    </Link>
                   </div>
                 </button>
               </th>
@@ -94,7 +96,9 @@ export default function CompanyProfilePage() {
               <th>
                 <button className="btn-ghost btn-xs btn">
                   <div className="tooltip" data-tip="Ver perfil">
-                    <EyeIcon className="h-6 w-6" />
+                    <Link href="/user/profile/company">
+                      <EyeIcon className="h-6 w-6" />
+                    </Link>
                   </div>
                 </button>
               </th>
@@ -126,7 +130,9 @@ export default function CompanyProfilePage() {
               <th>
                 <button className="btn-ghost btn-xs btn">
                   <div className="tooltip" data-tip="Ver perfil">
-                    <EyeIcon className="h-6 w-6" />
+                    <Link href="/user/profile/company">
+                      <EyeIcon className="h-6 w-6" />
+                    </Link>
                   </div>
                 </button>
               </th>
@@ -158,7 +164,9 @@ export default function CompanyProfilePage() {
               <th>
                 <button className="btn-ghost btn-xs btn">
                   <div className="tooltip" data-tip="Ver perfil">
-                    <EyeIcon className="h-6 w-6" />
+                    <Link href="/user/profile/company">
+                      <EyeIcon className="h-6 w-6" />
+                    </Link>
                   </div>
                 </button>
               </th>
@@ -190,7 +198,9 @@ export default function CompanyProfilePage() {
               <th>
                 <button className="btn-ghost btn-xs btn">
                   <div className="tooltip" data-tip="Ver perfil">
-                    <EyeIcon className="h-6 w-6" />
+                    <Link href="/user/profile/company">
+                      <EyeIcon className="h-6 w-6" />
+                    </Link>
                   </div>
                 </button>
               </th>
