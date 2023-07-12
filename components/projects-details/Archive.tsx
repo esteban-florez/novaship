@@ -3,7 +3,7 @@ import { EyeIcon } from '@heroicons/react/24/outline'
 function Doc() {
   return (
     <>
-      <div className="flex flex-col items-center justify-between rounded-lg border border-solid border-gray-400 p-3 md:flex-row">
+      <div className="flex flex-col items-center justify-between rounded-lg border border-solid border-gray-400 p-3 px-5 md:flex-row">
         <div className="flex flex-col">
           <h3 className="font-title text-base font-bold sm:text-lg">Archivo importante.doc</h3>
           <div className="flex flex-row gap-1">
