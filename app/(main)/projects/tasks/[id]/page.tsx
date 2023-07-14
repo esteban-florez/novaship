@@ -1,24 +1,10 @@
 import AvatarIcon from '@/components/AvatarIcon'
 import { ActionButton } from '@/components/FilterButtons'
+import Subtask from '@/components/projects/Subtask'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Detalles de Tarea',
-}
-
-interface Props {
-  subtask: string
-}
-
-export function Subtask({ subtask }: Props) {
-  return (
-    <>
-      <div className="flex items-center space-x-3">
-        <input type="checkbox" name="checked-demo" value="1" className="h-5 w-5 appearance-none rounded-lg border border-zinc-400 checked:border-transparent checked:bg-primary focus:outline-none" />
-        <span className="line-clamp-6 text-base text-gray-900">{subtask}</span>
-      </div>
-    </>
-  )
 }
 
 export default function TaskPage() {
