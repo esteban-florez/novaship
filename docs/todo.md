@@ -8,8 +8,8 @@
 - Añadir validaciones front y back.
 - Mover "/projects-details" a "/projects/:id/"
 - DRY en los forms del perfil.
-- Correr "prisma migrate dev" (migracion no funcionando).
 - Instalar sonner (Reemplazando el <Toast>)
+- Instalar "clsx" para clases condicionales.
 
   ## Navbar
 

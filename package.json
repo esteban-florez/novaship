@@ -6,11 +6,8 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
+    "lint": "next lint --fix",
     "prepare": "husky install",
-    "migrate:dev": "dotenv -e .env.local -- npx prisma migrate dev",
-    "migrate:reset": "dotenv -e .env.local -- npx prisma migrate reset",
     "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {

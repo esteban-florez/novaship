@@ -24,16 +24,16 @@ CREATE TYPE "Platform" AS ENUM ('MEET', 'ZOOM');
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "ci" INTEGER NOT NULL,
+    "surname" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
-    "phone" TEXT NOT NULL,
+    "password" TEXT,
+    "phone" TEXT,
     "bio" TEXT,
     "address" TEXT,
     "image" TEXT,
-    "countryId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -42,10 +42,10 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Membership" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "isLeader" BOOLEAN NOT NULL DEFAULT false,
-    "userId" INTEGER NOT NULL,
-    "projectId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
+    "projectId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -54,12 +54,12 @@ CREATE TABLE "Membership" (
 
 -- CreateTable
 CREATE TABLE "Project" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "image" TEXT,
     "visibility" "Visibility" NOT NULL,
-    "companyId" INTEGER,
+    "companyId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -68,10 +68,10 @@ CREATE TABLE "Project" (
 
 -- CreateTable
 CREATE TABLE "Participation" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "isLeader" BOOLEAN NOT NULL DEFAULT false,
-    "membershipId" INTEGER NOT NULL,
-    "taskId" INTEGER NOT NULL,
+    "membershipId" TEXT NOT NULL,
+    "taskId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -80,11 +80,11 @@ CREATE TABLE "Participation" (
 
 -- CreateTable
 CREATE TABLE "Task" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "status" "TaskStatus",
-    "projectId" INTEGER NOT NULL,
+    "projectId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -93,11 +93,11 @@ CREATE TABLE "Task" (
 
 -- CreateTable
 CREATE TABLE "Subtask" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "status" "TaskStatus" NOT NULL DEFAULT 'PENDING',
-    "taskId" INTEGER NOT NULL,
+    "taskId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -106,10 +106,10 @@ CREATE TABLE "Subtask" (
 
 -- CreateTable
 CREATE TABLE "Release" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "preview" TEXT,
     "price" DOUBLE PRECISION NOT NULL,
-    "projectId" INTEGER NOT NULL,
+    "projectId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -118,13 +118,13 @@ CREATE TABLE "Release" (
 
 -- CreateTable
 CREATE TABLE "Message" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "seen" TIMESTAMP(3),
-    "senderId" INTEGER NOT NULL,
-    "receiverId" INTEGER,
-    "projectId" INTEGER,
-    "taskId" INTEGER,
+    "senderId" TEXT NOT NULL,
+    "receiverId" TEXT,
+    "projectId" TEXT,
+    "taskId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -133,10 +133,10 @@ CREATE TABLE "Message" (
 
 -- CreateTable
 CREATE TABLE "File" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "src" TEXT NOT NULL,
-    "projectId" INTEGER NOT NULL,
-    "authorId" INTEGER NOT NULL,
+    "projectId" TEXT NOT NULL,
+    "authorId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -145,12 +145,12 @@ CREATE TABLE "File" (
 
 -- CreateTable
 CREATE TABLE "Profile" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "curriculum" TEXT,
     "schedule" JSONB NOT NULL,
     "description" TEXT NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -159,14 +159,14 @@ CREATE TABLE "Profile" (
 
 -- CreateTable
 CREATE TABLE "Experience" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "role" TEXT NOT NULL,
     "description" TEXT,
     "phone" TEXT,
     "from" TIMESTAMP(3) NOT NULL,
     "to" TIMESTAMP(3) NOT NULL,
-    "profileId" INTEGER NOT NULL,
+    "profileId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -175,7 +175,7 @@ CREATE TABLE "Experience" (
 
 -- CreateTable
 CREATE TABLE "Company" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -184,7 +184,6 @@ CREATE TABLE "Company" (
     "image" TEXT,
     "verifiedAt" TIMESTAMP(3),
     "certification" TEXT,
-    "countryId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -193,10 +192,10 @@ CREATE TABLE "Company" (
 
 -- CreateTable
 CREATE TABLE "Employee" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "role" "Role",
-    "userId" INTEGER NOT NULL,
-    "companyId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
+    "companyId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -205,10 +204,10 @@ CREATE TABLE "Employee" (
 
 -- CreateTable
 CREATE TABLE "Review" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "content" TEXT NOT NULL,
-    "profileId" INTEGER NOT NULL,
-    "companyId" INTEGER NOT NULL,
+    "profileId" TEXT NOT NULL,
+    "companyId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -217,9 +216,9 @@ CREATE TABLE "Review" (
 
 -- CreateTable
 CREATE TABLE "Candidate" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "description" TEXT,
-    "profileId" INTEGER NOT NULL,
+    "profileId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -228,10 +227,10 @@ CREATE TABLE "Candidate" (
 
 -- CreateTable
 CREATE TABLE "Intern" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "description" TEXT,
-    "profileId" INTEGER NOT NULL,
-    "instituteId" INTEGER NOT NULL,
+    "profileId" TEXT NOT NULL,
+    "instituteId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -240,15 +239,15 @@ CREATE TABLE "Intern" (
 
 -- CreateTable
 CREATE TABLE "Offer" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "mode" "Mode" NOT NULL,
     "hours" INTEGER,
-    "schedule" "Schedule",
+    "schedule" "Schedule" NOT NULL,
     "salary" DOUBLE PRECISION NOT NULL,
     "target" "Target" NOT NULL,
-    "companyId" INTEGER NOT NULL,
+    "companyId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -257,11 +256,11 @@ CREATE TABLE "Offer" (
 
 -- CreateTable
 CREATE TABLE "Postulation" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "status" "PostulationStatus",
-    "offerId" INTEGER NOT NULL,
-    "candidateId" INTEGER,
-    "internId" INTEGER,
+    "offerId" TEXT NOT NULL,
+    "candidateId" TEXT,
+    "internId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -270,12 +269,12 @@ CREATE TABLE "Postulation" (
 
 -- CreateTable
 CREATE TABLE "Interview" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "link" TEXT NOT NULL,
     "platform" "Platform" NOT NULL,
-    "membershipId" INTEGER NOT NULL,
-    "postulationId" INTEGER NOT NULL,
+    "membershipId" TEXT NOT NULL,
+    "postulationId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -284,7 +283,7 @@ CREATE TABLE "Interview" (
 
 -- CreateTable
 CREATE TABLE "Institute" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "address" TEXT NOT NULL,
@@ -293,7 +292,7 @@ CREATE TABLE "Institute" (
     "phone" TEXT NOT NULL,
     "image" TEXT,
     "verifiedAt" TIMESTAMP(3),
-    "userId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -302,7 +301,7 @@ CREATE TABLE "Institute" (
 
 -- CreateTable
 CREATE TABLE "Field" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -312,7 +311,7 @@ CREATE TABLE "Field" (
 
 -- CreateTable
 CREATE TABLE "Skill" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -321,20 +320,9 @@ CREATE TABLE "Skill" (
 );
 
 -- CreateTable
-CREATE TABLE "Country" (
-    "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "code" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Country_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Account" (
     "id" TEXT NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "provider" TEXT NOT NULL,
     "providerAccountId" TEXT NOT NULL,
@@ -350,54 +338,34 @@ CREATE TABLE "Account" (
 );
 
 -- CreateTable
-CREATE TABLE "Session" (
-    "id" TEXT NOT NULL,
-    "sessionToken" TEXT NOT NULL,
-    "userId" INTEGER NOT NULL,
-    "expires" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Session_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "VerificationToken" (
-    "identifier" TEXT NOT NULL,
-    "token" TEXT NOT NULL,
-    "expires" TIMESTAMP(3) NOT NULL
-);
-
--- CreateTable
 CREATE TABLE "_ProfileToSkill" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_OfferToSkill" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_FieldToProject" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_FieldToProfile" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_FieldToOffer" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_ci_key" ON "User"("ci");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
@@ -439,15 +407,6 @@ CREATE UNIQUE INDEX "Field_title_key" ON "Field"("title");
 CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
-
--- CreateIndex
-CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");
-
--- CreateIndex
-CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
-
--- CreateIndex
 CREATE UNIQUE INDEX "_ProfileToSkill_AB_unique" ON "_ProfileToSkill"("A", "B");
 
 -- CreateIndex
@@ -476,9 +435,6 @@ CREATE UNIQUE INDEX "_FieldToOffer_AB_unique" ON "_FieldToOffer"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_FieldToOffer_B_index" ON "_FieldToOffer"("B");
-
--- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_countryId_fkey" FOREIGN KEY ("countryId") REFERENCES "Country"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Membership" ADD CONSTRAINT "Membership_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -529,9 +485,6 @@ ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Experience" ADD CONSTRAINT "Experience_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "Profile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Company" ADD CONSTRAINT "Company_countryId_fkey" FOREIGN KEY ("countryId") REFERENCES "Country"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Employee" ADD CONSTRAINT "Employee_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -575,9 +528,6 @@ ALTER TABLE "Institute" ADD CONSTRAINT "Institute_userId_fkey" FOREIGN KEY ("use
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_ProfileToSkill" ADD CONSTRAINT "_ProfileToSkill_A_fkey" FOREIGN KEY ("A") REFERENCES "Profile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
