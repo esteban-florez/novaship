@@ -39,3 +39,7 @@
   ## Toast
 
   - Ajustar el ancho del mensaje  
+
+# RANT
+
+- Rutas con nombres muy parecidos y con contenidos muy parecidos, wtf.

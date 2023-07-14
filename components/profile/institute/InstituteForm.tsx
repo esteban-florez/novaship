@@ -23,6 +23,7 @@ export default function InsituteForm({ name, address, description, email, phone 
     setShowAlert('none')
   }
 
+  // RANT 2
   const FORM_STATUS: Record<string, JSX.Element | null> = {
     sending: <Toast type="info" message="Su perfil está siendo actualizado, espere unos momentos" onClose={handleCloseToast} />,
     failed: <Toast type="error" message="No se ha podido actualizar su perfil, intente de nuevo en unos momentos" onClose={handleCloseToast} />,

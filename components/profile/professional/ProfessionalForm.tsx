@@ -20,6 +20,7 @@ export default function ProfessionalForm({ title, description }: Props) {
     setShowAlert('none')
   }
 
+  // RANT 2
   const FORM_STATUS: Record<string, JSX.Element | null> = {
     sending: <Toast type="info" message="Su perfil está siendo registrado, espere unos momentos" onClose={handleCloseToast} />,
     failed: <Toast type="error" message="No se ha podido actualizar su perfil, intente de nuevo en unos momentos" onClose={handleCloseToast} />,

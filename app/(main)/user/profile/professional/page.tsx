@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default function ViewUserProfessionalProfilePage() {
+  // RANT 1
   return (
     <>
       <div className="m-4 flex justify-end rounded-md bg-white p-4">

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 export default function ProfileForms() {
-  // TODO -> ejemplo de nombres que no describen lo que son las cosas xd
+  // RANT -> ejemplo de nombres que no describen lo que son las cosas xd
   const currentPath = usePathname()
   const activeClasses = 'tab-active btn normal-case font-bold'
   const inactiveClasses = 'hover:tab-active'
@@ -12,6 +12,7 @@ export default function ProfileForms() {
   return (
     <>
       <div className="tabs tabs-boxed mb-6 items-center justify-between bg-base-100">
+        {/* RANT -> ejemplo de sitio donde SI se deben crear componentes y no se crean */}
         <Link href="/profile/user" className={`tab tab-lg border-none transition-all ${currentPath === '/profile/user' ? activeClasses : inactiveClasses}`}>
           Perfil personal
         </Link>

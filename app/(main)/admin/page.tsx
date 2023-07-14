@@ -1,16 +1,18 @@
 'use client'
 
 import SelectTable from '@/components/admin/SelectTable'
-import { type Metadata } from 'next'
+// import { type Metadata } from 'next'
 import { useState } from 'react'
 
-export const metadata: Metadata = {
-  title: 'Administración',
-}
+// RANT -> documentarnos bien, me incluyo, nos pasa mucho
+// export const metadata: Metadata = {
+//   title: 'Administración',
+// }
 
 export default function AdminPage() {
   const [switchButton, setSwitchButton] = useState<'companies' | 'institutes'>('institutes')
-
+  // RANT -> ejemplo de variable mal nombrada
+  // RANT -> ejemplo de uso innecesario de Client Component y useState
   const activeClasses = 'join-item btn btn-sm btn-primary px-6'
   const inactiveClasses = 'join-item btn btn-sm px-6'
 

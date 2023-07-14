@@ -1,6 +1,7 @@
 import { capitalizeString } from '@/utils/text'
 import Image from 'next/image'
 
+// RANT -> React.PropsWithChildren
 interface Props {
   username: string
   image?: string | null
