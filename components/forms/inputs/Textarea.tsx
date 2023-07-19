@@ -1,22 +1,23 @@
-import { DEFAULT_TEXTAREA_CLASSES } from '@/lib/classes'
 import CustomLabel from './CustomLabel'
 
-interface Props {
-  id?: string | null
+type Props = React.PropsWithChildren<{
   name: string
   placeholder: string
   label: string
   height: number
   value?: string
   classes?: string
-}
+}>
 
-export default function Textarea({ id = null, name, placeholder, label, height, value = '', classes = DEFAULT_TEXTAREA_CLASSES }: Props) {
-  id ??= name
+export default function Textarea({ name, placeholder, label, height, value = '' }: Props) {
   return (
     <>
-      <CustomLabel id={id} label={label} />
-      <textarea id={id} name={name} className={classes} placeholder={placeholder} rows={height} defaultValue={value} />
+      <CustomLabel id={name} label={label} />
+      <textarea
+        id={name} name={name}
+        placeholder={placeholder} rows={height} defaultValue={value}
+        className="textarea w-full resize-none border-secondary focus:ring focus:ring-primary"
+      />
     </>
   )
 }

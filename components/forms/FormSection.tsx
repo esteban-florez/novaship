@@ -1,11 +1,7 @@
-import React from 'react'
-
-// RANT -> React.PropsWithChildren
-interface Props {
+type Props = React.PropsWithChildren<{
   title: string
   description: string
-  children: React.ReactNode
-}
+}>
 
 export default function FormSection({ title, description, children }: Props) {
   return (

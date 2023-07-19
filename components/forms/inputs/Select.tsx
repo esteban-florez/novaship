@@ -1,8 +1,6 @@
-import { DEFAULT_SELECT_CLASSES } from '@/lib/classes'
 import CustomLabel from './CustomLabel'
 
 type Props = React.PropsWithChildren<{
-  id?: string | null
   name: string
   label: string
   value?: string
@@ -10,12 +8,11 @@ type Props = React.PropsWithChildren<{
   noDefault?: boolean
 }>
 
-export default function Select({ id = null, name, label, value = '', multiple = false, noDefault = false, children }: Props) {
-  id ??= name
+export default function Select({ name, label, value = '', multiple = false, noDefault = false, children }: Props) {
   return (
     <>
-      <CustomLabel id={id} label={label} />
-      <select id={id} name={name} className={DEFAULT_SELECT_CLASSES} defaultValue={value} multiple={multiple}>
+      <CustomLabel id={name} label={label} />
+      <select id={name} name={name} className="select-bordered select select-md mb-3 w-full border focus:ring focus:ring-primary" defaultValue={value} multiple={multiple}>
         {!noDefault && <option value="" disabled>Seleccionar...</option>}
         {children}
       </select>

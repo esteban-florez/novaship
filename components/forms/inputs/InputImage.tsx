@@ -1,10 +1,10 @@
 import { CloudArrowUpIcon } from '@heroicons/react/24/solid'
 
-interface Props {
+type Props = React.PropsWithChildren<{
   id: string
   name: string
   message?: string
-}
+}>
 
 export default function InputImage({ id, name, message = 'Haga clic para subir una imagen' }: Props) {
   return (
