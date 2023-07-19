@@ -14,7 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": ["./utils/types.d.ts"],
+    "types": ["./lib/types.d.ts"],
     "plugins": [
       {
         "name": "next"

@@ -1,10 +1,13 @@
-import { DEFAULT_INPUT_CLASSES } from '@/utils/defaultClasses'
+import { DEFAULT_INPUT_CLASSES } from '@/lib/classes'
 import CustomLabel from './CustomLabel'
+// import { HTMLInputTypeAttribute } from 'react'
 
+// RANT -> a veces los tipos ya existen
 interface Props {
   id?: string | null
   name: string
   type?: 'text' | 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel' | 'text' | 'time' | 'url' | 'week'
+  // type?: HTMLInputTypeAttribute
   placeholder: string
   label: string
   value?: string

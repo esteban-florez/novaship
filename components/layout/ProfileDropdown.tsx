@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth'
 import AvatarIcon from '../AvatarIcon'
-import authOptions from '@/utils/authOptions'
+import authOptions from '@/lib/auth-options'
 import ProfileDropdownMenu from './ProfileDropdownMenu'
 
 export default async function ProfileDropdown() {

@@ -1,4 +1,4 @@
-import { DEFAULT_SELECT_CLASSES } from '@/utils/defaultClasses'
+import { DEFAULT_SELECT_CLASSES } from '@/lib/classes'
 import CustomLabel from './CustomLabel'
 
 type Props = React.PropsWithChildren<{

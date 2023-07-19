@@ -1,4 +1,4 @@
-import { capitalizeString } from '@/utils/text'
+import { capitalizeString } from '@/lib/text'
 import Image from 'next/image'
 
 // RANT -> React.PropsWithChildren

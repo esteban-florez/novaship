@@ -1,4 +1,4 @@
-import { DEFAULT_TEXTAREA_CLASSES } from '@/utils/defaultClasses'
+import { DEFAULT_TEXTAREA_CLASSES } from '@/lib/classes'
 import CustomLabel from './CustomLabel'
 
 interface Props {

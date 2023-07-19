@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { routes } from '@/translations/es'
+import { routes } from '@/lib/translations'
 
 export default function Breadcrumbs() {
   const pathname = usePathname()
