@@ -1,4 +1,4 @@
-export const routes = {
+export const routes: Record<string, string> = {
   home: 'Inicio',
   offers: 'Ofertas',
   offer: 'Oferta',
@@ -13,7 +13,7 @@ export const routes = {
   create: 'Registrar',
   project: 'Proyecto',
   admin: 'Administración',
-} as const
+}
 
 export const statuses = {
   sent: 'Enviado',

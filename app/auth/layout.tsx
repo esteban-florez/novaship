@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import '@/styles/globals.css'
 
 export default function AuthLayout({

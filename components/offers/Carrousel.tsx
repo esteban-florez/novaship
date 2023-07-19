@@ -1,5 +1,13 @@
 'use client'
 
+// RANT más arrecha de todas -> aquí hay un poco de todo
+// 1. Variables innecesarias
+// 2. Propiedades no usadas en el JSON.
+// 3. Componentes innecesarios (<Content>)
+// 4. Función innecesaria para renderizar los elemntos (renderJobs)
+// 5. Mal uso de métodos de array en un sitio donde solo había que acceder a un índice (offers.slice().map())
+// 6. Componentes con props innecesarias (<Btn left right>)
+// 7. No crear componentes cuando si se necesitan, ni usar ciclos (<Dots>).
 import { useState } from 'react'
 import Btn from './Carrousel/Btn'
 import data from './Carrousel/data.json'
@@ -35,7 +43,6 @@ export default function Carrousel() {
           key={jobs.title}
           className="flex w-full grow-0 flex-col"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagen de fondo carrusel" className="absolute right-0 top-0 h-full w-full object-cover" />
           <div className="relative z-10 h-full w-full px-6 py-8 backdrop-blur-sm backdrop-brightness-50 sm:px-12">
             <div className="absolute left-0 top-0 -z-10 h-full w-full rounded-tr-[15rem] bg-neutral-800 md:rounded-br-full md:rounded-tr-none lg:w-7/12" />

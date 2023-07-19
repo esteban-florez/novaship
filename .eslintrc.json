@@ -36,7 +36,8 @@
       "children": "never",
       "propElementValues": "always"
     }],
-    "tailwindcss/no-custom-classname": "error"
+    "tailwindcss/no-custom-classname": "error",
+    "@next/next/no-img-element": "off"
   },
   "ignorePatterns": ["next-env.d.ts", "tailwind.config.js"]
 }

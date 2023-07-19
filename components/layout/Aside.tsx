@@ -3,12 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
-
-interface LinkData {
-  href: string
-  title: string
-  icon: React.ReactNode
-}
+import AsideLink from './AsideLink'
 
 const SIDEBAR_LINKS = [
   {
@@ -37,17 +32,6 @@ const SIDEBAR_LINKS = [
     icon: <ShieldCheckIcon className="h-6 w-6" />,
   },
 ]
-
-function AsideLink({ link, active }: React.PropsWithChildren<{ link: LinkData, active: boolean }>) {
-  return (
-    <li className="rounded-l-xl font-bold">
-      <Link href={link.href} className={`py-4 ${active ? 'active pointer-events-none' : ''}`}>
-        {link.icon}
-        {link.title}
-      </Link>
-    </li>
-  )
-}
 
 export default function Aside() {
   const pathname = usePathname()

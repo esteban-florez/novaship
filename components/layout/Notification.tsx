@@ -3,7 +3,6 @@ import AvatarIcon from '../AvatarIcon'
 interface Props {
   username: string
   time: number
-  bg?: string
   children: React.ReactNode
 }
 

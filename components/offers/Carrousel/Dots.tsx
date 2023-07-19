@@ -1,6 +1,6 @@
-interface Props {
+type Props = React.PropsWithChildren<{
   currentSlide: number
-}
+}>
 
 export default function Dots({ currentSlide }: Props) {
   const slideInactive = 'w-4 h-4 rounded-full bg-white/70'

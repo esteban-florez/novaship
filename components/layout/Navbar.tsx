@@ -2,10 +2,14 @@ import Link from 'next/link'
 import ProfileDropdown from '@/components/layout/ProfileDropdown'
 import { Bars3Icon } from '@heroicons/react/24/solid'
 import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/outline'
-import Breadcrumbs from '../Breadcrumbs'
+import Breadcrumbs from './Breadcrumbs'
 import NotificationDropdown from './NotificationDropdown'
 
 export default function Navbar() {
+  const date = new Date().toLocaleDateString('es', {
+    year: 'numeric', month: 'long', day: 'numeric',
+  })
+
   return (
     <nav className="navbar bg-white shadow-md">
       <div className="navbar-start">
@@ -14,10 +18,9 @@ export default function Navbar() {
         </button>
         <Breadcrumbs />
       </div>
-
       <div className="navbar-end mr-4 gap-1">
         <div className="me-4">
-          {new Date().toLocaleDateString('es', { year: 'numeric', month: 'long', day: 'numeric' })}
+          {date}
         </div>
         <Link
           href="/chats"
