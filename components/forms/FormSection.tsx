@@ -1,5 +1,6 @@
 import React from 'react'
 
+// RANT -> React.PropsWithChildren
 interface Props {
   title: string
   description: string

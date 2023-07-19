@@ -4,7 +4,9 @@ import { type Prisma } from '@prisma/client'
 import { getServerSession } from 'next-auth'
 import { NextResponse } from 'next/server'
 
+// RANT -> se usa NextRequest xd
 export async function PUT(req: Request) {
+  // TODO -> Este debería pasar a la ruta professional/[id]/route.ts
   const session = await getServerSession(authOptions)
   const body = await req.formData()
   const data = Object.fromEntries(body.entries()) as unknown as Prisma.ProfileUpdateInput
@@ -23,11 +25,13 @@ export async function PUT(req: Request) {
       data,
     })
   } catch (error) {
+    // RANT -> las respuestas de error deben tener detalles sobre el error
     return NextResponse.json('error', {
       status: 401,
     })
   }
 
+  // RANT -> las respuestas deben, o ser vacías, o devolver el recurso relacionado.
   return NextResponse.json('succeded', {
     status: 200,
   })

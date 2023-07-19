@@ -21,6 +21,6 @@ export default async function InstituteProfilePage() {
       director: { id: user?.id },
     },
   })
-
+  // RANT -> pasar propiedad por propiedad en vez de pasarlo directamente
   return <InstituteForm name={institute?.name ?? ''} email={institute?.email ?? ''} address={institute?.address ?? ''} description={institute?.description ?? ''} phone={institute?.phone ?? ''} />
 }

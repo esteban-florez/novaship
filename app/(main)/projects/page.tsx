@@ -17,6 +17,7 @@ export default function ProjectsPage() {
         <section className="mx-auto w-full columns-1 gap-4 rounded-lg rounded-tl-none bg-white p-6 pb-4">
           {projects.map((project) => {
             return (
+              // RANT -> bueno, que te puedo decir
               // eslint-disable-next-line react/jsx-key
               <section className="mb-3 flex w-full flex-col gap-3">
                 <Card

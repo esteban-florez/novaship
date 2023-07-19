@@ -7,3 +7,5 @@ interface Skill {
   title: string
   selected: boolean
 }
+
+type MessageStatus = 'sent' | 'read' | 'received'

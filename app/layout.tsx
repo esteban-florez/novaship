@@ -1,5 +1,6 @@
 import SessionProvider from '@/components/layout/SessionProvider'
 import '@/styles/globals.css'
+import clsx from 'clsx'
 import { type Metadata } from 'next'
 // TODO -> en producción, se debe cambiar a Google
 import localFont from 'next/font/local'
@@ -30,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${inter.variable} ${josefin.variable} h-full bg-base-300 font-default`} data-theme="light">
+    <html lang="es" className={clsx('h-full bg-base-300 font-default', inter.variable, josefin.variable)} data-theme="light">
       <SessionProvider>
         <body className="h-full">
           {children}

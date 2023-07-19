@@ -1,4 +1,4 @@
-export const routes: Record<string, string> = {
+export const routes = {
   home: 'Inicio',
   offers: 'Ofertas',
   offer: 'Oferta',
@@ -13,4 +13,10 @@ export const routes: Record<string, string> = {
   create: 'Registrar',
   project: 'Proyecto',
   admin: 'Administración',
-}
+} as const
+
+export const statuses = {
+  sent: 'Enviado',
+  read: 'Leído',
+  received: 'Recibido',
+} as const
