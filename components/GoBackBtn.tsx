@@ -3,7 +3,7 @@
 import { ArrowLeftIcon } from '@heroicons/react/24/solid'
 import { useRouter } from 'next/navigation'
 
-export default function GoBackBtn({ children }: { children: React.ReactNode }) {
+export default function GoBackBtn({ children }: React.PropsWithChildren) {
   const router = useRouter()
 
   return (

@@ -24,7 +24,6 @@ export default function SignUpForm() {
 
   return (
     // TODO -> client-side form validation
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form className="mx-auto w-full pt-4" onSubmit={handleSubmit} method="POST" action="/api/auth/signup">
       <div className="flex grid-cols-2 flex-col gap-x-5 gap-y-6 md:grid">
         <div className="form-control w-full">

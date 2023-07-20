@@ -43,3 +43,4 @@
 # RANT
 
 - Rutas con nombres muy parecidos y con contenidos muy parecidos, (user/profile y profile/)
+- React.PropsWithChildren

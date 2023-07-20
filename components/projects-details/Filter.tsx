@@ -1,6 +1,7 @@
 import { AdjustmentsHorizontalIcon, PlusIcon } from '@heroicons/react/24/solid'
-import { ActionButton, NavButton } from '../FilterButtons'
 import SearchInput from '../SearchInput'
+import NavButton from '../NavButton'
+import ActionButton from '../ActionButton'
 
 export default function Filter() {
   return (

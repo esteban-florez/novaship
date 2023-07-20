@@ -1,4 +1,6 @@
-export default function Subtask({ subtask }: { subtask: string }) {
+type Props = React.PropsWithChildren<{ subtask: string }>
+
+export default function Subtask({ subtask }: Props) {
   // RANT -> mal nombramiento de prop
   return (
     <>

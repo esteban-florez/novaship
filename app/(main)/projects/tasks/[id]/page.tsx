@@ -1,5 +1,5 @@
 import AvatarIcon from '@/components/AvatarIcon'
-import { ActionButton } from '@/components/FilterButtons'
+import ActionButton from '@/components/ActionButton'
 import Subtask from '@/components/projects/Subtask'
 import { type Metadata } from 'next'
 
