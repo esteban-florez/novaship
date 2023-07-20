@@ -1,13 +1,13 @@
 import Content from './Offer/Content'
 import Header from './Offer/Header'
 
-interface Props {
+type Props = React.PropsWithChildren<{
   title: string
   categories: string[]
   description: string
   owner: string
   ubication: string
-}
+}>
 
 export default function Offer({
   title,

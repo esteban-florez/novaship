@@ -1,10 +1,10 @@
 import FormSection from '@/components/forms/FormSection'
 import Input from '@/components/forms/inputs/Input'
 
-interface Props {
+type Props = React.PropsWithChildren<{
   name: string
   surname: string
-}
+}>
 
 export default function PersonalSection({ name, surname }: Props) {
   return (

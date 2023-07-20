@@ -3,7 +3,8 @@ import Input from '@/components/forms/inputs/Input'
 import Textarea from '@/components/forms/inputs/Textarea'
 import { type Institute } from '@prisma/client'
 
-type Props = Pick<Institute, 'name' | 'description'>
+type InstitutePick = Pick<Institute, 'name' | 'description'>
+type Props = React.PropsWithChildren<InstitutePick>
 
 export default function PersonalSection({ name, description }: Props) {
   return (

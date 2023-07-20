@@ -11,7 +11,8 @@ import ScheduleSection from './ScheduleSection'
 import Link from 'next/link'
 import { EyeIcon } from '@heroicons/react/24/outline'
 
-type Props = Pick<Profile, 'title' | 'description'>
+type ProfilePick = Pick<Profile, 'title' | 'description'>
+type Props = React.PropsWithChildren<ProfilePick>
 
 export default function ProfessionalForm({ title, description }: Props) {
   const [showAlert, setShowAlert] = useState('none')

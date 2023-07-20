@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
-interface Props {
+type Props = React.PropsWithChildren<{
   description: string
   owner: string
   ubication: string
-}
+}>
 
 export default function Content({ description, owner, ubication }: Props) {
   return (

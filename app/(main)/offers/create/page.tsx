@@ -1,5 +1,5 @@
 import PageTitle from '@/components/PageTitle'
-import CreateOfferForm from '@/components/offers/create/CreateOfferForm'
+import CreateOfferForm from '@/components/offers-create/CreateOfferForm'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {

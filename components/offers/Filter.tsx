@@ -2,14 +2,6 @@ import Link from 'next/link'
 import SearchInput from '../SearchInput'
 import FilterButtons from './Carrousel/FilterButtons'
 
-function PublishButton() {
-  return (
-    <Link href="/offers/create" className="btn-primary btn-sm btn h-8 w-full py-2 sm:w-40 md:w-auto">
-      Publicar
-    </Link>
-  )
-}
-
 export default function Filter() {
   return (
     <section className="mb-4 flex w-full flex-col items-center justify-between gap-4 pt-4 md:flex-row xl:mb-0 xl:gap-2">
@@ -27,7 +19,9 @@ export default function Filter() {
       </div>
       <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row md:place-items-start md:justify-end xl:w-auto">
         <SearchInput />
-        <PublishButton />
+        <Link href="/offers/create" className="btn-primary btn-sm btn h-8 w-full py-2 sm:w-40 md:w-auto">
+          Publicar
+        </Link>
       </div>
     </section>
   )

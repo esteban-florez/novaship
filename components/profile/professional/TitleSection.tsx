@@ -1,9 +1,7 @@
 import FormSection from '@/components/forms/FormSection'
 import Input from '@/components/forms/inputs/Input'
 
-interface Props {
-  title: string
-}
+type Props = React.PropsWithChildren<{ title: string }>
 
 export default function TitleSection({ title }: Props) {
   return (

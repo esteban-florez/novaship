@@ -2,11 +2,11 @@ import { EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 import AvatarIcon from '../AvatarIcon'
 import Link from 'next/link'
 
-interface Props {
+type Props = React.PropsWithChildren<{
   title: string
   owner: string
   status: string
-}
+}>
 
 export default function Header({ title, owner, status }: Props) {
   return (

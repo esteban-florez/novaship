@@ -49,6 +49,7 @@ export default function UserForm({ name, surname, email, phone, address, bio }: 
 
   return (
     <form method="POST" onSubmit={handleSubmit} action="/api/profile/user" className="w-full rounded-lg bg-base-100 p-4">
+      {/* RANT -> además del 'none' raro, ni lo usaste */}
       {showAlert !== 'none' && FORM_STATUS[showAlert]}
       <h2 className="text-2xl font-bold">Perfil Personal</h2>
       <div className="divider divider-vertical mt-2" />

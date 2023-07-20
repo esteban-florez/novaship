@@ -1,7 +1,7 @@
-interface Props {
+type Props = React.PropsWithChildren<{
   title: string
   categories: string[]
-}
+}>
 
 export default function Header({ title, categories }: Props) {
   return (
