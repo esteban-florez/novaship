@@ -19,7 +19,7 @@ export default function Task({ nameTask, value, percentage }: Props) {
           </div>
         </div>
         <div className="flex flex-row gap-2">
-          <Link href="/projects/tasks/task">
+          <Link href="/projects/project/tasks/task">
             <EyeIcon className="h-6 w-6" />
           </Link>
         </div>

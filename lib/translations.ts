@@ -13,6 +13,8 @@ export const routes: Record<string, string> = {
   create: 'Registrar',
   project: 'Proyecto',
   admin: 'Administración',
+  tasks: 'Tareas',
+  task: 'Tarea',
 }
 
 export const statuses = {

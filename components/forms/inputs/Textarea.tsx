@@ -16,7 +16,7 @@ export default function Textarea({ name, placeholder, label, height, value = '' 
       <textarea
         id={name} name={name}
         placeholder={placeholder} rows={height} defaultValue={value}
-        className="textarea w-full resize-none border-secondary focus:ring focus:ring-primary"
+        className="textarea w-full resize-none border-neutral-300 focus:ring focus:ring-primary"
       />
     </>
   )

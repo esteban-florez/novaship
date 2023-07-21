@@ -12,7 +12,7 @@ export default function Select({ name, label, value = '', multiple = false, noDe
   return (
     <>
       <CustomLabel id={name} label={label} />
-      <select id={name} name={name} className="select-bordered select select-md mb-3 w-full border focus:ring focus:ring-primary" defaultValue={value} multiple={multiple}>
+      <select id={name} name={name} className="select select-md mb-3 w-full border-neutral-300 focus:ring focus:ring-primary" defaultValue={value} multiple={multiple}>
         {!noDefault && <option value="" disabled>Seleccionar...</option>}
         {children}
       </select>

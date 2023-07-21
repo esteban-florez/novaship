@@ -43,7 +43,7 @@ export default function LogInForm() {
           type="text"
           id="email"
           placeholder="correo@ejemplo.com"
-          className="input-bordered input w-full bg-base-200"
+          className="input w-full border-neutral-300 bg-base-200"
         />
       </div>
       <div className="form-control mt-4 w-full">
@@ -54,7 +54,7 @@ export default function LogInForm() {
           type="password"
           id="password"
           placeholder="Ingresa tu contraseña..."
-          className="input-bordered input w-full bg-base-200"
+          className="input w-full border-neutral-300 bg-base-200"
         />
       </div>
       <div className="flex flex-col gap-4">

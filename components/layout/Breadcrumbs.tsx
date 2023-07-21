@@ -9,8 +9,7 @@ export default function Breadcrumbs() {
   const pathname = usePathname()
   const segments = pathname.split('/').filter(segment => segment !== '')
   segments.unshift('home')
-
-  const currentSegment = segments.pop()
+  const currentSegment = segments.at(-1)
 
   return (
     <div className="hidden items-center justify-start p-4 text-sm sm:flex">

@@ -18,7 +18,7 @@ export default function SignUpForm() {
 
     // TODO -> error handling
     if (response.status === 200) {
-      router.push('/auth/login?registered')
+      router.push('/login?registered')
     }
   }
 
