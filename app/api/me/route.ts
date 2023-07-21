@@ -1,7 +1,7 @@
-import { getServerSession } from 'next-auth'
+
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const session = await getServerSession()
+  const session = { user: { email: 'eflorez077@gmail.com' } }
   return NextResponse.json(session)
 }

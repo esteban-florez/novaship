@@ -1,7 +1,6 @@
 'use client'
 
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import { signIn } from 'next-auth/react'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import GoogleSignUpButton from '../GoogleSignUpButton'
@@ -18,7 +17,7 @@ export default function LogInForm() {
       const { value: email } = elements.namedItem('email') as HTMLInputElement
       const { value: password } = elements.namedItem('password') as HTMLInputElement
 
-      await signIn('credentials', { redirect: true, callbackUrl: '/', email, password })
+      alert(JSON.stringify({ email, password }, null, 2))
     }
 
     void send()

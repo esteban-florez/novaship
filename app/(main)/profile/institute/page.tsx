@@ -1,14 +1,13 @@
 import InstituteForm from '@/components/profile/institute/InstituteForm'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
-import { getServerSession } from 'next-auth'
 
 export const metadata: Metadata = {
   title: 'Perfil institucional',
 }
 
 export default async function InstituteProfilePage() {
-  const session = await getServerSession()
+  const session = { user: { email: 'eflorez077@gmail.com' } }
 
   const user = await prisma.user.findUnique({
     where: {

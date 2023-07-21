@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { ArrowLeftOnRectangleIcon, EyeIcon } from '@heroicons/react/24/solid'
-import { signOut } from 'next-auth/react'
 
 interface DropdownProps {
   username: string
@@ -16,7 +15,7 @@ export default function ProfileDropdownMenu({ username }: DropdownProps) {
         <EyeIcon className="h-5 w-5" />
         Ver perfil
       </Link>
-      <button className="flex gap-1 text-sm font-semibold text-error" onClick={async () => { await signOut() }}>
+      <button className="flex gap-1 text-sm font-semibold text-error" onClick={() => { alert('inprogress') }}>
         <ArrowLeftOnRectangleIcon className="h-5 w-5" />
         Cerrar sesión
       </button>
