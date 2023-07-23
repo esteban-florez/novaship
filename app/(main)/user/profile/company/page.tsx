@@ -7,8 +7,7 @@ export const metadata: Metadata = {
   title: 'Perfil empresarial',
 }
 
-export default function ViewCompanyProfilePage() {
-  // RANT 1 -> ejemplo de inconsistencia en nombres
+export default function CompanyProfilePage() {
   return (
     <>
       <div className="m-4 flex justify-end rounded-md bg-white p-4">

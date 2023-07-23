@@ -1,38 +1,19 @@
+import clsx from 'clsx'
+
 type Props = React.PropsWithChildren<{
-  currentSlide: number
+  current: number
+  length: number
 }>
 
-export default function Dots({ currentSlide }: Props) {
-  const slideInactive = 'w-4 h-4 rounded-full bg-white/70'
-  const slideActive = 'w-6 h-4 rounded-full bg-primary border-white border'
-
+export default function Dots({ current, length }: Props) {
   return (
     <ul className="flex-center gap-2">
-      <li
-        className={`${
-          currentSlide === 0 ? slideActive : slideInactive
-        }`}
-      />
-      <li
-        className={`${
-          currentSlide === 1 ? slideActive : slideInactive
-        }`}
-      />
-      <li
-        className={`${
-          currentSlide === 2 ? slideActive : slideInactive
-        }`}
-      />
-      <li
-        className={`${
-          currentSlide === 3 ? slideActive : slideInactive
-        }`}
-      />
-      <li
-        className={`${
-          currentSlide === 4 ? slideActive : slideInactive
-        }`}
-      />
+      {new Array(length).fill(null).map((_, index) => (
+        <li
+          key={index}
+          className={clsx('h-4 w-4 rounded-full bg-white/70', current === index && 'w-6 border border-white')}
+        />
+      ))}
     </ul>
   )
 }

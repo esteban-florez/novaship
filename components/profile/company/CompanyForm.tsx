@@ -8,39 +8,38 @@ import ContactSection from './ContactSection'
 import GoBackBtn from '@/components/GoBackBtn'
 
 export default function InsituteForm() {
-  const [showAlert, setShowAlert] = useState('none')
+  const [showAlert, setShowAlert] = useState<null | 'loading' | 'error' | 'success'>(null)
 
   const handleCloseToast = () => {
-    setShowAlert('none')
+    setShowAlert(null)
   }
 
-  // RANT 2
+  // DRY 2 -> repeticion de codigo
   const FORM_STATUS: Record<string, JSX.Element | null> = {
-    sending: <Toast type="info" message="Su perfil está siendo actualizado, espere unos momentos" onClose={handleCloseToast} />,
-    failed: <Toast type="error" message="No se ha podido actualizar su perfil, intente de nuevo en unos momentos" onClose={handleCloseToast} />,
-    succeded: <Toast type="success" message="Su perfil ha sido actualizado exitosamente" onClose={handleCloseToast} />,
-    none: null,
+    loading: <Toast type="info" message="Su perfil está siendo actualizado, espere unos momentos" onClose={handleCloseToast} />,
+    error: <Toast type="error" message="No se ha podido actualizar su perfil, intente de nuevo en unos momentos" onClose={handleCloseToast} />,
+    success: <Toast type="success" message="Su perfil está siendo actualizado, espere unos momentos" onClose={handleCloseToast} />,
   }
 
   async function handleSubmit(event: FormSubmitEvent) {
-    setShowAlert('sending')
+    setShowAlert('loading')
     event.preventDefault()
     const form = event.target
-    const { action, method } = form
+    const { action } = form
     const formData = new FormData(form)
 
     const response = await fetch(action, {
       body: formData,
-      method,
+      method: 'PUT',
     })
 
     if (response.status === 401) {
-      setShowAlert('failed')
+      setShowAlert('error')
     }
 
     // TODO -> error handling
     if (response.status === 200) {
-      setShowAlert('succeded')
+      setShowAlert('success')
     }
   }
 
@@ -54,7 +53,7 @@ export default function InsituteForm() {
       </div>
       <div className="divider divider-vertical mt-2" />
       <form method="POST" onSubmit={handleSubmit} action="/api/profile/company">
-        {showAlert !== 'none' && FORM_STATUS[showAlert]}
+        {showAlert !== null && FORM_STATUS[showAlert]}
         <PersonalSection />
         <ContactSection />
         <ButtonSection />

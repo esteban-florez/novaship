@@ -2,8 +2,6 @@ import { CheckIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import AvatarIcon from '../AvatarIcon'
 import { PhotoIcon } from '@heroicons/react/24/outline'
 
-// Mini RANT porque no somos gringos -> cuidado con las traducciones, además de que podría hacerse más corto el nombre algo tipo "PendingCompaniesList"
-// export default function CreateCompanyRequestList() {
 export default function CompanyCreateRequestList() {
   return (
     <div className="overflow-x-auto">

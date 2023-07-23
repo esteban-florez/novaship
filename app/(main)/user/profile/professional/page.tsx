@@ -7,8 +7,7 @@ export const metadata: Metadata = {
   title: 'Perfil profesinal',
 }
 
-export default function ViewUserProfessionalProfilePage() {
-  // RANT 1
+export default function ProfessionalProfilePage() {
   return (
     <>
       <div className="m-4 flex justify-end rounded-md bg-white p-4">

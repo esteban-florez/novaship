@@ -36,11 +36,11 @@ export default function TaskPage() {
             <ActionButton color="btn-primary">Agregar</ActionButton>
           </div>
           <div className="flex flex-col gap-2 px-8 py-4">
-            <Subtask subtask="Hacer el Inicio de sesión" />
-            <Subtask subtask="Hacer el Registro" />
-            <Subtask subtask="Hacer el Olvido de contraseña" />
-            <Subtask subtask="Hacer la Recuperación de contraseña" />
-            <Subtask subtask="Hacer el Home" />
+            <Subtask content="Hacer el Inicio de sesión" />
+            <Subtask content="Hacer el Registro" />
+            <Subtask content="Hacer el Olvido de contraseña" />
+            <Subtask content="Hacer la Recuperación de contraseña" />
+            <Subtask content="Hacer el Home" />
           </div>
         </div>
       </section>
