@@ -1,6 +1,6 @@
 import AvatarIcon from '@/components/AvatarIcon'
 import GoBackBtn from '@/components/GoBackBtn'
-import InputSimple from '@/components/forms/inputs/Input'
+import Input from '@/components/forms/inputs/Input'
 import { BuildingOfficeIcon, EnvelopeIcon, PlusCircleIcon, PlusIcon, StarIcon, UsersIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { type Metadata } from 'next'
 
@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 }
 
 export default function InstituteProfilePage() {
-  // RANT 1
   return (
     <>
       <div className="m-4 flex justify-end rounded-md bg-white p-4">
@@ -89,7 +88,7 @@ export default function InstituteProfilePage() {
                 <div className="modal-box p-0">
                   <h3 className="bg-primary p-4 text-center text-lg font-bold text-white">Listado de pasantes</h3>
                   <div className="px-4 py-2">
-                    <InputSimple id="" label="Pasantes" name="" placeholder="José Gómez" />
+                    <Input label="Pasantes" name="" placeholder="José Gómez" />
                     <h6 className="mt-4 font-semibold">Pasantes seleccionados (3)</h6>
                     <div className="mt-2 flex items-center justify-between rounded-md border bg-gray-100 p-2">
                       <p>Juan Montes</p>

@@ -2,7 +2,6 @@ import FormSection from '@/components/forms/FormSection'
 import Input from '@/components/forms/inputs/Input'
 import { type Institute } from '@prisma/client'
 
-// UNRANT -> buena idea lo del pick, no repetir código
 type InstitutePick = Pick<Institute, 'email' | 'phone' | 'address'>
 type Props = React.PropsWithChildren<InstitutePick>
 

@@ -8,25 +8,24 @@ import Toast from '@/components/Toast'
 import ButtonSection from '../ButtonSection'
 import { type User } from '@prisma/client'
 
-type Props = Pick<User, 'name' | 'surname' | 'email' | 'phone' | 'address' | 'bio'>
+type Props = Pick<User, 'name' | 'surname' | 'phone' | 'address' | 'bio'>
 
-export default function UserForm({ name, surname, email, phone, address, bio }: Props) {
-  const [showAlert, setShowAlert] = useState('none')
+export default function UserForm({ name, surname, phone, address, bio }: Props) {
+  const [showAlert, setShowAlert] = useState<null | 'loading' | 'error' | 'success'>(null)
 
   const handleCloseToast = () => {
-    setShowAlert('none')
+    setShowAlert(null)
   }
 
-  // RANT 2 -> repeticion de codigo
+  // DRY 2 -> repeticion de codigo
   const FORM_STATUS: Record<string, JSX.Element | null> = {
-    sending: <Toast type="info" message="Su perfil está siendo actualizado, espere unos momentos" onClose={handleCloseToast} />,
-    failed: <Toast type="error" message="No se ha podido actualizar su perfil, intente de nuevo en unos momentos" onClose={handleCloseToast} />,
-    succeded: <Toast type="success" message="Su perfil está siendo actualizado, espere unos momentos" onClose={handleCloseToast} />,
-    none: null,
+    loading: <Toast type="info" message="Su perfil está siendo actualizado, espere unos momentos" onClose={handleCloseToast} />,
+    error: <Toast type="error" message="No se ha podido actualizar su perfil, intente de nuevo en unos momentos" onClose={handleCloseToast} />,
+    success: <Toast type="success" message="Su perfil está siendo actualizado, espere unos momentos" onClose={handleCloseToast} />,
   }
 
   async function handleSubmit(event: FormSubmitEvent) {
-    setShowAlert('sending')
+    setShowAlert('loading')
     event.preventDefault()
     const form = event.target
     const { action } = form
@@ -38,23 +37,23 @@ export default function UserForm({ name, surname, email, phone, address, bio }: 
     })
 
     if (response.status === 401) {
-      setShowAlert('failed')
+      setShowAlert('error')
     }
 
     // TODO -> error handling
     if (response.status === 200) {
-      setShowAlert('succeded')
+      setShowAlert('success')
     }
   }
 
   return (
     <form method="POST" onSubmit={handleSubmit} action="/api/profile/user" className="w-full rounded-lg bg-base-100 p-4">
-      {/* RANT -> además del 'none' raro, ni lo usaste */}
-      {showAlert !== 'none' && FORM_STATUS[showAlert]}
+      {showAlert !== null && FORM_STATUS[showAlert]}
       <h2 className="text-2xl font-bold">Perfil Personal</h2>
       <div className="divider divider-vertical mt-2" />
       <PersonalSection name={name} surname={surname} />
-      <ContactSection email={email} phone={phone} address={address} />
+      {/* DEV -> email hardcodeado temporalmente */}
+      <ContactSection email="eflorez077@gmail.com" phone={phone} address={address} />
       <BiographySection bio={bio} />
       <ButtonSection />
     </form>

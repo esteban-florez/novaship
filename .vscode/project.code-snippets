@@ -5,5 +5,12 @@
       "type Props = React.PropsWithChildren<{$0}>",
     ],
     "description": "Define Props type with React.PropsWithChildren"
+  },
+  "Icon classname": {
+    "prefix": "ic",
+    "body": [
+      "className=\"h-6 w-6$0\"",
+    ],
+    "description": "Icon default className"
   }
 }

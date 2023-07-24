@@ -7,19 +7,13 @@ export const metadata: Metadata = {
 }
 
 export default async function InstituteProfilePage() {
-  const session = { user: { email: 'eflorez077@gmail.com' } }
-
-  const user = await prisma.user.findUnique({
-    where: {
-      email: session?.user?.email ?? '',
-    },
-  })
+  const user = await prisma.user.findFirst()
 
   const institute = await prisma.institute.findFirst({
     where: {
       director: { id: user?.id },
     },
   })
-  // RANT -> pasar propiedad por propiedad en vez de pasarlo directamente
+  // TODO -> pasar propiedad por propiedad en vez de pasarlo directamente
   return <InstituteForm name={institute?.name ?? ''} email={institute?.email ?? ''} address={institute?.address ?? ''} description={institute?.description ?? ''} phone={institute?.phone ?? ''} />
 }

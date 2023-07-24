@@ -7,7 +7,6 @@ type Props = React.PropsWithChildren<{
   time: string
 }>
 
-// RANT -> esta vaina se llamaba "CheckMessage"... como que CheckMessage? Chequear mensaje? El componente este es para chequear mensajes? XD
 export default function MessageInfo({ status, alignEnd, time }: Props) {
   const currentStatus = statuses[status]
 

@@ -1,4 +1,4 @@
-import ProfileForms from '@/components/profile/ProfileForms'
+import ProfileTabs from '@/components/profile/ProfileTabs'
 
 export default function ProfileLayout({
   children,
@@ -7,7 +7,7 @@ export default function ProfileLayout({
 }) {
   return (
     <main className="p-4">
-      <ProfileForms />
+      <ProfileTabs />
       {children}
     </main>
   )

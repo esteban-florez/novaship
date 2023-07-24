@@ -9,6 +9,7 @@ type Props = React.PropsWithChildren<{
 }>
 
 export default function Select({ name, label, value = '', multiple = false, noDefault = false, children }: Props) {
+  // TODO -> hacer que reciba una prop "options" con las opciones en formato { value: 1, label: 'Label'}
   return (
     <>
       <CustomLabel id={name} label={label} />
