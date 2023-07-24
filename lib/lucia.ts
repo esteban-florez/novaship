@@ -8,14 +8,17 @@ const env = process.env.NODE_ENV === 'development' ? 'DEV' : 'PROD'
 
 export const auth = lucia({
   adapter: prismaAdapter(prisma),
-  middleware: nextjs(),
   env,
-  transformDatabaseUser(databaseUser) {
-    return { ...databaseUser }
-  },
+  middleware: nextjs(),
   sessionExpiresIn: {
-    activePeriod: 1000 * 60 * 60 * 24 * 30, // 1 month
+    activePeriod: 1000 * 60 * 60 * 24 * 30,
     idlePeriod: 0,
+  },
+  transformDatabaseUser(databaseUser) {
+    return {
+      dbUserId: databaseUser.id,
+      dbUserEmail: databaseUser.email,
+    }
   },
 })
 
