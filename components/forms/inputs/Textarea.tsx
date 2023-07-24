@@ -4,12 +4,12 @@ type Props = React.PropsWithChildren<{
   name: string
   placeholder: string
   label: string
-  height: number
+  height?: number
   value?: string
   classes?: string
 }>
 
-export default function Textarea({ name, placeholder, label, height, value = '' }: Props) {
+export default function Textarea({ name, placeholder, label, height = 3, value = '' }: Props) {
   return (
     <>
       <CustomLabel id={name} label={label} />

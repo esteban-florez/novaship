@@ -21,9 +21,14 @@
   "plugins": ["react"],
   "rules": {
     "dot-location": ["error", "property"],
-    "comma-dangle": ["error", "always-multiline"],
     "jsx-quotes": ["error", "prefer-double"],
-    "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
+    "@typescript-eslint/comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "never"
+    }],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/space-before-function-paren": ["error", {
