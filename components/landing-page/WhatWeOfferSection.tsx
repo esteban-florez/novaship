@@ -4,7 +4,7 @@ import Title from './Title'
 
 export default function WhatWeOfferSection() {
   return (
-    <section className="mb-4 mt-16 border-y bg-white px-4 pb-16 pt-8 text-base md:px-20 md:text-lg">
+    <section className="mb-4 bg-white px-4 pb-16 pt-8 text-base md:px-20 md:text-lg">
       <Title>Tu estadía importa, por eso te brindamos</Title>
       <div className="flex flex-col gap-4 md:flex-row">
         <MiniCard title="Seguridad" icon={<ShieldCheckIcon className="h-9 w-9 fill-primary" />}>
