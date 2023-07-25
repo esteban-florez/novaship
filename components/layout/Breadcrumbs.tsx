@@ -3,13 +3,20 @@
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { routes } from '@/lib/translations'
-import clsx from 'clsx'
 
 export default function Breadcrumbs() {
   const pathname = usePathname()
   const segments = pathname.split('/').filter(segment => segment !== '')
-  segments.unshift('home')
   const currentSegment = segments.at(-1)
+
+  const links: string[] = []
+
+  const structuredLink = (path: string) => {
+    const lastLink = links.at(-1)
+
+    lastLink != null ? links.push(lastLink.concat(`/${path}`)) : links.push(`/${path}`)
+    return links.at(-1) ?? '/home'
+  }
 
   return (
     <div className="hidden items-center justify-start p-4 text-sm sm:flex">
@@ -18,12 +25,14 @@ export default function Breadcrumbs() {
         {segments.map(segment => {
           return (
             <li key={segment} className="flex items-center before:me-3 before:ms-2 before:block before:opacity-90 before:content-['/']">
-              <Link
-                href={segment === 'home' ? '/' : `/${segment}`}
-                className={clsx('hover:text-accent hover:underline', segment === currentSegment && 'text-primary')}
-              >
-                {routes[segment]}
-              </Link>
+              {segment === currentSegment && <span className="text-primary">{routes[segment]}</span>}
+              {segment !== currentSegment &&
+                <Link
+                  href={structuredLink(segment)}
+                  className="hover:text-accent hover:underline"
+                >
+                  {routes[segment]}
+                </Link>}
             </li>
           )
         })}

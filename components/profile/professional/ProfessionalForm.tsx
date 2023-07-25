@@ -55,7 +55,7 @@ export default function ProfessionalForm({ title, description }: Props) {
       {showAlert !== null && FORM_STATUS[showAlert]}
       <div className="flex flex-row items-center justify-between">
         <h2 className="text-2xl font-bold">Perfil Profesional</h2>
-        <Link href="/user/profile/professional" className="btn-secondary btn-sm btn border-none px-6">
+        <Link href="/home/user/profile/professional" className="btn-secondary btn-sm btn border-none px-6">
           <EyeIcon className="h-6 w-6" />
           Ver perfil
         </Link>

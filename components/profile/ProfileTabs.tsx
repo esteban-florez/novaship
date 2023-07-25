@@ -9,16 +9,16 @@ export default function ProfileTabs() {
   return (
     <>
       <div className="tabs tabs-boxed mb-6 items-center justify-between bg-base-100">
-        <ProfileTabLink href="/profile/user" currentPath={currentPath}>
+        <ProfileTabLink href="/home/profile/user" currentPath={currentPath}>
           Perfil personal
         </ProfileTabLink>
-        <ProfileTabLink href="/profile/professional" currentPath={currentPath}>
+        <ProfileTabLink href="/home/profile/professional" currentPath={currentPath}>
           Perfil profesional
         </ProfileTabLink>
-        <ProfileTabLink href="/profile/institute" currentPath={currentPath}>
+        <ProfileTabLink href="/home/profile/institute" currentPath={currentPath}>
           Perfil institucional
         </ProfileTabLink>
-        <ProfileTabLink href="/profile/company" currentPath={currentPath}>
+        <ProfileTabLink href="/home/profile/company" currentPath={currentPath}>
           Perfil empresarial
         </ProfileTabLink>
       </div>

@@ -7,27 +7,27 @@ import AsideLink from './AsideLink'
 
 const SIDEBAR_LINKS = [
   {
-    href: '/',
+    href: '/home/',
     title: 'Inicio',
     icon: <HomeIcon className="h-6 w-6" />,
   },
   {
-    href: '/internships',
+    href: '/home/internships',
     title: 'Pasantías',
     icon: <AcademicCapIcon className="h-6 w-6" />,
   },
   {
-    href: '/offers',
+    href: '/home/offers',
     title: 'Ofertas',
     icon: <BriefcaseIcon className="h-6 w-6" />,
   },
   {
-    href: '/projects',
+    href: '/home/projects',
     title: 'Proyectos',
     icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
   },
   {
-    href: '/admin',
+    href: '/home/admin',
     title: 'Administración',
     icon: <ShieldCheckIcon className="h-6 w-6" />,
   },
@@ -40,7 +40,7 @@ export default function Aside() {
     <aside className="sticky top-0 hidden h-screen flex-col bg-white shadow-md sm:flex">
       <div className="py-[18px] text-center">
         <Link
-          href="/"
+          href="/home"
           className="rounded-full bg-primary px-4 py-2 font-title text-2xl font-bold text-white shadow-md"
         >
           novaship

@@ -35,7 +35,7 @@ export default function Header({ title, owner, status }: Props) {
           <p className="line-clamp-6 text-sm font-bold">+3</p>
         </div>
         <div className="order-5 col-span-7 flex flex-row justify-end gap-2 p-4 sm:col-span-1">
-          <Link href="/projects/project">
+          <Link href="/home/projects/project">
             <EyeIcon className="h-7 w-7" />
           </Link>
           <button>

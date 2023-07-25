@@ -19,7 +19,7 @@ export default function Filter() {
       </div>
       <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row md:place-items-start md:justify-end xl:w-auto">
         <SearchInput />
-        <Link href="/offers/create" className="btn-primary btn-sm btn h-8 w-full py-2 sm:w-40 md:w-auto">
+        <Link href="/home/offers/create" className="btn-primary btn-sm btn h-8 w-full py-2 sm:w-40 md:w-auto">
           Publicar
         </Link>
       </div>
