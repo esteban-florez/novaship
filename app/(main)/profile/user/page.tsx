@@ -1,4 +1,5 @@
 import UserForm from '@/components/profile/user/UserForm'
+import { auth } from '@/lib/auth'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 
@@ -7,22 +8,15 @@ export const metadata: Metadata = {
 }
 
 export default async function UserProfilePage() {
-  const session = { user: { email: 'eflorez077@gmail.com' } }
+  const { user: sessionUser } = await auth()
 
-  const user = await prisma.user.findUnique({
-    where: {
-      email: session?.user?.email ?? '',
-    },
+  const user = await prisma.authUser.findUnique({
+    where: { id: sessionUser.id },
   })
 
   return (
     <UserForm
-      name={user?.name ?? ''}
-      surname={user?.surname ?? ''}
-      email={user?.email ?? ''}
-      phone={user?.phone ?? ''}
-      address={user?.address ?? ''}
-      bio={user?.bio ?? ''}
+      user={user}
     />
   )
 }

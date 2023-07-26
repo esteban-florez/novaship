@@ -9,7 +9,7 @@ export async function PUT(req: NextRequest) {
 
   let profile
   try {
-    const user = await prisma.user.findFirst()
+    const user = await prisma.authUser.findFirst()
 
     profile = await prisma.profile.update({
       where: {

@@ -1,4 +1,5 @@
 import ProfessionalForm from '@/components/profile/professional/ProfessionalForm'
+import { auth } from '@/lib/auth'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 
@@ -7,21 +8,11 @@ export const metadata: Metadata = {
 }
 
 export default async function ProfessionalProfilePage() {
-  const session = { user: { email: 'eflorez077@gmail.com' } }
+  const { user } = await auth()
 
-  const user = await prisma.user.findUnique({
-    where: {
-      email: session?.user?.email ?? '',
-    },
-    include: {
-      profile: {
-        select: {
-          title: true,
-          description: true,
-        },
-      },
-    },
+  const profile = await prisma.profile.findFirst({
+    where: { userId: user.id },
   })
 
-  return <ProfessionalForm title={user?.profile?.title ?? ''} description={user?.profile?.description ?? ''} />
+  return <ProfessionalForm profile={profile} />
 }
