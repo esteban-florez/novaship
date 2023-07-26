@@ -1,11 +1,10 @@
-import { getServerSession } from 'next-auth'
+import { auth } from '@/lib/auth'
 import AvatarIcon from '../AvatarIcon'
-import authOptions from '@/lib/auth-options'
 import ProfileDropdownMenu from './ProfileDropdownMenu'
 
 export default async function ProfileDropdown() {
-  const session = await getServerSession(authOptions)
-  const username = session?.user?.name ?? ''
+  const { user: { name, surname } } = await auth()
+  const username = `${name} ${surname}`
 
   return (
     <div className="dropdown-end dropdown z-20">

@@ -17,6 +17,7 @@ export default function ChatBubble({
   chatIsOpen = false,
 }: Props) {
   return (
+    // BUG -> arreglar el css para que funcione bien aún cuando no se renderiza el <span> de última conexión
     <button className={clsx('flex w-full items-center justify-center rounded-md p-2 hover:bg-neutral-200', chatIsOpen && 'bg-neutral-300')}>
       <AvatarIcon
         username={name}

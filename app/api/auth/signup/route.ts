@@ -1,56 +1,32 @@
-import prisma from '@/prisma/client'
-import { hash } from 'bcrypt'
-import { type Prisma } from '@prisma/client'
-import { NextResponse } from 'next/server'
+import lucia from '@/lib/lucia'
+import { NextResponse, type NextRequest } from 'next/server'
+import { signup } from '@/lib/validation/schemas'
+import { handleRequest } from '@/lib/auth'
 
-export async function PUT(req: Request) {
-  // TODO -> input validation
-  const body = await req.formData()
-  const data = Object.fromEntries(body.entries()) as unknown as Prisma.UserCreateInput
+export async function POST(request: NextRequest) {
+  try {
+    const data = await request.json()
+    const { name, surname, email, password } = signup.parse(data)
 
-  if (data.password === null || data.password === undefined || data.password === '') {
-    return NextResponse.json({
-      message: 'Empty password.',
-    }, {
+    const authUser = await lucia.createUser({
+      primaryKey: {
+        providerId: 'email',
+        providerUserId: email,
+        password,
+      },
+      attributes: { name, surname, email },
+    })
+
+    const session = await lucia.createSession(authUser.id)
+    const authRequest = await handleRequest(request)
+    authRequest.setSession(session)
+
+    return NextResponse.redirect(new URL('/', request.url))
+  } catch (error) {
+    // TODO -> error handling
+    console.error(error)
+    return NextResponse.json(null, {
       status: 400,
     })
   }
-
-  data.password = await hash(data.password, 10)
-
-  let user
-  try {
-    user = await prisma.user.create({ data })
-    const profile = await prisma.profile.create({
-      data: {
-        title: '',
-        description: '',
-        schedule: { monday: {}, tuesday: {}, wednesday: {}, thursday: {}, friday: {}, saturday: {}, sunday: {} },
-        user: {
-          connect: {
-            id: user?.id,
-          },
-        },
-      },
-    })
-
-    await prisma.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        profile: {
-          connect: {
-            id: profile.id,
-          },
-        },
-      },
-    })
-  } catch (error) {
-    return NextResponse.error()
-  }
-
-  return NextResponse.json(user, {
-    status: 200,
-  })
 }

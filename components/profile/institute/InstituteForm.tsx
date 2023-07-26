@@ -10,14 +10,14 @@ import Link from 'next/link'
 import { EyeIcon } from '@heroicons/react/24/outline'
 import { type Metadata } from 'next'
 
-type InstitutePick = Pick<Institute, 'name' | 'address' | 'description' | 'email' | 'phone'>
-type Props = React.PropsWithChildren<InstitutePick>
+type Props = React.PropsWithChildren<{ institute: Institute | null }>
 
 export const metadata: Metadata = {
   title: 'Registrar institución',
 }
 
-export default function InsituteForm({ name, address, description, email, phone }: Props) {
+export default function InstituteForm({ institute }: Props) {
+  const { name, description, phone, address, email } = institute ?? {}
   const [showAlert, setShowAlert] = useState<null | 'loading' | 'error' | 'success'>(null)
 
   const handleCloseToast = () => {
@@ -64,8 +64,8 @@ export default function InsituteForm({ name, address, description, email, phone 
         </Link>
       </div>
       <div className="divider divider-vertical mt-2" />
-      <PersonalSection name={name} description={description} />
-      <ContactSection phone={phone} address={address} email={email} />
+      <PersonalSection name={name ?? ''} description={description ?? ''} />
+      <ContactSection phone={phone ?? ''} address={address ?? ''} email={email ?? ''} />
       <ButtonSection />
     </form>
   )

@@ -12,4 +12,11 @@ interface Skill {
   selected: boolean
 }
 
+interface SessionUser {
+  id: string
+  name: string
+  surname: string
+  email: string
+}
+
 type MessageStatus = 'sent' | 'read' | 'received'

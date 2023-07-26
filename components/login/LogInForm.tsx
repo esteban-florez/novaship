@@ -1,40 +1,14 @@
 'use client'
 
-import { XMarkIcon } from '@heroicons/react/24/solid'
-import { signIn } from 'next-auth/react'
-import { useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { ArrowPathIcon } from '@heroicons/react/24/outline'
 import GoogleSignUpButton from '../GoogleSignUpButton'
+import useFormHandling from '@/lib/hooks/useFormHandling'
 
 export default function LogInForm() {
-  const [showAlert, setShowAlert] = useState<boolean>(useSearchParams().has('registered'))
-
-  function handleSubmit(event: FormSubmitEvent) {
-    event.preventDefault()
-
-    // TODO -> error handling
-    async function send() {
-      const elements = event.target.elements
-      const { value: email } = elements.namedItem('email') as HTMLInputElement
-      const { value: password } = elements.namedItem('password') as HTMLInputElement
-
-      await signIn('credentials', { redirect: true, callbackUrl: '/home', email, password })
-    }
-
-    void send()
-  }
+  const { loading, onSubmit } = useFormHandling()
 
   return (
-    <form method="POST" onSubmit={handleSubmit} className="mx-auto w-full pt-4">
-      {showAlert &&
-      (
-        <div className="alert alert-success my-3 flex justify-between">
-          <p className="w-full">Te has registrado correctamente.</p>
-          <button onClick={() => { setShowAlert(false) }}>
-            <XMarkIcon className="h-5 w-5" />
-          </button>
-        </div>
-      )}
+    <form action="/api/auth/login" method="POST" onSubmit={onSubmit} className="mx-auto w-full pt-4">
       <div className="form-control w-full">
         <label htmlFor="email" className="label font-semibold">
           Correo electrónico:
@@ -42,6 +16,7 @@ export default function LogInForm() {
         <input
           type="text"
           id="email"
+          name="email"
           placeholder="correo@ejemplo.com"
           className="input w-full border-neutral-300 bg-base-200"
         />
@@ -53,12 +28,14 @@ export default function LogInForm() {
         <input
           type="password"
           id="password"
+          name="password"
           placeholder="Ingresa tu contraseña..."
           className="input w-full border-neutral-300 bg-base-200"
         />
       </div>
       <div className="flex flex-col gap-4">
-        <button type="submit" className="btn-primary btn mt-8 w-full md:w-auto">
+        <button type="submit" className="btn-primary btn mt-8 w-full md:w-auto" disabled={loading}>
+          {loading && <ArrowPathIcon className="h-6 w-6 animate-spin" />}
           Iniciar sesión
         </button>
         <GoogleSignUpButton />

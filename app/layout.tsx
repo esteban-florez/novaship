@@ -1,4 +1,3 @@
-import SessionProvider from '@/components/layout/SessionProvider'
 import '@/styles/globals.css'
 import clsx from 'clsx'
 import { type Metadata } from 'next'
@@ -32,11 +31,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={clsx('h-full bg-base-300 font-default', inter.variable, josefin.variable)} data-theme="light">
-      <SessionProvider>
-        <body className="h-full">
-          {children}
-        </body>
-      </SessionProvider>
+      <body className="h-full">
+        {children}
+      </body>
     </html>
   )
 }

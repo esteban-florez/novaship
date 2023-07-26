@@ -44,5 +44,5 @@
     "tailwindcss/no-custom-classname": "error",
     "@next/next/no-img-element": "off"
   },
-  "ignorePatterns": ["next-env.d.ts", "tailwind.config.js"]
+  "ignorePatterns": ["next-env.d.ts", "tailwind.config.js", "lucia.d.ts"]
 }

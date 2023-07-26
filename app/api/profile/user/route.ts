@@ -1,18 +1,20 @@
+import { validateUser } from '@/lib/auth'
 import prisma from '@/prisma/client'
-import authOptions from '@/lib/auth-options'
-import { type Prisma } from '@prisma/client'
-import { getServerSession } from 'next-auth'
-import { NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 
-export async function PUT(req: Request) {
-  const session = await getServerSession(authOptions)
-  const body = await req.formData()
-  const data = Object.fromEntries(body.entries()) as unknown as Prisma.UserUpdateInput
+export async function PUT(request: NextRequest) {
+  const { user } = await validateUser(request)
+  const body = await request.formData()
+  const data = Object.fromEntries(body.entries())
 
   try {
-    await prisma.user.update({
+    if (user === null) {
+      throw new Error('Unathenticated request.')
+    }
+
+    await prisma.authUser.update({
       where: {
-        email: session?.user?.email ?? '',
+        id: user.id,
       },
       data,
     })

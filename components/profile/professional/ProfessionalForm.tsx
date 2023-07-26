@@ -11,10 +11,12 @@ import ScheduleSection from './ScheduleSection'
 import Link from 'next/link'
 import { EyeIcon } from '@heroicons/react/24/outline'
 
-type ProfilePick = Pick<Profile, 'title' | 'description'>
-type Props = React.PropsWithChildren<ProfilePick>
+type Props = React.PropsWithChildren<{
+  profile: Profile | null
+}>
 
-export default function ProfessionalForm({ title, description }: Props) {
+export default function ProfessionalForm({ profile }: Props) {
+  const { title, description } = profile ?? {}
   const [showAlert, setShowAlert] = useState<null | 'loading' | 'error' | 'success'>(null)
 
   const handleCloseToast = () => {
@@ -61,8 +63,8 @@ export default function ProfessionalForm({ title, description }: Props) {
         </Link>
       </div>
       <div className="divider divider-vertical mt-2" />
-      <TitleSection title={title} />
-      <AboutMeSection description={description} />
+      <TitleSection title={title ?? ''} />
+      <AboutMeSection description={description ?? ''} />
       <ExperienceSection />
       <ScheduleSection />
       <ButtonSection />
