@@ -1,8 +1,11 @@
 import Toast from '@/components/Toast'
+import { type HTTP_METHOD } from 'next/dist/server/web/http'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 interface UseFormOptions {
   append?: Record<string, string>
+  method?: HTTP_METHOD
   onError?: () => void
   onSuccess?: () => void
 }
@@ -24,7 +27,8 @@ function getStatus(response: Response) {
 }
 
 export default function useFormHandling(options: UseFormOptions = {}) {
-  const { append = {}, onError = null, onSuccess = null } = options
+  const router = useRouter()
+  const { append = {}, onError = null, onSuccess = null, method = null } = options
   const CONTROLS_SELECTOR = 'input, select, textarea'
   const [response, setResponse] = useState<Response | null | 'loading'>(null)
 
@@ -37,12 +41,16 @@ export default function useFormHandling(options: UseFormOptions = {}) {
 
     const form = event.target
     const elements = [...form.querySelectorAll(CONTROLS_SELECTOR)] as FormControls
-    const { action, method } = form
+    const { action, method: formMethod } = form
     const fields = getFields(elements, append)
 
     const response = await fetch(action, {
-      method, body: JSON.stringify(fields),
+      method: method ?? formMethod, body: JSON.stringify(fields),
     })
+
+    if (response.redirected) {
+      router.push(response.url)
+    }
 
     setResponse(response)
     if (onError !== null) {
@@ -63,6 +71,9 @@ export default function useFormHandling(options: UseFormOptions = {}) {
 
   return {
     status,
+    loading: status === 'loading',
+    success: status === 'success',
+    error: status === 'success',
     onSubmit: handleSubmit,
     alert: status !== null && (
       <Toast

@@ -1,30 +1,14 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import useFormHandling from '@/lib/hooks/useFormHandling'
 
 export default function SignUpForm() {
-  const router = useRouter()
-
-  async function handleSubmit(event: FormSubmitEvent) {
-    event.preventDefault()
-    const form = event.target
-    const { action, method } = form
-    const formData = new FormData(form)
-
-    const response = await fetch(action, {
-      body: formData,
-      method,
-    })
-
-    // TODO -> error handling
-    if (response.status === 200) {
-      router.push('/login?registered')
-    }
-  }
+  const { onSubmit, loading, alert } = useFormHandling()
 
   return (
     // TODO -> client-side form validation
-    <form className="mx-auto w-full pt-4" onSubmit={handleSubmit} method="POST" action="/api/auth/signup">
+    <form className="mx-auto w-full pt-4" onSubmit={onSubmit} method="POST" action="/api/auth/signup">
+      {alert}
       <div className="flex grid-cols-2 flex-col gap-x-5 gap-y-6 md:grid">
         <div className="form-control w-full">
           <label htmlFor="name" className="label font-semibold">
@@ -75,7 +59,7 @@ export default function SignUpForm() {
           />
         </div>
       </div>
-      <button type="submit" className="btn-primary btn-block btn mt-8">
+      <button type="submit" className="btn-primary btn-block btn mt-8" disabled={loading}>
         Registrarme
       </button>
     </form>

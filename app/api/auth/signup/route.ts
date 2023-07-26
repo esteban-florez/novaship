@@ -1,48 +1,30 @@
 import { auth } from '@/lib/lucia'
-import { cookies } from 'next/headers'
 import { NextResponse, type NextRequest } from 'next/server'
+import { signup } from '@/lib/validation/schemas'
+import { handleRequest } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
-  const data = await request.json()
-
-  const invalidData = Object.values(data).some(value => typeof value !== 'string')
-
-  if (invalidData) {
-    return NextResponse.json(
-      { error: 'Invalid input' },
-      { status: 400 },
-    )
-  }
-
-  const { name, surname, email, password } = data
-
   try {
-    const user = await auth.createUser({
+    const data = await request.json()
+    const { name, surname, email, password } = signup.parse(data)
+
+    const authUser = await auth.createUser({
       primaryKey: {
         providerId: 'email',
         providerUserId: email,
         password,
       },
-      attributes: {
-        name,
-        surname,
-        email,
-      },
+      attributes: { name, surname, email },
     })
 
-    const session = await auth.createSession(user.userId)
-    // @ts-expect-error Lucia cookies
-    const authRequest = auth.handleRequest({ request, cookies })
+    const session = await auth.createSession(authUser.id)
+    const authRequest = await handleRequest(request)
     authRequest.setSession(session)
 
-    // eslint-disable-next-line no-new
-    new Response(null, {
-      status: 302,
-      headers: {
-        location: '/',
-      },
-    })
+    return NextResponse.redirect(new URL('/', request.url))
   } catch (error) {
+    // TODO -> error handling
+    console.error(error)
     return NextResponse.json(null, {
       status: 400,
     })

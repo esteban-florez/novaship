@@ -14,10 +14,12 @@ export const auth = lucia({
     activePeriod: 1000 * 60 * 60 * 24 * 30,
     idlePeriod: 0,
   },
-  transformDatabaseUser(databaseUser) {
+  transformDatabaseUser(dbUser) {
     return {
-      dbUserId: databaseUser.id,
-      dbUserEmail: databaseUser.email,
+      id: dbUser.id,
+      name: dbUser.name,
+      surname: dbUser.surname,
+      email: dbUser.email,
     }
   },
 })

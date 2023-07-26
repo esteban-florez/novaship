@@ -8,30 +8,32 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model User {
-  id          String       @id @default(cuid())
-  name        String
-  surname     String
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  phone       String?      @unique
-  bio         String?
-  address     String?
-  image       String?
-  profile     Profile?
-  profileId   String?
-  sended      Message[]    @relation(name: "sender")
-  received    Message[]    @relation(name: "receiver")
-  employments Employee[]
-  institutes  Institute[]
-  memberships Membership[]
-  authUser    AuthUser?
+model AuthUser {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  name         String
+  surname      String
+  phone        String?       @unique
+  bio          String?
+  address      String?
+  image        String?
+  profile      Profile?
+  profileId    String?
+  sended       Message[]     @relation(name: "sender")
+  received     Message[]     @relation(name: "receiver")
+  employments  Employee[]
+  institutes   Institute[]
+  memberships  Membership[]
+  auth_session AuthSession[]
+  auth_key     AuthKey[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Membership {
   id             String          @id @default(cuid())
   isLeader       Boolean         @default(false)
-  user           User            @relation(fields: [userId], references: [id])
+  user           AuthUser        @relation(fields: [userId], references: [id])
   userId         String
   project        Project         @relation(fields: [projectId], references: [id])
   projectId      String
@@ -110,9 +112,9 @@ model Message {
   id         String    @id @default(cuid())
   content    String    @db.Text
   seen       DateTime?
-  sender     User      @relation(name: "sender", fields: [senderId], references: [id])
+  sender     AuthUser  @relation(name: "sender", fields: [senderId], references: [id])
   senderId   String
-  receiver   User?     @relation(name: "receiver", fields: [receiverId], references: [id])
+  receiver   AuthUser? @relation(name: "receiver", fields: [receiverId], references: [id])
   receiverId String?
   project    Project?  @relation(fields: [projectId], references: [id])
   projectId  String?
@@ -146,7 +148,7 @@ model Profile {
   candidacies Candidate[]
   internships Intern[]
   reviews     Review[]
-  user        User         @relation(fields: [userId], references: [id])
+  user        AuthUser     @relation(fields: [userId], references: [id])
   userId      String       @unique
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
@@ -187,7 +189,7 @@ model Company {
 model Employee {
   id        String   @id @default(cuid())
   role      Role?
-  user      User     @relation(fields: [userId], references: [id])
+  user      AuthUser @relation(fields: [userId], references: [id])
   userId    String
   company   Company  @relation(fields: [companyId], references: [id])
   companyId String
@@ -285,7 +287,7 @@ model Institute {
   image         String?
   verifiedAt    DateTime?
   interns       Intern[]
-  director      User      @relation(fields: [userId], references: [id])
+  director      AuthUser  @relation(fields: [userId], references: [id])
   userId        String
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -308,15 +310,6 @@ model Skill {
   offers    Offer[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-}
-
-model AuthUser {
-  id           String        @id @default(cuid())
-  email        String        @unique
-  user         User          @relation(fields: [userId], references: [id])
-  userId       String        @unique
-  auth_session AuthSession[]
-  auth_key     AuthKey[]
 }
 
 model AuthSession {

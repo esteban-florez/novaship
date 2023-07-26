@@ -6,11 +6,11 @@ import BiographySection from './BiographySection'
 import { useState } from 'react'
 import Toast from '@/components/Toast'
 import ButtonSection from '../ButtonSection'
-import { type User } from '@prisma/client'
+import { type AuthUser } from '@prisma/client'
 
-type Props = Pick<User, 'name' | 'surname' | 'phone' | 'address' | 'bio'>
+type Props = Pick<AuthUser, 'name' | 'surname' | 'phone' | 'address' | 'bio' | 'email'>
 
-export default function UserForm({ name, surname, phone, address, bio }: Props) {
+export default function UserForm({ name, surname, phone, address, bio, email }: Props) {
   const [showAlert, setShowAlert] = useState<null | 'loading' | 'error' | 'success'>(null)
 
   const handleCloseToast = () => {
@@ -52,8 +52,7 @@ export default function UserForm({ name, surname, phone, address, bio }: Props) 
       <h2 className="text-2xl font-bold">Perfil Personal</h2>
       <div className="divider divider-vertical mt-2" />
       <PersonalSection name={name} surname={surname} />
-      {/* DEV -> email hardcodeado temporalmente */}
-      <ContactSection email="eflorez077@gmail.com" phone={phone} address={address} />
+      <ContactSection email={email} phone={phone} address={address} />
       <BiographySection bio={bio} />
       <ButtonSection />
     </form>

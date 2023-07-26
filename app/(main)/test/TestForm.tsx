@@ -8,8 +8,7 @@ import { ArrowPathIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 
 export default function TestForm() {
-  const { status, alert, onSubmit } = useFormHandling()
-  const isLoading = status === 'loading'
+  const { loading: isLoading, alert, onSubmit } = useFormHandling()
 
   return (
     <form action="/api/test" method="POST" onSubmit={onSubmit}>
