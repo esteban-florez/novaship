@@ -8,10 +8,10 @@ export default function Filter() {
     <>
       <section className="mt-5 flex w-full flex-col flex-wrap gap-2 rounded-lg xl:flex-row xl:items-center">
         <div className="order-2 gap-x-2 xl:order-none">
-          <NavButton isActive url="/">
+          <NavButton isActive url="">
             Mis proyectos
           </NavButton>
-          <NavButton url="/">
+          <NavButton url="">
             Todos
           </NavButton>
         </div>

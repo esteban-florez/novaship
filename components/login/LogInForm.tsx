@@ -18,7 +18,7 @@ export default function LogInForm() {
       const { value: email } = elements.namedItem('email') as HTMLInputElement
       const { value: password } = elements.namedItem('password') as HTMLInputElement
 
-      await signIn('credentials', { redirect: true, callbackUrl: '/', email, password })
+      await signIn('credentials', { redirect: true, callbackUrl: '/home', email, password })
     }
 
     void send()

@@ -23,7 +23,7 @@ export default function Navbar() {
           {date}
         </div>
         <Link
-          href="/chats"
+          href="/home/chats"
           className="btn-ghost btn-circle btn"
         >
           <div className="indicator">

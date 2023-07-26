@@ -22,13 +22,13 @@ export default function HomePage() {
           <div className="card grid w-full grow place-items-center bg-white p-8 shadow-md sm:w-3/6">
             <h5 className="border-b pb-2 font-title font-bold">¿Es gerente de una empresa?</h5>
             <p className="mt-3 text-sm">Busque aspirantes o publique ofertas laborales para hacer crecer su empresa y darle oportunidad a estudiantes egresados</p>
-            <Link className="btn-primary btn mt-4 px-6" href="/profile/company">Registrar empresa</Link>
+            <Link className="btn-primary btn mt-4 px-6" href="/home/profile/company">Registrar empresa</Link>
           </div>
           <div className="divider divider-horizontal mx-auto font-bold sm:px-4">O</div>
           <div className="card grid w-full grow place-items-center bg-white p-8 shadow-md sm:w-3/6">
             <h5 className="border-b pb-2 font-title font-bold">¿Es director de una institución?</h5>
             <p className="mt-3 text-sm">Afíliese con distintas empresas para garantizarle pasantías a sus estudiantes o una oferta laboral</p>
-            <Link className="btn-primary btn mt-4 px-6" href="/profile/institute">Registrar institución</Link>
+            <Link className="btn-primary btn mt-4 px-6" href="/home/profile/institute">Registrar institución</Link>
           </div>
         </div>
       </section>

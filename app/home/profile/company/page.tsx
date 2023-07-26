@@ -13,7 +13,7 @@ export default function CompanyProfilePage() {
     <div className="w-full bg-base-100 p-4">
       <div className="flex flex-row items-center justify-between">
         <h2 className="text-2xl font-bold">Mis empresas registradas</h2>
-        <Link href="/profile/company/create" className="btn-secondary btn-sm btn border-none px-6">
+        <Link href="/home/profile/company/create" className="btn-secondary btn-sm btn border-none px-6">
           <PlusIcon className="h-6 w-6" />
           Registrar
         </Link>
@@ -62,7 +62,7 @@ export default function CompanyProfilePage() {
               <th>
                 <button className="btn-ghost btn-xs btn">
                   <div className="tooltip" data-tip="Ver perfil">
-                    <Link href="/user/profile/company">
+                    <Link href="/home/user/profile/company">
                       <EyeIcon className="h-6 w-6" />
                     </Link>
                   </div>
@@ -96,7 +96,7 @@ export default function CompanyProfilePage() {
               <th>
                 <button className="btn-ghost btn-xs btn">
                   <div className="tooltip" data-tip="Ver perfil">
-                    <Link href="/user/profile/company">
+                    <Link href="/home/user/profile/company">
                       <EyeIcon className="h-6 w-6" />
                     </Link>
                   </div>
@@ -130,7 +130,7 @@ export default function CompanyProfilePage() {
               <th>
                 <button className="btn-ghost btn-xs btn">
                   <div className="tooltip" data-tip="Ver perfil">
-                    <Link href="/user/profile/company">
+                    <Link href="/home/user/profile/company">
                       <EyeIcon className="h-6 w-6" />
                     </Link>
                   </div>
@@ -164,7 +164,7 @@ export default function CompanyProfilePage() {
               <th>
                 <button className="btn-ghost btn-xs btn">
                   <div className="tooltip" data-tip="Ver perfil">
-                    <Link href="/user/profile/company">
+                    <Link href="/home/user/profile/company">
                       <EyeIcon className="h-6 w-6" />
                     </Link>
                   </div>
@@ -198,7 +198,7 @@ export default function CompanyProfilePage() {
               <th>
                 <button className="btn-ghost btn-xs btn">
                   <div className="tooltip" data-tip="Ver perfil">
-                    <Link href="/user/profile/company">
+                    <Link href="/home/user/profile/company">
                       <EyeIcon className="h-6 w-6" />
                     </Link>
                   </div>
