@@ -6,7 +6,7 @@ import 'lucia-auth/polyfill/node'
 
 const env = process.env.NODE_ENV === 'development' ? 'DEV' : 'PROD'
 
-export const auth = lucia({
+const auth = lucia({
   adapter: prismaAdapter(prisma),
   env,
   middleware: nextjs(),
@@ -23,5 +23,7 @@ export const auth = lucia({
     }
   },
 })
+
+export { auth as default }
 
 export type Auth = typeof auth

@@ -1,5 +1,5 @@
 import { handleRequest } from '@/lib/auth'
-import { auth } from '@/lib/lucia'
+import lucia from '@/lib/lucia'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function DELETE(request: NextRequest) {
@@ -12,7 +12,7 @@ export async function DELETE(request: NextRequest) {
       return redirectToLogin
     }
 
-    void auth.invalidateSession(session.sessionId)
+    void lucia.invalidateSession(session.sessionId)
     authRequest.setSession(null)
 
     return redirectToLogin

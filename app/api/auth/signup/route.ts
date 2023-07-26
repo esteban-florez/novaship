@@ -1,4 +1,4 @@
-import { auth } from '@/lib/lucia'
+import lucia from '@/lib/lucia'
 import { NextResponse, type NextRequest } from 'next/server'
 import { signup } from '@/lib/validation/schemas'
 import { handleRequest } from '@/lib/auth'
@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     const data = await request.json()
     const { name, surname, email, password } = signup.parse(data)
 
-    const authUser = await auth.createUser({
+    const authUser = await lucia.createUser({
       primaryKey: {
         providerId: 'email',
         providerUserId: email,
@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       attributes: { name, surname, email },
     })
 
-    const session = await auth.createSession(authUser.id)
+    const session = await lucia.createSession(authUser.id)
     const authRequest = await handleRequest(request)
     authRequest.setSession(session)
 

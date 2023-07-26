@@ -1,16 +1,10 @@
-import { validateUser } from '@/lib/auth'
+import { auth } from '@/lib/auth'
 import AvatarIcon from '../AvatarIcon'
 import ProfileDropdownMenu from './ProfileDropdownMenu'
-import { redirect } from 'next/navigation'
 
 export default async function ProfileDropdown() {
-  const { user } = await validateUser()
-
-  if (user === null) {
-    return redirect('/auth/login')
-  }
-
-  const username = `${user.name} ${user.surname}`
+  const { user: { name, surname } } = await auth()
+  const username = `${name} ${surname}`
 
   return (
     <div className="dropdown-end dropdown z-20">
