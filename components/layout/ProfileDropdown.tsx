@@ -3,7 +3,7 @@ import AvatarIcon from '../AvatarIcon'
 import ProfileDropdownMenu from './ProfileDropdownMenu'
 
 export default async function ProfileDropdown() {
-  const { user: { name, surname } } = await auth()
+  const { name, surname } = await auth()
   const username = `${name} ${surname}`
 
   return (

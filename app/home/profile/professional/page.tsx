@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default async function ProfessionalProfilePage() {
-  const { user } = await auth()
+  const user = await auth()
 
   const profile = await prisma.profile.findFirst({
     where: { userId: user.id },

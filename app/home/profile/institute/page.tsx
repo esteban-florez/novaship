@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default async function InstituteProfilePage() {
-  const { user } = await auth()
+  const user = await auth()
 
   const institute = await prisma.institute.findFirst({
     where: {

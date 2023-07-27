@@ -2,6 +2,7 @@ import lucia from './lucia'
 import { cookies } from 'next/headers'
 import { type NextRequest } from 'next/server'
 import { type Session } from 'lucia-auth'
+import prisma from '@/prisma/client'
 
 interface AuthData {
   user: SessionUser
@@ -9,10 +10,13 @@ interface AuthData {
 }
 
 /**
- * Nota: Usar solamente en páginas dentro del grupo "(main)".
+ * Nota: Usar solamente en páginas dentro de la ruta "/home".
  */
 export async function auth() {
-  return await (validateUser() as Promise<AuthData>)
+  const { user } = await (validateUser() as Promise<AuthData>)
+  return await prisma.authUser.findUniqueOrThrow({
+    where: { id: user.id },
+  })
 }
 
 export async function validateUser(request?: NextRequest) {
