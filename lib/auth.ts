@@ -12,11 +12,22 @@ interface AuthData {
 /**
  * Nota: Usar solamente en páginas dentro de la ruta "/home".
  */
-export async function auth() {
-  const { user } = await (validateUser() as Promise<AuthData>)
-  return await prisma.authUser.findUniqueOrThrow({
-    where: { id: user.id },
-  })
+export const auth = {
+  async company() {
+    return await prisma.company.findUniqueOrThrow(await options())
+  },
+  async institute() {
+    return await prisma.institute.findUniqueOrThrow(await options())
+  },
+  async person() {
+    return await prisma.person.findUniqueOrThrow(await options())
+  },
+}
+
+async function options() {
+  const { user: { id } } = await (validateUser() as Promise<AuthData>)
+
+  return { where: { authUserId: id } }
 }
 
 export async function validateUser(request?: NextRequest) {

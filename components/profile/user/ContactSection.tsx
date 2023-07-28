@@ -1,8 +1,8 @@
 import FormSection from '@/components/forms/FormSection'
 import Input from '@/components/forms/inputs/Input'
-import { type AuthUser } from '@prisma/client'
+import { type Person } from '@prisma/client'
 
-type Props = React.PropsWithChildren<Pick<AuthUser, 'email' | 'phone' | 'address'>>
+type Props = React.PropsWithChildren<Pick<Person, 'email' | 'phone' | 'address'>>
 
 export default function ContactSection({ email, phone, address }: Props) {
   return (

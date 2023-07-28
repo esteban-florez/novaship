@@ -7,11 +7,11 @@ export const metadata: Metadata = {
 }
 
 export default async function UserProfilePage() {
-  const user = await auth()
+  const person = await auth.person()
 
   return (
     <UserForm
-      user={user}
+      user={person}
     />
   )
 }

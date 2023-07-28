@@ -17,9 +17,7 @@ const auth = lucia({
   transformDatabaseUser(dbUser) {
     return {
       id: dbUser.id,
-      name: dbUser.name,
-      surname: dbUser.surname,
-      email: dbUser.email,
+      type: dbUser.type,
     }
   },
 })

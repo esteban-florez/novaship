@@ -1,8 +1,8 @@
 import FormSection from '@/components/forms/FormSection'
 import Textarea from '@/components/forms/inputs/Textarea'
-import { type AuthUser } from '@prisma/client'
+import { type Person } from '@prisma/client'
 
-type Props = React.PropsWithChildren<Pick<AuthUser, 'bio'>>
+type Props = React.PropsWithChildren<Pick<Person, 'bio'>>
 
 export default function BiographySection({ bio }: Props) {
   return (

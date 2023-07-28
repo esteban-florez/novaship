@@ -12,11 +12,11 @@ interface Skill {
   selected: boolean
 }
 
+type UserType = 'COMPANY' | 'INSTITUTE' | 'PERSON'
+
 interface SessionUser {
   id: string
-  name: string
-  surname: string
-  email: string
+  type: UserType
 }
 
 type MessageStatus = 'sent' | 'read' | 'received'

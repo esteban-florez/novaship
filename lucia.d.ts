@@ -3,5 +3,5 @@
 
 declare namespace Lucia {
 	type Auth = import('./auth/lucia').Auth
-	type UserAttributes = Pick<SessionUser, 'name' | 'surname' | 'email'> 
+	type UserAttributes = Pick<SessionUser, 'type'> 
 }
