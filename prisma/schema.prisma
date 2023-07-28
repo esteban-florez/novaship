@@ -51,6 +51,8 @@ model Company {
   verifiedAt    DateTime?
   authUser      AuthUser  @relation(fields: [authUserId], references: [id])
   authUserId    String    @unique
+  location      Location? @relation(fields: [locationId], references: [id])
+  locationId    String
   projects      Project[]
   offers        Offer[]
   reviews       Review[]
@@ -68,9 +70,11 @@ model Institute {
   address       String
   certification String
   verifiedAt    DateTime?
-  internships   Internship[]
+  location      Location?    @relation(fields: [locationId], references: [id])
+  locationId    String
   authUser      AuthUser     @relation(fields: [authUserId], references: [id])
   authUserId    String       @unique
+  internships   Internship[]
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 }
@@ -199,6 +203,8 @@ model Profile {
   description String       @db.Text
   person      Person       @relation(fields: [personId], references: [id])
   personId    String       @unique
+  location    Location?    @relation(fields: [locationId], references: [id])
+  locationId  String
   fields      Field[]
   skills      Skill[]
   experiences Experience[]
@@ -272,6 +278,8 @@ model Offer {
   limit        Int
   company      Company       @relation(fields: [companyId], references: [id])
   companyId    String
+  location     Location?     @relation(fields: [locationId], references: [id])
+  locationId   String
   fields       Field[]
   skills       Skill[]
   postulations Postulation[]
@@ -317,6 +325,17 @@ model Interview {
   recruitmentId String?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
+}
+
+model Location {
+  id        String      @id @default(cuid())
+  title     String      @unique
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  company   Company[]
+  institute Institute[]
+  profile   Profile[]
+  offer     Offer[]
 }
 
 model Field {
