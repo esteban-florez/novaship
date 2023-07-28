@@ -7,17 +7,16 @@ import Select from '@/components/forms/inputs/Select'
 import Textarea from '@/components/forms/inputs/Textarea'
 import SelectedSkills from './SelectedSkills'
 import Link from 'next/link'
+import { type SkillOption } from '@/lib/types'
 
 export default function CreateOfferForm() {
-  // TODO -> use Skill from '@prisma/client'
-  const [skills, setSkills] = useState<Skill[]>([
+  const [skills, setSkills] = useState<SkillOption[]>([
     { id: '8293-3819-1234', title: 'Programación', selected: false },
     { id: '2903-4850-1282', title: 'JavaScript', selected: false },
     { id: '8349-2309-4052', title: 'Bases de datos', selected: false },
     { id: '2930-9485-1234', title: 'React', selected: false },
     { id: '7890-1234-5324', title: 'Diseño', selected: false },
   ])
-
   const selectedSkills = skills.filter(skill => skill.selected)
   const availableSkills = skills.filter(skill => !skill.selected)
 

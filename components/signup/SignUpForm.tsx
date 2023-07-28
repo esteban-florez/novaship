@@ -1,6 +1,7 @@
 'use client'
 
 import useFormHandling from '@/lib/hooks/useFormHandling'
+import Input from '../forms/inputs/Input'
 
 export default function SignUpForm() {
   const { onSubmit, loading, alert } = useFormHandling()
@@ -11,55 +12,13 @@ export default function SignUpForm() {
       {alert}
       <div className="flex grid-cols-2 flex-col gap-x-5 gap-y-6 md:grid">
         <div className="form-control w-full">
-          <label htmlFor="name" className="label font-semibold">
-            Nombre:
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Ej. Luis"
-            className="input-bordered input w-full bg-base-200"
-          />
+          <Input label="Correo electrónico:" name="email" placeholder="Ej. correo@ejemplo.com" />
         </div>
         <div className="form-control w-full">
-          <label htmlFor="surname" className="label font-semibold">
-            Apellido:
-          </label>
-          <input
-            type="text"
-            id="surname"
-            name="surname"
-            placeholder="Ej. Pérez"
-            className="input-bordered input w-full bg-base-200"
-          />
-        </div>
-        <div className="form-control w-full">
-          <label htmlFor="email" className="label font-semibold">
-            Correo electrónico:
-          </label>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            placeholder="correo@ejemplo.com"
-            className="input-bordered input w-full bg-base-200"
-          />
-        </div>
-        <div className="form-control w-full">
-          <label htmlFor="password" className="label font-semibold">
-            Contraseña:
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Ingresa tu contraseña..."
-            className="input-bordered input w-full bg-base-200"
-          />
+          <Input label="Ingresa tu contraseña:" name="password" placeholder="Ingresa tu contraseña..." />
         </div>
       </div>
-      <button type="submit" className="btn-primary btn-block btn mt-8" disabled={loading}>
+      <button type="submit" className="btn-primary btn-block btn mt-4" disabled={loading}>
         Registrarme
       </button>
     </form>

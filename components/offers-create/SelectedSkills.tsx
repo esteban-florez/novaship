@@ -1,7 +1,8 @@
+import { type SkillOption } from '@/lib/types'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
 type Props = React.PropsWithChildren<{
-  selectedSkills: Skill[]
+  selectedSkills: SkillOption[]
   removeSkill: (id: string) => void
 }>
 

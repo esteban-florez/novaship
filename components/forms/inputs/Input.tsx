@@ -17,7 +17,7 @@ export default function Input({ name, type = 'text', placeholder, label, value =
       <CustomLabel id={name} label={label} />
       <input
         id={name} name={name} type={type} placeholder={placeholder}
-        className={clsx('input input-md mb-3 w-full border-neutral-300 focus:ring focus:ring-primary', classes)} defaultValue={value}
+        className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary', classes)} defaultValue={value}
       />
     </>
   )
