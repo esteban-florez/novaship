@@ -27,7 +27,6 @@ model Person {
   image       String?
   phone       String?      @unique
   bio         String?
-  address     String?
   profile     Profile?
   authUser    AuthUser     @relation(fields: [authUserId], references: [id])
   authUserId  String       @unique
@@ -46,7 +45,6 @@ model Company {
   image         String?
   description   String    @db.Text
   phone         String    @unique
-  address       String
   certification String
   verifiedAt    DateTime?
   authUser      AuthUser  @relation(fields: [authUserId], references: [id])
@@ -67,7 +65,6 @@ model Institute {
   image         String?
   description   String       @db.Text
   phone         String       @unique
-  address       String
   certification String
   verifiedAt    DateTime?
   location      Location?    @relation(fields: [locationId], references: [id])

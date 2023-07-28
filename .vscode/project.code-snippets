@@ -12,5 +12,12 @@
       "className=\"h-6 w-6$0\"",
     ],
     "description": "Icon default className"
-  }
+  },
+  "Register prop for fields": {
+    "prefix": "rp",
+    "body": [
+      "register={{ ...register('$0') }} name=\"$0\""
+    ],
+    "description": "Register prop for fields"
+  },
 }

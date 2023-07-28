@@ -4,14 +4,14 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 interface UseFormOptions {
-  append?: Record<string, string>
+  append?: Rec
   method?: HTTP_METHOD
   onError?: () => void
   onSuccess?: () => void
 }
 
-function getFields(elements: FormControls, append: Record<string, string>) {
-  const fields = elements.reduce<Record<string, string>>((data, element) => {
+function getFields(elements: FormControls, append: Rec) {
+  const fields = elements.reduce<Rec>((data, element) => {
     data[element.name] = element.value
     return data
   }, {})

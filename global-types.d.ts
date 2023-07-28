@@ -12,3 +12,5 @@ interface SessionUser {
 }
 
 type MessageStatus = 'sent' | 'read' | 'received'
+
+type Rec = Record<string, string>

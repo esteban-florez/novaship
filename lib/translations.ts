@@ -1,4 +1,4 @@
-export const routes: Record<string, string> = {
+export const routes: Rec = {
   home: 'Inicio',
   offers: 'Ofertas',
   offer: 'Oferta',
@@ -21,4 +21,10 @@ export const statuses = {
   sent: 'Enviado',
   read: 'Leído',
   received: 'Recibido',
+} as const
+
+export const userTypes = {
+  PERSON: 'Persona natural',
+  COMPANY: 'Empresa',
+  INSTITUTE: 'Institución',
 } as const

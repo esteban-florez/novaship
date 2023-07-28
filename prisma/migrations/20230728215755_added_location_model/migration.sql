@@ -1,6 +1,9 @@
 /*
   Warnings:
 
+  - You are about to drop the column `address` on the `Company` table. All the data in the column will be lost.
+  - You are about to drop the column `address` on the `Institute` table. All the data in the column will be lost.
+  - You are about to drop the column `address` on the `Person` table. All the data in the column will be lost.
   - Added the required column `locationId` to the `Company` table without a default value. This is not possible if the table is not empty.
   - Added the required column `locationId` to the `Institute` table without a default value. This is not possible if the table is not empty.
   - Added the required column `locationId` to the `Offer` table without a default value. This is not possible if the table is not empty.
@@ -8,13 +11,18 @@
 
 */
 -- AlterTable
-ALTER TABLE "Company" ADD COLUMN     "locationId" TEXT NOT NULL;
+ALTER TABLE "Company" DROP COLUMN "address",
+ADD COLUMN     "locationId" TEXT NOT NULL;
 
 -- AlterTable
-ALTER TABLE "Institute" ADD COLUMN     "locationId" TEXT NOT NULL;
+ALTER TABLE "Institute" DROP COLUMN "address",
+ADD COLUMN     "locationId" TEXT NOT NULL;
 
 -- AlterTable
 ALTER TABLE "Offer" ADD COLUMN     "locationId" TEXT NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Person" DROP COLUMN "address";
 
 -- AlterTable
 ALTER TABLE "Profile" ADD COLUMN     "locationId" TEXT NOT NULL;
