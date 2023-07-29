@@ -17,4 +17,4 @@ Monetización
 - Agregar suscripción para ver proyectos (empresas) o publicarlos (responsable). Update de Esteban: Yo diría que mejor que sea gratis publicar, pero que tengas mas prioridad si pagas. Y que sea gratis ver, porque pagar nada más por ver y después tener que pagar para tener un proyecto, queda feo xd
 
 - Usar el carrusel de las ofertas como medio de promoción.
-- Añadir publicidad creada por los usuarios
+- Añadir publicidad creada por los usuarios.

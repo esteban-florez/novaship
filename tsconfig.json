@@ -14,7 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": ["./global-types.d.ts"],
+    "types": ["./global-types.d.ts", "node"],
     "plugins": [
       {
         "name": "next"
@@ -24,6 +24,12 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "postcss.config.js", "next.config.js"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "postcss.config.js",
+    "next.config.js"
+  ],
   "exclude": ["node_modules"]
 }
