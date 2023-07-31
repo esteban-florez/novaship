@@ -2,10 +2,8 @@ import CustomLabel from './CustomLabel'
 
 interface SelectOptionsConfig {
   type: 'enum' | 'rows'
-  data: Rec | Rec[]
+  data: Rec | Array<{ value: string, label: string }>
   translation?: Rec
-  valueKey?: string
-  labelKey?: string
 }
 
 type Props = React.PropsWithChildren<{
@@ -30,12 +28,13 @@ function enumOptions(options: SelectOptionsConfig) {
 }
 
 function rowsOptions(options: SelectOptionsConfig) {
-  const { data, valueKey = 'id', labelKey } = options
+  const { data } = options
 
-  if (!Array.isArray(data) || labelKey === undefined) {
+  if (!Array.isArray(data)) {
     throw new Error('Invalid "options" argument to Select.tsx component.')
   }
-  return data.map(row => ({ value: row[valueKey], label: row[labelKey] }))
+
+  return data
 }
 
 export default function Select({ name, label, children, options, value = '', multiple = false, noDefault = false, register = {} }: Props) {

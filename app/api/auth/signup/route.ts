@@ -7,6 +7,7 @@ export async function POST(request: NextRequest) {
   try {
     const data = await request.json()
     const { name, surname, email, password } = signup.parse(data)
+    console.log(name, surname)
 
     const authUser = await lucia.createUser({
       primaryKey: {
@@ -14,7 +15,8 @@ export async function POST(request: NextRequest) {
         providerUserId: email,
         password,
       },
-      attributes: { name, surname, email },
+      // DEV
+      attributes: { type: 'PERSON' },
     })
 
     const session = await lucia.createSession(authUser.id)

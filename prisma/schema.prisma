@@ -28,9 +28,9 @@ model Person {
   phone       String?      @unique
   bio         String?
   profile     Profile?
+  profileId   String?
   authUser    AuthUser     @relation(fields: [authUserId], references: [id])
   authUserId  String       @unique
-  profileId   String?
   messages    Message[]
   memberships Membership[]
   projects    Project[]
@@ -49,7 +49,7 @@ model Company {
   verifiedAt    DateTime?
   authUser      AuthUser  @relation(fields: [authUserId], references: [id])
   authUserId    String    @unique
-  location      Location? @relation(fields: [locationId], references: [id])
+  location      Location  @relation(fields: [locationId], references: [id])
   locationId    String
   projects      Project[]
   offers        Offer[]
@@ -67,7 +67,7 @@ model Institute {
   phone         String       @unique
   certification String
   verifiedAt    DateTime?
-  location      Location?    @relation(fields: [locationId], references: [id])
+  location      Location     @relation(fields: [locationId], references: [id])
   locationId    String
   authUser      AuthUser     @relation(fields: [authUserId], references: [id])
   authUserId    String       @unique
@@ -200,7 +200,7 @@ model Profile {
   description String       @db.Text
   person      Person       @relation(fields: [personId], references: [id])
   personId    String       @unique
-  location    Location?    @relation(fields: [locationId], references: [id])
+  location    Location     @relation(fields: [locationId], references: [id])
   locationId  String
   fields      Field[]
   skills      Skill[]
@@ -275,7 +275,7 @@ model Offer {
   limit        Int
   company      Company       @relation(fields: [companyId], references: [id])
   companyId    String
-  location     Location?     @relation(fields: [locationId], references: [id])
+  location     Location      @relation(fields: [locationId], references: [id])
   locationId   String
   fields       Field[]
   skills       Skill[]
