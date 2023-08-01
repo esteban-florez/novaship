@@ -349,7 +349,7 @@ model Field {
 
 model Skill {
   id        String    @id @default(cuid())
-  title     String
+  title     String    @unique
   profiles  Profile[]
   offers    Offer[]
   createdAt DateTime  @default(now())
