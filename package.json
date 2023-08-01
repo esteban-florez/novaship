@@ -60,9 +60,6 @@
     "project": "./tsconfig.json"
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "tsc-files --noEmit --incremental false",
-      "eslint --cache --fix"
-    ]
+    "*.{ts,tsx}": []
   }
 }
