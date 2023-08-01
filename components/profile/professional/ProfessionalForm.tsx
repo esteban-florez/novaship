@@ -6,17 +6,19 @@ import TitleSection from './TitleSection'
 import ButtonSection from '../ButtonSection'
 import AboutMeSection from './AboutMeSection'
 import ExperienceSection from './ExperienceSection'
-import { type Profile } from '@prisma/client'
+// DEV
+// import { type Profile } from '@prisma/client'
 import ScheduleSection from './ScheduleSection'
 import Link from 'next/link'
 import { EyeIcon } from '@heroicons/react/24/outline'
 
-type Props = React.PropsWithChildren<{
-  profile: Profile | null
-}>
+// type Props = React.PropsWithChildren<{
+//   profile: Profile | null
+// }>
 
-export default function ProfessionalForm({ profile }: Props) {
-  const { title, description } = profile ?? {}
+// export default function ProfessionalForm({ profile }: Props) {
+export default function ProfessionalForm() {
+  // const { title, description } = profile ?? {}
   const [showAlert, setShowAlert] = useState<null | 'loading' | 'error' | 'success'>(null)
 
   const handleCloseToast = () => {
@@ -63,8 +65,10 @@ export default function ProfessionalForm({ profile }: Props) {
         </Link>
       </div>
       <div className="divider divider-vertical mt-2" />
-      <TitleSection title={title ?? ''} />
-      <AboutMeSection description={description ?? ''} />
+      {/* <TitleSection title={title ?? ''} />
+      <AboutMeSection description={description ?? ''} /> */}
+      <TitleSection title="" />
+      <AboutMeSection description="" />
       <ExperienceSection />
       <ScheduleSection />
       <ButtonSection />

@@ -1,5 +1,6 @@
 import UserForm from '@/components/profile/user/UserForm'
-import { auth } from '@/lib/auth'
+// DEV
+// import { auth } from '@/lib/auth'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -7,11 +8,10 @@ export const metadata: Metadata = {
 }
 
 export default async function UserProfilePage() {
-  const person = await auth.person()
+  // const person = await auth.person()
 
   return (
-    <UserForm
-      user={person}
-    />
+    // <UserForm user={person} />
+    <UserForm />
   )
 }

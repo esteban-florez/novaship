@@ -1,6 +1,7 @@
 import ProfessionalForm from '@/components/profile/professional/ProfessionalForm'
-import { auth } from '@/lib/auth'
-import prisma from '@/prisma/client'
+// DEV
+// import { auth } from '@/lib/auth'
+// import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -8,11 +9,12 @@ export const metadata: Metadata = {
 }
 
 export default async function ProfessionalProfilePage() {
-  const person = await auth.person()
+  // const person = await auth.person()
 
-  const profile = await prisma.profile.findFirst({
-    where: { personId: person.id },
-  })
+  // const profile = await prisma.profile.findFirst({
+  //   where: { personId: person.id },
+  // })
 
-  return <ProfessionalForm profile={profile} />
+  // return <ProfessionalForm profile={profile} />
+  return <ProfessionalForm />
 }
