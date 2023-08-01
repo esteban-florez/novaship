@@ -21,4 +21,13 @@
     ],
     "description": "Register prop for fields"
   },
+
+  "Declare Fields type for Zod schema": {
+    "prefix": "df",
+    "body": [
+      // TODO -> actualizar para que funcione con tres props: el name, el errors, el register.
+      "export type Fields = z.infer<typeof schema>"
+    ],
+    "description": "Declare Fields type for Zod schema"
+  },
 }

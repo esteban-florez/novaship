@@ -1,12 +1,12 @@
 import lucia from '@/lib/lucia'
 import { NextResponse, type NextRequest } from 'next/server'
-import { signup } from '@/lib/validation/schemas'
+import { schema } from '@/lib/validation/schemas/signup'
 import { handleRequest } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json()
-    const { name, surname, email, password } = signup.parse(data)
+    const { name, surname, email, password } = schema.parse(data)
     console.log(name, surname)
 
     const authUser = await lucia.createUser({

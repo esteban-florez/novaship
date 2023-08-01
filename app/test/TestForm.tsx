@@ -8,21 +8,18 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { type Location, UserType } from '@prisma/client'
 import { userTypes } from '@/lib/translations'
 import collect from '@/lib/utils/collection'
-import { test as schema } from '@/lib/validation/schemas'
-import { type z } from 'zod'
+import { schema, type Fields } from '@/lib/validation/schemas/test'
 
 type Props = React.PropsWithChildren<{
   locations: Location[]
 }>
 
-type Fields = z.infer<typeof schema>
-
 export default function TestForm({ locations }: Props) {
   const { register, handleSubmit, formState: { errors } } = useForm<Fields>({
+    mode: 'onTouched',
     resolver: zodResolver(schema),
   })
-
-  // TODO -> los "componentes control" deberían recibir 4 props. name, errors, register (como function), y options, para usarse en la llamada de register dentro del componente. O incluso mejor, podrían ponerse "erros" y "register" en un Context, para que sea consumido por los "componentes control" hijos.
+  // TODO -> los "componentes control" deberían recibir 4 props. name, errors, register (como function), y options, para usarse en la llamada de register dentro del componente.
 
   return (
     <form className="p-8" action="/api/test" method="POST" onSubmit={handleSubmit(data => { console.log(data) })}>

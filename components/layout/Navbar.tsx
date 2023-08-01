@@ -4,11 +4,10 @@ import { Bars3Icon } from '@heroicons/react/24/solid'
 import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/outline'
 import Breadcrumbs from './Breadcrumbs'
 import NotificationDropdown from './NotificationDropdown'
+import { format } from '@/lib/utils/date'
 
 export default function Navbar() {
-  const date = new Date().toLocaleDateString('es', {
-    year: 'numeric', month: 'long', day: 'numeric',
-  })
+  const date = format(new Date())
 
   return (
     <nav className="navbar bg-white shadow-md">

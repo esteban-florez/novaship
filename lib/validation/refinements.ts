@@ -1,13 +1,11 @@
-export const password = (password: string) => {
-  const expressions = [
-    /[.[\]?*+{}^$()|!\\'"@~%&°#¡¿_\-<>]/g,
-    /[A-Z]/g,
-    /[a-z]/g,
-    /[0-9]/g,
-  ]
+export const hasUpper = (string: string) => (/[A-Z]/g).test(string)
 
-  return expressions.every(expression => expression.test(password))
-}
+export const hasLower = (string: string) => (/[a-z]/g).test(string)
+
+export const hasNumber = (string: string) => (/[0-9]/g).test(string)
+
+export const hasSymbol = (string: string) =>
+  (/[.[\]?*+{}^$()|!\\'"@~%&°#¡¿_,\-<>·¬`]/g).test(string)
 
 export const within = (elements: unknown[]) =>
   (value: unknown) => elements.includes(value)
