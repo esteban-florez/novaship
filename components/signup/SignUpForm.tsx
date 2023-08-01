@@ -1,26 +1,33 @@
 'use client'
 
 import useFormHandling from '@/lib/hooks/useFormHandling'
-import Input from '../forms/inputs/Input'
+import General from './General'
+import UserType from './UserType'
+import SignUserForm from './SignUserForm'
+import PhotoProfile from './PhotoProfile'
+import ThemePreferences from './ThemePreferences'
+import UserCalendar from './UserCalendar'
+import UserCurriculum from './UserCurriculum'
+import { useState } from 'react'
 
 export default function SignUpForm() {
-  const { onSubmit, loading, alert } = useFormHandling()
+  const { onSubmit, alert } = useFormHandling()
+  const [step, setStep] = useState('general')
+  const allSteps = {
+    general: <General setStep={setStep} />,
+    userType: <UserType setStep={setStep} />,
+    signUserForm: <SignUserForm setStep={setStep} />,
+    photoProfile: <PhotoProfile setStep={setStep} />,
+    themePreferences: <ThemePreferences setStep={setStep} />,
+    userCalendar: <UserCalendar setStep={setStep} />,
+    userCurriculum: <UserCurriculum setStep={setStep} />,
+  }
 
   return (
     // TODO -> client-side form validation
-    <form className="mx-auto w-full pt-4" onSubmit={onSubmit} method="POST" action="/api/auth/signup">
+    <form onSubmit={onSubmit} method="POST" action="/api/auth/signup">
       {alert}
-      <div className="flex grid-cols-2 flex-col gap-x-5 gap-y-6 md:grid">
-        <div className="form-control w-full">
-          <Input label="Correo electrónico:" name="email" placeholder="Ej. correo@ejemplo.com" />
-        </div>
-        <div className="form-control w-full">
-          <Input label="Ingresa tu contraseña:" name="password" placeholder="Ingresa tu contraseña..." />
-        </div>
-      </div>
-      <button type="submit" className="btn-primary btn-block btn mt-4" disabled={loading}>
-        Registrarme
-      </button>
+      {allSteps[step]}
     </form>
   )
 }
