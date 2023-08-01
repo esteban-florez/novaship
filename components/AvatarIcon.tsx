@@ -1,4 +1,4 @@
-import { capitalizeString } from '@/lib/text'
+import { capitalizeString } from '@/lib/utils/text'
 import clsx from 'clsx'
 import Image from 'next/image'
 

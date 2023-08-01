@@ -36,6 +36,8 @@
       "named": "never",
       "asyncArrow": "always"
     }],
+    // TODO -> activar
+    // "react/jsx-sort-props": "error",
     "react/jsx-curly-brace-presence": ["error", {
       "props": "never",
       "children": "never",

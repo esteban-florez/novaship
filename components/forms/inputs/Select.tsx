@@ -14,6 +14,9 @@ type Props = React.PropsWithChildren<{
   noDefault?: boolean
   options?: SelectOptionsConfig
   register?: object
+  errors?: Record<string, {
+    message?: string
+  }>
 }>
 
 function enumOptions(options: SelectOptionsConfig) {
@@ -37,7 +40,9 @@ function rowsOptions(options: SelectOptionsConfig) {
   return data
 }
 
-export default function Select({ name, label, children, options, value = '', multiple = false, noDefault = false, register = {} }: Props) {
+// DRY 3
+export default function Select({ name, label, children, options, value = '', multiple = false, noDefault = false, register = {}, errors = {} }: Props) {
+  const hasError = errors[name] !== undefined
   let selectOptions
 
   if (options !== undefined) {
@@ -63,6 +68,9 @@ export default function Select({ name, label, children, options, value = '', mul
         ))}
         {children}
       </select>
+      {(hasError) && (
+        <p className="-mt-2 text-sm font-semibold text-red-500">{errors[name].message}</p>
+      )}
     </>
   )
 }

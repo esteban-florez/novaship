@@ -5,6 +5,30 @@ class Collection<T> {
     this.array = array
   }
 
+  first() {
+    return structuredClone(this.array[0])
+  }
+
+  all() {
+    return structuredClone(this.array)
+  }
+
+  ids() {
+    return this.array.map(element => {
+      const isObject = typeof element === 'object' && element !== null
+
+      if (!isObject) {
+        throw new Error('Failed to extract ids: The elements are not objects.')
+      }
+
+      if (!('id' in element)) {
+        throw new Error('Failed to extract ids: The elements are missing \'id\' property.')
+      }
+
+      return element.id
+    })
+  }
+
   random(amount = 1) {
     const arrayCopy = structuredClone(this.array)
     const result = []
@@ -16,14 +40,6 @@ class Collection<T> {
     }
 
     return new Collection(result)
-  }
-
-  first() {
-    return structuredClone(this.array[0])
-  }
-
-  all() {
-    return structuredClone(this.array)
   }
 
   toOptions() {
