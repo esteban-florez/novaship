@@ -7,7 +7,7 @@ import AsideLink from './AsideLink'
 
 const SIDEBAR_LINKS = [
   {
-    href: '/home/',
+    href: '/home',
     title: 'Inicio',
     icon: <HomeIcon className="h-6 w-6" />,
   },
@@ -36,6 +36,11 @@ const SIDEBAR_LINKS = [
 export default function Aside() {
   const pathname = usePathname()
 
+  const handleActivelink = (link: string) => {
+    const [, , path] = link.split('/')
+    return link === pathname || (pathname.includes(path) && path !== '')
+  }
+
   return (
     <aside className="sticky top-0 hidden h-screen flex-col bg-white shadow-md sm:flex">
       <div className="py-[18px] text-center">
@@ -48,7 +53,7 @@ export default function Aside() {
       </div>
       <ul className="menu h-full gap-4 px-8 py-6 shadow">
         {SIDEBAR_LINKS.map(link => (
-          <AsideLink key={link.href} link={link} active={pathname === link.href} />
+          <AsideLink key={link.href} link={link} active={handleActivelink(link.href)} />
         ))}
       </ul>
     </aside>

@@ -12,7 +12,6 @@
 - Ajustar el ancho del mensaje en Toast.
 - Revisar rutas: /user/profile y /profile.
 - Mover el chat del /navbar a /projects.
-- Sidebar link active cuando se entra a la ruta correspondiente /projects/*.
 - El height del carrusel debe ser el mismo sin importar su contenido.
 - Guiar al usuario por la aplicación.
 - Banner recordatorio de completar perfil.
