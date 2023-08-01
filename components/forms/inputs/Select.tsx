@@ -2,10 +2,8 @@ import CustomLabel from './CustomLabel'
 
 interface SelectOptionsConfig {
   type: 'enum' | 'rows'
-  data: Rec | Rec[]
+  data: Rec | Array<{ value: string, label: string }>
   translation?: Rec
-  valueKey?: string
-  labelKey?: string
 }
 
 type Props = React.PropsWithChildren<{
@@ -16,6 +14,9 @@ type Props = React.PropsWithChildren<{
   noDefault?: boolean
   options?: SelectOptionsConfig
   register?: object
+  errors?: Record<string, {
+    message?: string
+  }>
 }>
 
 function enumOptions(options: SelectOptionsConfig) {
@@ -30,15 +31,18 @@ function enumOptions(options: SelectOptionsConfig) {
 }
 
 function rowsOptions(options: SelectOptionsConfig) {
-  const { data, valueKey = 'id', labelKey } = options
+  const { data } = options
 
-  if (!Array.isArray(data) || labelKey === undefined) {
+  if (!Array.isArray(data)) {
     throw new Error('Invalid "options" argument to Select.tsx component.')
   }
-  return data.map(row => ({ value: row[valueKey], label: row[labelKey] }))
+
+  return data
 }
 
-export default function Select({ name, label, children, options, value = '', multiple = false, noDefault = false, register = {} }: Props) {
+// DRY 3
+export default function Select({ name, label, children, options, value = '', multiple = false, noDefault = false, register = {}, errors = {} }: Props) {
+  const hasError = errors[name] !== undefined
   let selectOptions
 
   if (options !== undefined) {
@@ -64,6 +68,9 @@ export default function Select({ name, label, children, options, value = '', mul
         ))}
         {children}
       </select>
+      {(hasError) && (
+        <p className="-mt-2 text-sm font-semibold text-red-500">{errors[name].message}</p>
+      )}
     </>
   )
 }

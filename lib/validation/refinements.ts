@@ -6,5 +6,11 @@ export const password = (password: string) => {
     /[0-9]/g,
   ]
 
-  return expressions.map(expression => expression.test(password))
+  return expressions.every(expression => expression.test(password))
 }
+
+export const within = (elements: unknown[]) =>
+  (value: unknown) => elements.includes(value)
+
+export const notWithin = (elements: unknown[]) =>
+  (value: unknown) => !elements.includes(value)
