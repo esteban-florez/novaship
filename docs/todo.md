@@ -20,6 +20,4 @@
 - Crear personalizados componentes.
 - Arreglar los perfiles (ruta /home/profile no existe, en el navbar).
 - Remover padding left del chatbar en /chats
-
-# Plugins
-- Sonner (Alerts y toasts) o mejorar el componente Toast
+- Release, File, Message, Release le faltan seeders.

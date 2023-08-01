@@ -8,13 +8,13 @@ export function getRandomValueFromArray(array: string[]) {
 }
 
 /**
- * @param firstValue 
- * @param secondValue 
+ * @param firstValue
+ * @param secondValue
  * @returns returns the same position value from two arrays
  */
 export function getRandomValuesFromPositionInArray(firstValue: string[], secondValue: string[]) {
   const position = firstValue.length * Math.random() | 0
   const firstPosition = firstValue[position]
   const secondPosition = secondValue[position]
-  return { firstPosition, secondPosition}
+  return { firstPosition, secondPosition }
 }

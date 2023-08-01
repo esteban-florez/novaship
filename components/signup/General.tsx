@@ -2,7 +2,11 @@ import Link from 'next/link'
 import GoogleSignUpButton from '../GoogleSignUpButton'
 import Input from '../forms/inputs/Input'
 
-export default function General({ setStep }) {
+type Props = React.PropsWithChildren<{
+  setStep: (step: string) => void
+}>
+
+export default function General({ setStep }: Props) {
   return (
     <>
       <h2 className="text-center font-title text-2xl font-bold md:text-4xl">
@@ -17,7 +21,7 @@ export default function General({ setStep }) {
             <Input label="Ingresa tu contraseña:" name="password" placeholder="Ingresa tu contraseña..." />
           </div>
         </div>
-        <button onClick={() => setStep('userType')} type="button" className="btn-primary btn-block btn mt-4">
+        <button onClick={() => { setStep('userType') }} type="button" className="btn-primary btn-block btn mt-4">
           Registrarme
         </button>
         <div className="divider divider-vertical" />

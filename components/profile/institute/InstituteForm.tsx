@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 }
 
 export default function InstituteForm({ institute }: Props) {
-  const { name, description, phone, address, email } = institute ?? {}
+  const { name, description, phone, email } = institute ?? {}
   const [showAlert, setShowAlert] = useState<null | 'loading' | 'error' | 'success'>(null)
 
   const handleCloseToast = () => {
@@ -54,7 +54,7 @@ export default function InstituteForm({ institute }: Props) {
   }
 
   return (
-    <form method="POST" onSubmit={handleSubmit} action="/api/profile/institute" className="w-full rounded-lg bg-base-100 p-4">
+    <form method="POST" onSubmit={handleSubmit} className="w-full rounded-lg bg-base-100 p-4">
       {showAlert !== null && FORM_STATUS[showAlert]}
       <div className="flex flex-row items-center justify-between">
         <h2 className="text-2xl font-bold">Perfil Institucional</h2>
@@ -65,7 +65,7 @@ export default function InstituteForm({ institute }: Props) {
       </div>
       <div className="divider divider-vertical mt-2" />
       <PersonalSection name={name ?? ''} description={description ?? ''} />
-      <ContactSection phone={phone ?? ''} address={address ?? ''} email={email ?? ''} />
+      <ContactSection phone={phone ?? ''} email={email ?? ''} />
       <ButtonSection />
     </form>
   )

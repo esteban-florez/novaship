@@ -8,12 +8,13 @@ import PhotoProfile from './PhotoProfile'
 import ThemePreferences from './ThemePreferences'
 import UserCalendar from './UserCalendar'
 import UserCurriculum from './UserCurriculum'
-import { useState } from 'react'
+import { useState, type JSX } from 'react'
 
 export default function SignUpForm() {
   const { onSubmit, alert } = useFormHandling()
   const [step, setStep] = useState('general')
-  const allSteps = {
+
+  const allSteps: Record<string, JSX.Element> = {
     general: <General setStep={setStep} />,
     userType: <UserType setStep={setStep} />,
     signUserForm: <SignUserForm setStep={setStep} />,

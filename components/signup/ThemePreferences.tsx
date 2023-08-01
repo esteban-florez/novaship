@@ -1,6 +1,10 @@
 import SearchInput from '../SearchInput'
 
-export default function ThemePreferences({setStep}) {
+type Props = React.PropsWithChildren<{
+  setStep: (step: string) => void
+}>
+
+export default function ThemePreferences({ setStep }: Props) {
   return (
     <>
       <h2 className="text-center font-title text-2xl font-bold md:text-4xl">
@@ -28,10 +32,10 @@ export default function ThemePreferences({setStep}) {
           <input type="checkbox" className="checkbox" />
         </label>
         <div className="flex justify-between">
-          <button onClick={() => setStep('photoProfile')} type="button" className="btn-neutral btn mt-4">
+          <button onClick={() => { setStep('photoProfile') }} type="button" className="btn-neutral btn mt-4">
             Volver
           </button>
-          <button onClick={() => setStep('userCalendar')} type="button" className="btn-primary btn mt-4">
+          <button onClick={() => { setStep('userCalendar') }} type="button" className="btn-primary btn mt-4">
             Siguiente
           </button>
         </div>

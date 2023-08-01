@@ -1,7 +1,7 @@
-import prisma from "./client"
-import fs from "fs"
-import path from "path"
-import data from "@/prisma/seeds-data.json"
+import prisma from './client'
+import fs from 'fs'
+import path from 'path'
+import data from '@/prisma/seeds-data.json'
 
 export const seederQueries = {
   person: 20,
@@ -26,14 +26,14 @@ export const seederQueries = {
 }
 
 async function seed() {
-  const seedFilesPath = path.join(__dirname, "seeds")
+  const seedFilesPath = path.join(__dirname, 'seeds')
   const seedFiles = fs
     .readdirSync(seedFilesPath)
-    .filter((file) => file.endsWith(".seed.ts"))
+    .filter((file) => file.endsWith('.seed.ts'))
 
   for (const seedFile of seedFiles) {
     const seedFilePath = path.join(seedFilesPath, seedFile)
-    const { default: seedFunction } = require(seedFilePath)
+    const { default: seedFunction } = await import(seedFilePath)
     await seedFunction(prisma)
   }
 }
@@ -41,120 +41,120 @@ async function seed() {
 seed()
   .then(async () => {
     console.log(
-      "\x1b[1m",
-      "\x1b[32m",
-      "\n\nDatabase seeded successfully 👌\n\n",
-      "\x1b[0m"
+      '\x1b[1m',
+      '\x1b[32m',
+      '\nDatabase seeded successfully 👌\n',
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Candidacies: ${await prisma.candidacy.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Companies: ${await prisma.company.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Experiences: ${await prisma.experience.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Fields: ${await prisma.field.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Institutes: ${await prisma.institute.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Internships: ${await prisma.internship.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Interviews: ${await prisma.interview.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Locations: ${await prisma.location.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Memberships: ${await prisma.membership.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Offers: ${await prisma.offer.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Participations: ${await prisma.participation.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Persons: ${await prisma.person.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Postulations: ${await prisma.postulation.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Profiles: ${await prisma.profile.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Projects: ${await prisma.project.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Recruitments: ${await prisma.recruitment.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Reviews: ${await prisma.review.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Revisions: ${await prisma.revision.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Skills: ${await prisma.skill.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
-    console.log("\x1b[35m", `🟣 Tasks: ${await prisma.task.count()}`, "\x1b[0m")
+    console.log('\x1b[35m', `🟣 Tasks: ${await prisma.task.count()}`, '\x1b[0m')
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Substasks: ${await prisma.subtask.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
     console.log(
-      "\x1b[35m",
+      '\x1b[35m',
       `🟣 Users: ${await prisma.authUser.count()}`,
-      "\x1b[0m"
+      '\x1b[0m'
     )
   })
   .catch((error) => {
-    console.error("Seeding error:", error)
+    console.error('Seeding error:', error)
   })
   .finally(async () => {
     await prisma.$disconnect()

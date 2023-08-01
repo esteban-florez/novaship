@@ -1,7 +1,7 @@
-import prisma from "../client"
+import prisma from '../client'
 import data from '@/prisma/seeds-data.json'
-import { getRandomValueFromArray } from "@/lib/utils/array"
-import { seederQueries } from "../seed"
+import { getRandomValueFromArray } from '@/lib/utils/array'
+import { seederQueries } from '../seed'
 
 const profiles = data.profiles
 
@@ -14,25 +14,25 @@ export default async function profile() {
         schedule: {},
         person: {
           connect: {
-            email: `u${i}@user.dev`
-          }
+            email: `u${i}@user.dev`,
+          },
         },
         location: {
           connect: {
-            title: getRandomValueFromArray(data.locations)
-          }
+            title: getRandomValueFromArray(data.locations),
+          },
         },
         fields: {
           connect: {
-            title: getRandomValueFromArray(data.fields)
-          }
+            title: getRandomValueFromArray(data.fields),
+          },
         },
         skills: {
           connect: {
-            title: getRandomValueFromArray(data.skills)
-          }
-        }
-      }
+            title: getRandomValueFromArray(data.skills),
+          },
+        },
+      },
     })
   }
 }
