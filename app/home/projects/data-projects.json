@@ -3,12 +3,14 @@
     "id": 0,
     "title": "Contabilidad para la UCB",
     "owner": "Myriam Yaqueno",
-    "status": "Active"
+    "status": "Active",
+    "privaci": "Public"
   },
   {
     "id": 1,
     "title": "Sistema contable completo",
     "owner": "Myriam Yaqueno",
-    "status": "Finalizado"
+    "status": "Finalizado",
+    "privaci": "Private"
   }
 ]
