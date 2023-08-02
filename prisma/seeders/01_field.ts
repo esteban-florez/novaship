@@ -1,7 +1,7 @@
 import prisma from '../client'
-import data from '@/prisma/seeds-data.json'
+import data from '@/prisma/data/fields.json'
 
-const fields = data.fields
+const fields = data
 
 export default async function field() {
   await prisma.field.createMany({

@@ -1,24 +1,24 @@
-import { getRandomValueFromArray } from '@/lib/utils/array'
 import prisma from '../client'
 import { seederQueries } from '../seed'
-import { random } from '@/lib/utils/number'
-import data from '@/prisma/seeds-data.json'
+import numbers from '@/lib/utils/number'
+import data from '@/prisma/data/reviews.json'
+import collect from '@/lib/utils/collection'
 
-const reviews = data.reviews
+const reviews = data
 
 export default async function review() {
   const profilesCount = await prisma.profile.count()
   const companiesCount = await prisma.company.count()
 
   for (let i = 1; i <= seederQueries.reviews; i++) {
-    const skipProfiles = random(1, profilesCount - 1)
-    const skipCompanies = random(1, companiesCount - 1)
+    const skipProfiles = numbers(1, profilesCount - 1).randomBetween()
+    const skipCompanies = numbers(1, companiesCount - 1).randomBetween()
     const selectedProfile = await prisma.profile.findFirst({ skip: skipProfiles })
     const selectedCompany = await prisma.company.findFirst({ skip: skipCompanies })
 
     await prisma.review.create({
       data: {
-        content: getRandomValueFromArray(reviews),
+        content: collect(reviews).random().first(),
         profile: {
           connect: {
             id: selectedProfile?.id,

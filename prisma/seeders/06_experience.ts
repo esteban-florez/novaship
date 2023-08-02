@@ -1,27 +1,27 @@
 import prisma from '../client'
-import data from '@/prisma/seeds-data.json'
-import { getRandomValueFromArray } from '@/lib/utils/array'
+import data from '@/prisma/data/experiences.json'
 import { seederQueries } from '../seed'
-import { random } from '@/lib/utils/number'
+import numbers from '@/lib/utils/number'
+import collect from '@/lib/utils/collection'
 
-const experiences = data.experiences
+const experiences = data
 
 export default async function experience() {
   const profilesCount = await prisma.profile.count()
 
   for (let i = 1; i <= seederQueries.experiences; i++) {
     const toDate = new Date()
-    toDate.setDate(toDate.getDate() + random(25, 410))
+    toDate.setDate(toDate.getDate() + numbers(25, 410).randomBetween())
 
-    const skip = random(1, profilesCount - 1)
+    const skip = numbers(1, profilesCount - 1).randomBetween()
     const selectedProfile = await prisma.profile.findFirst({ skip })
 
     await prisma.experience.create({
       data: {
-        name: getRandomValueFromArray(experiences.names),
-        description: getRandomValueFromArray(experiences.descriptions),
-        phone: random(75000000000, 79000000000).toString(),
-        role: getRandomValueFromArray(experiences.roles),
+        name: collect(experiences.names).random().first(),
+        description: collect(experiences.descriptions).random().first(),
+        phone: numbers().randomPhone(),
+        role: collect(experiences.roles).random().first(),
         from: new Date(),
         to: toDate,
         profile: {

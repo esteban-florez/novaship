@@ -1,16 +1,26 @@
 import prisma from '../client'
-import data from '@/prisma/seeds-data.json'
-import { getRandomValueFromArray } from '@/lib/utils/array'
+import data from '@/prisma/data/profiles.json'
+import dataFields from '@/prisma/data/fields.json'
+import dataSkills from '@/prisma/data/skills.json'
 import { seederQueries } from '../seed'
+import collect from '@/lib/utils/collection'
+import numbers from '@/lib/utils/number'
 
-const profiles = data.profiles
+const profiles = data
+const fields = dataFields
+const skills = dataSkills
 
 export default async function profile() {
+  const locationCount = await prisma.location.count()
+
   for (let i = 1; i <= seederQueries.profiles; i++) {
+    const skip = numbers(1, locationCount - 1).randomBetween()
+    const selectedLocation = await prisma.location.findFirst({ skip })
+
     await prisma.profile.create({
       data: {
-        title: getRandomValueFromArray(profiles.titles),
-        description: getRandomValueFromArray(profiles.descriptions),
+        title: collect(profiles.titles).random().first(),
+        description: collect(profiles.descriptions).random().first(),
         schedule: {},
         person: {
           connect: {
@@ -19,17 +29,17 @@ export default async function profile() {
         },
         location: {
           connect: {
-            title: getRandomValueFromArray(data.locations),
+            id: selectedLocation?.id,
           },
         },
         fields: {
           connect: {
-            title: getRandomValueFromArray(data.fields),
+            title: collect(fields).random().first(),
           },
         },
         skills: {
           connect: {
-            title: getRandomValueFromArray(data.skills),
+            title: collect(skills).random().first(),
           },
         },
       },
