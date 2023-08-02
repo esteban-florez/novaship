@@ -76,7 +76,7 @@ export default function CreateOfferForm() {
       <FormSection title="Habilidades requeridas" description="Elige las habilidades necesarias para desempeñar el trabajo.">
         {availableSkills.length > 0 &&
           (
-            <Select name="skills" label="Habilidades" multiple noDefault>
+            <Select name="skills" label="Habilidades" noDefault>
               {availableSkills.map(skill => (
                 <option key={skill.id} value={skill.id} onClick={() => { addSkill(skill.id) }}>
                   {skill.title}

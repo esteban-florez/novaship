@@ -1,33 +1,33 @@
+import { type SharedInputProps } from '@/lib/types'
 import CustomLabel from './CustomLabel'
 import clsx from 'clsx'
 import { type HTMLInputTypeAttribute } from 'react'
 
-interface Props {
-  name: string
+type Props = React.PropsWithChildren<{
   placeholder: string
-  label: string
   type?: HTMLInputTypeAttribute
-  value?: string
-  classes?: string
-  errors?: Record<string, {
-    message?: string
-  }>
-  register?: object
-}
+} & SharedInputProps>
 
 // DRY 3
-export default function Input({ name, placeholder, label, errors = {}, register = {}, type = 'text', value = '', classes = '' }: Props) {
+export default function Input({
+  name, placeholder, label, register, errors = {},
+  config = {}, type = 'text', value = '', classes = '',
+}: Props) {
   const hasError = errors[name] !== undefined
+  const registerProps = register !== undefined ? { ...register(name, config) } : {}
+
   return (
     <>
       <CustomLabel id={name} label={label} />
       <input
         id={name} name={name} type={type}
-        placeholder={placeholder} {...register}
+        placeholder={placeholder} {...registerProps}
         className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', classes)} defaultValue={value}
       />
-      {(hasError) && (
-        <p className="-mt-2 text-sm font-semibold text-red-500">{errors[name].message}</p>
+      {hasError && (
+        <p className="-mt-2 text-sm font-semibold text-error">
+          {errors[name].message}
+        </p>
       )}
     </>
   )
