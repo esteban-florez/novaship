@@ -2,13 +2,11 @@ type FormSubmitEvent = React.BaseSyntheticEvent<SubmitEvent, HTMLFormElement, HT
 
 type FormStatus = 'loading' | 'error' | 'success'
 
-type FormControls = Array<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-
 type UserType = 'COMPANY' | 'INSTITUTE' | 'PERSON'
 
 interface SessionUser {
   id: string
-  type: UserType
+  type: UserType // TODO -> probar si funciona con UserType de @prisma/client
 }
 
 type MessageStatus = 'sent' | 'read' | 'received'
