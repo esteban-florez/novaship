@@ -25,7 +25,7 @@ export default function UserType({ setStep }: Props) {
           <button onClick={() => { setStep('general') }} type="button" className="btn-neutral btn mt-4">
             Volver
           </button>
-          <button onClick={() => { setStep('signUserForm') }} type="button" className="btn-primary btn mt-4">
+          <button onClick={() => { setStep('basicData') }} type="button" className="btn-primary btn mt-4">
             Siguiente
           </button>
         </div>

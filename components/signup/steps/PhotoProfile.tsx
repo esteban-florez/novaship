@@ -12,7 +12,7 @@ export default function PhotoProfile({ setStep }: Props) {
         {/* Poner para previsualizar la imagen si se puede */}
         <input type="file" className="file-input w-full max-w-xs" />
         <div className="flex justify-between">
-          <button onClick={() => { setStep('signUserForm') }} type="button" className="btn-neutral btn mt-4">
+          <button onClick={() => { setStep('basicData') }} type="button" className="btn-neutral btn mt-4">
             Volver
           </button>
           <button onClick={() => { setStep('themePreferences') }} type="button" className="btn-primary btn mt-4">

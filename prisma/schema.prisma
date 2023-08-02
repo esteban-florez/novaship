@@ -24,7 +24,7 @@ model Person {
   id          String       @id @default(cuid())
   name        String
   email       String       @unique
-  ci          String
+  ci          String       @unique
   birth       DateTime
   image       String?
   phone       String?      @unique

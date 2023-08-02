@@ -20,4 +20,4 @@
 - Crear personalizados componentes.
 - Arreglar los perfiles (ruta /home/profile no existe, en el navbar).
 - Remover padding left del chatbar en /chats
-- Release, File, Message, Release le faltan seeders.
+- Release, File, Message le faltan seeders.

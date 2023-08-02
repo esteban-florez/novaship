@@ -1,11 +1,11 @@
-import Input from '../forms/inputs/Input'
-import Textarea from '../forms/inputs/Textarea'
+import Input from '@/components/forms/inputs/Input'
+import Textarea from '@/components/forms/inputs/Textarea'
 
 type Props = React.PropsWithChildren<{
   setStep: (step: string) => void
 }>
 
-export default function SignUserForm({ setStep }: Props) {
+export default function BasicData({ setStep }: Props) {
   return (
     <>
       <h2 className="text-center font-title text-2xl font-bold md:text-4xl">

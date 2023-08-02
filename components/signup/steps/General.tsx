@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import GoogleSignUpButton from '../GoogleSignUpButton'
-import Input from '../forms/inputs/Input'
+import GoogleSignUpButton from '../../GoogleSignUpButton'
+import Input from '../../forms/inputs/Input'
 
 type Props = React.PropsWithChildren<{
   setStep: (step: string) => void

@@ -1,4 +1,4 @@
-import SearchInput from '../SearchInput'
+import SearchInput from '@/components/SearchInput'
 
 type Props = React.PropsWithChildren<{
   setStep: (step: string) => void
