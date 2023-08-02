@@ -1,20 +1,20 @@
 import prisma from '../client'
 import { seederQueries } from '../seed'
-import { random } from '@/lib/utils/number'
+import numbers from '@/lib/utils/number'
 
 export default async function participation() {
   const membershipsCount = await prisma.membership.count()
   const tasksCount = await prisma.task.count()
 
   for (let i = 1; i <= seederQueries.participations; i++) {
-    const skipMemberships = random(1, membershipsCount - 1)
-    const skipTasks = random(1, tasksCount - 1)
+    const skipMemberships = numbers(1, membershipsCount - 1).randomBetween()
+    const skipTasks = numbers(1, tasksCount - 1).randomBetween()
     const selectedMembership = await prisma.membership.findFirst({ skip: skipMemberships })
     const selectedTask = await prisma.task.findFirst({ skip: skipTasks })
 
     await prisma.participation.create({
       data: {
-        isLeader: random(1, 3) === 3,
+        isLeader: numbers(1, 3).randomBetween() === 3,
         membership: {
           connect: {
             id: selectedMembership?.id,

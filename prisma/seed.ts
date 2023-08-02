@@ -1,20 +1,27 @@
 import prisma from './client'
 import fs from 'fs'
 import path from 'path'
-import data from '@/prisma/seeds-data.json'
+import { pathToFileURL } from 'url'
+
+import dataSkills from '@/prisma/data/skills.json'
+import dataFields from '@/prisma/data/fields.json'
+import dataProjects from '@/prisma/data/projects.json'
+import dataTasks from '@/prisma/data/tasks.json'
+import dataSubtasks from '@/prisma/data/subtasks.json'
+import dataExperiences from '@/prisma/data/experiences.json'
 
 export const seederQueries = {
-  person: 20,
+  persons: 20,
   profiles: 20,
   institute: 20,
   companies: 20,
   offers: 20,
-  skills: data.skills.length,
-  fields: data.fields.length,
-  projects: data.projects.titles.length,
-  tasks: data.tasks.titles.length,
-  subtasks: data.subtasks.titles.length,
-  experiences: data.experiences.names.length,
+  skills: dataSkills.length,
+  fields: dataFields.length,
+  projects: dataProjects.titles.length,
+  tasks: dataTasks.titles.length,
+  subtasks: dataSubtasks.titles.length,
+  experiences: dataExperiences.names.length,
   memberships: 30,
   participations: 20,
   revisions: 12,
@@ -31,125 +38,76 @@ async function seed() {
 
   for (const seedFile of seedFiles) {
     const seedFilePath = path.join(seedFilesPath, seedFile)
-    const { default: seedFunction } = await import(seedFilePath)
+    const seedFileUrl = pathToFileURL(seedFilePath).href
+    const { default: seedFunction } = await import(seedFileUrl)
     await seedFunction(prisma)
   }
 }
 
+let totalQueries = 0
+
+interface LogProps {
+  name: string
+  value?: number
+  bold?: boolean
+  color?: string
+}
+
+function formatLog({ name, value = 0, bold = false, color = '\x1b[35m' }: LogProps) {
+  const hasValue = value !== null && value > 0
+  const isBold = bold !== null && bold
+  totalQueries += value
+
+  const options = {
+    paddedName: name.padEnd(20, ' '),
+    resetCode: '\x1b[0m',
+    boldCode: '\x1b[1m',
+  }
+  const formattedName = isBold
+    ? `${options.boldCode}${color}${options.paddedName}${options.resetCode}`
+    : `${color}${options.paddedName}${options.resetCode}`
+  const formattedValue = hasValue ? `${color}${value}${options.resetCode}` : ''
+
+  if (isBold) {
+    const result = hasValue ? `\n${formattedName} Total: ${formattedValue}\n` : `\n${formattedName}\n`
+    console.log(result); return
+  }
+
+  if (hasValue) {
+    console.log(`${formattedName} Total: ${formattedValue}`); return
+  }
+
+  console.log(formattedName)
+}
+
 seed()
   .then(async () => {
-    console.log(
-      '\x1b[1m',
-      '\x1b[32m',
-      '\nDatabase seeded successfully 👌\n',
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Candidacies: ${await prisma.candidacy.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Companies: ${await prisma.company.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Experiences: ${await prisma.experience.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Fields: ${await prisma.field.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Institutes: ${await prisma.institute.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Internships: ${await prisma.internship.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Interviews: ${await prisma.interview.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Locations: ${await prisma.location.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Memberships: ${await prisma.membership.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Offers: ${await prisma.offer.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Participations: ${await prisma.participation.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Persons: ${await prisma.person.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Postulations: ${await prisma.postulation.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Profiles: ${await prisma.profile.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Projects: ${await prisma.project.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Recruitments: ${await prisma.recruitment.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Reviews: ${await prisma.review.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Revisions: ${await prisma.revision.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Skills: ${await prisma.skill.count()}`,
-      '\x1b[0m'
-    )
-    console.log('\x1b[35m', `🟣 Tasks: ${await prisma.task.count()}`, '\x1b[0m')
-    console.log(
-      '\x1b[35m',
-      `🟣 Substasks: ${await prisma.subtask.count()}`,
-      '\x1b[0m'
-    )
-    console.log(
-      '\x1b[35m',
-      `🟣 Users: ${await prisma.authUser.count()}`,
-      '\x1b[0m'
-    )
+    formatLog({ name: 'Database seeded successfully 👌', bold: true, color: '\x1b[32m' })
+    formatLog({ name: '🟣 AuthKeys', value: await prisma.authKey.count() })
+    formatLog({ name: '🟣 AuthSessions', value: await prisma.authSession.count() })
+    formatLog({ name: '🟣 Candidacies', value: await prisma.candidacy.count() })
+    formatLog({ name: '🟣 Companies', value: await prisma.company.count() })
+    formatLog({ name: '🟣 Experiences', value: await prisma.experience.count() })
+    formatLog({ name: '🟣 Fields', value: await prisma.field.count() })
+    formatLog({ name: '🟣 Institutes', value: await prisma.institute.count() })
+    formatLog({ name: '🟣 Internships', value: await prisma.internship.count() })
+    formatLog({ name: '🟣 Interviews', value: await prisma.interview.count() })
+    formatLog({ name: '🟣 Locations', value: await prisma.location.count() })
+    formatLog({ name: '🟣 Memberships', value: await prisma.membership.count() })
+    formatLog({ name: '🟣 Offers', value: await prisma.offer.count() })
+    formatLog({ name: '🟣 Participations', value: await prisma.participation.count() })
+    formatLog({ name: '🟣 Persons', value: await prisma.person.count() })
+    formatLog({ name: '🟣 Postulations', value: await prisma.postulation.count() })
+    formatLog({ name: '🟣 Profiles', value: await prisma.profile.count() })
+    formatLog({ name: '🟣 Projects', value: await prisma.project.count() })
+    formatLog({ name: '🟣 Recruitments', value: await prisma.recruitment.count() })
+    formatLog({ name: '🟣 Reviews', value: await prisma.review.count() })
+    formatLog({ name: '🟣 Revisions', value: await prisma.revision.count() })
+    formatLog({ name: '🟣 Skills', value: await prisma.skill.count() })
+    formatLog({ name: '🟣 Tasks', value: await prisma.task.count() })
+    formatLog({ name: '🟣 Substasks', value: await prisma.subtask.count() })
+    formatLog({ name: '🟣 Users', value: await prisma.authUser.count() })
+    formatLog({ name: 'Total queries', value: totalQueries, bold: true })
   })
   .catch((error) => {
     console.error('Seeding error:', error)

@@ -1,0 +1,24 @@
+{
+  "titles": [
+    "Contador",
+    "Administrador",
+    "Electromecánico",
+    "Terapeuta",
+    "Abogado",
+    "Economista",
+    "Financiero",
+    "Biólogo",
+    "Informático",
+    "Analista"
+  ],
+  "descriptions": [
+    "Profesional en recursos humanos con experiencia en la administración de programas de capacitación y desarrollo. Capaz de reclutar y retener talento. Orientado al servicio y con habilidades de comunicación.",
+    "Experiencia en la gestión de proyectos y la coordinación de equipos de trabajo. Capaz de manejar múltiples tareas y plazos. Orientado a resultados y con habilidades de liderazgo.",
+    "Analista financiero con habilidades en el análisis de datos financieros y la elaboración de informes. Capaz de tomar decisiones informadas basadas en el análisis financiero. Orientado a resultados y con habilidades numéricas.",
+    "Diseñador gráfico con habilidades en el diseño gráfico y la creación de materiales visuales atractivos. Capaz de trabajar en equipo y dar vida a la visión de la marca. Orientado a la creatividad y con habilidades de diseño.",
+    "Especialista en atención al cliente: con experiencia en la atención al cliente y la resolución de problemas. Capaz de brindar un servicio excepcional y mantener relaciones positivas con los clientes. Orientado al servicio y con habilidades de comunicación.",
+    "Ingeniero de software: con experiencia en el desarrollo de software y la resolución de problemas técnicos. Capaz de trabajar en equipo y entregar soluciones de calidad. Orientado a resultados y con habilidades de programación.",
+    "Ejecutivo de cuentas: con habilidades en la gestión de clientes y el desarrollo de relaciones comerciales. Capaz de identificar oportunidades de venta y cerrar acuerdos. Orientado a resultados y con excelentes habilidades de comunicación.",
+    "Especialista en marketing: con experiencia en el desarrollo y ejecución de estrategias de marketing efectivas. Capaz de liderar equipos y alcanzar los objetivos de la empresa. Orientado a resultados y con habilidades analíticas."
+  ]
+}

@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     const authRequest = await handleRequest(request)
     authRequest.setSession(session)
 
-    return NextResponse.redirect(new URL('/', request.url))
+    return NextResponse.redirect(new URL('/home', request.url))
   } catch (error) {
     console.error(error)
     return NextResponse.json(null, { status: 400 })

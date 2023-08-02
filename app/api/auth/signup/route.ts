@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { schema } from '@/lib/validation/schemas/signup'
 import { handleRequest } from '@/lib/auth'
 import prisma from '@/prisma/client'
-import { random } from '@/lib/utils/number'
+import numbers from '@/lib/utils/number'
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     await prisma.person.create({
       data: {
         name: 'Esteban Florez',
-        ci: random(1, 30_000_000).toString(),
+        ci: numbers(1, 30_000_000).randomCI(),
         birth: new Date('2003-07-07'),
         email,
         authUserId: authUser.id,

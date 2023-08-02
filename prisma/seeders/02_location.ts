@@ -1,10 +1,14 @@
 import prisma from '../client'
-import data from '@/prisma/seeds-data.json'
-
-const locations = data.locations
+import data from '@/prisma/data/locations.json'
 
 export default async function location() {
-  await prisma.location.createMany({
-    data: locations.map((location) => ({ title: location })),
-  })
+  for (const [key, values] of Object.entries(data)) {
+    for (const value of values) {
+      await prisma.location.create({
+        data: {
+          title: `${key}, ${value}`,
+        },
+      })
+    }
+  }
 }
