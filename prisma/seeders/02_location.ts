@@ -1,4 +1,4 @@
-import prisma from "../client"
+import prisma from '../client'
 import data from '@/prisma/seeds-data.json'
 
 const locations = data.locations

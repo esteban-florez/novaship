@@ -1,6 +1,6 @@
-import prisma from "../client"
-import { seederQueries } from "../seed"
-import { random } from "@/lib/utils/number"
+import prisma from '../client'
+import { seederQueries } from '../seed'
+import { random } from '@/lib/utils/number'
 
 export default async function membership() {
   const projectsCount = await prisma.project.count()
@@ -11,20 +11,20 @@ export default async function membership() {
     const skipPersons = random(1, personsCount - 1)
     const selectedProject = await prisma.project.findFirst({ skip: skipProjects })
     const selectedPerson = await prisma.person.findFirst({ skip: skipPersons })
-  
+
     await prisma.membership.create({
       data: {
         project: {
           connect: {
-            id: selectedProject?.id
-          }
+            id: selectedProject?.id,
+          },
         },
         person: {
           connect: {
-            id: selectedPerson?.id
-          }
+            id: selectedPerson?.id,
+          },
         },
-      }
+      },
     })
   }
 }

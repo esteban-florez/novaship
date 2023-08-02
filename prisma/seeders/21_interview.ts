@@ -1,9 +1,9 @@
-import prisma from "../client"
-import { getRandomValueFromType } from "@/lib/utils/types"
-import { seederQueries } from "../seed"
-import { random } from "@/lib/utils/number"
-import { Platform } from "@prisma/client"
-import { randomUUID } from "crypto"
+import prisma from '../client'
+import { getRandomValueFromType } from '@/lib/utils/types'
+import { seederQueries } from '../seed'
+import { random } from '@/lib/utils/number'
+import { Platform } from '@prisma/client'
+import { randomUUID } from 'crypto'
 
 export default async function interview() {
   const postulationsCount = await prisma.postulation.count()
@@ -22,15 +22,15 @@ export default async function interview() {
         platform: getRandomValueFromType(Platform),
         postulation: {
           connect: {
-            id: selectedPostulation?.id
-          }
+            id: selectedPostulation?.id,
+          },
         },
         recruitment: {
           connect: {
-            id: selectedRecruitment?.id
-          }
-        }
-      }
+            id: selectedRecruitment?.id,
+          },
+        },
+      },
     })
   }
 }

@@ -1,8 +1,8 @@
-import prisma from "../client"
+import prisma from '../client'
 import data from '@/prisma/seeds-data.json'
-import { getRandomValueFromArray } from "@/lib/utils/array"
-import { seederQueries } from "../seed"
-import { random } from "@/lib/utils/number"
+import { getRandomValueFromArray } from '@/lib/utils/array'
+import { seederQueries } from '../seed'
+import { random } from '@/lib/utils/number'
 
 const experiences = data.experiences
 
@@ -26,10 +26,10 @@ export default async function experience() {
         to: toDate,
         profile: {
           connect: {
-            id: selectedProfile?.id
-          }
-        }
-      }
+            id: selectedProfile?.id,
+          },
+        },
+      },
     })
   }
 }

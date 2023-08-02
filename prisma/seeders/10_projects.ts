@@ -1,9 +1,9 @@
-import prisma from "../client"
+import prisma from '../client'
 import data from '@/prisma/seeds-data.json'
-import { getRandomValueFromType } from "@/lib/utils/types"
-import { Visibility } from "@prisma/client"
-import { seederQueries } from "../seed"
-import { random } from "@/lib/utils/number"
+import { getRandomValueFromType } from '@/lib/utils/types'
+import { Visibility } from '@prisma/client'
+import { seederQueries } from '../seed'
+import { random } from '@/lib/utils/number'
 
 const projects = data.projects
 
@@ -24,15 +24,15 @@ export default async function project() {
         visibility: getRandomValueFromType(Visibility),
         person: {
           connect: {
-            id: selectedPerson?.id
-          }
+            id: selectedPerson?.id,
+          },
         },
         fields: {
           connect: {
-            id: selectedField?.id
-          }
-        }
-      }
+            id: selectedField?.id,
+          },
+        },
+      },
     })
   }
 }

@@ -26,10 +26,8 @@ export const seederQueries = {
 }
 
 async function seed() {
-  const seedFilesPath = path.join(__dirname, 'seeds')
-  const seedFiles = fs
-    .readdirSync(seedFilesPath)
-    .filter((file) => file.endsWith('.seed.ts'))
+  const seedFilesPath = path.join(__dirname, 'seeders')
+  const seedFiles = fs.readdirSync(seedFilesPath)
 
   for (const seedFile of seedFiles) {
     const seedFilePath = path.join(seedFilesPath, seedFile)

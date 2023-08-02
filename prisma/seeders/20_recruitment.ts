@@ -1,8 +1,8 @@
-import prisma from "../client"
-import { getRandomValueFromType } from "@/lib/utils/types"
-import { seederQueries } from "../seed"
-import { random } from "@/lib/utils/number"
-import { RecruitmentStatus } from "@prisma/client"
+import prisma from '../client'
+import { getRandomValueFromType } from '@/lib/utils/types'
+import { seederQueries } from '../seed'
+import { random } from '@/lib/utils/number'
+import { RecruitmentStatus } from '@prisma/client'
 
 export default async function recruitment() {
   const candidaciesCount = await prisma.candidacy.count()
@@ -13,21 +13,21 @@ export default async function recruitment() {
     const skipInternship = random(1, internshipsCount - 1)
     const selectedCandidacy = await prisma.candidacy.findFirst({ skip: skipCandidacy })
     const selectedInternship = await prisma.internship.findFirst({ skip: skipInternship })
-  
+
     await prisma.recruitment.create({
       data: {
         status: getRandomValueFromType(RecruitmentStatus),
         candidacy: {
           connect: {
-            id: selectedCandidacy?.id
-          }
+            id: selectedCandidacy?.id,
+          },
         },
         internship: {
           connect: {
-            id: selectedInternship?.id
-          }
-        }
-      }
+            id: selectedInternship?.id,
+          },
+        },
+      },
     })
   }
 }

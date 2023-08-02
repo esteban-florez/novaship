@@ -1,9 +1,9 @@
-import { getRandomValueFromArray } from "@/lib/utils/array"
-import prisma from "../client"
+import { getRandomValueFromArray } from '@/lib/utils/array'
+import prisma from '../client'
 import data from '@/prisma/seeds-data.json'
-import { seederQueries } from "../seed"
-import { getRandomValueFromType } from "@/lib/utils/types"
-import { TaskStatus } from "@prisma/client"
+import { seederQueries } from '../seed'
+import { getRandomValueFromType } from '@/lib/utils/types'
+import { TaskStatus } from '@prisma/client'
 
 const tasks = data.tasks
 
@@ -16,9 +16,9 @@ export default async function task() {
         status: getRandomValueFromType(TaskStatus),
         project: {
           connect: {
-            title: getRandomValueFromArray(data.projects.titles)
-          }
-        }
+            title: getRandomValueFromArray(data.projects.titles),
+          },
+        },
       },
     })
   }

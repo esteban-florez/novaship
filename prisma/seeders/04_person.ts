@@ -1,8 +1,8 @@
-import { random } from "@/lib/utils/number"
-import prisma from "../client"
+import { random } from '@/lib/utils/number'
+import prisma from '../client'
 import data from '@/prisma/seeds-data.json'
-import { getRandomValueFromArray } from "@/lib/utils/array"
-import { seederQueries } from "../seed"
+import { getRandomValueFromArray } from '@/lib/utils/array'
+import { seederQueries } from '../seed'
 
 const persons = data.users
 
@@ -12,7 +12,7 @@ export default async function person() {
   for (let i = 1; i <= seederQueries.person; i++) {
     await prisma.authUser.create({
       data: {
-        type: "PERSON",
+        type: 'PERSON',
         person: {
           create: {
             name: fullname,
@@ -21,8 +21,8 @@ export default async function person() {
             bio: getRandomValueFromArray(persons.descriptions),
             ci: random(100000, 40000000).toString(),
             birth: new Date(),
-          }
-        }
+          },
+        },
       },
     })
   }
