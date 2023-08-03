@@ -1,16 +1,16 @@
-import { getRandomValueFromArray } from '@/lib/utils/array'
 import prisma from '../client'
 import { seederQueries } from '../seed'
-import { random } from '@/lib/utils/number'
-import data from '@/prisma/seeds-data.json'
+import numbers from '@/lib/utils/number'
+import data from '@/prisma/data/revisions.json'
+import collect from '@/lib/utils/collection'
 
-const revisions = data.revisions
+const revisions = data
 
 export default async function revision() {
   const tasksCount = await prisma.task.count()
 
   for (let i = 1; i <= seederQueries.revisions; i++) {
-    const skip = random(1, tasksCount - 1)
+    const skip = numbers(1, tasksCount - 1).randomBetween()
     const selectedTask = await prisma.task.findFirst({ skip })
 
     await prisma.revision.create({
@@ -20,7 +20,7 @@ export default async function revision() {
             id: selectedTask?.id,
           },
         },
-        description: getRandomValueFromArray(revisions),
+        description: collect(revisions).random().first(),
       },
     })
   }

@@ -1,30 +1,46 @@
-import { getRandomValueFromArray, getRandomValuesFromPositionInArray } from '@/lib/utils/array'
+import lucia from '@/lib/lucia'
 import prisma from '../client'
-import data from '@/prisma/seeds-data.json'
-import { random } from '@/lib/utils/number'
+import data from '@/prisma/data/institutes.json'
+import numbers from '@/lib/utils/number'
 import { seederQueries } from '../seed'
 
-const institutes = data.institutes
+const institutes = data
 
 export default async function institute() {
-  const { firstPosition: name, secondPosition: description } = getRandomValuesFromPositionInArray(institutes.names, institutes.descriptions)
+  const locationCount = await prisma.location.count()
 
   for (let i = 1; i <= seederQueries.institute; i++) {
-    await prisma.authUser.create({
+    const skip = numbers(1, locationCount - 1).randomBetween()
+    const selectedLocation = await prisma.location.findFirst({ skip })
+    const position = numbers(institutes.names.length - 1).randomBetween()
+    const name = institutes.names[position]
+    const description = institutes.descriptions[position]
+    const email = `i${i}@institute.dev`
+
+    const authUser = await lucia.createUser({
+      primaryKey: {
+        providerId: 'email',
+        providerUserId: email,
+        password: 'Password_3',
+      },
+      attributes: { type: 'INSTITUTE' },
+    })
+
+    await prisma.institute.create({
       data: {
-        type: 'INSTITUTE',
-        institute: {
-          create: {
-            name,
-            description,
-            email: `i${i}@institute.dev`,
-            phone: random(30000000000, 31000000000).toString(),
-            certification: 'PENDING',
-            location: {
-              connect: {
-                title: getRandomValueFromArray(data.locations),
-              },
-            },
+        name,
+        description,
+        email,
+        phone: numbers().randomPhone(),
+        certification: 'PENDING',
+        authUser: {
+          connect: {
+            id: authUser.id,
+          },
+        },
+        location: {
+          connect: {
+            id: selectedLocation?.id,
           },
         },
       },

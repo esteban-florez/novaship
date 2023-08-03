@@ -6,11 +6,12 @@ import { type HTMLInputTypeAttribute } from 'react'
 type Props = React.PropsWithChildren<{
   placeholder: string
   type?: HTMLInputTypeAttribute
+  step?: string
 } & SharedInputProps>
 
 // DRY 3
 export default function Input({
-  name, placeholder, label, register, errors = {},
+  name, placeholder, label, register, step, errors = {},
   config = {}, type = 'text', value = '', classes = '',
 }: Props) {
   const hasError = errors[name] !== undefined
@@ -20,7 +21,7 @@ export default function Input({
     <>
       <CustomLabel id={name} label={label} />
       <input
-        id={name} name={name} type={type}
+        id={name} name={name} type={type} step={step}
         placeholder={placeholder} {...registerProps}
         className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', classes)} defaultValue={value}
       />

@@ -3,6 +3,8 @@ import { type HTTP_METHOD } from 'next/dist/server/web/http'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+type FormControls = Array<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+
 interface UseFormOptions {
   append?: Rec
   method?: HTTP_METHOD

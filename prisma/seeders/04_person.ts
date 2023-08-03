@@ -1,26 +1,39 @@
-import { random } from '@/lib/utils/number'
+import lucia from '@/lib/lucia'
+import numbers from '@/lib/utils/number'
 import prisma from '../client'
-import data from '@/prisma/seeds-data.json'
-import { getRandomValueFromArray } from '@/lib/utils/array'
+import data from '@/prisma/data/persons.json'
 import { seederQueries } from '../seed'
+import collect from '@/lib/utils/collection'
 
-const persons = data.users
+const persons = data
 
 export default async function person() {
-  const fullname = `${getRandomValueFromArray(persons.names)} ${getRandomValueFromArray(persons.surnames)}`
+  for (let i = 1; i <= seederQueries.persons; i++) {
+    const name = collect(persons.names).random().first()
+    const surname = collect(persons.surnames).random().first()
+    const fullname = `${name} ${surname}`
+    const email = `u${i}@user.dev`
 
-  for (let i = 1; i <= seederQueries.person; i++) {
-    await prisma.authUser.create({
+    const authUser = await lucia.createUser({
+      primaryKey: {
+        providerId: 'email',
+        providerUserId: email,
+        password: 'Password_3',
+      },
+      attributes: { type: 'PERSON' },
+    })
+
+    await prisma.person.create({
       data: {
-        type: 'PERSON',
-        person: {
-          create: {
-            name: fullname,
-            email: `u${i}@user.dev`,
-            phone: random(10000000000, 11000000000).toString(),
-            bio: getRandomValueFromArray(persons.descriptions),
-            ci: random(100000, 40000000).toString(),
-            birth: new Date(),
+        name: fullname,
+        email,
+        phone: numbers().randomPhone(),
+        bio: collect(persons.descriptions).random().first(),
+        ci: numbers().randomCI(),
+        birth: new Date(),
+        authUser: {
+          connect: {
+            id: authUser.id,
           },
         },
       },

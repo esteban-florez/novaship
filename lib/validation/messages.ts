@@ -2,26 +2,26 @@ import { format } from '../utils/date'
 
 const m = (message: string) => ({ message })
 
+const required = 'Este campo es obligatorio.'
+
 const messages = {
-  required: {
-    required_error: 'Este campo es obligatorio.',
-    invalid_type_error: 'Este campo es obligatorio.',
-  },
-  birth: m('Debes tener más de 18 años.'),
+  number: { required_error: required, invalid_type_error: 'Debe ser un número.' },
+  string: { required_error: required, invalid_type_error: 'Debe ser un texto.' },
+  date: { errorMap: () => m('La fecha seleccionada es inválida.') },
+  enum: { errorMap: () => messages.cuid },
+  cuid: m('La opción seleccionada es inválida.'),
   email: m('Correo electrónico inválido.'),
-  invalidOption: m('La opción seleccionada es inválida.'),
+  birth: m('Debes tener más de 18 años.'),
   hasLower: m('Debe poseer al menos una letra minúscula.'),
   hasUpper: m('Debe poseer al menos una letra mayúscula.'),
   hasNumber: m('Debe poseer al menos un número.'),
   hasSymbol: m('Debe poseer al menos un símbolo.'),
-  min: (num: number) => m(`Requiere mínimo ${num} caracteres.`),
-  max: (num: number) => m(`Requiere máximo ${num} caracteres.`),
+  min: (num: number) => m(`Debe tener mínimo ${num} caracteres.`),
+  max: (num: number) => m(`Debe tener máximo ${num} caracteres.`),
   minN: (num: number) => m(`La cantidad mínima es ${num}`),
   maxN: (num: number) => m(`La cantidad máxima es ${num}`),
   minD: (date: Date) => m(`La fecha mínima es ${format(date)}.`),
   maxD: (date: Date) => m(`La fecha máxima es ${format(date)}.`),
-  enum: { errorMap: () => messages.invalidOption },
-  date: { errorMap: () => m('La fecha seleccionada es inválida.') },
 }
 
 export default messages
