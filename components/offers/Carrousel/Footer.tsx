@@ -15,11 +15,11 @@ export default function Footer({ owner, ubication }: Props) {
           </div>
         </div>
         <div className="flex flex-col">
-          <h5 className="font-title text-sm font-bold text-white lg:text-base">{owner}</h5>
+          <h5 className="font-bold text-white lg:text-base">{owner}</h5>
           <small className="-mt-2 text-white">{ubication}</small>
         </div>
       </div>
-      <Link href="/home/offers/offer" className="btn-primary btn-outline btn-sm btn order-2 mt-4 w-full text-sm sm:btn-md sm:mt-0 sm:w-auto lg:text-base">
+      <Link href="/home/offers/offer" className="btn-primary btn-outline btn-sm btn order-2 mt-4 w-full sm:btn-md sm:mt-0 sm:w-auto lg:text-base">
         Ver más
       </Link>
     </footer>

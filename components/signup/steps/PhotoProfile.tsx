@@ -5,7 +5,7 @@ type Props = React.PropsWithChildren<{
 export default function PhotoProfile({ setStep }: Props) {
   return (
     <>
-      <h2 className="text-center font-title text-2xl font-bold md:text-4xl">
+      <h2 className="text-center text-2xl font-bold md:text-4xl">
         ¡Ponle cara a tu perfil!
       </h2>
       <div className="mx-auto w-full pt-4">

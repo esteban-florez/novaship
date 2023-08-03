@@ -24,7 +24,7 @@ export default function Textarea({
         className={clsx('textarea w-full resize-none border-neutral-300 bg-base-200 focus:outline-none focus:ring focus:ring-primary', hasError && 'border-error focus:ring-error', classes)}
       />
       {hasError && (
-        <p className="-mt-2 text-sm font-semibold text-error">
+        <p className="-mt-2 font-semibold text-error">
           {errors[name].message}
         </p>
       )}

@@ -10,7 +10,7 @@ export default function ChatHeader() {
         </div>
         <div className="flex flex-col">
           <h3 className="text-xl font-semibold text-primary-content sm:text-base">Joseph Monter</h3>
-          <h6 className="text-xs text-neutral-300">
+          <h6 className="text-sm text-neutral-300">
             Última vez conectado hace 24 horas.
           </h6>
         </div>

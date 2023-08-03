@@ -4,7 +4,7 @@ export default function Archive() {
   return (
     <>
       <div className="flex flex-col rounded-lg rounded-tl-none bg-white p-6 shadow">
-        <h3 className="font-title text-lg font-bold sm:text-xl">
+        <h3 className="text-lg font-bold sm:text-xl">
           Viernes / 30-06-2023
         </h3>
         <div className="flex flex-row gap-4">

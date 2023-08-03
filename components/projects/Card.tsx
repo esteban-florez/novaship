@@ -15,15 +15,15 @@ export default function Header({ title, owner, status }: Props) {
         <div className="order-1 col-span-7 flex flex-row items-center gap-3 lg:col-span-2">
           <div className="w-14 rounded-l-lg rounded-r-full bg-primary py-9 text-center sm:w-20 md:w-28 lg:w-16" />
           <div className="flex flex-col ">
-            <h3 className="font-title text-base font-bold sm:text-lg">{title}</h3>
-            <small className="-mt-1 line-clamp-6 text-sm font-semibold text-stone-500">Estado: {status}</small>
+            <h3 className="text-base font-bold sm:text-lg">{title}</h3>
+            <small className="-mt-1 line-clamp-6 font-semibold text-stone-500">Estado: {status}</small>
           </div>
         </div>
         <div className="order-3 col-span-7 flex flex-row items-center justify-normal gap-2 p-4 sm:col-span-6 lg:col-span-2 lg:justify-center lg:p-0">
           <AvatarIcon username="Myriam Yaqueno" bg="bg-neutral" />
           <div className="flex flex-col">
             <h5 className="text-base font-bold">{owner}</h5>
-            <h5 className="-mt-1 line-clamp-6 text-sm">Responsable</h5>
+            <h5 className="-mt-1 line-clamp-6">Responsable</h5>
           </div>
         </div>
         <div className="order-4 hidden flex-row items-center justify-center gap-2 p-4 lg:col-span-2 lg:flex">
@@ -32,7 +32,7 @@ export default function Header({ title, owner, status }: Props) {
             <AvatarIcon username="Estefani Garcia" bg="bg-secondary" />
             <AvatarIcon username="Esteban Florez" bg="bg-warning" />
           </div>
-          <p className="line-clamp-6 text-sm font-bold">+3</p>
+          <p className="line-clamp-6 font-bold">+3</p>
         </div>
         <div className="order-5 col-span-7 flex flex-row justify-end gap-2 p-4 sm:col-span-1">
           <Link href="/home/projects/project">

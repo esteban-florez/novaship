@@ -4,7 +4,7 @@ import Link from 'next/link'
 export default function HomePage() {
   return (
     <>
-      <section className="flex-center h-72 w-full flex-col bg-neutral text-center font-title text-2xl text-white shadow">
+      <section className="flex-center h-72 w-full flex-col bg-neutral text-center text-2xl text-white shadow">
         <p className="mt-3">
           Mejora tus oportunidades de <span className="badge badge-secondary badge-lg font-semibold">ofertas laborales</span> o <span className="badge badge-accent badge-lg font-semibold">pasantías</span>
         </p>
@@ -20,14 +20,14 @@ export default function HomePage() {
       <section className="flex-center flex-col p-4">
         <div className="flex-center flex w-full flex-col text-center sm:flex-row">
           <div className="card grid w-full grow place-items-center bg-white p-8 shadow-md sm:w-3/6">
-            <h5 className="border-b pb-2 font-title font-bold">¿Es gerente de una empresa?</h5>
-            <p className="mt-3 text-sm">Busque aspirantes o publique ofertas laborales para hacer crecer su empresa y darle oportunidad a estudiantes egresados</p>
+            <h5 className="border-b pb-2 font-bold">¿Es gerente de una empresa?</h5>
+            <p className="mt-3">Busque aspirantes o publique ofertas laborales para hacer crecer su empresa y darle oportunidad a estudiantes egresados</p>
             <Link className="btn-primary btn mt-4 px-6" href="/home/profile/company">Registrar empresa</Link>
           </div>
           <div className="divider divider-horizontal mx-auto font-bold sm:px-4">O</div>
           <div className="card grid w-full grow place-items-center bg-white p-8 shadow-md sm:w-3/6">
-            <h5 className="border-b pb-2 font-title font-bold">¿Es director de una institución?</h5>
-            <p className="mt-3 text-sm">Afíliese con distintas empresas para garantizarle pasantías a sus estudiantes o una oferta laboral</p>
+            <h5 className="border-b pb-2 font-bold">¿Es director de una institución?</h5>
+            <p className="mt-3">Afíliese con distintas empresas para garantizarle pasantías a sus estudiantes o una oferta laboral</p>
             <Link className="btn-primary btn mt-4 px-6" href="/home/profile/institute">Registrar institución</Link>
           </div>
         </div>
@@ -40,20 +40,20 @@ export default function HomePage() {
               <h6 className="border-b bg-gray-100 p-4 text-lg font-semibold">Aplicación administrativa UTV</h6>
               <div className="flex-col py-2">
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Tareas pendientes:</h6>
-                  <span className="text-xs md:text-base">6</span>
+                  <h6 className="font-semibold md:text-base">Tareas pendientes:</h6>
+                  <span className="text-sm md:text-base">6</span>
                 </div>
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Tareas completadas:</h6>
-                  <span className="text-xs md:text-base">29</span>
+                  <h6 className="font-semibold md:text-base">Tareas completadas:</h6>
+                  <span className="text-sm md:text-base">29</span>
                 </div>
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Miembros:</h6>
-                  <span className="text-xs md:text-base">6</span>
+                  <h6 className="font-semibold md:text-base">Miembros:</h6>
+                  <span className="text-sm md:text-base">6</span>
                 </div>
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Estado:</h6>
-                  <span className="text-xs md:text-base">Público</span>
+                  <h6 className="font-semibold md:text-base">Estado:</h6>
+                  <span className="text-sm md:text-base">Público</span>
                 </div>
               </div>
             </div>
@@ -61,20 +61,20 @@ export default function HomePage() {
               <h6 className="border-b bg-gray-100 p-4 text-lg font-semibold">Estructura de servidor</h6>
               <div className="flex-col py-2">
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Tareas pendientes:</h6>
-                  <span className="text-xs md:text-base">14</span>
+                  <h6 className="font-semibold md:text-base">Tareas pendientes:</h6>
+                  <span className="text-sm md:text-base">14</span>
                 </div>
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Tareas completadas:</h6>
-                  <span className="text-xs md:text-base">59</span>
+                  <h6 className="font-semibold md:text-base">Tareas completadas:</h6>
+                  <span className="text-sm md:text-base">59</span>
                 </div>
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Miembros:</h6>
-                  <span className="text-xs md:text-base">23</span>
+                  <h6 className="font-semibold md:text-base">Miembros:</h6>
+                  <span className="text-sm md:text-base">23</span>
                 </div>
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Estado:</h6>
-                  <span className="text-xs md:text-base">Privado</span>
+                  <h6 className="font-semibold md:text-base">Estado:</h6>
+                  <span className="text-sm md:text-base">Privado</span>
                 </div>
               </div>
             </div>
@@ -84,20 +84,20 @@ export default function HomePage() {
               <h6 className="border-b bg-gray-100 p-4 text-lg font-semibold">Cableado eléctrico</h6>
               <div className="flex-col py-2">
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Tareas pendientes:</h6>
-                  <span className="text-xs md:text-base">10</span>
+                  <h6 className="font-semibold md:text-base">Tareas pendientes:</h6>
+                  <span className="text-sm md:text-base">10</span>
                 </div>
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Tareas completadas:</h6>
-                  <span className="text-xs md:text-base">18</span>
+                  <h6 className="font-semibold md:text-base">Tareas completadas:</h6>
+                  <span className="text-sm md:text-base">18</span>
                 </div>
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Miembros:</h6>
-                  <span className="text-xs md:text-base">8</span>
+                  <h6 className="font-semibold md:text-base">Miembros:</h6>
+                  <span className="text-sm md:text-base">8</span>
                 </div>
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Estado:</h6>
-                  <span className="text-xs md:text-base">Privado</span>
+                  <h6 className="font-semibold md:text-base">Estado:</h6>
+                  <span className="text-sm md:text-base">Privado</span>
                 </div>
               </div>
             </div>
@@ -105,20 +105,20 @@ export default function HomePage() {
               <h6 className="w-full border-b bg-gray-100 p-4 text-lg font-semibold md:w-2/4">Análisis de mercado</h6>
               <div className="flex-col py-2">
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Tareas pendientes:</h6>
-                  <span className="text-xs md:text-base">3</span>
+                  <h6 className="font-semibold md:text-base">Tareas pendientes:</h6>
+                  <span className="text-sm md:text-base">3</span>
                 </div>
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Tareas completadas:</h6>
-                  <span className="text-xs md:text-base">25</span>
+                  <h6 className="font-semibold md:text-base">Tareas completadas:</h6>
+                  <span className="text-sm md:text-base">25</span>
                 </div>
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Miembros:</h6>
-                  <span className="text-xs md:text-base">7</span>
+                  <h6 className="font-semibold md:text-base">Miembros:</h6>
+                  <span className="text-sm md:text-base">7</span>
                 </div>
                 <div className="ms-6 flex gap-x-4">
-                  <h6 className="text-sm font-semibold md:text-base">Estado:</h6>
-                  <span className="text-xs md:text-base">Privado</span>
+                  <h6 className="font-semibold md:text-base">Estado:</h6>
+                  <span className="text-sm md:text-base">Privado</span>
                 </div>
               </div>
             </div>

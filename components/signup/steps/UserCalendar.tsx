@@ -5,7 +5,7 @@ type Props = React.PropsWithChildren<{
 export default function UserCalendar({ setStep }: Props) {
   return (
     <>
-      <h2 className="text-center font-title text-2xl font-bold md:text-4xl">
+      <h2 className="text-center text-2xl font-bold md:text-4xl">
         Horario boleta
       </h2>
       <section className="mx-auto w-full pt-4">

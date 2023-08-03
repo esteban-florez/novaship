@@ -5,10 +5,11 @@ import GoogleSignUpButton from '../GoogleSignUpButton'
 import useFormHandling from '@/lib/hooks/useFormHandling'
 
 export default function LogInForm() {
-  const { loading, onSubmit } = useFormHandling()
+  const { loading, onSubmit, alert } = useFormHandling()
 
   return (
     <form action="/api/auth/login" method="POST" onSubmit={onSubmit} className="mx-auto w-full pt-4">
+      {alert}
       <div className="form-control w-full">
         <label htmlFor="email" className="label font-semibold">
           Correo electrónico:

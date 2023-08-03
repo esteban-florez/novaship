@@ -121,7 +121,7 @@ export default function ProfessionalProfilePage() {
         <div className="w-full">
           <h2 className="mb-2 rounded-t-md border bg-gray-100 p-4 text-lg font-bold">Comentarios (3)</h2>
           <div className="mb-4 w-full p-4">
-            <textarea rows={4} className="w-full resize-none rounded-t-md border bg-gray-100 p-2 text-sm outline-none" placeholder="Deje un comentario..." required />
+            <textarea rows={4} className="w-full resize-none rounded-t-md border bg-gray-100 p-2 outline-none" placeholder="Deje un comentario..." required />
             <div className="p-3">
               <button className="btn-info btn text-white">
                 Enviar comentario
@@ -133,7 +133,7 @@ export default function ProfessionalProfilePage() {
         <div className="mt-3 flex w-full p-4">
           <AvatarIcon username="EC" bg="bg-gray-400" />
           <div className="flex-col">
-            <h6 className="p-2 text-sm">
+            <h6 className="p-2">
               <span className="font-bold">Electrodomésticos Carmen</span>
               <span> - Publicado el 19 de marzo de 2023.</span>
             </h6>
@@ -145,7 +145,7 @@ export default function ProfessionalProfilePage() {
         <div className="mt-3 flex w-full p-4">
           <AvatarIcon username="DS" bg="bg-gray-400" />
           <div className="flex-col">
-            <h6 className="p-2 text-sm">
+            <h6 className="p-2">
               <span className="font-bold">Distribuidora Solcenaga</span>
               <span> - Publicado el 5 de abril de 2023.</span>
             </h6>
@@ -157,7 +157,7 @@ export default function ProfessionalProfilePage() {
         <div className="mt-3 flex w-full p-4">
           <AvatarIcon username="DA" bg="bg-gray-400" />
           <div className="flex-col">
-            <h6 className="p-2 text-sm">
+            <h6 className="p-2">
               <span className="font-bold">Distribuidora Altamira</span>
               <span> - Publicado el 19 de abril de 2023.</span>
             </h6>

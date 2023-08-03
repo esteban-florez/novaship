@@ -2,14 +2,23 @@ import '@/styles/globals.css'
 import clsx from 'clsx'
 import { type Metadata } from 'next'
 // TODO -> en producción, se debe cambiar a Google
-// import localFont from 'next/font/local'
-import { Ubuntu } from 'next/font/google'
+import localFont from 'next/font/local'
 
-const ubuntu = Ubuntu({
-  subsets: ['latin'],
+const ubuntu = localFont({
+  src: [{
+    path: './Ubuntu-Light.ttf',
+    weight: '300',
+  }, {
+    path: './Ubuntu-Regular.ttf',
+    weight: '400',
+  }, {
+    path: './Ubuntu-Medium.ttf',
+    weight: '600',
+  }, {
+    path: './Ubuntu-Bold.ttf',
+    weight: '700',
+  }],
   display: 'swap',
-  variable: '--font-default',
-  weight: ['300', '400', '500', '700'],
 })
 
 export const metadata: Metadata = {
@@ -26,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={clsx('h-full bg-base-200 font-default', ubuntu.variable)} data-theme="light">
+    <html lang="es" className={clsx('h-full bg-base-200', ubuntu.className)} data-theme="light">
       <body className="h-full">
         {children}
       </body>

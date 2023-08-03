@@ -10,7 +10,7 @@ export default function Message({ status, fromCurrentUser = false, message }: Pr
   return (
     <div className={`chat first:mt-4 last:mb-4 ${fromCurrentUser ? 'chat-end' : 'chat-start'}`}>
       <div className={`chat-bubble ${fromCurrentUser ? 'bg-primary' : 'bg-base-300 text-black'}`}>
-        <p className="flex-row text-sm">
+        <p className="flex-row">
           {message}
         </p>
         <MessageInfo status={status} alignEnd={fromCurrentUser} time="6:00 pm" />

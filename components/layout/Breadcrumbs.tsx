@@ -19,7 +19,7 @@ export default function Breadcrumbs() {
   }
 
   return (
-    <div className="hidden items-center justify-start p-4 text-sm sm:flex">
+    <div className="hidden items-center justify-start p-4 sm:flex">
       <ul className="flex font-bold">
         <li className="flex items-center">~</li>
         {segments.map(segment => {

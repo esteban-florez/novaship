@@ -18,7 +18,7 @@ function Btn({ content, isActive = false }: Props) {
   const inactiveClasses = 'hover:btn-active btn-ghost hover:'
 
   return (
-    <button className={`${isActive ? activeClasses : inactiveClasses} btn-md btn rounded-b-none text-sm font-semibold sm:text-lg`}>
+    <button className={`${isActive ? activeClasses : inactiveClasses} btn-md btn rounded-b-none font-semibold sm:text-lg`}>
       {content}
     </button>
   )

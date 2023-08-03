@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   return (
     <section className="z-10 mx-2 my-6 flex w-full max-w-md flex-col rounded-xl px-4 py-6 md:px-8">
-      <h2 className="text-center font-title text-2xl font-bold md:text-4xl">
+      <h2 className="text-center text-2xl font-bold md:text-4xl">
         ¡Tu <span className="text-primary">plataforma</span> de <span className="text-secondary">ofertas</span> de trabajo!
       </h2>
       <LogInForm />
@@ -24,7 +24,7 @@ export default function LoginPage() {
           </Link>
           <Link
             href="/auth/login"
-            className="text-center text-sm underline"
+            className="text-center underline"
           >
             Olvidé mi contraseña
           </Link>

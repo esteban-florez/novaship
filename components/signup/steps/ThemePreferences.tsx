@@ -7,7 +7,7 @@ type Props = React.PropsWithChildren<{
 export default function ThemePreferences({ setStep }: Props) {
   return (
     <>
-      <h2 className="text-center font-title text-2xl font-bold md:text-4xl">
+      <h2 className="text-center text-2xl font-bold md:text-4xl">
         Elige tus temas de interés
       </h2>
       <div className="mx-auto w-full pt-4">

@@ -14,7 +14,7 @@ export default function Radio({ name, value, label, children, active = false, on
       <label className={clsx('label mb-2 cursor-pointer rounded-lg border border-gray-300 p-4', active && 'border-primary')}>
         <div className="flex flex-col">
           <span className="text-base">{label}</span>
-          <span className="text-sm">{children}</span>
+          <span className="">{children}</span>
         </div>
         <input name={name} type="radio" value={value} hidden onInput={() => { onInput() }} />
       </label>

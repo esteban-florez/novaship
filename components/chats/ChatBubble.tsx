@@ -26,12 +26,12 @@ export default function ChatBubble({
       />
       <div className="flex w-4/6 flex-col px-2 text-left">
         <h5 className="font-semibold">{name}</h5>
-        <p className="truncate text-xs">
+        <p className="truncate text-sm">
           {message}
         </p>
       </div>
       {lastConnection !== null && (
-        <span className="w-1/6 text-xs">
+        <span className="w-1/6 text-sm">
           {lastConnection} hrs
         </span>
       )}

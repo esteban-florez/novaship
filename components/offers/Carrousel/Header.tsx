@@ -6,10 +6,10 @@ interface Props {
 export default function Header({ title, categories }: Props) {
   return (
     <header>
-      <h3 className="font-title text-lg font-bold text-white sm:text-2xl">
+      <h3 className="text-lg font-bold text-white sm:text-2xl">
         {title}
       </h3>
-      <h6 className="-mt-2 line-clamp-1 text-sm font-semibold text-neutral-200 sm:text-base">
+      <h6 className="-mt-2 line-clamp-1 font-semibold text-neutral-200 sm:text-base">
         {categories}
       </h6>
     </header>

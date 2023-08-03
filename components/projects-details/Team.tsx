@@ -8,7 +8,7 @@ export default function TeamGroup() {
       <div>
         <header className="rounded-t-lg bg-accent pl-5">
           <div className="flex flex-row justify-between align-middle">
-            <h4 className="mt-2 py-3 font-title text-xl font-bold text-black sm:text-xl">Equipo de trabajo</h4>
+            <h4 className="mt-2 py-3 text-xl font-bold text-black sm:text-xl">Equipo de trabajo</h4>
             {/* Esto es un dropdown */}
             <button className="btn-ghost btn px-2">
               <EllipsisVerticalIcon className="h-7 text-black" />
@@ -16,8 +16,8 @@ export default function TeamGroup() {
           </div>
         </header>
         <main className="flex flex-col gap-3 rounded-b-lg bg-white p-4">
-          <p className="line-clamp-6 text-sm font-bold">Total miembros: 3</p>
-          <p className="line-clamp-6 text-sm font-bold">Activos - 2</p>
+          <p className="line-clamp-6 font-bold">Total miembros: 3</p>
+          <p className="line-clamp-6 font-bold">Activos - 2</p>
           <Member />
           <Member />
           <Link className="btn-accent btn-outline btn-sm btn mt-1 sm:text-base" href="#">

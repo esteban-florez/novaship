@@ -46,7 +46,7 @@ export default function Aside() {
       <div className="py-[18px] text-center">
         <Link
           href="/home"
-          className="rounded-full bg-primary px-4 py-2 font-title text-2xl font-bold text-white shadow-md"
+          className="rounded-full bg-primary px-4 py-2 text-2xl font-bold text-white shadow-md"
         >
           novaship
         </Link>

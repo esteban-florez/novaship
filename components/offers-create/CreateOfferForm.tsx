@@ -71,7 +71,7 @@ export default function CreateOfferForm() {
           <option value="1283-1232-3829">EmpresaNet</option>
           <option value="1283-1232-3829">ACME S.A.</option>
         </Select>
-        <a className="btn-link self-start text-sm font-semibold" href="/home/profile/company">Registrar una nueva empresa</a>
+        <a className="btn-link self-start font-semibold" href="/home/profile/company">Registrar una nueva empresa</a>
       </FormSection>
       <FormSection title="Habilidades requeridas" description="Elige las habilidades necesarias para desempeñar el trabajo.">
         {availableSkills.length > 0 &&

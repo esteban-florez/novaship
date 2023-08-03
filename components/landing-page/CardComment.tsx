@@ -13,7 +13,7 @@ export default function CardComment({ title, color = 'bg-primary', className = '
         <span className={clsx('h-5 w-5 rounded-full border', color)} />
         <h5 className="text-base font-semibold">{title}</h5>
       </div>
-      <div className="bg-neutral-50 p-4 text-sm">{children}</div>
+      <div className="bg-neutral-50 p-4">{children}</div>
     </div>
   )
 }

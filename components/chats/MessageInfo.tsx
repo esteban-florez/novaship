@@ -12,8 +12,8 @@ export default function MessageInfo({ status, alignEnd, time }: Props) {
 
   return (
     <div className={clsx('mt-1 flex flex-row gap-1', alignEnd && 'text-end')}>
-      <span className="text-xs font-semibold">{currentStatus}</span>
-      <span className="text-xs font-semibold">{time}.</span>
+      <span className="text-sm font-semibold">{currentStatus}</span>
+      <span className="text-sm font-semibold">{time}.</span>
     </div>
   )
 }

@@ -20,14 +20,14 @@ export default function InstituteProfilePage() {
             <div className="flex-center h-36 w-full rounded-md border bg-neutral shadow">
               <button className="btn-ghost btn text-white">
                 <PlusCircleIcon className="h-6 w-6" />
-                <p className="text-sm">Añadir imagen</p>
+                <p className="">Añadir imagen</p>
               </button>
             </div>
           </div>
           <div className="flex w-full flex-col md:w-3/4">
             <div className="p-4">
               <h4 className="border-b text-lg font-bold">Universidad Santander</h4>
-              <p className="mt-4 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, nemo dolores ab quasi dolorum sapiente autem veritatis eius dicta eos, aperiam id praesentium quisquam fuga illo, nam maxime placeat porro.</p>
+              <p className="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, nemo dolores ab quasi dolorum sapiente autem veritatis eius dicta eos, aperiam id praesentium quisquam fuga illo, nam maxime placeat porro.</p>
             </div>
             <div className="flex flex-col gap-4 p-4 md:flex-row">
               <div className="flex w-full flex-col gap-y-2 md:w-2/4">
@@ -36,8 +36,8 @@ export default function InstituteProfilePage() {
                     <StarIcon className="h-6 w-6 fill-secondary" />
                   </div>
                   <div className="ms-4 flex-col">
-                    <h6 className="text-sm font-semibold md:text-base">Director</h6>
-                    <span className="text-xs md:text-base">Fredy Gómez</span>
+                    <h6 className="font-semibold md:text-base">Director</h6>
+                    <span className="text-sm md:text-base">Fredy Gómez</span>
                   </div>
                 </div>
                 <div className="flex rounded-md border bg-gray-100 p-4 shadow">
@@ -45,8 +45,8 @@ export default function InstituteProfilePage() {
                     <EnvelopeIcon className="h-6 w-6 fill-secondary" />
                   </div>
                   <div className="ms-4 flex-col">
-                    <h6 className="text-sm font-semibold md:text-base">Correo electrónico</h6>
-                    <span className="text-xs md:text-base">institucional@gmail.com</span>
+                    <h6 className="font-semibold md:text-base">Correo electrónico</h6>
+                    <span className="text-sm md:text-base">institucional@gmail.com</span>
                   </div>
                 </div>
               </div>
@@ -56,8 +56,8 @@ export default function InstituteProfilePage() {
                     <UsersIcon className="h-6 w-6 fill-secondary" />
                   </div>
                   <div className="ms-4 flex-col">
-                    <h6 className="text-sm font-semibold md:text-base">Pasantes afiliadas</h6>
-                    <span className="text-xs md:text-base">109</span>
+                    <h6 className="font-semibold md:text-base">Pasantes afiliadas</h6>
+                    <span className="text-sm md:text-base">109</span>
                   </div>
                 </div>
                 <div className="flex rounded-md border bg-gray-100 p-4 shadow">
@@ -65,8 +65,8 @@ export default function InstituteProfilePage() {
                     <BuildingOfficeIcon className="h-6 w-6 fill-secondary" />
                   </div>
                   <div className="ms-4 flex-col">
-                    <h6 className="text-sm font-semibold md:text-base">Empresas afiliadas</h6>
-                    <span className="text-xs md:text-base">6</span>
+                    <h6 className="font-semibold md:text-base">Empresas afiliadas</h6>
+                    <span className="text-sm md:text-base">6</span>
                   </div>
                 </div>
               </div>

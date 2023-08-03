@@ -49,7 +49,7 @@ export default function Select({
         {children}
       </select>
       {hasError && (
-        <p className="-mt-2 text-sm font-semibold text-error">
+        <p className="-mt-2 font-semibold text-error">
           {errors[name].message}
         </p>
       )}

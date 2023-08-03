@@ -16,8 +16,7 @@
   "Register prop for fields": {
     "prefix": "rp",
     "body": [
-      // TODO -> actualizar para que funcione con tres props: el name, el errors, el register.
-      "name=\"$0\" register={{ ...register('$0') }}"
+      "name=\"$0\" register={register} errors={errors}"
     ],
     "description": "Register prop for fields"
   },
@@ -25,7 +24,6 @@
   "Declare Fields type for Zod schema": {
     "prefix": "df",
     "body": [
-      // TODO -> actualizar para que funcione con tres props: el name, el errors, el register.
       "export type Fields = z.infer<typeof schema>"
     ],
     "description": "Declare Fields type for Zod schema"

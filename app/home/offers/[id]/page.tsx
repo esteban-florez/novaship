@@ -66,7 +66,7 @@ export default function OfferPage() {
           <AvatarIcon username="Empresa Net" />
           <h3 className="card-title text-xl font-semibold">EmpresaNet</h3>
         </div>
-        <p className="mt-2 line-clamp-3 text-sm">Empresa líder en soluciones informáticas con sede en Venezuela desde el 2008.</p>
+        <p className="mt-2 line-clamp-3">Empresa líder en soluciones informáticas con sede en Venezuela desde el 2008.</p>
         <button className="btn-primary btn-block btn mt-2">
           Ver más
         </button>

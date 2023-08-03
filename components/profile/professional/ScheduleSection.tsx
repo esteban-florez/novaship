@@ -3,7 +3,7 @@ export default function ScheduleSection() {
     <div className="mb-8 mt-4 flex flex-col gap-x-2 border-t pt-4 last:mb-4 lg:px-4">
       <div className="w-full flex-row lg:form-control">
         <h2 className="mb-4 text-2xl font-semibold">Horario</h2>
-        <p className="pe-4 text-sm">Indique su disponibilidad para que empresas o proyectos puedan tener un perfil más claro de usted.</p>
+        <p className="pe-4">Indique su disponibilidad para que empresas o proyectos puedan tener un perfil más claro de usted.</p>
       </div>
       <div className="mt-4 w-full flex-row lg:form-control lg:mt-0">
         <div className="mt-6 overflow-x-auto">

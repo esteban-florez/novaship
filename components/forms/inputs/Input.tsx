@@ -26,7 +26,7 @@ export default function Input({
         className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', classes)} defaultValue={value}
       />
       {hasError && (
-        <p className="-mt-2 text-sm font-semibold text-error">
+        <p className="-mt-2 font-semibold text-error">
           {errors[name].message}
         </p>
       )}
