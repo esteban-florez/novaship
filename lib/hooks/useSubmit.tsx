@@ -51,6 +51,7 @@ function getAlert(result: Result, setResult: (newState: Result) => void) {
   )
 }
 
+// TODO -> este hook debería envolver a useForm() para que sea más facil de usar.
 export default function useSubmit<Fields>(options: UseSubmitOptions = {}) {
   const router = useRouter()
   const { method, append } = options
@@ -80,6 +81,6 @@ export default function useSubmit<Fields>(options: UseSubmitOptions = {}) {
 
   const alert = getAlert(result, setResult)
 
-  // TODO -> exponer los errores de validación que vengan del servidor...
+  // TODO -> exponer los errores de validación que vengan del servidor, y mostrarlos mediante este hook al usuario de alguna manera.
   return { send, alert }
 }
