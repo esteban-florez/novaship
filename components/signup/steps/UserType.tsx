@@ -1,4 +1,4 @@
-import { UserType as TypeUser } from '@prisma/client'
+import { UserType as UserTypeEnum } from '@prisma/client'
 import Radio from '@/components/forms/inputs/Radio'
 import { userTypes as translation } from '@/lib/translations'
 import { useState } from 'react'
@@ -8,8 +8,7 @@ type Props = React.PropsWithChildren<{
 }>
 
 export default function UserType({ setStep }: Props) {
-  // TODO -> arreglar el tipado
-  const [selected, setSelected] = useState<'PERSON' | 'COMPANY' | 'INSTITUTE'>()
+  const [selected, setSelected] = useState<keyof typeof UserTypeEnum>()
 
   const descriptions = {
     COMPANY: '¡Contrata nuevos empleados y crea proyectos para impulsar el crecimiento y éxito de tu empresa!',
@@ -17,11 +16,14 @@ export default function UserType({ setStep }: Props) {
     PERSON: '¡Descubre ofertas de trabajo, crea tu perfil y encuentra tu camino al éxito profesional!',
   }
 
-  const options = Object.values(TypeUser).map((userType) => {
-    const label = translation[userType]
+  const options = Object.values(UserTypeEnum).map((type) => {
+    const label = translation[type]
     return (
-      <Radio name="type" key={userType} value={userType} label={label} onInput={() => { setSelected(userType) }} active={userType === selected}>
-        {descriptions[userType]}
+      <Radio
+        name="type" key={type} value={type} label={label}
+        onInput={() => { setSelected(type) }} active={type === selected}
+      >
+        {descriptions[type]}
       </Radio>
     )
   })

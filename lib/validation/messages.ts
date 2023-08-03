@@ -7,6 +7,7 @@ const required = 'Este campo es obligatorio.'
 const messages = {
   number: { required_error: required, invalid_type_error: 'Debe ser un número.' },
   string: { required_error: required, invalid_type_error: 'Debe ser un texto.' },
+  boolean: { required_error: required, invalid_type_error: 'Debe ser verdadero o falso.' },
   date: { errorMap: () => m('La fecha seleccionada es inválida.') },
   enum: { errorMap: () => messages.cuid },
   cuid: m('La opción seleccionada es inválida.'),
@@ -18,10 +19,10 @@ const messages = {
   hasSymbol: m('Debe poseer al menos un símbolo.'),
   min: (num: number) => m(`Debe tener mínimo ${num} caracteres.`),
   max: (num: number) => m(`Debe tener máximo ${num} caracteres.`),
-  minN: (num: number) => m(`La cantidad mínima es ${num}`),
-  maxN: (num: number) => m(`La cantidad máxima es ${num}`),
-  minD: (date: Date) => m(`La fecha mínima es ${format(date)}.`),
-  maxD: (date: Date) => m(`La fecha máxima es ${format(date)}.`),
+  minNumber: (num: number) => m(`La cantidad mínima es ${num}`),
+  maxNumber: (num: number) => m(`La cantidad máxima es ${num}`),
+  minDate: (date: Date) => m(`La fecha mínima es ${format(date)}.`),
+  maxDate: (date: Date) => m(`La fecha máxima es ${format(date)}.`),
 }
 
 export default messages

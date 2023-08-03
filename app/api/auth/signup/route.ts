@@ -4,6 +4,7 @@ import { schema } from '@/lib/validation/schemas/signup'
 import { handleRequest } from '@/lib/auth'
 import prisma from '@/prisma/client'
 import numbers from '@/lib/utils/number'
+import { handleError } from '@/lib/api-errors'
 
 export async function POST(request: NextRequest) {
   try {
@@ -36,10 +37,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.redirect(new URL('/', request.url))
   } catch (error) {
-    // TODO -> error handling
-    console.error(error)
-    return NextResponse.json(null, {
-      status: 400,
-    })
+    const { status, body } = handleError(error)
+    return NextResponse.json(body, { status })
   }
 }

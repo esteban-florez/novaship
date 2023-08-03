@@ -5,7 +5,6 @@ import messages from '../messages'
 
 export type Fields = z.infer<typeof schema>
 
-// TODO -> quizás podría hacer bound functions para las funciones de Zod, porque q peresa pasar siempre los mismos parámetros en string() number() etc. Aunque es un poco overkill también.
 export const schema = object({
   email: defaults.email,
 
@@ -18,8 +17,8 @@ export const schema = object({
   birth: defaults.birth,
 
   salary: number(messages.number)
-    .min(10, messages.minN(10))
-    .max(1000, messages.maxN(1000))
+    .min(10, messages.minNumber(10))
+    .max(1000, messages.maxNumber(1000))
     .step(0.01, { message: 'Máximo dos dígitos decimales.' }),
 
   type: nativeEnum(UserType, messages.enum),

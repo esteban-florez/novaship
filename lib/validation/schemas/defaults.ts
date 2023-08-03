@@ -10,10 +10,13 @@ const dateOptions = {
   ...messages.date,
   coerce: true,
 }
-// TODO -> hacer defaults para lost ipos basicos de datos.
+
 export const defaults = {
-  email: string(messages.string).trim().email(messages.email),
-  password: string(messages.string).trim()
+  email: string(messages.string)
+    .trim()
+    .email(messages.email),
+  password: string(messages.string)
+    .trim()
     .min(8, messages.min(8))
     .max(20, messages.max(20))
     .refine(hasLower, messages.hasLower)

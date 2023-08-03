@@ -8,6 +8,7 @@ interface UseSubmitOptions {
   method?: HTTP_METHOD
 }
 
+// TODO -> mejorar tipado, que hay un tipo ApiResponse, del cual se pueda sacar el tipado de esto, que incluya las diferentes respuestas que puede dar el la API.
 type Result = null | 'loading' | {
   status: number
   body: object
@@ -56,9 +57,9 @@ export default function useSubmit<Fields>(options: UseSubmitOptions = {}) {
   const [result, setResult] = useState<Result>(null)
 
   const send = async (data: Fields, event: React.BaseSyntheticEvent | undefined) => {
+    // TODO -> mejorar tipado de Result, y manejar posible error de fetch
     setResult('loading')
     const form = event?.target as HTMLFormElement
-
     const response = await fetch(form.action, {
       body: JSON.stringify({ ...data, ...append }),
       method: method ?? form.method,

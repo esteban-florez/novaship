@@ -6,7 +6,7 @@ import UserType from './steps/UserType'
 import PhotoProfile from './steps/PhotoProfile'
 import ThemePreferences from './steps/ThemePreferences'
 import UserCalendar from './steps/UserCalendar'
-import { useState, type JSX, createContext } from 'react'
+import { useState, type JSX } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type Fields, schema } from '@/lib/validation/schemas/signup'
@@ -16,8 +16,8 @@ export default function SignUpForm() {
     mode: 'onTouched',
     resolver: zodResolver(schema),
   })
+  console.log(register, errors)
 
-  const FormContext = createContext({ register, errors })
   const [step, setStep] = useState('general')
 
   const allSteps: Record<string, JSX.Element> = {
@@ -29,14 +29,11 @@ export default function SignUpForm() {
   }
 
   return (
-    // TODO -> añadir "setStep" al FormContext.
     <form onSubmit={handleSubmit(d => { console.log(d) })} method="POST" action="/api/auth/signup">
-      <FormContext.Provider value={{ register, errors }}>
-        {step === 'general' && <General setStep={setStep} />}
-        <section className="bg-white">
-          {allSteps[step]}
-        </section>
-      </FormContext.Provider>
+      {step === 'general' && <General setStep={setStep} />}
+      <section className="bg-white">
+        {allSteps[step]}
+      </section>
     </form>
   )
 }
