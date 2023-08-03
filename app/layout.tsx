@@ -2,18 +2,14 @@ import '@/styles/globals.css'
 import clsx from 'clsx'
 import { type Metadata } from 'next'
 // TODO -> en producción, se debe cambiar a Google
-import localFont from 'next/font/local'
+// import localFont from 'next/font/local'
+import { Ubuntu } from 'next/font/google'
 
-export const inter = localFont({
-  src: './Inter.ttf',
+const ubuntu = Ubuntu({
+  subsets: ['latin'],
   display: 'swap',
   variable: '--font-default',
-})
-
-export const josefin = localFont({
-  src: './Josefin_Sans.ttf',
-  display: 'swap',
-  variable: '--font-title',
+  weight: ['300', '400', '500', '700'],
 })
 
 export const metadata: Metadata = {
@@ -30,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={clsx('h-full bg-base-300 font-default', inter.variable, josefin.variable)} data-theme="light">
+    <html lang="es" className={clsx('h-full bg-base-200 font-default', ubuntu.variable)} data-theme="light">
       <body className="h-full">
         {children}
       </body>

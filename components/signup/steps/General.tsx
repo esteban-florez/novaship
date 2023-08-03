@@ -6,33 +6,42 @@ type Props = React.PropsWithChildren<{
   setStep: (step: string) => void
 }>
 
+// mrk así lo dejo tengo sueño:c
+
 export default function General({ setStep }: Props) {
   return (
     <>
-      <h2 className="text-center font-title text-2xl font-bold md:text-4xl">
-        ¡Regístrate!
-      </h2>
-      <div className="mx-auto w-full pt-4">
-        <div className="flex grid-cols-2 flex-col gap-x-5 gap-y-6 md:grid">
-          <div className="form-control w-full">
-            <Input label="Correo electrónico:" name="email" placeholder="Ej. correo@ejemplo.com" />
-          </div>
-          <div className="form-control w-full">
-            <Input label="Ingresa tu contraseña:" name="password" placeholder="Ingresa tu contraseña..." />
-          </div>
-        </div>
-        <button onClick={() => { setStep('userType') }} type="button" className="btn-primary btn-block btn mt-4">
-          Registrarme
-        </button>
-        <div className="divider divider-vertical" />
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <GoogleSignUpButton />
-          <Link
-            href="/auth/login"
-            className="underline"
-          >
-            Ya tengo una cuenta
+      <div className="absolute left-0 z-20 grid h-screen place-items-center gap-0">
+        <img src="/undraw_Appreciation_pur7.webp" alt="Imagen de trabajo remoto" width={200} height={200} className="z-50" />
+        <div className="flex flex-col">
+          <h2 className="mb-1 text-start font-title text-3xl font-bold text-white">
+            ¿Tienes una cuenta?
+          </h2>
+          <Link href="/auth/login" className="btn bg-white">
+            Inicia sesión
           </Link>
+        </div>
+      </div>
+      <div className="grid h-screen place-items-end">
+        <div className="mx-36 my-auto flex w-2/5 flex-col rounded-lg">
+          <h2 className="mb-1 text-center font-title text-3xl font-bold md:text-4xl">
+            ¡Descubre <span className="text-primary">todo</span> lo
+            <br />
+            que <span className="text-secondary">tenemos</span> para ti!
+          </h2>
+          <p className="text-center text-base">Seguridad y confianza, siempre a tu disposición</p>
+          <div className="mx-auto w-full pt-3">
+            <div className="flex flex-col">
+              <Input label="Correo electrónico:" name="email" placeholder="Ej. correo@ejemplo.com" />
+              <Input label="Ingresa tu contraseña:" name="password" placeholder="Ingresa tu contraseña..." />
+            </div>
+            <div className="flex flex-col gap-3">
+              <button onClick={() => { setStep('userType') }} type="button" className="btn-primary btn-block btn mt-3">
+                Registrarme
+              </button>
+              <GoogleSignUpButton />
+            </div>
+          </div>
         </div>
       </div>
     </>
