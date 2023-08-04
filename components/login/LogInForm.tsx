@@ -22,7 +22,7 @@ export default function LogInForm() {
           className="input w-full border-neutral-300 bg-base-200"
         />
       </div>
-      <div className="form-control mt-4 w-full">
+      <div className="form-control mt-3 w-full">
         <label htmlFor="password" className="label font-semibold">
           Contraseña:
         </label>
@@ -34,8 +34,8 @@ export default function LogInForm() {
           className="input w-full border-neutral-300 bg-base-200"
         />
       </div>
-      <div className="flex flex-col gap-4">
-        <button type="submit" className="btn-primary btn mt-8 w-full md:w-auto" disabled={loading}>
+      <div className="flex flex-col gap-2">
+        <button type="submit" className="btn-primary btn mt-6 w-full md:w-auto" disabled={loading}>
           {loading && <ArrowPathIcon className="h-6 w-6 animate-spin" />}
           Iniciar sesión
         </button>

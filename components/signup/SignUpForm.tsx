@@ -30,10 +30,12 @@ export default function SignUpForm() {
 
   return (
     <form onSubmit={handleSubmit(d => { console.log(d) })} method="POST" action="/api/auth/signup">
-      {step === 'general' && <General setStep={setStep} />}
-      <section className="bg-white">
-        {allSteps[step]}
-      </section>
+      {step === 'general' &&
+        <div>
+          <img src="/coso4.webp" alt="Imagen decorativa en esquinas" className="absolute left-0 top-0 hidden h-full w-2/4 md:block" />
+          <General setStep={setStep} />
+        </div>}
+      {allSteps[step]}
     </form>
   )
 }
