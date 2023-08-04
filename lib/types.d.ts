@@ -1,5 +1,7 @@
 import { type Skill } from '@prisma/client'
 import { type RegisterOptions } from 'react-hook-form'
+import { type ZodIssue } from 'zod'
+import { type ERRORS } from './errors/reference'
 
 export type SkillOption = Pick<Skill, 'id' | 'title'> & { selected: boolean }
 
@@ -13,4 +15,13 @@ interface SharedInputProps {
   errors?: Record<string, {
     message?: string
   }>
+}
+
+type UseSubmitResult = null | 'loading' | {
+  body: ApiResponseBody
+}
+
+interface ApiResponseBody {
+  errorType?: keyof typeof ERRORS
+  errors?: ZodIssue[]
 }

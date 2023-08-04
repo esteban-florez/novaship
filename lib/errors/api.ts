@@ -16,7 +16,9 @@ export function handleError(error: unknown) {
 
     return {
       status: 400,
-      body: null,
+      body: {
+        errorType: 'REQUEST_SYNTAX',
+      },
     }
   }
 
@@ -24,6 +26,7 @@ export function handleError(error: unknown) {
     return {
       status: 422,
       body: {
+        errorType: 'VALIDATION',
         errors: error.issues,
       },
     }
@@ -37,7 +40,9 @@ export function handleError(error: unknown) {
 
     return {
       status: 500,
-      body: null,
+      body: {
+        errorType: 'SERVER',
+      },
     }
   }
 
