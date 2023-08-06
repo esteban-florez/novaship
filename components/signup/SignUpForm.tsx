@@ -31,11 +31,18 @@ export default function SignUpForm() {
   return (
     <form onSubmit={handleSubmit(d => { console.log(d) })} method="POST" action="/api/auth/signup">
       {step === 'general' &&
-        <div>
+        <section>
           <img src="/coso4.webp" alt="Imagen decorativa en esquinas" className="absolute left-0 top-0 hidden h-full w-2/4 md:block" />
           <General setStep={setStep} />
-        </div>}
-      {allSteps[step]}
+        </section>}
+      {step !== 'general' &&
+        <section>
+          <img src="/coso_1.webp" alt="Imagen decorativa en esquinas" width={250} className="absolute left-0 top-0 hidden md:block" />
+          <div className="mx-auto w-3/6 pt-10">
+            {allSteps[step]}
+          </div>
+          <img src="/coso_2.webp" alt="Imagen decorativa en esquinas" width={250} className="absolute bottom-0 right-0 hidden rotate-180 md:block" />
+        </section>}
     </form>
   )
 }

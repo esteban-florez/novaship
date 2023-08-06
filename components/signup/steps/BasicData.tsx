@@ -8,16 +8,29 @@ type Props = React.PropsWithChildren<{
 export default function BasicData({ setStep }: Props) {
   return (
     <>
-      <h2 className="text-center text-2xl font-bold md:text-4xl">
-        Rellenar datos
+      <h2 className="text-xl font-bold md:text-3xl">
+        ¡Estamos <span className="text-primary">interesados</span> en saber más sobre <span className="text-secondary">usted</span>!
       </h2>
+      <p className="text-base">
+        Te invitamos a tus datos para personalizar tu experiencia en nuestra plataforma.
+      </p>
       <section className="mx-auto w-full pt-4">
-        <div className="grid grid-cols-2">
-          <Input label="Nombre y apellido:" name="name" placeholder="Ej. Myriam Yaqueno" />
-          <Input label="Cédula de identidad:" name="ci" placeholder="Ej. 12345678" />
-          <Input label="Teléfono:" name="phone" placeholder="Ej. 0412-1234567" />
-          <Input type="date" label="Fecha de nacimiento:" name="birth" placeholder="" />
-          <Textarea height={3} label="Descripción:" name="bio" placeholder="Destacate pue" />
+        <div className="grid grid-cols-2 gap-x-4">
+          <div className="col-span-2 md:col-span-1">
+            <Input label="Nombre y apellido:" name="name" placeholder="Ej. Myriam Yaqueno" />
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <Input label="Cédula de identidad:" name="ci" placeholder="Ej. 12345678" />
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <Input label="Teléfono:" name="phone" placeholder="Ej. 0412-1234567" />
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <Input type="date" label="Fecha de nacimiento:" name="birth" placeholder="" />
+          </div>
+          <div className="col-span-2">
+            <Textarea height={2} label="Descripción:" name="bio" placeholder="Destacate pue" />
+          </div>
         </div>
         <div className="flex justify-between">
           <button onClick={() => { setStep('userType') }} type="button" className="btn-neutral btn mt-4">
