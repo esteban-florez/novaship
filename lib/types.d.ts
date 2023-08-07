@@ -4,6 +4,7 @@ import { type ZodIssue } from 'zod'
 import { type ERRORS } from './errors/reference'
 
 export type SkillOption = Pick<Skill, 'id' | 'title'> & { selected: boolean }
+export type FieldOption = Pick<Fields, 'id' | 'title'> & { selected: boolean }
 
 interface SharedInputProps {
   name: string

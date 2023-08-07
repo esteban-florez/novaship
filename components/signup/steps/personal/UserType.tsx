@@ -1,5 +1,5 @@
-import { UserType as UserTypeEnum } from '@prisma/client'
 import Radio from '@/components/forms/inputs/Radio'
+import { UserType as UserTypeEnum } from '@prisma/client'
 import { userTypes as translation } from '@/lib/translations'
 import { useState } from 'react'
 import { BuildingLibraryIcon, BuildingOffice2Icon, UserIcon } from '@heroicons/react/24/outline'
