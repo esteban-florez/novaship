@@ -1,17 +1,22 @@
 'use client'
 
 import General from './steps/General'
-import BasicData from './steps/BasicData'
-import UserType from './steps/UserType'
+import BasicData from './steps/personal/BasicData'
+import UserType from './steps/personal/UserType'
 import PhotoProfile from './steps/PhotoProfile'
-import ThemePreferences from './steps/ThemePreferences'
-import UserCalendar from './steps/UserCalendar'
+import ThemePreferences from './steps/personal/ThemePreferences'
+import UserCalendar from './steps/personal/UserCalendar'
 import { useState, type JSX } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type Fields, schema } from '@/lib/validation/schemas/signup'
+import { type FieldOption } from '@/lib/types'
 
-export default function SignUpForm() {
+type Props = React.PropsWithChildren <{
+  fields: FieldOption[]
+}>
+
+export default function SignUpForm({ fields }: Props) {
   const { register, handleSubmit, formState: { errors } } = useForm<Fields>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
@@ -24,7 +29,7 @@ export default function SignUpForm() {
     userType: <UserType setStep={setStep} />,
     basicData: <BasicData setStep={setStep} />,
     photoProfile: <PhotoProfile setStep={setStep} />,
-    themePreferences: <ThemePreferences setStep={setStep} />,
+    themePreferences: <ThemePreferences setStep={setStep} fields={fields} />,
     userCalendar: <UserCalendar setStep={setStep} />,
   }
 
