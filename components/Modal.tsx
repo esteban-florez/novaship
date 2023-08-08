@@ -3,31 +3,39 @@ import Button from './Button'
 
 type Props = React.PropsWithChildren<{
   id: string
-  title: string
-  accept: string
-  acceptIcon: React.ReactElement
-  cancel: string
-  buttonText: string
   buttonIcon: React.ReactElement
+  buttonText: string
+  buttonClassName: string
+  buttonCancelText: string
+  buttonActionIcon?: React.ReactElement
+  buttonActionClassName?: string
+  buttonActionText?: string
+  onClick?: () => void
 }>
 
-export default function Modal({ id, title, accept, acceptIcon, cancel, buttonText, buttonIcon, children }: Props) {
+// Dev
+// Arreglar las props
+export default function Modal({ id, buttonIcon, buttonText, buttonClassName, buttonCancelText, buttonActionIcon, buttonActionClassName, buttonActionText, onClick, children }: Props) {
+  const hasActionIcon = buttonActionIcon !== null && buttonActionIcon !== undefined
+  const hasActionText = buttonActionText !== null && buttonActionText !== undefined
+  const hasActionClassName = buttonActionClassName !== null && buttonActionClassName !== undefined
+
   return (
     <>
-      <Button type="MODAL" id={id} bgColor="bg-secondary" textColor="text-secondary-content" icon={buttonIcon}>
+      <Button type="MODAL" id={id} icon={buttonIcon} className={buttonClassName}>
         {buttonText}
       </Button>
       <div className="modal p-0">
         <div className="modal-box p-0">
-          <h3 className="bg-primary p-4 text-center text-lg font-bold text-white">{title}</h3>
-          <div className="px-4 py-2">{children}</div>
-          <div className="modal-action border-t p-4">
-            <label htmlFor={id} className="inline-flex cursor-pointer items-center justify-center gap-x-2 rounded-md bg-gray-200 px-6 py-2 text-neutral-600">
+          <main className="mt-4 px-8 py-4">{children}</main>
+          <footer className="modal-action bg-gray-100 px-4 py-2">
+            <label htmlFor={id} className="inline-flex cursor-pointer items-center justify-center gap-x-2 rounded-md border border-neutral-300 bg-gray-200 px-6 py-2 text-neutral-600">
               <XMarkIcon className="h-5 w-5" />
-              {cancel}
+              {buttonCancelText}
             </label>
-            <Button bgColor="bg-secondary" textColor="text-secondary-content" icon={acceptIcon}>{accept}</Button>
-          </div>
+            {(hasActionIcon && hasActionText && hasActionClassName) &&
+              <Button type="BUTTON" icon={buttonActionIcon} className={buttonActionClassName} onClick={onClick}>{buttonActionText}</Button>}
+          </footer>
         </div>
       </div>
     </>
