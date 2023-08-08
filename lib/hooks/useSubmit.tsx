@@ -1,85 +1,46 @@
-import Toast from '@/components/Toast'
+import SubmitAlert from '@/components/forms/SubmitAlert'
 import { type HTTP_METHOD } from 'next/dist/server/web/http'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { type ApiResponseBody, type UseSubmitResult } from '../types'
+import { handleError } from '../errors/fetch'
 
 interface UseSubmitOptions {
   append?: Record<string, unknown>
   method?: HTTP_METHOD
 }
 
-// TODO -> mejorar tipado, que hay un tipo ApiResponse, del cual se pueda sacar el tipado de esto, que incluya las diferentes respuestas que puede dar el la API.
-type Result = null | 'loading' | {
-  status: number
-  body: object
-}
-
-const messages: Record<string | number, string> = {
-  200: '¡Los datos se enviaron correctamente!',
-  400: 'Hubo un error al envíar los datos, por favor intenta de nuevo...',
-  422: 'Existe un error en los datos, por favor verifícalos...',
-  500: 'Hubo un error en el servidor, intenta de nuevo más tarde...',
-}
-
-// REF -> esto podría ser un component de React más bien...
-function getAlert(result: Result, setResult: (newState: Result) => void) {
-  if (result === null) {
-    return null
-  }
-
-  interface Alert {
-    message: string
-    type: 'loading' | 'success' | 'error'
-  }
-
-  const alert: Alert = {
-    message: 'Enviando datos...',
-    type: 'loading',
-  }
-
-  if (result !== 'loading') {
-    alert.message = messages[result.status]
-    alert.type = result.status === 200 ? 'success' : 'error'
-  }
-
-  return (
-    <Toast
-      type={alert.type}
-      message={alert.message}
-      onClose={() => { setResult(null) }}
-    />
-  )
-}
-
 // TODO -> este hook debería envolver a useForm() para que sea más facil de usar.
 export default function useSubmit<Fields>(options: UseSubmitOptions = {}) {
-  const router = useRouter()
+  const [result, setResult] = useState<UseSubmitResult>(null)
   const { method, append } = options
-  const [result, setResult] = useState<Result>(null)
+  const router = useRouter()
 
   const send = async (data: Fields, event: React.BaseSyntheticEvent | undefined) => {
-    // TODO -> mejorar tipado de Result, y manejar posible error de fetch
-    setResult('loading')
-    const form = event?.target as HTMLFormElement
-    const response = await fetch(form.action, {
-      body: JSON.stringify({ ...data, ...append }),
-      method: method ?? form.method,
-    })
+    try {
+      setResult('loading')
 
-    const body = response.json()
+      const form = event?.target as HTMLFormElement
 
-    if (response.redirected) {
-      router.push(response.url)
-      return
+      const response = await fetch(form.action, {
+        body: JSON.stringify({ ...data, ...append }),
+        method: method ?? form.method,
+      })
+
+      if (response.redirected) {
+        router.push(response.url)
+        return
+      }
+
+      const body = response.json() as ApiResponseBody
+      setResult({ body })
+    } catch (error) {
+      const body = handleError(error)
+      setResult({ body })
     }
-
-    setResult({
-      status: response.status,
-      body,
-    })
   }
 
-  const alert = getAlert(result, setResult)
+  const alert = <SubmitAlert result={result} reset={() => { setResult(null) }} />
 
   // TODO -> exponer los errores de validación que vengan del servidor, y mostrarlos mediante este hook al usuario de alguna manera.
   return { send, alert }
