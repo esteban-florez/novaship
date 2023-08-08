@@ -13,6 +13,7 @@ interface Props {
   onChange: (event: InputOnChange) => void
 }
 
+// DRY Filter
 export default function Filter({ active, onChange }: Props) {
   return (
     <section className="mt-5 flex w-full flex-col flex-wrap gap-2 rounded-lg xl:flex-row xl:items-center">
