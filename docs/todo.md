@@ -1,6 +1,5 @@
 # To-Do
 
-- Crear landing page para después iniciar sesión.
 - Definir los onDelete y onUpdate en Prisma Schema.
 - Hacer middleware de autenticación.
 - Añadir validaciones front y back.
@@ -16,8 +15,14 @@
 - Guiar al usuario por la aplicación.
 - Banner recordatorio de completar perfil.
 - Componente Ads y ubicarlos en el layout.
-- Componente InputSelect da error (The `defaultValue` prop supplied to <select> must be an array if `multiple` is true).
 - Crear personalizados componentes.
 - Arreglar los perfiles (ruta /home/profile no existe, en el navbar).
 - Remover padding left del chatbar en /chats
 - Release, File, Message le faltan seeders.
+- Crear input tipo file y limitar las extensiones.
+
+# Ideas
+
+- Opciones de ver, editar y eliminar como un overlay en el elemento al hacer hover.
+- Mostrar un popup al hacer hover en los avatares de los miembros en /projects.
+- Mostrar un modal al hacer clic en el + de los mimebros en /projects.

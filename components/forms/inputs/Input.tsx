@@ -1,10 +1,12 @@
-import { type SharedInputProps } from '@/lib/types'
+import { type InputOnChange, type SharedInputProps } from '@/lib/types'
 import CustomLabel from './CustomLabel'
 import clsx from 'clsx'
 import { type HTMLInputTypeAttribute } from 'react'
 
 type Props = React.PropsWithChildren<{
+  onChange?: (event: InputOnChange) => void
   placeholder: string
+  innerIcon?: React.ReactElement
   type?: HTMLInputTypeAttribute
   step?: string
 } & SharedInputProps>
@@ -12,24 +14,28 @@ type Props = React.PropsWithChildren<{
 // DRY 3
 export default function Input({
   name, placeholder, label, register, step, errors = {},
-  config = {}, type = 'text', value = '', classes = '',
+  config = {}, type = 'text', value = '', className = '', children, onChange,
 }: Props) {
   const hasError = errors[name] !== undefined
   const registerProps = register !== undefined ? { ...register(name, config) } : {}
 
   return (
     <>
-      <CustomLabel id={name} label={label} />
-      <input
-        id={name} name={name} type={type} step={step}
-        placeholder={placeholder} {...registerProps}
-        className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', classes)} defaultValue={value}
-      />
-      {hasError && (
-        <p className="-mt-2 text-sm font-semibold text-error">
-          {errors[name].message}
-        </p>
-      )}
+      {(label !== null && label !== undefined) && <CustomLabel id={name} label={label} />}
+      <div className="relative">
+        <input
+          id={name} name={name} type={type} step={step}
+          placeholder={placeholder} {...registerProps}
+          className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', className)} defaultValue={value}
+          onChange={onChange}
+        />
+        {children}
+        {hasError && (
+          <p className="text-sm font-semibold text-error">
+            {errors[name].message}
+          </p>
+        )}
+      </div>
     </>
   )
 }

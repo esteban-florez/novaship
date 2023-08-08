@@ -10,6 +10,7 @@ interface DropdownProps {
 
 export default function ProfileDropdownMenu({ username }: DropdownProps) {
   const { onSubmit, alert } = useFormHandling({ method: 'DELETE' })
+
   return (
     <>
       {alert}
