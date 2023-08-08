@@ -19,10 +19,10 @@ interface AlertData {
 
 type Props = React.PropsWithChildren<{
   result: UseSubmitResult
-  reset: () => void
+  close: () => void
 }>
 
-export default function SubmitAlert({ result, reset }: Props) {
+export default function SubmitAlert({ result, close }: Props) {
   if (result === null) {
     return null
   }
@@ -33,14 +33,14 @@ export default function SubmitAlert({ result, reset }: Props) {
   }
 
   if (result !== 'loading') {
-    alert.message = messages[result.body.errorType ?? 'SUCCESS']
-    alert.type = result.body.errorType !== undefined ? 'error' : 'success'
+    alert.message = messages[result.errorType ?? 'SUCCESS']
+    alert.type = result.errorType !== undefined ? 'error' : 'success'
   }
 
   return (
     <Toast
       {...alert}
-      onClose={reset}
+      onClose={close}
     />
   )
 }

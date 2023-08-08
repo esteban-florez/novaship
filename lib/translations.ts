@@ -28,3 +28,7 @@ export const userTypes = {
   COMPANY: 'Empresa',
   INSTITUTE: 'Institución',
 } as const
+
+export const fields: Record<string, string> = {
+  email: 'Correo electrónico: ',
+}

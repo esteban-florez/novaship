@@ -1,11 +1,15 @@
 import lucia from './lucia'
+import prisma from '@/prisma/client'
 import { cookies } from 'next/headers'
 import { type NextRequest } from 'next/server'
 import { type Session } from 'lucia-auth'
-import prisma from '@/prisma/client'
+import { type UserType } from '@prisma/client'
 
 interface AuthData {
-  user: SessionUser
+  user: {
+    id: string
+    type: UserType
+  }
   session: Session
 }
 

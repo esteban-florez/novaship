@@ -4,11 +4,12 @@ import { schema } from '@/lib/validation/schemas/signup'
 import { handleRequest } from '@/lib/auth'
 import prisma from '@/prisma/client'
 import numbers from '@/lib/utils/number'
-import { handleError } from '@/lib/api-errors'
+import { handleError } from '@/lib/errors/api'
 
 export async function POST(request: NextRequest) {
+  let data
   try {
-    const data = await request.json()
+    data = await request.json()
     const { email, password } = schema.parse(data)
 
     const authUser = await lucia.createUser({
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.redirect(new URL('/', request.url))
   } catch (error) {
-    const { status, body } = handleError(error)
+    const { status, body } = handleError(error, data)
     return NextResponse.json(body, { status })
   }
 }

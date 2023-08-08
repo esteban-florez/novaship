@@ -3,8 +3,6 @@
 import Input from '@/components/forms/inputs/Input'
 import Select from '@/components/forms/inputs/Select'
 import Textarea from '@/components/forms/inputs/Textarea'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { type Location, UserType } from '@prisma/client'
 import { userTypes } from '@/lib/translations'
 import collect from '@/lib/utils/collection'
@@ -16,14 +14,17 @@ type Props = React.PropsWithChildren<{
 }>
 
 export default function TestForm({ locations }: Props) {
-  const { alert, send } = useSubmit<Fields>()
-  const { register, handleSubmit, formState: { errors } } = useForm<Fields>({
-    mode: 'onTouched',
-    resolver: zodResolver(schema),
-  })
+  const {
+    alert,
+    register,
+    handleSubmit,
+    serverErrors,
+    formState: { errors },
+  } = useSubmit<Fields>({ schema, refreshOnSuccess: true })
 
   return (
-    <form className="p-8" action="/api/test" method="POST" onSubmit={handleSubmit(send)}>
+    <form className="p-8" action="/api/test" method="POST" onSubmit={handleSubmit}>
+      {serverErrors}
       {alert}
       <div className="form-control">
         <Input errors={errors} register={register} label="Correo" name="email" type="email" placeholder="Introduce tu correo..." />
