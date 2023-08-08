@@ -18,13 +18,13 @@ interface AuthData {
  */
 export const auth = {
   async company() {
-    return await prisma.company.findUnique(await options())
+    return await prisma.company.findUniqueOrThrow(await options())
   },
   async institute() {
-    return await prisma.institute.findUnique(await options())
+    return await prisma.institute.findUniqueOrThrow(await options())
   },
   async person() {
-    return await prisma.person.findUnique(await options())
+    return await prisma.person.findUniqueOrThrow(await options())
   },
 }
 

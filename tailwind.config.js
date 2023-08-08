@@ -18,12 +18,13 @@ module.exports = {
     themes: [
       {
         light: {
-          ...themes["[data-theme=light]"],
+          ...themes['[data-theme=light]'],
           primary: '#a55eea',
           'primary-content': '#ffffff',
           secondary: '#45aaf2',
           'secondary-content': '#ffffff',
           accent: '#2bcbba',
+          'seoncdary-content': 'fffffff',
           'neutral-content': '#ffffff',
           // 'base-100': '#E5E7EB',
           // 'base-200': '#F3F4F6',

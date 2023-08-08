@@ -2,24 +2,35 @@ import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid'
 import Modal from '../Modal'
 import Select from '../forms/inputs/Select'
 import Input from '../forms/inputs/Input'
+import { type InputOnChange } from '@/lib/types'
+import { BUTTON_DEFAULT } from '@/lib/constants/button'
+import clsx from 'clsx'
 
-export default function FilterModal() {
+interface Props {
+  onChange?: (event: InputOnChange) => void
+}
+
+// DEV
+// Filtrar por visibilidad "Private" no funciona
+export default function FilterModal({ onChange }: Props) {
   return (
     <Modal
       id="filterModal"
-      title="Filtrar proyectos"
-      accept="Filtrar"
-      cancel="Cancelar"
-      acceptIcon={<AdjustmentsHorizontalIcon className="h-6 w-6 sm:flex" />}
       buttonText="Filtrar"
+      buttonClassName={clsx(BUTTON_DEFAULT, 'bg-secondary text-secondary-content')}
       buttonIcon={<AdjustmentsHorizontalIcon className="h-5 w-5" />}
+      buttonActionText="Filtrar"
+      buttonCancelText="Cancelar"
+      buttonActionIcon={<AdjustmentsHorizontalIcon className="h-5 w-5" />}
+      buttonActionClassName="bg-secondary text-secondary-content"
     >
-      <Select name="privacity" label="Privacidad">
-        <option value="Private">Privado</option>
-        <option value="Public">Público</option>
+      <Select name="privacity" label="Privacidad" onChange={onChange}>
+        <option value="ALL">Todos</option>
+        <option value="PRIVATE">Privado</option>
+        <option value="PUBLIC">Público</option>
       </Select>
-      <Input type="number" name="members" label="Miembros" placeholder="Ej: 15" />
-      <Input name="owner" label="Responsable" placeholder="Ej: Juan Aguilar" />
+      <Input type="number" name="members" label="Miembros" placeholder="Ej: 15" onChange={onChange} />
+      {/* <Input name="owner" label="Responsable" placeholder="Ej: Juan Aguilar" onChange={onChange} /> */}
     </Modal>
   )
 }

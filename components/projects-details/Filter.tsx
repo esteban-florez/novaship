@@ -1,20 +1,20 @@
 import { AdjustmentsHorizontalIcon, PlusIcon } from '@heroicons/react/24/solid'
 import SearchInput from '../SearchInput'
-import NavButton from '../NavButton'
 import ActionButton from '../ActionButton'
 
+// DRY Filter
 export default function Filter() {
   return (
     <>
       <section className="mt-5 flex w-full flex-col flex-wrap gap-2 rounded-lg xl:flex-row xl:items-center">
-        <div className="order-2 gap-x-2 xl:order-none">
+        {/* <div className="order-2 gap-x-2 xl:order-none">
           <NavButton url="/home/projects/project" isActive>
             Archivos
           </NavButton>
           <NavButton url="/home/projects/tasks">
             Tareas
           </NavButton>
-        </div>
+        </div> */}
         <div className="order-1 flex w-full flex-col items-center justify-between gap-3 sm:ms-auto sm:flex-row sm:pb-3 xl:w-auto">
           <SearchInput />
           <div className="flex w-full flex-row justify-between gap-2 pb-2 sm:w-auto sm:pb-0">

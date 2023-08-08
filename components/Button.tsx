@@ -1,23 +1,27 @@
+import { BUTTON_DEFAULT } from '@/lib/constants/button'
 import clsx from 'clsx'
 import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   id?: string
-  icon: React.ReactElement
-  bgColor: string
-  textColor: string
   url?: string
+  icon: React.ReactElement
   type?: 'MODAL' | 'BUTTON'
+  extendClass?: boolean
+  className?: string
   onClick?: () => void
 }>
 
-export default function Button({ id = 'modal', type = 'BUTTON', bgColor, textColor, icon, url = '', onClick, children }: Props) {
-  const className = 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2'
+export default function Button({ id = 'modal', type = 'BUTTON', icon, url = '', className, extendClass = false, onClick, children }: Props) {
+  const defaultClasses = clsx({
+    [BUTTON_DEFAULT as string]: className === null || className === undefined,
+    [className as string]: className !== null && className !== undefined,
+  })
 
   if (url !== null && url !== '') {
     return (
       <Link href={url}>
-        <button className={clsx(className, bgColor, textColor)}>
+        <button className={clsx(defaultClasses)}>
           {icon}
           {children}
         </button>
@@ -28,7 +32,7 @@ export default function Button({ id = 'modal', type = 'BUTTON', bgColor, textCol
   if (type !== null && type === 'MODAL' && id !== null) {
     return (
       <>
-        <label htmlFor={id} className={clsx(className, bgColor, textColor, 'cursor-pointer')}>
+        <label htmlFor={id} className={clsx(defaultClasses, 'cursor-pointer')}>
           {icon}
           {children}
         </label>
@@ -38,7 +42,7 @@ export default function Button({ id = 'modal', type = 'BUTTON', bgColor, textCol
   }
 
   return (
-    <button onClick={onClick} className={clsx(className, bgColor, textColor)}>
+    <button onClick={onClick} className={defaultClasses}>
       {icon}
       {children}
     </button>

@@ -1,31 +1,55 @@
-import Filter from '@/components/projects/Filter'
-import data from './data-projects.json'
 import { type Metadata } from 'next'
-import Card from '@/components/projects/Card'
-
-const projects = data
+import PageContent from '@/components/projects/PageContent'
+import prisma from '@/prisma/client'
+import { auth } from '@/lib/auth'
 
 export const metadata: Metadata = {
   title: 'Proyectos',
 }
 
-export default function ProjectsPage() {
+export const revalidate = 10
+
+export default async function ProjectsPage() {
+  // const projects = await prisma.project.findMany({
+  //   include: {
+  //     person: true,
+  //     memberships: {
+  //       include: {
+  //         person: true
+  //       }
+  //     }
+  //   },
+  //   where: {
+  //     visibility: 'PUBLIC'
+  //   },
+  //   orderBy: {
+  //     title: 'asc'
+  //   }
+  // })
+
+  const activeUser = await auth.person()
+  const projects = await prisma.project.findMany({
+    where: {
+      person: {
+        authUserId: activeUser.authUserId,
+      },
+    },
+    include: {
+      person: true,
+      memberships: {
+        include: {
+          person: true,
+        },
+      },
+    },
+    orderBy: {
+      title: 'asc',
+    },
+  })
+
   return (
     <div className="px-4">
-      <Filter />
-      <section className="mx-auto w-full columns-1 gap-4 rounded-lg rounded-tl-none bg-white p-6 pb-4">
-        {projects.map((project) => {
-          return (
-            <div key={project.id} className="mb-3 flex w-full flex-col gap-3">
-              <Card
-                title={project.title}
-                owner={project.owner}
-                status={project.status}
-              />
-            </div>
-          )
-        })}
-      </section>
+      <PageContent projects={projects} />
     </div>
   )
 }

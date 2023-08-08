@@ -1,13 +1,19 @@
 import { ArrowLeftIcon, PlusIcon } from '@heroicons/react/24/solid'
 import Button from '../Button'
+import { BUTTON_DEFAULT } from '@/lib/constants/button'
+import clsx from 'clsx'
 
-export default function FormButtons({ url = '' }: { url?: string }) {
+interface Props {
+  url?: string
+}
+
+export default function FormButtons({ url = '' }: Props) {
   return (
     <div className="flex justify-end gap-x-2 border-t pt-4">
-      <Button url={url} bgColor="bg-gray-200" textColor="text-neutral-600" icon={<ArrowLeftIcon className="h-4 w-4" />}>
+      <Button url={url} icon={<ArrowLeftIcon className="h-4 w-4" />} className={clsx(BUTTON_DEFAULT, 'bg-gray-200 text-neutral-600')}>
         Cancelar
       </Button>
-      <Button bgColor="bg-success" textColor="text-white" icon={<PlusIcon className="h-4 w-4" />}>
+      <Button icon={<PlusIcon className="h-4 w-4" />} className={clsx(BUTTON_DEFAULT, 'bg-primary text-primary-content')}>
         Registrar
       </Button>
     </div>

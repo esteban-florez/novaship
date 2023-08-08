@@ -1,7 +1,8 @@
 import CustomLabel from './CustomLabel'
-import { type SharedInputProps } from '@/lib/types'
+import { type InputOnChange, type SharedInputProps } from '@/lib/types'
 
 type Props = React.PropsWithChildren<{
+  onChange?: (event: InputOnChange) => void
   noDefault?: boolean
   options?: SelectOptionsConfig
 } & SharedInputProps>
@@ -28,7 +29,7 @@ function getSelectOptions(options: SelectOptionsConfig | undefined) {
 // DRY 3
 export default function Select({
   name, label, children, options, register, config = {},
-  value = '', noDefault = false, errors = {},
+  value = '', noDefault = false, errors = {}, onChange,
 }: Props) {
   const hasError = errors[name] !== undefined
   const registerProps = register !== undefined ? { ...register(name, config) } : {}
@@ -36,11 +37,12 @@ export default function Select({
 
   return (
     <>
-      <CustomLabel id={name} label={label} />
+      {(label !== null && label !== undefined) && <CustomLabel id={name} label={label} />}
       <select
         id={name} name={name}
         defaultValue={value} {...registerProps}
         className="select select-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary"
+        onChange={onChange}
       >
         {!noDefault && <option value="" disabled>Seleccionar...</option>}
         {selectOptions?.map(({ value, label }) => (

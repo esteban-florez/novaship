@@ -1,14 +1,15 @@
-import { type Skill } from '@prisma/client'
+import { type Field, type Skill } from '@prisma/client'
 import { type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
 
-export type SkillOption = Pick<Skill, 'id' | 'title'> & { selected: boolean }
-export type FieldOption = Pick<Fields, 'id' | 'title'> & { selected: boolean }
+type SkillOption = Pick<Skill, 'id' | 'title'> & { selected: boolean }
+type FieldOption = Pick<Field, 'id' | 'title'> & { selected: boolean }
+type PersonOption = Pick<Person, 'id' | 'name' | 'email'> & { selected: boolean }
 
 interface SharedInputProps {
   name: string
-  label: string
-  classes?: string
+  label?: string
+  className?: string
   value?: string
   register?: (name, config?: RegisterOptions) => object
   config?: RegisterOptions
@@ -18,6 +19,10 @@ interface SharedInputProps {
 }
 
 type UseSubmitResult = null | 'loading' | ApiResponseBody
+
+type InputOnChange = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
+
+type TabProp = 'All' | 'Mine'
 
 interface ApiResponseBody {
   errorType?: keyof typeof ERRORS

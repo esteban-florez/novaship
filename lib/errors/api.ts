@@ -9,7 +9,7 @@ const prismaErrors = [
   Prisma.PrismaClientValidationError,
 ]
 
-export function handleError(error: unknown, data?: Record<string, unknown>) {
+export function handleError(error: unknown, data: Record<string, unknown> = {}) {
   // TODO -> handle possible auth error
   if (error instanceof SyntaxError) {
     console.log('Route Handler Error (verify schema validation and data sending): ')

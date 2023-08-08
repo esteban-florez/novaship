@@ -9,6 +9,7 @@ type Props = React.PropsWithChildren<{
   showStatus?: boolean
   bg?: string
   text?: string
+  className?: string
 }>
 
 export default function AvatarIcon({
@@ -18,12 +19,13 @@ export default function AvatarIcon({
   showStatus = false,
   bg = 'bg-primary',
   text = 'text-white',
+  className,
 }: Props) {
   const avatarContent = image !== null ? <Image src={image} alt="Foto de perfil" /> : <span>{capitalizeString(username, 2)}</span>
 
   return (
     <div className={clsx('placeholder avatar', status !== null && 'relative')}>
-      <div className={clsx('h-10 w-10 rounded-full', bg, text)}>
+      <div className={clsx('h-10 w-10 rounded-full', bg, text, className)}>
         {avatarContent}
       </div>
       {showStatus && (
