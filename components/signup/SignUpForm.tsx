@@ -38,6 +38,7 @@ export default function SignUpForm({ fields }: Props) {
       {step === 'general' &&
         <section>
           <img src="/coso4.webp" alt="Imagen decorativa en esquinas" className="absolute left-0 top-0 hidden h-full w-2/4 md:block" />
+          <img src="/coso3.webp" alt="Imagen decorativa en esquinas" className="absolute left-0 top-0 block h-2/5 w-full md:hidden" />
           <General setStep={setStep} />
         </section>}
       {step !== 'general' &&

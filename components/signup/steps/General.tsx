@@ -11,21 +11,26 @@ type Props = React.PropsWithChildren<{
 export default function General({ setStep }: Props) {
   return (
     <>
-      <div className="z-10 grid h-screen grid-cols-7 place-items-center">
-        <div className="col-span-2 hidden w-9/12 flex-col justify-center rounded-2xl bg-white/10 p-6 shadow-lg backdrop-blur-sm md:flex">
-          <h2 className="mb-3 text-center text-2xl font-bold text-white">
-            ¿Ya tienes una cuenta?
-          </h2>
-          <img src="/undraw_summer.webp" alt="Imagen de trabajo remoto" width={180} className="z-50" />
-          <Link href="/auth/login" className="btn -mt-1 bg-white text-base">
+      <div className="z-10 grid h-screen grid-cols-7 place-items-center gap-6">
+        <div className="col-span-7 flex flex-col justify-center rounded-b-2xl rounded-t-none bg-white/10 p-6 shadow-lg backdrop-blur-sm md:col-span-2 md:w-5/6 md:rounded-2xl lg:w-9/12">
+          <div className="flex flex-row items-center gap-2 md:flex-col md:items-start">
+            <div className="flex flex-col">
+              <h2 className="mb-3 text-center text-lg font-bold text-white md:text-xl lg:text-2xl">
+                ¿Ya tienes una cuenta?
+              </h2>
+              <Link href="/auth/login" className="btn -mt-1 flex bg-white md:hidden md:text-base">
+                Inicia sesión
+              </Link>
+            </div>
+            <img src="/undraw_summer.webp" alt="Imagen de trabajo remoto" className="z-50 grid h-24 w-36 place-items-end md:h-auto md:w-48" />
+          </div>
+          <Link href="/auth/login" className="btn -mt-1 hidden bg-white md:flex md:text-base">
             Inicia sesión
           </Link>
         </div>
-        <div className="col-span-7 flex w-full flex-col justify-center p-6 md:col-span-5 md:ml-20 md:w-3/5 lg:w-3/6">
-          <h2 className="mb-1 text-center text-3xl font-bold md:text-4xl">
-            ¡Descubre <span className="text-primary">todo</span> lo
-            <br />
-            que <span className="text-secondary">tenemos</span> para ti!
+        <div className="col-span-7 my-6 flex w-full flex-col justify-center p-6 md:col-span-5 md:ml-20 md:mt-0 md:w-3/4 lg:w-3/6">
+          <h2 className="mb-1 text-center text-2xl font-bold sm:text-3xl md:text-4xl">
+            ¡Descubre <span className="text-primary">todo</span> lo <br className="hidden lg:block" /> que <span className="text-secondary">tenemos</span> para ti!
           </h2>
           <p className="text-center text-base">Seguridad y confianza, siempre a tu disposición</p>
           <div className="mx-auto mt-3 w-full">
