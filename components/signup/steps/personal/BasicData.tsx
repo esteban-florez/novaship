@@ -1,11 +1,7 @@
 import Input from '@/components/forms/inputs/Input'
 import Textarea from '@/components/forms/inputs/Textarea'
 
-type Props = React.PropsWithChildren<{
-  setStep: (step: string) => void
-}>
-
-export default function BasicData({ setStep }: Props) {
+export default function BasicData({ goBack, goNext }: StepProps) {
   return (
     <>
       <h2 className="text-xl font-bold md:text-3xl">
@@ -33,10 +29,10 @@ export default function BasicData({ setStep }: Props) {
           </div>
         </div>
         <div className="flex justify-between">
-          <button onClick={() => { setStep('userType') }} type="button" className="btn-neutral btn mt-4">
+          <button onClick={goBack} type="button" className="btn-neutral btn mt-4">
             Volver
           </button>
-          <button onClick={() => { setStep('photoProfile') }} type="button" className="btn-primary btn mt-4">
+          <button onClick={goNext} type="button" className="btn-primary btn mt-4">
             Siguiente
           </button>
         </div>

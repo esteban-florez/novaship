@@ -1,3 +1,5 @@
+import collect from './collection'
+
 class Types <T extends object> {
   types: T
 
@@ -6,7 +8,8 @@ class Types <T extends object> {
   }
 
   random() {
-    return Object.values(this.types)[Math.floor(Math.random() * Object.values(this.types).length)]
+    const values = Object.values(this.types)
+    return collect(values).random()
   }
 }
 

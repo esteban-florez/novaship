@@ -21,6 +21,7 @@ interface Props {
 
 export default function CreateProjectForm({ fields, persons }: Props) {
   // TODO D -> remover duplicación de código
+  // DRY 4
   const [totalFields, setTotalFields] = useState<FieldOption[]>(fields)
   const [totalPersons, setTotalPersons] = useState<PersonOption[]>(persons)
   const [searchName, setSearchName] = useState('')

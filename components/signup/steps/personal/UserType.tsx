@@ -1,16 +1,16 @@
 import Radio from '@/components/forms/inputs/Radio'
 import { UserType as UserTypeEnum } from '@prisma/client'
 import { userTypes as translation } from '@/lib/translations'
-import { useState } from 'react'
 import { BuildingLibraryIcon, BuildingOffice2Icon, UserIcon } from '@heroicons/react/24/outline'
 
-type Props = React.PropsWithChildren<{
-  setStep: (step: string) => void
-}>
+type UserTypeLiteral = keyof typeof UserTypeEnum
 
-export default function UserType({ setStep }: Props) {
-  const [selected, setSelected] = useState<keyof typeof UserTypeEnum>()
+type Props = StepProps & {
+  userType: UserTypeLiteral | null
+  setUserType: (string: UserTypeLiteral) => void
+}
 
+export default function UserType({ userType, setUserType, goNext, goBack }: Props) {
   const descriptions = {
     COMPANY: '¡Contrata nuevos empleados y crea proyectos para impulsar el crecimiento y éxito de tu empresa!',
     INSTITUTE: 'Gestiona las pasantías de tus estudiantes para fortalecer su preparación profesional',
@@ -28,7 +28,7 @@ export default function UserType({ setStep }: Props) {
     return (
       <Radio
         name="type" key={type} value={type} label={label} icon={icons[type]}
-        onInput={() => { setSelected(type) }} active={type === selected}
+        onInput={() => { setUserType(type) }} active={type === userType}
       >
         {descriptions[type]}
       </Radio>
@@ -46,10 +46,10 @@ export default function UserType({ setStep }: Props) {
       <section className="mx-auto w-full pt-4">
         {options}
         <div className="mt-4 flex justify-between">
-          <button onClick={() => { setStep('general') }} type="button" className="btn-neutral btn">
+          <button onClick={goBack} type="button" className="btn-neutral btn">
             Volver
           </button>
-          <button onClick={() => { setStep('basicData') }} type="button" className="btn-primary btn">
+          <button onClick={goNext} type="button" className="btn-primary btn">
             Siguiente
           </button>
         </div>

@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { type SkillOption } from '@/lib/types'
 
 export default function CreateOfferForm() {
+  // DRY 4
   const [skills, setSkills] = useState<SkillOption[]>([
     { id: '8293-3819-1234', title: 'Programación', selected: false },
     { id: '2903-4850-1282', title: 'JavaScript', selected: false },

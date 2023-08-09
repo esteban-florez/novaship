@@ -53,7 +53,7 @@ class Numbers<T extends number> {
  * Accepts 0-2 numbers or a number array, if no values provided min and max values will be (1 - 99.999.999)
  * @param number
  * @param secondNumber optional
- * @returns number
+ * @returns
  */
 export default function numbers<T extends number>(number?: T | T[], secondNumber?: T) {
   return new Numbers(number, secondNumber)

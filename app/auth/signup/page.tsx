@@ -13,6 +13,7 @@ export default async function SignUpPage() {
       title: true,
     },
   })
+  // DRY 4
   const selectableFields = fields.map(field => {
     return {
       ...field,

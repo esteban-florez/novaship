@@ -1,8 +1,8 @@
 type Props = React.PropsWithChildren<{
-  setStep: (step: string) => void
+  goBack: () => void
 }>
 
-export default function UserCalendar({ setStep }: Props) {
+export default function Schedule({ goBack }: Props) {
   return (
     <>
       <h2 className="text-xl font-bold md:text-3xl">
@@ -13,11 +13,11 @@ export default function UserCalendar({ setStep }: Props) {
       </p>
       <section className="mx-auto w-full pt-4">
         <div className="flex justify-between">
-          <button onClick={() => { setStep('themePreferences') }} type="button" className="btn-neutral btn mt-4">
+          <button onClick={goBack} type="button" className="btn-neutral btn mt-4">
             Volver
           </button>
-          <button onClick={() => { setStep('home') }} type="button" className="btn-primary btn mt-4">
-            Siguiente
+          <button type="submit" className="btn-primary btn mt-4">
+            Finalizar
           </button>
         </div>
       </section>

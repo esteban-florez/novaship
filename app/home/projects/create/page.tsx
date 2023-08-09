@@ -28,6 +28,7 @@ export default async function CreateProjectPage() {
     },
   })
 
+  // DRY 4
   const selectableFields = fields.map(field => {
     return {
       ...field,

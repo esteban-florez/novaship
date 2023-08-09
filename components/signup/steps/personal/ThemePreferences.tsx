@@ -3,25 +3,33 @@ import Checkbox from '@/components/forms/inputs/Checkbox'
 import { type FieldOption } from '@/lib/types'
 import { useState } from 'react'
 
-type Props = React.PropsWithChildren<{
-  fields: FieldOption[]
-  setStep: (step: string) => void
-}>
+type Props = StepProps & { fields: FieldOption[] }
 
-export default function ThemePreferences({ setStep, fields }: Props) {
+export default function ThemePreferences({ goBack, goNext, fields }: Props) {
+  // DRY 4
   const [availableFields, setAvailableFields] = useState<FieldOption[]>(fields)
-  const [count, setCount] = useState(0)
-  const handleActive = (id: string) => {
+  const selectedFieldsLength = availableFields.filter(field => field.selected).length
+
+  function handleFieldInput(id: string) {
     const newFields = availableFields.map(field => {
-      if (id === field.id && count < 5) {
-        setCount(count + 1)
-        return {
-          ...field,
-          selected: !field.selected,
+      if (id === field.id) {
+        if (!field.selected && selectedFieldsLength < 5) {
+          return {
+            ...field,
+            selected: true,
+          }
+        }
+
+        if (field.selected) {
+          return {
+            ...field,
+            selected: false,
+          }
         }
       }
       return field
     })
+
     setAvailableFields(newFields)
   }
 
@@ -46,17 +54,17 @@ export default function ThemePreferences({ setStep, fields }: Props) {
                 name={field.title}
                 value={field.id}
                 label={field.title}
-                onInput={() => { handleActive(field.id) }}
+                onInput={() => { handleFieldInput(field.id) }}
                 active={field.selected}
               />
             )
           })}
         </div>
         <div className="mt-4 flex justify-between">
-          <button onClick={() => { setStep('photoProfile') }} type="button" className="btn-neutral btn">
+          <button onClick={goBack} type="button" className="btn-neutral btn">
             Volver
           </button>
-          <button onClick={() => { setStep('userCalendar') }} type="button" className="btn-primary btn">
+          <button onClick={goNext} type="button" className="btn-primary btn">
             Siguiente
           </button>
         </div>

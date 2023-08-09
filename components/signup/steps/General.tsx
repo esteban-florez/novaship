@@ -3,12 +3,12 @@ import GoogleSignUpButton from '../../GoogleSignUpButton'
 import Input from '../../forms/inputs/Input'
 
 type Props = React.PropsWithChildren<{
-  setStep: (step: string) => void
+  goNext: () => void
 }>
 
 // mrk así lo dejo tengo sueño:c
 
-export default function General({ setStep }: Props) {
+export default function General({ goNext }: Props) {
   return (
     <>
       <div className="z-10 grid h-screen grid-cols-7 place-items-center gap-6">
@@ -39,7 +39,7 @@ export default function General({ setStep }: Props) {
               <Input label="Ingresa tu contraseña:" name="password" placeholder="Ingresa tu contraseña..." />
             </div>
             <div className="flex flex-col gap-2">
-              <button onClick={() => { setStep('userType') }} type="button" className="btn-primary btn-block btn mt-3">
+              <button onClick={goNext} type="button" className="btn-primary btn-block btn mt-3">
                 Registrarme
               </button>
               <GoogleSignUpButton />
