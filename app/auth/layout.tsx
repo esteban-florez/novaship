@@ -1,4 +1,4 @@
-import { validateUser } from '@/lib/auth'
+import { session } from '@/lib/auth/pages'
 import '@/styles/globals.css'
 import { redirect } from 'next/navigation'
 
@@ -7,10 +7,8 @@ export default async function AuthLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { user } = await validateUser()
-
-  if (user !== null) {
-    redirect('/')
+  if (await session() !== null) {
+    redirect('/home')
   }
 
   return (

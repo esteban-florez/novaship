@@ -8,6 +8,12 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
+model PreRegistration {
+  id       String @unique @default(cuid())
+  email    String
+  password String
+}
+
 model AuthUser {
   id           String        @id @default(cuid())
   type         UserType

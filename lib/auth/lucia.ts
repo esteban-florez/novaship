@@ -1,4 +1,4 @@
-import lucia from 'lucia-auth'
+import luciaAuth from 'lucia-auth'
 import { nextjs } from 'lucia-auth/middleware'
 import prismaAdapter from '@lucia-auth/adapter-prisma'
 import prisma from '@/prisma/client'
@@ -6,7 +6,7 @@ import 'lucia-auth/polyfill/node'
 
 const env = process.env.NODE_ENV === 'development' ? 'DEV' : 'PROD'
 
-const auth = lucia({
+const lucia = luciaAuth({
   adapter: prismaAdapter(prisma),
   env,
   middleware: nextjs(),
@@ -22,6 +22,6 @@ const auth = lucia({
   },
 })
 
-export { auth as default }
+export default lucia
 
-export type Auth = typeof auth
+export type Auth = typeof lucia

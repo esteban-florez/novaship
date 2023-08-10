@@ -4,7 +4,7 @@ import prisma from '@/prisma/client'
 import { type NextRequest, NextResponse } from 'next/server'
 
 export async function DELETE(request: NextRequest) {
-  // TODO D
+  // TODO D -> así no es el delete xDDD
   let data
   try {
     data = await request.json()
@@ -17,7 +17,6 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json(project)
   } catch (error) {
-    const { status, body } = handleError(error, data)
-    return NextResponse.json(body, { status })
+    return handleError(error, data)
   }
 }

@@ -69,7 +69,7 @@ export default function useSubmit<Fields extends FieldValues>({
         const keys = Object.keys(body.errors) as Array<Path<Fields>>
 
         keys.forEach(key => {
-          const value = data?.[key] as PathValue<Fields, Path<Fields>>
+          const value = body.data?.[key] as PathValue<Fields, Path<Fields>>
           setValue(key, value)
         })
 

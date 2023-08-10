@@ -1,31 +1,39 @@
 {
   "Write Props type": {
     "prefix": "dp",
-    "body": [
-      "type Props = React.PropsWithChildren<{$0}>",
-    ],
+    "body": "type Props = React.PropsWithChildren<{$0}>",
     "description": "Define Props type with React.PropsWithChildren"
   },
   "Icon classname": {
     "prefix": "ic",
-    "body": [
-      "className=\"h-6 w-6$0\"",
-    ],
+    "body": "className=\"h-6 w-6$0\"",
     "description": "Icon default className"
   },
   "Register prop for fields": {
     "prefix": "rp",
-    "body": [
-      "name=\"$0\" register={register} errors={errors}"
-    ],
+    "body": "name=\"$0\" register={register} errors={errors}",
     "description": "Register prop for fields"
   },
-
   "Declare Fields type for Zod schema": {
     "prefix": "df",
-    "body": [
-      "export type Fields = z.infer<typeof schema>"
-    ],
+    "body": "export type Fields = z.infer<typeof schema>",
     "description": "Declare Fields type for Zod schema"
   },
+  "Route Handler Template": {
+    "prefix": "rh",
+    "body": "import { type NextRequest } from 'next/server'\n\nexport async function $1(request: NextRequest) {\n\t$0\n}\n",
+    "description": "Write Route Handler template"
+  },
+  "React Component": {
+    "prefix": "rc",
+    "body": "export default function $1($2) {\n\t$0\n}\n"
+  },
+  "Props destructuring with Type": {
+    "prefix": "pt",
+    "body": "{ $0 }: Props"
+  },
+  "JSX Return parentheses": {
+    "prefix": "jr",
+    "body": "return (\n\t$0\n)"
+  }
 }

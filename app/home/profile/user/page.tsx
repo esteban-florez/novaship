@@ -1,6 +1,6 @@
 import UserForm from '@/components/profile/user/UserForm'
 // DEV
-// import { auth } from '@/lib/auth'
+// import { auth } from '@/lib/auth/pages'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {

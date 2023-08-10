@@ -5,3 +5,5 @@ export const ERRORS = {
   FETCH: 'FETCH',
   RESPONSE_SYNTAX: 'RESPONSE_SYNTAX',
 } as const
+
+export class AuthError extends Error {}

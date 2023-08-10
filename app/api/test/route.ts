@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
     })
     return NextResponse.json(location)
   } catch (error) {
-    const { status, body } = handleError(error, data)
-    return NextResponse.json(body, { status })
+    return handleError(error, data)
   }
 }

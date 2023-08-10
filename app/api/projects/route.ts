@@ -1,21 +1,21 @@
 import { handleError } from '@/lib/errors/api'
-import { auth } from '@/lib/auth/pages'
+import { auth } from '@/lib/auth/api'
 import { schema } from '@/lib/validation/schemas/project'
 import prisma from '@/prisma/client'
 import { type NextRequest, NextResponse } from 'next/server'
+import { url } from '@/lib/utils/url'
 
 export async function POST(request: NextRequest) {
-  // TODO -> en el caso de la api, no es necesario que esten dentro de /home las rutas.
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    // TODO D -> no se puede llamar esta función desde la API.
-    const user = await auth.person()
+    const user = await auth.person(request)
 
     await prisma.project.create({
       data: {
         ...parsed,
+        // TODO -> y que pasa si el proyecto lo crea una empresa?
         person: {
           connect: {
             id: user.id,
@@ -24,9 +24,8 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.redirect(new URL('/home/projects', request.url))
+    return NextResponse.redirect(url('home/projects'))
   } catch (error) {
-    const { status, body } = handleError(error, data)
-    return NextResponse.json(body, { status })
+    return handleError(error, data)
   }
 }

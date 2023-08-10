@@ -1,17 +1,15 @@
 import '@/styles/globals.css'
 import Aside from '@/components/layout/Aside'
 import Navbar from '@/components/layout/Navbar'
-import { validateUser } from '@/lib/auth'
 import { redirect } from 'next/navigation'
+import { session } from '@/lib/auth/pages'
 
 export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const { user } = await validateUser()
-
-  if (user === null) {
+  if (await session() === null) {
     redirect('/auth/login')
   }
 

@@ -1,7 +1,7 @@
 import { type Metadata } from 'next'
 import PageContent from '@/components/projects/PageContent'
 import prisma from '@/prisma/client'
-import { auth } from '@/lib/auth'
+import { auth } from '@/lib/auth/pages'
 
 export const metadata: Metadata = {
   title: 'Proyectos',

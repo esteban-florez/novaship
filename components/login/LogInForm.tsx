@@ -5,6 +5,7 @@ import GoogleSignUpButton from '../GoogleSignUpButton'
 import useFormHandling from '@/lib/hooks/useFormHandling'
 
 export default function LogInForm() {
+  // TODO -> mostrar una alerta de "debes iniciar sesión primero antes de ver esa página" cuando exista un searchParam llamado "redirected".
   const { loading, onSubmit, alert } = useFormHandling()
 
   return (

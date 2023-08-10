@@ -1,12 +1,13 @@
-import { handleRequest } from '@/lib/auth'
-import lucia from '@/lib/lucia'
+import { handleRequest } from '@/lib/auth/api'
+import lucia from '@/lib/auth/lucia'
+import { url } from '@/lib/utils/url'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function DELETE(request: NextRequest) {
   try {
-    const authRequest = await handleRequest()
+    const authRequest = handleRequest(request)
     const session = await authRequest.validate()
-    const redirectToLogin = NextResponse.redirect(new URL('/auth/login', request.url))
+    const redirectToLogin = NextResponse.redirect(url('auth/login'))
 
     if (session === null) {
       return redirectToLogin

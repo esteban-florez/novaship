@@ -1,14 +1,22 @@
-import lucia from '@/lib/lucia'
+import lucia from '@/lib/auth/lucia'
 import { NextResponse, type NextRequest } from 'next/server'
 import { schema } from '@/lib/validation/schemas/signup'
-import { handleRequest } from '@/lib/auth'
+import { handleRequest } from '@/lib/auth/api'
 import prisma from '@/prisma/client'
 import numbers from '@/lib/utils/number'
 import { handleError } from '@/lib/errors/api'
+import { url } from '@/lib/utils/url'
 
 export async function POST(request: NextRequest) {
   let data
   try {
+    const redirectToHome = NextResponse.redirect(url('home'))
+    // DRY 10 -> Mismo codigo de /api/auth/login
+    const authRequest = handleRequest(request)
+    if (authRequest.validate() !== null) {
+      return redirectToHome
+    }
+
     data = await request.json()
     const { email, password } = schema.parse(data)
 
@@ -33,10 +41,9 @@ export async function POST(request: NextRequest) {
     })
 
     const session = await lucia.createSession(authUser.id)
-    const authRequest = await handleRequest(request)
     authRequest.setSession(session)
 
-    return NextResponse.redirect(new URL('/', request.url))
+    return redirectToHome
   } catch (error) {
     const { status, body } = handleError(error, data)
     return NextResponse.json(body, { status })

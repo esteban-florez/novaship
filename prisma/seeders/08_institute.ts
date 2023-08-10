@@ -1,4 +1,4 @@
-import lucia from '@/lib/lucia'
+import lucia from '@/lib/auth/lucia'
 import prisma from '../client'
 import data from '@/prisma/data/institutes.json'
 import numbers from '@/lib/utils/number'
