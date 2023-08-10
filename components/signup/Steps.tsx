@@ -1,12 +1,15 @@
 import { type FieldOption } from '@/lib/types'
 import { type UserType as UserTypeEnum } from '@prisma/client'
+// TODO -> en todos estos componentes Step que se importan aquí, hay mucha repetición de JSX, se pueden hacer componentes "template".
 import UserType from './steps/personal/UserType'
-import BasicData from './steps/personal/BasicData'
-import PhotoProfile from './steps/PhotoProfile'
-import ThemePreferences from './steps/personal/ThemePreferences'
+import PersonBasicData from './steps/personal/PersonBasicData'
+import InstituteBasicData from './steps/institute/InstituteBasicData'
+import CompanyBasicData from './steps/company/CompanyBasicData'
+import PhotoProfile from './steps/shared/PhotoProfile'
+import Fields from './steps/shared/Fields'
 import Schedule from './steps/personal/Schedule'
 import clsx from 'clsx'
-import RifStep from './steps/company/RifStep'
+import RifStep from './steps/shared/RifStep'
 
 type Props = StepProps & {
   step: number
@@ -18,16 +21,32 @@ type Props = StepProps & {
 export default function Steps({
   goBack, goNext, fields, userType, setUserType, step,
 }: Props) {
+  const secondStep = {
+    PERSON: <PersonBasicData goBack={goBack} goNext={goNext} />,
+    COMPANY: <CompanyBasicData goBack={goBack} goNext={goNext} />,
+    INSTITUTE: <InstituteBasicData goBack={goBack} goNext={goNext} />,
+  }
+
   const thirdStep = userType === 'PERSON'
-    ? <PhotoProfile key={2} goBack={goBack} goNext={goNext} />
-    : <RifStep key={2} goBack={goBack} goNext={goNext} />
+    ? <PhotoProfile goBack={goBack} goNext={goNext} />
+    : <RifStep goBack={goBack} goNext={goNext} />
+
+  const fourthStep = userType === 'PERSON'
+    ? <Fields goBack={goBack} goNext={goNext} fields={fields} />
+    : <PhotoProfile goBack={goBack} goNext={goNext} />
+
+  const fifthStep = {
+    PERSON: <Schedule goBack={goBack} />,
+    COMPANY: <Fields goBack={goBack} goNext={goNext} fields={fields} />,
+    INSTITUTE: null, // TODO -> falta un paso en Institute
+  }
 
   const steps = [
     <UserType key={0} goBack={goBack} goNext={goNext} userType={userType} setUserType={setUserType} />,
-    <BasicData key={1} goBack={goBack} goNext={goNext} />,
+    secondStep[userType ?? 'PERSON'],
     thirdStep,
-    <ThemePreferences key={3} goBack={goBack} goNext={goNext} fields={fields} />,
-    <Schedule key={4} goBack={goBack} />,
+    fourthStep,
+    fifthStep[userType ?? 'PERSON'],
   ] as const
 
   return (

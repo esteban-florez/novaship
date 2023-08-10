@@ -12,6 +12,7 @@ type Props = React.PropsWithChildren <{
 }>
 
 export default function SignUpForm({ fields }: Props) {
+  // TODO -> corregir los textos de este formulario
   const [userType, setUserType] = useState<UserTypeEnum | null>(null)
   const [step, setStep] = useState<number | null>(null)
 

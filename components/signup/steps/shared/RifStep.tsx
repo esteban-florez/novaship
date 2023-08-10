@@ -4,11 +4,10 @@ export default function RifStep({ goBack, goNext }: StepProps) {
   return (
     <>
       <h2 className="text-xl font-bold md:text-3xl">
-        ¡Valida el <span className="text-primary">éxito</span> de tu <span className="text-secondary">empresa</span>!
+        ¡Valida tu <span className="text-primary">éxito</span>!
       </h2>
       <p className="text-base">
-        Esto permitirá que los postulantes tengan plena confianza
-        de tu trayectoria empresarial.
+        Sube una imagen de tu RIF. Esto dará un mayor grado de validez a tu registro.
       </p>
       <div className="mx-auto w-full pt-4">
         <div className="flex h-64 w-full items-center justify-center rounded-lg bg-base-300">

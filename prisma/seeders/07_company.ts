@@ -33,6 +33,7 @@ export default async function company() {
         description,
         certification: 'PENDING',
         phone: numbers().randomPhone(),
+        rif: numbers(1_000_000_000, 9_999_999_999).randomBetween().toString(),
         authUser: {
           connect: {
             id: authUser.id,

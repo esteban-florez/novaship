@@ -32,6 +32,7 @@ export default async function institute() {
         description,
         email,
         phone: numbers().randomPhone(),
+        rif: numbers(1_000_000_000, 9_999_999_999).randomBetween().toString(),
         certification: 'PENDING',
         authUser: {
           connect: {

@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 type Props = StepProps & { fields: FieldOption[] }
 
-export default function ThemePreferences({ goBack, goNext, fields }: Props) {
+export default function Fields({ goBack, goNext, fields }: Props) {
   // DRY 4
   const [availableFields, setAvailableFields] = useState<FieldOption[]>(fields)
   const selectedFieldsLength = availableFields.filter(field => field.selected).length
@@ -36,16 +36,16 @@ export default function ThemePreferences({ goBack, goNext, fields }: Props) {
   return (
     <>
       <h2 className="text-xl font-bold md:text-3xl">
-        ¡Expora tu <span className="text-primary">pasiones</span> y elige los temas que más te <span className="text-secondary">interesen</span>!
+        ¡Elige las <span className="text-primary">áreas</span> que sea relavantes para ti!
       </h2>
       <p className="text-base">
-        Para ofrecer una mejor experiencia necesitamos conocer tus preferencias.
+        Para ofrecer una mejor experiencia necesitamos conocer las áreas en las que te desempeñas.
       </p>
       <div className="mx-auto w-full pt-4">
         <div className="flex justify-end">
           <SearchInput />
         </div>
-        {/* hacer funcional este coso del carrusel */}
+        {/* TODO -> hacer funcional este coso del carrusel */}
         <div className="my-4 grid max-h-56 grid-cols-2 gap-x-3 gap-y-2 overflow-y-scroll overscroll-auto">
           {availableFields.map(field => {
             return (

@@ -9,7 +9,7 @@ class Types <T extends object> {
 
   random() {
     const values = Object.values(this.types)
-    return collect(values).random()
+    return collect(values).random().first()
   }
 }
 
