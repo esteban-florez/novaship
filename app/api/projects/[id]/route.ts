@@ -15,7 +15,7 @@ export async function DELETE(request: NextRequest) {
       },
     })
 
-    return NextResponse.json(project, { status: 200 })
+    return NextResponse.json(project)
   } catch (error) {
     const { status, body } = handleError(error, data)
     return NextResponse.json(body, { status })

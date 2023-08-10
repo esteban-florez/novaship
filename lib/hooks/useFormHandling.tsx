@@ -29,6 +29,7 @@ function getStatus(response: Response) {
 }
 
 export default function useFormHandling(options: UseFormOptions = {}) {
+  // TODO -> sustituir por useSubmit y eliminar
   const router = useRouter()
   const { append = {}, onError = null, onSuccess = null, method = null } = options
   const CONTROLS_SELECTOR = 'input, select, textarea'

@@ -42,7 +42,7 @@ export default function Steps({
   }
 
   const steps = [
-    <UserType key={0} goBack={goBack} goNext={goNext} userType={userType} setUserType={setUserType} />,
+    <UserType key={0} goNext={goNext} userType={userType} setUserType={setUserType} />,
     secondStep[userType ?? 'PERSON'],
     thirdStep,
     fourthStep,

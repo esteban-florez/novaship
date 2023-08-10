@@ -5,12 +5,13 @@ import { BuildingLibraryIcon, BuildingOffice2Icon, UserIcon } from '@heroicons/r
 
 type UserTypeLiteral = keyof typeof UserTypeEnum
 
-type Props = StepProps & {
+type Props = React.PropsWithChildren<{
+  goNext: () => void
   userType: UserTypeLiteral | null
   setUserType: (string: UserTypeLiteral) => void
-}
+}>
 
-export default function UserType({ userType, setUserType, goNext, goBack }: Props) {
+export default function UserType({ userType, setUserType, goNext }: Props) {
   const descriptions = {
     COMPANY: '¡Contrata nuevos empleados y crea proyectos para impulsar el crecimiento y éxito de tu empresa!',
     INSTITUTE: 'Gestiona las pasantías de tus estudiantes para fortalecer su preparación profesional',
@@ -46,9 +47,6 @@ export default function UserType({ userType, setUserType, goNext, goBack }: Prop
       <section className="mx-auto w-full pt-4">
         {options}
         <div className="mt-4 flex justify-between">
-          <button onClick={goBack} type="button" className="btn-neutral btn">
-            Volver
-          </button>
           <button onClick={goNext} type="button" className="btn-primary btn">
             Siguiente
           </button>

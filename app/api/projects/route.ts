@@ -1,10 +1,11 @@
 import { handleError } from '@/lib/errors/api'
-import { auth } from '@/lib/auth'
+import { auth } from '@/lib/auth/pages'
 import { schema } from '@/lib/validation/schemas/project'
 import prisma from '@/prisma/client'
 import { type NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
+  // TODO -> en el caso de la api, no es necesario que esten dentro de /home las rutas.
   let data
   try {
     data = await request.json()

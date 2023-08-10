@@ -47,7 +47,7 @@ export default function Header({ id, title, owner, status, members }: Props) {
       <div className="order-5 flex w-full shrink-0 flex-row justify-center gap-2 p-4 sm:w-1/4 sm:justify-end">
         <Button url={`/home/projects/${id}`} icon={<EyeIcon className="h-5 w-5" />} className={clsx(BUTTON_ICON, 'border bg-gray-100 hover:text-primary')} />
         <Button icon={<PencilIcon className="h-5 w-5" />} className={clsx(BUTTON_ICON, 'border bg-gray-100 hover:text-primary')} />
-        <DeleteModal id={id} title={title} action={`/api/home/projects/${id}`} />
+        <DeleteModal id={id} title={title} action={`/api/projects/${id}`} />
       </div>
     </section>
   )

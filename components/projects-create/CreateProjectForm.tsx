@@ -98,7 +98,7 @@ export default function CreateProjectForm({ fields, persons }: Props) {
   } = useSubmit<Fields>({ schema })
   // TODO D -> añadir al "append" los datos que están en el estado y se deben enviar.
   return (
-    <form className="w-full rounded-lg bg-base-100 p-4" onSubmit={handleSubmit} method="POST" action="/api/home/projects">
+    <form className="w-full rounded-lg bg-base-100 p-4" onSubmit={handleSubmit} method="POST" action="/api/projects">
       {alert}
       <FormSection title="Información del proyecto" description="Asigne un título que explique de que trata el proyecto, así como una descripción del mismo para tener una mejor idea y por último si es público o privado.">
         <Input name="title" register={register} errors={errors} label="Título" placeholder="Ej: Página web administrativa" />
