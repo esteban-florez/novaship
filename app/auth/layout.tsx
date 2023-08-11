@@ -12,7 +12,7 @@ export default async function AuthLayout({
   }
 
   return (
-    <main className="relative grid min-h-full place-items-center">
+    <main className="h-full w-full bg-white">
       {children}
     </main>
   )

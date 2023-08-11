@@ -35,5 +35,13 @@
   "JSX Return parentheses": {
     "prefix": "jr",
     "body": "return (\n\t$0\n)"
+  },
+  "Use Submit hook": {
+    "prefix": "us",
+    "body": "const {\n\tregister, formState: { errors },\n\talert, serverErrors, handleSubmit,\n} = useSubmit<Fields>({ schema })\n"
+  },
+  "Import schema": {
+    "prefix": "is",
+    "body": "import { schema, type Fields } from '@/lib/validation/schemas/$0'"
   }
 }

@@ -3,7 +3,7 @@ import { ArrowUpTrayIcon, DocumentIcon } from '@heroicons/react/24/solid'
 export default function RifStep({ goBack, goNext }: StepProps) {
   return (
     <>
-      <h2 className="text-xl font-bold md:text-3xl">
+      <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Valida tu <span className="text-primary">éxito</span>!
       </h2>
       <p className="text-base">

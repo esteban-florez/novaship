@@ -5,7 +5,7 @@ type Props = React.PropsWithChildren<{
 export default function Schedule({ goBack }: Props) {
   return (
     <>
-      <h2 className="text-xl font-bold md:text-3xl">
+      <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Organiza tu <span className="text-primary">tiempo</span> con nuestro <span className="text-secondary">horario</span>!
       </h2>
       <p className="text-base">

@@ -46,12 +46,13 @@ export default function useSubmit<Fields extends FieldValues>({
         body: JSON.stringify({ ...data, ...append }),
         method: method ?? form.method,
       })
-      const body = await response.json() as ApiResponseBody
 
       if (response.redirected) {
         router.push(response.url)
         return
       }
+
+      const body = await response.json() as ApiResponseBody
 
       if (response.ok) {
         if (refreshOnSuccess) {
@@ -79,6 +80,7 @@ export default function useSubmit<Fields extends FieldValues>({
       setResult(body)
     } catch (error) {
       const body = handleError(error)
+      console.log(body)
       setResult(body)
     }
   }

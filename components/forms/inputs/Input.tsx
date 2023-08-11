@@ -21,13 +21,13 @@ export default function Input({
 
   return (
     <>
-      {(label !== null && label !== undefined) && <CustomLabel id={name} label={label} />}
+      {label !== undefined && <CustomLabel id={name} label={label} />}
       <div className="relative">
         <input
-          id={name} name={name} type={type} step={step}
+          onChange={onChange} id={name} name={name} type={type} step={step}
           placeholder={placeholder} {...registerProps}
           className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', className)} defaultValue={value}
-          onChange={onChange}
+
         />
         {children}
         {hasError && (

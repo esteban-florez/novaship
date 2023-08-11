@@ -1,24 +1,21 @@
-import lucia from '@/lib/auth/lucia'
 import { NextResponse, type NextRequest } from 'next/server'
-import { schema } from '@/lib/validation/schemas/signup'
 import { handleRequest } from '@/lib/auth/api'
-import prisma from '@/prisma/client'
-import numbers from '@/lib/utils/number'
 import { handleError } from '@/lib/errors/api'
 import { url } from '@/lib/utils/url'
+import lucia from '@/lib/auth/lucia'
+import { schema } from '@/lib/validation/schemas/server/signup'
 
 export async function POST(request: NextRequest) {
   let data
   try {
-    const redirectToHome = NextResponse.redirect(url('home'))
-    // DRY 10 -> Mismo codigo de /api/auth/login
     const authRequest = handleRequest(request)
-    if (authRequest.validate() !== null) {
-      return redirectToHome
+    // DRY 10 -> Mismo codigo de /api/auth/login
+    if (await authRequest.validate() !== null) {
+      return NextResponse.redirect(url('/home'))
     }
 
     data = await request.json()
-    const { email, password } = schema.parse(data)
+    const { email, password, type } = await schema.parseAsync(data)
 
     const authUser = await lucia.createUser({
       primaryKey: {
@@ -27,25 +24,14 @@ export async function POST(request: NextRequest) {
         password,
       },
       // DEV
-      attributes: { type: 'PERSON' },
-    })
-
-    await prisma.person.create({
-      data: {
-        name: 'Esteban Florez',
-        ci: numbers(1, 30_000_000).randomCI(),
-        birth: new Date('2003-07-07'),
-        email,
-        authUserId: authUser.id,
-      },
+      attributes: { type },
     })
 
     const session = await lucia.createSession(authUser.id)
     authRequest.setSession(session)
 
-    return redirectToHome
+    return NextResponse.redirect(url('/home'))
   } catch (error) {
-    const { status, body } = handleError(error, data)
-    return NextResponse.json(body, { status })
+    return handleError(error, data)
   }
 }

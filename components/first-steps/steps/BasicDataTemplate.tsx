@@ -9,7 +9,7 @@ type Props = StepProps & {
 export default function BasicDataTemplate({ goBack, goNext, nameInput, documentInput }: Props) {
   return (
     <>
-      <h2 className="text-xl font-bold md:text-3xl">
+      <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Estamos <span className="text-primary">interesados</span> en saber más sobre <span className="text-secondary">ti</span>!
       </h2>
       <p className="text-base">
@@ -22,6 +22,12 @@ export default function BasicDataTemplate({ goBack, goNext, nameInput, documentI
           </div>
           <div className="col-span-2 md:col-span-1">
             {documentInput}
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <Input label="Correo electrónico:" name="email" placeholder="Ej. correo@ejemplo.com" />
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <Input label="Ingresa tu contraseña:" name="password" type="password" placeholder="Ingresa tu contraseña..." />
           </div>
           <div className="col-span-2 md:col-span-1">
             <Input label="Teléfono:" name="phone" placeholder="Ej. 0412-1234567" />

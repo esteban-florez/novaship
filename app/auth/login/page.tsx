@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="h-full w-full bg-white">
+    <>
       <img src="/coso4.webp" alt="Imagen decorativa en esquinas" className="absolute right-0 top-0 hidden h-full w-2/4 rotate-180 md:block" />
       <img src="/coso3.webp" alt="Imagen decorativa en esquinas" className="absolute left-0 top-0 block h-2/5 w-full md:hidden" />
       <div className="z-10 grid h-screen grid-cols-7 place-items-center">
@@ -43,6 +43,6 @@ export default function LoginPage() {
           </Link>
         </section>
       </div>
-    </div>
+    </>
   )
 }

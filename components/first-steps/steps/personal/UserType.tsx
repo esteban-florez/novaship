@@ -38,14 +38,16 @@ export default function UserType({ userType, setUserType, goNext }: Props) {
 
   return (
     <>
-      <h2 className="text-xl font-bold md:text-3xl">
+      <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Sé <span className="text-primary">parte</span> de nuestra <span className="text-secondary">plataforma</span>!
       </h2>
       <p className="text-base">
         Asegurate de seleccionar el tipo de usuario que mejor se adapte a tí.
       </p>
       <section className="mx-auto w-full pt-4">
-        {options}
+        <div className="space-y-4">
+          {options}
+        </div>
         <div className="mt-4 flex justify-between">
           <button onClick={goNext} type="button" className="btn-primary btn">
             Siguiente

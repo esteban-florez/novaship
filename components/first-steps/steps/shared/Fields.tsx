@@ -35,7 +35,7 @@ export default function Fields({ goBack, goNext, fields }: Props) {
 
   return (
     <>
-      <h2 className="text-xl font-bold md:text-3xl">
+      <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Elige las <span className="text-primary">áreas</span> que sea relavantes para ti!
       </h2>
       <p className="text-base">

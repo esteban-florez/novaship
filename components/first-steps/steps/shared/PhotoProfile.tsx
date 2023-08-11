@@ -3,7 +3,7 @@ import { ArrowUpTrayIcon, PhotoIcon } from '@heroicons/react/24/outline'
 export default function PhotoProfile({ goBack, goNext }: StepProps) {
   return (
     <>
-      <h2 className="text-xl font-bold md:text-3xl">
+      <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Ponle <span className="text-primary">cara</span> a tu <span className="text-secondary">perfil</span>!
       </h2>
       <p className="text-base">
