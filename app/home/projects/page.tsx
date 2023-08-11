@@ -10,23 +10,6 @@ export const metadata: Metadata = {
 export const revalidate = 10
 
 export default async function ProjectsPage() {
-  // const projects = await prisma.project.findMany({
-  //   include: {
-  //     person: true,
-  //     memberships: {
-  //       include: {
-  //         person: true
-  //       }
-  //     }
-  //   },
-  //   where: {
-  //     visibility: 'PUBLIC'
-  //   },
-  //   orderBy: {
-  //     title: 'asc'
-  //   }
-  // })
-
   const activeUser = await auth.person()
   const projects = await prisma.project.findMany({
     where: {

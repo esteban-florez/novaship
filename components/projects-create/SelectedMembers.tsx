@@ -1,8 +1,6 @@
 import { type PersonOption } from '@/lib/types'
 import Button from '../Button'
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import clsx from 'clsx'
-import { BUTTON_ICON } from '@/lib/constants/button'
 
 type Props = React.PropsWithChildren<{
   selectedPersons: PersonOption[]
@@ -23,7 +21,7 @@ export default function SelectedMembers({ selectedPersons, removePerson }: Props
                 <h6>{person.name}</h6>
                 <p>{person.email}</p>
               </div>
-              <Button icon={<XMarkIcon className="h-5 w-5" />} className={clsx(BUTTON_ICON, 'text-error')} onClick={() => { removePerson(person.id) }} />
+              <Button icon={<XMarkIcon className="h-5 w-5" />} style="ICON" color="ERROR" onClick={() => { removePerson(person.id) }} />
             </div>
           )
         })}
