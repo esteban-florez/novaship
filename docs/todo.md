@@ -20,9 +20,13 @@
 - Remover padding left del chatbar en /chats
 - Release, File, Message le faltan seeders.
 - Crear input tipo file y limitar las extensiones.
+- Cambiar los estilos de <SelectedMembers>.
+- Cambiar estilos de los select (Fields, Skills).
+- Arreglar la ruta de [id] en <Breadcrumbs>
 
 # Ideas
 
 - Opciones de ver, editar y eliminar como un overlay en el elemento al hacer hover.
 - Mostrar un popup al hacer hover en los avatares de los miembros en /projects.
 - Mostrar un modal al hacer clic en el + de los mimebros en /projects.
+- Mostrar un dropdown en SelectMembers de los usuarios disponibles.

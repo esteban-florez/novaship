@@ -22,20 +22,17 @@ export default function Input({
   return (
     <>
       {label !== undefined && <CustomLabel id={name} label={label} />}
-      <div className="relative">
-        <input
-          onChange={onChange} id={name} name={name} type={type} step={step}
-          placeholder={placeholder} {...registerProps}
-          className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', className)} defaultValue={value}
-
-        />
-        {children}
-        {hasError && (
-          <p className="text-sm font-semibold text-error">
-            {errors[name].message}
-          </p>
-        )}
-      </div>
+      <input
+        onChange={onChange} id={name} name={name} type={type} step={step}
+        placeholder={placeholder} {...registerProps}
+        className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', className)} defaultValue={value}
+      />
+      {children}
+      {hasError && (
+        <p className="text-sm font-semibold text-error">
+          {errors[name].message}
+        </p>
+      )}
     </>
   )
 }

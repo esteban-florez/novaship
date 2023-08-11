@@ -1,3 +1,5 @@
+// TODO -> Tira error al redirigir (TypeError: Invalid URL) despues de crear un proyecto
+
 /**
  * Crear una URL a partir de la BASE_URL del archivo de entorno.
  */

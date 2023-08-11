@@ -1,7 +1,5 @@
-import Link from 'next/link'
 import ProfileDropdown from '@/components/layout/ProfileDropdown'
 import { Bars3Icon } from '@heroicons/react/24/solid'
-import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/outline'
 import Breadcrumbs from './Breadcrumbs'
 import NotificationDropdown from './NotificationDropdown'
 import { format } from '@/lib/utils/date'
@@ -21,15 +19,6 @@ export default function Navbar() {
         <div className="me-4">
           {date}
         </div>
-        <Link
-          href="/home/chats"
-          className="btn-ghost btn-circle btn"
-        >
-          <div className="indicator">
-            <ChatBubbleOvalLeftIcon className="h-6 w-6" />
-            <span className="badge badge-xs indicator-item right-1 top-3 bg-success" />
-          </div>
-        </Link>
         <NotificationDropdown />
         <ProfileDropdown />
       </div>
