@@ -4,7 +4,6 @@ import { type Membership, type Person } from '@prisma/client'
 import clsx from 'clsx'
 import DeleteModal from './DeleteModal'
 import Button from '../Button'
-import { BUTTON_ICON } from '@/lib/constants/button'
 
 type Props = React.PropsWithChildren<{
   id: string
@@ -42,11 +41,12 @@ export default function Header({ id, title, owner, status, members }: Props) {
           }
           return null
         })}
-        {members.length > 3 && <p className="line-clamp-6 text-sm font-bold">+{members.length - 3}</p>}
+        {members.length > 3 &&
+          <div className="z-10 flex h-10 w-10 items-center justify-center text-sm font-bold">+{members.length - 3}</div>}
       </div>
       <div className="order-5 flex w-full shrink-0 flex-row justify-center gap-2 p-4 sm:w-1/4 sm:justify-end">
-        <Button url={`/home/projects/${id}`} icon={<EyeIcon className="h-5 w-5" />} className={clsx(BUTTON_ICON, 'border bg-gray-100 hover:text-primary')} />
-        <Button icon={<PencilIcon className="h-5 w-5" />} className={clsx(BUTTON_ICON, 'border bg-gray-100 hover:text-primary')} />
+        <Button url={`/home/projects/${id}`} icon={<EyeIcon className="h-5 w-5" />} style="ICON" color="CANCEL" />
+        <Button icon={<PencilIcon className="h-5 w-5" />} style="ICON" color="CANCEL" />
         <DeleteModal id={id} title={title} action={`/api/projects/${id}`} />
       </div>
     </section>
