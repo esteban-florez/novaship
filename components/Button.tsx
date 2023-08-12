@@ -5,9 +5,9 @@ import Link from 'next/link'
 // DRY
 const className = {
   DEFAULT: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border',
-  ICON: 'p-2 rounded-sm transition-colors delay-150 duration-150',
-  OUTLINE: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border bg-transparent transition-colors delay-150 duration-150 ',
-  TAB: 'px-6 py-2 inline-flex justify-center items-center rounded-t-md rounded-se-md gap-x-2 transition-colors delay-150 duration-150',
+  ICON: 'p-2 rounded-sm transition-colors delay-75 duration-delay-75',
+  OUTLINE: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border bg-transparent transition-colors delay-75 duration-delay-75 ',
+  TAB: 'px-6 py-2 inline-flex justify-center items-center rounded-t-md rounded-se-md gap-x-2 transition-colors delay-75 duration-delay-75',
   DISABLED: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border opacity-50 cursor-not-allowed ',
   colors: {
     PRIMARY: 'bg-primary text-primary-content',
@@ -23,7 +23,7 @@ const className = {
     SECONDARY: 'hover:bg-secondary hover:text-secondary-content',
     ACCENT: 'hover:bg-accent hover:text-accent-content',
     CANCEL: 'hover:bg-primary hover:text-primary-content',
-    ERROR: 'hover:bg-primary hover:text-primary-content',
+    ERROR: 'hover:bg-error hover:text-white',
     WHITE: 'hover:bg-primary hover:text-primary-content',
     EMPTY: null,
   },

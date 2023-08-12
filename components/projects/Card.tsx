@@ -17,7 +17,7 @@ type Props = React.PropsWithChildren<{
 
 const stackOrder = ['z-40', 'z-30', 'z-20']
 
-export default function Header({ id, title, owner, status, members }: Props) {
+export default function Card({ id, title, owner, status, members }: Props) {
   return (
     <section className="card flex flex-col justify-between rounded-lg border border-solid border-zinc-300 shadow sm:flex-row md:rounded-l-none lg:items-center">
       <div className="order-1 flex w-full shrink-0 flex-row items-center gap-3 ps-4 sm:w-1/4">
@@ -45,9 +45,9 @@ export default function Header({ id, title, owner, status, members }: Props) {
           <div className="z-10 flex h-10 w-10 items-center justify-center text-sm font-bold">+{members.length - 3}</div>}
       </div>
       <div className="order-5 flex w-full shrink-0 flex-row justify-center gap-2 p-4 sm:w-1/4 sm:justify-end">
-        <Button url={`/home/projects/${id}`} icon={<EyeIcon className="h-5 w-5" />} style="ICON" color="CANCEL" />
-        <Button icon={<PencilIcon className="h-5 w-5" />} style="ICON" color="CANCEL" />
-        <DeleteModal id={id} title={title} action={`/api/projects/${id}`} />
+        <Button url={`/home/projects/${id}`} icon={<EyeIcon className="h-5 w-5" />} style="ICON" color="CANCEL" hover="PRIMARY" />
+        <Button icon={<PencilIcon className="h-5 w-5" />} style="ICON" color="CANCEL" hover="PRIMARY" />
+        <DeleteModal title={title} action={`/api/projects/${id}`} />
       </div>
     </section>
   )

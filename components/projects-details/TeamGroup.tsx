@@ -95,37 +95,39 @@ export default function TeamGroup({ id, memberships, isOwner, persons }: Props) 
             <h2 className="mb-2 border-b text-xl font-bold uppercase text-primary">Miembros</h2>
 
             {isOwner &&
-              <form action={`/api/projects/${id}`} onSubmit={handleSubmit} method="POST">
-                {alert}
-                <Input name="members" label="Invitar" placeholder="Ej: José Pérez o josezz@gmail.com" onChange={handleInputChange} />
-                <div className={clsx({
-                  'mt-3 w-full max-h-60 gap-2 overflow-y-auto': true,
-                  block: inputFocus,
-                  hidden: !inputFocus,
-                })}
-                >
-                  {inputFocus && availablePersons.map(person => {
-                    if (searchName === '' || Boolean(person.name.toLowerCase().includes(searchName.toLowerCase()))) {
-                      return (
-                        <div key={person.id} className="w-full cursor-pointer border px-4 py-1 transition-colors delay-150 duration-150 first:rounded-t-md last:rounded-b-md hover:border-primary" onClick={() => { addPerson(person.id) }}>
-                          <h6>{person.name}</h6>
-                          <p>{person.email}</p>
-                        </div>
-                      )
-                    }
+              (
+                <>
+                  <form action={`/api/projects/${id}`} onSubmit={handleSubmit} method="POST">
+                    {alert}
+                    <Input name="members" label="Invitar" placeholder="Ej: José Pérez o josezz@gmail.com" onChange={handleInputChange} />
+                    <div className={clsx({
+                      'mt-3 w-full max-h-60 gap-2 overflow-y-auto': true,
+                      block: inputFocus,
+                      hidden: !inputFocus,
+                    })}
+                    >
+                      {inputFocus && availablePersons.map(person => {
+                        if (searchName === '' || Boolean(person.name.toLowerCase().includes(searchName.toLowerCase()))) {
+                          return (
+                            <div key={person.id} className="w-full cursor-pointer border px-4 py-1 transition-colors delay-150 duration-150 first:rounded-t-md last:rounded-b-md hover:border-primary" onClick={() => { addPerson(person.id) }}>
+                              <h6>{person.name}</h6>
+                              <p>{person.email}</p>
+                            </div>
+                          )
+                        }
 
-                    return null
-                  })}
-                </div>
-                <SelectedMembers selectedPersons={selectedPersons} removePerson={removePerson} />
-                <div className="mt-2 flex flex-col">
-                  <Button style={selectedPersons.length === 0 ? 'DISABLED' : 'DEFAULT'} color="PRIMARY" icon={<UserPlusIcon className="h-5 w-5" />} isDisabled={selectedPersons.length === 0}>Añadir</Button>
-                </div>
-              </form>}
-
-            <Divider />
-
-            {isOwner && <h5 className="text-lg font-semibold">Miembros actuales</h5>}
+                        return null
+                      })}
+                    </div>
+                    <SelectedMembers selectedPersons={selectedPersons} removePerson={removePerson} />
+                    <div className="mt-2 flex flex-col">
+                      <Button style={selectedPersons.length === 0 ? 'DISABLED' : 'DEFAULT'} color="PRIMARY" icon={<UserPlusIcon className="h-5 w-5" />} isDisabled={selectedPersons.length === 0}>Añadir</Button>
+                    </div>
+                  </form>
+                  <Divider />
+                  <h5 className="text-lg font-semibold">Miembros actuales</h5>
+                </>
+              )}
 
             {memberships.map(member => {
               return <Member key={member.id} name={member.person.name} />
