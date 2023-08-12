@@ -43,5 +43,9 @@
   "Import schema": {
     "prefix": "is",
     "body": "import { schema, type Fields } from '@/lib/validation/schemas/$0'"
+  },
+  "register and errors": {
+    "prefix": "r",
+    "body": "register={register} errors={errors}",
   }
 }

@@ -12,12 +12,13 @@ export default function Textarea({
   name, placeholder, label, register, className = '',
   height = 3, value = '', errors = {}, config = {},
 }: Props) {
-  const hasError = errors[name] !== undefined
+  const errorMessage = errors[name]?.message as string | undefined
+  const hasError = errorMessage !== undefined
   const registerProps = register !== undefined ? { ...register(name, config) } : {}
 
   return (
     <>
-      {(label !== null && label !== undefined) && <CustomLabel id={name} label={label} />}
+      {label !== undefined && <CustomLabel id={name} label={label} />}
       <textarea
         id={name} name={name} {...registerProps}
         placeholder={placeholder} rows={height} defaultValue={value}
@@ -25,7 +26,7 @@ export default function Textarea({
       />
       {hasError && (
         <p className="-mt-2 text-sm font-semibold text-error">
-          {errors[name].message}
+          {errorMessage}
         </p>
       )}
     </>

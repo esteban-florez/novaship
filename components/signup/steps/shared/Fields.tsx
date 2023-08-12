@@ -1,11 +1,13 @@
 import SearchInput from '@/components/SearchInput'
 import Checkbox from '@/components/forms/inputs/Checkbox'
 import { type FieldOption } from '@/lib/types'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { SignUpContext } from '../../SignUpContext'
 
-type Props = StepProps & { fields: FieldOption[] }
+type Props = React.PropsWithChildren<{ fields: FieldOption[] }>
 
-export default function Fields({ goBack, goNext, fields }: Props) {
+export default function Fields({ fields }: Props) {
+  const { goBack, goNext } = useContext(SignUpContext)
   // DRY 4
   const [availableFields, setAvailableFields] = useState<FieldOption[]>(fields)
   const selectedFieldsLength = availableFields.filter(field => field.selected).length

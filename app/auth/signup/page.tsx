@@ -1,4 +1,4 @@
-import FirstStepsForm from '@/components/first-steps/FirstStepsForm'
+import SignUpForm from '@/components/signup/SignUpForm'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import Link from 'next/link'
@@ -26,8 +26,8 @@ export default async function SignUpPage() {
     <>
       <img src="/coso3.webp" alt="Imagen decorativa en esquinas" className="absolute left-0 top-0 block h-1/4 w-full lg:hidden" />
       <img src="/coso4.webp" alt="Imagen decorativa en esquinas" className="absolute left-0 top-0 hidden h-full w-1/3 lg:block" />
-      <div className="flex h-screen flex-col gap-6 lg:flex-row">
-        <div className="z-10 flex flex-col justify-center lg:w-1/4 lg:p-4">
+      <section className="flex h-screen flex-col gap-6 lg:flex-row">
+        <section className="z-10 flex flex-col justify-center lg:w-1/4 lg:p-4">
           <div className="rounded-b-2xl bg-white/10 p-3 shadow-lg backdrop-blur-sm md:p-6 lg:rounded-2xl">
             <div className="flex items-center justify-center gap-2 lg:flex-col lg:items-start">
               <div className="flex flex-col">
@@ -44,11 +44,11 @@ export default async function SignUpPage() {
               Inicia sesión
             </Link>
           </div>
-        </div>
-        <div className="grid w-full place-items-center p-4 lg:w-3/4">
-          <FirstStepsForm fields={selectableFields} />
-        </div>
-      </div>
+        </section>
+        <section className="grid w-full place-items-center p-4 lg:w-3/4">
+          <SignUpForm fields={selectableFields} />
+        </section>
+      </section>
     </>
   )
 }

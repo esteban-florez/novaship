@@ -1,5 +1,5 @@
 import { type Field, type Skill } from '@prisma/client'
-import { type RegisterOptions } from 'react-hook-form'
+import { type FieldErrors, type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
 
 type SkillOption = Pick<Skill, 'id' | 'title'> & { selected: boolean }
@@ -13,9 +13,7 @@ interface SharedInputProps {
   value?: string
   register?: (name, config?: RegisterOptions) => object
   config?: RegisterOptions
-  errors?: Record<string, {
-    message?: string
-  }>
+  errors?: FieldErrors
 }
 
 type UseSubmitResult = null | 'loading' | ApiResponseBody

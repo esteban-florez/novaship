@@ -16,7 +16,8 @@ export default function Input({
   name, placeholder, label, register, step, errors = {},
   config = {}, type = 'text', value = '', className = '', children, onChange,
 }: Props) {
-  const hasError = errors[name] !== undefined
+  const errorMessage = errors[name]?.message as string | undefined
+  const hasError = errorMessage !== undefined
   const registerProps = register !== undefined ? { ...register(name, config) } : {}
 
   return (
@@ -32,7 +33,7 @@ export default function Input({
         {children}
         {hasError && (
           <p className="text-sm font-semibold text-error">
-            {errors[name].message}
+            {errorMessage}
           </p>
         )}
       </div>

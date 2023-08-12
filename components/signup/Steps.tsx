@@ -11,38 +11,38 @@ import Schedule from './steps/personal/Schedule'
 import clsx from 'clsx'
 import RifStep from './steps/shared/RifStep'
 
-type Props = StepProps & {
+type Props = React.PropsWithChildren<{
   step: number
   fields: FieldOption[]
   userType: UserTypeEnum | null
   setUserType: (type: UserTypeEnum) => void
-}
+}>
 
 export default function Steps({
-  goBack, goNext, fields, userType, setUserType, step,
+  fields, userType, setUserType, step,
 }: Props) {
   const secondStep = {
-    PERSON: <PersonBasicData goBack={goBack} goNext={goNext} />,
-    COMPANY: <CompanyBasicData goBack={goBack} goNext={goNext} />,
-    INSTITUTE: <InstituteBasicData goBack={goBack} goNext={goNext} />,
+    PERSON: <PersonBasicData />,
+    COMPANY: <CompanyBasicData />,
+    INSTITUTE: <InstituteBasicData />,
   }
 
   const thirdStep = userType === 'PERSON'
-    ? <PhotoProfile goBack={goBack} goNext={goNext} />
-    : <RifStep goBack={goBack} goNext={goNext} />
+    ? <PhotoProfile />
+    : <RifStep />
 
   const fourthStep = userType === 'PERSON'
-    ? <Fields goBack={goBack} goNext={goNext} fields={fields} />
-    : <PhotoProfile goBack={goBack} goNext={goNext} />
+    ? <Fields fields={fields} />
+    : <PhotoProfile />
 
   const fifthStep = {
-    PERSON: <Schedule goBack={goBack} />,
-    COMPANY: <Fields goBack={goBack} goNext={goNext} fields={fields} />,
+    PERSON: <Schedule />,
+    COMPANY: <Fields fields={fields} />,
     INSTITUTE: null, // TODO -> falta un paso en Institute
   }
 
   const steps = [
-    <UserType key={0} goNext={goNext} userType={userType} setUserType={setUserType} />,
+    <UserType key={0} userType={userType} setUserType={setUserType} />,
     secondStep[userType ?? 'PERSON'],
     thirdStep,
     fourthStep,

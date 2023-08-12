@@ -1,12 +1,15 @@
 import Input from '@/components/forms/inputs/Input'
 import Textarea from '@/components/forms/inputs/Textarea'
+import { useContext } from 'react'
+import { SignUpContext } from '../SignUpContext'
 
-type Props = StepProps & {
+type Props = React.PropsWithChildren<{
   nameInput: React.JSX.Element
   documentInput: React.JSX.Element
-}
+}>
 
-export default function BasicDataTemplate({ goBack, goNext, nameInput, documentInput }: Props) {
+export default function BasicDataTemplate({ nameInput, documentInput }: Props) {
+  const { goNext, goBack, register, errors } = useContext(SignUpContext)
   return (
     <>
       <h2 className="text-center text-xl font-bold md:text-3xl">
@@ -24,19 +27,19 @@ export default function BasicDataTemplate({ goBack, goNext, nameInput, documentI
             {documentInput}
           </div>
           <div className="col-span-2 md:col-span-1">
-            <Input label="Correo electrónico:" name="email" placeholder="Ej. correo@ejemplo.com" />
+            <Input label="Correo electrónico:" name="email" register={register} errors={errors} placeholder="Ej. correo@ejemplo.com" />
           </div>
           <div className="col-span-2 md:col-span-1">
-            <Input label="Ingresa tu contraseña:" name="password" type="password" placeholder="Ingresa tu contraseña..." />
+            <Input label="Ingresa tu contraseña:" name="password" register={register} errors={errors} type="password" placeholder="Ingresa tu contraseña..." />
           </div>
           <div className="col-span-2 md:col-span-1">
-            <Input label="Teléfono:" name="phone" placeholder="Ej. 0412-1234567" />
+            <Input label="Teléfono:" name="phone" register={register} errors={errors} placeholder="Ej. 0412-1234567" />
           </div>
           <div className="col-span-2 md:col-span-1">
-            <Input type="date" label="Fecha de nacimiento:" name="birth" placeholder="" />
+            <Input type="date" label="Fecha de nacimiento:" name="birth" register={register} errors={errors} placeholder="Fecha de nacimiento" />
           </div>
           <div className="col-span-2">
-            <Textarea height={2} label="Descripción:" name="bio" placeholder="Ingresa la descripción..." />
+            <Textarea height={2} label="Descripción:" name="bio" register={register} errors={errors} placeholder="Ingresa la descripción..." />
           </div>
         </div>
         <div className="flex justify-between">

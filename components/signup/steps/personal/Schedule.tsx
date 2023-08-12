@@ -1,8 +1,8 @@
-type Props = React.PropsWithChildren<{
-  goBack: () => void
-}>
+import { useContext } from 'react'
+import { SignUpContext } from '../../SignUpContext'
 
-export default function Schedule({ goBack }: Props) {
+export default function Schedule() {
+  const { goBack } = useContext(SignUpContext)
   return (
     <>
       <h2 className="text-center text-xl font-bold md:text-3xl">

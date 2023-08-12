@@ -33,9 +33,9 @@ export default function useSubmit<Fields extends FieldValues>({
     resolver: zodResolver(schema),
     defaultValues,
   })
-  const { setValue, trigger } = useFormReturn
+  const { setValue, setError, trigger } = useFormReturn
 
-  const send = async (data: Fields, event: React.BaseSyntheticEvent | undefined) => {
+  const send = async (values: Fields, event: React.BaseSyntheticEvent | undefined) => {
     try {
       setResult('loading')
       setShowAlert(true)
@@ -43,7 +43,7 @@ export default function useSubmit<Fields extends FieldValues>({
 
       const form = event?.target as HTMLFormElement
       const response = await fetch(form.action, {
-        body: JSON.stringify({ ...data, ...append }),
+        body: JSON.stringify({ ...values, ...append }),
         method: method ?? form.method,
       })
 
@@ -66,12 +66,22 @@ export default function useSubmit<Fields extends FieldValues>({
         void onError()
       }
 
-      if (body.errorType === 'VALIDATION' && body.errors !== undefined) {
-        const keys = Object.keys(body.errors) as Array<Path<Fields>>
+      const { errorType, errors, data } = body
+
+      if (errorType === 'VALIDATION' && errors !== undefined && data !== undefined) {
+        const keys = Object.keys(errors) as Array<Path<Fields>>
 
         keys.forEach(key => {
-          const value = body.data?.[key] as PathValue<Fields, Path<Fields>>
+          const value = data[key] as PathValue<Fields, Path<Fields>>
           setValue(key, value)
+
+          // TODO -> no soporta mostrar multiples errores de servidor en el input directamente
+          const { [key]: messages } = errors
+          if (messages !== undefined) {
+            setError(key, {
+              message: messages.at(-1),
+            })
+          }
         })
 
         void trigger()
