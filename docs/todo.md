@@ -22,7 +22,8 @@
 - Crear input tipo file y limitar las extensiones.
 - Cambiar los estilos de <SelectedMembers>.
 - Cambiar estilos de los select (Fields, Skills).
-- Arreglar la ruta de [id] en <Breadcrumbs>
+- Arreglar la ruta de [id] en <Breadcrumbs>.
+- Añadir opcion de registrar campo si no existe.
 
 # Ideas
 
