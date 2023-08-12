@@ -1,7 +1,6 @@
 import { type FieldOption, type SkillOption } from '@/lib/types'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Button from '../Button'
-import { BUTTON_ICON } from '@/lib/constants/button'
 
 type Props = React.PropsWithChildren<{
   selectedOptions: FieldOption[] | SkillOption[]
@@ -18,7 +17,7 @@ export default function SelectedOptions({ selectedOptions, removeOption }: Props
       {selectedOptions.map(option => (
         <span key={option.id} className="badge badge-primary badge-lg justify-between gap-1 font-semibold">
           {option.title}
-          <Button icon={<XMarkIcon className="-mr-2 h-5 w-5" />} className={BUTTON_ICON} onClick={() => { removeOption(option.id) }} />
+          <Button icon={<XMarkIcon className="-mr-2 h-5 w-5" />} style="ICON" color="EMPTY" onClick={() => { removeOption(option.id) }} />
         </span>
       ))}
     </div>

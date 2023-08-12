@@ -12,7 +12,6 @@ import { type FieldOption, type InputOnChange, type PersonOption } from '@/lib/t
 import SelectedOptions from './SelectedOptions'
 import SelectedMembers from './SelectedMembers'
 import clsx from 'clsx'
-import { XMarkIcon } from '@heroicons/react/24/outline'
 
 interface Props {
   fields: FieldOption[]
@@ -22,11 +21,11 @@ interface Props {
 export default function CreateProjectForm({ fields, persons }: Props) {
   // TODO D -> remover duplicación de código
   // DRY 4
+  // DEV, cuando se selecciona una de las opciones de privacity no quita el error
   const [totalFields, setTotalFields] = useState<FieldOption[]>(fields)
   const [totalPersons, setTotalPersons] = useState<PersonOption[]>(persons)
   const [searchName, setSearchName] = useState('')
   const [inputFocus, setInputFocus] = useState(false)
-  const [inputValue, setInputValue] = useState('')
 
   const selectedFields = totalFields.filter(field => field.selected)
   const availableFields = totalFields.filter(field => !field.selected)
@@ -95,7 +94,13 @@ export default function CreateProjectForm({ fields, persons }: Props) {
   const {
     handleSubmit, alert,
     register, formState: { errors },
-  } = useSubmit<Fields>({ schema })
+  } = useSubmit<Fields>({
+    schema,
+    append: {
+      selectedFields,
+      selectedPersons,
+    },
+  })
   // TODO D -> añadir al "append" los datos que están en el estado y se deben enviar.
   return (
     <form className="w-full rounded-lg bg-base-100 p-4" onSubmit={handleSubmit} method="POST" action="/api/projects">
@@ -124,13 +129,7 @@ export default function CreateProjectForm({ fields, persons }: Props) {
       </FormSection>
 
       <FormSection title="Miembros del proyecto" description="Añada algunos colaboradores a su proyecto para llevarlo a cabo.">
-        <div className="relative">
-          <Input name="members" label="Miembros" value={inputValue} placeholder="Ej: José Pérez o josezz@gmail.com" onChange={handleInputChange}>
-            <span className="absolute inset-y-0 right-0 me-4 mt-3 cursor-pointer rounded-full" onClick={() => { setInputValue('') }}>
-              <XMarkIcon className="h-5 w-5" />
-            </span>
-          </Input>
-        </div>
+        <Input name="members" label="Miembros" placeholder="Ej: José Pérez o josezz@gmail.com" onChange={handleInputChange} />
         <div className={clsx({
           'mt-3 w-full max-h-60 gap-2 overflow-y-auto': true,
           block: inputFocus,

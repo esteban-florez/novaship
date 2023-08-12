@@ -5,8 +5,6 @@ import FilterModal from './FilterModal'
 import { type TabProp, type InputOnChange } from '@/lib/types'
 
 import Input from '../forms/inputs/Input'
-import clsx from 'clsx'
-import { BUTTON_DEFAULT } from '@/lib/constants/button'
 
 interface Props {
   active: TabProp
@@ -23,7 +21,7 @@ export default function Filter({ active, onChange }: Props) {
         </div>
         <div className="flex w-full flex-row justify-between gap-2 pb-2 sm:w-auto sm:pb-0">
           <FilterModal onChange={onChange} />
-          <Button url="/home/projects/create" icon={<PlusIcon className="h-5 w-5" />} className={clsx(BUTTON_DEFAULT, 'bg-primary text-primary-content')}>
+          <Button url="/home/projects/create" icon={<PlusIcon className="h-5 w-5" />} style="DEFAULT" color="PRIMARY" hover="PRIMARY">
             Agregar
           </Button>
         </div>
