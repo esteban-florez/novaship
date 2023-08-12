@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     const parsed = schema.parse(data)
     const user = await auth.person(request)
 
-    const project = await prisma.project.create({
+    await prisma.project.create({
       data: {
         ...parsed,
         person: {
@@ -39,8 +39,6 @@ export async function POST(request: NextRequest) {
         },
       },
     })
-
-    console.log('\n\n', project, '\n\n')
 
     return NextResponse.redirect(url('home/projects'))
   } catch (error) {
