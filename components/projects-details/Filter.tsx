@@ -1,9 +1,14 @@
-import { AdjustmentsHorizontalIcon, PlusIcon } from '@heroicons/react/24/solid'
+import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid'
 import SearchInput from '../SearchInput'
 import ActionButton from '../ActionButton'
+import Link from 'next/link'
 
 // DRY Filter
-export default function Filter() {
+type Props = React.PropsWithChildren<{
+  projectId: string
+}>
+
+export default function Filter({ projectId }: Props) {
   return (
     <section className="mt-5 flex w-full flex-col flex-wrap gap-2 rounded-lg xl:flex-row xl:items-center">
       {/* <div className="order-2 gap-x-2 xl:order-none">
@@ -21,10 +26,9 @@ export default function Filter() {
             <AdjustmentsHorizontalIcon className="h-6 w-6 sm:flex xl:hidden" />
             <p className="flex sm:hidden md:flex md:flex-row">Filtrar</p>
           </ActionButton>
-          <ActionButton color="btn-primary">
-            <PlusIcon className="flex h-6 w-6 xl:hidden" />
-            <p className="flex sm:hidden md:flex md:flex-row">Agregar</p>
-          </ActionButton>
+          <Link href={`/home/projects/${projectId}/tasks/create`} className="btn-primary btn-sm btn border-none px-6">
+            Agregar
+          </Link>
         </div>
       </div>
     </section>
