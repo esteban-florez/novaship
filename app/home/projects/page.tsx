@@ -9,14 +9,16 @@ export const metadata: Metadata = {
 
 export const revalidate = 10
 
+// TODO -> Añadir paginaction
+// TODO -> Mantener la pestaña escogida al regresar a /projects
 export default async function ProjectsPage() {
   const activeUser = await auth.person()
   const projects = await prisma.project.findMany({
-    where: {
-      person: {
-        authUserId: activeUser.authUserId,
-      },
-    },
+    // where: {
+    //   person: {
+    //     authUserId: activeUser.authUserId,
+    //   },
+    // },
     include: {
       person: true,
       memberships: {
@@ -30,9 +32,13 @@ export default async function ProjectsPage() {
     },
   })
 
+  const personalProjects = projects.filter(project => {
+    return project.personId === activeUser.id
+  })
+
   return (
     <div className="px-4">
-      <PageContent projects={projects} />
+      <PageContent projects={projects} personalProjects={personalProjects} />
     </div>
   )
 }

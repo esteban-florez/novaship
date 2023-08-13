@@ -9,6 +9,8 @@ type PersonOption = Pick<Person, 'id' | 'name' | 'email'> & { selected: boolean 
 type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE'
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 
+type VisibilityFilter = 'PRIVATE' | 'PUBLIC' | 'ALL'
+
 interface SharedInputProps {
   name: string
   label?: string

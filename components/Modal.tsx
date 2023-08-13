@@ -10,20 +10,21 @@ type Props = React.PropsWithChildren<{
   color: Colors
   hover: Colors
   cancelLabel: 'Cancelar' | 'Aceptar' | 'Cerrar'
-  actionIcon?: React.ReactElement
-  actionLabel?: string
+  acceptIcon?: React.ReactElement
+  acceptLabel?: string
+  acceptColor?: Colors
   onClick?: () => void
 }>
 
 // Dev
 // Arreglar las props
-export default function Modal({ id, icon, label, color, hover, cancelLabel, actionIcon, actionLabel, onClick, children }: Props) {
-  const hasActionIcon = actionIcon !== null && actionIcon !== undefined
-  const hasActionText = actionLabel !== null && actionLabel !== undefined
+export default function Modal({ id, icon, label, color, style = 'DEFAULT', hover, cancelLabel, acceptColor = 'EMPTY', acceptIcon, acceptLabel, onClick, children }: Props) {
+  const hasacceptIcon = acceptIcon !== null && acceptIcon !== undefined
+  const hasActionText = acceptLabel !== null && acceptLabel !== undefined
 
   return (
     <>
-      <Button type="MODAL" id={id} icon={icon} style="DEFAULT" color={color} hover={hover}>
+      <Button type="MODAL" id={id} icon={icon} style={style} color={color} hover={hover}>
         {label}
       </Button>
       <div className="modal p-0">
@@ -34,8 +35,8 @@ export default function Modal({ id, icon, label, color, hover, cancelLabel, acti
               <XMarkIcon className="h-5 w-5" />
               {cancelLabel}
             </label>
-            {(hasActionIcon && hasActionText) &&
-              <Button type="BUTTON" icon={actionIcon} style="DEFAULT" color={color} hover={color} onClick={onClick}>{actionLabel}</Button>}
+            {(hasacceptIcon && hasActionText) &&
+              <Button type="BUTTON" icon={acceptIcon} style="DEFAULT" color={acceptColor} hover={acceptColor} onClick={onClick}>{acceptLabel}</Button>}
           </footer>
         </div>
       </div>

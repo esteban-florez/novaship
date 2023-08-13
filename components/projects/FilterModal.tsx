@@ -9,7 +9,7 @@ interface Props {
 }
 
 // DEV
-// Filtrar por visibilidad "Private" no funciona
+// Filtrar por visibilidad no funciona
 export default function FilterModal({ onChange }: Props) {
   return (
     <Modal
@@ -18,10 +18,11 @@ export default function FilterModal({ onChange }: Props) {
       style="DEFAULT"
       color="SECONDARY"
       hover="SECONDARY"
-      cancelLabel="Cancelar"
-      actionLabel="Filtrar"
       icon={<AdjustmentsHorizontalIcon className="h-5 w-5" />}
-      actionIcon={<AdjustmentsHorizontalIcon className="h-5 w-5" />}
+      cancelLabel="Cancelar"
+      acceptLabel="Aplicar"
+      acceptColor="SECONDARY"
+      acceptIcon={<AdjustmentsHorizontalIcon className="h-5 w-5" />}
     >
       <Select name="privacity" label="Privacidad" onChange={onChange}>
         <option value="ALL">Todos</option>

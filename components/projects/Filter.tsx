@@ -9,10 +9,11 @@ import Input from '../forms/inputs/Input'
 interface Props {
   active: TabProp
   onChange: (event: InputOnChange) => void
+  onTabClick: (tabOption?: TabProp) => void
 }
 
 // DRY Filter
-export default function Filter({ active, onChange }: Props) {
+export default function Filter({ active, onChange, onTabClick }: Props) {
   return (
     <section className="mt-5 flex w-full flex-col flex-wrap gap-2 rounded-lg xl:flex-row xl:items-center">
       <div className="mb-3 flex w-full flex-col items-center justify-between gap-3 sm:ms-auto sm:flex-row sm:pb-3">
@@ -27,10 +28,10 @@ export default function Filter({ active, onChange }: Props) {
         </div>
       </div>
       <div className="flex">
-        <NavButton isActive={active === 'All'} icon={<ListBulletIcon className="h-6 w-6" />}>
+        <NavButton isActive={active === 'All'} icon={<ListBulletIcon className="h-6 w-6" />} onClick={() => { onTabClick('All') }}>
           Todos
         </NavButton>
-        <NavButton isActive={active === 'Mine'} icon={<StarIcon className="h-6 w-6" />}>
+        <NavButton isActive={active === 'Mine'} icon={<StarIcon className="h-6 w-6" />} onClick={() => { onTabClick('Mine') }}>
           Mis proyectos
         </NavButton>
       </div>
