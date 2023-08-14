@@ -48,7 +48,7 @@ export default function CreateOfferForm() {
   }
 
   return (
-    <form method="POST" action="/api/offer/create" className="mb-4 w-full rounded-lg bg-base-100 p-4" onSubmit={e => { e.preventDefault() }}>
+    <form method="POST" action="/api/offer/create" className="mb-4 w-full rounded-lg bg-base-100 p-4 pt-10" onSubmit={e => { e.preventDefault() }}>
       <FormSection title="Datos básicos" description="El nombre de la oferta, su descripción, categoría y salario serán visibles para los posibles candidatos.">
         <div className="mb-4">
           <Input name="title" placeholder="Ej. Desarrollador Web Front-End" label="Título de la oferta:" />
@@ -111,13 +111,13 @@ export default function CreateOfferForm() {
           <option value="candidats">Candidatos</option>
         </Select>
       </FormSection>
-      <div className="flex gap-2 px-4">
-        <button className="btn-primary btn" type="submit">
-          Crear oferta
-        </button>
-        <Link href="/home/offers" className="btn-ghost btn">
+      <div className="mb-4 flex justify-between gap-2 px-4">
+        <Link href="/home/offers" className="btn-neutral btn-md btn text-base">
           Cancelar
         </Link>
+        <button className="btn-primary btn-md btn text-base" type="submit">
+          Crear oferta
+        </button>
       </div>
     </form>
   )

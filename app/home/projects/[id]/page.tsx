@@ -61,7 +61,7 @@ export default async function ProjectPage({ params }: GetServerSidePropsContext)
     <div className="my-4 grid grid-cols-10 gap-4 px-6">
       <div className="col-span-10 lg:col-span-7">
         <ProjectDetails project={project} />
-        <Filter />
+        <Filter projectId={project.id} />
         <Archive />
       </div>
       <div className="hidden gap-4 lg:col-span-3 lg:flex lg:flex-col">

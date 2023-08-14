@@ -1,43 +1,35 @@
 'use client'
 
-import { ArrowPathIcon } from '@heroicons/react/24/outline'
 import GoogleSignUpButton from '../GoogleSignUpButton'
-import useFormHandling from '@/lib/hooks/useFormHandling'
+import useSubmit from '@/lib/hooks/useSubmit'
+import { type Fields, schema } from '@/lib/validation/schemas/login'
+import Input from '../forms/inputs/Input'
 
 export default function LogInForm() {
   // TODO -> mostrar una alerta de "debes iniciar sesión primero antes de ver esa página" cuando exista un searchParam llamado "redirected".
-  const { loading, onSubmit, alert } = useFormHandling()
+  const { alert, handleSubmit, register, formState: { errors }, serverErrors } = useSubmit<Fields>({ schema })
 
   return (
-    <form action="/api/auth/login" method="POST" onSubmit={onSubmit} className="mx-auto w-full pt-4">
+    <form action="/api/auth/login" method="POST" onSubmit={handleSubmit} className="mx-auto w-full pt-4">
+      {serverErrors}
       {alert}
-      <div className="form-control w-full">
-        <label htmlFor="email" className="label font-semibold">
-          Correo electrónico:
-        </label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          placeholder="correo@ejemplo.com"
-          className="input w-full border-neutral-300 bg-base-200"
-        />
-      </div>
-      <div className="form-control mt-3 w-full">
-        <label htmlFor="password" className="label font-semibold">
-          Contraseña:
-        </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Ingresa tu contraseña..."
-          className="input w-full border-neutral-300 bg-base-200"
-        />
-      </div>
+      <Input
+        name="email"
+        label="Correo electrónico"
+        placeholder="correo@ejemplo.com"
+        register={register}
+        errors={errors}
+      />
+      <Input
+        type="password"
+        name="password"
+        label="Contraseña"
+        placeholder="Ingresa tu contraseña..."
+        register={register}
+        errors={errors}
+      />
       <div className="flex flex-col gap-2">
-        <button type="submit" className="btn-primary btn mt-6 w-full md:w-auto" disabled={loading}>
-          {loading && <ArrowPathIcon className="h-6 w-6 animate-spin" />}
+        <button type="submit" className="btn-primary btn mt-6 w-full md:w-auto">
           Iniciar sesión
         </button>
         <GoogleSignUpButton />

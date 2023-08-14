@@ -1,12 +1,10 @@
 'use client'
 
-import Card from '@/components/projects/Card'
 import Filter from './Filter'
 import { useState } from 'react'
-import { type InputOnChange } from '@/lib/types'
+import { type TabProp, type InputOnChange, type VisibilityFilter } from '@/lib/types'
 import { type Membership, type Person, type Project } from '@prisma/client'
-
-type VisibilityProp = 'PRIVATE' | 'PUBLIC' | 'ALL'
+import List from './List'
 
 interface Props {
   projects: Array<Project & {
@@ -15,10 +13,17 @@ interface Props {
       person: Person
     }>
   }>
+  personalProjects: Array<Project & {
+    person: Person | null
+    memberships: Array<Membership & {
+      person: Person
+    }>
+  }>
 }
 
-export default function PageContent({ projects }: Props) {
-  const [visibility, setVisibility] = useState<VisibilityProp>('ALL')
+export default function PageContent({ projects, personalProjects }: Props) {
+  const [tab, setTab] = useState<TabProp>('All')
+  const [visibility, setVisibility] = useState<VisibilityFilter>('ALL')
   const [members, setMembers] = useState(0)
   const [title, setTitle] = useState('')
 
@@ -37,30 +42,15 @@ export default function PageContent({ projects }: Props) {
     }
   }
 
+  const handleChangeTab = (tabOption?: TabProp) => {
+    if (tabOption !== null && tabOption !== undefined) setTab(tabOption)
+  }
+
   return (
     <>
-      <Filter active="Mine" onChange={handleChange} />
+      <Filter active={tab} onChange={handleChange} onTabClick={handleChangeTab} />
       <section className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg rounded-tl-none bg-white p-4">
-        {projects.map((project) => {
-          if (
-            (title === '' || project.title.includes(title)) &&
-            (visibility === 'ALL' || project.visibility === visibility) &&
-            (members === 0 || project.memberships.length === members)
-          ) {
-            return (
-              <div key={project.id} className="mb-3 flex w-full flex-col gap-3">
-                <Card
-                  id={project.id}
-                  title={project.title}
-                  status={project.visibility}
-                  members={project.memberships}
-                />
-              </div>
-            )
-          }
-
-          return null
-        })}
+        <List projects={tab === 'All' ? projects : personalProjects} visibility={visibility} members={members} title={title} />
       </section>
     </>
   )
