@@ -1,6 +1,7 @@
 import Card from '@/components/projects/Card'
 import { type VisibilityFilter } from '@/lib/types'
 import { type Membership, type Person, type Project } from '@prisma/client'
+import EmptyContent from '../EmptyContent'
 
 interface Props {
   projects: Array<Project & {
@@ -14,7 +15,16 @@ interface Props {
   title: string
 }
 
+// Todo -> pagination
 export default function List({ projects, visibility, members, title }: Props) {
+  if (projects.length === 0) {
+    return (
+      <EmptyContent title="No encontramos nada...">
+        Démosle un poco de vida a esta sección añadiendo algunos proyectos.
+      </EmptyContent>
+    )
+  }
+
   return (
     projects.map((project, i) => {
       if (i < 10) {
