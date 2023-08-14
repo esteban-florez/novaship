@@ -1,18 +1,16 @@
 import Button from './Button'
 
 type Props = React.PropsWithChildren<{
-  icon: React.ReactElement
   isActive?: boolean
   onClick?: () => void
 }>
 
-export default function NavButton({ isActive = false, icon, onClick, children }: Props) {
+export default function NavButton({ isActive = false, onClick, children }: Props) {
   return (
     <Button
-      icon={icon}
       style="TAB"
-      color={isActive ? 'PRIMARY' : 'WHITE'}
-      hover={isActive ? 'EMPTY' : 'PRIMARY'}
+      color={isActive ? 'WHITE' : 'GHOST'}
+      hover={isActive ? 'SECONDARY' : 'WHITE'}
       onClick={onClick}
     >
       {children}
