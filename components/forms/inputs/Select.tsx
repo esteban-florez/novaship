@@ -1,8 +1,8 @@
 import CustomLabel from './CustomLabel'
-import { type InputOnChange, type SharedInputProps } from '@/lib/types'
+import { type SharedInputProps } from '@/lib/types'
 
 type Props = React.PropsWithChildren<{
-  onChange?: (event: InputOnChange) => void
+  onInput?: (event: SelectOnInputEvent) => void
   noDefault?: boolean
   options?: SelectOptionsConfig
 } & SharedInputProps>
@@ -29,7 +29,7 @@ function getSelectOptions(options: SelectOptionsConfig | undefined) {
 // DRY 3
 export default function Select({
   name, label, children, options, register, config = {},
-  value = '', noDefault = false, errors = {}, onChange,
+  value = '', noDefault = false, errors = {}, onInput,
 }: Props) {
   const errorMessage = errors[name]?.message as string | undefined
   const hasError = errorMessage !== undefined
@@ -40,10 +40,9 @@ export default function Select({
     <>
       {(label !== null && label !== undefined) && <CustomLabel id={name} label={label} />}
       <select
-        id={name} name={name}
+        id={name} name={name} onInput={onInput}
         defaultValue={value} {...registerProps}
         className="select select-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary"
-        onChange={onChange}
       >
         {!noDefault && <option value="" disabled>Seleccionar...</option>}
         {selectOptions?.map(({ value, label }) => (
@@ -52,7 +51,7 @@ export default function Select({
         {children}
       </select>
       {hasError && (
-        <p className="-mt-2 text-sm font-semibold text-error">
+        <p className="-mt-3 text-sm font-semibold text-error">
           {errorMessage}
         </p>
       )}

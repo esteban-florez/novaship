@@ -29,6 +29,12 @@ const radios = {
 
 export default function UserType({ userType, setUserType }: Props) {
   const { goNext } = useContext(SignUpContext)
+  const noOptionSelected = userType === null
+
+  function handleNextButton() {
+    if (noOptionSelected) return
+    goNext()
+  }
 
   const options = Object.values(UserTypeEnum).map((type) => {
     const label = translation[type]
@@ -56,7 +62,7 @@ export default function UserType({ userType, setUserType }: Props) {
           {options}
         </div>
         <div className="mt-4 flex justify-between">
-          <button onClick={goNext} type="button" className="btn-primary btn">
+          <button onClick={handleNextButton} disabled={noOptionSelected} type="button" className="btn-primary btn">
             Siguiente
           </button>
         </div>

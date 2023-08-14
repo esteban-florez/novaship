@@ -9,7 +9,7 @@ export default function CrateTaskPage() {
           <PlusIcon className="h-9 w-9 font-bold" />
           <h2 className="text-4xl font-bold tracking-tighter">Crear tarea</h2>
         </div>
-        <img src="/coso3.webp" alt="Imagen decorativa en esquinas" className="absolute left-0 top-0 h-48 w-full rounded-t-xl" />
+        <img src="/coso3.webp" alt="Imagen decorativa en esquinas" className="pointer-events-none absolute left-0 top-0 h-48 w-full rounded-t-xl" />
       </div>
       <CreateTaskForm />
     </section>

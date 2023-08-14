@@ -8,7 +8,7 @@ import Textarea from '../forms/inputs/Textarea'
 import { type Fields, schema } from '@/lib/validation/schemas/project'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { useState } from 'react'
-import { type FieldOption, type InputOnChange, type PersonOption } from '@/lib/types'
+import { type FieldOption, type PersonOption } from '@/lib/types'
 import SelectedOptions from './SelectedOptions'
 import SelectedMembers from './SelectedMembers'
 import clsx from 'clsx'
@@ -85,7 +85,7 @@ export default function CreateProjectForm({ fields, persons }: Props) {
     setTotalPersons(newPersons)
   }
 
-  function handleInputChange(event: InputOnChange) {
+  function handleInputEvent(event: OnInputEvent) {
     const { value } = event.target
     setInputFocus(value.length > 0)
     setSearchName(value)
@@ -117,7 +117,7 @@ export default function CreateProjectForm({ fields, persons }: Props) {
       <FormSection title="Campos requeridos" description="Elige los campos necesarios para ser parte del proyecto.">
         {availableFields.length > 0 &&
           (
-            <Select name="fields" label="Campos" onChange={(e) => { addField(e.target.value) }}>
+            <Select name="fields" label="Campos" onInput={(e) => { addField(e.target.value) }}>
               {availableFields.map(field => (
                 <option key={field.id} value={field.id}>
                   {field.title}
@@ -129,7 +129,7 @@ export default function CreateProjectForm({ fields, persons }: Props) {
       </FormSection>
 
       <FormSection title="Miembros del proyecto" description="Añada algunos colaboradores a su proyecto para llevarlo a cabo.">
-        <Input name="members" label="Miembros" placeholder="Ej: José Pérez o josezz@gmail.com" onChange={handleInputChange} />
+        <Input name="members" label="Miembros" placeholder="Ej: José Pérez o josezz@gmail.com" onInput={handleInputEvent} />
         <div className={clsx({
           'mt-3 w-full max-h-60 gap-2 overflow-y-auto': true,
           block: inputFocus,

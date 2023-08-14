@@ -33,7 +33,7 @@ export default function BasicDataTemplate({ nameInput, documentInput }: Props) {
             <Input label="Ingresa tu contraseña:" name="password" register={register} errors={errors} type="password" placeholder="Ingresa tu contraseña..." />
           </div>
           <div className="col-span-2 md:col-span-1">
-            <Input label="Teléfono:" name="phone" register={register} errors={errors} placeholder="Ej. 0412-1234567" />
+            <Input label="Teléfono:" type="number" name="phone" register={register} errors={errors} placeholder="Ej. 04121234567" />
           </div>
           <div className="col-span-2 md:col-span-1">
             <Input type="date" label="Fecha de nacimiento:" name="birth" register={register} errors={errors} placeholder="Fecha de nacimiento" />

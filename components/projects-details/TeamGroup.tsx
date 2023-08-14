@@ -9,7 +9,7 @@ import Member from './Member'
 import Input from '../forms/inputs/Input'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { type InputOnChange, type PersonOption } from '@/lib/types'
+import { type PersonOption } from '@/lib/types'
 import SelectedMembers from '../projects-create/SelectedMembers'
 import useSubmit from '@/lib/hooks/useSubmit'
 import Divider from '../Divider'
@@ -60,7 +60,7 @@ export default function TeamGroup({ id, memberships, isOwner, persons }: Props) 
     setTotalPersons(newPersons)
   }
 
-  function handleInputChange(event: InputOnChange) {
+  function handleInput(event: OnInputEvent) {
     const { value } = event.target
     setInputFocus(value.length > 0)
     setSearchName(value)
@@ -99,7 +99,7 @@ export default function TeamGroup({ id, memberships, isOwner, persons }: Props) 
                 <>
                   <form action={`/api/projects/${id}`} onSubmit={handleSubmit} method="POST">
                     {alert}
-                    <Input name="members" label="Invitar" placeholder="Ej: José Pérez o josezz@gmail.com" onChange={handleInputChange} />
+                    <Input name="members" label="Invitar" placeholder="Ej: José Pérez o josezz@gmail.com" onInput={handleInput} />
                     <div className={clsx({
                       'mt-3 w-full max-h-60 gap-2 overflow-y-auto': true,
                       block: inputFocus,

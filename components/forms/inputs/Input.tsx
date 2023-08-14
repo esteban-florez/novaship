@@ -1,10 +1,10 @@
-import { type InputOnChange, type SharedInputProps } from '@/lib/types'
+import { type SharedInputProps } from '@/lib/types'
 import CustomLabel from './CustomLabel'
 import clsx from 'clsx'
 import { type HTMLInputTypeAttribute } from 'react'
 
 type Props = React.PropsWithChildren<{
-  onChange?: (event: InputOnChange) => void
+  onInput?: (event: OnInputEvent) => void
   placeholder: string
   innerIcon?: React.ReactElement
   type?: HTMLInputTypeAttribute
@@ -14,7 +14,7 @@ type Props = React.PropsWithChildren<{
 // DRY 3
 export default function Input({
   name, placeholder, label, register, step, errors = {},
-  config = {}, type = 'text', value = '', className = '', children, onChange,
+  config = {}, type = 'text', value = '', className = '', children, onInput,
 }: Props) {
   const errorMessage = errors[name]?.message as string | undefined
   const hasError = errorMessage !== undefined
@@ -25,14 +25,14 @@ export default function Input({
       {label !== undefined && <CustomLabel id={name} label={label} />}
       <div className="relative">
         <input
-          onChange={onChange} id={name} name={name} type={type} step={step}
+          onInput={onInput} id={name} name={name} type={type} step={step}
           placeholder={placeholder} {...registerProps}
           className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', className)} defaultValue={value}
 
         />
         {children}
         {hasError && (
-          <p className="text-sm font-semibold text-error">
+          <p className="-mt-3 text-sm font-semibold text-error">
             {errorMessage}
           </p>
         )}

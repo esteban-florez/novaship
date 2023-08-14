@@ -25,7 +25,7 @@ export default function PhotoProfile() {
           <input type="file" className="file-input w-full" hidden {...register('image')} />
         </label>
         {errors.image !== undefined && (
-          <p className="text-sm font-semibold text-error">
+          <p className="-mt-3 text-sm font-semibold text-error">
             {errors.image.message as string}
           </p>
         )}

@@ -12,7 +12,7 @@ export default function CompanyBasicData() {
         <Input label="Nombre de la empresa:" name="name" register={register} errors={errors} placeholder="Ej. Phasebuck S.A." />
       }
       documentInput={
-        <Input label="RIF:" name="rif" register={register} errors={errors} placeholder="Ej. 1234567890" />
+        <Input label="RIF:" name="rif" type="number" register={register} errors={errors} placeholder="Ej. 1234567890" />
       }
     />
   )

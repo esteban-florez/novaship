@@ -23,8 +23,6 @@ interface SharedInputProps {
 
 type UseSubmitResult = null | 'loading' | ApiResponseBody
 
-type InputOnChange = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
-
 type TabProp = 'All' | 'Mine'
 
 interface ApiResponseBody {

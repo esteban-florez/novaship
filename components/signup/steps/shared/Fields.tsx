@@ -47,7 +47,6 @@ export default function Fields({ fields }: Props) {
         <div className="flex justify-end">
           <SearchInput />
         </div>
-        {/* TODO -> hacer funcional este coso del carrusel */}
         <div className="my-4 grid max-h-56 grid-cols-2 gap-x-3 gap-y-2 overflow-y-scroll overscroll-auto">
           {availableFields.map(field => {
             return (

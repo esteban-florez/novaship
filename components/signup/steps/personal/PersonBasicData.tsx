@@ -12,7 +12,7 @@ export default function PersonBasicData() {
         <Input label="Nombre y apellido:" name="name" register={register} errors={errors} placeholder="Ej. Myriam Yaqueno" />
       }
       documentInput={
-        <Input label="Cédula de identidad:" name="ci" register={register} errors={errors} placeholder="Ej. 12345678" />
+        <Input label="Cédula de identidad:" type="number" name="ci" register={register} errors={errors} placeholder="Ej. 12345678" />
       }
     />
   )
