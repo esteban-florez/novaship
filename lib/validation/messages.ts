@@ -17,6 +17,7 @@ const messages = {
   hasUpper: m('Debe poseer al menos una letra mayúscula.'),
   hasNumber: m('Debe poseer al menos un número.'),
   hasSymbol: m('Debe poseer al menos un símbolo.'),
+  numeric: m('Debe tener solo números.'),
   min: (num: number) => m(`Debe tener mínimo ${num} caracteres.`),
   max: (num: number) => m(`Debe tener máximo ${num} caracteres.`),
   minNumber: (num: number) => m(`La cantidad mínima es ${num}`),

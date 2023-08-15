@@ -12,6 +12,7 @@ export default function Textarea({
   name, placeholder, label, register, className = '',
   height = 3, value = '', errors = {}, config = {},
 }: Props) {
+  config.required = config.required !== undefined ? config.required : true
   const errorMessage = errors[name]?.message as string | undefined
   const hasError = errorMessage !== undefined
   const registerProps = register !== undefined ? { ...register(name, config) } : {}

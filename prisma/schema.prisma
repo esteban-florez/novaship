@@ -27,8 +27,8 @@ model Person {
   ci          String       @unique
   birth       DateTime
   image       String?
-  phone       String?      @unique
-  bio         String?
+  phone       String       @unique
+  description String?
   profile     Profile?
   profileId   String?
   authUser    AuthUser     @relation(fields: [authUserId], references: [id])
@@ -44,10 +44,10 @@ model Company {
   id            String    @id @default(cuid())
   name          String
   email         String    @unique
+  rif           String    @unique
   image         String?
   description   String    @db.Text
   phone         String    @unique
-  rif           String    @unique
   certification String
   verifiedAt    DateTime?
   authUser      AuthUser  @relation(fields: [authUserId], references: [id])
@@ -65,10 +65,10 @@ model Institute {
   id            String       @id @default(cuid())
   name          String
   email         String       @unique
+  rif           String       @unique
   image         String?
   description   String       @db.Text
   phone         String       @unique
-  rif           String       @unique
   certification String
   verifiedAt    DateTime?
   location      Location     @relation(fields: [locationId], references: [id])
@@ -174,10 +174,12 @@ model Release {
 model Message {
   id        String   @id @default(cuid())
   content   String   @db.Text
+  // TODO -> relaciones redundantes, pueden sustituirse por membership 
   person    Person   @relation(fields: [personId], references: [id])
   personId  String
   project   Project? @relation(fields: [projectId], references: [id])
   projectId String?
+  //
   task      Task?    @relation(fields: [taskId], references: [id])
   taskId    String?
   createdAt DateTime @default(now())
@@ -221,7 +223,6 @@ model Experience {
   name        String
   role        String
   description String?  @db.Text
-  phone       String?
   from        DateTime
   to          DateTime
   profile     Profile  @relation(fields: [profileId], references: [id])

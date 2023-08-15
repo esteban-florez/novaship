@@ -28,7 +28,7 @@ const radios = {
 }
 
 export default function UserType({ userType, setUserType }: Props) {
-  const { goNext } = useContext(SignUpContext)
+  const { goNext, reset } = useContext(SignUpContext)
   const noOptionSelected = userType === null
 
   function handleNextButton() {
@@ -42,7 +42,11 @@ export default function UserType({ userType, setUserType }: Props) {
     return (
       <Radio
         name="type" key={type} value={type} label={label} icon={icon}
-        onInput={() => { setUserType(type) }} active={type === userType}
+        active={type === userType}
+        onInput={() => {
+          reset()
+          setUserType(type)
+        }}
       >
         {description}
       </Radio>
