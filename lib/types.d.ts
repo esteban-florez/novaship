@@ -6,7 +6,7 @@ type SkillOption = Pick<Skill, 'id' | 'title'> & { selected: boolean }
 type FieldOption = Pick<Field, 'id' | 'title'> & { selected: boolean }
 type PersonOption = Pick<Person, 'id' | 'name' | 'email'> & { selected: boolean }
 
-type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE'
+type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE' | 'GHOST'
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 
 type VisibilityFilter = 'PRIVATE' | 'PUBLIC' | 'ALL'

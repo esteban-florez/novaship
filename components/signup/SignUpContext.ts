@@ -6,6 +6,8 @@ interface SignUpContextType {
   errors: FieldErrors
   goNext: () => void
   goBack: () => void
+  reset: () => void
+  trigger: (fields?: string | string[]) => Promise<boolean>
 }
 
 // @ts-expect-error -> Trust me TypeScript, this context will not be null.

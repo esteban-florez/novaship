@@ -1,5 +1,5 @@
-import Content from './Offer/Content'
-import Header from './Offer/Header'
+import Content from './Card/Content'
+import Header from './Card/Header'
 
 type Props = React.PropsWithChildren<{
   title: string
@@ -17,12 +17,10 @@ export default function Offer({
   ubication,
 }: Props) {
   return (
-    <section className="mb-4 break-inside-avoid rounded-xl border border-solid border-zinc-300 shadow">
-      <div className="relative flex w-full rounded-xl">
-        <div className="w-full flex-col">
-          <Header title={title} categories={categories} />
-          <Content description={description} owner={owner} ubication={ubication} />
-        </div>
+    <section className="mb-4 break-inside-avoid">
+      <div className="rounded-xl border border-solid border-zinc-300 bg-white shadow">
+        <Header title={title} categories={categories} />
+        <Content description={description} owner={owner} ubication={ubication} />
       </div>
     </section>
   )

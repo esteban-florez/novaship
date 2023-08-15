@@ -7,7 +7,7 @@ const className = {
   DEFAULT: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border',
   ICON: 'p-2 rounded-sm transition-colors delay-75 duration-delay-75',
   OUTLINE: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border bg-transparent transition-colors delay-75 duration-delay-75 ',
-  TAB: 'px-6 py-2 inline-flex justify-center items-center rounded-t-md rounded-se-md gap-x-2 transition-colors delay-75 duration-delay-75',
+  TAB: 'px-6 py-2 inline-flex justify-center items-center rounded-lg gap-x-2 font-semibold shadow-lg sm:text-lg transition-colors delay-75 duration-delay-75',
   DISABLED: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border opacity-50 cursor-not-allowed ',
   colors: {
     PRIMARY: 'bg-primary text-primary-content',
@@ -16,6 +16,7 @@ const className = {
     CANCEL: 'bg-gray-200 text-neutral-600',
     ERROR: 'text-error',
     WHITE: 'bg-white text-neutral-600',
+    GHOST: 'bg-white/20 text-white',
     EMPTY: null,
   },
   hover: {
@@ -24,7 +25,8 @@ const className = {
     ACCENT: 'hover:bg-accent hover:text-accent-content',
     CANCEL: 'hover:bg-primary hover:text-primary-content',
     ERROR: 'hover:bg-error hover:text-white',
-    WHITE: 'hover:bg-primary hover:text-primary-content',
+    WHITE: 'hover:bg-white hover:text-neutral-600',
+    GHOST: 'hover:bg-white/20 hover:text-white',
     EMPTY: null,
   },
 }
@@ -32,7 +34,7 @@ const className = {
 type Props = React.PropsWithChildren<{
   id?: string
   url?: string
-  icon: React.ReactElement
+  icon?: React.ReactElement
   type?: 'MODAL' | 'BUTTON'
   style: Styles
   color: Colors

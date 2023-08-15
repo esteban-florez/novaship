@@ -1,3 +1,5 @@
+export const numeric = (string: string) => (/^\d+$/g).test(string)
+
 export const hasUpper = (string: string) => (/[A-Z]/g).test(string)
 
 export const hasLower = (string: string) => (/[a-z]/g).test(string)

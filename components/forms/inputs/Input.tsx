@@ -13,9 +13,10 @@ type Props = React.PropsWithChildren<{
 
 // DRY 3
 export default function Input({
-  name, placeholder, label, register, step, errors = {},
-  config = {}, type = 'text', value = '', className = '', children, onInput,
+  name, placeholder, label, register, step, config = {}, errors = {},
+  type = 'text', value = '', className = '', children, onInput,
 }: Props) {
+  config.required = config.required !== undefined ? config.required : true
   const errorMessage = errors[name]?.message as string | undefined
   const hasError = errorMessage !== undefined
   const registerProps = register !== undefined ? { ...register(name, config) } : {}
