@@ -131,7 +131,7 @@ export default function ProfessionalProfilePage() {
         </div>
         <div className="divider mx-auto w-3/4" />
         <div className="mt-3 flex w-full p-4">
-          <AvatarIcon username="EC" bg="bg-gray-400" />
+          <AvatarIcon username="EC" className="bg-gray-400 text-white" />
           <div className="flex-col">
             <h6 className="p-2">
               <span className="font-bold">Electrodomésticos Carmen</span>
@@ -143,7 +143,7 @@ export default function ProfessionalProfilePage() {
           </div>
         </div>
         <div className="mt-3 flex w-full p-4">
-          <AvatarIcon username="DS" bg="bg-gray-400" />
+          <AvatarIcon username="DS" className="bg-gray-400 text-white" />
           <div className="flex-col">
             <h6 className="p-2">
               <span className="font-bold">Distribuidora Solcenaga</span>
@@ -155,7 +155,7 @@ export default function ProfessionalProfilePage() {
           </div>
         </div>
         <div className="mt-3 flex w-full p-4">
-          <AvatarIcon username="DA" bg="bg-gray-400" />
+          <AvatarIcon username="DA" className="bg-gray-400 text-white" />
           <div className="flex-col">
             <h6 className="p-2">
               <span className="font-bold">Distribuidora Altamira</span>

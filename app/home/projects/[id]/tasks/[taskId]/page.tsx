@@ -22,9 +22,9 @@ export default function TaskPage() {
               </div>
             </div>
             <div className="flex flex-row items-center gap-2">
-              <AvatarIcon username="Liz Villegas" bg="bg-accent" />
-              <AvatarIcon username="Estefani Garcia" bg="bg-secondary" />
-              <AvatarIcon username="Esteban Florez" bg="bg-warning" />
+              <AvatarIcon username="Liz Villegas" className="bg-accent text-accent-content" />
+              <AvatarIcon username="Estefani Garcia" className="bg-secondary text-white" />
+              <AvatarIcon username="Esteban Florez" className="bg-warning text-white" />
             </div>
           </div>
         </div>

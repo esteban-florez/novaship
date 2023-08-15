@@ -32,7 +32,7 @@ export default function Card({ id, title, owner = '', status, members }: Props) 
 
       {hasOwner &&
         <div className="order-3 flex w-full shrink-0 flex-row gap-2 p-4 sm:w-1/4 lg:p-0">
-          <AvatarIcon username={owner} bg="bg-neutral" />
+          <AvatarIcon username={owner} className="bg-neutral text-white" />
           <div className="flex flex-col">
             <h5 className="text-base font-bold">{owner}</h5>
             <h5 className="-mt-1 line-clamp-6 text-sm">Responsable</h5>
@@ -42,7 +42,7 @@ export default function Card({ id, title, owner = '', status, members }: Props) 
       <div className="order-4 flex w-full shrink-0 flex-row items-center justify-center -space-x-3 sm:w-1/4">
         {members.map((member, i) => {
           if (i <= 2) {
-            return <AvatarIcon key={member.id} username={member.person.name} className={clsx('border-2 border-current bg-secondary', stackOrder[i])} />
+            return <AvatarIcon key={member.id} username={member.person.name} className={clsx('border-2 border-white bg-secondary', stackOrder[i])} />
           }
           return null
         })}

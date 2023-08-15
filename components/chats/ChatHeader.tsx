@@ -6,7 +6,7 @@ export default function ChatHeader() {
     <header className="flex items-center justify-between rounded-t-xl border-b-2 border-white bg-primary px-4 py-2 font-bold">
       <div className="flex items-center justify-start gap-2">
         <div className="rounded-full">
-          <AvatarIcon username="Joseph Monter" bg="bg-white" text="text-primary" />
+          <AvatarIcon username="Joseph Monter" className="bg-white text-primary" />
         </div>
         <div className="flex flex-col">
           <h3 className="text-xl font-semibold text-primary-content sm:text-base">Joseph Monter</h3>

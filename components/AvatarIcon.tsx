@@ -7,20 +7,15 @@ type Props = React.PropsWithChildren<{
   image?: string | null
   status?: boolean
   showStatus?: boolean
-  bg?: string
-  text?: string
   className?: string
 }>
 
-// Todo -> add sizes, add default styles.
 export default function AvatarIcon({
   username,
   image = null,
   status = false,
   showStatus = false,
-  bg = 'bg-primary',
-  text = 'text-white',
-  className,
+  className = 'bg-primary text-white',
 }: Props) {
   const avatarContent = image !== null
     ? <Image src={image} alt="Foto de perfil" />
@@ -28,7 +23,7 @@ export default function AvatarIcon({
 
   return (
     <div className={clsx('placeholder avatar', status !== null && 'relative')}>
-      <div className={clsx('h-10 w-10 rounded-full', bg, text, className)}>
+      <div className={clsx('h-10 w-10 rounded-full', className)}>
         {avatarContent}
       </div>
       {showStatus && (
