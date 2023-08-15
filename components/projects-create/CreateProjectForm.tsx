@@ -101,7 +101,7 @@ export default function CreateProjectForm({ fields, persons }: Props) {
       selectedPersons,
     },
   })
-  // TODO D -> añadir al "append" los datos que están en el estado y se deben enviar.
+
   return (
     <form className="w-full rounded-lg bg-base-100 p-4" onSubmit={handleSubmit} method="POST" action="/api/projects">
       {alert}

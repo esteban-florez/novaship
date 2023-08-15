@@ -27,7 +27,7 @@ export default function Filter({ active, onInput, onTabClick }: Props) {
           </Button>
         </div>
       </div>
-      <div className="flex">
+      <div className="flex text-sm sm:text-base">
         <NavButton isActive={active === 'All'} icon={<ListBulletIcon className="h-6 w-6" />} onClick={() => { onTabClick('All') }}>
           Todos
         </NavButton>

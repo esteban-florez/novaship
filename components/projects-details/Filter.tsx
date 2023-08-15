@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 // DRY Filter
 type Props = React.PropsWithChildren<{
-  projectId: string
+  projectId: string | ''
 }>
 
 export default function Filter({ projectId }: Props) {

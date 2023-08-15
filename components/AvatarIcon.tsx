@@ -12,6 +12,7 @@ type Props = React.PropsWithChildren<{
   className?: string
 }>
 
+// Todo -> add sizes, add default styles.
 export default function AvatarIcon({
   username,
   image = null,
@@ -21,7 +22,9 @@ export default function AvatarIcon({
   text = 'text-white',
   className,
 }: Props) {
-  const avatarContent = image !== null ? <Image src={image} alt="Foto de perfil" /> : <span>{capitalizeString(username, 2)}</span>
+  const avatarContent = image !== null
+    ? <Image src={image} alt="Foto de perfil" />
+    : <span>{capitalizeString(username, 2)}</span>
 
   return (
     <div className={clsx('placeholder avatar', status !== null && 'relative')}>

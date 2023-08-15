@@ -7,8 +7,6 @@ interface Props {
   onInput?: (event: SelectOnInputEvent | OnInputEvent) => void
 }
 
-// DEV
-// Filtrar por visibilidad no funciona
 export default function FilterModal({ onInput }: Props) {
   return (
     <Modal
@@ -23,7 +21,7 @@ export default function FilterModal({ onInput }: Props) {
       acceptColor="SECONDARY"
       acceptIcon={<AdjustmentsHorizontalIcon className="h-5 w-5" />}
     >
-      <Select name="privacity" label="Privacidad" onInput={onInput}>
+      <Select name="visibility" label="Privacidad" onInput={onInput}>
         <option value="ALL">Todos</option>
         <option value="PRIVATE">Privado</option>
         <option value="PUBLIC">Público</option>

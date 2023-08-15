@@ -24,6 +24,7 @@ interface SharedInputProps {
 type UseSubmitResult = null | 'loading' | ApiResponseBody
 
 type TabProp = 'All' | 'Mine'
+type TeamGroupTab = 'members' | 'add'
 
 interface ApiResponseBody {
   errorType?: keyof typeof ERRORS
