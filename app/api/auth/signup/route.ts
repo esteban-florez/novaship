@@ -23,7 +23,6 @@ export async function POST(request: NextRequest) {
         providerUserId: email,
         password,
       },
-      // DEV
       attributes: { type },
     })
 

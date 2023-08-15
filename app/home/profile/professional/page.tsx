@@ -1,5 +1,5 @@
 import ProfessionalForm from '@/components/profile/professional/ProfessionalForm'
-// DEV
+// TODO
 // import { auth } from '@/lib/auth/pages'
 // import prisma from '@/prisma/client'
 import { type Metadata } from 'next'

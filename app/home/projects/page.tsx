@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export const revalidate = 10
 
-// TODO -> Añadir paginaction
+// TODO -> Añadir pagination
 // TODO -> Mantener la pestaña escogida al regresar a /projects
 export default async function ProjectsPage() {
   const activeUser = await auth.person()

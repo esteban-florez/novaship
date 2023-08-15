@@ -16,7 +16,7 @@ interface Props {
   tab: TabProp
 }
 
-// Todo -> pagination
+// TODO -> pagination
 export default function List({ projects, visibility, members, title, tab }: Props) {
   if (projects.length === 0) {
     return (

@@ -6,7 +6,7 @@ import TitleSection from './TitleSection'
 import ButtonSection from '../ButtonSection'
 import AboutMeSection from './AboutMeSection'
 import ExperienceSection from './ExperienceSection'
-// DEV
+// TODO
 // import { type Profile } from '@prisma/client'
 import ScheduleSection from './ScheduleSection'
 import Link from 'next/link'
