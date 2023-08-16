@@ -9,7 +9,7 @@ type Props = React.PropsWithChildren<{
   onInput: () => void
 }>
 
-export default function Radio({ name, value, label, children, icon, active = false, onInput }: Props) {
+export default function SignupRadio({ name, value, label, children, icon, active = false, onInput }: Props) {
   return (
     <>
       <label className={clsx('label mb-2 cursor-pointer rounded-lg border border-gray-400 p-4 transition-all', active && 'border-transparent ring-4 ring-primary')}>

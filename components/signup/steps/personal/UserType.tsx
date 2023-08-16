@@ -1,4 +1,4 @@
-import Radio from '@/components/forms/inputs/Radio'
+import SignupRadio from '@/components/signup/SignupRadio'
 import { UserType as UserTypeEnum } from '@prisma/client'
 import { userTypes as translation } from '@/lib/translations'
 import { BuildingLibraryIcon, BuildingOffice2Icon, UserIcon } from '@heroicons/react/24/outline'
@@ -40,7 +40,7 @@ export default function UserType({ userType, setUserType }: Props) {
     const label = translation[type]
     const { description, icon } = radios[type]
     return (
-      <Radio
+      <SignupRadio
         name="type" key={type} value={type} label={label} icon={icon}
         active={type === userType}
         onInput={() => {
@@ -49,7 +49,7 @@ export default function UserType({ userType, setUserType }: Props) {
         }}
       >
         {description}
-      </Radio>
+      </SignupRadio>
     )
   })
 

@@ -15,11 +15,14 @@ type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 
 type VisibilityFilter = 'PRIVATE' | 'PUBLIC' | 'ALL'
 
-interface SharedInputProps {
-  name: string
+type SharedInputProps = {
   label?: string
   className?: string
   value?: string
+} & UseInputProps
+
+interface UseInputProps {
+  name: string
   register?: (name, config?: RegisterOptions) => object
   config?: RegisterOptions
   errors?: FieldErrors

@@ -1,5 +1,7 @@
+import useInput from '@/lib/hooks/useInput'
 import CustomLabel from './CustomLabel'
 import { type SharedInputProps } from '@/lib/types'
+import InputError from '../InputError'
 
 type Props = React.PropsWithChildren<{
   onInput?: (event: SelectOnInputEvent) => void
@@ -26,15 +28,13 @@ function getSelectOptions(options: SelectOptionsConfig | undefined) {
     .map(type => ({ label: options.translation[type], value: type }))
 }
 
-// DRY 3
 export default function Select({
   name, label, children, options, register, config = {},
   value = '', noDefault = false, errors = {}, onInput,
 }: Props) {
-  config.required = config.required !== undefined ? config.required : true
-  const errorMessage = errors[name]?.message as string | undefined
-  const hasError = errorMessage !== undefined
-  const registerProps = register !== undefined ? { ...register(name, config) } : {}
+  const { registerProps, errorMessage } = useInput({
+    register, errors, name, config,
+  })
   const selectOptions = getSelectOptions(options)
 
   return (
@@ -51,11 +51,7 @@ export default function Select({
         ))}
         {children}
       </select>
-      {hasError && (
-        <p className="-mt-3 text-sm font-semibold text-error">
-          {errorMessage}
-        </p>
-      )}
+      <InputError message={errorMessage} />
     </>
   )
 }
