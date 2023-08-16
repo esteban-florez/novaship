@@ -26,7 +26,13 @@ export default function SignUpForm({ fields: fieldsData, skills: skillsData }: P
   const {
     register, formState: { errors }, alert,
     reset, trigger, serverErrors, handleSubmit,
-  } = useSubmit({ schema, append: { userType } })
+  } = useSubmit({
+    append: {
+      userType,
+      fields: fields.filter(field => field.selected),
+    },
+    schema,
+  })
 
   function goNext() {
     if (step >= 4) return

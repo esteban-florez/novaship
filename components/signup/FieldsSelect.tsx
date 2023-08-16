@@ -13,8 +13,6 @@ export default function FieldsSelect({ searchText }: Props) {
   const selectedFields = fields.filter(field => field.selected)
   const filteredFields = fields.filter(filterBySearch)
 
-  console.log(selectedFields)
-
   function filterBySearch(field: SelectableField) {
     const title = field.title.toLowerCase()
     return title.includes(searchText.toLowerCase())

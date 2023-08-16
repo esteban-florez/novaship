@@ -16,9 +16,7 @@ export default function Skills() {
         <div className="flex justify-end">
           <SearchInput />
         </div>
-        <div className="my-4 grid max-h-56 grid-cols-2 gap-x-3 gap-y-2 overflow-y-scroll overscroll-auto">
-          {/* // TODO -> aqui va el select multiple */}
-        </div>
+        <div className="my-4 grid max-h-56 grid-cols-2 gap-x-3 gap-y-2 overflow-y-scroll overscroll-auto" />
         <div className="mt-4 flex justify-between">
           <button onClick={goBack} type="button" className="btn-neutral btn">
             Volver
