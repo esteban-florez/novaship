@@ -1,8 +1,8 @@
 import { type SelectableField } from '@/lib/types'
 import FieldOption from './FieldOption'
 import { useContext } from 'react'
-import { SignUpContext } from './SignUpContext'
-import SelectedItems from '../forms/inputs/SelectedItems'
+import { SignUpContext } from '../../SignUpContext'
+import SelectedItems from '@/components/forms/inputs/SelectedItems'
 
 type Props = React.PropsWithChildren<{
   searchText: string
@@ -37,7 +37,9 @@ export default function FieldsSelect({ searchText }: Props) {
 
   return (
     <div className="my-4">
-      <SelectedItems items={selectedFields} itemsName="Áreas" onRemove={handleFieldInput} />
+      <SelectedItems
+        items={selectedFields} itemsName="Áreas" onRemove={handleFieldInput}
+      />
       <div className="grid h-60 grid-cols-2 gap-x-3 gap-y-2 overflow-y-auto overscroll-auto p-4 shadow-inner">
         {filteredFields.length !== 0
           ? filteredFields.map(field => {

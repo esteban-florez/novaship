@@ -1,7 +1,7 @@
 import SearchInput from '@/components/SearchInput'
 import { useContext, useState } from 'react'
 import { SignUpContext } from '../../SignUpContext'
-import FieldsSelect from '../../FieldsSelect'
+import FieldsSelect from './FieldsSelect'
 
 export default function Fields() {
   const { goBack, goNext, selectedFields } = useContext(SignUpContext)
