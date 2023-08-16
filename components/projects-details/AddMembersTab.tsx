@@ -1,5 +1,5 @@
 import useSubmit from '@/lib/hooks/useSubmit'
-import { type PersonOption } from '@/lib/types'
+import { type SelectablePerson } from '@/lib/types'
 import { type Fields, schema } from '@/lib/validation/schemas/persons'
 import Input from '../forms/inputs/Input'
 import SelectedMembers from '../projects-create/SelectedMembers'
@@ -9,12 +9,12 @@ import Member from './Member'
 
 interface Props {
   id: string
-  selectedPersons: PersonOption[]
-  availablePersons: PersonOption[]
-  totalPersons: PersonOption[]
+  selectedPersons: SelectablePerson[]
+  availablePersons: SelectablePerson[]
+  totalPersons: SelectablePerson[]
   inputFocus: boolean
   searchName: string
-  setTotalPersons: (totalPersons: PersonOption[]) => void
+  setTotalPersons: (totalPersons: SelectablePerson[]) => void
   setInputFocus: (value: boolean) => void
   setSearchName: (search: string) => void
 }

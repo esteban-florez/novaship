@@ -1,8 +1,8 @@
-import { type PersonOption } from '@/lib/types'
+import { type SelectablePerson } from '@/lib/types'
 import Member from '../projects-details/Member'
 
 type Props = React.PropsWithChildren<{
-  selectedPersons: PersonOption[]
+  selectedPersons: SelectablePerson[]
   removePerson: (id: string) => void
 }>
 

@@ -4,8 +4,6 @@ import messages from '../../messages'
 
 const MB_IN_BYTES = 2_097_152
 
-console.log(globalThis.File)
-
 export const base = object({
   name: string(messages.string)
     .min(4, messages.min(4))

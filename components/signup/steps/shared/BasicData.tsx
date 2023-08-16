@@ -24,7 +24,7 @@ const placeholders = {
 export default function BasicData({ userType }: Props) {
   const isPerson = userType === 'PERSON'
 
-  const { goNext, goBack, register, errors, trigger } = useContext(SignUpContext)
+  const { goNext, goBack, register, errors } = useContext(SignUpContext)
 
   async function handleNext() {
     const fieldsToValidate = ['name', 'email', 'password', 'phone', 'description']
@@ -35,11 +35,11 @@ export default function BasicData({ userType }: Props) {
       fieldsToValidate.push('rif')
     }
 
-    const valid = await trigger(fieldsToValidate)
-
-    if (valid) {
-      goNext()
-    }
+    // DEV
+    // const valid = await trigger(fieldsToValidate)
+    // if (valid) {
+    goNext()
+    // }
   }
 
   return (

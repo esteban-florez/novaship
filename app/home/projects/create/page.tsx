@@ -1,4 +1,5 @@
 import CreateProjectForm from '@/components/projects-create/CreateProjectForm'
+import collect from '@/lib/utils/collection'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 
@@ -28,19 +29,8 @@ export default async function CreateProjectPage() {
     },
   })
 
-  // DRY 4
-  const selectableFields = fields.map(field => {
-    return {
-      ...field,
-      selected: false,
-    }
-  })
-  const selectablePersons = persons.map(person => {
-    return {
-      ...person,
-      selected: false,
-    }
-  })
+  const selectableFields = collect(fields).toSelectable()
+  const selectablePersons = collect(persons).toSelectable()
 
   return (
     <div className="mx-auto px-20 py-10">

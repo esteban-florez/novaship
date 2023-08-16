@@ -3,10 +3,10 @@ import { SignUpContext } from '../../SignUpContext'
 import ImageInput from '@/components/forms/inputs/ImageInput'
 
 type Props = React.PropsWithChildren<{
-  isInstitute?: boolean
+  isPerson?: boolean
 }>
 
-export default function PhotoProfile({ isInstitute = false }: Props) {
+export default function PhotoProfile({ isPerson = false }: Props) {
   const { register, errors, goBack, goNext, trigger } = useContext(SignUpContext)
 
   async function handleNext() {
@@ -32,11 +32,11 @@ export default function PhotoProfile({ isInstitute = false }: Props) {
             Volver
           </button>
           <button
-            onClick={isInstitute ? undefined : handleNext}
-            type={isInstitute ? 'submit' : 'button'}
+            onClick={!isPerson ? undefined : handleNext}
+            type={!isPerson ? 'submit' : 'button'}
             className="btn-primary btn mt-4"
           >
-            {isInstitute ? 'Enviar' : 'Siguiente'}
+            {!isPerson ? 'Enviar' : 'Siguiente'}
           </button>
         </div>
       </div>

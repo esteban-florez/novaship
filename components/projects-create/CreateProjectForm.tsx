@@ -8,33 +8,32 @@ import Textarea from '../forms/inputs/Textarea'
 import { type Fields, schema } from '@/lib/validation/schemas/project'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { useState } from 'react'
-import { type FieldOption, type PersonOption } from '@/lib/types'
-import SelectedOptions from './SelectedOptions'
+import { type SelectablePerson, type SelectableField } from '@/lib/types'
 import SelectedMembers from './SelectedMembers'
 import clsx from 'clsx'
+import SelectedItems from '../forms/inputs/SelectedItems'
 
 interface Props {
-  fields: FieldOption[]
-  persons: PersonOption[]
+  fields: SelectableField[]
+  persons: SelectablePerson[]
 }
 
-export default function CreateProjectForm({ fields, persons }: Props) {
-  // TODO D -> remover duplicación de código
+export default function CreateProjectForm({ fields: fieldsData, persons: personsData }: Props) {
   // DRY 4
-  // DEV, cuando se selecciona una de las opciones de privacity no quita el error
-  const [totalFields, setTotalFields] = useState<FieldOption[]>(fields)
-  const [totalPersons, setTotalPersons] = useState<PersonOption[]>(persons)
+  // TODO -> cuando se selecciona una de las opciones de privacity no quita el error
+  const [fields, setFields] = useState(fieldsData)
+  const [persons, setPersons] = useState(personsData)
   const [searchName, setSearchName] = useState('')
   const [inputFocus, setInputFocus] = useState(false)
 
-  const selectedFields = totalFields.filter(field => field.selected)
-  const availableFields = totalFields.filter(field => !field.selected)
+  const selectedFields = fields.filter(field => field.selected)
+  const availableFields = fields.filter(field => !field.selected)
 
-  const selectedPersons = totalPersons.filter(person => person.selected)
-  const availablePersons = totalPersons.filter(person => !person.selected)
+  const selectedPersons = persons.filter(person => person.selected)
+  const availablePersons = persons.filter(person => !person.selected)
 
   function addField(id: string) {
-    const newFields = totalFields.map(field => {
+    const newFields = fields.map(field => {
       if (field.id !== id) return field
 
       return {
@@ -43,11 +42,11 @@ export default function CreateProjectForm({ fields, persons }: Props) {
       }
     })
 
-    setTotalFields(newFields)
+    setFields(newFields)
   }
 
   function removeField(id: string) {
-    const newFields = totalFields.map(field => {
+    const newFields = fields.map(field => {
       if (field.id !== id) return field
 
       return {
@@ -56,11 +55,11 @@ export default function CreateProjectForm({ fields, persons }: Props) {
       }
     })
 
-    setTotalFields(newFields)
+    setFields(newFields)
   }
 
   function addPerson(id: string) {
-    const newPersons = totalPersons.map(person => {
+    const newPersons = persons.map(person => {
       if (person.id !== id) return person
 
       return {
@@ -69,11 +68,11 @@ export default function CreateProjectForm({ fields, persons }: Props) {
       }
     })
 
-    setTotalPersons(newPersons)
+    setPersons(newPersons)
   }
 
   function removePerson(id: string) {
-    const newPersons = totalPersons.map(person => {
+    const newPersons = persons.map(person => {
       if (person.id !== id) return person
 
       return {
@@ -82,7 +81,7 @@ export default function CreateProjectForm({ fields, persons }: Props) {
       }
     })
 
-    setTotalPersons(newPersons)
+    setPersons(newPersons)
   }
 
   function handleInputEvent(event: OnInputEvent) {
@@ -125,7 +124,7 @@ export default function CreateProjectForm({ fields, persons }: Props) {
               ))}
             </Select>
           )}
-        <SelectedOptions selectedOptions={selectedFields} removeOption={removeField} />
+        <SelectedItems items={selectedFields} itemsName="Campos" onRemove={removeField} />
       </FormSection>
 
       <FormSection title="Miembros del proyecto" description="Añada algunos colaboradores a su proyecto para llevarlo a cabo.">

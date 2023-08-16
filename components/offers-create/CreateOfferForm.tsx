@@ -5,19 +5,17 @@ import FormSection from '@/components/forms/FormSection'
 import Input from '@/components/forms/inputs/Input'
 import Select from '@/components/forms/inputs/Select'
 import Textarea from '@/components/forms/inputs/Textarea'
-import SelectedSkills from './SelectedSkills'
 import Link from 'next/link'
-import { type SkillOption } from '@/lib/types'
+import { type SelectableSkill } from '@/lib/types'
+import SelectedItems from '../forms/inputs/SelectedItems'
 
-export default function CreateOfferForm() {
+type Props = React.PropsWithChildren<{
+  skills: SelectableSkill[]
+}>
+
+export default function CreateOfferForm({ skills: skillsData }: Props) {
   // DRY 4
-  const [skills, setSkills] = useState<SkillOption[]>([
-    { id: '8293-3819-1234', title: 'Programación', selected: false },
-    { id: '2903-4850-1282', title: 'JavaScript', selected: false },
-    { id: '8349-2309-4052', title: 'Bases de datos', selected: false },
-    { id: '2930-9485-1234', title: 'React', selected: false },
-    { id: '7890-1234-5324', title: 'Diseño', selected: false },
-  ])
+  const [skills, setSkills] = useState(skillsData)
   const selectedSkills = skills.filter(skill => skill.selected)
   const availableSkills = skills.filter(skill => !skill.selected)
 
@@ -75,7 +73,8 @@ export default function CreateOfferForm() {
         <a className="btn-link self-start font-semibold" href="/home/profile/company">Registrar una nueva empresa</a>
       </FormSection>
       <FormSection title="Habilidades requeridas" description="Elige las habilidades necesarias para desempeñar el trabajo.">
-        {availableSkills.length > 0 &&
+        <div>
+          {availableSkills.length > 0 &&
           (
             <Select name="skills" label="Habilidades" noDefault>
               {availableSkills.map(skill => (
@@ -85,8 +84,7 @@ export default function CreateOfferForm() {
               ))}
             </Select>
           )}
-        <div className="flex flex-wrap items-center gap-x-1 gap-y-2">
-          <SelectedSkills selectedSkills={selectedSkills} removeSkill={removeSkill} />
+          <SelectedItems items={selectedSkills} itemsName="Habilidades" onRemove={removeSkill} />
         </div>
       </FormSection>
       <FormSection title="Horario de trabajo" description="Especifica los detalles del horario de trabajo así como la modalidad.">

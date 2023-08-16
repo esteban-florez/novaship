@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { type FieldOption } from '@/lib/types'
 import { type UserType as UserTypeEnum } from '@prisma/client'
 import Steps from './Steps'
 import useSubmit from '@/lib/hooks/useSubmit'
@@ -10,13 +9,17 @@ import { schema as nonPersonSchema } from '@/lib/validation/schemas/signup/non-p
 import { SignUpContext } from './SignUpContext'
 import clsx from 'clsx'
 import UserType from './steps/personal/UserType'
+import { type SelectableField, type SelectableSkill } from '@/lib/types'
 
 type Props = React.PropsWithChildren <{
-  fields: FieldOption[]
+  fields: SelectableField[]
+  skills: SelectableSkill[]
 }>
 
-export default function SignUpForm({ fields }: Props) {
+export default function SignUpForm({ fields: fieldsData, skills: skillsData }: Props) {
   // TODO -> corregir los textos de este formulario
+  const [fields, setFields] = useState(fieldsData)
+  const [skills, setSkills] = useState(skillsData)
   const [userType, setUserType] = useState<UserTypeEnum | null>(null)
   const [step, setStep] = useState<number>(0)
   const schema = userType === 'PERSON' ? personSchema : nonPersonSchema
@@ -35,17 +38,29 @@ export default function SignUpForm({ fields }: Props) {
     setStep(step - 1)
   }
 
+  const providerValue = {
+    register,
+    errors,
+    goBack,
+    goNext,
+    trigger,
+    reset,
+    fields,
+    setFields,
+    skills,
+    setSkills,
+  }
+
   return (
     <form className="mx-auto" onSubmit={handleSubmit} method="POST" action="/api/auth/signup">
       {alert}
       {serverErrors}
-      <SignUpContext.Provider value={{ register, errors, goBack, goNext, trigger, reset }}>
+      <SignUpContext.Provider value={providerValue}>
         <section className={clsx(step !== 0 && 'hidden')}>
           <UserType userType={userType} setUserType={setUserType} />
         </section>
         {userType !== null && (
           <Steps
-            fields={fields}
             userType={userType}
             step={step}
           />
