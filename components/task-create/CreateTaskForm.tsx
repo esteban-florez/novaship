@@ -5,6 +5,7 @@ import FormSection from '../forms/FormSection'
 import Input from '../forms/inputs/Input'
 import { type Fields, schema } from '@/lib/validation/schemas/task'
 import Link from 'next/link'
+import SelectMultiple from '../forms/inputs/SelectMultiple'
 
 export default function CreateTaskForm() {
   const {
@@ -31,6 +32,7 @@ export default function CreateTaskForm() {
           register={register}
           errors={errors}
         />
+        <SelectMultiple />
         <div className="mb-4 flex justify-between gap-2 px-4">
           {/* TODO -> que le pase el id de projects */}
           <Link href="/home/offers" className="btn-neutral btn-md btn text-base">
