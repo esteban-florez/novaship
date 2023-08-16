@@ -2,26 +2,51 @@
 // import TeamGroup from '@/components/projects-details/TeamGroup'
 import Filter from '@/components/projects-details/tasks/Filter'
 import Tasks from '@/components/projects-details/tasks/Tasks'
+// import { auth } from '@/lib/auth/pages'
+// import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Tareas',
 }
 
-export default function TasksPage() {
+interface Context {
+  params: { id: string }
+}
+
+export default async function TasksPage({ params: { id } }: Context) {
+  // const activeUser = await auth.person()
+
+  // Todo -> add redirect alert.
+  if (id === null) redirect('/home/projects')
+
+  // const project = await prisma.project.findUnique({
+  //   where: { id },
+  //   include: {
+  //     memberships: {
+  //       person: true,
+  //     },
+  //   },
+  // })
+
+  // project?.memberships.map(member => {
+  //   if (member.person.id !== activeUser.id) redirect('/home/projects')
+  // })
+
+  // const members = project.membership
+
   return (
-    <>
-      <div className="my-4 grid grid-cols-10 gap-4 px-6">
-        <div className="col-span-10 lg:col-span-7">
-          {/* <ProjectDetails project={} /> */}
-          <Filter />
-          <Tasks />
-        </div>
-        <div className="hidden gap-4 lg:col-span-3 lg:flex lg:flex-col">
-          <div className="flex h-72 flex-col gap-2 rounded-lg bg-neutral-300 p-5" />
-          {/* <TeamGroup /> */}
-        </div>
+    <div className="my-4 grid grid-cols-10 gap-4 px-6">
+      <div className="col-span-10 lg:col-span-7">
+        {/* <ProjectDetails project={} /> */}
+        <Filter />
+        <Tasks />
       </div>
-    </>
+      <div className="hidden gap-4 lg:col-span-3 lg:flex lg:flex-col">
+        <div className="flex h-72 flex-col gap-2 rounded-lg bg-neutral-300 p-5" />
+        {/* <TeamGroup /> */}
+      </div>
+    </div>
   )
 }
