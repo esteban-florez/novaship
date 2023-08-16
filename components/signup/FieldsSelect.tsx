@@ -9,8 +9,7 @@ type Props = React.PropsWithChildren<{
 }>
 
 export default function FieldsSelect({ searchText }: Props) {
-  const { fields, setFields } = useContext(SignUpContext)
-  const selectedFields = fields.filter(field => field.selected)
+  const { fields, setFields, selectedFields } = useContext(SignUpContext)
   const filteredFields = fields.filter(filterBySearch)
 
   function filterBySearch(field: SelectableField) {

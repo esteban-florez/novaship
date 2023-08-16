@@ -22,6 +22,8 @@ export default function SignUpForm({ fields: fieldsData, skills: skillsData }: P
   const [skills, setSkills] = useState(skillsData)
   const [userType, setUserType] = useState<UserTypeEnum | null>(null)
   const [step, setStep] = useState<number>(0)
+
+  const selectedFields = fields.filter(field => field.selected)
   const schema = userType === 'PERSON' ? personSchema : nonPersonSchema
   const {
     register, formState: { errors }, alert,
@@ -29,7 +31,7 @@ export default function SignUpForm({ fields: fieldsData, skills: skillsData }: P
   } = useSubmit({
     append: {
       userType,
-      fields: fields.filter(field => field.selected),
+      fields: selectedFields,
     },
     schema,
   })
@@ -52,6 +54,7 @@ export default function SignUpForm({ fields: fieldsData, skills: skillsData }: P
     trigger,
     reset,
     fields,
+    selectedFields,
     setFields,
     skills,
     setSkills,

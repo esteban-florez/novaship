@@ -10,6 +10,7 @@ interface SignUpContextType {
   reset: () => void
   trigger: (fields?: string | string[]) => Promise<boolean>
   fields: SelectableField[]
+  selectedFields: SelectableField[]
   setFields: (fields: SelectableField[]) => void
   skills: SelectableSkill[]
   setSkills: (skills: SelectableSkill[]) => void

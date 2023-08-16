@@ -4,12 +4,11 @@ import { SignUpContext } from '../../SignUpContext'
 import FieldsSelect from '../../FieldsSelect'
 
 export default function Fields() {
-  const { goBack, goNext, fields } = useContext(SignUpContext)
-  const selectedCount = fields.filter(field => field.selected).length
+  const { goBack, goNext, selectedFields } = useContext(SignUpContext)
   const [searchText, setSearchText] = useState('')
 
   function handleNext() {
-    if (selectedCount >= 1) {
+    if (selectedFields.length >= 1) {
       goNext()
     }
   }
@@ -32,7 +31,7 @@ export default function Fields() {
           <button onClick={goBack} type="button" className="btn-neutral btn">
             Volver
           </button>
-          <button onClick={handleNext} disabled={selectedCount < 1} type="button" className="btn-primary btn">
+          <button onClick={handleNext} disabled={selectedFields.length < 1} type="button" className="btn-primary btn">
             Siguiente
           </button>
         </div>
