@@ -1,4 +1,4 @@
-import { type FieldOption } from '@/lib/types'
+import { type FieldSelectable } from '@/lib/types'
 import { type UserType } from '@prisma/client'
 // TODO -> en todos estos componentes Step que se importan aquí, hay mucha repetición de JSX, se pueden hacer componentes "template".
 import PhotoProfile from './steps/shared/PhotoProfile'
@@ -10,7 +10,7 @@ import BasicData from './steps/shared/BasicData'
 
 type Props = React.PropsWithChildren<{
   step: number
-  fields: FieldOption[]
+  fields: FieldSelectable[]
   userType: UserType
 }>
 
