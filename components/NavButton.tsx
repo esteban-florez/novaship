@@ -9,8 +9,8 @@ export default function NavButton({ isActive = false, onClick, children }: Props
   return (
     <Button
       style="TAB"
-      color={isActive ? 'WHITE' : 'GHOST'}
-      hover={isActive ? 'SECONDARY' : 'WHITE'}
+      color={isActive ? 'PRIMARY' : 'WHITE'}
+      hover={isActive ? 'WHITE' : 'PRIMARY'}
       onClick={onClick}
     >
       {children}
