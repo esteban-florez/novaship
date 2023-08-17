@@ -24,6 +24,8 @@ const messages = {
   max: (num: number) => m(`Debe tener máximo ${num} caracteres.`),
   minNumber: (num: number) => m(`La cantidad mínima es ${num}`),
   maxNumber: (num: number) => m(`La cantidad máxima es ${num}`),
+  minArray: (num: number) => m(`La cantidad mínima es ${num}`),
+  maxArray: (num: number) => m(`La cantidad máxima es ${num}`),
   minDate: (date: Date) => m(`La fecha mínima es ${format(date)}.`),
   maxDate: (date: Date) => m(`La fecha máxima es ${format(date)}.`),
 }

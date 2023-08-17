@@ -14,7 +14,7 @@ type Props = React.PropsWithChildren<{
   limit?: number
   menuOnTop?: boolean
   defaultValue?: string[]
-  config?: RegisterOptions
+  config?: Omit<RegisterOptions, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
 }>
 
 export default function SelectMultiple({

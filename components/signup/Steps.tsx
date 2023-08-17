@@ -20,14 +20,14 @@ export default function Steps({
   const stepTwo = isPerson ? <Fields /> : <RifStep />
   const stepThree = isPerson
     ? <Skills />
-    : <PhotoProfile key={2} isPerson={false} />
+    : <PhotoProfile isPerson={false} />
 
   const steps = [
     <BasicData key={0} userType={userType} />,
     stepTwo,
     stepThree,
-    <PhotoProfile key={2} isPerson={isPerson} />,
-    <Schedule key={3} />,
+    <PhotoProfile key={3} isPerson={isPerson} />,
+    <Schedule key={4} />,
   ] as const
 
   return (
