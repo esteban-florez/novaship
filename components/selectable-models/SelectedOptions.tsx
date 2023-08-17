@@ -1,9 +1,9 @@
-import { type FieldSelectable, type SkillSelectable } from '@/lib/types'
+import { type SelectableSkill, type SelectableField } from '@/lib/types'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 
 type Props = React.PropsWithChildren<{
-  selectedOptions: FieldSelectable[] | SkillSelectable[]
+  selectedOptions: SelectableField[] | SelectableSkill[]
   removeOption: (id: string) => void
 }>
 

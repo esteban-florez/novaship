@@ -1,6 +1,6 @@
 import prisma from '@/prisma/client'
-import { type FieldOption, type FieldSelectable, type OfferOption, type OfferSelectable, type PersonOption, type PersonSelectable, type SelectableOption, type SkillOption, type SkillSelectable } from '../types'
 import addSelectedProp from '../selectable'
+import { type OptionField, type OptionPerson, type OptionSkill, type SelectableField, type SelectableOption, type SelectablePerson, type SelectableSkill } from '../types'
 
 interface Props {
   arr: SelectableOption[] | undefined
@@ -30,7 +30,7 @@ export default async function SelectableFields<T>({ arr, model, order = 'asc', s
       },
     })
 
-    data = addSelectedProp<FieldOption>(fields, selected) as FieldSelectable[]
+    data = addSelectedProp<OptionField>(fields, selected) as SelectableField[]
   }
 
   if (model === 'Skill') {
@@ -49,7 +49,7 @@ export default async function SelectableFields<T>({ arr, model, order = 'asc', s
       },
     })
 
-    data = addSelectedProp<SkillOption>(skills, selected) as SkillSelectable[]
+    data = addSelectedProp<OptionSkill>(skills, selected) as SelectableSkill[]
   }
 
   if (model === 'Person') {
@@ -69,26 +69,7 @@ export default async function SelectableFields<T>({ arr, model, order = 'asc', s
       },
     })
 
-    data = addSelectedProp<PersonOption>(persons, selected) as PersonSelectable[]
-  }
-
-  if (model === 'Offer') {
-    const offers = await prisma.offer.findMany({
-      where: {
-        id: {
-          notIn: arr?.map(offer => offer.id),
-        },
-      },
-      select: {
-        id: true,
-        title: true,
-      },
-      orderBy: {
-        title: order,
-      },
-    })
-
-    data = addSelectedProp<OfferOption>(offers, selected) as OfferSelectable[]
+    data = addSelectedProp<OptionPerson>(persons, selected) as SelectablePerson[]
   }
 
   return data as T[]
