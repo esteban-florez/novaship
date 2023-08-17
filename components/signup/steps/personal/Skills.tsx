@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { SignUpContext } from '../../SignUpContext'
+// import SelectMultiple from '@/components/forms/inputs/SelectMultiple'
 
 export default function Skills() {
   const { goBack, goNext } = useContext(SignUpContext)
@@ -12,7 +13,7 @@ export default function Skills() {
         Incluye todas las habilidades que poseas para que tus talentos puedan ser vistos por las empresas.
       </p>
       <div className="mx-auto w-full pt-4">
-        {/* TODO _> select multiple */}
+        {/* <SelectMultiple /> */}
         <div className="mt-4 flex justify-between">
           <button onClick={goBack} type="button" className="btn-neutral btn">
             Volver

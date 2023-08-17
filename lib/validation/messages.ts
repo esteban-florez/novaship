@@ -8,6 +8,8 @@ const messages = {
   number: { required_error: required, invalid_type_error: 'Debe ser un número.' },
   string: { required_error: required, invalid_type_error: 'Debe ser un texto.' },
   boolean: { required_error: required, invalid_type_error: 'Debe ser verdadero o falso.' },
+  array: { required_errror: required, invalid_type_error: 'Debes seleccionar una o más opciones.' },
+  nonempty: m('Debes seleccionar al menos una opción.'),
   date: { errorMap: () => m('La fecha seleccionada es inválida.') },
   enum: { errorMap: () => messages.cuid },
   cuid: m('La opción seleccionada es inválida.'),

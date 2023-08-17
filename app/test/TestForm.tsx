@@ -6,8 +6,9 @@ import Textarea from '@/components/forms/inputs/Textarea'
 import { type Location, UserType } from '@prisma/client'
 import { userTypes } from '@/lib/translations'
 import collect from '@/lib/utils/collection'
-import { schema, type Fields } from '@/lib/validation/schemas/test'
+import { schema } from '@/lib/validation/schemas/test'
 import useSubmit from '@/lib/hooks/useSubmit'
+import SelectMultiple from '@/components/forms/inputs/select-multiple/SelectMultiple'
 
 type Props = React.PropsWithChildren<{
   locations: Location[]
@@ -19,8 +20,9 @@ export default function TestForm({ locations }: Props) {
     register,
     handleSubmit,
     serverErrors,
+    control,
     formState: { errors },
-  } = useSubmit<Fields>({ schema, refreshOnSuccess: true })
+  } = useSubmit({ schema, refreshOnSuccess: true })
 
   return (
     <form className="p-8" action="/api/test" method="POST" onSubmit={handleSubmit}>
@@ -60,6 +62,20 @@ export default function TestForm({ locations }: Props) {
           register={register} name="locationId"
           options={{
             type: 'rows', data: collect(locations).toOptions(),
+          }}
+        />
+      </div>
+      <div className="form-control">
+        <SelectMultiple
+          control={control}
+          label="Selecciona varios:"
+          name="multiple"
+          menuOnTop
+          itemsName="Cosas"
+          limit={5}
+          options={{
+            type: 'rows',
+            data: collect(locations).toOptions(),
           }}
         />
       </div>

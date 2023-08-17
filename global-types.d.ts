@@ -10,11 +10,13 @@ type OnInputEvent = React.BaseSyntheticEvent<InputEvent, HTMLInputElement, HTMLI
 
 type SelectOnInputEvent = React.BaseSyntheticEvent<InputEvent, HTMLSelectElement, HTMLSelectElement>
 
+type SelectOptionsArray = Array<{ value: string, label: string }>
+
 type SelectOptionsConfig = {
   type: 'enum'
   data: Rec
   translation: Rec
 } | {
   type: 'rows'
-  data: Array<{ value: string, label: string }>
+  data: SelectOptionsArray
 }
