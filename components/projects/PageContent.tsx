@@ -47,11 +47,11 @@ export default function PageContent({ projects, personalProjects }: Props) {
   }
 
   return (
-    <>
+    <div className="px-4">
       <Filter active={tab} onInput={handleChange} onTabClick={handleChangeTab} />
       <section className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg rounded-tl-none bg-white p-4">
         <List projects={tab === 'All' ? projects : personalProjects} tab={tab} visibility={visibility} members={members} title={title} />
       </section>
-    </>
+    </div>
   )
 }

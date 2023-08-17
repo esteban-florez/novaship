@@ -62,7 +62,5 @@ export default async function ProjectPage({ params: { id } }: Context) {
     }
   })
 
-  return (
-    <PageContent owner={activeUser} project={project} persons={selectablePersons} />
-  )
+  return <PageContent owner={activeUser} project={project} persons={selectablePersons} />
 }

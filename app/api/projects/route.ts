@@ -6,7 +6,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { url } from '@/lib/utils/url'
 
 export async function POST(request: NextRequest) {
-  // TODO -> y que pasa si el proyecto lo crea una empresa?
+  // TODO -> Validar que tipo de usuario hace la petición.
   let data
   try {
     data = await request.json()
