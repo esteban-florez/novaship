@@ -1,4 +1,3 @@
-import { type FieldSelectable } from '@/lib/types'
 import { type UserType } from '@prisma/client'
 import PhotoProfile from './steps/shared/PhotoProfile'
 import Fields from './steps/personal/Fields'
@@ -10,7 +9,6 @@ import Skills from './steps/personal/Skills'
 
 type Props = React.PropsWithChildren<{
   step: number
-  fields: FieldSelectable[]
   userType: UserType
 }>
 
@@ -22,14 +20,14 @@ export default function Steps({
   const stepTwo = isPerson ? <Fields /> : <RifStep />
   const stepThree = isPerson
     ? <Skills />
-    : <PhotoProfile key={2} isPerson={false} />
+    : <PhotoProfile isPerson={false} />
 
   const steps = [
     <BasicData key={0} userType={userType} />,
     stepTwo,
     stepThree,
-    <PhotoProfile key={2} isPerson={isPerson} />,
-    <Schedule key={3} />,
+    <PhotoProfile key={3} isPerson={isPerson} />,
+    <Schedule key={4} />,
   ] as const
 
   return (

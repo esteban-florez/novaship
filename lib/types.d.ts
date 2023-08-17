@@ -2,6 +2,7 @@ import { type FieldErrors, type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
 import { type Field, type Skill } from '@prisma/client'
 
+// Todo -> Remover tipos sin usar
 type SkillOption = Pick<Skill, 'id' | 'title'>
 type FieldOption = Pick<Field, 'id' | 'title'>
 type PersonOption = Pick<Person, 'id' | 'name' | 'email'>

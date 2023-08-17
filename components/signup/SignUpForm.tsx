@@ -19,14 +19,13 @@ type Props = React.PropsWithChildren <{
 export default function SignUpForm({ fields: fieldsData, skills }: Props) {
   // TODO -> corregir los textos de este formulario
   const [fields, setFields] = useState(fieldsData)
-  // const [skills, setSkills] = useState(skillsData)
   const [userType, setUserType] = useState<UserTypeEnum | null>(null)
   const [step, setStep] = useState<number>(0)
 
   const selectedFields = fields.filter(field => field.selected)
   const schema = userType === 'PERSON' ? personSchema : nonPersonSchema
   const {
-    register, formState: { errors }, alert,
+    register, formState: { errors }, alert, control,
     reset, trigger, serverErrors, handleSubmit,
   } = useSubmit({
     append: {
@@ -57,7 +56,7 @@ export default function SignUpForm({ fields: fieldsData, skills }: Props) {
     selectedFields,
     setFields,
     skills,
-    // setSkills,
+    control,
   }
 
   return (
@@ -70,7 +69,6 @@ export default function SignUpForm({ fields: fieldsData, skills }: Props) {
         </section>
         {userType !== null && (
           <Steps
-            fields={fields}
             userType={userType}
             step={step}
           />

@@ -7,7 +7,6 @@ interface Props {
   setTab: (tab: TeamGroupTab) => void
 }
 
-// Check
 export default function TeamGroupTabs({ tab, setTab }: Props) {
   return (
     <div className="flex flex-col sm:flex-row">
