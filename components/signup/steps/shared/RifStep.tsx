@@ -9,7 +9,7 @@ export default function RifStep() {
       <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Valida tu <span className="text-primary">éxito</span>!
       </h2>
-      <p className="text-base">
+      <p>
         Sube una imagen de tu RIF. Esto dará un mayor grado de validez a tu registro.
       </p>
       <div className="mx-auto w-full pt-4">

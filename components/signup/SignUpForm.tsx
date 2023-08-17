@@ -16,10 +16,10 @@ type Props = React.PropsWithChildren <{
   skills: SelectableSkill[]
 }>
 
-export default function SignUpForm({ fields: fieldsData, skills: skillsData }: Props) {
+export default function SignUpForm({ fields: fieldsData, skills }: Props) {
   // TODO -> corregir los textos de este formulario
   const [fields, setFields] = useState(fieldsData)
-  const [skills, setSkills] = useState(skillsData)
+  // const [skills, setSkills] = useState(skillsData)
   const [userType, setUserType] = useState<UserTypeEnum | null>(null)
   const [step, setStep] = useState<number>(0)
 
@@ -57,7 +57,7 @@ export default function SignUpForm({ fields: fieldsData, skills: skillsData }: P
     selectedFields,
     setFields,
     skills,
-    setSkills,
+    // setSkills,
   }
 
   return (

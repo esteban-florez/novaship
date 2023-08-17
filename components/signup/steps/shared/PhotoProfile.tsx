@@ -22,7 +22,7 @@ export default function PhotoProfile({ isPerson = false }: Props) {
       <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Ponle <span className="text-primary">cara</span> a tu <span className="text-secondary">perfil</span>!
       </h2>
-      <p className="text-base">
+      <p>
         La primera impresión cuenta, sube una foto que transmita confianza y profesionalismo.
       </p>
       <div className="mx-auto w-full pt-4">

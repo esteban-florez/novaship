@@ -58,7 +58,7 @@ export default function UserType({ userType, setUserType }: Props) {
       <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Sé <span className="text-primary">parte</span> de nuestra <span className="text-secondary">plataforma</span>!
       </h2>
-      <p className="text-base">
+      <p>
         Asegurate de seleccionar el tipo de usuario que mejor se adapte a tí.
       </p>
       <section className="mx-auto w-full pt-4">

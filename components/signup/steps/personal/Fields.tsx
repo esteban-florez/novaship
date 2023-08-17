@@ -18,7 +18,7 @@ export default function Fields() {
       <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Elige las <span className="text-primary">áreas</span> que sea relevantes para ti!
       </h2>
-      <p className="text-base">
+      <p>
         Para ofrecer una mejor experiencia necesitamos conocer las áreas en las que te desempeñas.
       </p>
       <div className="mx-auto w-full pt-4">

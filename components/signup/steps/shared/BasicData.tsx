@@ -47,7 +47,7 @@ export default function BasicData({ userType }: Props) {
       <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Estamos <span className="text-primary">interesados</span> en saber más sobre <span className="text-secondary">ti</span>!
       </h2>
-      <p className="text-base">
+      <p>
         Ingresa los datos básicos para personalizar tu experiencia en la aplicación.
       </p>
       <section className="mx-auto w-full pt-4">

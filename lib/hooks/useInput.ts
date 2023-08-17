@@ -1,6 +1,6 @@
 import { type UseInputProps } from '../types'
 
-type RequiredProps = Required<Pick<UseInputProps, 'config' | 'errors' | 'name'>>
+type RequiredProps = Required<Omit<UseInputProps, 'register'>>
 
 type Props = RequiredProps & Pick<UseInputProps, 'register'>
 

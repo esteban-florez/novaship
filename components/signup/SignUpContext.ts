@@ -13,7 +13,7 @@ interface SignUpContextType {
   selectedFields: SelectableField[]
   setFields: (fields: SelectableField[]) => void
   skills: SelectableSkill[]
-  setSkills: (skills: SelectableSkill[]) => void
+  // setSkills: (skills: SelectableSkill[]) => void
 }
 
 // @ts-expect-error -> Trust me TypeScript, this context will not be null.
