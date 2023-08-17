@@ -2,7 +2,7 @@ import CommentsColumn from './CommentsColumn'
 import Title from './Title'
 import WhoWeAreColumn from './WhoWeAreColumn'
 
-export default function AboutUsSection() {
+export default function MiddleSection() {
   return (
     <section className="border-b pb-16 pt-8 md:px-20">
       <Title>¿Por qué escogernos?</Title>

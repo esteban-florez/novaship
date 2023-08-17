@@ -28,6 +28,7 @@
 
 # Ideas
 
+- Hacer un efecto de escritura al landing-page.
 - Opciones de ver, editar y eliminar como un overlay en el elemento al hacer hover.
 - Mostrar un popup al hacer hover en los avatares de los miembros en /projects.
 - Mostrar un modal al hacer clic en el + de los mimebros en /projects.

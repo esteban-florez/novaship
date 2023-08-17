@@ -8,7 +8,7 @@ import Textarea from '../forms/inputs/Textarea'
 import { type Fields, schema } from '@/lib/validation/schemas/project'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { useState } from 'react'
-import { type FieldSelectable, type PersonSelectable } from '@/lib/types'
+import { type SelectableField, type SelectablePerson } from '@/lib/types'
 import clsx from 'clsx'
 import SelectedOptions from '../selectable-models/SelectedOptions'
 import SelectedMembers from '../selectable-models/SelectedMembers'
@@ -21,8 +21,8 @@ interface Props {
   id?: string
   method: 'POST' | 'PUT'
   action: string
-  fields: FieldSelectable[]
-  persons: PersonSelectable[]
+  fields: SelectableField[]
+  persons: SelectablePerson[]
   project?: Project & {
     person: {
       id: string
@@ -43,8 +43,8 @@ interface Props {
 }
 
 export default function ProjectForm({ id, method, action, fields, persons, project }: Props) {
-  const [totalFields, setTotalFields] = useState<FieldSelectable[]>(fields)
-  const [totalPersons, setTotalPersons] = useState<PersonSelectable[]>(persons)
+  const [totalFields, setTotalFields] = useState<SelectableField[]>(fields)
+  const [totalPersons, setTotalPersons] = useState<SelectablePerson[]>(persons)
   const [searchName, setSearchName] = useState('')
   const [inputFocus, setInputFocus] = useState(false)
   const [oldFields, setOldFields] = useState<string[]>([])
