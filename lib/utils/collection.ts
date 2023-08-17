@@ -42,6 +42,15 @@ class Collection<T> {
     return new Collection(result)
   }
 
+  toSelectable() {
+    return this.array.map(model => {
+      return {
+        ...model,
+        selected: false,
+      }
+    })
+  }
+
   toOptions() {
     return this.array.map(model => {
       if (typeof model !== 'object' || model === null) {

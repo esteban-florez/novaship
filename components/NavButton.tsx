@@ -11,9 +11,8 @@ export default function NavButton({ icon, isActive = false, onClick, children }:
   return (
     <Button
       style="TAB"
-      color={isActive ? 'WHITE' : 'GHOST'}
-      hover={isActive ? 'SECONDARY' : 'WHITE'}
-      icon={icon}
+      color={isActive ? 'PRIMARY' : 'WHITE'}
+      hover={isActive ? 'WHITE' : 'PRIMARY'}
       onClick={onClick}
     >
       {children}

@@ -1,4 +1,5 @@
 import SignUpForm from '@/components/signup/SignUpForm'
+import collect from '@/lib/utils/collection'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import Link from 'next/link'
@@ -8,19 +9,14 @@ export const metadata: Metadata = {
 }
 
 export default async function SignUpPage() {
-  const fields = await prisma.field.findMany({
-    select: {
-      id: true,
-      title: true,
-    },
-  })
-  // DRY 4
-  const selectableFields = fields.map(field => {
-    return {
-      ...field,
-      selected: false,
-    }
-  })
+  const options = {
+    select: { id: true, title: true },
+  }
+
+  const fields = await prisma.field.findMany(options)
+  const skills = await prisma.skill.findMany(options)
+  const selectableFields = collect(fields).toSelectable()
+  const selectableSkills = collect(skills).toSelectable()
 
   return (
     <>
@@ -46,7 +42,7 @@ export default async function SignUpPage() {
           </div>
         </section>
         <section className="grid w-full place-items-center p-4 lg:w-3/4">
-          <SignUpForm fields={selectableFields} />
+          <SignUpForm fields={selectableFields} skills={selectableSkills} />
         </section>
       </section>
     </>

@@ -1,6 +1,6 @@
-import { type Person, type Field, type Skill, type Offer } from '@prisma/client'
 import { type FieldErrors, type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
+import { type Field, type Skill } from '@prisma/client'
 
 type SkillOption = Pick<Skill, 'id' | 'title'>
 type FieldOption = Pick<Field, 'id' | 'title'>
@@ -14,16 +14,27 @@ type OfferSelectable = OfferOption & { selected: boolean }
 
 type SelectableOption = FieldOption | SkillOption | PersonOption | OfferOption
 
+type Selectable<T> = T & {
+  selected: boolean
+}
+
+type SelectableField = Selectable<Pick<Field, 'id' | 'title'>>
+type SelectableSkill = Selectable<Pick<Skill, 'id' | 'title'>>
+type SelectablePerson = Selectable<Pick<Person, 'id' | 'name' | 'email'>>
+
 type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE' | 'GHOST'
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 
 type VisibilityFilter = 'PRIVATE' | 'PUBLIC' | 'ALL'
 
-interface SharedInputProps {
-  name: string
+type SharedInputProps = {
   label?: string
   className?: string
   value?: string
+} & UseInputProps
+
+interface UseInputProps {
+  name: string
   register?: (name, config?: RegisterOptions) => object
   config?: RegisterOptions
   errors?: FieldErrors

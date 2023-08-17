@@ -6,7 +6,7 @@ import BiographySection from './BiographySection'
 import { useState } from 'react'
 import Toast from '@/components/Toast'
 import ButtonSection from '../ButtonSection'
-// DEV
+// TODO
 // import { type Person } from '@prisma/client'
 
 // interface Props {
@@ -61,7 +61,7 @@ export default function UserForm() {
       <BiographySection bio={bio ?? ''} /> */}
       <PersonalSection name="" />
       <ContactSection email="" phone="" />
-      <BiographySection bio="" />
+      <BiographySection />
       <ButtonSection />
     </form>
   )

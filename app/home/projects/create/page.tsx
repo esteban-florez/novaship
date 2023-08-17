@@ -1,6 +1,5 @@
 import ProjectForm from '@/components/projects/ProjectForm'
-import addSelectedProp from '@/lib/selectable'
-import { type FieldOption, type FieldSelectable, type PersonOption, type PersonSelectable } from '@/lib/types'
+import collect from '@/lib/utils/collection'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 
@@ -30,8 +29,8 @@ export default async function CreateProjectPage() {
     },
   })
 
-  const selectableFields = addSelectedProp<FieldOption>(fields) as FieldSelectable[]
-  const selectablePersons = addSelectedProp<PersonOption>(persons) as PersonSelectable[]
+  const selectableFields = collect(fields).toSelectable()
+  const selectablePersons = collect(persons).toSelectable()
 
   return (
     <ProjectForm

@@ -2,6 +2,8 @@ import { type SharedInputProps } from '@/lib/types'
 import CustomLabel from './CustomLabel'
 import clsx from 'clsx'
 import { type HTMLInputTypeAttribute } from 'react'
+import useInput from '@/lib/hooks/useInput'
+import InputError from '../InputError'
 
 type Props = React.PropsWithChildren<{
   onInput?: (event: OnInputEvent) => void
@@ -11,15 +13,13 @@ type Props = React.PropsWithChildren<{
   step?: string
 } & SharedInputProps>
 
-// DRY 3
 export default function Input({
   name, placeholder, label, register, step, config = {}, errors = {},
   type = 'text', value = '', className = '', children, onInput,
 }: Props) {
-  config.required = config.required !== undefined ? config.required : true
-  const errorMessage = errors[name]?.message as string | undefined
-  const hasError = errorMessage !== undefined
-  const registerProps = register !== undefined ? { ...register(name, config) } : {}
+  const { errorMessage, hasError, registerProps } = useInput({
+    register, config, errors, name,
+  })
 
   return (
     <>
@@ -32,11 +32,7 @@ export default function Input({
 
         />
         {children}
-        {hasError && (
-          <p className="-mt-3 text-sm font-semibold text-error">
-            {errorMessage}
-          </p>
-        )}
+        <InputError message={errorMessage} />
       </div>
     </>
   )

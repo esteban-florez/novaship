@@ -20,7 +20,6 @@ export default async function experience() {
       data: {
         name: collect(experiences.names).random().first(),
         description: collect(experiences.descriptions).random().first(),
-        phone: numbers().randomPhone(),
         role: collect(experiences.roles).random().first(),
         from: new Date(),
         to: toDate,

@@ -15,7 +15,7 @@ export default function OffersPage() {
     <>
       <Carrousel />
       <PageNav />
-      <div className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg p-4 md:columns-2 lg:columns-3 xl:rounded-tl-none xl:py-10">
+      <div className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg p-4 pt-1 md:columns-2 lg:columns-3 xl:rounded-tl-none xl:px-6">
         {offers.map((offer) => {
           return (
             <Offer

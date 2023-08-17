@@ -1,4 +1,4 @@
-import { nativeEnum, number, object, string, type z } from 'zod'
+import { array, nativeEnum, number, object, string, type z } from 'zod'
 import { UserType } from '@prisma/client'
 import { defaults } from './defaults'
 import messages from '../messages'
@@ -30,4 +30,8 @@ export const schema = object({
 
   locationId: string(messages.string)
     .cuid(messages.cuid),
+
+  multiple: array(string(), messages.array)
+    .nonempty(messages.nonempty)
+    .max(5, messages.maxNumber(5)),
 })

@@ -28,7 +28,7 @@ export default async function person() {
         name: fullname,
         email,
         phone: numbers().randomPhone(),
-        bio: collect(persons.descriptions).random().first(),
+        // description: collect(persons.descriptions).random().first(),
         ci: numbers().randomCI(),
         birth: new Date(),
         authUser: {

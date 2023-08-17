@@ -1,7 +1,30 @@
+// import prisma from '@/prisma/client'
+import { type Metadata } from 'next'
+import { redirect } from 'next/navigation'
 import CreateTaskForm from '@/components/task-create/CreateTaskForm'
 import { PlusIcon } from '@heroicons/react/24/solid'
+// import { auth } from '@/lib/auth/pages'
 
-export default function CrateTaskPage() {
+export const metadata: Metadata = {
+  title: 'Tareas',
+}
+
+interface Context {
+  params: { id: string }
+}
+
+export default async function CrateTaskPage({ params: { id } }: Context) {
+  // const activeUser = await auth.person()
+
+  // Todo -> add redirect alert.
+  if (id === null) redirect('/home/projects')
+
+  // const project = await prisma.project.findUnique({
+  //   where: {
+  //     id
+  //   }
+  // })
+
   return (
     <section className="container px-10 py-8">
       <div className="relative flex h-28 items-center rounded-t-xl bg-primary px-6 py-4 text-white shadow">

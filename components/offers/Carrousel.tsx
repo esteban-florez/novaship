@@ -21,15 +21,13 @@ export default function Carrousel() {
         >
           <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagen de fondo carrusel" className="absolute right-0 top-0 h-full w-full object-cover" />
           <div className="relative z-10 h-full w-full px-4 pt-6 backdrop-blur-sm backdrop-brightness-50 sm:px-0">
-            <div className="w-full flex-row">
-              <Content
-                title={offer.title}
-                categories={offer.categories}
-                description={offer.description}
-                owner={offer.owner}
-                ubication={offer.ubication}
-              />
-            </div>
+            <Content
+              title={offer.title}
+              categories={offer.categories}
+              description={offer.description}
+              owner={offer.owner}
+              ubication={offer.ubication}
+            />
             <div className="my-4 flex w-full flex-row items-center justify-center gap-4">
               <div className="flex rounded-lg">
                 <Btn direction="left" onClick={() => { setCurrentSlide(previousSlide) }} />

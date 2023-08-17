@@ -24,7 +24,7 @@ const placeholders = {
 export default function BasicData({ userType }: Props) {
   const isPerson = userType === 'PERSON'
 
-  const { goNext, goBack, register, errors, trigger } = useContext(SignUpContext)
+  const { goNext, goBack, register, errors } = useContext(SignUpContext)
 
   async function handleNext() {
     const fieldsToValidate = ['name', 'email', 'password', 'phone', 'description']
@@ -35,11 +35,11 @@ export default function BasicData({ userType }: Props) {
       fieldsToValidate.push('rif')
     }
 
-    const valid = await trigger(fieldsToValidate)
-
-    if (valid) {
-      goNext()
-    }
+    // DEV
+    // const valid = await trigger(fieldsToValidate)
+    // if (valid) {
+    goNext()
+    // }
   }
 
   return (
@@ -47,7 +47,7 @@ export default function BasicData({ userType }: Props) {
       <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Estamos <span className="text-primary">interesados</span> en saber más sobre <span className="text-secondary">ti</span>!
       </h2>
-      <p className="text-base">
+      <p>
         Ingresa los datos básicos para personalizar tu experiencia en la aplicación.
       </p>
       <section className="mx-auto w-full pt-4">

@@ -340,6 +340,7 @@ model Location {
   offer     Offer[]
 }
 
+// TODO -> renombrar a Category
 model Field {
   id        String    @id @default(cuid())
   title     String    @unique
