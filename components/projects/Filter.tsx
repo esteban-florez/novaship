@@ -1,5 +1,4 @@
 import { ListBulletIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
-import NavButton from '../NavButton'
 import Button from '../Button'
 import FilterModal from './FilterModal'
 import { type TabProp } from '@/lib/types'
@@ -28,12 +27,24 @@ export default function Filter({ active, onInput, onTabClick }: Props) {
         </div>
       </div>
       <div className="flex text-sm sm:text-base">
-        <NavButton isActive={active === 'All'} icon={<ListBulletIcon className="h-6 w-6" />} onClick={() => { onTabClick('All') }}>
+        <Button
+          icon={<ListBulletIcon className="h-6 w-6" />}
+          style="TAB"
+          color={active === 'All' ? 'PRIMARY' : 'WHITE'}
+          hover={active === 'All' ? 'PRIMARY' : 'WHITE'}
+          onClick={() => { onTabClick('All') }}
+        >
           Todos
-        </NavButton>
-        <NavButton isActive={active === 'Mine'} icon={<StarIcon className="h-6 w-6" />} onClick={() => { onTabClick('Mine') }}>
+        </Button>
+        <Button
+          icon={<StarIcon className="h-6 w-6" />}
+          style="TAB"
+          color={active === 'Mine' ? 'PRIMARY' : 'WHITE'}
+          hover={active === 'Mine' ? 'PRIMARY' : 'WHITE'}
+          onClick={() => { onTabClick('Mine') }}
+        >
           Mis proyectos
-        </NavButton>
+        </Button>
       </div>
     </section>
   )

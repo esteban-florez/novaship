@@ -3,7 +3,7 @@ import Archive from './Archive'
 import Filter from './Filter'
 import ProjectDetails from './ProjectDetails'
 import TeamGroup from './TeamGroup'
-import { type PersonOption } from '@/lib/types'
+import { type PersonSelectable } from '@/lib/types'
 
 interface Props {
   owner: Person
@@ -13,7 +13,7 @@ interface Props {
     }>
     person: Person | null
   }) | null
-  persons: PersonOption[]
+  persons: PersonSelectable[]
 }
 
 export default function PageContent({ owner, project, persons }: Props) {

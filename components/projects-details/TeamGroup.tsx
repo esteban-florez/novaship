@@ -6,7 +6,7 @@ import Button from '../Button'
 import { EyeIcon } from '@heroicons/react/24/outline'
 import Modal from '../Modal'
 import { useState } from 'react'
-import { type TeamGroupTab, type PersonOption } from '@/lib/types'
+import { type TeamGroupTab, type PersonSelectable } from '@/lib/types'
 import MembersTab from './MembersTab'
 import TeamGroupTabs from './TeamGroupTabs'
 import AddMembersTab from './AddMembersTab'
@@ -17,13 +17,13 @@ interface Props {
     person: Person | null
   }> | undefined
   isOwner: boolean
-  persons: PersonOption[]
+  persons: PersonSelectable[]
 }
 
 export default function TeamGroup({ id, memberships, isOwner, persons }: Props) {
   // DRY
   const membershipsCount = memberships?.length ?? 0
-  const [totalPersons, setTotalPersons] = useState<PersonOption[]>(persons)
+  const [totalPersons, setTotalPersons] = useState<PersonSelectable[]>(persons)
   const [inputFocus, setInputFocus] = useState(false)
   const [searchName, setSearchName] = useState('')
   const [tab, setTab] = useState<TeamGroupTab>('members')

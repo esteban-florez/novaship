@@ -1,20 +1,21 @@
 import useSubmit from '@/lib/hooks/useSubmit'
-import { type PersonOption } from '@/lib/types'
+import { type PersonSelectable } from '@/lib/types'
 import { type Fields, schema } from '@/lib/validation/schemas/persons'
 import Input from '../forms/inputs/Input'
-import SelectedMembers from '../projects-create/SelectedMembers'
+import SelectedMembers from '../selectable-models/SelectedMembers'
 import Button from '../Button'
 import { UserPlusIcon } from '@heroicons/react/24/solid'
 import Member from './Member'
+import { includesValue } from '@/lib/utils/text'
 
 interface Props {
   id: string
-  selectedPersons: PersonOption[]
-  availablePersons: PersonOption[]
-  totalPersons: PersonOption[]
+  selectedPersons: PersonSelectable[]
+  availablePersons: PersonSelectable[]
+  totalPersons: PersonSelectable[]
   inputFocus: boolean
   searchName: string
-  setTotalPersons: (totalPersons: PersonOption[]) => void
+  setTotalPersons: (totalPersons: PersonSelectable[]) => void
   setInputFocus: (value: boolean) => void
   setSearchName: (search: string) => void
 }
@@ -31,6 +32,7 @@ export default function AddMembersTab({
   setInputFocus,
   setSearchName,
 }: Props) {
+  // DRY 4
   function addPerson(id: string) {
     const newPersons = totalPersons.map(person => {
       if (person.id !== id) return person
@@ -84,7 +86,7 @@ export default function AddMembersTab({
 
       <div className="mt-3 max-h-60 w-full gap-2 overflow-y-auto">
         {inputFocus && availablePersons.map(person => {
-          if (searchName === '' || (searchName !== '' && Boolean(person.name.toLowerCase().includes(searchName.toLowerCase())))) {
+          if (searchName === '' || (searchName !== '' && includesValue(person.name, searchName)) || includesValue(person.email, searchName)) {
             return <Member key={person.id} name={person.name} email={person.email} action="Add" onClick={() => { addPerson(person.id) }} />
           }
 

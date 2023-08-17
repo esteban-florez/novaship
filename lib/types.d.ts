@@ -1,10 +1,18 @@
-import { type Field, type Skill } from '@prisma/client'
+import { type Person, type Field, type Skill, type Offer } from '@prisma/client'
 import { type FieldErrors, type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
 
-type SkillOption = Pick<Skill, 'id' | 'title'> & { selected: boolean }
-type FieldOption = Pick<Field, 'id' | 'title'> & { selected: boolean }
-type PersonOption = Pick<Person, 'id' | 'name' | 'email'> & { selected: boolean }
+type SkillOption = Pick<Skill, 'id' | 'title'>
+type FieldOption = Pick<Field, 'id' | 'title'>
+type PersonOption = Pick<Person, 'id' | 'name' | 'email'>
+type OfferOption = Pick<Offer, 'id' | 'title'>
+
+type SkillSelectable = SkillOption & { selected: boolean }
+type FieldSelectable = FieldOption & { selected: boolean }
+type PersonSelectable = PersonOption & { selected: boolean }
+type OfferSelectable = OfferOption & { selected: boolean }
+
+type SelectableOption = FieldOption | SkillOption | PersonOption | OfferOption
 
 type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE' | 'GHOST'
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'

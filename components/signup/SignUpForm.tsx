@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { type FieldOption } from '@/lib/types'
+import { type FieldSelectable } from '@/lib/types'
 import { type UserType as UserTypeEnum } from '@prisma/client'
 import Steps from './Steps'
 import useSubmit from '@/lib/hooks/useSubmit'
@@ -12,7 +12,7 @@ import clsx from 'clsx'
 import UserType from './steps/personal/UserType'
 
 type Props = React.PropsWithChildren <{
-  fields: FieldOption[]
+  fields: FieldSelectable[]
 }>
 
 export default function SignUpForm({ fields }: Props) {

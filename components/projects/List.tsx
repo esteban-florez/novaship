@@ -28,26 +28,22 @@ export default function List({ projects, visibility, members, title, tab }: Prop
 
   return (
     projects.map((project, i) => {
-      if (i < 10) {
-        if (
-          (title === '' || Boolean(project.title.toLowerCase().includes(title.toLowerCase()))) &&
-          (visibility === 'ALL' || project.visibility === visibility) &&
-          (members === 0 || project.memberships.length === members)
-        ) {
-          return (
-            <div key={project.id} className="mb-3 flex w-full flex-col gap-3">
-              <Card
-                id={project.id}
-                title={project.title}
-                owner={tab === 'All' ? project?.person?.name : ''}
-                status={project.visibility}
-                members={project.memberships}
-              />
-            </div>
-          )
-        }
-
-        return null
+      if (
+        (title === '' || Boolean(project.title.toLowerCase().includes(title.toLowerCase()))) &&
+        (visibility === 'ALL' || project.visibility === visibility) &&
+        (members === 0 || project.memberships.length === members)
+      ) {
+        return (
+          <div key={project.id} className="mb-3 flex w-full flex-col gap-3">
+            <Card
+              id={project.id}
+              title={project.title}
+              owner={tab === 'All' ? project?.person?.name : ''}
+              status={project.visibility}
+              members={project.memberships}
+            />
+          </div>
+        )
       }
 
       return null
