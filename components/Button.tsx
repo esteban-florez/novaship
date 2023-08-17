@@ -10,9 +10,9 @@ const className = {
   TAB: 'px-6 py-2 inline-flex justify-center items-center rounded-lg gap-x-2 font-semibold shadow-lg sm:text-lg transition-colors delay-75 duration-delay-75',
   DISABLED: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border opacity-50 cursor-not-allowed ',
   colors: {
-    PRIMARY: 'bg-primary text-primary-content',
-    SECONDARY: 'bg-secondary text-secondary-content',
-    ACCENT: 'bg-action text-accent-content',
+    PRIMARY: 'bg-primary text-primary-content border-primary',
+    SECONDARY: 'bg-secondary text-secondary-content border-secondary',
+    ACCENT: 'bg-action text-accent-content border-accent',
     CANCEL: 'bg-gray-200 text-neutral-600',
     ERROR: 'text-error',
     WHITE: 'bg-white text-neutral-600',
@@ -45,6 +45,7 @@ type Props = React.PropsWithChildren<{
 }>
 
 // DRY
+// TODO -> reemplazar las clases por clases de daisy
 export default function Button({ id = 'modal', type = 'BUTTON', icon, url = '', style, color, hover = 'EMPTY', width, isDisabled = false, onClick, children }: Props) {
   const hasWidth = width !== null
 
