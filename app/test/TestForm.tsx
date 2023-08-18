@@ -5,7 +5,6 @@ import Select from '@/components/forms/inputs/Select'
 import Textarea from '@/components/forms/inputs/Textarea'
 import { type Location, UserType } from '@prisma/client'
 import { userTypes } from '@/lib/translations'
-import collect from '@/lib/utils/collection'
 import { schema } from '@/lib/validation/schemas/test'
 import useSubmit from '@/lib/hooks/useSubmit'
 import SelectMultiple from '@/components/forms/inputs/select-multiple/SelectMultiple'
@@ -61,7 +60,7 @@ export default function TestForm({ locations }: Props) {
           label="Selecciona el loqueishon" errors={errors}
           register={register} name="locationId"
           options={{
-            type: 'rows', data: collect(locations).toOptions(),
+            type: 'rows', data: locations,
           }}
         />
       </div>
@@ -75,7 +74,7 @@ export default function TestForm({ locations }: Props) {
           limit={5}
           options={{
             type: 'rows',
-            data: collect(locations).toOptions(),
+            data: locations,
           }}
         />
       </div>

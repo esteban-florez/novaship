@@ -46,6 +46,7 @@ export default function CreateOfferForm({ skills: skillsData }: Props) {
   }
 
   return (
+    // TODO -> outdated
     <form method="POST" action="/api/offer/create" className="mb-4 w-full rounded-lg bg-base-100 p-4 pt-10" onSubmit={e => { e.preventDefault() }}>
       <FormSection title="Datos básicos" description="El nombre de la oferta, su descripción, categoría y salario serán visibles para los posibles candidatos.">
         <div className="mb-4">

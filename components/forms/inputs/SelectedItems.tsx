@@ -12,7 +12,7 @@ type Props = React.PropsWithChildren<{
 export default function SelectedItems({ items, onRemove, itemsName }: Props) {
   return (
     <div className="my-2 flex w-full flex-wrap items-center gap-x-1 gap-y-2 text-sm">
-      <p>{itemsName} seleccionadas:</p>
+      <p>{itemsName} seleccionados(as):</p>
       {items.length === 0 && (
         <span className="text-neutral-400">Ningun elemento seleccionado.</span>
       )}

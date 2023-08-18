@@ -18,5 +18,11 @@ type SelectOptionsConfig = {
   translation: Rec
 } | {
   type: 'rows'
-  data: SelectOptionsArray
+  data: Array<{
+    id: string
+    name: string
+  } | {
+    id: string
+    title: string
+  }>
 }

@@ -9,11 +9,11 @@ import { schema as nonPersonSchema } from '@/lib/validation/schemas/signup/non-p
 import { SignUpContext } from './SignUpContext'
 import clsx from 'clsx'
 import UserType from './steps/personal/UserType'
-import { type SelectableField, type SelectableSkill } from '@/lib/types'
+import { type OptionSkill, type SelectableField } from '@/lib/types'
 
 type Props = React.PropsWithChildren <{
   fields: SelectableField[]
-  skills: SelectableSkill[]
+  skills: OptionSkill[]
 }>
 
 export default function SignUpForm({ fields: fieldsData, skills }: Props) {

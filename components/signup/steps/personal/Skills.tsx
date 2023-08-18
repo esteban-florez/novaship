@@ -1,7 +1,6 @@
 import { useContext } from 'react'
 import { SignUpContext } from '../../SignUpContext'
 import SelectMultiple from '@/components/forms/inputs/select-multiple/SelectMultiple'
-import collect from '@/lib/utils/collection'
 
 export default function Skills() {
   const { goBack, goNext, control, skills, trigger } = useContext(SignUpContext)
@@ -24,7 +23,7 @@ export default function Skills() {
       </p>
       <div className="mx-auto w-full pt-4">
         <SelectMultiple
-          options={{ type: 'rows', data: collect(skills).toOptions() }}
+          options={{ type: 'rows', data: skills }}
           label="Selecciona tus habilidades (máximo 5):"
           itemsName="Habilidades"
           control={control}

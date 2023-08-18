@@ -1,4 +1,4 @@
-import { type SelectableField, type SelectableSkill } from '@/lib/types'
+import { type OptionSkill, type SelectableField } from '@/lib/types'
 import { createContext } from 'react'
 import { type Control, type FieldErrors, type RegisterOptions, type UseFormRegisterReturn } from 'react-hook-form'
 
@@ -13,7 +13,7 @@ interface SignUpContextType {
   fields: SelectableField[]
   selectedFields: SelectableField[]
   setFields: (fields: SelectableField[]) => void
-  skills: SelectableSkill[]
+  skills: OptionSkill[]
 }
 
 // @ts-expect-error -> Trust me TypeScript, this context will not be null.

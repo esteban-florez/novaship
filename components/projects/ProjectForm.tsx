@@ -43,6 +43,7 @@ interface Props {
 }
 
 export default function ProjectForm({ id, method, action, fields, persons, project }: Props) {
+  // TODO -> actualizar a select multiple sin estado
   const [totalFields, setTotalFields] = useState<SelectableField[]>(fields)
   const [totalPersons, setTotalPersons] = useState<SelectablePerson[]>(persons)
   const [searchName, setSearchName] = useState('')
@@ -172,10 +173,13 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
           <FormSection title="Información del proyecto" description="Asigne un título que explique de que trata el proyecto, así como una descripción del mismo para tener una mejor idea y por último si es público o privado.">
             <Input name="title" value={project?.title} register={register} errors={errors} label="Título" placeholder="Ej: Página web administrativa" />
             <Textarea name="description" value={project?.description} register={register} errors={errors} label="Descripción" placeholder="Ej: Página web de carácter administrativo para la empresa..." />
-            <Select name="visibility" value={project?.visibility} register={register} errors={errors} label="Selecciona la privacidad">
-              <option value="PRIVATE">Privado</option>
-              <option value="PUBLIC">Público</option>
-            </Select>
+            <Select
+              name="visibility"
+              value={project?.visibility}
+              register={register}
+              errors={errors}
+              label="Selecciona la privacidad"
+            />
           </FormSection>
 
           <FormSection title="Campos requeridos" description="Elige los campos necesarios para ser parte del proyecto.">
