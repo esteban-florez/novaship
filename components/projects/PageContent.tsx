@@ -6,20 +6,18 @@ import { type TabProp, type VisibilityFilter } from '@/lib/types'
 import { type Membership, type Person, type Project } from '@prisma/client'
 import List from './List'
 
-interface Props {
-  projects: Array<Project & {
-    person: Person | null
-    memberships: Array<Membership & {
-      person: Person
-    }>
+// DRY 18
+type Projects = Array<Project & {
+  person: Person | null
+  memberships: Array<Membership & {
+    person: Person
   }>
-  personalProjects: Array<Project & {
-    person: Person | null
-    memberships: Array<Membership & {
-      person: Person
-    }>
-  }>
-}
+}>
+
+type Props = React.PropsWithChildren<{
+  projects: Projects
+  personalProjects: Projects
+}>
 
 export default function PageContent({ projects, personalProjects }: Props) {
   const [tab, setTab] = useState<TabProp>('All')

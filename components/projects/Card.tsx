@@ -18,8 +18,8 @@ type Props = React.PropsWithChildren<{
 const stackOrder = ['z-40', 'z-30', 'z-20']
 
 export default function Card({ id, title, owner = '', status, members }: Props) {
-  const hasOwner = owner !== null && owner !== ''
-  const currentUserIsOwner = owner !== null && owner === ''
+  const hasOwner = owner !== ''
+  const currentUserIsOwner = owner === ''
 
   return (
     <section className="card flex flex-col justify-between rounded-lg border border-solid border-zinc-300 shadow sm:flex-row md:rounded-l-none lg:items-center">
