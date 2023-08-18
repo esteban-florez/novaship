@@ -12,9 +12,10 @@ import { type SelectableField, type SelectablePerson } from '@/lib/types'
 import clsx from 'clsx'
 import SelectedOptions from '../selectable-models/SelectedOptions'
 import SelectedMembers from '../selectable-models/SelectedMembers'
-import { type Project } from '@prisma/client'
+import { Visibility, type Project } from '@prisma/client'
 import Member from '../projects-details/Member'
 import { includesValue } from '@/lib/utils/text'
+import { visibilities } from '@/lib/translations'
 
 // DRY 5
 interface Props {
@@ -179,6 +180,7 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
               register={register}
               errors={errors}
               label="Selecciona la privacidad"
+              options={{ type: 'enum', data: Visibility, translation: visibilities }}
             />
           </FormSection>
 

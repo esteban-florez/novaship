@@ -29,6 +29,11 @@ export const userTypes = {
   INSTITUTE: 'Institución',
 } as const
 
+export const visibilities = {
+  PRIVATE: 'Privado',
+  PUBLIC: 'Público',
+}
+
 export const fields: Record<string, string> = {
   email: 'Correo electrónico: ',
 }
