@@ -5,6 +5,7 @@ import { type Field, type Skill } from '@prisma/client'
 type Selectable<T> = T & {
   selected: boolean
 }
+
 type OptionSkill = Pick<Skill, 'id' | 'title'>
 type OptionField = Pick<Field, 'id' | 'title'>
 type OptionPerson = Pick<Person, 'id' | 'name' | 'email'>

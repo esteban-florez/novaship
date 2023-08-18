@@ -1,6 +1,6 @@
 import ProjectForm from '@/components/projects/ProjectForm'
-import collect from '@/lib/utils/collection'
-import prisma from '@/prisma/client'
+import selectable from '@/lib/data-fetching/selectable'
+import { type SelectablePerson, type SelectableSkill } from '@/lib/types'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -8,36 +8,15 @@ export const metadata: Metadata = {
 }
 
 export default async function CreateProjectPage() {
-  const fields = await prisma.field.findMany({
-    select: {
-      id: true,
-      title: true,
-    },
-    orderBy: {
-      title: 'asc',
-    },
-  })
-
-  const persons = await prisma.person.findMany({
-    select: {
-      id: true,
-      name: true,
-      email: true,
-    },
-    orderBy: {
-      name: 'asc',
-    },
-  })
-
-  const selectableFields = collect(fields).toSelectable()
-  const selectablePersons = collect(persons).toSelectable()
+  const fields = await selectable<SelectableSkill>({ model: 'field' })
+  const persons = await selectable<SelectablePerson>({ model: 'person' })
 
   return (
     <ProjectForm
       action="/api/projects"
       method="POST"
-      fields={selectableFields}
-      persons={selectablePersons}
+      fields={fields}
+      persons={persons}
     />
   )
 }

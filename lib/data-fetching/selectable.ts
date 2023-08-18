@@ -1,23 +1,24 @@
 import prisma from '@/prisma/client'
-import { type SelectableField, type SelectableOption, type SelectablePerson, type SelectableSkill } from '../types'
 import collect from '../utils/collection'
 
 interface Props {
-  arr: SelectableOption[] | undefined
-  model: 'Field' | 'Skill' | 'Person' | 'Offer' | 'Membership'
+  model: 'field' | 'skill' | 'person'
+  excluded?: Array<{ id: string }>
   order?: 'asc' | 'desc'
 }
 
 /**
- * Se debe definir el tipo para tener autocompletado
+ * Se debe definir el tipo para tener autocompletado.
  */
-export default async function SelectableFields<T>({ arr, model, order = 'asc' }: Props): Promise<T[]> {
+export default async function selectable<T>({ excluded, model, order = 'asc' }: Props): Promise<T[]> {
   let data
-  if (model === 'Field') {
+  const excludedIds = excluded?.map(model => model.id)
+
+  if (model === 'field') {
     const fields = await prisma.field.findMany({
       where: {
         id: {
-          notIn: arr?.map(field => field.id),
+          notIn: excludedIds,
         },
       },
       select: {
@@ -29,14 +30,14 @@ export default async function SelectableFields<T>({ arr, model, order = 'asc' }:
       },
     })
 
-    data = collect(fields).toSelectable() as SelectableField[]
+    data = fields
   }
 
-  if (model === 'Skill') {
+  if (model === 'skill') {
     const skills = await prisma.skill.findMany({
       where: {
         id: {
-          notIn: arr?.map(skill => skill.id),
+          notIn: excludedIds,
         },
       },
       select: {
@@ -48,14 +49,14 @@ export default async function SelectableFields<T>({ arr, model, order = 'asc' }:
       },
     })
 
-    data = collect(skills).toSelectable() as SelectableSkill[]
+    data = skills
   }
 
-  if (model === 'Person') {
+  if (model === 'person') {
     const persons = await prisma.person.findMany({
       where: {
         id: {
-          notIn: arr?.map(person => person.id),
+          notIn: excludedIds,
         },
       },
       select: {
@@ -68,8 +69,8 @@ export default async function SelectableFields<T>({ arr, model, order = 'asc' }:
       },
     })
 
-    data = collect(persons).toSelectable() as SelectablePerson[]
+    data = persons
   }
 
-  return data as T[]
+  return collect(data as unknown[]).toSelectable() as T[]
 }

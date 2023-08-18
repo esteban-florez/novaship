@@ -1,9 +1,9 @@
 import prisma from '@/prisma/client'
-import { type Metadata, type GetServerSidePropsContext } from 'next'
+import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
 import ProjectForm from '@/components/projects/ProjectForm'
-import SelectableFields from '@/lib/handlers/selectableFields'
+import selectable from '@/lib/data-fetching/selectable'
 import { type SelectableField, type SelectablePerson } from '@/lib/types'
 import collect from '@/lib/utils/collection'
 
@@ -11,9 +11,14 @@ export const metadata: Metadata = {
   title: 'Actualizar Proyecto',
 }
 
-export default async function UpdateProjectPage({ params }: GetServerSidePropsContext) {
+interface Context {
+  params: {
+    id: string
+  }
+}
+
+export default async function UpdateProjectPage({ params: { id } }: Context) {
   const activeUser = await auth.person()
-  const id = params?.id as string
 
   if (id === null) redirect('/home/projects')
 
@@ -52,10 +57,10 @@ export default async function UpdateProjectPage({ params }: GetServerSidePropsCo
   if (project === null) redirect('/home/projects')
   if (project.personId !== activeUser.id) redirect('/home/projects')
 
-  const fields = await SelectableFields<SelectableField>({ model: 'Field', arr: project?.fields })
-  const persons = await SelectableFields<SelectablePerson>({
-    model: 'Person',
-    arr: project?.memberships.map(member => {
+  const fields = await selectable<SelectableField>({ model: 'field', excluded: project?.fields })
+  const persons = await selectable<SelectablePerson>({
+    model: 'person',
+    excluded: project?.memberships.map(member => {
       return member.person
     }),
   })

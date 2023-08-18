@@ -1,6 +1,6 @@
 import CreateOfferForm from '@/components/offers-create/CreateOfferForm'
-import collect from '@/lib/utils/collection'
-import prisma from '@/prisma/client'
+import selectable from '@/lib/data-fetching/selectable'
+import { type SelectableSkill } from '@/lib/types'
 import { PlusIcon } from '@heroicons/react/24/solid'
 import { type Metadata } from 'next'
 
@@ -9,8 +9,7 @@ export const metadata: Metadata = {
 }
 
 export default async function CreateOfferPage() {
-  const skills = await prisma.skill.findMany({ select: { id: true, title: true } })
-
+  const skills = await selectable<SelectableSkill>({ model: 'skill' })
   return (
     <section className="container px-10 py-8">
       <div className="relative flex h-28 items-center rounded-t-xl bg-primary px-6 py-4 text-white shadow">
@@ -20,7 +19,7 @@ export default async function CreateOfferPage() {
         </div>
         <img src="/coso3.webp" alt="Imagen decorativa en esquinas" className="pointer-events-none absolute left-0 top-0 h-48 w-full rounded-t-xl" />
       </div>
-      <CreateOfferForm skills={collect(skills).toSelectable()} />
+      <CreateOfferForm skills={skills} />
     </section>
   )
 }
