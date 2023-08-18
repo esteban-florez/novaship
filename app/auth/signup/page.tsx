@@ -15,8 +15,8 @@ export default async function SignUpPage() {
 
   const fields = await prisma.field.findMany(options)
   const skills = await prisma.skill.findMany(options)
-  const selectableFields = collect(fields).toSelectable(false)
-  const selectableSkills = collect(skills).toSelectable(false)
+  const selectableFields = collect(fields).toSelectable()
+  const selectableSkills = collect(skills).toSelectable()
 
   return (
     <>
