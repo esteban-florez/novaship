@@ -9,13 +9,11 @@ export default function Breadcrumbs() {
   const segments = pathname.split('/').filter(segment => segment !== '')
   const currentSegment = segments.at(-1)
 
-  const links: string[] = []
+  let link = ''
 
-  const structuredLink = (path: string) => {
-    const lastLink = links.at(-1)
-
-    lastLink != null ? links.push(lastLink.concat(`/${path}`)) : links.push(`/${path}`)
-    return links.at(-1) ?? '/home'
+  const getStructuredLink = (path: string) => {
+    link === '' ? link = '/home' : link = `${link}/${path}`
+    return link
   }
 
   return (
@@ -25,14 +23,9 @@ export default function Breadcrumbs() {
         {segments.map(segment => {
           return (
             <li key={segment} className="flex items-center before:me-3 before:ms-2 before:block before:opacity-90 before:content-['/']">
-              {segment === currentSegment && <span className="text-primary">{routes[segment]}</span>}
-              {segment !== currentSegment &&
-                <Link
-                  href={structuredLink(segment)}
-                  className="hover:text-accent hover:underline"
-                >
-                  {routes[segment]}
-                </Link>}
+              {segment === currentSegment
+                ? <span className="text-primary">{routes[segment]}</span>
+                : <Link href={getStructuredLink(segment)} className="hover:text-accent hover:underline">{routes[segment]}</Link>}
             </li>
           )
         })}
