@@ -1,11 +1,15 @@
 import prisma from '@/prisma/client'
-import { type GetServerSidePropsContext } from 'next'
+import { type Metadata, type GetServerSidePropsContext } from 'next'
 import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
 import ProjectForm from '@/components/projects/ProjectForm'
 import SelectableFields from '@/lib/handlers/selectableFields'
-import { type FieldSelectable, type PersonSelectable } from '@/lib/types'
-import addSelectedProp from '@/lib/selectable'
+import { type SelectableField, type SelectablePerson } from '@/lib/types'
+import collect from '@/lib/utils/collection'
+
+export const metadata: Metadata = {
+  title: 'Actualizar Proyecto',
+}
 
 export default async function UpdateProjectPage({ params }: GetServerSidePropsContext) {
   const activeUser = await auth.person()
@@ -48,8 +52,8 @@ export default async function UpdateProjectPage({ params }: GetServerSidePropsCo
   if (project === null) redirect('/home/projects')
   if (project.personId !== activeUser.id) redirect('/home/projects')
 
-  const fields = await SelectableFields<FieldSelectable>({ model: 'Field', arr: project?.fields })
-  const persons = await SelectableFields<PersonSelectable>({
+  const fields = await SelectableFields<SelectableField>({ model: 'Field', arr: project?.fields })
+  const persons = await SelectableFields<SelectablePerson>({
     model: 'Person',
     arr: project?.memberships.map(member => {
       return member.person
@@ -58,10 +62,10 @@ export default async function UpdateProjectPage({ params }: GetServerSidePropsCo
 
   const personsWithoutOwner = persons.filter(person => person.id !== activeUser.id)
 
-  const projectFields = addSelectedProp(project?.fields ?? [], true)
-  const projectPersons = addSelectedProp(project?.memberships.map(member => {
+  const projectFields = collect(project.fields).toSelectable(true)
+  const projectPersons = collect(project.memberships.map(member => {
     return member.person
-  }) ?? [], true)
+  })).toSelectable(true)
 
   const totalFields = [...fields, ...projectFields]
   const totalPersons = [...personsWithoutOwner, ...projectPersons]

@@ -1,18 +1,17 @@
 import prisma from '@/prisma/client'
-import addSelectedProp from '../selectable'
-import { type OptionField, type OptionPerson, type OptionSkill, type SelectableField, type SelectableOption, type SelectablePerson, type SelectableSkill } from '../types'
+import { type SelectableField, type SelectableOption, type SelectablePerson, type SelectableSkill } from '../types'
+import collect from '../utils/collection'
 
 interface Props {
   arr: SelectableOption[] | undefined
   model: 'Field' | 'Skill' | 'Person' | 'Offer' | 'Membership'
   order?: 'asc' | 'desc'
-  selected?: boolean
 }
 
 /**
  * Se debe definir el tipo para tener autocompletado
  */
-export default async function SelectableFields<T>({ arr, model, order = 'asc', selected = false }: Props): Promise<T[]> {
+export default async function SelectableFields<T>({ arr, model, order = 'asc' }: Props): Promise<T[]> {
   let data
   if (model === 'Field') {
     const fields = await prisma.field.findMany({
@@ -30,7 +29,7 @@ export default async function SelectableFields<T>({ arr, model, order = 'asc', s
       },
     })
 
-    data = addSelectedProp<OptionField>(fields, selected) as SelectableField[]
+    data = collect(fields).toSelectable(false) as SelectableField[]
   }
 
   if (model === 'Skill') {
@@ -49,7 +48,7 @@ export default async function SelectableFields<T>({ arr, model, order = 'asc', s
       },
     })
 
-    data = addSelectedProp<OptionSkill>(skills, selected) as SelectableSkill[]
+    data = collect(skills).toSelectable(false) as SelectableSkill[]
   }
 
   if (model === 'Person') {
@@ -69,7 +68,7 @@ export default async function SelectableFields<T>({ arr, model, order = 'asc', s
       },
     })
 
-    data = addSelectedProp<OptionPerson>(persons, selected) as SelectablePerson[]
+    data = collect(persons).toSelectable(false) as SelectablePerson[]
   }
 
   return data as T[]

@@ -60,12 +60,34 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
     return member.person.id
   })
 
+  // CHECK 1 -> Posible manejador de elementos seleccionados ?
+  // type HandleOptionProps<T> = {
+  //   id: string
+  //   value: boolean
+  //   options: Array<T & {
+  //     id: string
+  //   }>
+  //   setOptions: React.Dispatch<React.SetStateAction<Array<any>>>
+  // }
+
+  // function handleOption<T>({ id, value, options, setOptions }: HandleOptionProps<T>) {
+  //   if (id === null && id === undefined) return null
+
+  //   const newOptions = options.map((option: { id: string }) => {
+  //     if (option.id === id) {
+  //       return {...option, selected: value }
+  //     }
+
+  //     return option
+  //   })
+
+  //   setOptions(newOptions)
+  // }
+
   // DRY 4
   function addField(id: string) {
     const newFields = totalFields.map(field => {
       if (field.id !== id) return field
-
-      setOldFields([...oldFields.filter(value => value !== id)])
 
       return {
         ...field,
@@ -73,6 +95,7 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
       }
     })
 
+    setOldFields([...oldFields.filter(value => value !== id)])
     setTotalFields(newFields)
   }
 
@@ -142,7 +165,7 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
 
   return (
     <div className="mx-auto px-20 py-10">
-      <div className="card w-full rounded-lg bg-base-100 p-4 shadow-xl">
+      <div className="card w-full rounded-lg border border-neutral-300 bg-base-100 p-4 shadow-xl">
         <form onSubmit={handleSubmit} method="POST" action={action}>
           {serverErrors}
           {alert}
@@ -160,6 +183,12 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
               (
                 // Fix -> Despues de seleccionar una opcion el primer elemento no es seleccionable.
                 <Select name="fields" label="Campos" onInput={(e) => { addField(e.target.value) }}>
+                  {/* CHECK 1 */}
+                  {/*
+                  <Select name="fields" label="Campos" onInput={
+                    (e) => {handleOption<SelectableField>({ id: e.target.value, options: totalFields, value: true, setOptions: setTotalFields })}
+                  }>
+                */}
                   {availableFields.map(field => (
                     <option key={field.id} value={field.id}>
                       {field.title}

@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: 'Proyectos',
 }
 
+// TODO -> no parece funcionar para hacer un re-fetch.
+export const fetchCache = 'force-no-store'
+
 export const revalidate = 0
 
 // TODO -> Añadir pagination
