@@ -42,7 +42,7 @@ class Collection<T> {
     return new Collection(result)
   }
 
-  toSelectable(value: boolean) {
+  toSelectable(value = false) {
     return this.array.map(model => {
       return {
         ...model,

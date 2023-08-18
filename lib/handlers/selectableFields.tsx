@@ -29,7 +29,7 @@ export default async function SelectableFields<T>({ arr, model, order = 'asc' }:
       },
     })
 
-    data = collect(fields).toSelectable(false) as SelectableField[]
+    data = collect(fields).toSelectable() as SelectableField[]
   }
 
   if (model === 'Skill') {
@@ -48,7 +48,7 @@ export default async function SelectableFields<T>({ arr, model, order = 'asc' }:
       },
     })
 
-    data = collect(skills).toSelectable(false) as SelectableSkill[]
+    data = collect(skills).toSelectable() as SelectableSkill[]
   }
 
   if (model === 'Person') {
@@ -68,7 +68,7 @@ export default async function SelectableFields<T>({ arr, model, order = 'asc' }:
       },
     })
 
-    data = collect(persons).toSelectable(false) as SelectablePerson[]
+    data = collect(persons).toSelectable() as SelectablePerson[]
   }
 
   return data as T[]

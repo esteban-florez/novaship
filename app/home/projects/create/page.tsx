@@ -29,8 +29,8 @@ export default async function CreateProjectPage() {
     },
   })
 
-  const selectableFields = collect(fields).toSelectable(false)
-  const selectablePersons = collect(persons).toSelectable(false)
+  const selectableFields = collect(fields).toSelectable()
+  const selectablePersons = collect(persons).toSelectable()
 
   return (
     <ProjectForm
