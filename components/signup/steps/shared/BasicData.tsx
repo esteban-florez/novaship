@@ -39,8 +39,9 @@ export default function BasicData({ userType }: Props) {
 
     if (valid) {
       clearErrors(['skills', 'fields', 'image'])
-      goNext()
     }
+    // DEV
+    goNext()
   }
 
   return (

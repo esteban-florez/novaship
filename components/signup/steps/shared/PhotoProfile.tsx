@@ -2,27 +2,8 @@ import { useContext } from 'react'
 import { SignUpContext } from '../../SignUpContext'
 import ImageInput from '@/components/forms/inputs/ImageInput'
 
-type Props = React.PropsWithChildren<{
-  isPerson?: boolean
-}>
-
-export default function PhotoProfile({ isPerson = false }: Props) {
-  const { register, errors, goBack, goNext, trigger } = useContext(SignUpContext)
-
-  async function handleNext() {
-    const valid = await trigger('image')
-
-    if (valid) {
-      goNext()
-    }
-  }
-
-  function handleOmit() {
-    const input = document.querySelector('#image') as HTMLInputElement
-    input.value = ''
-
-    goNext()
-  }
+export default function PhotoProfile() {
+  const { register, errors, goBack } = useContext(SignUpContext)
 
   return (
     <>
@@ -43,18 +24,9 @@ export default function PhotoProfile({ isPerson = false }: Props) {
           <button onClick={goBack} type="button" className="btn-neutral btn mt-4">
             Volver
           </button>
-          <div className="space-x-2">
-            <button className="btn-ghost btn" onClick={handleOmit}>
-              Omitir
-            </button>
-            <button
-              onClick={!isPerson ? undefined : handleNext}
-              type={!isPerson ? 'submit' : 'button'}
-              className="btn-primary btn mt-4"
-            >
-              {!isPerson ? 'Enviar' : 'Siguiente'}
-            </button>
-          </div>
+          <button type="submit" className="btn-primary btn mt-4">
+            Enviar
+          </button>
         </div>
       </div>
     </>
