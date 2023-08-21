@@ -1,5 +1,5 @@
 import useSubmit from '@/lib/hooks/useSubmit'
-import { type PersonSelectable } from '@/lib/types'
+import { type SelectablePerson } from '@/lib/types'
 import { type Fields, schema } from '@/lib/validation/schemas/persons'
 import Input from '../forms/inputs/Input'
 import SelectedMembers from '../selectable-models/SelectedMembers'
@@ -10,17 +10,16 @@ import { includesValue } from '@/lib/utils/text'
 
 interface Props {
   id: string
-  selectedPersons: PersonSelectable[]
-  availablePersons: PersonSelectable[]
-  totalPersons: PersonSelectable[]
+  selectedPersons: SelectablePerson[]
+  availablePersons: SelectablePerson[]
+  totalPersons: SelectablePerson[]
   inputFocus: boolean
   searchName: string
-  setTotalPersons: (totalPersons: PersonSelectable[]) => void
+  setTotalPersons: (totalPersons: SelectablePerson[]) => void
   setInputFocus: (value: boolean) => void
   setSearchName: (search: string) => void
 }
 
-// TODO -> añadir y remover miembros
 export default function AddMembersTab({
   id,
   selectedPersons,
