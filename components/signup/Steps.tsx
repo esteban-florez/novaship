@@ -17,15 +17,14 @@ export default function Steps({
   // DRY -> en todos estos componentes Step que se importan aquí, hay mucha repetición de JSX, se pueden hacer componentes "template".
   const isPerson = userType === 'PERSON'
   const stepTwo = isPerson ? <Fields /> : <RifStep />
-  const stepThree = isPerson
-    ? <Skills />
-    : <PhotoProfile />
+  const stepThree = isPerson ? <Skills /> : <PhotoProfile />
+  const stepFour = isPerson ? <PhotoProfile /> : null
 
   const steps = [
     <BasicData key={0} userType={userType} />,
     stepTwo,
     stepThree,
-    <PhotoProfile key={3} />,
+    stepFour,
   ] as const
 
   return (

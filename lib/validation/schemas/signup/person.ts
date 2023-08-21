@@ -15,6 +15,3 @@ export const schema = base.merge(
       .nonempty(messages.nonempty),
   })
 )
-
-//   certification String
-//   image       String?

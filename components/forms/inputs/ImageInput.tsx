@@ -6,12 +6,12 @@ import { useEffect, useState } from 'react'
 import InputError from '../InputError'
 
 type Props = SharedInputProps & {
+  preview?: boolean
   rounded?: boolean
-  inputRef?: React.MutableRefObject<HTMLInputElement | null>
 }
 
 export default function ImageInput({
-  name, register, errors = {},
+  name, register, errors = {}, preview = true,
   config = {}, rounded = false,
 }: Props) {
   const [source, setSource] = useState<string | null>(null)
@@ -36,23 +36,27 @@ export default function ImageInput({
 
   return (
     <div className="flex flex-col items-center">
-      <div
-        className={clsx('flex h-60 w-60 flex-col items-center justify-center border-2 border-dashed border-secondary bg-base-300 lg:h-72 lg:w-72', rounded && 'rounded-full')}
-      >
-        {source !== null && (
-          <img
-            src={source}
-            alt="Previsualización de imagen de perfil"
-            className={clsx('z-10 h-full w-full object-cover', rounded && 'rounded-full')}
-          />
-        )}
-        {source === null && (
-          <div className="flex flex-col items-center justify-center p-4">
-            <CloudArrowUpIcon className="h-10 w-10" />
-            <p className="text-center font-semibold">Has click abajo para subir una imagen de perfil</p>
-          </div>
-        )}
-      </div>
+      {preview && (
+        <div
+          className={clsx('flex h-60 w-60 flex-col items-center justify-center border-2 border-dashed border-secondary bg-base-300 lg:h-72 lg:w-72', rounded && 'rounded-full')}
+        >
+          {source !== null && (
+            <img
+              src={source}
+              alt="Previsualización de imagen de perfil"
+              className={clsx('z-10 h-full w-full object-cover', rounded && 'rounded-full')}
+            />
+          )}
+          {source === null && (
+            <div className="flex flex-col items-center justify-center p-4">
+              <CloudArrowUpIcon className="h-10 w-10" />
+              <p className="text-center font-semibold">
+                Has click abajo para subir la imagen
+              </p>
+            </div>
+          )}
+        </div>
+      )}
       <input id={name} name={name} type="file" className="file-input-bordered file-input-primary file-input my-4 w-full" onInput={handleFileLoad} {...registerProps} />
       <InputError message={errorMessage} />
     </div>
