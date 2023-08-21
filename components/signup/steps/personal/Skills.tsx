@@ -24,11 +24,10 @@ export default function Skills() {
       <div className="mx-auto w-full pt-4">
         <SelectMultiple
           options={{ type: 'rows', data: skills }}
-          label="Selecciona tus habilidades (máximo 5):"
+          label="Selecciona tus habilidades:"
           itemsName="Habilidades"
           control={control}
           name="skills"
-          limit={5}
         />
         <div className="mt-4 flex justify-between">
           <button onClick={goBack} type="button" className="btn-neutral btn">

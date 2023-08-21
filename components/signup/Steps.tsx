@@ -31,10 +31,12 @@ export default function Steps({
   ] as const
 
   return (
-    steps.map((element, i) => (
-      <section key={i} className={clsx(step !== i + 1 && 'hidden')}>
-        {element}
-      </section>
-    ))
+    <div className="px-10">
+      {steps.map((element, i) => (
+        <section key={i} className={clsx(step !== i + 1 && 'hidden')}>
+          {element}
+        </section>
+      ))}
+    </div>
   )
 }

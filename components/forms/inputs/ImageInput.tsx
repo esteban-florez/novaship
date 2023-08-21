@@ -2,7 +2,7 @@ import useInput from '@/lib/hooks/useInput'
 import { type SharedInputProps } from '@/lib/types'
 import { CloudArrowUpIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import InputError from '../InputError'
 
 type Props = SharedInputProps & {
@@ -15,14 +15,23 @@ export default function ImageInput({
   config = {}, rounded = false,
 }: Props) {
   const [source, setSource] = useState<string | null>(null)
-  const { errorMessage, registerProps } = useInput({
+  const { errorMessage, registerProps, hasError } = useInput({
     errors, register, config, name,
   })
 
+  useEffect(() => {
+    if (hasError) {
+      setSource(null)
+    }
+  }, [hasError])
+
   function handleFileLoad(event: React.BaseSyntheticEvent) {
-    const file = event.target.files.item(0) as File
-    const url = URL.createObjectURL(file)
-    setSource(url)
+    const file = event.target.files.item(0) as File | null
+
+    if (file !== null) {
+      const url = URL.createObjectURL(file)
+      setSource(url)
+    }
   }
 
   return (
@@ -44,7 +53,7 @@ export default function ImageInput({
           </div>
         )}
       </div>
-      <input id={name} name={name} type="file" className="file-input-bordered file-input-primary file-input mt-4 w-full" onInput={handleFileLoad} {...registerProps} />
+      <input id={name} name={name} type="file" className="file-input-bordered file-input-primary file-input my-4 w-full" onInput={handleFileLoad} {...registerProps} />
       <InputError message={errorMessage} />
     </div>
   )

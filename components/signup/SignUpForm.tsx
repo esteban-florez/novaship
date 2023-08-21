@@ -26,7 +26,7 @@ export default function SignUpForm({ fields: fieldsData, skills }: Props) {
   const schema = userType === 'PERSON' ? personSchema : nonPersonSchema
   const {
     register, formState: { errors }, alert, control,
-    reset, trigger, serverErrors, handleSubmit,
+    reset, trigger, serverErrors, handleSubmit, watch,
   } = useSubmit({
     append: {
       userType,
@@ -35,8 +35,11 @@ export default function SignUpForm({ fields: fieldsData, skills }: Props) {
     schema,
   })
 
+  console.log(watch('image'))
+
   function goNext() {
-    if (step >= 4) return
+    const limit = userType === 'PERSON' ? 5 : 4
+    if (step >= limit) return
     setStep(step + 1)
   }
 

@@ -32,6 +32,5 @@ export const schema = object({
     .cuid(messages.cuid),
 
   multiple: array(string(), messages.array)
-    .nonempty(messages.nonempty)
-    .max(5, messages.maxNumber(5)),
+    .nonempty(messages.nonempty),
 })

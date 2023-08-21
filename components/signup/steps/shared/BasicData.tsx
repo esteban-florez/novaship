@@ -36,6 +36,7 @@ export default function BasicData({ userType }: Props) {
     }
 
     // DEV
+    // TODO -> validar de esta manera hace que se activen toodas las validaciones lo cual es malo.
     // const valid = await trigger(fieldsToValidate)
     // if (valid) {
     goNext()

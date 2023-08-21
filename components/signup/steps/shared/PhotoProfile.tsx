@@ -17,6 +17,13 @@ export default function PhotoProfile({ isPerson = false }: Props) {
     }
   }
 
+  function handleOmit() {
+    const input = document.querySelector('#image') as HTMLInputElement
+    input.value = ''
+
+    goNext()
+  }
+
   return (
     <>
       <h2 className="text-center text-xl font-bold md:text-3xl">
@@ -31,22 +38,23 @@ export default function PhotoProfile({ isPerson = false }: Props) {
           label="Subir imagen de perfil"
           register={register}
           errors={errors}
-          config={{
-            setValueAs: (value: FileList) =>
-              value.length === 0 ? undefined : value.item(0),
-          }}
         />
         <div className="flex justify-between">
           <button onClick={goBack} type="button" className="btn-neutral btn mt-4">
             Volver
           </button>
-          <button
-            onClick={!isPerson ? undefined : handleNext}
-            type={!isPerson ? 'submit' : 'button'}
-            className="btn-primary btn mt-4"
-          >
-            {!isPerson ? 'Enviar' : 'Siguiente'}
-          </button>
+          <div className="space-x-2">
+            <button className="btn-ghost btn" onClick={handleOmit}>
+              Omitir
+            </button>
+            <button
+              onClick={!isPerson ? undefined : handleNext}
+              type={!isPerson ? 'submit' : 'button'}
+              className="btn-primary btn mt-4"
+            >
+              {!isPerson ? 'Enviar' : 'Siguiente'}
+            </button>
+          </div>
         </div>
       </div>
     </>
