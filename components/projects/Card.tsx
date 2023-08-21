@@ -3,7 +3,8 @@ import AvatarIcon from '../AvatarIcon'
 import { type Membership, type Person } from '@prisma/client'
 import clsx from 'clsx'
 import DeleteModal from './DeleteModal'
-import Button from '../Button'
+import Button from '../modal/Button'
+import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   id: string
@@ -57,23 +58,19 @@ export default function Card({ id, title, owner = '', status, members }: Props) 
       </div>
 
       <div className="order-5 flex w-full shrink-0 flex-row justify-center gap-2 p-4 sm:w-1/4 sm:justify-end">
-        <Button
-          url={`/home/projects/${id}`}
-          icon={<EyeIcon className="h-5 w-5" />}
-          style="ICON"
-          color="CANCEL"
-          hover="PRIMARY"
-        />
+        <Link href={`/home/projects/${id}`}>
+          <Button className="btn-square btn-sm btn rounded-sm hover:btn-primary">
+            <EyeIcon className="h-5 w-5" />
+          </Button>
+        </Link>
         {currentUserIsOwner &&
           (
             <>
-              <Button
-                url={`/home/projects/${id}/update`}
-                icon={<PencilIcon className="h-5 w-5" />}
-                style="ICON"
-                color="CANCEL"
-                hover="PRIMARY"
-              />
+              <Link href={`/home/projects/${id}/update`}>
+                <Button className="btn-square btn-sm btn rounded-sm hover:btn-primary">
+                  <PencilIcon className="h-5 w-5" />
+                </Button>
+              </Link>
               <DeleteModal title={title} action={`/api/projects/${id}`} />
             </>
           )}
