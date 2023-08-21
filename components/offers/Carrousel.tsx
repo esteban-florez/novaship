@@ -2,11 +2,15 @@
 
 import { useState } from 'react'
 import Btn from './Carrousel/Btn'
-import offers from './Carrousel/data.json'
 import Content from './Carrousel/Content'
 import Dots from './Carrousel/Dots'
+import { type OffersWithRelationships } from '@/lib/types'
 
-export default function Carrousel() {
+interface Props {
+  offers: OffersWithRelationships
+}
+
+export default function Carrousel({ offers }: Props) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const offer = offers[currentSlide]
   const previousSlide = currentSlide === 0 ? offers.length - 1 : currentSlide - 1
@@ -22,11 +26,12 @@ export default function Carrousel() {
           <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagen de fondo carrusel" className="absolute right-0 top-0 h-full w-full object-cover" />
           <div className="relative z-10 h-full w-full px-4 pt-6 backdrop-blur-sm backdrop-brightness-50 sm:px-0">
             <Content
+              id={offer.id}
               title={offer.title}
-              categories={offer.categories}
+              categories={offer.fields}
               description={offer.description}
-              owner={offer.owner}
-              ubication={offer.ubication}
+              owner={offer.company.name}
+              location={offer.location}
             />
             <div className="my-4 flex w-full flex-row items-center justify-center gap-4">
               <div className="flex rounded-lg">

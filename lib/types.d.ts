@@ -47,3 +47,11 @@ interface ApiResponseBody {
   }
   data?: Record<string, unknown>
 }
+
+type OffersWithRelationships =
+  Array<Offer & {
+    company: Company
+    location: Location
+    fields: Field[]
+    skills: Skill[]
+  }>

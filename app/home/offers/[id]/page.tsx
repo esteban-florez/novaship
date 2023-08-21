@@ -1,76 +1,104 @@
+// import AvatarIcon from '@/components/AvatarIcon'
+// import { ClockIcon, MapPinIcon } from '@heroicons/react/24/solid'
+// import PageContent from '@/components/offers-details/pageContent'
 import AvatarIcon from '@/components/AvatarIcon'
-import { ClockIcon, MapPinIcon } from '@heroicons/react/24/solid'
+import Button from '@/components/Button'
+import prisma from '@/prisma/client'
+import { ArrowLeftIcon } from '@heroicons/react/24/solid'
 import { type Metadata } from 'next'
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Desarrollador Web Front-End',
 }
 
-export default function OfferPage() {
+interface Context {
+  params: { id: string }
+}
+
+export default async function OfferPage({ params: { id } }: Context) {
+  if (id === null) {
+    redirect('/home/offers')
+  }
+
+  const offer = await prisma.offer.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      company: true,
+      location: true,
+      fields: true,
+      skills: true,
+    },
+  })
+
   return (
-    <section className="flex flex-col gap-4 px-2 pt-2 lg:flex-row lg:px-4 lg:pt-4">
-      <div className="card border-t-4 border-primary bg-white shadow-md lg:w-3/4">
-        <div className="p-6 lg:card-body lg:flex lg:flex-row">
-          <div className="lg:w-4/5">
-            <h1 className="text-4xl font-bold tracking-tighter text-primary">
-              Desarrollador Web Front-End
-            </h1>
-            <p className="-mt-2 text-lg font-semibold uppercase text-neutral-400">
-              Desarrollo Informático
-            </p>
-            <div className="mt-3 lg:hidden">
-              <p className="flex gap-1">
-                <ClockIcon className="h-5 w-5" />
-                Full-Time
-              </p>
-              <p className="flex gap-1">
-                <MapPinIcon className="h-5 w-5" />
-                Remoto
-              </p>
+    <>
+      <section className="grid grid-cols-7 gap-4 p-4">
+        <div className="col-span-5">
+          <div className="card bg-white p-4 shadow-xl">
+            {/* Imagen */}
+            <div className="flex items-center justify-between">
+              <div className="flex flex-col">
+                <h3 className="text-base font-bold sm:text-2xl">{offer?.title}</h3>
+                <p className="-mt-1 text-base text-primary">Arquitectura</p>
+              </div>
+              <div className="flex flex-col">
+                <p className="text-base">Expira en: {offer?.expiresAt?.getDate()} días</p>
+                <p className="-mt-1 text-base">Límite: {offer?.limit}</p>
+              </div>
             </div>
-            <p className="mt-4">
-              Se busca Desarrollador Web Front-End con años de experiencia, para trabajar en proyectos web de diferentes categorías, teniendo en cuenta todas las características del desarrollo moderno.
-            </p>
-            <p className="mt-2 text-3xl">
-              <span className="font-bold text-green-600">25 $/hr</span>
-            </p>
-            <div className="mt-4 w-full lg:w-auto">
-              <button className="btn-primary btn w-full lg:w-auto">
-                <span className="uppercase">
-                  ¡Quiero aplicar!
-                </span>
-              </button>
-              <button className="btn-ghost btn w-full lg:w-auto">
-                <span className="uppercase">
-                  Volver al listado
-                </span>
-              </button>
+            <p className="line-clamp-6 py-3">{offer?.description}</p>
+            <div className="flex w-full justify-between lg:w-auto">
+              <Button
+                url="/home/offers"
+                style="DEFAULT"
+                color="WHITE"
+                hover="PRIMARY"
+              >
+                <ArrowLeftIcon className="h-4 w-4" />
+                Volver al listado
+              </Button>
+              <Button
+                style="DEFAULT"
+                color="PRIMARY"
+                hover="WHITE"
+              >
+                ¡Quiero Aplicar!
+              </Button>
             </div>
           </div>
-          <div className="-my-1 hidden flex-col items-center justify-between lg:flex lg:w-1/5">
-            <span className="flex w-full flex-col items-center py-4 font-semibold text-primary">
-              <ClockIcon className="h-8 w-8" />
-              Full-Time
-            </span>
-            <div className="divider divider-vertical px-4" />
-            <span className="flex w-full flex-col items-center py-4 font-semibold text-primary">
-              <MapPinIcon className="h-8 w-8" />
-              Remoto
-            </span>
+          <div className="mt-4 flex columns-2 gap-3">
+            <div className="card w-full bg-white p-4 shadow-lg">Pasante</div>
+            <div className="card w-full bg-white p-4 shadow-lg">Remoto</div>
+            <div className="card w-full bg-white p-4 shadow-lg">Horas</div>
+            <div className="card w-full bg-white p-4 shadow-lg">Salario</div>
           </div>
+          <div className="card mt-4 bg-white p-4 shadow-lg">Habilidades</div>
         </div>
-      </div>
-      <div className="card bg-white p-8 shadow-md lg:w-1/4 lg:self-start">
-        <p className="-mx-4 -mt-4 rounded-xl bg-neutral-200 py-2 text-center font-bold uppercase">Ofrecido por</p>
-        <div className="mt-4 flex items-center gap-2">
-          <AvatarIcon username="Empresa Net" />
-          <h3 className="card-title text-xl font-semibold">EmpresaNet</h3>
+        <div className="col-span-2">
+          <div className="card bg-white p-4 shadow-md lg:self-start">
+            <div className="flex items-center gap-2">
+              <AvatarIcon username="Pedro Lopez" className="bg-black text-white" />
+              <div className="flex flex-col">
+                <h5 className="text-base font-bold">{offer?.company.name}</h5>
+                <small className="-mt-1 text-sm">{offer?.location.title}</small>
+              </div>
+            </div>
+            <p className="my-3 line-clamp-3">{offer?.company.description}</p>
+            <Button
+              style="DEFAULT"
+              color="SECONDARY"
+              hover="WHITE"
+              width="w-full"
+            >
+              Ver más
+            </Button>
+          </div>
+          <div className="mt-4 h-20 rounded-lg bg-slate-500 shadow-lg" />
         </div>
-        <p className="mt-2 line-clamp-3">Empresa líder en soluciones informáticas con sede en Venezuela desde el 2008.</p>
-        <button className="btn-primary btn-block btn mt-2">
-          Ver más
-        </button>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
