@@ -37,3 +37,13 @@ export const visibilities = {
 export const fields: Record<string, string> = {
   email: 'Correo electrónico: ',
 }
+
+export const days = {
+  monday: 'Lunes',
+  tuesday: 'Martes',
+  wednesday: 'Miércoles',
+  thursday: 'Jueves',
+  friday: 'Viernes',
+  saturday: 'Sábado',
+  sunday: 'Domingo',
+} as const
