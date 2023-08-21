@@ -30,6 +30,7 @@ type Props = React.PropsWithChildren<{
   onClose: () => void
 }>
 
+// TODO -> hacerlo responsive
 export default function Toast({ type, message, onClose }: Props) {
   const { style, icon } = DEFAULT_TOASTS[type]
 
