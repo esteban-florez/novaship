@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { routes } from '@/lib/translations'
 
+// TODO -> Colocar el nombre del modelo si es ruta dinamica model/[id]
 export default function Breadcrumbs() {
   const pathname = usePathname()
   const segments = pathname.split('/').filter(segment => segment !== '')
