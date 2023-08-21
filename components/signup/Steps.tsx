@@ -1,8 +1,7 @@
 import { type UserType } from '@prisma/client'
+import clsx from 'clsx'
 import PhotoProfile from './steps/shared/PhotoProfile'
 import Fields from './steps/personal/Fields'
-import Schedule from './steps/personal/Schedule'
-import clsx from 'clsx'
 import RifStep from './steps/shared/RifStep'
 import BasicData from './steps/shared/BasicData'
 import Skills from './steps/personal/Skills'
@@ -20,14 +19,13 @@ export default function Steps({
   const stepTwo = isPerson ? <Fields /> : <RifStep />
   const stepThree = isPerson
     ? <Skills />
-    : <PhotoProfile isPerson={false} />
+    : <PhotoProfile />
 
   const steps = [
     <BasicData key={0} userType={userType} />,
     stepTwo,
     stepThree,
-    <PhotoProfile key={3} isPerson={isPerson} />,
-    <Schedule key={4} />,
+    <PhotoProfile key={3} />,
   ] as const
 
   return (

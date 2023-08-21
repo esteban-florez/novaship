@@ -25,8 +25,8 @@ export default function SignUpForm({ fields: fieldsData, skills }: Props) {
   const selectedFields = fields.filter(field => field.selected)
   const schema = userType === 'PERSON' ? personSchema : nonPersonSchema
   const {
-    register, formState: { errors }, alert, control, clearErrors,
-    reset, trigger, serverErrors, handleSubmit,
+    register, formState: { errors }, alert, control,
+    clearErrors, reset, trigger, serverErrors, handleSubmit,
   } = useSubmit({
     append: {
       userType,

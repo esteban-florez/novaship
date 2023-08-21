@@ -17,8 +17,8 @@ export default async function SignUpPage() {
 
   return (
     <>
-      <img src="/coso3.webp" alt="Imagen decorativa en esquinas" className="pointer-events-none absolute left-0 top-0 block h-1/4 w-full lg:hidden" />
-      <img src="/coso4.webp" alt="Imagen decorativa en esquinas" className="pointer-events-none absolute left-0 top-0 hidden h-full w-1/3 lg:block" />
+      <img src="/coso3.webp" alt="Imagen decorativa en esquinas" className="pointer-events-none fixed left-0 top-0 block h-1/4 w-full lg:hidden" />
+      <img src="/coso4.webp" alt="Imagen decorativa en esquinas" className="pointer-events-none fixed left-0 top-0 hidden h-full w-1/3 lg:block" />
       <section className="flex h-screen flex-col gap-6 lg:flex-row">
         <section className="z-10 flex flex-col justify-center lg:w-1/4 lg:p-4">
           <div className="rounded-b-2xl bg-white/10 p-3 shadow-lg backdrop-blur-sm md:p-6 lg:rounded-2xl">
