@@ -23,9 +23,10 @@ export default async function UpdateProjectPage({ params: { id } }: Context) {
   if (id === null) redirect('/home/projects')
 
   // DRY 5
-  const project = await prisma.project.findUnique({
+  const project = await prisma.project.findFirst({
     where: {
       id,
+      deletedAt: null,
     },
     include: {
       fields: {

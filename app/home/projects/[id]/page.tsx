@@ -19,9 +19,10 @@ export default async function ProjectPage({ params: { id } }: Context) {
     redirect('/home/projects')
   }
 
-  const project = await prisma.project.findUnique({
+  const project = await prisma.project.findFirst({
     where: {
       id,
+      deletedAt: null,
     },
     include: {
       person: true,
