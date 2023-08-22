@@ -32,7 +32,7 @@ export default function List({ projects, visibility, members, title, tab }: Prop
       if (
         (title === '' || project.title.toLowerCase().includes(title.toLowerCase())) &&
         (visibility === 'ALL' || project.visibility === visibility) &&
-        (members === 0 || project.memberships.length === members)
+        (members === 0 || project.memberships.length <= members)
       ) {
         return (
           <div key={project.id} className="mb-3 flex w-full flex-col gap-3">

@@ -18,7 +18,7 @@ export default async function MainLayout({
       <Aside />
       <div className="relative w-full flex-col sm:static">
         <Navbar />
-        <main>{children}</main>
+        <main className="bg-base-200">{children}</main>
       </div>
     </div>
   )

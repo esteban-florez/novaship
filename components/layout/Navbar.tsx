@@ -8,7 +8,7 @@ export default function Navbar() {
   const date = format(new Date())
 
   return (
-    <nav className="navbar bg-white shadow-md">
+    <nav className="navbar border-b bg-white shadow-md">
       <div className="sm:navbar-start">
         <button className="btn-ghost btn-circle btn">
           <Bars3Icon className="h-6 w-6" />

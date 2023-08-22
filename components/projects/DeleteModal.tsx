@@ -35,7 +35,7 @@ export default function DeleteModal({ title, action }: Props) {
           </p>
           <div className="flex justify-center gap-x-4">
             <CloseModalButton id={id} text="Cancelar" />
-            <Button className="btn-error btn-outline btn">
+            <Button className="btn-error btn-outline btn px-6 py-2">
               <TrashIcon className="h-5 w-5" />
               Eliminar
             </Button>

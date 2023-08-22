@@ -6,7 +6,7 @@ type Props = React.PropsWithChildren<{
 // TEMPORAL -> cambiar los botones por este nuevo
 export default function Button({ className, onClick, children }: Props) {
   return (
-    <button type="submit" className={className} onClick={onClick}>
+    <button className={className} onClick={onClick}>
       {children}
     </button>
   )
