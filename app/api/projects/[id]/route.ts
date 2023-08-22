@@ -62,17 +62,40 @@ export async function PUT(request: NextRequest) {
   }
 }
 
+// Check 2 -> borrar las relaciones (si tiene) antes de borrar el proyecto
 export async function DELETE(request: NextRequest) {
-  // TODO D -> así no es el delete xDDD
-
-  console.log(true)
   let data
   try {
     data = await request.json()
+    const user = await auth.person(request)
 
-    console.log(data)
+    const project = await prisma.project.findFirst({
+      where: {
+        id: data.id,
+        personId: user.id,
+      },
+      include: {
+        memberships: true,
+      },
+    })
 
-    // return NextResponse.json(project)
+    if (project === null) redirect('/home/projects')
+
+    if (project?.memberships !== null) {
+      await prisma.membership.deleteMany({
+        where: {
+          projectId: project?.id,
+        },
+      })
+    }
+
+    const deleteProject = await prisma.project.deleteMany({
+      where: {
+        id: project.id,
+      },
+    })
+
+    return NextResponse.json(deleteProject)
   } catch (error) {
     return handleError(error, data)
   }

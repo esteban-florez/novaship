@@ -22,7 +22,7 @@ export function handleError(error: unknown, data: Record<string, unknown> = {}) 
   }
 
   if (error instanceof SyntaxError) {
-    console.log('Route Handler Error (verify schema validation and data sending): ')
+    console.log('Route Handler Error (verify schema validation and data sending): ', error)
 
     return json(400, {
       errorType: 'REQUEST_SYNTAX',
