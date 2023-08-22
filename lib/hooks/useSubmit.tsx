@@ -11,6 +11,7 @@ import ServerErrors from '@/components/forms/ServerErrors'
 
 interface UseSubmitOptions<Fields> {
   schema: ZodType
+  asFormData?: boolean
   defaultValues?: DefaultValues<Fields>
   refreshOnSuccess?: boolean
   append?: object
@@ -20,7 +21,7 @@ interface UseSubmitOptions<Fields> {
 }
 
 export default function useSubmit<Fields extends FieldValues>({
-  method, append, schema, defaultValues,
+  method, append, schema, defaultValues, asFormData = false,
   onSuccess, onError, refreshOnSuccess = false,
 }: UseSubmitOptions<Fields>) {
   const [showAlert, setShowAlert] = useState(true)
@@ -41,9 +42,22 @@ export default function useSubmit<Fields extends FieldValues>({
       setShowAlert(true)
       setShowErrors(true)
 
+      const requestData = { ...values, ...append }
+
+      let requestBody
+      if (asFormData) {
+        const formData = new FormData()
+        Object.entries(requestData).forEach(([key, value]) => {
+          formData.append(key, value)
+        })
+        requestBody = formData
+      } else {
+        requestBody = JSON.stringify(requestData)
+      }
+
       const form = event?.target as HTMLFormElement
       const response = await fetch(form.action, {
-        body: JSON.stringify({ ...values, ...append }),
+        body: requestBody,
         method: method ?? form.method,
       })
 

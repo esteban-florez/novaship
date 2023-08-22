@@ -26,7 +26,7 @@ class Collection<T> {
       }
 
       return element.id
-    })
+    }) as Array<{ id: string }>
   }
 
   random(amount = 1) {

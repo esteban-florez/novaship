@@ -10,6 +10,7 @@ import { SignUpContext } from './SignUpContext'
 import clsx from 'clsx'
 import UserType from './steps/personal/UserType'
 import { type OptionSkill, type SelectableField } from '@/lib/types'
+import collect from '@/lib/utils/collection'
 
 type Props = React.PropsWithChildren <{
   fields: SelectableField[]
@@ -30,14 +31,14 @@ export default function SignUpForm({ fields: fieldsData, skills }: Props) {
   } = useSubmit({
     append: {
       userType,
-      fields: selectedFields,
+      fields: collect(selectedFields).ids(),
     },
     schema,
+    asFormData: true,
   })
 
   function goNext() {
-    const limit = userType === 'PERSON' ? 5 : 4
-    if (step >= limit) return
+    if (step >= 4) return
     setStep(step + 1)
   }
 
