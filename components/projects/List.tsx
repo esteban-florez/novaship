@@ -21,7 +21,7 @@ interface Props {
 export default function List({ projects, visibility, members, title, tab }: Props) {
   if (projects.length === 0) {
     return (
-      <EmptyContent title="No encontramos nada...">
+      <EmptyContent title="No encontramos nada..." size="sm:w-2/4">
         Démosle un poco de vida a esta sección añadiendo algunos proyectos.
       </EmptyContent>
     )

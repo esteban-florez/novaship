@@ -10,7 +10,7 @@ interface Props {
 
 export default function TeamGroupTabs({ tab, setTab }: Props) {
   return (
-    <div className="join">
+    <div className={clsx(tab === 'add' && 'mb-4', 'join')}>
       <Button
         className={clsx({
           'btn btn-sm sm:btn-md join-item w-2/4': true,

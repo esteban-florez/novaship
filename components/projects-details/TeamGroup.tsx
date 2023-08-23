@@ -6,7 +6,7 @@ import Button from '../Button'
 import { EyeIcon } from '@heroicons/react/24/outline'
 import Modal from '../Modal'
 import { useState } from 'react'
-import { type TeamGroupTab, type SelectablePerson } from '@/lib/types'
+import { type TeamGroupTab, type OptionPerson } from '@/lib/types'
 import MembersTab from './MembersTab'
 import TeamGroupTabs from './TeamGroupTabs'
 import AddMembersTab from './AddMembersTab'
@@ -14,22 +14,15 @@ import AddMembersTab from './AddMembersTab'
 interface Props {
   id: string
   memberships: Array<Membership & {
-    person: Person | null
-  }> | undefined
+    person: Person
+  }>
   isOwner: boolean
-  persons: SelectablePerson[]
+  persons: OptionPerson[]
 }
 
 export default function TeamGroup({ id, memberships, isOwner, persons }: Props) {
-  // DRY
   const membershipsCount = memberships?.length ?? 0
-  const [totalPersons, setTotalPersons] = useState<SelectablePerson[]>(persons)
-  const [inputFocus, setInputFocus] = useState(false)
-  const [searchName, setSearchName] = useState('')
   const [tab, setTab] = useState<TeamGroupTab>('members')
-
-  const selectedPersons = totalPersons.filter(person => person.selected)
-  const availablePersons = totalPersons.filter(person => !person.selected)
 
   return (
     <>
@@ -46,20 +39,18 @@ export default function TeamGroup({ id, memberships, isOwner, persons }: Props) 
           hover="ACCENT"
           cancelLabel="Cerrar"
         >
-          <article className="flex flex-col">
+          <article className="flex h-80 flex-col">
             {isOwner && <TeamGroupTabs tab={tab} setTab={setTab} />}
-            {tab === 'members' && <MembersTab memberships={memberships} />}
+            {tab === 'members' &&
+              <MembersTab
+                projectId={id}
+                memberships={memberships}
+                isOwner={isOwner}
+              />}
             {tab === 'add' &&
               <AddMembersTab
-                id={id}
-                selectedPersons={selectedPersons}
-                availablePersons={availablePersons}
-                totalPersons={totalPersons}
-                inputFocus={inputFocus}
-                searchName={searchName}
-                setTotalPersons={setTotalPersons}
-                setInputFocus={setInputFocus}
-                setSearchName={setSearchName}
+                projectId={id}
+                persons={persons}
               />}
           </article>
         </Modal>

@@ -43,6 +43,7 @@ interface Props {
   }
 }
 
+// TODO -> responsive
 export default function ProjectForm({ id, method, action, fields, persons, project }: Props) {
   // TODO -> actualizar a select multiple sin estado
   const [totalFields, setTotalFields] = useState<SelectableField[]>(fields)
