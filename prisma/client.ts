@@ -21,6 +21,7 @@ if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
 
+// TODO -> no se puede añadir un registro si tiene el mismo campo que uno borrado
 async function main() {
   prisma.$use(async (params, next) => {
     // CHECK 3 -> No se puede incluir que omita los registros eliminados por los modelos de lucia

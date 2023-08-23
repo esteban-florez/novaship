@@ -18,6 +18,7 @@ type Props = React.PropsWithChildren<{
 
 // Dev
 // Arreglar las props
+// Si hay scroll el actions del modal queda flotando
 export default function Modal({
   id, icon, label, color, style = 'DEFAULT',
   hover, cancelLabel, acceptColor = 'EMPTY',
