@@ -2,6 +2,7 @@ import Link from 'next/link'
 import AvatarIcon from './AvatarIcon'
 
 type Props = React.PropsWithChildren<{
+  id: string
   title: string
   categories?: string[]
   description: string
@@ -9,7 +10,7 @@ type Props = React.PropsWithChildren<{
   ubication?: string
 }>
 
-export default function Card({ title, categories = [], description, owner, ubication }: Props) {
+export default function Card({ id, title, categories = [], description, owner, ubication }: Props) {
   const category = (
     <ul className="-mt-1 line-clamp-2 flex flex-row flex-wrap font-semibold text-primary">
       {categories.map(category => {
@@ -43,7 +44,7 @@ export default function Card({ title, categories = [], description, owner, ubica
                 <small className="-mt-1 text-xs">{ubication}</small>
               </div>
             </div>
-            <Link href="/home/offers/offer" className="btn-secondary btn-sm btn w-full text-sm md:w-auto">
+            <Link href={`/home/offers/${id}`} className="btn-secondary btn-sm btn w-full text-sm md:w-auto">
               Ver más
             </Link>
           </div>

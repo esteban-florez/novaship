@@ -2,11 +2,19 @@
 
 import { useState } from 'react'
 import Btn from './Carrousel/Btn'
-import offers from './Carrousel/data.json'
 import Content from './Carrousel/Content'
 import Dots from './Carrousel/Dots'
+import { type Company, type Field, type Location, type Offer } from '@prisma/client'
 
-export default function Carrousel() {
+interface Props {
+  offers: Array<Offer & {
+    company: Company
+    location: Location
+    fields: Field[]
+  }>
+}
+
+export default function Carrousel({ offers }: Props) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const offer = offers[currentSlide]
   const previousSlide = currentSlide === 0 ? offers.length - 1 : currentSlide - 1
@@ -23,10 +31,10 @@ export default function Carrousel() {
           <div className="relative z-10 h-full w-full px-4 pt-6 backdrop-blur-sm backdrop-brightness-50 sm:px-0">
             <Content
               title={offer.title}
-              categories={offer.categories}
+              categories={offer.fields.map(field => field.title)}
               description={offer.description}
-              owner={offer.owner}
-              ubication={offer.ubication}
+              owner={offer.company.name}
+              ubication={offer.location.title}
             />
             <div className="my-4 flex w-full flex-row items-center justify-center gap-4">
               <div className="flex rounded-lg">
