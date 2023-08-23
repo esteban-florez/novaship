@@ -8,7 +8,7 @@ interface Props {
   categories: Field[]
   description: string
   owner: string
-  location?: Location
+  location: Location
 }
 
 export default function Content({ id, title, categories, description, owner, location }: Props) {
@@ -34,7 +34,7 @@ export default function Content({ id, title, categories, description, owner, loc
             <AvatarIcon username="Diseñadores Unidos" className="bg-black text-white" />
             <div className="flex flex-col">
               <h5 className="font-bold text-white lg:text-base">{owner}</h5>
-              <small className="-mt-1 text-white">{location?.title}</small>
+              <small className="-mt-1 text-white">{location.title}</small>
             </div>
           </div>
           <Button

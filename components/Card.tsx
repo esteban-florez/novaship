@@ -45,6 +45,7 @@ export default function Card({ id, title, categories, description, owner, locati
               url={`/home/offers/${id}`}
               style="DEFAULT"
               color="SECONDARY"
+              hover="WHITE"
             >
               Ver más
             </Button>

@@ -49,9 +49,9 @@ interface ApiResponseBody {
 }
 
 type OffersWithRelationships =
-  Array<Offer & {
+  Offer & {
     company: Company
     location: Location
     fields: Field[]
     skills: Skill[]
-  }>
+  }

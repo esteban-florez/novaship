@@ -37,3 +37,14 @@ export const visibilities = {
 export const fields: Record<string, string> = {
   email: 'Correo electrónico: ',
 }
+
+export const modes = {
+  REMOTE: 'Remoto',
+  ONSITE: 'Presencial',
+  HYBRID: 'Híbrido',
+}
+
+export const targets = {
+  INTERNS: 'Pasantes',
+  CANDIDATS: 'Postulantes',
+}
