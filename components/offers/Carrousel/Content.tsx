@@ -13,7 +13,7 @@ interface Props {
 
 export default function Content({ id, title, categories, description, owner, location }: Props) {
   return (
-    <section className="flex h-80 w-full justify-center">
+    <section className="flex w-full justify-center">
       <div className="relative flex flex-col gap-4 rounded-lg bg-black/40 p-6 pt-4 shadow-lg backdrop-blur-sm backdrop-brightness-50 md:w-5/6 lg:w-2/4">
         <img src="/coso3.webp" alt="Imagen decorativa en esquinas" className="pointer-events-none absolute left-0 top-0 -z-10 h-28 w-full rounded-t-xl opacity-90 sm:h-32" />
         <header className="flex flex-col justify-center text-center xl:h-16">

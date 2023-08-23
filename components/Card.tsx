@@ -1,4 +1,4 @@
-import { type Field, type Location } from '@prisma/client'
+import { type Field } from '@prisma/client'
 import AvatarIcon from './AvatarIcon'
 import Button from './Button'
 
@@ -8,7 +8,7 @@ interface Props {
   categories: Field[]
   description: string
   owner?: string
-  location: Location
+  location: string
 }
 
 export default function Card({ id, title, categories, description, owner, location }: Props) {
@@ -38,7 +38,7 @@ export default function Card({ id, title, categories, description, owner, locati
               <AvatarIcon username="Pedro Lopez" className="bg-black text-white" />
               <div className="flex flex-col">
                 <h5 className="text-sm font-bold">{owner}</h5>
-                <small className="-mt-1 text-xs">{location.title}</small>
+                <small className="-mt-1 text-xs">{location}</small>
               </div>
             </div>
             <Button

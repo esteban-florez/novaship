@@ -7,13 +7,19 @@ import {
   HomeModernIcon,
   UserIcon,
 } from '@heroicons/react/24/outline'
-import { type OffersWithRelationships } from '@/lib/types'
+// import { type OffersWithRelationships } from '@/lib/types'
 import { modes, targets } from '@/lib/translations'
 import AvatarIcon from '../AvatarIcon'
 import Button from '../Button'
+import { type Company, type Field, type Offer, type Location, type Skill } from '@prisma/client'
 
 interface Props {
-  offer: OffersWithRelationships
+  offer: Offer & {
+    company: Company
+    location: Location
+    fields: Field[]
+    skills: Skill[]
+  }
 }
 
 export default function Details({ offer }: Props) {
@@ -30,7 +36,7 @@ export default function Details({ offer }: Props) {
               <p className="-mt-1 text-base text-primary">Arquitectura</p>
             </div>
             <div className="flex flex-col">
-              <p className="text-base">Expira en: {offer.expiresAt.getDate()} días</p>
+              <p className="text-base">Expira en: {offer.expiresAt?.getDate()} días</p>
               <p className="-mt-1 text-base">Límite: {offer.limit}</p>
             </div>
           </div>
@@ -84,13 +90,7 @@ export default function Details({ offer }: Props) {
             <ClockIcon className="h-12 w-12 text-primary" />
             <div className="flex flex-col">
               <h3 className="text-xl font-bold">Horas</h3>
-              {offer.hours === null
-                ? (
-                  <h4>No especificado</h4>
-                  )
-                : (
-                  <h4>{offer.hours}</h4>
-                  )}
+              <h4>{offer.hours ?? 'No especificado'}</h4>
             </div>
           </div>
         </div>

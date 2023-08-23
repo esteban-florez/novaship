@@ -34,9 +34,8 @@ export default async function OffersPage() {
             <Offer
               key={offer.id}
               id={offer.id}
-              id={offer.id}
               title={offer.title}
-              categories={offer.fields.map(field => field.title)}
+              categories={offer.fields}
               description={offer.description}
               owner={offer.company.name}
               location={offer.location.title}
