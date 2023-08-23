@@ -21,23 +21,32 @@ model AuthUser {
 }
 
 model Person {
-  id          String       @id @default(cuid())
-  name        String
-  email       String       @unique
-  ci          String       @unique
-  birth       DateTime
-  image       String?
-  phone       String       @unique
-  description String?
-  profile     Profile?
-  profileId   String?
-  authUser    AuthUser     @relation(fields: [authUserId], references: [id])
-  authUserId  String       @unique
-  messages    Message[]
-  memberships Membership[]
-  projects    Project[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id            String       @id @default(cuid())
+  name          String
+  email         String       @unique
+  ci            String       @unique
+  birth         DateTime
+  image         String?
+  phone         String       @unique
+  description   String
+  authUser      AuthUser     @relation(fields: [authUserId], references: [id])
+  authUserId    String       @unique
+  messages      Message[]
+  memberships   Membership[]
+  projects      Project[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  // Profile fields
+  // TODO -> quizás haya que añadir Location a este modelo
+  qualification String? // Esto podría ser una table de Títulos, pero por ahora un string
+  curriculum    String?
+  schedule      Json?
+  fields        Field[]
+  skills        Skill[]
+  experiences   Experience[]
+  candidacies   Candidacy[]
+  internships   Internship[]
+  reviews       Review[]
 }
 
 model Company {
@@ -197,27 +206,6 @@ model File {
   updatedAt DateTime   @updatedAt
 }
 
-model Profile {
-  id          String       @id @default(cuid())
-  // Quizás title pueda ser una tabla de titulaciones, por ahora un string normal.
-  title       String
-  curriculum  String?
-  schedule    Json
-  description String       @db.Text
-  person      Person       @relation(fields: [personId], references: [id])
-  personId    String       @unique
-  location    Location     @relation(fields: [locationId], references: [id])
-  locationId  String
-  fields      Field[]
-  skills      Skill[]
-  experiences Experience[]
-  candidacies Candidacy[]
-  internships Internship[]
-  reviews     Review[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-}
-
 model Experience {
   id          String   @id @default(cuid())
   name        String
@@ -225,8 +213,8 @@ model Experience {
   description String?  @db.Text
   from        DateTime
   to          DateTime
-  profile     Profile  @relation(fields: [profileId], references: [id])
-  profileId   String
+  person      Person   @relation(fields: [personId], references: [id])
+  personId    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -234,8 +222,8 @@ model Experience {
 model Review {
   id        String   @id @default(cuid())
   content   String   @db.Text
-  profile   Profile  @relation(fields: [profileId], references: [id])
-  profileId String
+  person    Person   @relation(fields: [personId], references: [id])
+  personId  String
   company   Company  @relation(fields: [companyId], references: [id])
   companyId String
   createdAt DateTime @default(now())
@@ -246,8 +234,8 @@ model Candidacy {
   id           String        @id @default(cuid())
   description  String?       @db.Text
   isActive     Boolean       @default(true)
-  profile      Profile       @relation(fields: [profileId], references: [id])
-  profileId    String
+  person       Person        @relation(fields: [personId], references: [id])
+  personId     String
   postulations Postulation[]
   recruitments Recruitment[]
   createdAt    DateTime      @default(now())
@@ -258,8 +246,8 @@ model Internship {
   id           String        @id @default(cuid())
   description  String?       @db.Text
   isActive     Boolean       @default(true)
-  profile      Profile       @relation(fields: [profileId], references: [id])
-  profileId    String
+  person       Person        @relation(fields: [personId], references: [id])
+  personId     String
   institute    Institute     @relation(fields: [instituteId], references: [id])
   instituteId  String
   postulations Postulation[]
@@ -336,7 +324,6 @@ model Location {
   updatedAt DateTime    @updatedAt
   company   Company[]
   institute Institute[]
-  profile   Profile[]
   offer     Offer[]
 }
 
@@ -345,19 +332,19 @@ model Field {
   id        String    @id @default(cuid())
   title     String    @unique
   projects  Project[]
-  profiles  Profile[]
+  persons   Person[]
   offers    Offer[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
 
 model Skill {
-  id        String    @id @default(cuid())
-  title     String    @unique
-  profiles  Profile[]
+  id        String   @id @default(cuid())
+  title     String   @unique
+  persons   Person[]
   offers    Offer[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model AuthSession {
