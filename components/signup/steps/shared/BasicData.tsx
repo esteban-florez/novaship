@@ -2,11 +2,12 @@ import Input from '@/components/forms/inputs/Input'
 import Textarea from '@/components/forms/inputs/Textarea'
 import { useContext } from 'react'
 import { SignUpContext } from '../../SignUpContext'
-import { type UserType } from '@prisma/client'
-import clsx from 'clsx'
+import { type Location, type UserType } from '@prisma/client'
+import Select from '@/components/forms/inputs/Select'
 
 type Props = React.PropsWithChildren<{
   userType: UserType
+  locations: Location[]
 }>
 
 const labels = {
@@ -21,7 +22,7 @@ const placeholders = {
   INSTITUTE: 'Ej. Colegio Luis Blanco',
 }
 
-export default function BasicData({ userType }: Props) {
+export default function BasicData({ userType, locations }: Props) {
   const isPerson = userType === 'PERSON'
 
   const { goNext, goBack, register, errors, trigger, clearErrors } = useContext(SignUpContext)
@@ -39,9 +40,8 @@ export default function BasicData({ userType }: Props) {
 
     if (valid) {
       clearErrors(['skills', 'fields', 'image'])
+      goNext()
     }
-    // DEV
-    goNext()
   }
 
   return (
@@ -72,20 +72,20 @@ export default function BasicData({ userType }: Props) {
           <div className="col-span-2 md:col-span-1">
             <Input label="Ingresa tu contraseña:" name="password" register={register} errors={errors} type="password" placeholder="Ingresa tu contraseña..." />
           </div>
-          <div className={clsx({
-            'col-span-2 md:col-span-1': isPerson,
-            'col-span-2': !isPerson,
-          })}
-          >
+          <div className="col-span-2 md:col-span-1">
             <Input label="Teléfono:" type="number" name="phone" register={register} errors={errors} placeholder="Ej. 04121234567" />
           </div>
-          {isPerson && (
-            <div className="col-span-2 md:col-span-1">
-              <Input type="date" label="Fecha de nacimiento:" name="birth" register={register} errors={errors} placeholder="Fecha de nacimiento" />
-            </div>
-          )}
+          <div className="col-span-2 md:col-span-1">
+            {isPerson
+              ? (
+                <Input type="date" label="Fecha de nacimiento:" name="birth" register={register} errors={errors} placeholder="Fecha de nacimiento" />
+                )
+              : (
+                <Select name="locationId" register={register} errors={errors} label="Dirección:" options={{ type: 'rows', data: locations }} />
+                )}
+          </div>
           <div className="col-span-2">
-            <Textarea height={2} label="Sobre ti:" name="description" register={register} errors={errors} placeholder="Ingresa una breve descripción para tu perfil..." />
+            <Textarea height={2} label="Sobre ti:" name="description" register={register} errors={errors} placeholder="Ingresa una breve descripción para tu perfil..." config={{ required: false }} />
           </div>
         </div>
         <div className="flex justify-between">

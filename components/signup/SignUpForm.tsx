@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { type UserType as UserTypeEnum } from '@prisma/client'
+import { type Location, type UserType as UserTypeEnum } from '@prisma/client'
 import Steps from './Steps'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { schema as personSchema } from '@/lib/validation/schemas/signup/person'
@@ -15,9 +15,10 @@ import collect from '@/lib/utils/collection'
 type Props = React.PropsWithChildren <{
   fields: SelectableField[]
   skills: OptionSkill[]
+  locations: Location[]
 }>
 
-export default function SignUpForm({ fields: fieldsData, skills }: Props) {
+export default function SignUpForm({ fields: fieldsData, skills, locations }: Props) {
   // TODO -> corregir los textos de este formulario
   const [fields, setFields] = useState(fieldsData)
   const [userType, setUserType] = useState<UserTypeEnum | null>(null)
@@ -74,6 +75,7 @@ export default function SignUpForm({ fields: fieldsData, skills }: Props) {
           <Steps
             userType={userType}
             step={step}
+            locations={locations}
           />
         )}
       </SignUpContext.Provider>

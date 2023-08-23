@@ -26,7 +26,7 @@ class Collection<T> {
       }
 
       return element.id
-    }) as Array<{ id: string }>
+    }) as string[]
   }
 
   random(amount = 1) {
@@ -34,7 +34,7 @@ class Collection<T> {
     const result = []
 
     for (let i = 0; i < amount; i++) {
-      const randomIndex = Math.floor(this.array.length * Math.random())
+      const randomIndex = Math.floor(arrayCopy.length * Math.random())
       const selected = arrayCopy.splice(randomIndex, 1)[0]
       result.push(selected)
     }

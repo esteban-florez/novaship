@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { type ApiResponseBody, type UseSubmitResult } from '../types'
 import { handleError } from '../errors/fetch'
-import { type FieldValues, useForm, type DefaultValues, type Path, type PathValue } from 'react-hook-form'
+import { type FieldValues, useForm, type DefaultValues } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type ZodType } from 'zod'
 import ServerErrors from '@/components/forms/ServerErrors'
@@ -34,7 +34,6 @@ export default function useSubmit<Fields extends FieldValues>({
     resolver: zodResolver(schema),
     defaultValues,
   })
-  const { setValue, setError, trigger } = useFormReturn
 
   const send = async (values: Fields, event: React.BaseSyntheticEvent | undefined) => {
     try {
@@ -47,9 +46,11 @@ export default function useSubmit<Fields extends FieldValues>({
       let requestBody
       if (asFormData) {
         const formData = new FormData()
+
         Object.entries(requestData).forEach(([key, value]) => {
           formData.append(key, value)
         })
+
         requestBody = formData
       } else {
         requestBody = JSON.stringify(requestData)
@@ -80,26 +81,9 @@ export default function useSubmit<Fields extends FieldValues>({
         void onError()
       }
 
+      // TODO -> manejar errores de validación que vienen del Servidor
       const { errorType, errors, data } = body
-
-      if (errorType === 'VALIDATION' && errors !== undefined && data !== undefined) {
-        const keys = Object.keys(errors) as Array<Path<Fields>>
-
-        keys.forEach(key => {
-          const value = data[key] as PathValue<Fields, Path<Fields>>
-          setValue(key, value)
-
-          // TODO -> no soporta mostrar multiples errores de servidor en el input directamente
-          const { [key]: messages } = errors
-          if (messages !== undefined) {
-            setError(key, {
-              message: messages.at(-1),
-            })
-          }
-        })
-
-        void trigger()
-      }
+      console.log('server error response: ', { errorType, errors, data })
 
       setResult(body)
     } catch (error) {

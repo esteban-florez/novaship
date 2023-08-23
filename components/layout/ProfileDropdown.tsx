@@ -1,10 +1,9 @@
-import { auth } from '@/lib/auth/pages'
 import AvatarIcon from '../AvatarIcon'
 import ProfileDropdownMenu from './ProfileDropdownMenu'
+import { auth } from '@/lib/auth/pages'
 
 export default async function ProfileDropdown() {
-  // TODO -> debe funcionar para todos los tipos de usuario
-  const { name } = await auth.person()
+  const { name } = await auth.user()
 
   return (
     <div className="dropdown-end dropdown z-20">

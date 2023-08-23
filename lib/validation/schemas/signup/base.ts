@@ -1,6 +1,7 @@
 import { object, string } from 'zod'
 import { defaults } from '../defaults'
 import messages from '../../messages'
+import { numeric } from '../../refinements'
 
 export const base = object({
   name: string(messages.string)
@@ -11,9 +12,9 @@ export const base = object({
   phone: string(messages.string)
     .length(11, {
       message: 'Debe tener 11 dígitos.',
-    }),
+    }).refine(numeric, messages.numeric),
   description: string(messages.string)
-    .max(255, messages.max(255))
-    .optional(),
+    .min(100, messages.min(100))
+    .max(255, messages.max(255)),
   image: defaults.client.image,
 })

@@ -12,7 +12,7 @@ export default function Navbar() {
           <ArrowLeftOnRectangleIcon className="h-5 w-5" />
           Iniciar sesión
         </Link>
-        <Link href="/auth/login" className="btn-secondary btn-outline btn-md btn sm:btn-wide">
+        <Link href="/auth/signup" className="btn-secondary btn-outline btn-md btn sm:btn-wide">
           <UserPlusIcon className="h-5 w-5" />
           Registrarme
         </Link>
