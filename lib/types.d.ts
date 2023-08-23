@@ -1,6 +1,7 @@
-import { type FieldErrors, type RegisterOptions } from 'react-hook-form'
+import { type UseFormRegisterReturn, type FieldErrors, type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
 import { type Field, type Skill } from '@prisma/client'
+import { type days } from './translations'
 
 type Selectable<T> = T & {
   selected: boolean
@@ -28,7 +29,7 @@ type SharedInputProps = {
 
 interface UseInputProps {
   name: string
-  register?: (name, config?: RegisterOptions) => object
+  register?: (name, config?: RegisterOptions) => UseFormRegisterReturn
   config?: RegisterOptions
   errors?: FieldErrors
 }
@@ -47,6 +48,8 @@ interface ApiResponseBody {
   }
   data?: Record<string, unknown>
 }
+
+type Schedule = Record<keyof typeof days, number[]>
 
 type OffersWithRelationships =
   Offer & {

@@ -1,42 +1,47 @@
 'use client'
 
 import { TrashIcon } from '@heroicons/react/24/outline'
-import useSubmit from '@/lib/hooks/useSubmit'
-import { type Fields, schema } from '@/lib/validation/schemas/delete'
-import Modal from '../Modal'
+import Modal from '../modal/Modal'
+import useDeleteRequest from '@/lib/hooks/useDeleteRequest'
+import Button from '../modal/Button'
+import CloseModalButton from '../modal/CloseModalButton'
+import { useId } from 'react'
 
 interface Props {
   title: string
   action: string
 }
 
-// TODO -> handleSubmit no envia los datos, requiere de un input al menos que pertenezca al schema
+// TODO -> cuando se elimina un elemento debe hacerse un re-fetch
 export default function DeleteModal({ title, action }: Props) {
-  const { handleSubmit, alert } = useSubmit<Fields>({
-    schema,
-    method: 'DELETE',
-  })
+  const id = useId()
+  const { handleSubmit, alert, serverErrors } = useDeleteRequest()
 
-  // TODO D -> esta no es la manera correcta de eliminar
   return (
-    <Modal
-      id="deleteModal"
-      label=""
-      style="ICON"
-      color="CANCEL"
-      hover="PRIMARY"
-      icon={<TrashIcon className="h-5 w-5" />}
-      cancelLabel="Cancelar"
-      acceptLabel="Borrar"
-      acceptColor="ERROR"
-      acceptIcon={<TrashIcon className="h-5 w-5" />}
-    >
-      <form action={action} method="POST" onSubmit={handleSubmit} className="text-center">
-        {alert}
-        <p>Si continua no podrá recuperarlo</p>
-        <p className="font-semibold text-error">¿Está seguro de borrarlo?</p>
-        <h6 className="mt-4 font-bold">{title}</h6>
-      </form>
-    </Modal>
+    <>
+      {alert}
+      {serverErrors}
+      <Modal
+        id={id}
+        icon={<TrashIcon className="h-4 w-4" />}
+        button="btn btn-sm btn-square hover:btn-primary rounded-sm"
+      >
+        <h4 className="text-center font-semibold">¿Está seguro que quiere borrarlo?</h4>
+        <img src="/delete.webp" alt="Imagen de un registro siendo borrado" className="mx-auto w-60 p-4" />
+        <form action={action} method="POST" onSubmit={handleSubmit} className="flex flex-col gap-y-4">
+          <p className="text-center">
+            <span className="font-bold">{title} </span>
+            será borrado...
+          </p>
+          <div className="flex justify-center gap-x-4">
+            <CloseModalButton id={id} text="Cancelar" />
+            <Button className="btn-error btn-outline btn px-6 py-2">
+              <TrashIcon className="h-5 w-5" />
+              Eliminar
+            </Button>
+          </div>
+        </form>
+      </Modal>
+    </>
   )
 }

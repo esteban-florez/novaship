@@ -4,6 +4,7 @@ import { type Membership, type Person, type Project } from '@prisma/client'
 import EmptyContent from '../EmptyContent'
 
 interface Props {
+  // DRY 18
   projects: Array<Project & {
     person: Person | null
     memberships: Array<Membership & {
@@ -27,11 +28,11 @@ export default function List({ projects, visibility, members, title, tab }: Prop
   }
 
   return (
-    projects.map((project, i) => {
+    projects.map(project => {
       if (
-        (title === '' || Boolean(project.title.toLowerCase().includes(title.toLowerCase()))) &&
+        (title === '' || project.title.toLowerCase().includes(title.toLowerCase())) &&
         (visibility === 'ALL' || project.visibility === visibility) &&
-        (members === 0 || project.memberships.length === members)
+        (members === 0 || project.memberships.length <= members)
       ) {
         return (
           <div key={project.id} className="mb-3 flex w-full flex-col gap-3">

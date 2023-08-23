@@ -1,8 +1,6 @@
-import { number, object, string } from 'zod'
+import { object, string } from 'zod'
 import { defaults } from '../defaults'
 import messages from '../../messages'
-
-const MB_IN_BYTES = 2_097_152
 
 export const base = object({
   name: string(messages.string)
@@ -17,10 +15,5 @@ export const base = object({
   description: string(messages.string)
     .max(255, messages.max(255))
     .optional(),
-  image: object({
-    size: number(),
-  }).refine(file => file.size < MB_IN_BYTES * 2, {
-    message: 'El peso máximo es 2 MB.',
-  })
-    .optional(),
+  image: defaults.client.image,
 })

@@ -12,10 +12,6 @@ export const schema = base.merge(
       .max(9, messages.max(9))
       .refine(numeric, messages.numeric),
     skills: array(string(), messages.array)
-      .nonempty(messages.nonempty)
-      .max(5, messages.maxArray(5)),
+      .nonempty(messages.nonempty),
   })
 )
-
-//   certification String
-//   image       String?

@@ -6,20 +6,18 @@ import { type TabProp, type VisibilityFilter } from '@/lib/types'
 import { type Membership, type Person, type Project } from '@prisma/client'
 import List from './List'
 
-interface Props {
-  projects: Array<Project & {
-    person: Person | null
-    memberships: Array<Membership & {
-      person: Person
-    }>
+// DRY 18
+type Projects = Array<Project & {
+  person: Person | null
+  memberships: Array<Membership & {
+    person: Person
   }>
-  personalProjects: Array<Project & {
-    person: Person | null
-    memberships: Array<Membership & {
-      person: Person
-    }>
-  }>
-}
+}>
+
+type Props = React.PropsWithChildren<{
+  projects: Projects
+  personalProjects: Projects
+}>
 
 export default function PageContent({ projects, personalProjects }: Props) {
   const [tab, setTab] = useState<TabProp>('All')
@@ -47,9 +45,9 @@ export default function PageContent({ projects, personalProjects }: Props) {
   }
 
   return (
-    <div className="px-4">
+    <div className="p-4">
       <Filter active={tab} onInput={handleChange} onTabClick={handleChangeTab} />
-      <section className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg rounded-tl-none bg-white p-4">
+      <section className="mx-auto mb-4 w-full columns-1 gap-4 rounded-b-lg rounded-r-lg border-x border-b border-neutral-300 bg-white p-4">
         <List projects={tab === 'All' ? projects : personalProjects} tab={tab} visibility={visibility} members={members} title={title} />
       </section>
     </div>

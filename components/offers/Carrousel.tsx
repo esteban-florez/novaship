@@ -11,6 +11,7 @@ interface Props {
 }
 
 export default function Carrousel({ offers }: Props) {
+export default function Carrousel({ offers }: Props) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const offer = offers[currentSlide]
   const previousSlide = currentSlide === 0 ? offers.length - 1 : currentSlide - 1
@@ -28,10 +29,10 @@ export default function Carrousel({ offers }: Props) {
             <Content
               id={offer.id}
               title={offer.title}
-              categories={offer.fields}
+              categories={offer.fields.map(field => field.title)}
               description={offer.description}
               owner={offer.company.name}
-              location={offer.location}
+              location={offer.location.title}
             />
             <div className="my-4 flex w-full flex-row items-center justify-center gap-4">
               <div className="flex rounded-lg">

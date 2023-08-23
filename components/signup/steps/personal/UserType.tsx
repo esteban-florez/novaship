@@ -67,7 +67,7 @@ export default function UserType({ userType, setUserType }: Props) {
         </div>
         <div className="mt-4 flex justify-between">
           <button
-            className="btn-primary btn-lg btn"
+            className="btn-primary btn"
             disabled={noOptionSelected}
             onClick={handleNextButton}
             type="button"

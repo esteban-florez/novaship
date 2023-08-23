@@ -4,7 +4,7 @@ import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
-  title: 'Desarrollador Web Front-End',
+  title: 'Ver oferta',
 }
 
 interface Context {
@@ -18,9 +18,6 @@ export default async function OfferPage({ params: { id } }: Context) {
     },
     include: {
       company: true,
-      location: true,
-      fields: true,
-      skills: true,
     },
   })
 

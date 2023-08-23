@@ -14,6 +14,7 @@ interface SignUpContextType {
   selectedFields: SelectableField[]
   setFields: (fields: SelectableField[]) => void
   skills: OptionSkill[]
+  clearErrors: (name?: string | string[]) => void
 }
 
 // @ts-expect-error -> Trust me TypeScript, this context will not be null.

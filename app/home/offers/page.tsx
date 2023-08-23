@@ -10,22 +10,21 @@ export const metadata: Metadata = {
 
 export default async function OffersPage() {
   const offers = await prisma.offer.findMany({
+    where: {
+      deletedAt: null,
+    },
     include: {
+      fields: true,
       company: true,
       location: true,
-      fields: true,
-      skills: true,
-    },
-    orderBy: {
-      title: 'asc',
     },
   })
 
-  const carrouselOffers = offers.slice(0, 5)
+  const carruselOffers = offers.splice(0, 5)
 
   return (
     <>
-      <Carrousel offers={carrouselOffers} />
+      <Carrousel offers={carruselOffers} />
       <PageNav />
       <div className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg p-4 pt-1
       md:columns-2 lg:columns-3 xl:rounded-tl-none xl:px-6"
@@ -35,11 +34,12 @@ export default async function OffersPage() {
             <Offer
               key={offer.id}
               id={offer.id}
+              id={offer.id}
               title={offer.title}
-              categories={offer.fields}
+              categories={offer.fields.map(field => field.title)}
               description={offer.description}
               owner={offer.company.name}
-              location={offer.location}
+              location={offer.location.title}
             />
           )
         })}

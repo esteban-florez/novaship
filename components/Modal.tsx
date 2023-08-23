@@ -18,7 +18,11 @@ type Props = React.PropsWithChildren<{
 
 // Dev
 // Arreglar las props
-export default function Modal({ id, icon, label, color, style = 'DEFAULT', hover, cancelLabel, acceptColor = 'EMPTY', acceptIcon, acceptLabel, onClick, children }: Props) {
+export default function Modal({
+  id, icon, label, color, style = 'DEFAULT',
+  hover, cancelLabel, acceptColor = 'EMPTY',
+  acceptIcon, acceptLabel, onClick, children,
+}: Props) {
   const hasacceptIcon = acceptIcon !== null && acceptIcon !== undefined
   const hasActionText = acceptLabel !== null && acceptLabel !== undefined
 

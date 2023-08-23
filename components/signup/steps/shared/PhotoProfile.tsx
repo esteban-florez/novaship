@@ -2,20 +2,8 @@ import { useContext } from 'react'
 import { SignUpContext } from '../../SignUpContext'
 import ImageInput from '@/components/forms/inputs/ImageInput'
 
-type Props = React.PropsWithChildren<{
-  isPerson?: boolean
-}>
-
-export default function PhotoProfile({ isPerson = false }: Props) {
-  const { register, errors, goBack, goNext, trigger } = useContext(SignUpContext)
-
-  async function handleNext() {
-    const valid = await trigger('image')
-
-    if (valid) {
-      goNext()
-    }
-  }
+export default function PhotoProfile() {
+  const { register, errors, goBack } = useContext(SignUpContext)
 
   return (
     <>
@@ -31,21 +19,13 @@ export default function PhotoProfile({ isPerson = false }: Props) {
           label="Subir imagen de perfil"
           register={register}
           errors={errors}
-          config={{
-            setValueAs: (value: FileList) =>
-              value.length === 0 ? undefined : value.item(0),
-          }}
         />
         <div className="flex justify-between">
           <button onClick={goBack} type="button" className="btn-neutral btn mt-4">
             Volver
           </button>
-          <button
-            onClick={!isPerson ? undefined : handleNext}
-            type={!isPerson ? 'submit' : 'button'}
-            className="btn-primary btn mt-4"
-          >
-            {!isPerson ? 'Enviar' : 'Siguiente'}
+          <button type="submit" className="btn-primary btn mt-4">
+            Enviar
           </button>
         </div>
       </div>

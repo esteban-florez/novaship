@@ -11,18 +11,14 @@
 - Función para añadir n campos de experiencias.
 - Ajustar el ancho del mensaje en Toast.
 - Revisar rutas: /user/profile y /profile.
-- Mover el chat del /navbar a /projects.
 - El height del carrusel debe ser el mismo sin importar su contenido.
 - Guiar al usuario por la aplicación.
 - Banner recordatorio de completar perfil.
 - Componente Ads y ubicarlos en el layout.
-- Crear personalizados componentes.
 - Arreglar los perfiles (ruta /home/profile no existe, en el navbar).
 - Remover padding left del chatbar en /chats
 - Release, File, Message le faltan seeders.
 - Crear input tipo file y limitar las extensiones.
-- Cambiar los estilos de <SelectedMembers>.
-- Cambiar estilos de los select (Fields, Skills).
 - Arreglar la ruta de [id] en <Breadcrumbs>.
 - Añadir opcion de registrar campo si no existe.
 

@@ -90,7 +90,6 @@ export default function useSubmit<Fields extends FieldValues>({
       setResult(body)
     } catch (error) {
       const body = handleError(error)
-      console.log(body)
       setResult(body)
     }
   }

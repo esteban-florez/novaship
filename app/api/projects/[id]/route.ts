@@ -19,7 +19,9 @@ export async function PUT(request: NextRequest) {
       },
     })
 
-    if (project?.personId !== user.id) redirect('/home/projects')
+    if (project?.deletedAt !== null || project?.personId !== user.id) {
+      redirect('/home/projects')
+    }
 
     await prisma.project.update({
       where: {
@@ -63,16 +65,19 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  // TODO D -> así no es el delete xDDD
-
-  console.log(true)
   let data
   try {
     data = await request.json()
+    const user = await auth.person(request)
 
-    console.log(data)
+    const project = await prisma.project.deleteMany({
+      where: {
+        id: data.id,
+        personId: user.id,
+      },
+    })
 
-    // return NextResponse.json(project)
+    return NextResponse.json(project)
   } catch (error) {
     return handleError(error, data)
   }
