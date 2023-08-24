@@ -1,4 +1,4 @@
-import Details from '@/components/offers-details/Details'
+import PageContent from '@/components/offers-details/PageContent'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
@@ -29,10 +29,6 @@ export default async function OfferPage({ params: { id } }: Context) {
   }
 
   return (
-    <>
-      <section className="grid grid-cols-7 gap-4 p-4">
-        <Details offer={offer} />
-      </section>
-    </>
+    <PageContent offer={offer} />
   )
 }

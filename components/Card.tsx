@@ -16,7 +16,7 @@ export default function Card({ id, title, categories, description, owner, locati
     <>
       <div className="relative">
         <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagen de fondo carrusel" className="h-28 w-full rounded-t-xl object-cover" />
-        <img src="/ondas.png" alt="card onda" className="absolute bottom-0 w-full" />
+        <img src="/onda-horizontal.webp" alt="Onda-horizontal" className="absolute bottom-0 w-full" />
       </div>
       <div className="card card-compact bg-base-100 shadow-lg">
         <div className="flex flex-col gap-3 rounded-t-xl px-4 py-1">
