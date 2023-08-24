@@ -13,6 +13,7 @@ export default async function SignUpPage() {
   const skills = await prisma.skill.findMany({
     select: { id: true, title: true },
   })
+  const locations = await prisma.location.findMany()
   const fields = await selectable<SelectableSkill>({ model: 'field' })
 
   return (
@@ -39,7 +40,7 @@ export default async function SignUpPage() {
           </div>
         </section>
         <section className="grid w-full place-items-center p-4 lg:w-3/4">
-          <SignUpForm fields={fields} skills={skills} />
+          <SignUpForm fields={fields} skills={skills} locations={locations} />
         </section>
       </section>
     </>

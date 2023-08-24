@@ -1,6 +1,6 @@
-import { date, preprocess, string, instanceof as isInstance } from 'zod'
+import { date, preprocess, string, instanceof as isInstance, array } from 'zod'
 import messages from '../messages'
-import { hasLower, hasNumber, hasSymbol, hasUpper } from '../refinements'
+import { hasLower, hasNumber, hasSymbol, hasUpper, imageFormat, imageSize } from '../refinements'
 
 const today = new Date()
 const year18YearsAgo = today.getFullYear() - 18
@@ -10,8 +10,6 @@ const dateOptions = {
   ...messages.date,
   coerce: true,
 }
-
-const MB_IN_BYTES = 2_097_152
 
 // @ts-expect-error Hack for instanceof File and FileList
 globalThis.FileList ??= Object; globalThis.File ??= Object
@@ -24,16 +22,9 @@ function extractFile(files: unknown) {
   return null
 }
 
-const imageSchema = isInstance(File, {
-  message: 'Este campo es requerido.',
-}).refine(file => {
-  const formats = ['image/png', 'image/jpeg']
-  return formats.includes(file.type)
-}, {
-  message: 'Los formatos permitidos son PNG y JPEG.',
-}).refine(file => file.size < 2 * MB_IN_BYTES, {
-  message: 'La imagen tiene como máximo 2 MB.',
-})
+const clientImageSchema = isInstance(File, messages.file)
+  .refine(imageFormat, messages.imageFormat)
+  .refine(imageSize, messages.imageSize)
 
 export const defaults = {
   email: string(messages.string)
@@ -49,8 +40,14 @@ export const defaults = {
     .refine(hasSymbol, messages.hasSymbol),
   birth: date(dateOptions).max(today18YearsAgo, messages.birth),
   date: date(dateOptions),
+  ids: array(string(messages.string).cuid(messages.cuid), messages.array),
   client: {
-    image: preprocess(extractFile, imageSchema.nullable()),
-    requiredImage: preprocess(extractFile, imageSchema),
+    image: preprocess(extractFile, clientImageSchema.nullable()),
+    requiredImage: preprocess(extractFile, clientImageSchema),
+  },
+  server: {
+    image: isInstance(Blob, messages.file)
+      .refine(imageFormat, messages.imageFormat)
+      .refine(imageSize, messages.imageSize),
   },
 }

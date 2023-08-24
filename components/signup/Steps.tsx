@@ -1,4 +1,4 @@
-import { type UserType } from '@prisma/client'
+import { type Location, type UserType } from '@prisma/client'
 import clsx from 'clsx'
 import PhotoProfile from './steps/shared/PhotoProfile'
 import Fields from './steps/personal/Fields'
@@ -9,10 +9,11 @@ import Skills from './steps/personal/Skills'
 type Props = React.PropsWithChildren<{
   step: number
   userType: UserType
+  locations: Location[]
 }>
 
 export default function Steps({
-  userType, step,
+  userType, step, locations,
 }: Props) {
   // DRY -> en todos estos componentes Step que se importan aquí, hay mucha repetición de JSX, se pueden hacer componentes "template".
   const isPerson = userType === 'PERSON'
@@ -21,7 +22,7 @@ export default function Steps({
   const stepFour = isPerson ? <PhotoProfile /> : null
 
   const steps = [
-    <BasicData key={0} userType={userType} />,
+    <BasicData key={0} userType={userType} locations={locations} />,
     stepTwo,
     stepThree,
     stepFour,

@@ -2,7 +2,7 @@ import { defaults } from '../defaults'
 import { base } from './base'
 import messages from '../../messages'
 import { numeric } from '../../refinements'
-import { array, object, string } from 'zod'
+import { object, string } from 'zod'
 
 export const schema = base.merge(
   object({
@@ -11,7 +11,7 @@ export const schema = base.merge(
       .min(7, messages.min(7))
       .max(9, messages.max(9))
       .refine(numeric, messages.numeric),
-    skills: array(string(), messages.array)
+    skills: defaults.ids
       .nonempty(messages.nonempty),
   })
 )

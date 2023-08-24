@@ -23,7 +23,7 @@ export default function Textarea({
       <textarea
         id={name} name={name} {...registerProps}
         placeholder={placeholder} rows={height} defaultValue={value}
-        className={clsx('textarea w-full resize-none border-neutral-300 bg-base-200 focus:outline-none focus:ring focus:ring-primary', hasError && 'border-error focus:ring-error', className)}
+        className={clsx('textarea mb-3 w-full resize-none border-neutral-300 bg-base-200 focus:outline-none focus:ring focus:ring-primary', hasError && 'border-error focus:ring-error', className)}
       />
       <InputError message={errorMessage} />
     </>

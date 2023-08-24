@@ -14,9 +14,8 @@ export default async function IntenshipsPage() {
       deletedAt: null,
     },
     include: {
-      profile: {
+      person: {
         include: {
-          person: true,
           skills: {
             select: {
               id: true,
@@ -34,17 +33,17 @@ export default async function IntenshipsPage() {
         return (
           <div key={intership.id} className="group mb-4 select-none break-inside-avoid rounded-md border border-neutral-300 bg-white px-4 py-6 shadow hover:border-primary hover:bg-primary/10">
             <div className="flex items-center gap-2">
-              <AvatarIcon username={intership.profile.person.name} />
-              <h3 className="text-xl font-bold">{intership.profile.person.name}</h3>
+              <AvatarIcon username={intership.person.name} />
+              <h3 className="text-xl font-bold">{intership.person.name}</h3>
             </div>
             <div className="mt-3">
-              {intership.profile.skills.map(skill => (
+              {intership.person.skills.map(skill => (
                 <span key={skill.id} className="badge badge-primary badge-outline me-2 py-1 font-semibold">
                   {skill.title}
                 </span>
               ))}
             </div>
-            <p className="my-4 line-clamp-3">{intership.profile.description}</p>
+            <p className="my-4 line-clamp-3">{intership.person.description}</p>
             <div className="hidden group-hover:flex group-hover:justify-between">
               <Button className="btn-error btn">
                 <XMarkIcon className="h-5 w-5" />

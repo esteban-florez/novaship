@@ -12,7 +12,6 @@ import dataExperiences from '@/prisma/data/experiences.json'
 
 export const seederQueries = {
   persons: 20,
-  profiles: 20,
   institute: 20,
   companies: 20,
   offers: 20,
@@ -98,7 +97,6 @@ seed()
     formatLog({ name: '🟣 Participations', value: await prisma.participation.count() })
     formatLog({ name: '🟣 Persons', value: await prisma.person.count() })
     formatLog({ name: '🟣 Postulations', value: await prisma.postulation.count() })
-    formatLog({ name: '🟣 Profiles', value: await prisma.profile.count() })
     formatLog({ name: '🟣 Projects', value: await prisma.project.count() })
     formatLog({ name: '🟣 Recruitments', value: await prisma.recruitment.count() })
     formatLog({ name: '🟣 Reviews', value: await prisma.review.count() })

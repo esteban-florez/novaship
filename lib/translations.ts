@@ -63,3 +63,8 @@ export const targets = {
   INTERNS: 'Pasantes',
   CANDIDATS: 'Postulantes',
 } as const
+
+export const actions = {
+  update: 'Actualizar',
+  create: 'Registrar',
+} as const

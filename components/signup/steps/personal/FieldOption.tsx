@@ -9,6 +9,7 @@ type Props = React.PropsWithChildren<{
 export default function FieldOption({ handleFieldInput, field: { id, title, selected } }: Props) {
   return (
     <button
+      type="button"
       onClick={() => { handleFieldInput(id) }}
       className={clsx(
         'rounded-lg border-2 border-primary p-4 transition-colors',
