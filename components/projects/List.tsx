@@ -21,7 +21,7 @@ interface Props {
 export default function List({ projects, visibility, members, title, tab }: Props) {
   if (projects.length === 0) {
     return (
-      <EmptyContent title="No encontramos nada...">
+      <EmptyContent title="No encontramos nada..." size="sm:w-2/4">
         Démosle un poco de vida a esta sección añadiendo algunos proyectos.
       </EmptyContent>
     )
@@ -32,7 +32,7 @@ export default function List({ projects, visibility, members, title, tab }: Prop
       if (
         (title === '' || project.title.toLowerCase().includes(title.toLowerCase())) &&
         (visibility === 'ALL' || project.visibility === visibility) &&
-        (members === 0 || project.memberships.length === members)
+        (members === 0 || project.memberships.length <= members)
       ) {
         return (
           <div key={project.id} className="mb-3 flex w-full flex-col gap-3">

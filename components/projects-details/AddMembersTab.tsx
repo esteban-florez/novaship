@@ -1,110 +1,56 @@
-import useSubmit from '@/lib/hooks/useSubmit'
-import { type SelectablePerson } from '@/lib/types'
-import { type Fields, schema } from '@/lib/validation/schemas/persons'
-import Input from '../forms/inputs/Input'
-import SelectedMembers from '../selectable-models/SelectedMembers'
+import { type OptionPerson } from '@/lib/types'
 import Button from '../Button'
 import { UserPlusIcon } from '@heroicons/react/24/solid'
-import Member from './Member'
-import { includesValue } from '@/lib/utils/text'
+import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
+import useSubmit from '@/lib/hooks/useSubmit'
+import { schema } from '@/lib/validation/schemas/memberships'
 
 interface Props {
-  id: string
-  selectedPersons: SelectablePerson[]
-  availablePersons: SelectablePerson[]
-  totalPersons: SelectablePerson[]
-  inputFocus: boolean
-  searchName: string
-  setTotalPersons: (totalPersons: SelectablePerson[]) => void
-  setInputFocus: (value: boolean) => void
-  setSearchName: (search: string) => void
+  projectId: string
+  persons: OptionPerson[]
 }
 
-export default function AddMembersTab({
-  id,
-  selectedPersons,
-  availablePersons,
-  totalPersons,
-  inputFocus,
-  searchName,
-  setTotalPersons,
-  setInputFocus,
-  setSearchName,
-}: Props) {
-  // DRY 4
-  function addPerson(id: string) {
-    const newPersons = totalPersons.map(person => {
-      if (person.id !== id) return person
-
-      return {
-        ...person,
-        selected: true,
-      }
-    })
-
-    setTotalPersons(newPersons)
-  }
-
-  function removePerson(id: string) {
-    const newPersons = totalPersons.map(person => {
-      if (person.id !== id) return person
-
-      return {
-        ...person,
-        selected: false,
-      }
-    })
-
-    setTotalPersons(newPersons)
-  }
-
-  function handleInput(event: OnInputEvent) {
-    const { value } = event.target
-    setInputFocus(value.length > 0)
-    setSearchName(value)
-  }
-
+export default function AddMembersTab({ projectId, persons }: Props) {
   const {
-    handleSubmit, alert, register, serverErrors,
-  } = useSubmit<Fields>({
+    alert,
+    serverErrors,
+    control,
+    handleSubmit,
+  } = useSubmit({
     schema,
     method: 'PUT',
+    refreshOnSuccess: true,
     append: {
-      projectId: id,
-      selectedPersons,
+      action: 'ADD',
+      projectId,
     },
   })
 
   return (
-    <form action="/api/memberships" onSubmit={handleSubmit} method="POST">
+    <>
       {alert}
       {serverErrors}
-      <Input name="id" label="" placeholder="" value={id} register={register} className="hidden" />
-      <Input name="test" label="" placeholder="" register={register} className="hidden" />
-      <Input name="members" label="Invitar" placeholder="Ej: josezz@gmail.com" register={register} onInput={handleInput} />
-
-      <div className="mt-3 max-h-60 w-full gap-2 overflow-y-auto">
-        {inputFocus && availablePersons.map(person => {
-          if (searchName === '' || (searchName !== '' && includesValue(person.name, searchName)) || includesValue(person.email, searchName)) {
-            return <Member key={person.id} name={person.name} email={person.email} action="Add" onClick={() => { addPerson(person.id) }} />
-          }
-
-          return null
-        })}
-      </div>
-
-      <SelectedMembers selectedPersons={selectedPersons} removePerson={removePerson} />
-
-      <div className="mt-2 flex flex-col">
-        <Button
-          style={selectedPersons.length === 0 ? 'DISABLED' : 'DEFAULT'}
-          color="PRIMARY"
-          icon={<UserPlusIcon className="h-5 w-5" />}
-          isDisabled={selectedPersons.length === 0}
-        >
-          Añadir
-        </Button>
-      </div>
-    </form>
+      <form action="/api/memberships" onSubmit={handleSubmit} method="POST">
+        <SelectMultiple
+          control={control}
+          label="Invitar personas"
+          name="members"
+          itemsName="Personas"
+          options={{
+            type: 'rows',
+            data: persons,
+          }}
+        />
+        <div className="mt-2 flex flex-col">
+          <Button
+            style="DEFAULT"
+            color="PRIMARY"
+            icon={<UserPlusIcon className="h-5 w-5" />}
+          >
+            Añadir
+          </Button>
+        </div>
+      </form>
+    </>
   )
 }

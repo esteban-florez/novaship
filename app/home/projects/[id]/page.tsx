@@ -19,9 +19,10 @@ export default async function ProjectPage({ params: { id } }: Context) {
     redirect('/home/projects')
   }
 
-  const project = await prisma.project.findUnique({
+  const project = await prisma.project.findFirst({
     where: {
       id,
+      deletedAt: null,
     },
     include: {
       person: true,
@@ -54,13 +55,5 @@ export default async function ProjectPage({ params: { id } }: Context) {
     },
   })
 
-  // DRY
-  const selectablePersons = persons.map(person => {
-    return {
-      ...person,
-      selected: false,
-    }
-  })
-
-  return <PageContent owner={activeUser} project={project} persons={selectablePersons} />
+  return <PageContent owner={activeUser} project={project} persons={persons} />
 }

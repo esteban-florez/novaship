@@ -29,13 +29,11 @@ model Person {
   image         String?
   phone         String       @unique
   description   String
-  authUser      AuthUser     @relation(fields: [authUserId], references: [id])
+  authUser      AuthUser     @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authUserId    String       @unique
   messages      Message[]
   memberships   Membership[]
   projects      Project[]
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
   // Profile fields
   // TODO -> quizás haya que añadir Location a este modelo
   qualification String? // Esto podría ser una table de Títulos, pero por ahora un string
@@ -47,6 +45,9 @@ model Person {
   candidacies   Candidacy[]
   internships   Internship[]
   reviews       Review[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  deletedAt     DateTime?
 }
 
 model Company {
@@ -59,15 +60,16 @@ model Company {
   phone         String    @unique
   certification String
   verifiedAt    DateTime?
-  authUser      AuthUser  @relation(fields: [authUserId], references: [id])
+  authUser      AuthUser  @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authUserId    String    @unique
-  location      Location  @relation(fields: [locationId], references: [id])
+  location      Location  @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   locationId    String
   projects      Project[]
   offers        Offer[]
   reviews       Review[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
 }
 
 model Institute {
@@ -80,25 +82,27 @@ model Institute {
   phone         String       @unique
   certification String
   verifiedAt    DateTime?
-  location      Location     @relation(fields: [locationId], references: [id])
+  location      Location     @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   locationId    String
-  authUser      AuthUser     @relation(fields: [authUserId], references: [id])
+  authUser      AuthUser     @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authUserId    String       @unique
   internships   Internship[]
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
+  deletedAt     DateTime?
 }
 
 model Membership {
   id             String          @id @default(cuid())
-  person         Person          @relation(fields: [personId], references: [id])
+  person         Person          @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   personId       String
-  project        Project         @relation(fields: [projectId], references: [id])
+  project        Project         @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   projectId      String
   files          File[]
   participations Participation[]
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+  deletedAt      DateTime?
 }
 
 model Project {
@@ -107,9 +111,9 @@ model Project {
   description String
   image       String?      @unique
   visibility  Visibility
-  company     Company?     @relation(fields: [companyId], references: [id])
+  company     Company?     @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   companyId   String?
-  person      Person?      @relation(fields: [personId], references: [id])
+  person      Person?      @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   personId    String?
   memberships Membership[]
   fields      Field[]
@@ -119,17 +123,19 @@ model Project {
   files       File[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  deletedAt   DateTime?
 }
 
 model Participation {
   id           String     @id @default(cuid())
   isLeader     Boolean    @default(false)
-  membership   Membership @relation(fields: [membershipId], references: [id])
+  membership   Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   membershipId String
-  task         Task       @relation(fields: [taskId], references: [id])
+  task         Task       @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   taskId       String
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
+  deletedAt    DateTime?
 }
 
 model Task {
@@ -138,13 +144,14 @@ model Task {
   description    String
   revisions      Revision[]
   status         TaskStatus?
-  project        Project         @relation(fields: [projectId], references: [id])
+  project        Project         @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   projectId      String
   subtasks       Subtask[]
   participations Participation[]
   messages       Message[]
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+  deletedAt      DateTime?
 }
 
 model Subtask {
@@ -153,107 +160,116 @@ model Subtask {
   description String
   revisions   Revision[]
   status      TaskStatus @default(PENDING)
-  task        Task       @relation(fields: [taskId], references: [id])
+  task        Task       @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   taskId      String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  deletedAt   DateTime?
 }
 
 model Revision {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   description String
-  task        Task?    @relation(fields: [taskId], references: [id])
+  task        Task?     @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   taskId      String?
-  subtask     Subtask? @relation(fields: [subtaskId], references: [id])
+  subtask     Subtask?  @relation(fields: [subtaskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   subtaskId   String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
 }
 
 model Release {
-  id        String   @id @default(cuid())
-  preview   String?  @unique
+  id        String    @id @default(cuid())
+  preview   String?   @unique
   price     Float
-  project   Project  @relation(fields: [projectId], references: [id])
-  projectId String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  projectId String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 model Message {
-  id        String   @id @default(cuid())
-  content   String   @db.Text
+  id        String    @id @default(cuid())
+  content   String    @db.Text
   // TODO -> relaciones redundantes, pueden sustituirse por membership 
-  person    Person   @relation(fields: [personId], references: [id])
+  person    Person    @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   personId  String
-  project   Project? @relation(fields: [projectId], references: [id])
+  project   Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   projectId String?
   //
-  task      Task?    @relation(fields: [taskId], references: [id])
+  task      Task?     @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   taskId    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 model File {
   id        String     @id @default(cuid())
   src       String
-  project   Project    @relation(fields: [projectId], references: [id])
+  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   projectId String
   author    Membership @relation(fields: [authorId], references: [id])
   authorId  String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  deletedAt DateTime?
 }
 
 model Experience {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   role        String
-  description String?  @db.Text
+  description String?   @db.Text
   from        DateTime
   to          DateTime
-  person      Person   @relation(fields: [personId], references: [id])
+  person      Person    @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   personId    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
 }
 
 model Review {
-  id        String   @id @default(cuid())
-  content   String   @db.Text
-  person    Person   @relation(fields: [personId], references: [id])
+  id        String    @id @default(cuid())
+  content   String    @db.Text
+  person    Person    @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   personId  String
-  company   Company  @relation(fields: [companyId], references: [id])
+  company   Company   @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   companyId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 model Candidacy {
   id           String        @id @default(cuid())
   description  String?       @db.Text
   isActive     Boolean       @default(true)
-  person       Person        @relation(fields: [personId], references: [id])
+  person       Person        @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   personId     String
   postulations Postulation[]
   recruitments Recruitment[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
 }
 
 model Internship {
   id           String        @id @default(cuid())
   description  String?       @db.Text
   isActive     Boolean       @default(true)
-  person       Person        @relation(fields: [personId], references: [id])
+  person       Person        @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   personId     String
-  institute    Institute     @relation(fields: [instituteId], references: [id])
+  institute    Institute     @relation(fields: [instituteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   instituteId  String
   postulations Postulation[]
   recruitments Recruitment[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
 }
 
 model Offer {
@@ -276,32 +292,35 @@ model Offer {
   expiresAt    DateTime?
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
 }
 
 model Postulation {
   id          String             @id @default(cuid())
   status      RecruitmentStatus? @default(PENDING)
-  offer       Offer              @relation(fields: [offerId], references: [id])
+  offer       Offer              @relation(fields: [offerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   offerId     String
-  candidacy   Candidacy?         @relation(fields: [candidacyId], references: [id])
+  candidacy   Candidacy?         @relation(fields: [candidacyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   candidacyId String?
-  intern      Internship?        @relation(fields: [internId], references: [id])
+  intern      Internship?        @relation(fields: [internId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   internId    String?
   interviews  Interview[]
   createdAt   DateTime           @default(now())
   updatedAt   DateTime           @updatedAt
+  deletedAt   DateTime?
 }
 
 model Recruitment {
   id           String             @id @default(cuid())
   status       RecruitmentStatus? @default(PENDING)
-  candidacy    Candidacy?         @relation(fields: [candidacyId], references: [id])
+  candidacy    Candidacy?         @relation(fields: [candidacyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   candidacyId  String?
-  internship   Internship?        @relation(fields: [internshipId], references: [id])
+  internship   Internship?        @relation(fields: [internshipId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   internshipId String?
   interviews   Interview[]
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @updatedAt
+  deletedAt    DateTime?
 }
 
 model Interview {
@@ -309,12 +328,13 @@ model Interview {
   date          DateTime
   link          String
   platform      Platform
-  postulation   Postulation? @relation(fields: [postulationId], references: [id])
+  postulation   Postulation? @relation(fields: [postulationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   postulationId String?
-  recruitment   Recruitment? @relation(fields: [recruitmentId], references: [id])
+  recruitment   Recruitment? @relation(fields: [recruitmentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   recruitmentId String?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
+  deletedAt     DateTime?
 }
 
 model Location {
@@ -325,6 +345,7 @@ model Location {
   company   Company[]
   institute Institute[]
   offer     Offer[]
+  deletedAt DateTime?
 }
 
 // TODO -> renombrar a Category
@@ -336,15 +357,17 @@ model Field {
   offers    Offer[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 model Skill {
-  id        String   @id @default(cuid())
-  title     String   @unique
+  id        String    @id @default(cuid())
+  title     String    @unique
   persons   Person[]
   offers    Offer[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 model AuthSession {

@@ -20,7 +20,7 @@ export default function ProjectDetails({ project }: Props) {
         <div className="flex justify-between">
           <div className="container pl-5">
             <h3 className="text-base font-bold sm:text-xl">{project?.title}</h3>
-            <p className="sm: line-clamp-6 text-sm">Responsable: {project?.person?.name}</p>
+            <p className="text-sm">Responsable: {project?.person?.name}</p>
           </div>
         </div>
         <p className="line-clamp-6 px-5 pt-4">

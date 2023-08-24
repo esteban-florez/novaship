@@ -11,7 +11,11 @@ export default function Dots({ current, length }: Props) {
       {new Array(length).fill(null).map((_, index) => (
         <li
           key={index}
-          className={clsx('h-4 w-4 rounded-full bg-white/70', current === index && 'w-6 border border-white bg-secondary/80')}
+          className={clsx({
+            'h-4 w-4 rounded-full': true,
+            'bg-white/60': current !== index,
+            'w-6 border border-neutral-400 bg-white': current === index,
+          })}
         />
       ))}
     </ul>

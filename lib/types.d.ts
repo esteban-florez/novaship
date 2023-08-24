@@ -50,3 +50,11 @@ interface ApiResponseBody {
 }
 
 type Schedule = Record<keyof typeof days, number[]>
+
+type OffersWithRelationships =
+  Offer & {
+    company: Company
+    location: Location
+    fields: Field[]
+    skills: Skill[]
+  }

@@ -47,3 +47,24 @@ export const days = {
   saturday: 'Sábado',
   sunday: 'Domingo',
 } as const
+
+export const schedules = {
+  FULLTIME: 'Tiempo completo',
+  PARTTIME: 'Medio tiempo',
+} as const
+
+export const modes = {
+  REMOTE: 'Remoto',
+  ONSITE: 'Presencial',
+  HYBRID: 'Semi-presencial',
+} as const
+
+export const targets = {
+  INTERNS: 'Pasantes',
+  CANDIDATS: 'Postulantes',
+} as const
+
+export const actions = {
+  update: 'Actualizar',
+  create: 'Registrar',
+} as const
