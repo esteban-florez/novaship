@@ -1,12 +1,13 @@
 type Props = React.PropsWithChildren<{
   title: React.ReactNode
+  bg: string
 }>
 
-export default function Collapse({ title, children }: Props) {
+export default function Collapse({ title, bg, children }: Props) {
   return (
-    <div className="collapse bg-white shadow-lg">
+    <div className={`collapse-arrow collapse ${bg} shadow-lg`}>
       <input type="checkbox" />
-      <div className="collapse-title pr-4 text-xl font-medium">
+      <div className="collapse-title pr-4 text-xl font-semibold">
         {title}
       </div>
       <div className="collapse-content">

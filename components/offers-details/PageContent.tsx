@@ -2,7 +2,6 @@
 
 import {
   BanknotesIcon,
-  ChevronDownIcon,
   ClockIcon,
   HomeModernIcon,
   UserIcon,
@@ -53,15 +52,8 @@ export default function PageContent({ offer }: Props) {
         />
         <div className="mt-4 block xl:hidden">
           <Collapse
-            title={
-              <div className="flex items-center justify-between">
-                <AvatarInfo
-                  owner={offer.company.name}
-                  location={offer.location.title}
-                />
-                <ChevronDownIcon className="h-8 w-8" />
-              </div>
-            }
+            title={<AvatarInfo owner={offer.company.name} location={offer.location.title} />}
+            bg="bg-white"
           >
             <InfoUser
               avatarInfo={false}
