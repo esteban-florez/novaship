@@ -18,7 +18,7 @@ interface Props {
 }
 
 // TODO -> pagination
-export default function List({ projects, visibility, members, title, tab }: Props) {
+export default function ProjectsCard({ projects, visibility, members, title, tab }: Props) {
   if (projects.length === 0) {
     return (
       <EmptyContent title="No encontramos nada..." size="sm:w-2/4">
@@ -45,8 +45,6 @@ export default function List({ projects, visibility, members, title, tab }: Prop
                   title={project.title}
                   description={project.description}
                   owner={project.person?.name}
-                  avatarInfo={false}
-                  members={project.memberships}
                 />
               </div>
             </div>
