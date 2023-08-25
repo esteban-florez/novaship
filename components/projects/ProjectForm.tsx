@@ -16,6 +16,7 @@ import { Visibility, type Project } from '@prisma/client'
 import Member from '../projects-details/Member'
 import { includesValue } from '@/lib/utils/text'
 import { visibilities } from '@/lib/translations'
+import Layout from '../forms/Layout'
 
 // DRY 5
 interface Props {
@@ -167,67 +168,65 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
   })
 
   return (
-    <div className="mx-auto px-20 py-10">
-      <div className="card w-full rounded-lg border border-neutral-300 bg-base-100 p-4 shadow-xl">
-        <form onSubmit={handleSubmit} method="POST" action={action}>
-          {serverErrors}
-          {alert}
-          <FormSection title="Información del proyecto" description="Asigne un título que explique de que trata el proyecto, así como una descripción del mismo para tener una mejor idea y por último si es público o privado.">
-            <Input name="title" value={project?.title} register={register} errors={errors} label="Título" placeholder="Ej: Página web administrativa" />
-            <Textarea name="description" value={project?.description} register={register} errors={errors} label="Descripción" placeholder="Ej: Página web de carácter administrativo para la empresa..." />
-            <Select
-              name="visibility"
-              value={project?.visibility}
-              register={register}
-              errors={errors}
-              label="Selecciona la privacidad"
-              options={{ type: 'enum', data: Visibility, translation: visibilities }}
-            />
-          </FormSection>
+    <Layout>
+      <form onSubmit={handleSubmit} method="POST" action={action}>
+        {serverErrors}
+        {alert}
+        <FormSection title="Información del proyecto" description="Asigne un título que explique de que trata el proyecto, así como una descripción del mismo para tener una mejor idea y por último si es público o privado.">
+          <Input name="title" value={project?.title} register={register} errors={errors} label="Título" placeholder="Ej: Página web administrativa" />
+          <Textarea name="description" value={project?.description} register={register} errors={errors} label="Descripción" placeholder="Ej: Página web de carácter administrativo para la empresa..." />
+          <Select
+            name="visibility"
+            value={project?.visibility}
+            register={register}
+            errors={errors}
+            label="Selecciona la privacidad"
+            options={{ type: 'enum', data: Visibility, translation: visibilities }}
+          />
+        </FormSection>
 
-          <FormSection title="Campos requeridos" description="Elige los campos necesarios para ser parte del proyecto.">
-            {availableFields.length > 0 &&
-              (
-                // Fix -> Despues de seleccionar una opcion el primer elemento no es seleccionable.
-                <Select name="fields" label="Campos" onInput={(e) => { addField(e.target.value) }}>
-                  {/* CHECK 1 */}
-                  {/*
-                  <Select name="fields" label="Campos" onInput={
-                    (e) => {handleOption<SelectableField>({ id: e.target.value, options: totalFields, value: true, setOptions: setTotalFields })}
-                  }>
-                */}
-                  {availableFields.map(field => (
-                    <option key={field.id} value={field.id}>
-                      {field.title}
-                    </option>
-                  ))}
-                </Select>
-              )}
-            <SelectedOptions selectedOptions={selectedFields} removeOption={removeField} />
-          </FormSection>
+        <FormSection title="Campos requeridos" description="Elige los campos necesarios para ser parte del proyecto.">
+          {availableFields.length > 0 &&
+            (
+              // Fix -> Despues de seleccionar una opcion el primer elemento no es seleccionable.
+              <Select name="fields" label="Campos" onInput={(e) => { addField(e.target.value) }}>
+                {/* CHECK 1 */}
+                {/*
+                <Select name="fields" label="Campos" onInput={
+                  (e) => {handleOption<SelectableField>({ id: e.target.value, options: totalFields, value: true, setOptions: setTotalFields })}
+                }>
+              */}
+                {availableFields.map(field => (
+                  <option key={field.id} value={field.id}>
+                    {field.title}
+                  </option>
+                ))}
+              </Select>
+            )}
+          <SelectedOptions selectedOptions={selectedFields} removeOption={removeField} />
+        </FormSection>
 
-          <FormSection title="Miembros del proyecto" description="Añada algunos colaboradores a su proyecto para llevarlo a cabo.">
-            <Input name="members" label="Miembros" placeholder="Ej: José Pérez o josezz@gmail.com" onInput={handleInputEvent} />
-            <div className={clsx({
-              'mt-3 w-full max-h-60 gap-2 overflow-y-auto': true,
-              block: inputFocus,
-              hidden: !inputFocus,
+        <FormSection title="Miembros del proyecto" description="Añada algunos colaboradores a su proyecto para llevarlo a cabo.">
+          <Input name="members" label="Miembros" placeholder="Ej: José Pérez o josezz@gmail.com" onInput={handleInputEvent} />
+          <div className={clsx({
+            'mt-3 w-full max-h-60 gap-2 overflow-y-auto': true,
+            block: inputFocus,
+            hidden: !inputFocus,
+          })}
+          >
+            {inputFocus && availablePersons.map(person => {
+              if (searchName === '' || includesValue(person.name, searchName) || includesValue(person.email, searchName)) {
+                return <Member key={person.id} name={person.name} email={person.email} action="Add" onClick={() => { addPerson(person.id) }} />
+              }
+
+              return null
             })}
-            >
-              {inputFocus && availablePersons.map(person => {
-                if (searchName === '' || includesValue(person.name, searchName) || includesValue(person.email, searchName)) {
-                  return <Member key={person.id} name={person.name} email={person.email} action="Add" onClick={() => { addPerson(person.id) }} />
-                }
+          </div>
+          <SelectedMembers selectedPersons={selectedPersons} removePerson={removePerson} />
+        </FormSection>
 
-                return null
-              })}
-            </div>
-            <SelectedMembers selectedPersons={selectedPersons} removePerson={removePerson} />
-          </FormSection>
-
-          <FormButtons url="/home/projects" />
-        </form>
-      </div>
-    </div>
+        <FormButtons url="/home/projects" />
+      </form>
+    </Layout>
   )
 }
