@@ -2,10 +2,9 @@ import { ListBulletIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
 import Button from '../modal/Button'
 import FilterModal from './FilterModal'
 import { type TabProp } from '@/lib/types'
-
-import Input from '../forms/inputs/Input'
 import clsx from 'clsx'
 import Link from 'next/link'
+import SeachFilter from './SearchFilter'
 
 interface Props {
   active: TabProp
@@ -18,7 +17,7 @@ export default function Filter({ active, onInput, onTabClick }: Props) {
   return (
     <section className="-mt-2 flex flex-col flex-wrap gap-2 rounded-lg xl:flex-row xl:items-center">
       <div className="flex w-full flex-col items-center justify-between gap-3 sm:ms-auto sm:flex-row sm:pb-3">
-        <Input name="title" placeholder="Buscar..." onInput={onInput} className="my-3 rounded-md border border-neutral-400 bg-neutral-100 shadow-inner" />
+        <SeachFilter name="title" onInput={onInput} />
         <div className="flex flex-row justify-between gap-2 pb-2 sm:w-auto sm:pb-0">
           <FilterModal onInput={onInput} />
           <Link href="/home/projects/create">

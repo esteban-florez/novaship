@@ -1,4 +1,4 @@
-import { type TabProp, type VisibilityFilter } from '@/lib/types'
+import { type VisibilityFilter } from '@/lib/types'
 import { type Membership, type Person, type Project } from '@prisma/client'
 import EmptyContent from '../EmptyContent'
 import Card from '../Card'
@@ -14,11 +14,10 @@ interface Props {
   visibility: VisibilityFilter
   members: number
   title: string
-  tab: TabProp
 }
 
 // TODO -> pagination
-export default function List({ projects, visibility, members, title, tab }: Props) {
+export default function List({ projects, visibility, members, title }: Props) {
   if (projects.length === 0) {
     return (
       <EmptyContent title="No encontramos nada..." size="sm:w-2/4">

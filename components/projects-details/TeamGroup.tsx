@@ -54,7 +54,11 @@ export default function TeamGroup({ id, memberships, isOwner, persons }: Props) 
               />}
           </article>
         </Modal>
-        {isOwner && <Button url={`/home/projects/${id}/chat`} icon={<EyeIcon className="h-5 w-5" />} style="OUTLINE" color="ACCENT" hover="ACCENT" width="w-full">Ver chat</Button>}
+        {isOwner &&
+          <Button url={`/home/projects/${id}/chat`} style="OUTLINE" color="ACCENT" hover="ACCENT">
+            <EyeIcon className="h-5 w-5" />
+            Ver chat
+          </Button>}
       </main>
     </>
   )

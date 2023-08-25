@@ -18,7 +18,7 @@ interface Props {
 
 export default function PageContent({ owner, project, persons }: Props) {
   return (
-    <div className="my-4 grid grid-cols-10 gap-4 px-6 ">
+    <div className="grid grid-cols-10 gap-4 px-6 py-4">
       <div className="col-span-10 lg:col-span-7">
         <ProjectDetails project={project} />
         <Filter projectId={project?.id ?? ''} />

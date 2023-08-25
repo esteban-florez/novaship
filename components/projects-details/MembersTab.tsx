@@ -63,8 +63,8 @@ export default function MembersTab({ projectId, memberships, isOwner }: Props) {
             <Button
               style="DEFAULT"
               color="PRIMARY"
-              icon={<UserMinusIcon className="h-5 w-5" />}
             >
+              <UserMinusIcon className="h-5 w-5" />
               Remover
             </Button>
           </div>
