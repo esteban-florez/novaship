@@ -21,6 +21,7 @@
 - Crear input tipo file y limitar las extensiones.
 - Arreglar la ruta de [id] en <Breadcrumbs>.
 - Añadir opcion de registrar campo si no existe.
+- Crear componente que lea la url para mostrar un alert.
 
 # Ideas
 

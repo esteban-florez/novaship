@@ -47,6 +47,7 @@ export default function List({ projects, visibility, members, title, tab }: Prop
                   owner={project.person?.name}
                   avatarInfo={false}
                   members={project.memberships}
+                  link={`/home/projects/${project.id}`}
                 />
               </div>
             </div>

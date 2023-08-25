@@ -15,11 +15,12 @@ interface Props {
   members: Array<Membership & {
     person: Person | null
   }>
+  link?: string
 }
 
 const stackOrder = ['z-40', 'z-30', 'z-20']
 
-export default function Card({ id, title, categories, description, owner, location, avatarInfo = false, status, members }: Props) {
+export default function Card({ id, title, categories, description, owner, location, avatarInfo = false, status, members, link }: Props) {
   return (
     <>
       <div className="relative">
@@ -66,7 +67,7 @@ export default function Card({ id, title, categories, description, owner, locati
                 </div>
               </div>}
             <Button
-              url={`/home/offers/${id}`}
+              url={link}
               style="DEFAULT"
               color="SECONDARY"
               hover="WHITE"
