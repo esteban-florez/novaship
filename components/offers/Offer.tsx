@@ -1,4 +1,4 @@
-import { type Field } from '@prisma/client'
+import { type Location, type Field } from '@prisma/client'
 import Card from '../Card'
 
 type Props = React.PropsWithChildren<{
@@ -7,7 +7,7 @@ type Props = React.PropsWithChildren<{
   categories: Field[]
   description: string
   owner: string
-  location: string
+  location: Location['title']
 }>
 
 export default function Offer({

@@ -31,7 +31,7 @@ export default function Carrousel({ offers }: Props) {
               categories={offer.fields.map((field: { title: unknown }) => field.title)}
               description={offer.description}
               owner={offer.company.name}
-              location={offer.location.title}
+              location={offer.location}
             />
             <div className="my-4 flex w-full flex-row items-center justify-center gap-4">
               <div className="flex rounded-lg">
