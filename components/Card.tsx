@@ -4,7 +4,6 @@ import Button from './Button'
 import clsx from 'clsx'
 
 interface Props {
-  id: string
   title: string
   categories?: Field[]
   description: string
@@ -12,7 +11,7 @@ interface Props {
   location?: Location['title']
   avatarInfo: boolean
   status?: string
-  members: Array<Membership & {
+  members?: Array<Membership & {
     person: Person | null
   }>
   link?: string
@@ -20,7 +19,7 @@ interface Props {
 
 const stackOrder = ['z-40', 'z-30', 'z-20']
 
-export default function Card({ id, title, categories, description, owner, location, avatarInfo = false, status, members, link }: Props) {
+export default function Card({ title, categories, description, owner, location, avatarInfo = false, status, members, link }: Props) {
   return (
     <>
       <div className="relative">
@@ -43,21 +42,22 @@ export default function Card({ id, title, categories, description, owner, locati
           </header>
           <p className="line-clamp-3 text-sm">{description}</p>
           <div className="flex flex-col gap-3 pb-3 md:flex-row md:items-center md:justify-between md:gap-1">
-            <div className="flex shrink-0 flex-row items-center justify-start -space-x-3">
-              {members?.map((member, i) => {
-                if (i <= 2) {
-                  return <AvatarIcon key={member.id} username="pakito" className={clsx('h-10 w-10 border-2 border-white bg-secondary', stackOrder[i])} />
-                } return null
-              })}
-              {members.length > 3 &&
-                <div className={clsx(
-                  'z-10 flex h-10 w-10 items-center justify-center text-sm font-bold',
-                  members.length > 9 ? 'ps-2' : ''
-                )}
-                >
-                  +{members.length - 3}
-                </div>}
-            </div>
+            {members !== null && (members != null) &&
+              <div className="flex shrink-0 flex-row items-center justify-start -space-x-3">
+                {members.map((member, i) => {
+                  if (i <= 2) {
+                    return <AvatarIcon key={member.id} username="pakito" className={clsx('h-10 w-10 border-2 border-white bg-secondary', stackOrder[i])} />
+                  } return null
+                })}
+                {members.length > 3 &&
+                  <div className={clsx(
+                    'z-10 flex h-10 w-10 items-center justify-center text-sm font-bold',
+                    members.length > 9 ? 'ps-2' : ''
+                  )}
+                  >
+                    +{members.length - 3}
+                  </div>}
+              </div>}
             {avatarInfo &&
               <div className="flex items-center gap-2">
                 <AvatarIcon username="Pedro Lopez" className="bg-black text-white" />

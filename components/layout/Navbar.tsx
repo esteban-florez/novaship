@@ -10,16 +10,16 @@ export default function Navbar() {
 
   return (
     <nav className="navbar border-b bg-white shadow-md">
-      <div className="sm:navbar-start">
+      <div className="w-1/4 sm:navbar-start">
         <button className="btn-ghost btn-circle btn">
           <Bars3Icon className="h-6 w-6" />
         </button>
         <Breadcrumbs />
       </div>
-      <div className="mr-4 gap-1 text-sm sm:navbar-end sm:text-base">
-        <div className="me-4">
+      <div className="w-3/4 text-sm sm:navbar-end sm:text-base">
+        <p className="px-5">
           {date}
-        </div>
+        </p>
         {/* <NotificationDropdown /> */}
         <ProfileDropdown />
       </div>

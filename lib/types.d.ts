@@ -55,7 +55,6 @@ type OffersWithRelationships = Offer & {
   company: Company
   location: Location
   fields: Field[]
-  skills: Skill[]
 }
 
 type UserWithType = (Person & { type: 'PERSON' })
