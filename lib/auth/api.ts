@@ -3,8 +3,31 @@ import prisma from '@/prisma/client'
 import { cookies } from 'next/headers'
 import { type NextRequest } from 'next/server'
 import { AuthError } from '../errors/reference'
+import { type UserWithType } from '../types'
 
 export const auth = {
+  /**
+   * Nota: Usar solo dentro de "/app/api". Lanza una excepción si no hay ningún usuario autenticado.
+   */
+  async user(request: NextRequest) {
+    const session = await sessionOrThrow(request)
+
+    const authUser = await prisma.authUser.findUniqueOrThrow({
+      include: {
+        company: true,
+        institute: true,
+        person: true,
+      },
+      where: {
+        id: session.userId,
+      },
+    })
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const user: any = authUser.company ?? authUser.institute ?? authUser.person
+    user.type = authUser.type
+    return user as UserWithType
+  },
   /**
    * Usar solo dentro de "/app/api". Lanza una excepción si no ninguna compañía autenticada.
    */
@@ -26,14 +49,20 @@ export const auth = {
 }
 
 async function options(request: NextRequest) {
-  const authRequest = handleRequest(request)
-  const currentSession = await authRequest.validate()
+  const session = await sessionOrThrow(request)
 
-  if (currentSession === null) {
+  return { where: { authUserId: session.userId } }
+}
+
+async function sessionOrThrow(request: NextRequest) {
+  const authRequest = handleRequest(request)
+  const session = await authRequest.validate()
+
+  if (session === null) {
     throw new AuthError('AuthError: Unauthenticated user in auth-required API.')
   }
 
-  return { where: { authUserId: currentSession.userId } }
+  return session
 }
 
 /**

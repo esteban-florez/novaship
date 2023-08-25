@@ -1,6 +1,6 @@
 import { type UseFormRegisterReturn, type FieldErrors, type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
-import { type Company, type Location, type Field, type Skill, type Offer } from '@prisma/client'
+import { type Person, type Field, type Skill, type Company, type Institute } from '@prisma/client'
 import { type days } from './translations'
 
 type Selectable<T> = T & {
@@ -58,3 +58,7 @@ type OffersWithRelationships =
     fields: Field[]
     skills: Skill[]
   }
+
+type UserWithType = (Person & { type: 'PERSON' })
+| (Company & { type: 'COMPANY' })
+| (Institute & { type: 'INSTITUTE' })

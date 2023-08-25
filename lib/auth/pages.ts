@@ -2,11 +2,7 @@ import lucia from './lucia'
 import prisma from '@/prisma/client'
 import { cookies } from 'next/headers'
 import { AuthError } from '../errors/reference'
-import { type Company, type Institute, type Person } from '@prisma/client'
-
-type UserWithType = (Person & { type: 'PERSON' })
-| (Company & { type: 'COMPANY' })
-| (Institute & { type: 'INSTITUTE' })
+import { type UserWithType } from '../types'
 
 /**
  * Nota: Usar solo dentro de "/app/home"
