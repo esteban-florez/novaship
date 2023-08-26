@@ -1,4 +1,4 @@
-import { type Location, type Field } from '@prisma/client'
+import { type Location, type Field, type Company } from '@prisma/client'
 import Card from '../Card'
 
 type Props = React.PropsWithChildren<{
@@ -6,7 +6,7 @@ type Props = React.PropsWithChildren<{
   title: string
   categories: Field[]
   description: string
-  owner: string
+  company: Company
   location: Location['title']
 }>
 
@@ -15,18 +15,18 @@ export default function Offer({
   title,
   categories,
   description,
-  owner,
+  company,
   location,
 }: Props) {
   return (
     <section className="mb-4 break-inside-avoid">
       <div className="rounded-xl border border-solid border-zinc-300 bg-white shadow">
         <Card
-          id={id}
+          link={`/home/offers/${id}`}
           title={title}
           categories={categories}
           description={description}
-          owner={owner}
+          owner={company.name}
           location={location}
         />
       </div>

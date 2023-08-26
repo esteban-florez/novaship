@@ -14,7 +14,7 @@ export const base = object({
       message: 'Debe tener 11 dígitos.',
     }).refine(numeric, messages.numeric),
   description: string(messages.string)
-    .min(100, messages.min(100))
+    .min(50, messages.min(50))
     .max(255, messages.max(255)),
   image: defaults.client.image,
 })

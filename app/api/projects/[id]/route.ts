@@ -64,21 +64,22 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
-  let data
+interface Context {
+  params: {
+    id: string
+  }
+}
+
+export async function DELETE(request: NextRequest, { params: { id } }: Context) {
   try {
-    data = await request.json()
-    const user = await auth.person(request)
+    await auth.person(request)
 
     const project = await prisma.project.deleteMany({
-      where: {
-        id: data.id,
-        personId: user.id,
-      },
+      where: { id },
     })
 
     return NextResponse.json(project)
   } catch (error) {
-    return handleError(error, data)
+    return handleError(error)
   }
 }

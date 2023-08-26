@@ -7,7 +7,11 @@ import { type Fields, schema } from '@/lib/validation/schemas/task'
 import Link from 'next/link'
 // import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
 
-export default function CreateTaskForm() {
+interface Props {
+  projectId: string
+}
+
+export default function CreateTaskForm({ projectId }: Props) {
   const {
     register, formState: { errors },
     alert, serverErrors, handleSubmit,
@@ -34,8 +38,7 @@ export default function CreateTaskForm() {
         />
         {/* <SelectMultiple /> */}
         <div className="mb-4 flex justify-between gap-2 px-4">
-          {/* TODO -> que le pase el id de projects */}
-          <Link href="/home/offers" className="btn-neutral btn-md btn text-base">
+          <Link href={`/home/projects/${projectId}`} className="btn-neutral btn-md btn text-base">
             Cancelar
           </Link>
           <button className="btn-primary btn-md btn text-base" type="submit">

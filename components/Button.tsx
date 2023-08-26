@@ -34,26 +34,21 @@ const className = {
 type Props = React.PropsWithChildren<{
   id?: string
   url?: string
-  icon?: React.ReactElement
   type?: 'MODAL' | 'BUTTON'
   style: Styles
   color: Colors
   hover?: Colors
-  width?: 'w-full'
   isDisabled?: boolean
   onClick?: () => void
 }>
 
 // DRY
 // TODO -> reemplazar las clases por clases de daisy
-export default function Button({ id = 'modal', type = 'BUTTON', icon, url = '', style, color, hover = 'EMPTY', width, isDisabled = false, onClick, children }: Props) {
-  const hasWidth = width !== null
-
+export default function Button({ id = 'modal', type = 'BUTTON', url = '', style, color, hover = 'EMPTY', isDisabled = false, onClick, children }: Props) {
   if (url !== null && url !== '') {
     return (
       <Link href={url}>
-        <button className={clsx(className[style], className.colors[color], className.hover[hover], hasWidth ? width : '')} disabled={isDisabled}>
-          {icon}
+        <button className={clsx(className[style], className.colors[color], className.hover[hover])} disabled={isDisabled}>
           {children}
         </button>
       </Link>
@@ -63,8 +58,7 @@ export default function Button({ id = 'modal', type = 'BUTTON', icon, url = '', 
   if (type !== null && type === 'MODAL' && id !== null) {
     return (
       <>
-        <label htmlFor={id} className={clsx(className[style], className.colors[color], className.hover[hover], hasWidth ? width : '', 'cursor-pointer')}>
-          {icon}
+        <label htmlFor={id} className={clsx(className[style], className.colors[color], className.hover[hover], 'cursor-pointer')}>
           {children}
         </label>
         <input type="checkbox" id={id} className="modal-toggle" />
@@ -73,8 +67,7 @@ export default function Button({ id = 'modal', type = 'BUTTON', icon, url = '', 
   }
 
   return (
-    <button onClick={onClick} className={clsx(className[style], className.colors[color], className.hover[hover], hasWidth ? width : '')} disabled={isDisabled}>
-      {icon}
+    <button onClick={onClick} className={clsx(className[style], className.colors[color], className.hover[hover])} disabled={isDisabled}>
       {children}
     </button>
   )

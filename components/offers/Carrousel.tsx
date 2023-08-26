@@ -31,7 +31,7 @@ export default function Carrousel({ offers }: Props) {
               categories={offer.fields}
               description={offer.description}
               owner={offer.company.name}
-              location={offer.location}
+              location={offer.location.title}
             />
             <div className="my-4 flex w-full flex-row items-center justify-center gap-4">
               <div className="flex rounded-lg">

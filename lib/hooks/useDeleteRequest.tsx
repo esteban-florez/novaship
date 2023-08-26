@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { handleError } from '../errors/fetch'
 import { type ApiResponseBody, type UseSubmitResult } from '../types'
-import { type FieldValues, useForm } from 'react-hook-form'
 import ServerErrors from '@/components/forms/ServerErrors'
 import SubmitAlert from '@/components/forms/SubmitAlert'
 
@@ -10,21 +9,15 @@ export default function useDeleteRequest() {
   const [showErrors, setShowErrors] = useState(true)
   const [result, setResult] = useState<UseSubmitResult>(null)
 
-  const useFormReturn = useForm({
-    mode: 'onTouched',
-  })
-
-  const send = async (data: FieldValues, event: React.BaseSyntheticEvent | undefined) => {
+  const handleSubmit = async (event: FormSubmitEvent) => {
     try {
       setResult('loading')
       setShowAlert(true)
       setShowErrors(true)
 
-      const form = event?.target as HTMLFormElement
-      const id = form.action.split('/').at(-1)
+      const form = event?.target
 
       const response = await fetch(form.action, {
-        body: JSON.stringify({ id }),
         method: 'DELETE',
       })
 
@@ -52,6 +45,5 @@ export default function useDeleteRequest() {
     ? <SubmitAlert result={result} close={() => { setShowAlert(false) }} />
     : null
 
-  const handleSubmit = useFormReturn.handleSubmit(send)
-  return { ...useFormReturn, handleSubmit, alert, result, serverErrors }
+  return { handleSubmit, alert, result, serverErrors }
 }
