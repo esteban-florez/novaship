@@ -29,7 +29,8 @@ export default function Modal({
 
   return (
     <>
-      <Button type="MODAL" id={id} icon={icon} style={style} color={color} hover={hover}>
+      <Button type="MODAL" id={id} style={style} color={color} hover={hover}>
+        {icon}
         {label}
       </Button>
       <div className="modal p-0">
@@ -41,7 +42,10 @@ export default function Modal({
               {cancelLabel}
             </label>
             {(hasacceptIcon && hasActionText) &&
-              <Button type="BUTTON" icon={acceptIcon} style="DEFAULT" color={acceptColor} hover={acceptColor} onClick={onClick}>{acceptLabel}</Button>}
+              <Button type="BUTTON" style="DEFAULT" color={acceptColor} hover={acceptColor} onClick={onClick}>
+                {acceptIcon}
+                {acceptLabel}
+              </Button>}
           </footer>
         </div>
       </div>

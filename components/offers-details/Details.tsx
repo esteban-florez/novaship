@@ -28,21 +28,20 @@ export default function Details({ title, description, expiresAt }: Props) {
         <p className="line-clamp-6 py-3">{description}</p>
         <div className="flex flex-col justify-between gap-3 md:flex-row md:gap-0 xl:w-auto">
           <Button
-            icon={<ArrowLeftIcon className="h-4 w-4" />}
             url="/home/offers"
-            width="w-full"
             style="DEFAULT"
             color="WHITE"
             hover="SECONDARY"
           >
+            <ArrowLeftIcon className="h-4 w-4" />
             Volver al listado
           </Button>
           <Button
-            icon={<PencilIcon className="h-4 w-4" />}
             style="DEFAULT"
             color="PRIMARY"
             hover="WHITE"
           >
+            <PencilIcon className="h-4 w-4" />
             ¡Quiero Aplicar!
           </Button>
         </div>

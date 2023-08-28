@@ -20,6 +20,7 @@ model AuthUser {
   updatedAt    DateTime      @updatedAt
 }
 
+// TODO -> añadir Location a este modelo
 model Person {
   id            String       @id @default(cuid())
   name          String
@@ -35,7 +36,6 @@ model Person {
   memberships   Membership[]
   projects      Project[]
   // Profile fields
-  // TODO -> quizás haya que añadir Location a este modelo
   qualification String? // Esto podría ser una table de Títulos, pero por ahora un string
   curriculum    String?
   schedule      Json?

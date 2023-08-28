@@ -37,7 +37,7 @@ export default async function OffersPage() {
               title={offer.title}
               categories={offer.fields}
               description={offer.description}
-              owner={offer.company.name}
+              company={offer.company}
               location={offer.location.title}
             />
           )

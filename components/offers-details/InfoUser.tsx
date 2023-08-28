@@ -34,7 +34,6 @@ export default function InfoUser({ avatarInfo = false, owner, location, descript
         style="DEFAULT"
         color="SECONDARY"
         hover="WHITE"
-        width="w-full"
       >
         Ver más
       </Button>

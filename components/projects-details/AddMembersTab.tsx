@@ -45,8 +45,8 @@ export default function AddMembersTab({ projectId, persons }: Props) {
           <Button
             style="DEFAULT"
             color="PRIMARY"
-            icon={<UserPlusIcon className="h-5 w-5" />}
           >
+            <UserPlusIcon className="h-5 w-5" />
             Añadir
           </Button>
         </div>

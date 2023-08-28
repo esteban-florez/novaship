@@ -1,6 +1,6 @@
 import { type UseFormRegisterReturn, type FieldErrors, type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
-import { type Person, type Field, type Skill, type Company, type Institute } from '@prisma/client'
+import { type Person, type Field, type Skill, type Company, type Institute, type Offer, type Location } from '@prisma/client'
 import { type days } from './translations'
 
 type Selectable<T> = T & {
@@ -51,13 +51,11 @@ interface ApiResponseBody {
 
 type Schedule = Record<keyof typeof days, number[]>
 
-type OffersWithRelationships =
-  Offer & {
-    company: Company
-    location: Location
-    fields: Field[]
-    skills: Skill[]
-  }
+type OffersWithRelationships = Offer & {
+  company: Company
+  location: Location
+  fields: Field[]
+}
 
 type UserWithType = (Person & { type: 'PERSON' })
 | (Company & { type: 'COMPANY' })

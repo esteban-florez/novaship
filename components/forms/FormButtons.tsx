@@ -14,10 +14,12 @@ export default function FormButtons({ url = '' }: Props) {
 
   return (
     <div className="flex justify-end gap-x-2 border-t pt-4">
-      <Button url={url} icon={<ArrowLeftIcon className="h-4 w-4" />} style="DEFAULT" color="CANCEL">
+      <Button url={url} style="DEFAULT" color="CANCEL">
+        <ArrowLeftIcon className="h-4 w-4" />
         Cancelar
       </Button>
-      <Button icon={<PlusIcon className="h-4 w-4" />} style="DEFAULT" color="PRIMARY">
+      <Button style="DEFAULT" color="PRIMARY">
+        <PlusIcon className="h-4 w-4" />
         {actions[label]}
       </Button>
     </div>

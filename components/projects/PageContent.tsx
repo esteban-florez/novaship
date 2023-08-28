@@ -1,10 +1,10 @@
 'use client'
 
-import Filter from './Filter'
+import PageNav from './PageNav'
 import { useState } from 'react'
 import { type TabProp, type VisibilityFilter } from '@/lib/types'
 import { type Membership, type Person, type Project } from '@prisma/client'
-import List from './List'
+import ProjectsCard from './ProjectsCard'
 
 // DRY 18
 type Projects = Array<Project & {
@@ -45,11 +45,14 @@ export default function PageContent({ projects, personalProjects }: Props) {
   }
 
   return (
-    <div className="p-4">
-      <Filter active={tab} onInput={handleChange} onTabClick={handleChangeTab} />
-      <section className="mx-auto mb-4 w-full columns-1 gap-4 rounded-b-lg rounded-r-lg border-x border-b border-neutral-300 bg-white p-4">
-        <List projects={tab === 'All' ? projects : personalProjects} tab={tab} visibility={visibility} members={members} title={title} />
-      </section>
-    </div>
+    <>
+      <PageNav active={tab} onInput={handleChange} onTabClick={handleChangeTab} />
+      <ProjectsCard
+        title={title}
+        members={members}
+        visibility={visibility}
+        projects={tab === 'All' ? projects : personalProjects}
+      />
+    </>
   )
 }

@@ -7,7 +7,7 @@ import Dots from './Carrousel/Dots'
 import { type OffersWithRelationships } from '@/lib/types'
 
 interface Props {
-  offers: OffersWithRelationships
+  offers: OffersWithRelationships[]
 }
 
 export default function Carrousel({ offers }: Props) {
@@ -28,10 +28,10 @@ export default function Carrousel({ offers }: Props) {
             <Content
               id={offer.id}
               title={offer.title}
-              categories={offer.fields.map((field: { title: unknown }) => field.title)}
+              categories={offer.fields}
               description={offer.description}
               owner={offer.company.name}
-              location={offer.location}
+              location={offer.location.title}
             />
             <div className="my-4 flex w-full flex-row items-center justify-center gap-4">
               <div className="flex rounded-lg">

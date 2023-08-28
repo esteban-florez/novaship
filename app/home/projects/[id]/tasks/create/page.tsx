@@ -1,4 +1,3 @@
-// import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import CreateTaskForm from '@/components/task-create/CreateTaskForm'
@@ -19,12 +18,6 @@ export default async function CrateTaskPage({ params: { id } }: Context) {
   // Todo -> add redirect alert.
   if (id === null) redirect('/home/projects')
 
-  // const project = await prisma.project.findUnique({
-  //   where: {
-  //     id
-  //   }
-  // })
-
   return (
     <section className="container px-10 py-8">
       <div className="relative flex h-28 items-center rounded-t-xl bg-primary px-6 py-4 text-white shadow">
@@ -34,7 +27,7 @@ export default async function CrateTaskPage({ params: { id } }: Context) {
         </div>
         <img src="/coso3.webp" alt="Imagen decorativa en esquinas" className="pointer-events-none absolute left-0 top-0 h-48 w-full rounded-t-xl" />
       </div>
-      <CreateTaskForm />
+      <CreateTaskForm projectId={id} />
     </section>
   )
 }
