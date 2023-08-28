@@ -6,24 +6,28 @@ import Input from '../forms/inputs/Input'
 import { schema } from '@/lib/validation/schemas/task'
 import FormButtons from '../forms/FormButtons'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
-import { type Membership, type Person } from '@prisma/client'
 import Select from '../forms/inputs/Select'
 import Textarea from '../forms/inputs/Textarea'
 import FormLayout from '../forms/FormLayout'
+import { type Participation, type Task } from '@prisma/client'
 
 interface Props {
+  action: string
   projectId: string
-  memberships: Array<(Membership & {
-    person: Person
-  })>
+  task?: Task & {
+    participations: Participation[]
+  }
+  memberships: Array<{
+    id: string
+    name: string
+  }>
 }
 
-export default function CreateTaskForm({ projectId, memberships }: Props) {
-  const members = memberships.map(member => {
-    return {
-      id: member.id,
-      name: member.person.name,
-    }
+export default function TaskForm({ action, projectId, task, memberships }: Props) {
+  const taskLeader = task?.participations.find(participation => participation.isLeader)?.membershipId ?? undefined
+
+  const selectedMembers = task?.participations.map(participation => {
+    return participation.membershipId
   })
 
   const {
@@ -38,7 +42,7 @@ export default function CreateTaskForm({ projectId, memberships }: Props) {
 
   return (
     <FormLayout>
-      <form method="POST" action="/api/tasks" onSubmit={handleSubmit}>
+      <form method="POST" action={action} onSubmit={handleSubmit}>
         {serverErrors}
         {alert}
         <FormSection title="Detalles" description="Asigne una tarea y una descripción de la misma para avanzar en el proyecto.">
@@ -46,6 +50,7 @@ export default function CreateTaskForm({ projectId, memberships }: Props) {
             name="title"
             placeholder="Ej. Realizar inventario."
             label="Título"
+            value={task?.title}
             register={register}
             errors={errors}
           />
@@ -53,6 +58,7 @@ export default function CreateTaskForm({ projectId, memberships }: Props) {
             name="description"
             placeholder="Ej. Rellenar una hoja de excel con los productos en stock."
             label="Descripción"
+            value={task?.description}
             register={register}
             errors={errors}
           />
@@ -61,21 +67,25 @@ export default function CreateTaskForm({ projectId, memberships }: Props) {
           <Select
             name="responsable"
             label="Responsable"
+            config={{
+              value: taskLeader,
+            }}
             register={register}
             errors={errors}
             options={{
               type: 'rows',
-              data: members,
+              data: memberships,
             }}
           />
           <SelectMultiple
             name="members"
             control={control}
+            defaultValue={selectedMembers}
             label="Participantes"
             itemsName="Miembros"
             options={{
               type: 'rows',
-              data: members,
+              data: memberships,
             }}
           />
         </FormSection>

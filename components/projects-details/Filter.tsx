@@ -18,11 +18,12 @@ interface Props {
   }>
 }
 
+// TODO -> cambiar la vista de tasks por un link
 export default function Filter({ id, tasks }: Props) {
   const [tab, setTab] = useState<ProjectDetailsTab>('files')
   const tabs = {
     files: <Archive />,
-    tasks: <Tasks tasks={tasks} />,
+    tasks: <Tasks projectId={id} tasks={tasks} />,
   }
 
   return (

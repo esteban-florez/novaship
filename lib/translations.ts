@@ -15,6 +15,7 @@ export const routes: Rec = {
   admin: 'Administración',
   tasks: 'Tareas',
   task: 'Tarea',
+  update: 'Actualizar',
 }
 
 export const statuses = {

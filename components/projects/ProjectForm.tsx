@@ -46,6 +46,7 @@ interface Props {
 
 // TODO -> responsive
 export default function ProjectForm({ id, method, action, fields, persons, project }: Props) {
+  const cancelUrl = id !== undefined ? `/home/projects/${id}` : '/home/projects'
   // TODO -> actualizar a select multiple sin estado
   const [totalFields, setTotalFields] = useState<SelectableField[]>(fields)
   const [totalPersons, setTotalPersons] = useState<SelectablePerson[]>(persons)
@@ -225,7 +226,7 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
           <SelectedMembers selectedPersons={selectedPersons} removePerson={removePerson} />
         </FormSection>
 
-        <FormButtons url="/home/projects" />
+        <FormButtons url={cancelUrl} />
       </form>
     </FormLayout>
   )

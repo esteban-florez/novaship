@@ -2,12 +2,13 @@ import { ArrowLeftIcon, PencilIcon, PlusCircleIcon } from '@heroicons/react/24/o
 import Button from '../Button'
 
 interface Props {
+  id: string
   title: string
   description: string
   isOwner: boolean
 }
 
-export default function ProjectDetails({ title, description, isOwner }: Props) {
+export default function ProjectDetails({ id, title, description, isOwner }: Props) {
   return (
     <div className="card rounded-xl bg-white shadow-xl xl:flex-row">
       <div className="relative flex xl:basis-2/3">
@@ -37,15 +38,28 @@ export default function ProjectDetails({ title, description, isOwner }: Props) {
             <ArrowLeftIcon className="h-4 w-4" />
             Volver al listado
           </Button>
-          {!isOwner &&
-            <Button
-              style="DEFAULT"
-              color="PRIMARY"
-              hover="WHITE"
-            >
-              <PencilIcon className="h-4 w-4" />
-              ¡Quiero Aplicar!
-            </Button>}
+          {isOwner
+            ? (
+              <Button
+                url={`/home/projects/${id}/update`}
+                style="DEFAULT"
+                color="PRIMARY"
+                hover="WHITE"
+              >
+                <PencilIcon className="h-4 w-4" />
+                Actualizar
+              </Button>
+              )
+            : (
+              <Button
+                style="DEFAULT"
+                color="PRIMARY"
+                hover="WHITE"
+              >
+                <PencilIcon className="h-4 w-4" />
+                ¡Quiero Aplicar!
+              </Button>
+              )}
         </div>
       </div>
     </div>
