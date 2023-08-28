@@ -3,49 +3,84 @@
 import useSubmit from '@/lib/hooks/useSubmit'
 import FormSection from '../forms/FormSection'
 import Input from '../forms/inputs/Input'
-import { type Fields, schema } from '@/lib/validation/schemas/task'
-import Link from 'next/link'
-// import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
+import { schema } from '@/lib/validation/schemas/task'
+import FormButtons from '../forms/FormButtons'
+import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
+import { type Membership, type Person } from '@prisma/client'
+import Select from '../forms/inputs/Select'
+import Textarea from '../forms/inputs/Textarea'
+import FormLayout from '../forms/FormLayout'
 
 interface Props {
   projectId: string
+  memberships: Array<(Membership & {
+    person: Person
+  })>
 }
 
-export default function CreateTaskForm({ projectId }: Props) {
+export default function CreateTaskForm({ projectId, memberships }: Props) {
+  const members = memberships.map(member => {
+    return {
+      id: member.id,
+      name: member.person.name,
+    }
+  })
+
   const {
     register, formState: { errors },
-    alert, serverErrors, handleSubmit,
-  } = useSubmit<Fields>({ schema })
+    alert, serverErrors, handleSubmit, control,
+  } = useSubmit({
+    schema,
+    append: {
+      projectId,
+    },
+  })
 
   return (
-    <form method="POST" action="/api/tasks" className="mb-4 w-full rounded-lg bg-base-100 p-4 pt-10" onSubmit={handleSubmit}>
-      {serverErrors}
-      {alert}
-      <FormSection title="Datos básicos" description="El nombre de la oferta, su descripción, categoría y salario serán visibles para los posibles candidatos.">
-        <Input
-          name="title"
-          placeholder="Ej. Ordenar los zapatos"
-          label="Título de la tarea:"
-          register={register}
-          errors={errors}
-        />
-        <Input
-          name="description"
-          placeholder="Ej. Ola soy una descripcion"
-          label="Descripción:"
-          register={register}
-          errors={errors}
-        />
-        {/* <SelectMultiple /> */}
-        <div className="mb-4 flex justify-between gap-2 px-4">
-          <Link href={`/home/projects/${projectId}`} className="btn-neutral btn-md btn text-base">
-            Cancelar
-          </Link>
-          <button className="btn-primary btn-md btn text-base" type="submit">
-            Crear tarea
-          </button>
-        </div>
-      </FormSection>
-    </form>
+    <FormLayout>
+      <form method="POST" action="/api/tasks" onSubmit={handleSubmit}>
+        {serverErrors}
+        {alert}
+        <FormSection title="Detalles" description="Asigne una tarea y una descripción de la misma para avanzar en el proyecto.">
+          <Input
+            name="title"
+            placeholder="Ej. Realizar inventario."
+            label="Título"
+            register={register}
+            errors={errors}
+          />
+          <Textarea
+            name="description"
+            placeholder="Ej. Rellenar una hoja de excel con los productos en stock."
+            label="Descripción"
+            register={register}
+            errors={errors}
+          />
+        </FormSection>
+        <FormSection title="Participantes" description="Designe a las personas que completerán la tarea.">
+          <Select
+            name="responsable"
+            label="Responsable"
+            register={register}
+            errors={errors}
+            options={{
+              type: 'rows',
+              data: members,
+            }}
+          />
+          <SelectMultiple
+            name="members"
+            control={control}
+            label="Participantes"
+            itemsName="Miembros"
+            options={{
+              type: 'rows',
+              data: members,
+            }}
+          />
+        </FormSection>
+        <FormButtons url={`/home/projects/${projectId}`} />
+      </form>
+    </FormLayout>
   )
 }
