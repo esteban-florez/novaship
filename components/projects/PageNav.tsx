@@ -18,32 +18,31 @@ export default function PageNav({ active, onInput, onTabClick }: Props) {
           style="TAB"
           color={active === 'All' ? 'PRIMARY' : 'WHITE'}
           hover={active === 'All' ? 'WHITE' : 'PRIMARY'}
-          icon={<ListBulletIcon className="h-6 w-6" />}
           onClick={() => { onTabClick('All') }}
         >
-          Todos
+          <ListBulletIcon className="h-6 w-6" />
+          <p className="text-base">Todos</p>
         </Button>
         <Button
           style="TAB"
           color={active === 'Mine' ? 'PRIMARY' : 'WHITE'}
           hover={active === 'Mine' ? 'WHITE' : 'PRIMARY'}
-          icon={<StarIcon className="h-6 w-6" />}
           onClick={() => { onTabClick('Mine') }}
         >
-          Mis proyectos
+          <StarIcon className="h-6 w-6" />
+          <p className="text-base">Mis proyectos</p>
         </Button>
       </div>
       <div className="order-1 flex w-full flex-row items-center justify-between gap-3 lg:order-2 lg:place-items-center lg:justify-end xl:w-auto">
         <Input name="title" placeholder="Buscar..." onInput={onInput} className="my-3 h-10 w-auto rounded-md border border-neutral-400 bg-white shadow-inner" />
         <Button
           url="/home/projects/create"
-          icon={<PlusIcon className="h-6 w-6" />}
           style="DEFAULT"
           color="PRIMARY"
           hover="WHITE"
-          width="w-full"
         >
-          Agregar
+          <PlusIcon className="h-6 w-6" />
+          <p className="text-base">Agregar</p>
         </Button>
       </div>
     </div>

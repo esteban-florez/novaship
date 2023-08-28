@@ -45,7 +45,7 @@ export default function Card({ title, categories, description, owner, location, 
               <div className="flex shrink-0 flex-row items-center justify-start -space-x-3">
                 {members.map((member, i) => {
                   if (i <= 2) {
-                    return <AvatarIcon key={member.id} username="pakito" className={clsx('h-10 w-10 border-2 border-white bg-secondary', stackOrder[i])} />
+                    return <AvatarIcon key={member.id} username="Paco Perez" className={clsx('h-10 w-10 border-2 border-white bg-black text-white', stackOrder[i])} />
                   } return null
                 })}
                 {members.length > 3 &&
@@ -57,14 +57,14 @@ export default function Card({ title, categories, description, owner, location, 
                     +{members.length - 3}
                   </div>}
               </div>}
-            {/* ofertas */}
-            <div className="flex items-center gap-2">
-              <AvatarIcon username="Pedro Lopez" className="bg-black text-white" />
-              <div className="flex flex-col">
-                <h5 className="text-sm font-bold">{owner}</h5>
-                <small className="-mt-1 text-xs">{location}</small>
-              </div>
-            </div>
+            {owner !== undefined &&
+              <div className="flex items-center gap-2">
+                <AvatarIcon username="Pedro Lopez" className="bg-black text-white" />
+                <div className="flex flex-col">
+                  <h5 className="text-sm font-bold">{owner}</h5>
+                  <small className="-mt-1 text-xs">{location}</small>
+                </div>
+              </div>}
             <Button
               url={link}
               style="DEFAULT"

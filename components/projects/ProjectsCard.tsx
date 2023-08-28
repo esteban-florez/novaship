@@ -1,5 +1,5 @@
-import { type TabProp, type VisibilityFilter } from '@/lib/types'
 import { type Membership, type Person, type Project } from '@prisma/client'
+import { type VisibilityFilter } from '@/lib/types'
 import EmptyContent from '../EmptyContent'
 import Card from '../Card'
 
@@ -14,11 +14,10 @@ interface Props {
   visibility: VisibilityFilter
   members: number
   title: string
-  tab: TabProp
 }
 
 // TODO -> pagination
-export default function ProjectsCard({ projects, visibility, members, title, tab }: Props) {
+export default function Projects({ projects, visibility, members, title }: Props) {
   if (projects.length === 0) {
     return (
       <EmptyContent title="No encontramos nada..." size="sm:w-2/4">
@@ -41,10 +40,10 @@ export default function ProjectsCard({ projects, visibility, members, title, tab
             <div key={project.id} className="mb-4 break-inside-avoid">
               <div className="rounded-xl border border-solid border-zinc-300 bg-white shadow">
                 <Card
-                  id={project.id}
                   title={project.title}
+                  members={project.memberships}
                   description={project.description}
-                  owner={project.person?.name}
+                  link={`/home/projects/${project.id}`}
                 />
               </div>
             </div>

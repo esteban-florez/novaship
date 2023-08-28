@@ -48,7 +48,6 @@ export default function PageContent({ projects, personalProjects }: Props) {
     <>
       <PageNav active={tab} onInput={handleChange} onTabClick={handleChangeTab} />
       <ProjectsCard
-        tab={tab}
         title={title}
         members={members}
         visibility={visibility}
