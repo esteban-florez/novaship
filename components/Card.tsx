@@ -45,7 +45,7 @@ export default function Card({ title, categories, description, owner, location, 
               <div className="flex shrink-0 flex-row items-center justify-start -space-x-3">
                 {members.map((member, i) => {
                   if (i <= 2) {
-                    return <AvatarIcon key={member.id} username="Paco Perez" className={clsx('h-10 w-10 border-2 border-white bg-black text-white', stackOrder[i])} />
+                    return <AvatarIcon key={member.id} username={member.person?.name ?? ''} className={clsx('h-10 w-10 border-2 border-white bg-black text-white', stackOrder[i])} />
                   } return null
                 })}
                 {members.length > 3 &&

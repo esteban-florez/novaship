@@ -10,7 +10,7 @@ export const routes: Rec = {
   professional: 'Profesional',
   institute: 'Institución',
   company: 'Compañía',
-  create: 'Registrar',
+  create: 'Agregar',
   project: 'Proyecto',
   admin: 'Administración',
   tasks: 'Tareas',
@@ -68,3 +68,10 @@ export const actions = {
   update: 'Actualizar',
   create: 'Registrar',
 } as const
+
+export const taskStatuses = {
+  PENDING: 'Pendiente',
+  PROGRESS: 'En progreso',
+  REVIEW: 'En revisión',
+  DONE: 'Terminada',
+}

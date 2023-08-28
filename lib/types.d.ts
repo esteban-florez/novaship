@@ -38,6 +38,7 @@ type UseSubmitResult = null | 'loading' | ApiResponseBody
 
 type TabProp = 'All' | 'Mine'
 type TeamGroupTab = 'members' | 'add'
+type ProjectDetailsTab = 'files' | 'tasks'
 
 interface ApiResponseBody {
   errorType?: keyof typeof ERRORS

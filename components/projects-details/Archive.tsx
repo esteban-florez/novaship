@@ -2,7 +2,7 @@ import Document from './Document'
 
 export default function Archive() {
   return (
-    <div className="flex flex-col rounded-lg rounded-tl-none bg-white p-6 shadow">
+    <>
       <h3 className="text-lg text-gray-600 sm:text-xl">
         Viernes 30 de junio de 2023.
       </h3>
@@ -13,6 +13,6 @@ export default function Archive() {
           <Document />
         </div>
       </div>
-    </div>
+    </>
   )
 }

@@ -6,7 +6,7 @@ type MessageStatus = 'sent' | 'read' | 'received'
 
 type Rec = Record<string, string>
 
-type OnInputEvent = React.BaseSyntheticEvent<InputEvent, HTMLInputElement, HTMLInputElement>
+type OnInputEvent = React.BaseSyntheticEvent<InputEvent, HTMLInputElement, HTMLInputElement, HTMLTextAreaElement>
 
 type SelectOnInputEvent = React.BaseSyntheticEvent<InputEvent, HTMLSelectElement, HTMLSelectElement>
 

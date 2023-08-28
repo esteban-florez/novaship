@@ -16,7 +16,7 @@ import { Visibility, type Project } from '@prisma/client'
 import Member from '../projects-details/Member'
 import { includesValue } from '@/lib/utils/text'
 import { visibilities } from '@/lib/translations'
-import Layout from '../forms/Layout'
+import FormLayout from '../forms/FormLayout'
 
 // DRY 5
 interface Props {
@@ -168,7 +168,7 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
   })
 
   return (
-    <Layout>
+    <FormLayout>
       <form onSubmit={handleSubmit} method="POST" action={action}>
         {serverErrors}
         {alert}
@@ -227,6 +227,6 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
 
         <FormButtons url="/home/projects" />
       </form>
-    </Layout>
+    </FormLayout>
   )
 }
