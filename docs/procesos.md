@@ -1,12 +1,12 @@
 # Proyectos
   ## Registro de un proyecto
-  Se pueden registrar proyectos, el usuario que lo registre se convierte en responsable del proyecto. También puede crear el proyecto en nombre de una empresa, si es gerente de dicha empresa.
+  Se pueden registrar proyectos, el usuario que lo registre se convierte en responsable del proyecto. También puede crear el proyecto desde una cuenta de empresa.
   
   ## Visiblidad del proyecto
   El responsable puede hacerlo público, para ser descubierto por todos usuarios de la app, o privado, solo para los miembros.
   
   ## Equipo de trabajo
-  El responsable puede añadir a todos los usuarios que participen en el desarrollo del proyecto, y se podrá enviar mensajes personales por un chat a un compañero de equipo. 
+  El responsable puede añadir a todos los usuarios que participen en el desarrollo del proyecto. 
   
   ## Captación de nuevos miembros
   Se puede buscar entre los aspirantes que tengan las habilidades para incluirlos en el equipo de trabajo.
@@ -19,16 +19,16 @@
   
   ## Manejo de tareas
   El proyecto puede dividirse en tareas, las cuales tienen distintos participantes y un responsable de tarea, y pueden dividirse en subtareas.
-  
+
   ## Progreso de tareas
   Se puede marcar el estado del progreso de una tarea y de sus subtareas.
-  
+
   ## Comercialización de proyectos
   Los proyectos finalizados pueden ser descubiertos por otros usuarios que necesiten un proyecto parecido, para realizar una adaptación a cambio de un pago.
 
 # Aspirantes
   ## Listado de aspirantes
-  Las empresas y los proyectos podrán acceder al listado de los aspirantes a puestos de trabajo, ya sean pasantes o no, y también podrán comunicarse con ellos mediante un chat.
+  Las empresas y los proyectos podrán acceder al listado de los aspirantes a puestos de trabajo, ya sean pasantes o no.
   
   ## Perfil laboral
   Los aspirantes podrán tener un perfil laboral donde figure sus información personal, habilidades, etc.
@@ -52,24 +52,15 @@
   ## Registrar empresa
   Se puede registrar una empresa en la apicación.
   
-  ## Personal de empresa
-  Se puede añadir diferentes usuarios de la aplicación a la empresa, para que puedan intervenir en procesos de contratacion, etc. Se podrán envíar mensajes personales entre los usuarios que pertenezacan a la empresa.
-  
-  ## Roles en la empresa
-  Se pueden asignar distintos roles a los miembros de la empresa, que se encargan de diferentes actividades (gerente, reclutador, entrevistador).
-  
   ## Listado de proyectos
   Se pueden visualizar los diferentes proyectos creados por la empresa.
-  
+
   ## Perfil de empresa
   Se puede crear una perfil público, para que sea visto por los demás usuarios de la aplicación, donde figuren las ofertas de trabajo de dicha empresa.
 
 # Postulantes
   ## Manejo de postulantes
   Las empresas pueden ver cuales son los que han aplicado a una oferta y su perfil laboral.
-  
-  ## Comunicación con los postulantes
-  Tendrán disponible un chat para contactar con el postulante a la oferta directamente en la aplicación.
   
   ## Agendar entrevistas
   Se podrán agendar entrevistas con los postulantes, seleccionando el entrevistador de entre los miembros de la empresa, integrandose con Google Meet y Calendar, o Zoom.
@@ -105,6 +96,3 @@
   
   ## Afiliación de pasantes
   Las instituciones podrán afiliar a los usuarios de la aplicación para integrarlos como pasantes de la institución.
-  
-  ## Contacto con empresas
-  La institución podrá contactar mediante un chat con las empresas intercambiar información referente a las pasantías.

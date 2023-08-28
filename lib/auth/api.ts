@@ -7,6 +7,17 @@ import { type UserWithType } from '../types'
 
 export const auth = {
   /**
+   * Nota: Usar solo dentro de "/app/home". Es "true" si hay un usuario autenticado.
+   */
+  async is(request: NextRequest) {
+    try {
+      await sessionOrThrow(request)
+      return true
+    } catch (error) {
+      return false
+    }
+  },
+  /**
    * Nota: Usar solo dentro de "/app/api". Lanza una excepción si no hay ningún usuario autenticado.
    */
   async user(request: NextRequest) {

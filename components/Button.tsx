@@ -48,7 +48,7 @@ export default function Button({ id = 'modal', type = 'BUTTON', url = '', style,
   if (url !== null && url !== '') {
     return (
       <Link href={url}>
-        <button className={clsx(className[style], className.colors[color], className.hover[hover])} disabled={isDisabled}>
+        <button className={clsx(className[style], 'w-full', className.colors[color], className.hover[hover])} disabled={isDisabled}>
           {children}
         </button>
       </Link>

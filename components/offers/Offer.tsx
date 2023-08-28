@@ -28,7 +28,6 @@ export default function Offer({
           description={description}
           owner={company.name}
           location={location}
-          avatarInfo
         />
       </div>
     </section>
