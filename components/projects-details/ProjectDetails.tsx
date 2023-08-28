@@ -1,20 +1,20 @@
 import { ArrowLeftIcon, PencilIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
 import Button from '../Button'
-import Link from 'next/link'
 
 interface Props {
   title: string
   description: string
+  isOwner: boolean
 }
 
-export default function ProjectDetails({ title, description }: Props) {
+export default function ProjectDetails({ title, description, isOwner }: Props) {
   return (
     <div className="card rounded-xl bg-white shadow-xl xl:flex-row">
       <div className="relative flex xl:basis-2/3">
-        <Link href="#" className="absolute flex items-center gap-1 rounded-br-lg rounded-tl-lg bg-white/80 p-2 shadow-lg">
+        <span className="absolute flex items-center gap-1 rounded-br-lg rounded-tl-lg bg-white/80 p-2 shadow-lg">
           <PlusCircleIcon className="h-6 w-6" />
           Editar imagen
-        </Link>
+        </span>
         <img
           src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           alt="Imagen de fondo carrusel"
@@ -29,7 +29,7 @@ export default function ProjectDetails({ title, description }: Props) {
         <p className="line-clamp-6 py-3">{description}</p>
         <div className="flex flex-col justify-between gap-3 md:flex-row md:gap-0 xl:w-auto">
           <Button
-            url="/home/offers"
+            url="/home/projects"
             style="DEFAULT"
             color="WHITE"
             hover="SECONDARY"
@@ -37,15 +37,15 @@ export default function ProjectDetails({ title, description }: Props) {
             <ArrowLeftIcon className="h-4 w-4" />
             Volver al listado
           </Button>
-          <Button
-            url="#"
-            style="DEFAULT"
-            color="PRIMARY"
-            hover="WHITE"
-          >
-            <PencilIcon className="h-4 w-4" />
-            ¡Quiero Aplicar!
-          </Button>
+          {!isOwner &&
+            <Button
+              style="DEFAULT"
+              color="PRIMARY"
+              hover="WHITE"
+            >
+              <PencilIcon className="h-4 w-4" />
+              ¡Quiero Aplicar!
+            </Button>}
         </div>
       </div>
     </div>

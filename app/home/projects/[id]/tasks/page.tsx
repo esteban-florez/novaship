@@ -2,6 +2,7 @@
 // import TeamGroup from '@/components/projects-details/TeamGroup'
 import Filter from '@/components/projects-details/tasks/Filter'
 import Tasks from '@/components/projects-details/tasks/Tasks'
+import prisma from '@/prisma/client'
 // import { auth } from '@/lib/auth/pages'
 // import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
@@ -16,32 +17,38 @@ interface Context {
 }
 
 export default async function TasksPage({ params: { id } }: Context) {
-  // const activeUser = await auth.person()
-
   // Todo -> add redirect alert.
   if (id === null) redirect('/home/projects')
 
-  // const project = await prisma.project.findUnique({
-  //   where: { id },
-  //   include: {
-  //     memberships: {
-  //       person: true,
-  //     },
-  //   },
-  // })
+  const project = await prisma.project.findFirst({
+    where: {
+      id,
+      deletedAt: null,
+    },
+    include: {
+      person: true,
+      memberships: {
+        include: {
+          person: true,
+        },
+      },
+      tasks: {
+        include: {
+          subtasks: true,
+          participations: true,
+        },
+      },
+    },
+  })
 
-  // project?.memberships.map(member => {
-  //   if (member.person.id !== activeUser.id) redirect('/home/projects')
-  // })
-
-  // const members = project.membership
+  if (project === null) redirect('/home/projects')
 
   return (
     <div className="my-4 grid grid-cols-10 gap-4 px-6">
       <div className="col-span-10 lg:col-span-7">
         {/* <ProjectDetails project={} /> */}
         <Filter />
-        <Tasks />
+        <Tasks tasks={project.tasks} />
       </div>
       <div className="hidden gap-4 lg:col-span-3 lg:flex lg:flex-col">
         <div className="flex h-72 flex-col gap-2 rounded-lg bg-neutral-300 p-5" />

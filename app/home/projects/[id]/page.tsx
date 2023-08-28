@@ -31,10 +31,16 @@ export default async function ProjectPage({ params: { id } }: Context) {
           person: true,
         },
       },
+      tasks: {
+        include: {
+          subtasks: true,
+          participations: true,
+        },
+      },
     },
   })
 
-  if (project === null) {
+  if (project === null || project.person === null) {
     redirect('/home/projects')
   }
 
@@ -55,5 +61,5 @@ export default async function ProjectPage({ params: { id } }: Context) {
     },
   })
 
-  return <PageContent owner={activeUser} project={project} persons={persons} />
+  return <PageContent owner={activeUser} isOwner={activeUser.id === project.personId} project={project} persons={persons} />
 }

@@ -1,17 +1,21 @@
-import Task from './Task'
+import { type Participation, type Subtask, type Task } from '@prisma/client'
+import TaskItem from './TaskItem'
 
-export default function Tasks() {
+interface Props {
+  tasks: Array<Task & {
+    subtasks: Subtask[]
+    participations: Participation[]
+  }>
+}
+
+export default function Tasks({ tasks }: Props) {
   return (
-    <>
-      <div className="flex flex-col rounded-lg rounded-tl-none bg-white p-6 shadow">
-        <div className="flex flex-row gap-4">
-          <div className="ml-1 w-1 rounded-sm bg-accent" />
-          <div className="flex w-full flex-col gap-2 py-1">
-            <Task nameTask="Realizar la base de datos" value="10" percentage="5%" />
-            <Task nameTask="Diseñar las interfaces" value="20" percentage="10%" />
-          </div>
-        </div>
-      </div>
-    </>
+    <div className="flex flex-col space-y-4 rounded-lg rounded-tl-none">
+      {tasks.map(task => {
+        return (
+          <TaskItem key={task.id} title={task.title} description={task.description} status={task.status ?? 'PENDING'} />
+        )
+      })}
+    </div>
   )
 }

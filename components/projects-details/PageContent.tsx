@@ -1,49 +1,39 @@
-'use client'
-
-import { type Membership, type Person, type Project } from '@prisma/client'
-import { type TabProp, type OptionPerson } from '@/lib/types'
+import { type Task, type Membership, type Person, type Project, type Subtask, type Participation } from '@prisma/client'
 import ProjectDetails from './ProjectDetails'
 import TeamGroup from './TeamGroup'
-// import Archive from './Archive'
+import { type OptionPerson } from '@/lib/types'
+import Filter from './Filter'
 import InfoUser from './InfoUser'
-import { useState } from 'react'
-import PageNav from './PageNav'
 
 interface Props {
+  isOwner: boolean
   owner: Person
   project: (Project & {
+    person: Person | null
     memberships: Array<Membership & {
       person: Person
     }>
-    person: Person
+    tasks: Array<Task & {
+      subtasks: Subtask[]
+      participations: Participation[]
+    }>
   })
   persons: OptionPerson[]
 }
 
-export default function PageContent({ owner, project, persons }: Props) {
-  const [tab, setTab] = useState<TabProp>('All')
-  const handleChangeTab = (tabOption?: TabProp) => {
-    if (tabOption !== null && tabOption !== undefined) setTab(tabOption)
-  }
-
+export default function PageContent({ isOwner, owner, project, persons }: Props) {
   return (
-    <section className="grid grid-cols-7 gap-4 p-4">
-      <div className="col-span-7 xl:col-span-5">
-        <ProjectDetails
-          title={project.title}
-          description={project.description}
-        />
-        <div>
-          <PageNav active={tab} onTabClick={handleChangeTab} />
-          {/* <Archive /> */}
-        </div>
+    <section className="grid grid-cols-10 gap-4 px-6 py-4">
+      <div className="col-span-10 lg:col-span-7">
+        <ProjectDetails title={project.title} description={project.description} isOwner={isOwner} />
+        {isOwner && <Filter id={project.id} tasks={project.tasks} />}
       </div>
-      <div className="hidden lg:col-span-2 lg:block">
+      <div className="hidden lg:col-span-3 lg:block">
         <div className="card mb-4 bg-white p-4 shadow-md lg:self-start">
           <InfoUser
-            owner={project.person.name}
-            email={project.person.email}
-            description={project.person.description}
+            owner={project.person?.name ?? ''}
+            email={project.person?.email ?? ''}
+            description={project.person?.description ?? ''}
           />
         </div>
         <TeamGroup
@@ -53,17 +43,6 @@ export default function PageContent({ owner, project, persons }: Props) {
           persons={persons}
         />
       </div>
-      {/* <div className="col-span-7 xl:col-span-2">
-        <div className="gap-4 sm:w-auto lg:flex lg:flex-col">
-          <div className="mb-4 flex h-72 flex-col gap-2 rounded-lg bg-neutral-300 sm:mb-0" />
-          <TeamGroup
-            id={project?.id ?? ''}
-            memberships={project?.memberships}
-            isOwner={owner.id === project?.personId}
-            persons={persons}
-          />
-        </div>
-      </div> */}
     </section>
   )
 }
