@@ -1,4 +1,4 @@
-import { object, string, type z } from 'zod'
+import { array, object, string, type z } from 'zod'
 import messages from '../messages'
 
 export type Fields = z.infer<typeof schema>
@@ -10,4 +10,8 @@ export const schema = object({
   description: string(messages.string)
     .min(15, messages.min(15))
     .max(255, messages.max(255)),
+  members: array(string(), messages.array)
+    .nonempty(messages.nonempty),
+  responsable: string(messages.string)
+    .cuid(messages.cuid),
 })

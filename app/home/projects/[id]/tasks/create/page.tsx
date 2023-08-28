@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation'
 import CreateTaskForm from '@/components/task-create/CreateTaskForm'
 import { auth } from '@/lib/auth/pages'
 import prisma from '@/prisma/client'
-import Layout from '@/components/forms/Layout'
 
 export const metadata: Metadata = {
   title: 'Tareas',
@@ -30,9 +29,5 @@ export default async function CrateTaskPage({ params: { id } }: Context) {
   // Todo -> add redirect alert.
   if (project === null || project?.personId !== activeUser.id) redirect('/home/projects')
 
-  return (
-    <Layout>
-      <CreateTaskForm projectId={id} memberships={project.memberships} />
-    </Layout>
-  )
+  return <CreateTaskForm projectId={id} memberships={project.memberships} />
 }
