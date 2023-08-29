@@ -15,6 +15,7 @@ interface Props {
   isOwner: boolean
 }
 
+// FIX -> se envia el formulario al seleccionar.
 export default function MembersTab({ projectId, memberships, isOwner }: Props) {
   const {
     alert,

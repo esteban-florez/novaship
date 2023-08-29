@@ -1,4 +1,4 @@
-import { type Task, type Membership, type Person, type Project, type Subtask, type Participation } from '@prisma/client'
+import { type Task, type Membership, type Person, type Project, type Subtask, type Participation, type Field } from '@prisma/client'
 import ProjectDetails from './ProjectDetails'
 import TeamGroup from './TeamGroup'
 import { type OptionPerson } from '@/lib/types'
@@ -10,6 +10,7 @@ interface Props {
   owner: Person
   project: (Project & {
     person: Person | null
+    fields: Field[]
     memberships: Array<Membership & {
       person: Person
     }>
@@ -22,6 +23,10 @@ interface Props {
 }
 
 export default function PageContent({ isOwner, owner, project, persons }: Props) {
+  const projectFields = project.fields.map(field => {
+    return field.title
+  })
+
   return (
     <section className="px-6 py-4">
       {/* TODO -> arreglar los tamaños y cambiar "Equipo de trabajo" */}
@@ -29,7 +34,7 @@ export default function PageContent({ isOwner, owner, project, persons }: Props)
       {/* Equipo de trabajo podria estar dentro del card tambien (?) */}
       <div className="grid grid-cols-10 gap-4 ">
         <div className="col-span-10 lg:col-span-7">
-          <ProjectDetails id={project.id} title={project.title} description={project.description} isOwner={isOwner} />
+          <ProjectDetails id={project.id} title={project.title} description={project.description} fields={projectFields} isOwner={isOwner} />
         </div>
         <div className="col-span-10 lg:col-span-3 lg:block">
           <div className="card mb-4 bg-white p-4 shadow-md lg:self-start">

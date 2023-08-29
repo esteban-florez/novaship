@@ -31,6 +31,7 @@ export default async function ProjectPage({ params: { id } }: Context) {
           person: true,
         },
       },
+      fields: true,
       tasks: {
         include: {
           subtasks: true,

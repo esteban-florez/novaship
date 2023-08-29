@@ -5,10 +5,11 @@ interface Props {
   id: string
   title: string
   description: string
+  fields: string[]
   isOwner: boolean
 }
 
-export default function ProjectDetails({ id, title, description, isOwner }: Props) {
+export default function ProjectDetails({ id, title, description, fields, isOwner }: Props) {
   return (
     <div className="card rounded-xl bg-white shadow-xl xl:flex-row">
       <div className="relative flex xl:basis-2/3">
@@ -26,7 +27,11 @@ export default function ProjectDetails({ id, title, description, isOwner }: Prop
       </div>
       <div className="flex flex-col rounded-t-none p-4 xl:rounded-l-none">
         <h3 className="text-xl font-bold sm:text-2xl">{title}</h3>
-        <p className="-mt-1 text-base text-primary">Arquitectura</p>
+        <div className="flex flex-wrap gap-2 text-base text-primary">
+          {fields.map(field => {
+            return <span key={field} className="badge badge-outline">{field}</span>
+          })}
+        </div>
         <p className="line-clamp-6 py-3">{description}</p>
         <div className="flex flex-col justify-between gap-3 md:flex-row md:gap-0 xl:w-auto">
           <Button
