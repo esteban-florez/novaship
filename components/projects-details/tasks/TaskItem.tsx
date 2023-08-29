@@ -1,6 +1,7 @@
 import Button from '@/components/Button'
+import DeleteModal from '@/components/projects/DeleteModal'
 import { taskStatuses } from '@/lib/translations'
-import { EyeIcon, PencilIcon } from '@heroicons/react/24/outline'
+import { EyeIcon, PencilIcon, PlusIcon } from '@heroicons/react/24/outline'
 import { type Participation, type Subtask, type Task } from '@prisma/client'
 import clsx from 'clsx'
 
@@ -66,6 +67,15 @@ export default function TaskItem({ projectId, task }: Props) {
         >
           <PencilIcon className="h-5 w-5" />
         </Button>
+        <Button
+          url={`/home/projects/${projectId}/tasks/${task.id}/subtasks/create`}
+          style="ICON"
+          color="CANCEL"
+          hover="PRIMARY"
+        >
+          <PlusIcon className="h-5 w-5" />
+        </Button>
+        <DeleteModal title={task.title} action={`/api/tasks/${task.id}`} />
       </div>
     </div>
   )

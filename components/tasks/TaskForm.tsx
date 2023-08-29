@@ -10,9 +10,11 @@ import Select from '../forms/inputs/Select'
 import Textarea from '../forms/inputs/Textarea'
 import FormLayout from '../forms/FormLayout'
 import { type Participation, type Task } from '@prisma/client'
+import { type HTTP_METHOD } from 'next/dist/server/web/http'
 
 interface Props {
   action: string
+  method: HTTP_METHOD
   projectId: string
   task?: Task & {
     participations: Participation[]
@@ -23,20 +25,20 @@ interface Props {
   }>
 }
 
-export default function TaskForm({ action, projectId, task, memberships }: Props) {
+export default function TaskForm({ action, method, projectId, task, memberships }: Props) {
   const taskLeader = task?.participations.find(participation => participation.isLeader)?.membershipId ?? undefined
-
-  const selectedMembers = task?.participations.map(participation => {
-    return participation.membershipId
-  })
+  const selectedMembers = task?.participations.map(participation => participation.membershipId) ?? undefined
+  const cancelUrl = `/home/projects/${projectId}`
 
   const {
     register, formState: { errors },
     alert, serverErrors, handleSubmit, control,
   } = useSubmit({
     schema,
+    method,
     append: {
       projectId,
+      taskId: task?.id,
     },
   })
 
@@ -62,14 +64,24 @@ export default function TaskForm({ action, projectId, task, memberships }: Props
             register={register}
             errors={errors}
           />
+          {/* <Select
+            name="status"
+            label="Estado"
+            defaultValue={task?.status ?? undefined}
+            register={register}
+            errors={errors}
+            options={{
+              type: 'enum',
+              data: TaskStatus,
+              translation: taskStatuses
+            }}
+          /> */}
         </FormSection>
         <FormSection title="Participantes" description="Designe a las personas que completerán la tarea.">
           <Select
             name="responsable"
             label="Responsable"
-            config={{
-              value: taskLeader,
-            }}
+            defaultValue={taskLeader}
             register={register}
             errors={errors}
             options={{
@@ -81,6 +93,7 @@ export default function TaskForm({ action, projectId, task, memberships }: Props
             name="members"
             control={control}
             defaultValue={selectedMembers}
+            menuOnTop
             label="Participantes"
             itemsName="Miembros"
             options={{
@@ -89,7 +102,7 @@ export default function TaskForm({ action, projectId, task, memberships }: Props
             }}
           />
         </FormSection>
-        <FormButtons url={`/home/projects/${projectId}`} />
+        <FormButtons url={cancelUrl} />
       </form>
     </FormLayout>
   )

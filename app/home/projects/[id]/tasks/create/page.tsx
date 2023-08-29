@@ -36,5 +36,5 @@ export default async function CrateTaskPage({ params: { id } }: Context) {
     }
   })
 
-  return <TaskForm action="/api/tasks" projectId={id} memberships={members} />
+  return <TaskForm action="/api/tasks" method="POST" projectId={id} memberships={members} />
 }
