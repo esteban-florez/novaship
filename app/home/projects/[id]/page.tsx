@@ -27,15 +27,29 @@ export default async function ProjectPage({ params: { id } }: Context) {
     include: {
       person: true,
       memberships: {
+        where: {
+          deletedAt: null,
+        },
         include: {
           person: true,
         },
       },
       fields: true,
       tasks: {
+        where: {
+          deletedAt: null,
+        },
         include: {
-          subtasks: true,
-          participations: true,
+          subtasks: {
+            where: {
+              deletedAt: null,
+            },
+          },
+          participations: {
+            where: {
+              deletedAt: null,
+            },
+          },
         },
       },
     },

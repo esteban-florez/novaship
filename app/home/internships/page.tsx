@@ -1,4 +1,4 @@
-import AvatarIcon from '@/components/AvatarIcon'
+// import AvatarIcon from '@/components/AvatarIcon'
 import Button from '@/components/modal/Button'
 import prisma from '@/prisma/client'
 import { EyeIcon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -8,23 +8,25 @@ export const metadata: Metadata = {
   title: 'Pasantías',
 }
 
+// TEMPORAL -> disabled
 export default async function IntenshipsPage() {
   const interships = await prisma.internship.findMany({
     where: {
       deletedAt: null,
     },
-    include: {
-      person: {
-        include: {
-          skills: {
-            select: {
-              id: true,
-              title: true,
-            },
-          },
-        },
-      },
-    },
+    // include: {
+
+    //   // person: {
+    //   //   include: {
+    //   //     skills: {
+    //   //       select: {
+    //   //         id: true,
+    //   //         title: true,
+    //   //       },
+    //   //     },
+    //   //   },
+    //   // },
+    // },
   })
 
   return (
@@ -33,17 +35,17 @@ export default async function IntenshipsPage() {
         return (
           <div key={intership.id} className="group mb-4 select-none break-inside-avoid rounded-md border border-neutral-300 bg-white px-4 py-6 shadow hover:border-primary hover:bg-primary/10">
             <div className="flex items-center gap-2">
-              <AvatarIcon username={intership.person.name} />
-              <h3 className="text-xl font-bold">{intership.person.name}</h3>
+              {/* <AvatarIcon username={intership.person.name} />
+              <h3 className="text-xl font-bold">{intership.person.name}</h3> */}
             </div>
-            <div className="mt-3">
+            {/* <div className="mt-3">
               {intership.person.skills.map(skill => (
                 <span key={skill.id} className="badge badge-primary badge-outline me-2 py-1 font-semibold">
                   {skill.title}
                 </span>
               ))}
-            </div>
-            <p className="my-4 line-clamp-3">{intership.person.description}</p>
+            </div> */}
+            {/* <p className="my-4 line-clamp-3">{intership.person.description}</p> */}
             <div className="hidden group-hover:flex group-hover:justify-between">
               <Button className="btn-error btn">
                 <XMarkIcon className="h-5 w-5" />

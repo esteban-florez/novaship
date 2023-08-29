@@ -20,7 +20,7 @@ interface Props {
 export default function Projects({ projects, visibility, members, title }: Props) {
   if (projects.length === 0) {
     return (
-      <EmptyContent title="No encontramos nada..." size="sm:w-2/4">
+      <EmptyContent title="No encontramos nada..." className="sm:w-2/4">
         Démosle un poco de vida a esta sección añadiendo algunos proyectos.
       </EmptyContent>
     )
@@ -52,6 +52,5 @@ export default function Projects({ projects, visibility, members, title }: Props
         return null
       })}
     </section>
-
   )
 }

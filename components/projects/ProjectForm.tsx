@@ -65,30 +65,6 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
     return member.person.id
   })
 
-  // CHECK 1 -> Posible manejador de elementos seleccionados ?
-  // type HandleOptionProps<T> = {
-  //   id: string
-  //   value: boolean
-  //   options: Array<T & {
-  //     id: string
-  //   }>
-  //   setOptions: React.Dispatch<React.SetStateAction<Array<any>>>
-  // }
-
-  // function handleOption<T>({ id, value, options, setOptions }: HandleOptionProps<T>) {
-  //   if (id === null && id === undefined) return null
-
-  //   const newOptions = options.map((option: { id: string }) => {
-  //     if (option.id === id) {
-  //       return {...option, selected: value }
-  //     }
-
-  //     return option
-  //   })
-
-  //   setOptions(newOptions)
-  // }
-
   // DRY 4
   function addField(id: string) {
     const newFields = totalFields.map(field => {
@@ -165,7 +141,6 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
       oldFields,
       oldPersons,
     },
-    refreshOnSuccess: true,
   })
 
   return (
@@ -178,7 +153,7 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
           <Textarea name="description" value={project?.description} register={register} errors={errors} label="Descripción" placeholder="Ej: Página web de carácter administrativo para la empresa..." />
           <Select
             name="visibility"
-            value={project?.visibility}
+            defaultValue={project?.visibility ?? undefined}
             register={register}
             errors={errors}
             label="Selecciona la privacidad"
@@ -189,14 +164,7 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
         <FormSection title="Campos requeridos" description="Elige los campos necesarios para ser parte del proyecto.">
           {availableFields.length > 0 &&
             (
-              // Fix -> Despues de seleccionar una opcion el primer elemento no es seleccionable.
               <Select name="fields" label="Campos" onInput={(e) => { addField(e.target.value) }}>
-                {/* CHECK 1 */}
-                {/*
-                <Select name="fields" label="Campos" onInput={
-                  (e) => {handleOption<SelectableField>({ id: e.target.value, options: totalFields, value: true, setOptions: setTotalFields })}
-                }>
-              */}
                 {availableFields.map(field => (
                   <option key={field.id} value={field.id}>
                     {field.title}

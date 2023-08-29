@@ -15,6 +15,8 @@ export const routes: Rec = {
   admin: 'Administración',
   tasks: 'Tareas',
   task: 'Tarea',
+  subtasks: 'Subtareas',
+  subtask: 'Subtarea',
   update: 'Actualizar',
 }
 

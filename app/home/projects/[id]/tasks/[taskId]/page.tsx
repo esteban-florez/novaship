@@ -33,8 +33,6 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
 
   if (task === null) redirect(`/home/projects/${project.id}`)
 
-  console.log(project, task)
-
   return (
     <FormLayout>
       <h2 className="border-b px-4 py-2 font-semibold">{task.title}</h2>
