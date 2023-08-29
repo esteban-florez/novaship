@@ -41,6 +41,7 @@ export default function Card({ title, categories, description, owner, location, 
           </ul>
           <p className="line-clamp-3 text-sm">{description}</p>
           <div className="flex flex-col gap-3 pb-3 md:flex-row md:items-center md:justify-between md:gap-1">
+            {/* XD */}
             {members !== null && (members != null) &&
               <div className="flex shrink-0 flex-row items-center justify-start -space-x-3">
                 {members.map((member, i) => {

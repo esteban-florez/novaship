@@ -45,9 +45,6 @@
   ## Horario de disponibilidad
   Los aspirantes podrán registrar su horario de disponibilidad para trabajar.
   
-  ## Reseñas positivas de empresas
-  Dentro del perfil se mostrarán diferentes reseñas positivas de empresas.
-
 # Empresas
   ## Registrar empresa
   Se puede registrar una empresa en la apicación.
@@ -57,6 +54,9 @@
 
   ## Perfil de empresa
   Se puede crear una perfil público, para que sea visto por los demás usuarios de la aplicación, donde figuren las ofertas de trabajo de dicha empresa.
+
+  ## Reseñas a personas contratadas
+  Las empresas podrán escribir reseñas en los perfiles de los usuarios que hayan contratado. 
 
 # Postulantes
   ## Manejo de postulantes
@@ -78,8 +78,8 @@
   ## Visibilidad de ofertas
   Se pueden cambiar la visibilidad de la oferta: oculta, excepto pasantes, solo pasantes, todos.
   
-  ## Eliminar la oferta
-  Pueden eliminar la oferta de trabajo una vez que ya no sea necesaria.
+  ## Vigencia de la oferta
+  La empresa puede decidir por cuanto tiempo estará activa la oferta, así como también podrá tener un límite de postulantes a la oferta.
   
   ## Requisitos para aplicar
   Pueden especificar cuales son los requisitos necesarios para aplicar a la oferta (habilidades, experiencia, edad).
@@ -89,10 +89,13 @@
 
 # Pasantías
   ## Registro de instituciones
-  Los usuarios podrán registrar instituciones educativas para integrar a los pasantes en la aplicación.
+  Las instituciones pueden crear una cuenta institucional en la aplicación.
+
+  ## Perfil institucional
+  Las instituciones pueden crear un perfil público institucional.
   
   ## Validación de instituciones
-  Los administradores de la aplicación validarán a las instituciones registradas.
+  Las instituciones deben mostrar su validez subiendo una imagen de su RIF. Los administradores de la aplicación validarán a las instituciones registradas. 
   
   ## Afiliación de pasantes
   Las instituciones podrán afiliar a los usuarios de la aplicación para integrarlos como pasantes de la institución.

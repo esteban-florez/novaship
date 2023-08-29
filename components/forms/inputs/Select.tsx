@@ -8,11 +8,12 @@ type Props = React.PropsWithChildren<{
   onInput?: (event: SelectOnInputEvent) => void
   noDefault?: boolean
   options?: SelectOptionsConfig
-} & SharedInputProps>
+  defaultValue?: string
+} & Omit<SharedInputProps, 'value'>>
 
 export default function Select({
   name, label, children, options: optionsData, register, config = {},
-  value = '', noDefault = false, errors = {}, onInput,
+  defaultValue = '', noDefault = false, errors = {}, onInput,
 }: Props) {
   const { registerProps, errorMessage } = useInput({
     register, errors, name, config,
@@ -24,7 +25,7 @@ export default function Select({
       {(label !== null && label !== undefined) && <CustomLabel id={name} label={label} />}
       <select
         id={name} name={name} onInput={onInput}
-        defaultValue={value} {...registerProps}
+        defaultValue={defaultValue} {...registerProps}
         className="select select-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary"
       >
         {!noDefault && <option value="" disabled>Seleccionar...</option>}
