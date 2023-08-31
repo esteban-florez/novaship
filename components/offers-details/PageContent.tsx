@@ -1,5 +1,3 @@
-'use-client'
-
 import {
   BanknotesIcon,
   ClockIcon,
@@ -19,6 +17,11 @@ interface Props {
 }
 
 export default function PageContent({ offer }: Props) {
+  // TODO -> HACER QUE SE MUESTRE EL ****** FIELDS QUE NO SE MUESTRA
+  const offerFields = offer.fields.map((field) => {
+    return field.title
+  })
+
   const atributtes = [
     {
       title: 'Modalidad',
@@ -44,11 +47,12 @@ export default function PageContent({ offer }: Props) {
 
   return (
     <section className="grid grid-cols-7 gap-4 p-4">
-      <div className="col-span-7 xl:col-span-5">
+      <div className="col-span-7">
         <Details
           title={offer.title}
           expiresAt={offer.expiresAt}
           description={offer.description}
+          fields={offerFields}
         />
         <div className="mt-4 block xl:hidden">
           <Collapse
@@ -63,7 +67,9 @@ export default function PageContent({ offer }: Props) {
             />
           </Collapse>
         </div>
-        <div className="mt-4 grid grid-cols-2 gap-x-2 gap-y-3">
+      </div>
+      <div className="col-span-7 lg:col-span-5">
+        <div className="grid grid-cols-2 gap-x-2 gap-y-3">
           {atributtes.map((atr) => {
             const { title, content, icon } = atr
             return (

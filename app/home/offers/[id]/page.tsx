@@ -12,15 +12,15 @@ interface Context {
 }
 
 export default async function OfferPage({ params: { id } }: Context) {
-  const offer = await prisma.offer.findUnique({
+  const offer = await prisma.offer.findFirst({
     where: {
       id,
+      deletedAt: null,
     },
     include: {
       company: true,
       fields: true,
       location: true,
-      skills: true,
     },
   })
 
