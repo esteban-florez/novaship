@@ -4,6 +4,7 @@ const m = (message: string) => ({ message })
 
 const required = 'Este campo es obligatorio.'
 
+// TODO -> min y max en number muestra "caracteres" en vez del numero
 const messages = {
   number: { required_error: required, invalid_type_error: 'Debe ser un número.' },
   string: { required_error: required, invalid_type_error: 'Debe ser un texto.' },

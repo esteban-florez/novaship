@@ -4,20 +4,24 @@ import {
   HomeModernIcon,
   UserIcon,
 } from '@heroicons/react/24/outline'
-import { type OffersWithRelationships } from '@/lib/types'
 import { modes, targets } from '@/lib/translations'
 import Atributtes from './Atributtes'
 import Details from './Details'
 import InfoUser from './InfoUser'
 import Collapse from '../Collapse'
 import AvatarInfo from './AvatarInfo'
+import { type Company, type Field, type Location, type Offer, type Skill } from '@prisma/client'
 
 interface Props {
-  offer: OffersWithRelationships
+  offer: Offer & {
+    fields: Field[]
+    location: Location
+    company: Company
+    skills: Skill[]
+  }
 }
 
 export default function PageContent({ offer }: Props) {
-  // TODO -> HACER QUE SE MUESTRE EL ****** FIELDS QUE NO SE MUESTRA
   const offerFields = offer.fields.map((field) => {
     return field.title
   })
@@ -84,9 +88,11 @@ export default function PageContent({ offer }: Props) {
             )
           })}
         </div>
-        {/* TODO -> Hacer que muestre las habilidades */}
         <div className="card mt-4 bg-white p-4 shadow-lg">
-          <p>Habilidades</p>
+          <h6>Habilidades</h6>
+          {offer.skills.map(skill => {
+            return <p key={skill.id}>{skill.title}</p>
+          })}
         </div>
       </div>
       <div className="sticky hidden lg:col-span-2 lg:block">

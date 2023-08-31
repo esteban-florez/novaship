@@ -1,13 +1,15 @@
-import Link from 'next/link'
 import SearchInput from '../SearchInput'
 import NavButton from '../NavButton'
 import Collapse from '../Collapse'
+import Button from '../Button'
+import { PlusIcon } from '@heroicons/react/24/outline'
 
 export default function PageNav() {
-  const navChildren = ['Todos', 'mis ofertas', 'Trabajos aplicados']
+  const navChildren = ['Todos', 'Mis ofertas', 'Trabajos aplicados']
 
   return (
     <div className="flex w-full flex-col items-center justify-between px-4 py-5 md:flex-row xl:px-6">
+      {/* No usar 2 componentes exactamente iguales, modificar uno para que sirva para ambos casos */}
       <div className="hidden gap-x-1 gap-y-4 xl:flex">
         {navChildren.map((children) => {
           const isActive = children === 'Todos'
@@ -33,9 +35,15 @@ export default function PageNav() {
       </div>
       <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row md:place-items-center md:justify-end xl:w-auto">
         <SearchInput />
-        <Link href="/home/offers/create" className="btn-sm btn w-full rounded-xl bg-primary py-2 text-white shadow-lg md:btn-md sm:w-40 md:w-auto md:text-base">
-          Publicar
-        </Link>
+        <Button
+          url="/home/offers/create"
+          style="DEFAULT"
+          color="PRIMARY"
+          hover="WHITE"
+        >
+          <PlusIcon className="h-5 w-5" />
+          Agregar
+        </Button>
       </div>
     </div>
   )

@@ -20,6 +20,7 @@ export default async function OfferPage({ params: { id } }: Context) {
     include: {
       company: true,
       fields: true,
+      skills: true,
       location: true,
     },
   })

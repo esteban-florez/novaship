@@ -14,7 +14,7 @@ interface Props {
   isOwner: boolean
   owner: Person
   project: (Project & {
-    person: Person | null
+    person: Person
     fields: Field[]
     memberships: Array<Membership & {
       person: Person
@@ -50,15 +50,15 @@ export default function PageContent({ isOwner, owner, project, persons }: Props)
         <div className="col-span-10 lg:col-span-3 lg:block">
           <div className="card mb-4 bg-white p-4 shadow-md lg:self-start">
             <InfoUser
-              owner={project.person?.name ?? ''}
-              email={project.person?.email ?? ''}
-              description={project.person?.description ?? ''}
+              owner={project.person?.name}
+              email={project.person?.email}
+              description={project.person?.description}
             />
           </div>
           <TeamGroup
-            id={project?.id ?? ''}
+            id={project.id}
             memberships={project?.memberships}
-            isOwner={owner.id === project?.personId}
+            isOwner={owner.id === project.personId}
             persons={persons}
           />
         </div>
