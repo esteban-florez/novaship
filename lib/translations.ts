@@ -18,6 +18,7 @@ export const routes: Rec = {
   subtasks: 'Subtareas',
   subtask: 'Subtarea',
   update: 'Actualizar',
+  chat: 'Chat',
 }
 
 export const statuses = {
