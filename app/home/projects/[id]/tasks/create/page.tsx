@@ -13,7 +13,7 @@ interface Context {
 }
 
 export default async function CrateTaskPage({ params: { id } }: Context) {
-  const activeUser = await auth.person()
+  const activeUser = await auth.user()
 
   const project = await prisma.project.findUnique({
     where: { id },
@@ -27,7 +27,7 @@ export default async function CrateTaskPage({ params: { id } }: Context) {
   })
 
   // Todo -> add redirect alert.
-  if (project === null || project?.personId !== activeUser.id) redirect('/home/projects')
+  if (project === null || ((project.personId ?? project.companyId) !== activeUser.id)) redirect('/home/projects')
 
   const members = project.memberships.map(member => {
     return {

@@ -13,7 +13,7 @@ export async function PUT(request: NextRequest) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.person(request)
+    const user = await auth.user(request)
 
     const validationSchema = object({
       taskId: string(messages.string)
@@ -35,6 +35,7 @@ export async function PUT(request: NextRequest) {
         project: {
           select: {
             personId: true,
+            companyId: true,
           },
         },
         participations: {
@@ -53,8 +54,12 @@ export async function PUT(request: NextRequest) {
       },
     })
 
-    const isLeader = task?.participations.find(participation =>
-      Boolean((participation.isLeader && participation.membership.personId === user.id) || (task.project.personId === user.id)))
+    const projectOwner = (task?.project.personId ?? task?.project.companyId) === user.id
+
+    const isLeader = task?.participations.find(participation => {
+      const participationMatchUser = participation.membership.personId === user.id
+      return Boolean((participation.isLeader && participationMatchUser) || projectOwner)
+    })
 
     if (task === null || (isLeader == null)) redirect(`/home/projects/${appendParsed.projectId}`)
 
@@ -81,7 +86,7 @@ interface Context {
 
 export async function DELETE(request: NextRequest, { params: { id } }: Context) {
   try {
-    const user = await auth.person(request)
+    const user = await auth.user(request)
 
     const subtask = await prisma.subtask.findFirst({
       where: {
@@ -94,6 +99,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
             project: {
               select: {
                 personId: true,
+                companyId: true,
               },
             },
           },
@@ -103,7 +109,9 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
 
     if (subtask === null) redirect('/home/projects')
 
-    if (subtask.task.project.personId !== user.id) redirect(`/home/projects/${subtask.task.projectId}/tasks/${subtask.taskId}`)
+    if ((subtask.task.project.personId ?? subtask.task.project.companyId) !== user.id) {
+      redirect(`/home/projects/${subtask.task.projectId}/tasks/${subtask.taskId}`)
+    }
 
     const deletedSubtask = await prisma.subtask.delete({
       where: { id },

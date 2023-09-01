@@ -71,12 +71,11 @@ interface Context {
 
 export async function DELETE(request: NextRequest, { params: { id } }: Context) {
   try {
-    const user = await auth.person(request)
+    const user = await auth.user(request)
 
     const task = await prisma.task.findFirst({
       where: {
         id,
-        deletedAt: null,
       },
       include: {
         project: {
@@ -91,7 +90,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
       },
     })
 
-    if (task?.project.personId !== user.id) redirect('/home/projects')
+    if ((task?.project.personId ?? task?.project.companyId) !== user.id) redirect('/home/projects')
 
     const deletedTask = await prisma.task.delete({
       where: { id },
