@@ -16,16 +16,8 @@ export async function POST(request: NextRequest) {
     if (user.type === 'COMPANY') {
       await prisma.offer.create({
         data: {
-          title: parsed.title,
-          description: parsed.description,
-          mode: parsed.mode,
-          hours: parsed.hours,
-          schedule: parsed.schedule,
-          salary: parsed.salary,
-          target: parsed.target,
-          limit: parsed.limit,
+          ...parsed,
           companyId: user.id,
-          locationId: parsed.location,
           fields: {
             connect: parsed.fields.map(field => {
               return {

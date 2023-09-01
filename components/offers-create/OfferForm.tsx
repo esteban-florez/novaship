@@ -6,7 +6,7 @@ import Select from '@/components/forms/inputs/Select'
 import Textarea from '@/components/forms/inputs/Textarea'
 import FormLayout from '../forms/FormLayout'
 import FormButtons from '../forms/FormButtons'
-import { type Field, type Location, Mode, Schedule, type Skill, Target } from '@prisma/client'
+import { type Field, type Location, Mode, Schedule, type Skill, Target, type Offer, type Company } from '@prisma/client'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { type HTTP_METHOD } from 'next/dist/server/web/http'
 import { schema } from '@/lib/validation/schemas/offer'
@@ -20,18 +20,30 @@ type Props = React.PropsWithChildren<{
   locations: Location[]
   action: string
   method: HTTP_METHOD
+  offer?: (Offer & {
+    company: Company
+    skills: Skill[]
+    fields: Field[]
+  })
 }>
 
+// CHECK -> este componente pesa 177KB | 55KB zipped
 // PENDING -> schedule field.
-export default function CreateOfferForm({ skills, fields, locations, action, method }: Props) {
+export default function OfferForm({ offer, skills, fields, locations, action, method }: Props) {
+  const offerSkills = offer?.skills.map(skill => {
+    return skill.id
+  })
+
+  const offerFields = offer?.fields.map(field => {
+    return field.id
+  })
+
   const {
     handleSubmit, alert, serverErrors,
     register, formState: { errors }, control,
   } = useSubmit({
     schema,
     method,
-    append: {
-    },
   })
 
   return (
@@ -46,6 +58,7 @@ export default function CreateOfferForm({ skills, fields, locations, action, met
             label="Título de la oferta"
             register={register}
             errors={errors}
+            value={offer?.title ?? undefined}
           />
           <Textarea
             name="description"
@@ -54,12 +67,14 @@ export default function CreateOfferForm({ skills, fields, locations, action, met
             placeholder="Ej. Se busca Desarrollador Web Front-End con años de experiencia."
             register={register}
             errors={errors}
+            value={offer?.description ?? undefined}
           />
           <Select
             name="mode"
             label="Modalidad"
             register={register}
             errors={errors}
+            defaultValue={offer?.mode ?? undefined}
             options={{
               type: 'enum',
               data: Mode,
@@ -75,13 +90,15 @@ export default function CreateOfferForm({ skills, fields, locations, action, met
             type="number"
             config={{
               valueAsNumber: true,
+              value: offer?.limit ?? undefined,
             }}
           />
           <Select
-            name="location"
+            name="locationId"
             label="Ubicación"
             register={register}
             errors={errors}
+            defaultValue={offer?.locationId ?? undefined}
             options={{
               type: 'rows',
               data: locations,
@@ -96,6 +113,7 @@ export default function CreateOfferForm({ skills, fields, locations, action, met
             itemsName="Campos"
             limit={6}
             menuOnTop
+            defaultValue={offerFields ?? undefined}
             options={{
               type: 'rows',
               data: fields,
@@ -108,6 +126,7 @@ export default function CreateOfferForm({ skills, fields, locations, action, met
             itemsName="Habilidades"
             limit={6}
             menuOnTop
+            defaultValue={offerSkills ?? undefined}
             options={{
               type: 'rows',
               data: skills,
@@ -120,6 +139,7 @@ export default function CreateOfferForm({ skills, fields, locations, action, met
             label="Horario"
             register={register}
             errors={errors}
+            defaultValue={offer?.schedule ?? undefined}
             options={{
               type: 'enum',
               data: Schedule,
@@ -135,6 +155,7 @@ export default function CreateOfferForm({ skills, fields, locations, action, met
             type="number"
             config={{
               valueAsNumber: true,
+              value: offer?.hours ?? undefined,
             }}
           />
           <Input
@@ -146,6 +167,7 @@ export default function CreateOfferForm({ skills, fields, locations, action, met
             type="number"
             config={{
               valueAsNumber: true,
+              value: offer?.salary ?? undefined,
             }}
           />
         </FormSection>
@@ -155,6 +177,7 @@ export default function CreateOfferForm({ skills, fields, locations, action, met
             label="Visibilidad"
             register={register}
             errors={errors}
+            defaultValue={offer?.target ?? undefined}
             options={{
               type: 'enum',
               data: Target,

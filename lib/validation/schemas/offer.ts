@@ -32,7 +32,7 @@ export const schema = object({
   skills: array(string(messages.string)
     .cuid(messages.cuid), messages.array)
     .nonempty(messages.nonempty),
-  location: string(messages.string)
+  locationId: string(messages.string)
     .cuid(messages.cuid),
   expiresAt: nativeEnum(EXPIRATION_DATES, messages.enum),
   mode: nativeEnum(Mode, messages.enum),

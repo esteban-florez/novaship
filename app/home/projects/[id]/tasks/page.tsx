@@ -1,10 +1,6 @@
-// import ProjectDetails from '@/components/projects-details/ProjectDetails'
-// import TeamGroup from '@/components/projects-details/TeamGroup'
 import Filter from '@/components/projects-details/tasks/Filter'
 import Tasks from '@/components/projects-details/tasks/Tasks'
 import prisma from '@/prisma/client'
-// import { auth } from '@/lib/auth/pages'
-// import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
@@ -48,7 +44,7 @@ export default async function TasksPage({ params: { id } }: Context) {
       <div className="col-span-10 lg:col-span-7">
         {/* <ProjectDetails project={} /> */}
         <Filter />
-        <Tasks tasks={project.tasks} />
+        <Tasks projectId={id} tasks={project.tasks} />
       </div>
       <div className="hidden gap-4 lg:col-span-3 lg:flex lg:flex-col">
         <div className="flex h-72 flex-col gap-2 rounded-lg bg-neutral-300 p-5" />

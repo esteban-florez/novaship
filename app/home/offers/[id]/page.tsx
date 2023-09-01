@@ -1,4 +1,5 @@
 import PageContent from '@/components/offers-details/PageContent'
+import { auth } from '@/lib/auth/pages'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
@@ -12,6 +13,8 @@ interface Context {
 }
 
 export default async function OfferPage({ params: { id } }: Context) {
+  const activeUser = await auth.user()
+
   const offer = await prisma.offer.findFirst({
     where: {
       id,
@@ -29,5 +32,5 @@ export default async function OfferPage({ params: { id } }: Context) {
     redirect('/home/offers')
   }
 
-  return <PageContent offer={offer} />
+  return <PageContent offer={offer} userId={activeUser.id} />
 }

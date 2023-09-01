@@ -11,8 +11,10 @@ import InfoUser from './InfoUser'
 import Collapse from '../Collapse'
 import AvatarInfo from './AvatarInfo'
 import { type Company, type Field, type Location, type Offer, type Skill } from '@prisma/client'
+import DeleteModal from '../projects/DeleteModal'
 
 interface Props {
+  userId: string
   offer: Offer & {
     fields: Field[]
     location: Location
@@ -21,7 +23,7 @@ interface Props {
   }
 }
 
-export default function PageContent({ offer }: Props) {
+export default function PageContent({ userId, offer }: Props) {
   const offerFields = offer.fields.map((field) => {
     return field.title
   })
@@ -53,10 +55,16 @@ export default function PageContent({ offer }: Props) {
     <section className="grid grid-cols-7 gap-4 p-4">
       <div className="col-span-7">
         <Details
+          isOwner={userId === offer.companyId}
           title={offer.title}
           expiresAt={offer.expiresAt}
           description={offer.description}
           fields={offerFields}
+          updateOffer={offer.id}
+        />
+        <DeleteModal
+          action={`/api/offers/${offer.id}`}
+          title={offer.title}
         />
         <div className="mt-4 block xl:hidden">
           <Collapse

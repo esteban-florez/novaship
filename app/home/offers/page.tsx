@@ -1,14 +1,15 @@
-import Carrousel from '@/components/offers/Carrousel'
-import Offer from '@/components/offers/Offer'
 import { type Metadata } from 'next'
-import PageNav from '@/components/offers/PageNav'
 import prisma from '@/prisma/client'
+import { auth } from '@/lib/auth/pages'
+import PageContent from '@/components/offers/PageContent'
 
 export const metadata: Metadata = {
   title: 'Ofertas',
 }
 
 export default async function OffersPage() {
+  const activeUser = await auth.user()
+
   const offers = await prisma.offer.findMany({
     where: {
       deletedAt: null,
@@ -20,29 +21,10 @@ export default async function OffersPage() {
     },
   })
 
-  const carruselOffers = offers.splice(0, 5)
+  const allOffers = offers.filter(offer => offer.companyId !== activeUser.id)
+  const myOffers = offers.filter(offer => offer.companyId === activeUser.id)
 
-  return (
-    <>
-      <Carrousel offers={carruselOffers} />
-      <PageNav />
-      <div className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg p-4 pt-1
-      md:columns-2 lg:columns-3 xl:rounded-tl-none xl:px-6"
-      >
-        {offers.map((offer) => {
-          return (
-            <Offer
-              key={offer.id}
-              id={offer.id}
-              title={offer.title}
-              categories={offer.fields}
-              description={offer.description}
-              company={offer.company}
-              location={offer.location.title}
-            />
-          )
-        })}
-      </div>
-    </>
-  )
+  const carruselOffers = allOffers.splice(0, 5)
+
+  return <PageContent generalOffers={allOffers} myOffers={myOffers} carruselOffers={carruselOffers} />
 }

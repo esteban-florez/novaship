@@ -1,4 +1,4 @@
-import CreateOfferForm from '@/components/offers-create/CreateOfferForm'
+import OfferForm from '@/components/offers-create/OfferForm'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 
@@ -32,7 +32,7 @@ export default async function CreateOfferPage() {
   })
 
   return (
-    <CreateOfferForm
+    <OfferForm
       fields={fields}
       skills={skills}
       locations={locations}

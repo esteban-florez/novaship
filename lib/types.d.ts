@@ -21,6 +21,12 @@ type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 
 type VisibilityFilter = 'PRIVATE' | 'PUBLIC' | 'ALL'
 
+interface Offers extends Offer {
+  company: Company
+  location: Location
+  fields: Field[]
+}
+
 type SharedInputProps = {
   label?: string
   className?: string
@@ -39,6 +45,7 @@ type UseSubmitResult = null | 'loading' | ApiResponseBody
 type TabProp = 'All' | 'Mine'
 type TeamGroupTab = 'members' | 'add'
 type ProjectDetailsTab = 'files' | 'tasks'
+type OffersTab = 'All' | 'Mine' | 'Applied'
 
 interface ApiResponseBody {
   errorType?: keyof typeof ERRORS
