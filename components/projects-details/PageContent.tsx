@@ -3,6 +3,7 @@ import {
   type Person, type Project,
   type Subtask, type Participation,
   type Field,
+  type Company,
 } from '@prisma/client'
 import { type OptionPerson } from '@/lib/types'
 import ProjectDetails from './ProjectDetails'
@@ -12,9 +13,9 @@ import Filter from './Filter'
 
 interface Props {
   isOwner: boolean
-  owner: Person
   project: (Project & {
-    person: Person
+    person: Person | null
+    company: Company | null
     fields: Field[]
     memberships: Array<Membership & {
       person: Person
@@ -27,10 +28,12 @@ interface Props {
   persons: OptionPerson[]
 }
 
-export default function PageContent({ isOwner, owner, project, persons }: Props) {
+export default function PageContent({ isOwner, project, persons }: Props) {
   const projectFields = project.fields.map(field => {
     return field.title
   })
+
+  const projectOwner = project.company ?? project.person
 
   return (
     <section className="px-6 py-4">
@@ -50,15 +53,15 @@ export default function PageContent({ isOwner, owner, project, persons }: Props)
         <div className="col-span-10 lg:col-span-3 lg:block">
           <div className="card mb-4 bg-white p-4 shadow-md lg:self-start">
             <InfoUser
-              owner={project.person?.name}
-              email={project.person?.email}
-              description={project.person?.description}
+              owner={projectOwner?.name ?? ''}
+              email={projectOwner?.email ?? ''}
+              description={projectOwner?.description ?? ''}
             />
           </div>
           <TeamGroup
             id={project.id}
             memberships={project?.memberships}
-            isOwner={owner.id === project.personId}
+            isOwner={isOwner}
             persons={persons}
           />
         </div>

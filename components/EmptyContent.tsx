@@ -5,6 +5,7 @@ type Props = React.PropsWithChildren<{
   className?: string
 }>
 
+// TODO -> arreglar el tamaño y responsive
 export default function EmptyContent({ title, children, className }: Props) {
   return (
     <div className={clsx('mx-auto mt-4 flex flex-col gap-y-4 pb-0 text-center sm:mt-0 sm:p-4', className)}>

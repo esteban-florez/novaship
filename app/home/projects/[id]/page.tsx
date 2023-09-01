@@ -13,7 +13,7 @@ interface Context {
 }
 
 export default async function ProjectPage({ params: { id } }: Context) {
-  const activeUser = await auth.person()
+  const activeUser = await auth.user()
 
   if (id === null) {
     redirect('/home/projects')
@@ -26,6 +26,7 @@ export default async function ProjectPage({ params: { id } }: Context) {
     },
     include: {
       person: true,
+      company: true,
       memberships: {
         where: {
           deletedAt: null,
@@ -55,9 +56,11 @@ export default async function ProjectPage({ params: { id } }: Context) {
     },
   })
 
-  if (project === null || project.person === null) {
+  if (project === null) {
     redirect('/home/projects')
   }
+
+  const isOwner = activeUser.id === project.personId || activeUser.id === project.companyId
 
   // DRY
   const persons = await prisma.person.findMany({
@@ -76,5 +79,5 @@ export default async function ProjectPage({ params: { id } }: Context) {
     },
   })
 
-  return <PageContent owner={activeUser} isOwner={activeUser.id === project.personId} project={project} persons={persons} />
+  return <PageContent isOwner={isOwner} project={project} persons={persons} />
 }

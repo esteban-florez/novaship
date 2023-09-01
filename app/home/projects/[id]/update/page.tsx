@@ -3,9 +3,6 @@ import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
 import ProjectForm from '@/components/projects/ProjectForm'
-import selectable from '@/lib/data-fetching/selectable'
-import { type SelectableField, type SelectablePerson } from '@/lib/types'
-import collect from '@/lib/utils/collection'
 
 export const metadata: Metadata = {
   title: 'Actualizar Proyecto',
@@ -18,7 +15,7 @@ interface Context {
 }
 
 export default async function UpdateProjectPage({ params: { id } }: Context) {
-  const activeUser = await auth.person()
+  const activeUser = await auth.user()
 
   if (id === null) redirect('/home/projects')
 
@@ -35,11 +32,8 @@ export default async function UpdateProjectPage({ params: { id } }: Context) {
           title: true,
         },
       },
-      person: {
-        select: {
-          id: true,
-        },
-      },
+      person: true,
+      company: true,
       memberships: {
         select: {
           id: true,
@@ -56,34 +50,34 @@ export default async function UpdateProjectPage({ params: { id } }: Context) {
   })
 
   if (project === null) redirect('/home/projects')
-  if (project.personId !== activeUser.id) redirect('/home/projects')
+  if (((project.personId ?? project.companyId) !== activeUser.id)) redirect('/home/projects')
 
-  const fields = await selectable<SelectableField>({ model: 'field', excluded: project?.fields })
-  const persons = await selectable<SelectablePerson>({
-    model: 'person',
-    excluded: project?.memberships.map(member => {
-      return member.person
-    }),
+  const fields = await prisma.field.findMany({
+    where: {
+      deletedAt: null,
+    },
+    orderBy: {
+      title: 'asc',
+    },
   })
 
-  const personsWithoutOwner = persons.filter(person => person.id !== activeUser.id)
-
-  const projectFields = collect(project.fields).toSelectable(true)
-  const projectPersons = collect(project.memberships.map(member => {
-    return member.person
-  })).toSelectable(true)
-
-  const totalFields = [...fields, ...projectFields]
-  const totalPersons = [...personsWithoutOwner, ...projectPersons]
+  const memberships = await prisma.person.findMany({
+    where: {
+      deletedAt: null,
+    },
+    orderBy: {
+      name: 'asc',
+    },
+  })
 
   return (
     <ProjectForm
-      id={id}
       method="PUT"
       action={`/api/projects/${id}`}
-      fields={totalFields}
-      persons={totalPersons}
+      fields={fields}
+      persons={memberships}
       project={project}
+      cancelRedirect={`/home/projects/${id}`}
     />
   )
 }

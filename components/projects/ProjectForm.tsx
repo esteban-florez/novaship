@@ -5,26 +5,20 @@ import FormSection from '../forms/FormSection'
 import Input from '../forms/inputs/Input'
 import Select from '../forms/inputs/Select'
 import Textarea from '../forms/inputs/Textarea'
-import { type Fields, schema } from '@/lib/validation/schemas/project'
+import { schema } from '@/lib/validation/schemas/project'
 import useSubmit from '@/lib/hooks/useSubmit'
-import { useState } from 'react'
-import { type SelectableField, type SelectablePerson } from '@/lib/types'
-import clsx from 'clsx'
-import SelectedOptions from '../selectable-models/SelectedOptions'
-import SelectedMembers from '../selectable-models/SelectedMembers'
-import { Visibility, type Project } from '@prisma/client'
-import Member from '../projects-details/Member'
-import { includesValue } from '@/lib/utils/text'
+import { Visibility, type Project, type Field, type Person } from '@prisma/client'
 import { visibilities } from '@/lib/translations'
 import FormLayout from '../forms/FormLayout'
+import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
 
 // DRY 5
 interface Props {
-  id?: string
+  cancelRedirect: string
   method: 'POST' | 'PUT'
   action: string
-  fields: SelectableField[]
-  persons: SelectablePerson[]
+  fields: Field[]
+  persons: Person[]
   project?: Project & {
     person: {
       id: string
@@ -45,102 +39,20 @@ interface Props {
 }
 
 // TODO -> responsive
-export default function ProjectForm({ id, method, action, fields, persons, project }: Props) {
-  const cancelUrl = id !== undefined ? `/home/projects/${id}` : '/home/projects'
-  // TODO -> actualizar a select multiple sin estado
-  const [totalFields, setTotalFields] = useState<SelectableField[]>(fields)
-  const [totalPersons, setTotalPersons] = useState<SelectablePerson[]>(persons)
-  const [searchName, setSearchName] = useState('')
-  const [inputFocus, setInputFocus] = useState(false)
-  const [oldFields, setOldFields] = useState<string[]>([])
-  const [oldPersons, setOldPersons] = useState<string[]>([])
-
-  const selectedFields = totalFields.filter(field => field.selected)
-  const availableFields = totalFields.filter(field => !field.selected)
-
-  const selectedPersons = totalPersons.filter(person => person.selected)
-  const availablePersons = totalPersons.filter(person => !person.selected)
-
-  const projectMembers = project?.memberships.map(member => {
+export default function ProjectForm({ cancelRedirect, method, action, fields, persons, project }: Props) {
+  const projectFields = project?.fields.map(field => {
+    return field.id
+  })
+  const projectMemberships = project?.memberships.map(member => {
     return member.person.id
   })
 
-  // DRY 4
-  function addField(id: string) {
-    const newFields = totalFields.map(field => {
-      if (field.id !== id) return field
-
-      return {
-        ...field,
-        selected: true,
-      }
-    })
-
-    setOldFields([...oldFields.filter(value => value !== id)])
-    setTotalFields(newFields)
-  }
-
-  function removeField(id: string) {
-    const newFields = totalFields.map(field => {
-      if (field.id !== id) return field
-
-      return {
-        ...field,
-        selected: false,
-      }
-    })
-
-    setOldFields([...oldFields, id])
-    setTotalFields(newFields)
-  }
-
-  function addPerson(id: string) {
-    const newPersons = totalPersons.map(person => {
-      if (person.id !== id) return person
-
-      return {
-        ...person,
-        selected: true,
-      }
-    })
-
-    if (oldPersons !== undefined) setOldPersons([...oldPersons?.filter(person => person !== id)])
-    setTotalPersons(newPersons)
-  }
-
-  function removePerson(id: string) {
-    const newPersons = totalPersons.map(person => {
-      if (person.id !== id) return person
-
-      return {
-        ...person,
-        selected: false,
-      }
-    })
-
-    if ((oldPersons !== undefined) && (projectMembers?.includes(id) ?? false)) setOldPersons([...oldPersons, id])
-    setTotalPersons(newPersons)
-  }
-
-  function handleInputEvent(event: OnInputEvent) {
-    const { value } = event.target
-    setInputFocus(value.length > 0)
-    setSearchName(value)
-  }
-
   const {
     handleSubmit, alert, serverErrors,
-    register, formState: { errors },
-  } = useSubmit<Fields>({
+    register, formState: { errors }, control,
+  } = useSubmit({
     schema,
     method,
-    append: {
-      projectId: id ?? '',
-      selectedFields,
-      selectedPersons,
-      oldFields,
-      oldPersons,
-    },
   })
 
   return (
@@ -149,8 +61,22 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
         {serverErrors}
         {alert}
         <FormSection title="Información del proyecto" description="Asigne un título que explique de que trata el proyecto, así como una descripción del mismo para tener una mejor idea y por último si es público o privado.">
-          <Input name="title" value={project?.title} register={register} errors={errors} label="Título" placeholder="Ej: Página web administrativa" />
-          <Textarea name="description" value={project?.description} register={register} errors={errors} label="Descripción" placeholder="Ej: Página web de carácter administrativo para la empresa..." />
+          <Input
+            name="title"
+            label="Título"
+            placeholder="Ej: Página web administrativa"
+            value={project?.title}
+            register={register}
+            errors={errors}
+          />
+          <Textarea
+            name="description"
+            label="Descripción"
+            placeholder="Ej: Página web de carácter administrativo para la empresa..."
+            value={project?.description}
+            register={register}
+            errors={errors}
+          />
           <Select
             name="visibility"
             defaultValue={project?.visibility ?? undefined}
@@ -160,41 +86,36 @@ export default function ProjectForm({ id, method, action, fields, persons, proje
             options={{ type: 'enum', data: Visibility, translation: visibilities }}
           />
         </FormSection>
-
         <FormSection title="Campos requeridos" description="Elige los campos necesarios para ser parte del proyecto.">
-          {availableFields.length > 0 &&
-            (
-              <Select name="fields" label="Campos" onInput={(e) => { addField(e.target.value) }}>
-                {availableFields.map(field => (
-                  <option key={field.id} value={field.id}>
-                    {field.title}
-                  </option>
-                ))}
-              </Select>
-            )}
-          <SelectedOptions selectedOptions={selectedFields} removeOption={removeField} />
+          <SelectMultiple
+            name="fields"
+            label="Campos"
+            itemsName="Campos"
+            control={control}
+            defaultValue={projectFields}
+            limit={5}
+            menuOnTop
+            options={{
+              type: 'rows',
+              data: fields,
+            }}
+          />
         </FormSection>
-
         <FormSection title="Miembros del proyecto" description="Añada algunos colaboradores a su proyecto para llevarlo a cabo.">
-          <Input name="members" label="Miembros" placeholder="Ej: José Pérez o josezz@gmail.com" onInput={handleInputEvent} />
-          <div className={clsx({
-            'mt-3 w-full max-h-60 gap-2 overflow-y-auto': true,
-            block: inputFocus,
-            hidden: !inputFocus,
-          })}
-          >
-            {inputFocus && availablePersons.map(person => {
-              if (searchName === '' || includesValue(person.name, searchName) || includesValue(person.email, searchName)) {
-                return <Member key={person.id} name={person.name} email={person.email} action="Add" onClick={() => { addPerson(person.id) }} />
-              }
-
-              return null
-            })}
-          </div>
-          <SelectedMembers selectedPersons={selectedPersons} removePerson={removePerson} />
+          <SelectMultiple
+            name="memberships"
+            label="Miembros"
+            itemsName="Miembros"
+            control={control}
+            defaultValue={projectMemberships}
+            menuOnTop
+            options={{
+              type: 'rows',
+              data: persons,
+            }}
+          />
         </FormSection>
-
-        <FormButtons url={cancelUrl} />
+        <FormButtons url={cancelRedirect} />
       </form>
     </FormLayout>
   )

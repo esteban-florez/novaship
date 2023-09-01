@@ -1,4 +1,4 @@
-import { nativeEnum, object, string, type z } from 'zod'
+import { array, nativeEnum, object, string, type z } from 'zod'
 import messages from '../messages'
 import { Visibility } from '@prisma/client'
 
@@ -12,4 +12,10 @@ export const schema = object({
     .min(15, messages.min(15))
     .max(255, messages.max(255)),
   visibility: nativeEnum(Visibility, messages.enum),
+  fields: array(string(messages.string)
+    .cuid(messages.cuid), messages.array)
+    .nonempty(messages.nonempty),
+  memberships: array(string(messages.string)
+    .cuid(messages.cuid), messages.array)
+    .nonempty(messages.nonempty),
 })
