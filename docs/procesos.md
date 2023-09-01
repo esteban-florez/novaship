@@ -1,11 +1,11 @@
 # Proyectos
-  ## Registro de un proyecto
+  ## Registro de un proyecto ✔✔
   Se pueden registrar proyectos, el usuario que lo registre se convierte en responsable del proyecto. También puede crear el proyecto desde una cuenta de empresa.
   
-  ## Visiblidad del proyecto
+  ## Visiblidad del proyecto ✔✔
   El responsable puede hacerlo público, para ser descubierto por todos usuarios de la app, o privado, solo para los miembros.
   
-  ## Equipo de trabajo
+  ## Equipo de trabajo ✔✔
   El responsable puede añadir a todos los usuarios que participen en el desarrollo del proyecto. 
   
   ## Captación de nuevos miembros
@@ -17,10 +17,10 @@
   ## Gestión de documentación
   Los miembros del equipo pueden subir distintos archivos para que están disponibles para los demás, y realizar cambios.
   
-  ## Manejo de tareas
+  ## Manejo de tareas ✔✔
   El proyecto puede dividirse en tareas, las cuales tienen distintos participantes y un responsable de tarea, y pueden dividirse en subtareas.
 
-  ## Progreso de tareas
+  ## Progreso de tareas ✔✔
   Se puede marcar el estado del progreso de una tarea y de sus subtareas.
 
   ## Comercialización de proyectos
@@ -72,7 +72,7 @@
   Las empresas podrán rechazar los postulantes según deseen.
 
 # Ofertas de trabajo
-  ## Registro de ofertas
+  ## Registro de ofertas ✔✔
   Las empresas pueden registrar ofertas de trabajo.
   
   ## Visibilidad de ofertas

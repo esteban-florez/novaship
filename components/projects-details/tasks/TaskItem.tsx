@@ -24,7 +24,7 @@ export default function TaskItem({ projectId, task }: Props) {
         {task.subtasks.length === 0
           ? (<p className="text-neutral-600">No hay subtareas registradas por los momentos.</p>)
           : (
-            <ul className="steps steps-vertical lg:steps-horizontal">
+            <ul className="steps steps-vertical gap-x-2 lg:steps-horizontal">
               {task.subtasks.map(subtask => {
                 return (
                   <li

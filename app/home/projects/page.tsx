@@ -36,7 +36,7 @@ export default async function ProjectsPage() {
   })
 
   const availableProjects = projects.filter(project => {
-    return project.personId !== activeUser.id || project.companyId !== activeUser.id
+    return (project.personId ?? project.companyId) !== activeUser.id && project.visibility === 'PUBLIC'
   })
 
   const personalProjects = projects.filter(project => {
