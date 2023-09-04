@@ -28,26 +28,53 @@ async function main() {
       return await next(params)
     }
 
-    // CHECK 3 -> No se puede incluir que omita los registros eliminados por los modelos de lucia
-    // No funciona correctamente al buscar cualquier registro
+    /**
+     * Ignora los registros con deletedAt: Date
+     *
+     * No funciona correctamente cuando la query es personalizada.
+     *
+     * Ej: model.includes({
+     *  relation1: true,
+     *  relation2: {
+     *    includes: {
+     *      relation3: true
+     *    }
+     *  }
+     * })
+     *
+     * Por lo cual hay que añadir manualmente a cada query y cada nivel en ella:
+     * where: {
+     *  deletedAt: null
+     * }
+     */
     // if (params.action === 'findUnique' || params.action === 'findFirst') {
     //   params.action = 'findFirst'
-    //   params.args.where['deletedAt'] = null
-    // }
-
-    // if (params.action === 'findMany') {
     //   if (params.args.where) {
-    //     if (params.args.where.deletedAt == undefined) {
-    //       params.args.where['deletedAt'] = null
-    //     }
+    //     params.args.where['deletedAt'] = null
     //   } else {
     //     params.args['where'] = { deletedAt: null }
     //   }
     // }
 
+    // if (params.action === 'findMany') {
+    //   if (Object.hasOwn(params, 'where')) {
+    //     if (params.args.where.deletedAt == undefined) {
+    //       params.args.where['deletedAt'] = null
+    //     }
+    //   } else {
+    //     if (Object.hasOwn(params, 'where')) {
+    //       params.args['where'] = { deletedAt: null }
+    //     }
+    //   }
+    // }
+
     // if (params.action === 'update') {
     //   params.action = 'updateMany'
-    //   params.args.where['deletedAt'] = null
+    //   if (params.args.where) {
+    //     params.args.where['deletedAt'] = null
+    //   } else {
+    //     params.args['where'] = { deletedAt: null }
+    //   }
     // }
 
     // if (params.action === 'updateMany') {
@@ -58,6 +85,9 @@ async function main() {
     //   }
     // }
 
+    /**
+     * Soft delete
+     */
     if (params.action === 'delete') {
       params.action = 'update'
       params.args.data = { deletedAt: new Date() }
