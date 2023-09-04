@@ -5,7 +5,8 @@ import ProjectDetails from './ProjectDetails'
 import TeamGroup from './TeamGroup'
 import PageNav from './PageNav'
 import { useState } from 'react'
-import Files from './Files'
+// import Files from './Files'
+import TaskItem from './tasks/TaskItem'
 
 interface Props {
   isOwner: boolean
@@ -28,9 +29,6 @@ export default function PageContent({ isOwner, project, persons }: Props) {
 
   return (
     <section className="px-6 py-4">
-      {/* TODO -> arreglar los tamaños y cambiar "Equipo de trabajo" */}
-      {/* La info del usuario podria estar dentro del card (?) */}
-      {/* Equipo de trabajo podria estar dentro del card tambien (?) */}
       <div className="grid grid-cols-7 gap-4">
         <div className="col-span-7">
           <ProjectDetails
@@ -44,15 +42,16 @@ export default function PageContent({ isOwner, project, persons }: Props) {
         <div className="col-span-7 lg:col-span-5">
           {isOwner && <PageNav tab={tab} onTabClick={handleChangeTab} />}
           <div className="card rounded-lg bg-white p-5 shadow-lg">
-            {project.tasks.map((task) => {
-              return (
-                <Files
-                  key={task.id}
-                  title={task.title}
-                  date={task.updatedAt}
-                />
-              )
-            })}
+            {tab === 'Tasks' &&
+              project.tasks.map((task) => {
+                return (
+                  <TaskItem
+                    key={task.id}
+                    projectId={project.id}
+                    task={task}
+                  />
+                )
+              })}
           </div>
         </div>
         <div className="col-span-7 lg:col-span-2">
