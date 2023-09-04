@@ -10,7 +10,7 @@ type Props = React.PropsWithChildren<{
   location: Location['title']
 }>
 
-export default function Offer({
+export default function OfferItem({
   id,
   title,
   categories,

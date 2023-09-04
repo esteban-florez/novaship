@@ -1,6 +1,6 @@
 import ProjectForm from '@/components/projects/ProjectForm'
-import selectable from '@/lib/data-fetching/selectable'
-import { type SelectablePerson, type SelectableSkill } from '@/lib/types'
+import { auth } from '@/lib/auth/pages'
+import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -8,8 +8,21 @@ export const metadata: Metadata = {
 }
 
 export default async function CreateProjectPage() {
-  const fields = await selectable<SelectableSkill>({ model: 'field' })
-  const persons = await selectable<SelectablePerson>({ model: 'person' })
+  const activeUser = await auth.user()
+
+  const fields = await prisma.field.findMany({
+    where: {
+      deletedAt: null,
+    },
+  })
+  const persons = await prisma.person.findMany({
+    where: {
+      id: {
+        not: activeUser.id,
+      },
+      deletedAt: null,
+    },
+  })
 
   return (
     <ProjectForm
@@ -17,6 +30,7 @@ export default async function CreateProjectPage() {
       method="POST"
       fields={fields}
       persons={persons}
+      cancelRedirect="/home/projects"
     />
   )
 }

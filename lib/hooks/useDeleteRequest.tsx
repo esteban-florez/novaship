@@ -11,6 +11,7 @@ export default function useDeleteRequest() {
 
   const handleSubmit = async (event: FormSubmitEvent) => {
     try {
+      event.preventDefault()
       setResult('loading')
       setShowAlert(true)
       setShowErrors(true)

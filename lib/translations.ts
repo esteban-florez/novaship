@@ -15,7 +15,10 @@ export const routes: Rec = {
   admin: 'Administración',
   tasks: 'Tareas',
   task: 'Tarea',
+  subtasks: 'Subtareas',
+  subtask: 'Subtarea',
   update: 'Actualizar',
+  chat: 'Chat',
 }
 
 export const statuses = {
@@ -75,4 +78,13 @@ export const taskStatuses = {
   PROGRESS: 'En progreso',
   REVIEW: 'En revisión',
   DONE: 'Terminada',
+}
+
+export const expirations = {
+  DAYS1: '1 día',
+  DAYS3: '3 días',
+  DAYS5: '5 días',
+  DAYS7: '7 días',
+  DAYS15: '15 días',
+  DAYS31: '31 días',
 }

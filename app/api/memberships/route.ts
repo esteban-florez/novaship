@@ -18,7 +18,7 @@ export async function PUT(request: NextRequest) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.person(request)
+    const user = await auth.user(request)
 
     const validationSchema = object({
       action: nativeEnum(MEMBERSHIPS_ACTIONS, messages.enum),
@@ -28,19 +28,22 @@ export async function PUT(request: NextRequest) {
 
     const appendParsed = validationSchema.parse(data)
 
-    let project = await prisma.project.findFirst({
+    const project = await prisma.project.findFirst({
       where: {
         id: appendParsed.projectId,
-        personId: user.id,
+      },
+      include: {
+        person: true,
+        company: true,
       },
     })
 
-    if (project === null) {
+    if (project === null || ((project.companyId ?? project.personId) !== user.id)) {
       return NextResponse.redirect(url('home/projects'))
     }
 
     if (appendParsed.action === 'ADD') {
-      project = await prisma.project.update({
+      await prisma.project.update({
         where: {
           id: appendParsed.projectId,
         },
@@ -59,7 +62,7 @@ export async function PUT(request: NextRequest) {
     }
 
     if (appendParsed.action === 'REMOVE') {
-      project = await prisma.project.update({
+      await prisma.project.update({
         where: {
           id: appendParsed.projectId,
         },

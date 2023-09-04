@@ -1,11 +1,11 @@
-import { type Membership, type Person } from '@prisma/client'
-import Member from './Member'
-import useSubmit from '@/lib/hooks/useSubmit'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
+import { type Membership, type Person } from '@prisma/client'
+import { schema } from '@/lib/validation/schemas/memberships'
+import { UserMinusIcon } from '@heroicons/react/24/outline'
+import useSubmit from '@/lib/hooks/useSubmit'
 import EmptyContent from '../EmptyContent'
 import Button from '../Button'
-import { UserMinusIcon } from '@heroicons/react/24/outline'
-import { schema } from '@/lib/validation/schemas/memberships'
+import Member from './Member'
 
 interface Props {
   projectId: string

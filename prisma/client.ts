@@ -27,7 +27,9 @@ async function main() {
     if (params.model === 'AuthKey' || params.model === 'AuthSession') {
       return await next(params)
     }
+
     // CHECK 3 -> No se puede incluir que omita los registros eliminados por los modelos de lucia
+    // No funciona correctamente al buscar cualquier registro
     // if (params.action === 'findUnique' || params.action === 'findFirst') {
     //   params.action = 'findFirst'
     //   params.args.where['deletedAt'] = null

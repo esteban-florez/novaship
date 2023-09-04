@@ -1,59 +1,71 @@
-import { type Task, type Membership, type Person, type Project, type Subtask, type Participation, type Field } from '@prisma/client'
+'use client'
+
+import { type ProjectDetailsTab, type OptionPerson, type Projects } from '@/lib/types'
 import ProjectDetails from './ProjectDetails'
 import TeamGroup from './TeamGroup'
-import { type OptionPerson } from '@/lib/types'
-import InfoUser from './InfoUser'
-import Filter from './Filter'
+import PageNav from './PageNav'
+import { useState } from 'react'
+import Files from './Files'
 
 interface Props {
   isOwner: boolean
-  owner: Person
-  project: (Project & {
-    person: Person | null
-    fields: Field[]
-    memberships: Array<Membership & {
-      person: Person
-    }>
-    tasks: Array<Task & {
-      subtasks: Subtask[]
-      participations: Participation[]
-    }>
-  })
+  project: Projects
   persons: OptionPerson[]
 }
 
-export default function PageContent({ isOwner, owner, project, persons }: Props) {
+export default function PageContent({ isOwner, project, persons }: Props) {
+  const [tab, setTab] = useState<ProjectDetailsTab>('Files')
+
+  const handleChangeTab = (tabOption?: ProjectDetailsTab) => {
+    if (tabOption !== null && tabOption !== undefined) setTab(tabOption)
+  }
+
   const projectFields = project.fields.map(field => {
     return field.title
   })
+
+  const projectOwner = project.company ?? project.person
 
   return (
     <section className="px-6 py-4">
       {/* TODO -> arreglar los tamaños y cambiar "Equipo de trabajo" */}
       {/* La info del usuario podria estar dentro del card (?) */}
       {/* Equipo de trabajo podria estar dentro del card tambien (?) */}
-      <div className="grid grid-cols-10 gap-4 ">
-        <div className="col-span-10 lg:col-span-7">
-          <ProjectDetails id={project.id} title={project.title} description={project.description} fields={projectFields} isOwner={isOwner} />
+      <div className="grid grid-cols-7 gap-4">
+        <div className="col-span-7">
+          <ProjectDetails
+            id={project.id}
+            isOwner={isOwner}
+            title={project.title}
+            fields={projectFields}
+            description={project.description}
+          />
         </div>
-        <div className="col-span-10 lg:col-span-3 lg:block">
-          <div className="card mb-4 bg-white p-4 shadow-md lg:self-start">
-            <InfoUser
-              owner={project.person?.name ?? ''}
-              email={project.person?.email ?? ''}
-              description={project.person?.description ?? ''}
-            />
+        <div className="col-span-7 lg:col-span-5">
+          {isOwner && <PageNav tab={tab} onTabClick={handleChangeTab} />}
+          <div className="card rounded-lg bg-white p-5 shadow-lg">
+            {project.tasks.map((task) => {
+              return (
+                <Files
+                  key={task.id}
+                  title={task.title}
+                  date={task.updatedAt}
+                />
+              )
+            })}
           </div>
+        </div>
+        <div className="col-span-7 lg:col-span-2">
           <TeamGroup
-            id={project?.id ?? ''}
+            id={project.id}
+            owner={projectOwner?.name ?? ''}
+            email={projectOwner?.email ?? ''}
+            description={projectOwner?.description ?? ''}
+            isOwner={isOwner}
             memberships={project?.memberships}
-            isOwner={owner.id === project?.personId}
             persons={persons}
           />
         </div>
-      </div>
-      <div className="grid-cols-10 gap-4">
-        {isOwner && <Filter id={project.id} tasks={project.tasks} />}
       </div>
     </section>
   )

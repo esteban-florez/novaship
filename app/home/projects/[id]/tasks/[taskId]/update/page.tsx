@@ -50,7 +50,8 @@ export default async function UpdateTaskPage({ params: { id, taskId } }: Context
 
   return (
     <TaskForm
-      action={`api/tasks/${taskId}`}
+      action={`/api/tasks/${taskId}`}
+      method="PUT"
       task={task}
       projectId={id}
       memberships={members}

@@ -16,10 +16,10 @@ export default function InfoUser({ avatarInfo = false, owner, location, descript
         <div className="mb-5 flex flex-col items-center justify-center">
           <AvatarIcon username={owner} className="mb-2 h-16 w-16 bg-black text-white" />
           <p className="text-lg font-semibold">{owner}</p>
-          <p className="-my-1 text-sm">{location}</p>
+          <p className="-my-1 text-center text-sm">{location}</p>
         </div>}
       <div className="divider mt-0" />
-      <p className="mb-3 line-clamp-4">{description}</p>
+      <p className="mb-3 line-clamp-4 text-base">{description}</p>
       <div className="mb-4 flex flex-col gap-1">
         <div className="flex items-center gap-2">
           <CheckBadgeIcon className="h-6 w-6 text-secondary" />

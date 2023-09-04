@@ -6,33 +6,33 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { url } from '@/lib/utils/url'
 
 export async function POST(request: NextRequest) {
-  // TODO -> Validar que tipo de usuario hace la petición.
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.person(request)
+    const user = await auth.user(request)
+
+    const ids = {
+      companyId: user.type === 'COMPANY' ? user.id : null,
+      personId: user.type === 'PERSON' ? user.id : null,
+    }
 
     await prisma.project.create({
       data: {
         ...parsed,
-        person: {
-          connect: {
-            id: user.id,
-          },
-        },
+        ...ids,
         fields: {
-          connect: data.selectedFields.map((field: { id: string }) => {
+          connect: parsed.fields.map(field => {
             return {
-              id: field.id,
+              id: field,
             }
           }),
         },
         memberships: {
           createMany: {
-            data: data.selectedPersons.map((person: { id: string }) => {
+            data: parsed.memberships.map(person => {
               return {
-                personId: person.id,
+                personId: person,
               }
             }),
           },

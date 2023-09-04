@@ -5,54 +5,77 @@ import prisma from '@/prisma/client'
 import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { redirect } from 'next/navigation'
+import collect from '@/lib/utils/collection'
+interface Context {
+  params: {
+    id: string
+  }
+}
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest, { params: { id } }: Context) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.person(request)
+    const user = await auth.user(request)
 
-    const project = await prisma.project.findUnique({
+    const project = await prisma.project.findFirst({
       where: {
-        id: data.projectId,
+        id,
+        deletedAt: null,
+      },
+      include: {
+        fields: true,
+        memberships: true,
       },
     })
 
-    if (project?.deletedAt !== null || project?.personId !== user.id) {
+    if (project?.deletedAt !== null || ((project.personId ?? project.companyId) !== user.id)) {
       redirect('/home/projects')
     }
 
+    const projectMembers = project.memberships.map(member => {
+      return member.personId
+    })
+
+    const projectFields = project.fields.map(field => {
+      return field.id
+    })
+
+    const members = collect(parsed.memberships).deleteDuplicatesFrom(projectMembers)
+    const fields = collect(parsed.fields).deleteDuplicatesFrom(projectFields)
+
     await prisma.project.update({
       where: {
-        id: data.projectId,
+        id,
       },
       data: {
         ...parsed,
         fields: {
-          disconnect: data.oldFields.map((id: { id: string }) => {
+          deleteMany: {
+            id: {
+              notIn: parsed.fields,
+            },
+          },
+          connect: fields.map(id => {
             return {
               id,
-            }
-          }),
-          connect: data.selectedFields.map((field: { id: string }) => {
-            return {
-              id: field.id,
             }
           }),
         },
         memberships: {
           deleteMany: {
             personId: {
-              in: data.oldPersons.map((id: { id: string }) => id),
+              notIn: parsed.memberships,
             },
           },
           createMany: {
-            data: data.selectedPersons.map((person: { id: string }) => {
+            data: members.map(member => {
               return {
-                personId: person.id,
+                personId: member,
               }
             }),
+            skipDuplicates: true,
           },
         },
       },
@@ -61,12 +84,6 @@ export async function PUT(request: NextRequest) {
     return NextResponse.redirect(url('home/projects'))
   } catch (error) {
     return handleError(error, data)
-  }
-}
-
-interface Context {
-  params: {
-    id: string
   }
 }
 

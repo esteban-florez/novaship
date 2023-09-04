@@ -32,7 +32,7 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
     <div className="relative mb-3 w-full" ref={menuRef}>
       <ChevronDownIcon className="pointer-events-none absolute right-2 top-4 z-30 h-4 w-4" />
       <input
-        className="input relative z-20 w-full border border-neutral-300 text-sm transition-colors focus:outline-none"
+        className="input relative z-20 w-full border border-neutral-300 bg-base-200 text-sm transition-colors focus:outline-none"
         onChange={(e) => { setSearch(e.target.value) }}
         onFocus={() => { setHidden(false) }}
         placeholder="Seleccionar..."
@@ -43,7 +43,7 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
       {!disabled && (
         <ul
           className={clsx(
-            'menu absolute z-10 max-h-40 w-full flex-nowrap overflow-y-auto rounded-md border border-neutral-300 bg-white text-sm scrollbar-thin scrollbar-thumb-neutral-300/75', hidden && 'hidden', menuOnTop && 'bottom-full'
+            'menu absolute z-50 max-h-40 w-full flex-nowrap overflow-y-auto rounded-md border border-neutral-300 bg-white text-sm scrollbar-thin scrollbar-thumb-neutral-300/75', hidden && 'hidden', menuOnTop && 'bottom-full'
           )}
         >
           {filteredOptions.length === 0

@@ -51,6 +51,12 @@ class Collection<T> {
     })
   }
 
+  // Check type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  deleteDuplicatesFrom(arr: any[]) {
+    return this.array.filter(val => !arr.includes(val))
+  }
+
   toOptions() {
     return this.array.map(model => {
       if (typeof model !== 'object' || model === null) {

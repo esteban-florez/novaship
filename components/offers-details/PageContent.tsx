@@ -1,24 +1,32 @@
-'use-client'
-
 import {
   BanknotesIcon,
   ClockIcon,
   HomeModernIcon,
   UserIcon,
 } from '@heroicons/react/24/outline'
-import { type OffersWithRelationships } from '@/lib/types'
 import { modes, targets } from '@/lib/translations'
 import Atributtes from './Atributtes'
 import Details from './Details'
 import InfoUser from './InfoUser'
 import Collapse from '../Collapse'
 import AvatarInfo from './AvatarInfo'
+import { type Company, type Field, type Location, type Offer, type Skill } from '@prisma/client'
 
 interface Props {
-  offer: OffersWithRelationships
+  userId: string
+  offer: Offer & {
+    fields: Field[]
+    location: Location
+    company: Company
+    skills: Skill[]
+  }
 }
 
-export default function PageContent({ offer }: Props) {
+export default function PageContent({ userId, offer }: Props) {
+  const offerFields = offer.fields.map((field) => {
+    return field.title
+  })
+
   const atributtes = [
     {
       title: 'Modalidad',
@@ -44,13 +52,17 @@ export default function PageContent({ offer }: Props) {
 
   return (
     <section className="grid grid-cols-7 gap-4 p-4">
-      <div className="col-span-7 xl:col-span-5">
+      <div className="col-span-7">
         <Details
+          id={offer.id}
+          isOwner={userId === offer.companyId}
           title={offer.title}
           expiresAt={offer.expiresAt}
           description={offer.description}
+          fields={offerFields}
+          updateOffer={offer.id}
         />
-        <div className="mt-4 block xl:hidden">
+        <div className="mt-4 block lg:hidden">
           <Collapse
             title={<AvatarInfo owner={offer.company.name} location={offer.location.title} />}
             bg="bg-white"
@@ -63,27 +75,30 @@ export default function PageContent({ offer }: Props) {
             />
           </Collapse>
         </div>
-        <div className="mt-4 grid grid-cols-2 gap-x-2 gap-y-3">
+      </div>
+      <div className="col-span-7 lg:col-span-4 xl:col-span-5">
+        <div className="grid grid-cols-2 gap-x-2 gap-y-3">
           {atributtes.map((atr) => {
-            const { title, content, icon } = atr
             return (
-              <div className="col-span-2 md:col-span-1" key={title}>
+              <div className="col-span-2 md:col-span-1" key={atr.title}>
                 <Atributtes
-                  title={title}
-                  icon={icon}
+                  title={atr.title}
+                  icon={atr.icon}
                 >
-                  {content}
+                  {atr.content}
                 </Atributtes>
               </div>
             )
           })}
         </div>
-        {/* TODO -> Hacer que muestre las habilidades */}
         <div className="card mt-4 bg-white p-4 shadow-lg">
-          <p>Habilidades</p>
+          <h6 className="text-lg font-bold md:text-xl">Habilidades requeridas</h6>
+          {offer.skills.map(skill => {
+            return <p key={skill.id}>{skill.title}</p>
+          })}
         </div>
       </div>
-      <div className="sticky hidden lg:col-span-2 lg:block">
+      <div className="sticky hidden lg:col-span-3 lg:block xl:col-span-2">
         <div className="card bg-white p-4 shadow-md lg:self-start">
           <InfoUser
             avatarInfo
