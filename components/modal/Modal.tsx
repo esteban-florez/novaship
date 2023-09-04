@@ -3,16 +3,20 @@ import clsx from 'clsx'
 type Props = React.PropsWithChildren<{
   id: string
   icon: React.ReactElement
+  title?: string
   button: string
   onClick?: () => void
 }>
 
 // TEMPORAL -> cambiar los modales por este nuevo
-export default function Modal({ id, icon, button, children }: Props) {
+export default function Modal({ id, icon, title, button, children }: Props) {
   return (
     <>
       <label htmlFor={id} className={clsx(button)}>
-        {icon}
+        <div className="flex items-center">
+          {icon}
+          <p className="ml-1 text-sm">{title}</p>
+        </div>
       </label>
       <input type="checkbox" id={id} className="modal-toggle" />
       <div className="modal p-0">

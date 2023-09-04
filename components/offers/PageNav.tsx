@@ -28,15 +28,22 @@ export default function PageNav({ search, tab, onTabClick, onSearch }: Props) {
 
   return (
     <div className="flex w-full flex-col items-center justify-between px-4 py-5 md:flex-row xl:px-6">
-      {/* No usar 2 componentes exactamente iguales, modificar uno para que sirva para ambos casos */}
-      {/* <div className="hidden gap-x-1 gap-y-4 xl:flex">
+      <div className="hidden gap-2 xl:flex">
         {navChildren.map((children) => {
-          const isActive = children === 'Todos'
           return (
-            <NavButton key={children} isActive={isActive}>{children}</NavButton>
+            <Button
+              key={children.title}
+              style="DEFAULT"
+              color={children.title === tab ? 'PRIMARY' : 'WHITE'}
+              hover={children.title === tab ? 'WHITE' : 'PRIMARY'}
+              onClick={() => { onTabClick(children.title as OffersTab) }}
+            >
+              {children.icon}
+              {children.content}
+            </Button>
           )
         })}
-      </div> */}
+      </div>
       <div className="w-full xl:hidden">
         <Collapse
           title="Categorías"
