@@ -13,8 +13,8 @@
 * Crear mi curriculum mediante una plantilla
 * Registrar mi horario de disponibilidad
 * Marcar (y desmarcar) la opción "En busca de empleo" para ser *Aspirante*
-* Listar las e afiliaciones de pasante enviadas por instituciones
-* Aceptar afiliaciones de pasante enviadas por instituciones para convertirse en *Pasante*.
+* Listar las afiliaciones de pasante que he recibido de instituciones
+* Aceptar afiliaciones de pasante enviadas por instituciones para convertirme en *Pasante*.
 * Listar las de ofertas de trabajo
 * Filtrar entre las ofertas de trabajo según diferentes parámetros (categoría, ubicación, modalidad, horario, entre otros) 
 * Ver una oferta de trabajo
