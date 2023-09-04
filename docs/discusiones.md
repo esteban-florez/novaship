@@ -1,4 +1,4 @@
-# Por conversar
+# Discusiones
 
 - ¿Los proyectos podrían crear ofertas de trabajo? De lo contrario... ¿Como sería la captación de nuevos miembros de proyecto? ¿Cual sería el incentivo para que las personas se unan a un proyecto?
 - R: No crearían ofertas de trabajo, simplemente se unirían o serían invitados al proyecto.
@@ -17,3 +17,16 @@
   - Crean proyectos
   - Pueden ser contratados
   - Tienen un chat
+
+- Las instituciones no hacen mucho realmente en la aplicación. ¿No podríamos eliminar las cuentas institucionales, y más bien hacer que para registrarte como pasante tengas que llenar un formato que nosotros proporcionemos, y subirlo sellado y firmado por la institución en la que estudias? No se si es mejor o más engorroso.
+
+- ¿Como podrían funcionar las pasantías, por si acaso no las quitamos?
+- R: Basicamente todo empieza por la institución que crea la pasantía, con el trabajo, categoría, horas, etc. Y agrega la persona. Luego la persona deberá confirmar que va a realizar la pasantía, y quedará registrada la pasantía para ser descubierta por empresas. Luego pueden pasar dos cosas:
+
+1. Que una empresa quiera reclutar al pasante, para lo cual le manda una solicitud que el pasante deba aceptar, y si este acepta, empieza el proceso de pasantía.
+
+2. Que sea el pasante el que busque una "oferta de pasantes", igualmente mandando una solicitud. Si la empresa acepta, empieza el proceso de pasantía.
+
+La pasantía empieza, la empresa debe ir registrado la cantidad de horas completadas por el pasante. Cuando haya completado todas las horas, finalizará el proceso de pasantías y se marcará como completada. El estudiante y la institución serán notificados de ello.
+
+- ¿Como funcionaría la contratación de equipos en detalle (paso a paso)?
