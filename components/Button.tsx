@@ -12,7 +12,7 @@ const className = {
   colors: {
     PRIMARY: 'bg-primary text-primary-content border-primary',
     SECONDARY: 'bg-secondary text-secondary-content border-secondary',
-    ACCENT: 'bg-action text-accent-content border-accent',
+    ACCENT: 'bg-accent text-accent-content border-accent',
     CANCEL: 'bg-gray-200 text-neutral-600',
     ERROR: 'text-error',
     WHITE: 'bg-white text-neutral-600',
