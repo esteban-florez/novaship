@@ -3,7 +3,7 @@ import AvatarIcon from '../AvatarIcon'
 
 export default function ChatHeader() {
   return (
-    <header className="flex items-center justify-between rounded-t-xl border-b-2 border-white bg-primary px-4 py-2 font-bold">
+    <header className="flex items-center justify-between border-b-2 border-white bg-primary px-4 py-2 font-bold">
       <div className="flex items-center justify-start gap-2">
         <div className="rounded-full">
           <AvatarIcon username="Joseph Monter" className="bg-white text-primary" />

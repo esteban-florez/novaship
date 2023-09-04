@@ -4,7 +4,7 @@ import ChatHeader from './ChatHeader'
 
 export default function CurrentChat() {
   return (
-    <div className="chat-grid hidden flex-col rounded-xl bg-white sm:grid sm:w-full">
+    <div className="chat-grid hidden flex-col bg-white sm:grid sm:w-full md:rounded-l-xl md:rounded-r-none">
       <ChatHeader />
       <div className="h-full overflow-y-scroll px-4 pe-4">
         <Message fromCurrentUser message="This is a test" status="read" />
