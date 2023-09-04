@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, PencilIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
+import { ArrowLeftIcon, PencilIcon } from '@heroicons/react/24/outline'
 import Button from '../Button'
 
 interface Props {
@@ -12,11 +12,7 @@ interface Props {
 export default function ProjectDetails({ id, title, description, fields, isOwner }: Props) {
   return (
     <div className="card rounded-xl bg-white shadow-xl xl:flex-row">
-      <div className="relative flex xl:basis-2/3">
-        <span className="absolute flex items-center gap-1 rounded-br-lg rounded-tl-lg bg-white/80 p-2 shadow-lg">
-          <PlusCircleIcon className="h-6 w-6" />
-          Editar imagen
-        </span>
+      <div className="relative flex xl:basis-2/4">
         <img
           src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           alt="Imagen de fondo carrusel"
@@ -25,11 +21,15 @@ export default function ProjectDetails({ id, title, description, fields, isOwner
         <img src="/onda-vertical.webp" alt="Onda-vertical" className="absolute bottom-0 right-0 hidden h-full xl:block" />
         <img src="/onda-horizontal.webp" alt="Onda-vertical" className="absolute bottom-0 block w-full xl:hidden" />
       </div>
-      <div className="flex flex-col rounded-t-none p-4 xl:rounded-l-none">
+      <div className="flex flex-col justify-center rounded-t-none p-4 xl:rounded-l-none">
         <h3 className="text-xl font-bold sm:text-2xl">{title}</h3>
         <div className="flex flex-wrap gap-2 text-base text-primary">
           {fields.map(field => {
-            return <span key={field} className="badge badge-outline">{field}</span>
+            return (
+              <span key={field} className="-my-1 font-semibold text-primary after:content-[','] last:after:content-[]">
+                {field}
+              </span>
+            )
           })}
         </div>
         <p className="line-clamp-6 py-3">{description}</p>
@@ -48,7 +48,7 @@ export default function ProjectDetails({ id, title, description, fields, isOwner
               <Button
                 url={`/home/projects/${id}/update`}
                 style="DEFAULT"
-                color="PRIMARY"
+                color="ACCENT"
                 hover="WHITE"
               >
                 <PencilIcon className="h-4 w-4" />
@@ -58,7 +58,7 @@ export default function ProjectDetails({ id, title, description, fields, isOwner
             : (
               <Button
                 style="DEFAULT"
-                color="PRIMARY"
+                color="SECONDARY"
                 hover="WHITE"
               >
                 <PencilIcon className="h-4 w-4" />

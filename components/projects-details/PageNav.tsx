@@ -1,48 +1,44 @@
-import { ListBulletIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
-import { type TabProp } from '@/lib/types'
-import Input from '../forms/inputs/Input'
+import { DocumentIcon, PlusIcon, QueueListIcon } from '@heroicons/react/24/outline'
+import { type ProjectDetailsTab } from '@/lib/types'
 import Button from '../Button'
 
 // DRY Filter
 interface Props {
-  active: TabProp
-  onInput?: (event: OnInputEvent | SelectOnInputEvent) => void
-  onTabClick: (tabOption?: TabProp) => void
+  tab: ProjectDetailsTab
+  onTabClick: (tabOption?: ProjectDetailsTab) => void
 }
 
-export default function PageNav({ active, onInput, onTabClick }: Props) {
-  const tabButtons = [
-    {
-      title: 'Todos',
-      icon: <ListBulletIcon className="h-6 w-6" />,
-    },
-    {
-      title: 'Mis proyectos',
-      icon: <StarIcon className="h-6 w-6" />,
-    },
-  ]
+export default function PageNav({ tab, onTabClick }: Props) {
+  const tabButtons = [{
+    title: 'Files',
+    content: 'Archivos',
+    icon: <DocumentIcon className="h-5 w-5" />,
+  },
+  {
+    title: 'Tasks',
+    content: 'Tareas',
+    icon: <QueueListIcon className="h-5 w-5" />,
+  }]
 
   return (
-    <div className="flex w-full columns-1 flex-col items-start justify-between gap-4 py-3 lg:columns-2 lg:flex-row lg:items-center lg:gap-0">
+    <div className="flex w-full columns-1 flex-col items-start justify-between gap-4 pb-3 lg:columns-2 lg:flex-row lg:items-center lg:gap-0">
       <div className="order-2 flex w-full gap-x-2 lg:order-1">
         {tabButtons.map((tabs) => {
-          const { title, icon } = tabs
           return (
             <Button
-              key={title}
-              style="TAB"
-              color={active === `${title}` ? 'PRIMARY' : 'WHITE'}
-              hover={active === `${title}` ? 'PRIMARY' : undefined}
-              onClick={() => { onTabClick('All') }}
+              key={tabs.title}
+              style="DEFAULT"
+              color={tabs.title === tab ? 'PRIMARY' : 'WHITE'}
+              hover={tabs.title === tab ? 'WHITE' : 'PRIMARY'}
+              onClick={() => { onTabClick(tabs.title as ProjectDetailsTab) }}
             >
-              {icon}
-              <p className="text-base">{title}</p>
+              {tabs.icon}
+              {tabs.content}
             </Button>
           )
         })}
       </div>
       <div className="order-1 flex w-full flex-row items-center justify-between gap-3 lg:order-2 lg:place-items-center lg:justify-end xl:w-auto">
-        <Input name="title" placeholder="Buscar..." onInput={onInput} className="my-3 h-10 w-full rounded-md border border-neutral-400 bg-white shadow-inner" />
         <Button
           url="/home/projects/create"
           style="DEFAULT"

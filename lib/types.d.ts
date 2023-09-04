@@ -1,6 +1,10 @@
 import { type UseFormRegisterReturn, type FieldErrors, type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
-import { type Person, type Field, type Skill, type Company, type Institute, type Offer, type Location } from '@prisma/client'
+import {
+  type Person, type Company, type Institute, type Field, type Skill,
+  type Offer, type Location, type Project, type Task, type Participation,
+  type Membership, type Subtask,
+} from '@prisma/client'
 import { type days } from './translations'
 
 type Selectable<T> = T & {
@@ -27,6 +31,19 @@ interface Offers extends Offer {
   fields: Field[]
 }
 
+interface Projects extends Project {
+  company: Company | null
+  person: Person | null
+  fields: Field[]
+  memberships: Array<Membership & {
+    person: Person
+  }>
+  tasks: Array<Task & {
+    subtasks: Subtask[]
+    participations: Participation[]
+  }>
+}
+
 type SharedInputProps = {
   label?: string
   className?: string
@@ -44,7 +61,7 @@ type UseSubmitResult = null | 'loading' | ApiResponseBody
 
 type TabProp = 'All' | 'Mine'
 type TeamGroupTab = 'members' | 'add'
-type ProjectDetailsTab = 'files' | 'tasks'
+type ProjectDetailsTab = 'Files' | 'Tasks'
 type OffersTab = 'All' | 'Mine' | 'Applied'
 
 interface ApiResponseBody {
