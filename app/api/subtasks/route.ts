@@ -27,7 +27,6 @@ export async function POST(request: NextRequest) {
     const task = await prisma.task.findFirst({
       where: {
         id: appendParsed.taskId,
-        deletedAt: null,
       },
       include: {
         project: {

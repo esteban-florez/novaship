@@ -18,9 +18,6 @@ export default async function ProjectsPage() {
   const activeUser = await auth.user()
 
   const projects = await prisma.project.findMany({
-    where: {
-      deletedAt: null,
-    },
     include: {
       person: true,
       company: true,

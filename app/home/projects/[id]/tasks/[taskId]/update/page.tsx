@@ -13,10 +13,7 @@ interface Context {
 
 export default async function UpdateTaskPage({ params: { id, taskId } }: Context) {
   const project = await prisma.project.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
     include: {
       memberships: {
         include: {
@@ -29,10 +26,7 @@ export default async function UpdateTaskPage({ params: { id, taskId } }: Context
   if (project === null) redirect('/home/projects')
 
   const task = await prisma.task.findFirst({
-    where: {
-      id: taskId,
-      deletedAt: null,
-    },
+    where: { id: taskId },
     include: {
       subtasks: true,
       participations: true,

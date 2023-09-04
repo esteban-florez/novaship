@@ -24,7 +24,6 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
     const offer = await prisma.offer.findFirst({
       where: {
         id,
-        deletedAt: null,
       },
       include: {
         fields: true,
@@ -95,7 +94,6 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
     const offer = await prisma.offer.findFirst({
       where: {
         id,
-        deletedAt: null,
       },
     })
 

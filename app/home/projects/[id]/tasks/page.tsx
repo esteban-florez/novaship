@@ -17,10 +17,7 @@ export default async function TasksPage({ params: { id } }: Context) {
   if (id === null) redirect('/home/projects')
 
   const project = await prisma.project.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
     include: {
       person: true,
       memberships: {

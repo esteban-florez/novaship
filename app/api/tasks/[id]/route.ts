@@ -16,7 +16,6 @@ export async function PUT(request: NextRequest) {
     const task = await prisma.task.findFirst({
       where: {
         id: data.taskId,
-        deletedAt: null,
       },
       include: {
         project: {
@@ -27,7 +26,7 @@ export async function PUT(request: NextRequest) {
       },
     })
 
-    if (task?.deletedAt !== null || task.project.personId !== user.id) {
+    if (task === null || task.project.personId !== user.id) {
       redirect('/home/projects')
     }
 

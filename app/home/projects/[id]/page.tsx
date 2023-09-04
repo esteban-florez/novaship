@@ -20,37 +20,20 @@ export default async function ProjectPage({ params: { id } }: Context) {
   }
 
   const project = await prisma.project.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
     include: {
       person: true,
       company: true,
       memberships: {
-        where: {
-          deletedAt: null,
-        },
         include: {
           person: true,
         },
       },
       fields: true,
       tasks: {
-        where: {
-          deletedAt: null,
-        },
         include: {
-          subtasks: {
-            where: {
-              deletedAt: null,
-            },
-          },
-          participations: {
-            where: {
-              deletedAt: null,
-            },
-          },
+          subtasks: true,
+          participations: true,
         },
       },
     },

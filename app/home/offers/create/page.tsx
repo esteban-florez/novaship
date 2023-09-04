@@ -8,28 +8,18 @@ export const metadata: Metadata = {
 
 export default async function CreateOfferPage() {
   const skills = await prisma.skill.findMany({
-    where: {
-      deletedAt: null,
-    },
     orderBy: {
       title: 'asc',
     },
   })
 
   const fields = await prisma.field.findMany({
-    where: {
-      deletedAt: null,
-    },
     orderBy: {
       title: 'asc',
     },
   })
 
-  const locations = await prisma.location.findMany({
-    where: {
-      deletedAt: null,
-    },
-  })
+  const locations = await prisma.location.findMany()
 
   return (
     <OfferForm

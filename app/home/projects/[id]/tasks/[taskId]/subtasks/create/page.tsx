@@ -17,10 +17,7 @@ interface Context {
 // TODO -> cambiar la page por un modal
 export default async function CreateSubtaskPage({ params: { id, taskId } }: Context) {
   const project = await prisma.project.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
   })
 
   if (project === null) redirect('/home/projects')
@@ -28,7 +25,6 @@ export default async function CreateSubtaskPage({ params: { id, taskId } }: Cont
   const task = await prisma.task.findFirst({
     where: {
       id: taskId,
-      deletedAt: null,
     },
   })
 

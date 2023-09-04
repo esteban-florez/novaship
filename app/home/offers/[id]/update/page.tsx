@@ -17,10 +17,7 @@ interface Context {
 export default async function UpdateOfferPage({ params: { id } }: Context) {
   const activeUser = await auth.user()
   const offer = await prisma.offer.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
     include: {
       skills: true,
       fields: true,
@@ -29,27 +26,18 @@ export default async function UpdateOfferPage({ params: { id } }: Context) {
   })
 
   const skills = await prisma.skill.findMany({
-    where: {
-      deletedAt: null,
-    },
     orderBy: {
       title: 'asc',
     },
   })
 
   const fields = await prisma.field.findMany({
-    where: {
-      deletedAt: null,
-    },
     orderBy: {
       title: 'asc',
     },
   })
 
   const locations = await prisma.location.findMany({
-    where: {
-      deletedAt: null,
-    },
     orderBy: {
       title: 'asc',
     },

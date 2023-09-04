@@ -16,10 +16,7 @@ interface Context {
 
 export default async function TaskPage({ params: { id, taskId } }: Context) {
   const project = await prisma.project.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
   })
 
   if (project === null) redirect('/home/projects')
@@ -29,11 +26,7 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
       id: taskId,
     },
     include: {
-      subtasks: {
-        where: {
-          deletedAt: null,
-        },
-      },
+      subtasks: true,
     },
   })
 

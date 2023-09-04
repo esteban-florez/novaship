@@ -29,7 +29,6 @@ export async function PUT(request: NextRequest) {
     const task = await prisma.task.findFirst({
       where: {
         id: appendParsed.taskId,
-        deletedAt: null,
       },
       include: {
         project: {
@@ -91,7 +90,6 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
     const subtask = await prisma.subtask.findFirst({
       where: {
         id,
-        deletedAt: null,
       },
       include: {
         task: {

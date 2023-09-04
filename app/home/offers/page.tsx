@@ -11,9 +11,6 @@ export default async function OffersPage() {
   const activeUser = await auth.user()
 
   const offers = await prisma.offer.findMany({
-    where: {
-      deletedAt: null,
-    },
     include: {
       fields: true,
       company: true,

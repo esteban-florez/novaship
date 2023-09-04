@@ -10,17 +10,12 @@ export const metadata: Metadata = {
 export default async function CreateProjectPage() {
   const activeUser = await auth.user()
 
-  const fields = await prisma.field.findMany({
-    where: {
-      deletedAt: null,
-    },
-  })
+  const fields = await prisma.field.findMany()
   const persons = await prisma.person.findMany({
     where: {
       id: {
         not: activeUser.id,
       },
-      deletedAt: null,
     },
   })
 

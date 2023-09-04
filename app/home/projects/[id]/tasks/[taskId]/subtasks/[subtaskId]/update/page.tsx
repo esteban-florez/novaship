@@ -17,28 +17,19 @@ interface Context {
 
 export default async function UpdateSubtaskPage({ params: { id, taskId, subtaskId } }: Context) {
   const project = await prisma.project.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
   })
 
   if (project === null) redirect('/home/projects')
 
   const task = await prisma.task.findFirst({
-    where: {
-      id: taskId,
-      deletedAt: null,
-    },
+    where: { id: taskId },
   })
 
   if (task === null) redirect(`/home/projects/${id}/tasks`)
 
   const subtask = await prisma.subtask.findFirst({
-    where: {
-      id: subtaskId,
-      deletedAt: null,
-    },
+    where: { id: subtaskId },
   })
 
   if (subtask === null) redirect(`/home/projects/${id}/tasks/${taskId}`)

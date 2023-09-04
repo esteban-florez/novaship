@@ -16,17 +16,11 @@ export default async function ChatsPage({ params: { id } }: Context) {
   }
 
   const project = await prisma.project.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
     include: {
       person: true,
       company: true,
       memberships: {
-        where: {
-          deletedAt: null,
-        },
         include: {
           person: true,
         },

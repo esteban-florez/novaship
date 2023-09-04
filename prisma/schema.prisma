@@ -39,7 +39,7 @@ model Person {
   internships Internship[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  deletedAt   DateTime?
+  // deletedAt   DateTime?
 }
 
 model Company {
@@ -64,7 +64,7 @@ model Company {
   verifiedAt    DateTime?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  deletedAt     DateTime?
+  // deletedAt     DateTime?
 }
 
 model Institute {
@@ -84,7 +84,7 @@ model Institute {
   verifiedAt    DateTime?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  deletedAt     DateTime?
+  // deletedAt     DateTime?
 }
 
 // ----------------------------------------------------------------------
@@ -100,7 +100,7 @@ model Team {
   categories  Category[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  deletedAt   DateTime?
+  // deletedAt   DateTime?
 }
 
 model Membership {
@@ -117,7 +117,7 @@ model Membership {
   messages       Message[]
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
-  deletedAt      DateTime?
+  // deletedAt      DateTime?
 }
 
 model Contract {
@@ -138,29 +138,29 @@ model Contract {
   questions   Question[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  deletedAt   DateTime?
+  // deletedAt   DateTime?
 }
 
 model Feature {
-  id          String    @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
-  description String    @db.Text
-  contract    Contract  @relation(fields: [contractId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  description String   @db.Text
+  contract    Contract @relation(fields: [contractId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   contractId  String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  // deletedAt   DateTime?
 }
 
 model Question {
-  id         String    @id @default(cuid())
-  content    String    @db.Text
-  answer     String?   @db.Text
-  contract   Contract  @relation(fields: [contractId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id         String   @id @default(cuid())
+  content    String   @db.Text
+  answer     String?  @db.Text
+  contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   contractId String
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  deletedAt  DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  // deletedAt  DateTime?
 }
 
 // ----------------------------------------------------------------------
@@ -182,7 +182,7 @@ model Project {
   files       File[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  deletedAt   DateTime?
+  // deletedAt   DateTime?
 }
 
 model Task {
@@ -198,7 +198,7 @@ model Task {
   revisions      Revision[]
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
-  deletedAt      DateTime?
+  // deletedAt      DateTime?
 }
 
 model Subtask {
@@ -211,19 +211,19 @@ model Subtask {
   taskId      String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  deletedAt   DateTime?
+  // deletedAt   DateTime?
 }
 
 model Revision {
-  id        String    @id @default(cuid())
-  content   String    @db.Text
-  task      Task?     @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  task      Task?    @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   taskId    String?
-  subtask   Subtask?  @relation(fields: [subtaskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  subtask   Subtask? @relation(fields: [subtaskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   subtaskId String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // deletedAt DateTime?
 }
 
 model Participation {
@@ -235,7 +235,7 @@ model Participation {
   taskId       String
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
-  deletedAt    DateTime?
+  // deletedAt    DateTime?
 }
 
 model File {
@@ -248,7 +248,7 @@ model File {
   membershipId String
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
-  deletedAt    DateTime?
+  // deletedAt    DateTime?
 }
 
 // ----------------------------------------------------------------------
@@ -275,7 +275,7 @@ model Offer {
   expiresAt   DateTime?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  deletedAt   DateTime?
+  // deletedAt   DateTime?
 }
 
 model Hiring {
@@ -289,19 +289,19 @@ model Hiring {
   interviews Interview[]
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
-  deletedAt  DateTime?
+  // deletedAt  DateTime?
 }
 
 model Interview {
-  id        String    @id @default(cuid())
+  id        String   @id @default(cuid())
   date      DateTime
   link      String
   platform  Platform
-  hiring    Hiring    @relation(fields: [hiringId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  hiring    Hiring   @relation(fields: [hiringId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   hiringId  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // deletedAt DateTime?
 }
 
 // ----------------------------------------------------------------------
@@ -324,7 +324,7 @@ model Internship {
   categories   Category[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
-  deletedAt    DateTime?
+  // deletedAt    DateTime?
 }
 
 model Vacant {
@@ -344,7 +344,7 @@ model Vacant {
   expiresAt    DateTime?
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
-  deletedAt    DateTime?
+  // deletedAt    DateTime?
 }
 
 model Recruitment {
@@ -357,7 +357,7 @@ model Recruitment {
   vacantId     String
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
-  deletedAt    DateTime?
+  // deletedAt    DateTime?
 }
 
 // ----------------------------------------------------------------------
@@ -375,19 +375,19 @@ model Experience {
   jobId       String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime?
+  // deletedAt   DateTime?
 }
 
 model Review {
-  id        String    @id @default(cuid())
-  content   String    @db.Text
-  person    Person    @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  person    Person   @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   personId  String
-  company   Company   @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   companyId String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // deletedAt DateTime?
 }
 
 // ----------------------------------------------------------------------
@@ -404,7 +404,7 @@ model Message {
   taskId       String?
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
-  deletedAt    DateTime?
+  // deletedAt    DateTime?
 }
 
 model Location {
@@ -417,7 +417,7 @@ model Location {
   persons    Person[]
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
-  deletedAt  DateTime?
+  // deletedAt  DateTime?
 }
 
 model Category {
@@ -431,7 +431,7 @@ model Category {
   vacants     Vacant[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  deletedAt   DateTime?
+  // deletedAt   DateTime?
 }
 
 model Job {
@@ -443,7 +443,7 @@ model Job {
   experiences Experience[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  deletedAt   DateTime?
+  // deletedAt   DateTime?
 }
 
 model Grade {
@@ -454,18 +454,18 @@ model Grade {
   vacants     Vacant[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  deletedAt   DateTime?
+  // deletedAt   DateTime?
 }
 
 model Skill {
-  id        String    @id @default(cuid())
-  title     String    @unique
+  id        String   @id @default(cuid())
+  title     String   @unique
   persons   Person[]
   offers    Offer[]
   vacants   Vacant[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // deletedAt DateTime?
 }
 
 // ----------------------------------------------------------------------

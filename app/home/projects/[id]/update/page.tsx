@@ -21,10 +21,7 @@ export default async function UpdateProjectPage({ params: { id } }: Context) {
 
   // DRY 5
   const project = await prisma.project.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
     include: {
       fields: {
         select: {
@@ -53,18 +50,12 @@ export default async function UpdateProjectPage({ params: { id } }: Context) {
   if (((project.personId ?? project.companyId) !== activeUser.id)) redirect('/home/projects')
 
   const fields = await prisma.field.findMany({
-    where: {
-      deletedAt: null,
-    },
     orderBy: {
       title: 'asc',
     },
   })
 
   const memberships = await prisma.person.findMany({
-    where: {
-      deletedAt: null,
-    },
     orderBy: {
       name: 'asc',
     },
