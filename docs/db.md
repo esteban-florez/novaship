@@ -3,6 +3,7 @@ Todas las tablas poseen las siguientes columnas:
   - **id**: String aleatorio que identifica el registro.
   - **createdAt**: Fecha de creación.
   - **updatedAt**: Fecha de actualización.
+  - **deletedAt**: Fecha de eliminación.
 
 ## AuthUser
 Representa el modelo de autenticación. Solo una de las tres relaciones existe, las demás son *"null"*.

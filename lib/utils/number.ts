@@ -1,3 +1,5 @@
+import collect from './collection'
+
 class Numbers<T extends number> {
   number: T[]
   MIN_VALUE = 1
@@ -24,19 +26,16 @@ class Numbers<T extends number> {
   }
 
   /**
-   * Returns a random number between two given digits
-   * @returns number
-   */
-  randomBetween() {
-    return Math.floor(Math.random() * (this.MAX_VALUE - this.MIN_VALUE + 1) + this.MIN_VALUE)
-  }
-
-  /**
    * Returns a random phone number with format (0000) 000 00 00
    * @returns string
    */
-  randomPhone() {
-    return this.randomBetween().toString()
+  phone() {
+    this.MIN_VALUE = 1_000_000
+    this.MAX_VALUE = 9_999_999
+
+    const code = ['0412', '0414', '0416', '0424', '0426']
+    const phone = `${collect(code).random().first()}${this.random()}`
+    return phone.toString()
   }
 
   /**
@@ -44,8 +43,24 @@ class Numbers<T extends number> {
    * Can start from min or have a max value only.
    * @returns string
    */
-  randomCI() {
-    return this.randomBetween().toString()
+  ci() {
+    this.MIN_VALUE = 6_000_000
+    this.MAX_VALUE = 50_000_000
+    return this.random().toString()
+  }
+
+  rif() {
+    this.MIN_VALUE = 1_000_000_000
+    this.MAX_VALUE = 9_999_999_999
+    return this.random().toString()
+  }
+
+  /**
+   * Returns a random number between two given digits
+   * @returns number
+   */
+  random() {
+    return Math.floor(Math.random() * (this.MAX_VALUE - this.MIN_VALUE + 1) + this.MIN_VALUE)
   }
 }
 

@@ -1,18 +1,15 @@
 import lucia from '@/lib/auth/lucia'
 import prisma from '../client'
-import data from '@/prisma/data/institutes.json'
+import institutes from '@/prisma/data/institutes.json'
 import numbers from '@/lib/utils/number'
 import { seederQueries } from '../seed'
-
-const institutes = data
+import collect from '@/lib/utils/collection'
 
 export default async function institute() {
-  const locationCount = await prisma.location.count()
+  const locations = await prisma.location.findMany({ select: { id: true } })
 
-  for (let i = 1; i <= seederQueries.institute; i++) {
-    const skip = numbers(1, locationCount - 1).randomBetween()
-    const selectedLocation = await prisma.location.findFirst({ skip })
-    const position = numbers(institutes.names.length - 1).randomBetween()
+  for (let i = 0; i < seederQueries.institute; i++) {
+    const position = numbers(institutes.names.length - 1).random()
     const name = institutes.names[position]
     const description = institutes.descriptions[position]
     const email = `i${i}@institute.dev`
@@ -31,8 +28,8 @@ export default async function institute() {
         name,
         description,
         email,
-        phone: numbers().randomPhone(),
-        rif: numbers(1_000_000_000, 9_999_999_999).randomBetween().toString(),
+        phone: numbers().phone(),
+        rif: numbers().rif(),
         certification: 'PENDING',
         authUser: {
           connect: {
@@ -40,9 +37,7 @@ export default async function institute() {
           },
         },
         location: {
-          connect: {
-            id: selectedLocation?.id,
-          },
+          connect: collect(locations).random().first(),
         },
       },
     })
