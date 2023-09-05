@@ -1,4 +1,4 @@
-import { DocumentIcon, PlusIcon, QueueListIcon } from '@heroicons/react/24/outline'
+import { DocumentIcon, QueueListIcon } from '@heroicons/react/24/outline'
 import { type ProjectDetailsTab } from '@/lib/types'
 import Button from '../Button'
 
@@ -37,17 +37,6 @@ export default function PageNav({ tab, onTabClick }: Props) {
             </Button>
           )
         })}
-      </div>
-      <div className="order-1 flex w-full flex-row items-center justify-between gap-3 lg:order-2 lg:place-items-center lg:justify-end xl:w-auto">
-        <Button
-          url="/home/projects/create"
-          style="DEFAULT"
-          color="PRIMARY"
-          hover="WHITE"
-        >
-          <PlusIcon className="h-6 w-6" />
-          <p className="text-base">Agregar</p>
-        </Button>
       </div>
     </div>
   )

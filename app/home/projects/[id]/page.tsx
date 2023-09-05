@@ -22,14 +22,16 @@ export default async function ProjectPage({ params: { id } }: Context) {
   const project = await prisma.project.findFirst({
     where: { id },
     include: {
-      person: true,
-      company: true,
-      memberships: {
+      team: {
         include: {
-          person: true,
+          memberships: {
+            include: {
+              person: true,
+            },
+          },
         },
       },
-      fields: true,
+      categories: true,
       tasks: {
         include: {
           subtasks: true,
@@ -43,24 +45,8 @@ export default async function ProjectPage({ params: { id } }: Context) {
     redirect('/home/projects')
   }
 
-  const isOwner = activeUser.id === project.personId || activeUser.id === project.companyId
+  const isOwner = project.team.memberships.find(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)?.isLeader ?? false
+  const isMember = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id)
 
-  // DRY
-  const persons = await prisma.person.findMany({
-    select: {
-      id: true,
-      name: true,
-      email: true,
-    },
-    where: {
-      id: {
-        notIn: project.memberships.map(member => member.person.id),
-      },
-    },
-    orderBy: {
-      name: 'asc',
-    },
-  })
-
-  return <PageContent isOwner={isOwner} project={project} persons={persons} />
+  return <PageContent isOwner={isOwner} isMember={isMember} project={project} />
 }

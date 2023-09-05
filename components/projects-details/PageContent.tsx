@@ -1,6 +1,6 @@
 'use client'
 
-import { type ProjectDetailsTab, type OptionPerson, type Projects } from '@/lib/types'
+import { type ProjectDetailsTab, type Projects } from '@/lib/types'
 import ProjectDetails from './ProjectDetails'
 import TeamGroup from './TeamGroup'
 import PageNav from './PageNav'
@@ -10,22 +10,20 @@ import TaskItem from './tasks/TaskItem'
 
 interface Props {
   isOwner: boolean
+  isMember: boolean
   project: Projects
-  persons: OptionPerson[]
 }
 
-export default function PageContent({ isOwner, project, persons }: Props) {
+export default function PageContent({ isOwner, isMember, project }: Props) {
   const [tab, setTab] = useState<ProjectDetailsTab>('Files')
 
   const handleChangeTab = (tabOption?: ProjectDetailsTab) => {
     if (tabOption !== null && tabOption !== undefined) setTab(tabOption)
   }
 
-  const projectFields = project.fields.map(field => {
-    return field.title
+  const projectCategories = project.categories.map(category => {
+    return category.title
   })
-
-  const projectOwner = project.company ?? project.person
 
   return (
     <section className="px-6 py-4">
@@ -34,13 +32,14 @@ export default function PageContent({ isOwner, project, persons }: Props) {
           <ProjectDetails
             id={project.id}
             isOwner={isOwner}
+            isMember={isMember}
             title={project.title}
-            fields={projectFields}
+            categories={projectCategories}
             description={project.description}
           />
         </div>
         <div className="col-span-7 lg:col-span-5">
-          {isOwner && <PageNav tab={tab} onTabClick={handleChangeTab} />}
+          {(isOwner || isMember) && <PageNav tab={tab} onTabClick={handleChangeTab} />}
           <div className="card rounded-lg bg-white p-5 shadow-lg">
             {tab === 'Tasks' &&
               project.tasks.map((task) => {
@@ -57,12 +56,8 @@ export default function PageContent({ isOwner, project, persons }: Props) {
         <div className="col-span-7 lg:col-span-2">
           <TeamGroup
             id={project.id}
-            owner={projectOwner?.name ?? ''}
-            email={projectOwner?.email ?? ''}
-            description={projectOwner?.description ?? ''}
+            team={project.team}
             isOwner={isOwner}
-            memberships={project?.memberships}
-            persons={persons}
           />
         </div>
       </div>

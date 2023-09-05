@@ -1,11 +1,11 @@
-import { type Membership, type Field, type Person, type Location } from '@prisma/client'
+import { type Membership, type Category, type Person, type Location } from '@prisma/client'
 import AvatarIcon from './AvatarIcon'
 import Button from './Button'
 import clsx from 'clsx'
 
 interface Props {
   title: string
-  categories?: Field[]
+  categories?: Category[]
   description: string
   owner?: string
   location?: Location['title']

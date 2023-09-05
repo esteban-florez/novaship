@@ -7,7 +7,7 @@ import Select from '../forms/inputs/Select'
 import Textarea from '../forms/inputs/Textarea'
 import { schema } from '@/lib/validation/schemas/project'
 import useSubmit from '@/lib/hooks/useSubmit'
-import { Visibility, type Project, type Field, type Person } from '@prisma/client'
+import { Visibility, type Project, type Category, type Team } from '@prisma/client'
 import { visibilities } from '@/lib/translations'
 import FormLayout from '../forms/FormLayout'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
@@ -17,13 +17,13 @@ interface Props {
   cancelRedirect: string
   method: 'POST' | 'PUT'
   action: string
-  fields: Field[]
-  persons: Person[]
+  categories: Category[]
+  teams: Team[]
   project?: Project & {
     person: {
       id: string
     } | null
-    fields: Array<{
+    categories: Array<{
       id: string
       title: string
     }>
@@ -39,12 +39,9 @@ interface Props {
 }
 
 // TODO -> responsive
-export default function ProjectForm({ cancelRedirect, method, action, fields, persons, project }: Props) {
-  const projectFields = project?.fields.map(field => {
-    return field.id
-  })
-  const projectMemberships = project?.memberships.map(member => {
-    return member.person.id
+export default function ProjectForm({ cancelRedirect, method, action, categories, teams, project }: Props) {
+  const projectCategories = project?.categories.map(category => {
+    return category.id
   })
 
   const {
@@ -88,30 +85,29 @@ export default function ProjectForm({ cancelRedirect, method, action, fields, pe
         </FormSection>
         <FormSection title="Campos requeridos" description="Elige los campos necesarios para ser parte del proyecto.">
           <SelectMultiple
-            name="fields"
+            name="categories"
             label="Campos"
             itemsName="Campos"
             control={control}
-            defaultValue={projectFields}
+            defaultValue={projectCategories}
             limit={5}
             menuOnTop
             options={{
               type: 'rows',
-              data: fields,
+              data: categories,
             }}
           />
         </FormSection>
         <FormSection title="Miembros del proyecto" description="Añada algunos colaboradores a su proyecto para llevarlo a cabo.">
-          <SelectMultiple
-            name="memberships"
-            label="Miembros"
-            itemsName="Miembros"
-            control={control}
-            defaultValue={projectMemberships}
-            menuOnTop
+          <Select
+            name="teamId"
+            label="Equipos de trabajo"
+            register={register}
+            errors={errors}
+            defaultValue={project?.teamId ?? undefined}
             options={{
               type: 'rows',
-              data: persons,
+              data: teams,
             }}
           />
         </FormSection>
