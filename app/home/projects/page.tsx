@@ -19,12 +19,28 @@ export default async function ProjectsPage() {
 
   const projects = await prisma.project.findMany({
     include: {
-      categories: true,
+      categories: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
       team: {
         include: {
           memberships: {
             include: {
-              person: true,
+              person: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+              company: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
             },
           },
         },

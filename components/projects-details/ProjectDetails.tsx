@@ -1,5 +1,6 @@
 import { ArrowLeftIcon, PencilIcon } from '@heroicons/react/24/outline'
 import Button from '../Button'
+import DeleteModal from '../projects/DeleteModal'
 
 interface Props {
   id: string
@@ -54,15 +55,23 @@ export default function ProjectDetails({ id, title, description, categories, isO
               ¡Quiero Aplicar!
             </Button>}
           {isOwner &&
-            <Button
-              url={`/home/projects/${id}/update`}
-              style="DEFAULT"
-              color="ACCENT"
-              hover="WHITE"
-            >
-              <PencilIcon className="h-4 w-4" />
-              Actualizar
-            </Button>}
+            (
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Button
+                  url={`/home/projects/${id}/update`}
+                  style="DEFAULT"
+                  color="PRIMARY"
+                  hover="WHITE"
+                >
+                  <PencilIcon className="h-4 w-4" />
+                  Actualizar
+                </Button>
+                <DeleteModal
+                  title={title}
+                  action={`/api/projects/${id}`}
+                />
+              </div>
+            )}
         </div>
       </div>
     </div>

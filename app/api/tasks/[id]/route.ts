@@ -11,7 +11,7 @@ export async function PUT(request: NextRequest) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.person(request)
+    const activeUser = await auth.user(request)
 
     const task = await prisma.task.findFirst({
       where: {
@@ -19,14 +19,36 @@ export async function PUT(request: NextRequest) {
       },
       include: {
         project: {
-          select: {
-            personId: true,
+          include: {
+            team: {
+              include: {
+                memberships: {
+                  include: {
+                    company: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                    person: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
         },
       },
     })
 
-    if (task === null || task.project.personId !== user.id) {
+    // DRY project validation
+    const isOwner = task?.project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader) ?? false
+
+    if (task === null || !isOwner) {
       redirect('/home/projects')
     }
 
@@ -70,7 +92,7 @@ interface Context {
 
 export async function DELETE(request: NextRequest, { params: { id } }: Context) {
   try {
-    const user = await auth.user(request)
+    const activeUser = await auth.user(request)
 
     const task = await prisma.task.findFirst({
       where: {
@@ -79,9 +101,24 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
       include: {
         project: {
           include: {
-            person: {
-              select: {
-                id: true,
+            team: {
+              include: {
+                memberships: {
+                  include: {
+                    company: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                    person: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                  },
+                },
               },
             },
           },
@@ -89,7 +126,12 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
       },
     })
 
-    if ((task?.project.personId ?? task?.project.companyId) !== user.id) redirect('/home/projects')
+    // DRY project validation
+    const isOwner = task?.project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader) ?? false
+
+    if (task === null || !isOwner) {
+      redirect('/home/projects')
+    }
 
     const deletedTask = await prisma.task.delete({
       where: { id },

@@ -7,10 +7,11 @@ import Select from '../forms/inputs/Select'
 import Textarea from '../forms/inputs/Textarea'
 import { schema } from '@/lib/validation/schemas/project'
 import useSubmit from '@/lib/hooks/useSubmit'
-import { Visibility, type Project, type Category, type Team } from '@prisma/client'
+import { Visibility, type Category, type Team } from '@prisma/client'
 import { visibilities } from '@/lib/translations'
 import FormLayout from '../forms/FormLayout'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
+import { type ProjectWithTeamAndCategories } from '@/lib/types'
 
 // DRY 5
 interface Props {
@@ -19,23 +20,7 @@ interface Props {
   action: string
   categories: Category[]
   teams: Team[]
-  project?: Project & {
-    person: {
-      id: string
-    } | null
-    categories: Array<{
-      id: string
-      title: string
-    }>
-    memberships: Array<{
-      id: string
-      person: {
-        id: string
-        name: string
-        email: string
-      }
-    }>
-  }
+  project?: ProjectWithTeamAndCategories
 }
 
 // TODO -> responsive

@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.user(request)
+    const activeUser = await auth.user(request)
 
     const validationSchema = object({
       taskId: string(messages.string)
@@ -30,9 +30,27 @@ export async function POST(request: NextRequest) {
       },
       include: {
         project: {
-          select: {
-            personId: true,
-            companyId: true,
+          include: {
+            team: {
+              include: {
+                memberships: {
+                  include: {
+                    person: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                    company: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
         },
         participations: {
@@ -51,14 +69,20 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    const projectOwner = (task?.project.personId ?? task?.project.companyId) === user.id
+    if (task === null) {
+      redirect(`/home/projects/${appendParsed.projectId}`)
+    }
+
+    const projectOwner = task.project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
 
     const isLeader = task?.participations.find(participation => {
-      const participationMatchUser = participation.membership.personId === user.id
-      return Boolean((participation.isLeader && participationMatchUser) || projectOwner)
+      const memberLeader = (participation.membership.personId ?? participation.membership.companyId) === activeUser.id && participation.isLeader
+      return Boolean(memberLeader || projectOwner)
     })
 
-    if (task === null || (isLeader == null)) redirect(`/home/projects/${appendParsed.projectId}`)
+    if (isLeader == null) {
+      redirect(`/home/projects/${appendParsed.projectId}`)
+    }
 
     await prisma.subtask.create({
       data: {

@@ -11,6 +11,7 @@ import Textarea from '../forms/inputs/Textarea'
 import FormLayout from '../forms/FormLayout'
 import { type Participation, type Task } from '@prisma/client'
 import { type HTTP_METHOD } from 'next/dist/server/web/http'
+import { type ProjectTeam } from '@/lib/types'
 
 interface Props {
   action: string
@@ -19,16 +20,18 @@ interface Props {
   task?: Task & {
     participations: Participation[]
   }
-  memberships: Array<{
-    id: string
-    name: string
-  }>
+  team: ProjectTeam
 }
 
-export default function TaskForm({ action, method, projectId, task, memberships }: Props) {
+// NOTE -> se debe añadir el responsable a la lista de miembros seleccionados
+export default function TaskForm({ action, method, projectId, task, team }: Props) {
   const taskLeader = task?.participations.find(participation => participation.isLeader)?.membershipId ?? undefined
   const selectedMembers = task?.participations.map(participation => participation.membershipId) ?? undefined
   const cancelUrl = `/home/projects/${projectId}`
+
+  const memberships: Array<{ id: string, name: string }> = team.memberships
+    .filter(member => !member.isLeader && member.companyId === null)
+    .map(member => ({ id: member.id, name: member.person?.name ?? member.company?.name ?? '' }))
 
   const {
     register, formState: { errors },
@@ -64,18 +67,6 @@ export default function TaskForm({ action, method, projectId, task, memberships 
             register={register}
             errors={errors}
           />
-          {/* <Select
-            name="status"
-            label="Estado"
-            defaultValue={task?.status ?? undefined}
-            register={register}
-            errors={errors}
-            options={{
-              type: 'enum',
-              data: TaskStatus,
-              translation: taskStatuses
-            }}
-          /> */}
         </FormSection>
         <FormSection title="Participantes" description="Designe a las personas que completerán la tarea.">
           <Select

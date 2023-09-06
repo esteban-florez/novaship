@@ -19,10 +19,24 @@ export default async function TasksPage({ params: { id } }: Context) {
   const project = await prisma.project.findFirst({
     where: { id },
     include: {
-      person: true,
-      memberships: {
+      team: {
         include: {
-          person: true,
+          memberships: {
+            include: {
+              company: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+              person: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
         },
       },
       tasks: {
