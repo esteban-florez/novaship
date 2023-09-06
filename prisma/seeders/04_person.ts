@@ -14,7 +14,7 @@ export default async function person() {
     const fullname = `${name} ${surname}`
     const email = `u${i}@user.dev`
     const skills = await prisma.skill.findMany({ select: { id: true } })
-    const fields = await prisma.field.findMany({ select: { id: true } })
+    const categories = await prisma.category.findMany({ select: { id: true } })
 
     const authUser = await lucia.createUser({
       primaryKey: {
@@ -38,8 +38,8 @@ export default async function person() {
         skills: {
           connect: collect(skills).random(5).all(),
         },
-        fields: {
-          connect: collect(fields).random(5).all(),
+        categories: {
+          connect: collect(categories).random(5).all(),
         },
         authUser: {
           connect: {

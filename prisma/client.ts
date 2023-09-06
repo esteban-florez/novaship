@@ -23,10 +23,10 @@ if (process.env.NODE_ENV !== 'production') {
 
 // TODO -> no se puede añadir un registro si tiene el mismo campo que uno borrado
 // async function main() {
-// prisma.$use(async (params, next) => {
-//   if (params.model === 'AuthKey' || params.model === 'AuthSession') {
-//     return await next(params)
-//   }
+//   prisma.$use(async (params, next) => {
+//     if (params.model === 'AuthKey' || params.model === 'AuthSession' || params.model === 'AuthUser') {
+//       return await next(params)
+//     }
 
 /**
      * Ignora los registros con deletedAt: Date

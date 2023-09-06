@@ -4,7 +4,7 @@ import path from 'path'
 import { pathToFileURL } from 'url'
 
 import dataSkills from '@/prisma/data/skills.json'
-import dataFields from '@/prisma/data/fields.json'
+import dataCategories from '@/prisma/data/categories.json'
 import dataProjects from '@/prisma/data/projects.json'
 import dataTasks from '@/prisma/data/tasks.json'
 import dataSubtasks from '@/prisma/data/subtasks.json'
@@ -16,7 +16,7 @@ export const seederQueries = {
   companies: 20,
   offers: 20,
   skills: dataSkills.length,
-  fields: dataFields.length,
+  categories: dataCategories.length,
   projects: dataProjects.titles.length,
   tasks: dataTasks.titles.length,
   subtasks: dataSubtasks.titles.length,
@@ -87,7 +87,7 @@ seed()
     formatLog({ name: '🟣 Candidacies', value: await prisma.candidacy.count() })
     formatLog({ name: '🟣 Companies', value: await prisma.company.count() })
     formatLog({ name: '🟣 Experiences', value: await prisma.experience.count() })
-    formatLog({ name: '🟣 Fields', value: await prisma.field.count() })
+    formatLog({ name: '🟣 Categories', value: await prisma.category.count() })
     formatLog({ name: '🟣 Institutes', value: await prisma.institute.count() })
     formatLog({ name: '🟣 Internships', value: await prisma.internship.count() })
     formatLog({ name: '🟣 Interviews', value: await prisma.interview.count() })

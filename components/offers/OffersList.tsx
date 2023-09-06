@@ -17,7 +17,7 @@ export default function OffersList({ search, offers }: Props) {
               key={offer.id}
               id={offer.id}
               title={offer.title}
-              categories={offer.fields}
+              categories={offer.categories}
               description={offer.description}
               company={offer.company}
               location={offer.location.title}

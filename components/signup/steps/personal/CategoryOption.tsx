@@ -1,16 +1,16 @@
-import { type SelectableField } from '@/lib/types'
+import { type SelectableCategory } from '@/lib/types'
 import clsx from 'clsx'
 
 type Props = React.PropsWithChildren<{
-  field: SelectableField
-  handleFieldInput: (id: string) => void
+  category: SelectableCategory
+  handleCategoryInput: (id: string) => void
 }>
 
-export default function FieldOption({ handleFieldInput, field: { id, title, selected } }: Props) {
+export default function CategoryOption({ handleCategoryInput, category: { id, title, selected } }: Props) {
   return (
     <button
       type="button"
-      onClick={() => { handleFieldInput(id) }}
+      onClick={() => { handleCategoryInput(id) }}
       className={clsx(
         'rounded-lg border-2 border-primary p-4 transition-colors',
         selected && 'bg-primary text-white'

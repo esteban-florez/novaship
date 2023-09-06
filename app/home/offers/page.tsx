@@ -12,7 +12,7 @@ export default async function OffersPage() {
 
   const offers = await prisma.offer.findMany({
     include: {
-      fields: true,
+      categories: true,
       company: true,
       location: true,
     },

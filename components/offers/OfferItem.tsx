@@ -1,10 +1,10 @@
-import { type Location, type Field, type Company } from '@prisma/client'
+import { type Location, type Category, type Company } from '@prisma/client'
 import Card from '../Card'
 
 type Props = React.PropsWithChildren<{
   id: string
   title: string
-  categories: Field[]
+  categories: Category[]
   description: string
   company: Company
   location: Location['title']

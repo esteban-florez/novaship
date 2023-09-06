@@ -13,7 +13,7 @@ export default async function CreateOfferPage() {
     },
   })
 
-  const fields = await prisma.field.findMany({
+  const categories = await prisma.category.findMany({
     orderBy: {
       title: 'asc',
     },
@@ -23,7 +23,7 @@ export default async function CreateOfferPage() {
 
   return (
     <OfferForm
-      fields={fields}
+      categories={categories}
       skills={skills}
       locations={locations}
       method="POST"

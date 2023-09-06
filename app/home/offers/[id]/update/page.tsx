@@ -20,7 +20,7 @@ export default async function UpdateOfferPage({ params: { id } }: Context) {
     where: { id },
     include: {
       skills: true,
-      fields: true,
+      categories: true,
       company: true,
     },
   })
@@ -31,7 +31,7 @@ export default async function UpdateOfferPage({ params: { id } }: Context) {
     },
   })
 
-  const fields = await prisma.field.findMany({
+  const categories = await prisma.category.findMany({
     orderBy: {
       title: 'asc',
     },
@@ -49,7 +49,7 @@ export default async function UpdateOfferPage({ params: { id } }: Context) {
     <OfferForm
       action={`/api/offers/${id}`}
       method="PUT"
-      fields={fields}
+      categories={categories}
       skills={skills}
       locations={locations}
       offer={offer}

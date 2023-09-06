@@ -2,20 +2,19 @@ import {
   BanknotesIcon,
   ClockIcon,
   HomeModernIcon,
-  UserIcon,
 } from '@heroicons/react/24/outline'
-import { modes, targets } from '@/lib/translations'
+import { modes } from '@/lib/translations'
 import Atributtes from './Atributtes'
 import Details from './Details'
 import InfoUser from './InfoUser'
 import Collapse from '../Collapse'
 import AvatarInfo from './AvatarInfo'
-import { type Company, type Field, type Location, type Offer, type Skill } from '@prisma/client'
+import { type Company, type Category, type Location, type Offer, type Skill } from '@prisma/client'
 
 interface Props {
   userId: string
   offer: Offer & {
-    fields: Field[]
+    categories: Category[]
     location: Location
     company: Company
     skills: Skill[]
@@ -23,8 +22,8 @@ interface Props {
 }
 
 export default function PageContent({ userId, offer }: Props) {
-  const offerFields = offer.fields.map((field) => {
-    return field.title
+  const offerCategories = offer.categories.map((category) => {
+    return category.title
   })
 
   const atributtes = [
@@ -37,11 +36,6 @@ export default function PageContent({ userId, offer }: Props) {
       title: 'Salario',
       content: [offer.salary, ' $'],
       icon: <BanknotesIcon className="h-12 w-12 text-primary" />,
-    },
-    {
-      title: 'Interés',
-      content: targets[offer.target],
-      icon: <UserIcon className="h-12 w-12 text-primary" />,
     },
     {
       title: 'Horas',
@@ -59,7 +53,7 @@ export default function PageContent({ userId, offer }: Props) {
           title={offer.title}
           expiresAt={offer.expiresAt}
           description={offer.description}
-          fields={offerFields}
+          categories={offerCategories}
           updateOffer={offer.id}
         />
         <div className="mt-4 block lg:hidden">

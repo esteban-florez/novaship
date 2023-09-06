@@ -1,7 +1,7 @@
 import { type UseFormRegisterReturn, type FieldErrors, type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
 import {
-  type Person, type Company, type Institute, type Field, type Skill,
+  type Person, type Company, type Institute, type Category, type Skill,
   type Offer, type Location, type Project, type Task, type Participation,
   type Membership, type Subtask,
 } from '@prisma/client'
@@ -12,13 +12,13 @@ type Selectable<T> = T & {
 }
 
 type OptionSkill = Pick<Skill, 'id' | 'title'>
-type OptionField = Pick<Field, 'id' | 'title'>
+type OptionCategory = Pick<Category, 'id' | 'title'>
 type OptionPerson = Pick<Person, 'id' | 'name' | 'email'>
 
-type SelectableField = Selectable<OptionField>
+type SelectableCategory = Selectable<OptionCategory>
 type SelectableSkill = Selectable<OptionSkill>
 type SelectablePerson = Selectable<OptionPerson>
-type SelectableOption = OptionField | OptionSkill | OptionPerson
+type SelectableOption = OptionCategory | OptionSkill | OptionPerson
 
 type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE' | 'GHOST'
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
@@ -28,13 +28,13 @@ type VisibilityFilter = 'PRIVATE' | 'PUBLIC' | 'ALL'
 interface Offers extends Offer {
   company: Company
   location: Location
-  fields: Field[]
+  categories: Category[]
 }
 
 interface Projects extends Project {
   company: Company | null
   person: Person | null
-  fields: Field[]
+  categories: Category[]
   memberships: Array<Membership & {
     person: Person
   }>
@@ -79,7 +79,7 @@ type Schedule = Record<keyof typeof days, number[]>
 type OffersWithRelationships = Offer & {
   company: Company
   location: Location
-  fields: Field[]
+  categories: Category[]
 }
 
 type UserWithType = (Person & { type: 'PERSON' })

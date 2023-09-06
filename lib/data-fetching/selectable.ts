@@ -2,7 +2,7 @@ import prisma from '@/prisma/client'
 import collect from '../utils/collection'
 
 interface Props {
-  model: 'field' | 'skill' | 'person'
+  model: 'category' | 'skill' | 'person'
   excluded?: Array<{ id: string }>
   order?: 'asc' | 'desc'
 }
@@ -14,8 +14,8 @@ export default async function selectable<T>({ excluded, model, order = 'asc' }: 
   let data
   const excludedIds = excluded?.map(model => model.id)
 
-  if (model === 'field') {
-    const fields = await prisma.field.findMany({
+  if (model === 'category') {
+    const categories = await prisma.category.findMany({
       where: {
         id: {
           notIn: excludedIds,
@@ -30,7 +30,7 @@ export default async function selectable<T>({ excluded, model, order = 'asc' }: 
       },
     })
 
-    data = fields
+    data = categories
   }
 
   if (model === 'skill') {

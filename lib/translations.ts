@@ -63,11 +63,6 @@ export const modes = {
   HYBRID: 'Semi-presencial',
 } as const
 
-export const targets = {
-  INTERNS: 'Pasantes',
-  CANDIDATS: 'Postulantes',
-} as const
-
 export const actions = {
   update: 'Actualizar',
   create: 'Registrar',

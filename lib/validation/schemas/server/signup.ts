@@ -27,7 +27,7 @@ export const basic = object({
 
 export const person = personBase.merge(
   object({
-    fields: preprocess(elementsPreprocess, defaults.ids.nonempty(messages.nonempty)),
+    categories: preprocess(elementsPreprocess, defaults.ids.nonempty(messages.nonempty)),
     skills: preprocess(elementsPreprocess, defaults.ids.nonempty(messages.nonempty)),
   })
 ).omit(omittedKeys)

@@ -9,22 +9,22 @@ import { schema as nonPersonSchema } from '@/lib/validation/schemas/signup/non-p
 import { SignUpContext } from './SignUpContext'
 import clsx from 'clsx'
 import UserType from './steps/personal/UserType'
-import { type OptionSkill, type SelectableField } from '@/lib/types'
+import { type OptionSkill, type SelectableCategory } from '@/lib/types'
 import collect from '@/lib/utils/collection'
 
 type Props = React.PropsWithChildren <{
-  fields: SelectableField[]
+  categories: SelectableCategory[]
   skills: OptionSkill[]
   locations: Location[]
 }>
 
-export default function SignUpForm({ fields: fieldsData, skills, locations }: Props) {
+export default function SignUpForm({ categories: categoriesData, skills, locations }: Props) {
   // TODO -> corregir los textos de este formulario
-  const [fields, setFields] = useState(fieldsData)
+  const [categories, setCategories] = useState(categoriesData)
   const [userType, setUserType] = useState<UserTypeEnum | null>(null)
   const [step, setStep] = useState<number>(0)
 
-  const selectedFields = fields.filter(field => field.selected)
+  const selectedCategories = categories.filter(category => category.selected)
   const schema = userType === 'PERSON' ? personSchema : nonPersonSchema
   const {
     register, formState: { errors }, alert, control,
@@ -32,7 +32,7 @@ export default function SignUpForm({ fields: fieldsData, skills, locations }: Pr
   } = useSubmit({
     append: {
       userType,
-      fields: collect(selectedFields).ids(),
+      categories: collect(selectedCategories).ids(),
     },
     schema,
     asFormData: true,
@@ -55,9 +55,9 @@ export default function SignUpForm({ fields: fieldsData, skills, locations }: Pr
     goNext,
     trigger,
     reset,
-    fields,
-    selectedFields,
-    setFields,
+    categories,
+    selectedCategories,
+    setCategories,
     skills,
     control,
     clearErrors,

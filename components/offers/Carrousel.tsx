@@ -28,7 +28,7 @@ export default function Carrousel({ offers }: Props) {
             <Content
               id={offer.id}
               title={offer.title}
-              categories={offer.fields}
+              categories={offer.categories}
               description={offer.description}
               owner={offer.company.name}
               location={offer.location.title}

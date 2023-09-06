@@ -8,14 +8,14 @@ import numbers from '@/lib/utils/number'
 const projects = data
 
 export default async function project() {
-  const fieldsCount = await prisma.field.count()
+  const categoriesCount = await prisma.category.count()
   const personsCount = await prisma.person.count()
 
   for (let i = 1; i <= seederQueries.projects; i++) {
-    const skipFields = numbers(1, fieldsCount - 1).randomBetween()
+    const skipCategories = numbers(1, categoriesCount - 1).randomBetween()
     const skipPersons = numbers(1, personsCount - 1).randomBetween()
     const selectedPerson = await prisma.person.findFirst({ skip: skipPersons })
-    const selectedField = await prisma.field.findFirst({ skip: skipFields })
+    const selectedCategory = await prisma.category.findFirst({ skip: skipCategories })
 
     await prisma.project.create({
       data: {
@@ -27,9 +27,9 @@ export default async function project() {
             id: selectedPerson?.id,
           },
         },
-        fields: {
+        categories: {
           connect: {
-            id: selectedField?.id,
+            id: selectedCategory?.id,
           },
         },
       },
