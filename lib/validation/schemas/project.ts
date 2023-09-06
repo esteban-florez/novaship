@@ -12,10 +12,9 @@ export const schema = object({
     .min(15, messages.min(15))
     .max(255, messages.max(255)),
   visibility: nativeEnum(Visibility, messages.enum),
-  fields: array(string(messages.string)
+  categories: array(string(messages.string)
     .cuid(messages.cuid), messages.array)
     .nonempty(messages.nonempty),
-  memberships: array(string(messages.string)
-    .cuid(messages.cuid), messages.array)
-    .nonempty(messages.nonempty),
+  teamId: string(messages.string)
+    .cuid(messages.cuid),
 })

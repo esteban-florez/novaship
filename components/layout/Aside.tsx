@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
+import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, ShieldCheckIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import AsideLink from './AsideLink'
 
 const SIDEBAR_LINKS = [
@@ -25,6 +25,11 @@ const SIDEBAR_LINKS = [
     href: '/home/projects',
     title: 'Proyectos',
     icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
+  },
+  {
+    href: '/home/teams',
+    title: 'Equipos',
+    icon: <UserGroupIcon className="h-6 w-6" />,
   },
   {
     href: '/home/admin',

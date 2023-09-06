@@ -1,7 +1,5 @@
 import prisma from '../client'
-import data from '@/prisma/data/skills.json'
-
-const skills = data
+import skills from '@/prisma/data/skills.json'
 
 export default async function skill() {
   await prisma.skill.createMany({

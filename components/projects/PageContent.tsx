@@ -3,15 +3,17 @@
 import PageNav from './PageNav'
 import { useState } from 'react'
 import { type TabProp, type VisibilityFilter } from '@/lib/types'
-import { type Membership, type Person, type Project } from '@prisma/client'
+import { type Team, type Membership, type Person, type Project, type Category } from '@prisma/client'
 import ProjectsCard from './ProjectsCard'
 
 // DRY 18
 type Projects = Array<Project & {
-  person: Person | null
-  memberships: Array<Membership & {
-    person: Person
-  }>
+  team: Team & {
+    memberships: Array<Membership & {
+      person: Person | null
+    }>
+  }
+  categories: Category[]
 }>
 
 type Props = React.PropsWithChildren<{

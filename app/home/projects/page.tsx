@@ -19,11 +19,14 @@ export default async function ProjectsPage() {
 
   const projects = await prisma.project.findMany({
     include: {
-      person: true,
-      company: true,
-      memberships: {
+      categories: true,
+      team: {
         include: {
-          person: true,
+          memberships: {
+            include: {
+              person: true,
+            },
+          },
         },
       },
     },
@@ -33,11 +36,15 @@ export default async function ProjectsPage() {
   })
 
   const availableProjects = projects.filter(project => {
-    return (project.personId ?? project.companyId) !== activeUser.id && project.visibility === 'PUBLIC'
+    return project.team.memberships.filter(member => {
+      return (member.companyId ?? member.personId) !== activeUser.id && project.visibility === 'PUBLIC'
+    }).length > 0
   })
 
   const personalProjects = projects.filter(project => {
-    return project.personId === activeUser.id || project.companyId === activeUser.id
+    return project.team.memberships.filter(member => {
+      return (member.companyId ?? member.personId) === activeUser.id
+    }).length > 0
   })
 
   return <PageContent projects={availableProjects} personalProjects={personalProjects} />

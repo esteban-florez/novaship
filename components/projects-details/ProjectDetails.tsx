@@ -5,11 +5,12 @@ interface Props {
   id: string
   title: string
   description: string
-  fields: string[]
+  categories: string[]
   isOwner: boolean
+  isMember: boolean
 }
 
-export default function ProjectDetails({ id, title, description, fields, isOwner }: Props) {
+export default function ProjectDetails({ id, title, description, categories, isOwner, isMember }: Props) {
   return (
     <div className="card rounded-xl bg-white shadow-xl xl:flex-row">
       <div className="relative flex xl:basis-2/4">
@@ -24,10 +25,10 @@ export default function ProjectDetails({ id, title, description, fields, isOwner
       <div className="flex flex-col justify-center rounded-t-none p-4 xl:rounded-l-none">
         <h3 className="text-xl font-bold sm:text-2xl">{title}</h3>
         <div className="flex flex-wrap gap-2 text-base text-primary">
-          {fields.map(field => {
+          {categories.map(category => {
             return (
-              <span key={field} className="-my-1 font-semibold text-primary after:content-[','] last:after:content-[]">
-                {field}
+              <span key={category} className="-my-1 font-semibold text-primary after:content-[','] last:after:content-[]">
+                {category}
               </span>
             )
           })}
@@ -43,28 +44,25 @@ export default function ProjectDetails({ id, title, description, fields, isOwner
             <ArrowLeftIcon className="h-4 w-4" />
             Volver al listado
           </Button>
-          {isOwner
-            ? (
-              <Button
-                url={`/home/projects/${id}/update`}
-                style="DEFAULT"
-                color="ACCENT"
-                hover="WHITE"
-              >
-                <PencilIcon className="h-4 w-4" />
-                Actualizar
-              </Button>
-              )
-            : (
-              <Button
-                style="DEFAULT"
-                color="SECONDARY"
-                hover="WHITE"
-              >
-                <PencilIcon className="h-4 w-4" />
-                ¡Quiero Aplicar!
-              </Button>
-              )}
+          {!isMember && !isOwner &&
+            <Button
+              style="DEFAULT"
+              color="SECONDARY"
+              hover="WHITE"
+            >
+              <PencilIcon className="h-4 w-4" />
+              ¡Quiero Aplicar!
+            </Button>}
+          {isOwner &&
+            <Button
+              url={`/home/projects/${id}/update`}
+              style="DEFAULT"
+              color="ACCENT"
+              hover="WHITE"
+            >
+              <PencilIcon className="h-4 w-4" />
+              Actualizar
+            </Button>}
         </div>
       </div>
     </div>
