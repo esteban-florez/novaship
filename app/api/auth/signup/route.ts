@@ -53,6 +53,9 @@ export async function POST(request: NextRequest) {
           categories: {
             connect: (parsed as PersonData).categories.map(categories => ({ id: categories })),
           },
+          jobs: {
+            connect: (parsed as PersonData).jobs.map(job => ({ id: job })),
+          },
         },
       })
     } else if (userType === 'COMPANY') {

@@ -11,6 +11,7 @@ type Props = React.PropsWithChildren<{
   label: string
   control: Control
   itemsName: string
+  disabled?: boolean
   limit?: number
   menuOnTop?: boolean
   defaultValue?: string[]
@@ -18,7 +19,7 @@ type Props = React.PropsWithChildren<{
 }>
 
 export default function SelectMultiple({
-  name: initialName, options: optionsData, label, itemsName, control,
+  name: initialName, options: optionsData, label, itemsName, control, disabled = false,
   menuOnTop = false, defaultValue = [], config = {}, limit = Infinity,
 }: Props) {
   config.required ??= true
@@ -68,7 +69,7 @@ export default function SelectMultiple({
         options={available}
         menuOnTop={menuOnTop}
         addOption={addOption}
-        disabled={selected.length >= limit}
+        disabled={selected.length >= limit || disabled}
       />
       <InputError message={error?.message} />
       {selected.length > 0 && (
@@ -78,7 +79,7 @@ export default function SelectMultiple({
           onRemove={removeOption}
         />
       )}
-      <select id={field.name} {...field} hidden multiple>
+      <select id={field.name} {...field} hidden multiple disabled={disabled}>
         {options?.map(({ value, label }) => (
           <option key={value} value={value}>{label}</option>
         ))}

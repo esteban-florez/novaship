@@ -9,7 +9,7 @@ import { UserType } from '@prisma/client'
 
 const base = clientBase.merge(
   object({
-    image: defaults.server.image.nullable(),
+    image: defaults.server.image.optional(),
   })
 )
 
@@ -20,7 +20,7 @@ const personBase = clientPerson.merge(base)
 const omittedKeys = { email: true, password: true } as const
 
 export const basic = object({
-  email: defaults.email.refine(uniqueEmail),
+  email: defaults.email.refine(uniqueEmail, 'Este correo ya posee una cuenta.'),
   password: defaults.password,
   userType: nativeEnum(UserType, messages.enum),
 })
@@ -29,6 +29,7 @@ export const person = personBase.merge(
   object({
     categories: preprocess(elementsPreprocess, defaults.ids.nonempty(messages.nonempty)),
     skills: preprocess(elementsPreprocess, defaults.ids.nonempty(messages.nonempty)),
+    jobs: preprocess(elementsPreprocess, defaults.ids),
   })
 ).omit(omittedKeys)
 

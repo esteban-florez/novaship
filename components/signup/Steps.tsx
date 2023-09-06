@@ -5,6 +5,7 @@ import Categories from './steps/personal/Categories'
 import RifStep from './steps/shared/RifStep'
 import BasicData from './steps/shared/BasicData'
 import Skills from './steps/personal/Skills'
+import Jobs from './steps/personal/Jobs'
 
 type Props = React.PropsWithChildren<{
   step: number
@@ -19,13 +20,15 @@ export default function Steps({
   const isPerson = userType === 'PERSON'
   const stepTwo = isPerson ? <Categories /> : <RifStep />
   const stepThree = isPerson ? <Skills /> : <PhotoProfile />
-  const stepFour = isPerson ? <PhotoProfile /> : null
+  const stepFour = isPerson ? <Jobs /> : null
+  const stepFive = isPerson ? <PhotoProfile /> : null
 
   const steps = [
     <BasicData key={0} userType={userType} locations={locations} />,
     stepTwo,
     stepThree,
     stepFour,
+    stepFive,
   ] as const
 
   return (

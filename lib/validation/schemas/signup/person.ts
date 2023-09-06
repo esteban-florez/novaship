@@ -2,7 +2,7 @@ import { defaults } from '../defaults'
 import { base } from './base'
 import messages from '../../messages'
 import { numeric } from '../../refinements'
-import { object, string } from 'zod'
+import { object, string, enum as zodEnum } from 'zod'
 
 export const schema = base.merge(
   object({
@@ -13,5 +13,10 @@ export const schema = base.merge(
       .refine(numeric, messages.numeric),
     skills: defaults.ids
       .nonempty(messages.nonempty),
+    employable: zodEnum(['true', 'false'], {
+      invalid_type_error: 'La opción seleccionada es inválida.',
+      required_error: 'Este campo es obligatorio.',
+    }).transform(str => str === 'true'),
+    jobs: defaults.ids,
   })
 )

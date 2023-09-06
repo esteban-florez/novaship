@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { type Location, type UserType as UserTypeEnum } from '@prisma/client'
+import { type Job, type Location, type UserType as UserTypeEnum } from '@prisma/client'
 import Steps from './Steps'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { schema as personSchema } from '@/lib/validation/schemas/signup/person'
@@ -16,9 +16,10 @@ type Props = React.PropsWithChildren <{
   categories: SelectableCategory[]
   skills: OptionSkill[]
   locations: Location[]
+  jobs: Job[]
 }>
 
-export default function SignUpForm({ categories: categoriesData, skills, locations }: Props) {
+export default function SignUpForm({ categories: categoriesData, skills, locations, jobs }: Props) {
   // TODO -> corregir los textos de este formulario
   const [categories, setCategories] = useState(categoriesData)
   const [userType, setUserType] = useState<UserTypeEnum | null>(null)
@@ -27,7 +28,7 @@ export default function SignUpForm({ categories: categoriesData, skills, locatio
   const selectedCategories = categories.filter(category => category.selected)
   const schema = userType === 'PERSON' ? personSchema : nonPersonSchema
   const {
-    register, formState: { errors }, alert, control,
+    register, formState: { errors }, alert, control, setValue,
     clearErrors, reset, trigger, serverErrors, handleSubmit,
   } = useSubmit({
     append: {
@@ -39,7 +40,7 @@ export default function SignUpForm({ categories: categoriesData, skills, locatio
   })
 
   function goNext() {
-    if (step >= 4) return
+    if (step >= 5) return
     setStep(step + 1)
   }
 
@@ -59,8 +60,10 @@ export default function SignUpForm({ categories: categoriesData, skills, locatio
     selectedCategories,
     setCategories,
     skills,
+    jobs,
     control,
     clearErrors,
+    setValue,
   }
 
   return (

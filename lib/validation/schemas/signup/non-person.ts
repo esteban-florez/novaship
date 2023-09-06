@@ -9,8 +9,6 @@ export const schema = base.merge(
     rif: string(messages.string)
       .min(10, messages.min(10))
       .refine(numeric, messages.numeric),
-    locationId: string(messages.string)
-      .cuid(messages.cuid),
     certification: defaults.client.requiredImage,
   })
 )

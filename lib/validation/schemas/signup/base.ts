@@ -13,6 +13,8 @@ export const base = object({
     .length(11, {
       message: 'Debe tener 11 dígitos.',
     }).refine(numeric, messages.numeric),
+  locationId: string(messages.string)
+    .cuid(messages.cuid),
   description: string(messages.string)
     .min(50, messages.min(50))
     .max(255, messages.max(255)),
