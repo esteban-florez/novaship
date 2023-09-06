@@ -5,7 +5,7 @@ import { auth } from '@/lib/auth/pages'
 import PageContent from '@/components/projects-details/PageContent'
 
 export const metadata: Metadata = {
-  title: 'Detalles de Proyecto',
+  title: 'Detalles de proyecto',
 }
 
 interface Context {
@@ -45,7 +45,7 @@ export default async function ProjectPage({ params: { id } }: Context) {
     redirect('/home/projects')
   }
 
-  const isOwner = project.team.memberships.find(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)?.isLeader ?? false
+  const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
   const isMember = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id)
 
   return <PageContent isOwner={isOwner} isMember={isMember} project={project} />

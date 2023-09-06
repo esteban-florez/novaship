@@ -1,7 +1,8 @@
-import { type Membership, type Category, type Person, type Location } from '@prisma/client'
+import { type Category, type Location } from '@prisma/client'
 import AvatarIcon from './AvatarIcon'
 import Button from './Button'
 import clsx from 'clsx'
+import { type ProjectMemberships } from '@/lib/types'
 
 interface Props {
   title: string
@@ -9,16 +10,13 @@ interface Props {
   description: string
   owner?: string
   location?: Location['title']
-  status?: string
-  members?: Array<Membership & {
-    person: Person | null
-  }>
+  members?: ProjectMemberships
   link?: string
 }
 
 const stackOrder = ['z-40', 'z-30', 'z-20']
 
-export default function Card({ title, categories, description, owner, location, status, members, link }: Props) {
+export default function Card({ title, categories, description, owner, location, members, link }: Props) {
   return (
     <>
       <div className="relative">
@@ -33,7 +31,10 @@ export default function Card({ title, categories, description, owner, location, 
           <ul className="-mt-1 line-clamp-2 flex flex-row flex-wrap font-semibold text-primary">
             {categories?.map(category => {
               return (
-                <li className="me-1 cursor-pointer text-sm after:text-neutral-800 after:content-[','] last:after:content-[] hover:text-primary/40" key={category.id}>
+                <li
+                  key={category.id}
+                  className="me-1 cursor-pointer text-sm after:text-neutral-800 after:content-[','] last:after:content-[] hover:text-primary/40"
+                >
                   {category.title}
                 </li>
               )
@@ -46,7 +47,7 @@ export default function Card({ title, categories, description, owner, location, 
               <div className="flex shrink-0 flex-row items-center justify-start -space-x-3">
                 {members.map((member, i) => {
                   if (i <= 2) {
-                    return <AvatarIcon key={member.id} username={member.person?.name ?? ''} className={clsx('h-10 w-10 border-2 border-white bg-black text-white', stackOrder[i])} />
+                    return <AvatarIcon key={member.id} username={member.company?.name ?? member.person?.name ?? ''} className={clsx('h-10 w-10 border-2 border-white bg-black text-white', stackOrder[i])} />
                   } return null
                 })}
                 {members.length > 3 &&

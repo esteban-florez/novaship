@@ -18,11 +18,25 @@ export default async function ChatsPage({ params: { id } }: Context) {
   const project = await prisma.project.findFirst({
     where: { id },
     include: {
-      person: true,
-      company: true,
-      memberships: {
+      team: {
         include: {
-          person: true,
+          memberships: {
+            include: {
+              company: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+              person: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+              messages: true,
+            },
+          },
         },
       },
     },
@@ -32,12 +46,17 @@ export default async function ChatsPage({ params: { id } }: Context) {
     redirect('/home/projects')
   }
 
-  const isOwner = activeUser.id === project.personId || activeUser.id === project.companyId
+  const isMember = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id)
 
+  if (!isMember) {
+    redirect('/home/projects')
+  }
+
+  // TODO -> re-estilar el chat
   return (
     <section className="chat-height flex w-full px-8 pb-8 pt-6">
       <CurrentChat />
-      <ChatsBar isOwner={isOwner} project={project} />
+      <ChatsBar project={project} />
     </section>
   )
 }

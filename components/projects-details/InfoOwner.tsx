@@ -22,8 +22,8 @@ export default function InfoOwner({ name, description }: Props) {
         color="SECONDARY"
         hover="WHITE"
       >
-        <p className="text-black">Ver equipo</p>
-        <ArrowRightIcon className="h-4 w-4 text-black" />
+        Ver equipo
+        <ArrowRightIcon className="h-4 w-4" />
       </Button>
     </>
   )

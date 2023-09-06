@@ -1,18 +1,9 @@
-import { type Team, type Membership, type Person, type Project, type Category } from '@prisma/client'
-import { type VisibilityFilter } from '@/lib/types'
+import { type ProjectWithTeamAndCategories, type VisibilityFilter } from '@/lib/types'
 import EmptyContent from '../EmptyContent'
 import Card from '../Card'
 
 interface Props {
-  // DRY 18
-  projects: Array<Project & {
-    team: Team & {
-      memberships: Array<Membership & {
-        person: Person | null
-      }>
-    }
-    categories: Category[]
-  }>
+  projects: ProjectWithTeamAndCategories[]
   visibility: VisibilityFilter
   members: number
   title: string

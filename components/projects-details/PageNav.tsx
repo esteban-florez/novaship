@@ -1,4 +1,4 @@
-import { DocumentIcon, QueueListIcon } from '@heroicons/react/24/outline'
+import { /* DocumentIcon, */ QueueListIcon } from '@heroicons/react/24/outline'
 import { type ProjectDetailsTab } from '@/lib/types'
 import Button from '../Button'
 
@@ -9,16 +9,18 @@ interface Props {
 }
 
 export default function PageNav({ tab, onTabClick }: Props) {
-  const tabButtons = [{
-    title: 'Files',
-    content: 'Archivos',
-    icon: <DocumentIcon className="h-5 w-5" />,
-  },
-  {
-    title: 'Tasks',
-    content: 'Tareas',
-    icon: <QueueListIcon className="h-5 w-5" />,
-  }]
+  const tabButtons = [
+    // {
+    //   title: 'Files',
+    //   content: 'Archivos',
+    //   icon: <DocumentIcon className="h-5 w-5" />,
+    // },
+    {
+      title: 'Tasks',
+      content: 'Tareas',
+      icon: <QueueListIcon className="h-5 w-5" />,
+    },
+  ]
 
   return (
     <div className="flex w-full columns-1 flex-col items-start justify-between gap-4 pb-3 lg:columns-2 lg:flex-row lg:items-center lg:gap-0">

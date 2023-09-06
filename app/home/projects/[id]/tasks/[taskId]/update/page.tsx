@@ -1,4 +1,5 @@
 import TaskForm from '@/components/tasks/TaskForm'
+import { auth } from '@/lib/auth/pages'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
@@ -12,12 +13,29 @@ interface Context {
 }
 
 export default async function UpdateTaskPage({ params: { id, taskId } }: Context) {
-  const project = await prisma.project.findFirst({
+  const activeUser = await auth.user()
+
+  const project = await prisma.project.findUnique({
     where: { id },
     include: {
-      memberships: {
+      team: {
         include: {
-          person: true,
+          memberships: {
+            include: {
+              company: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+              person: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
         },
       },
     },
@@ -28,19 +46,22 @@ export default async function UpdateTaskPage({ params: { id, taskId } }: Context
   const task = await prisma.task.findFirst({
     where: { id: taskId },
     include: {
-      subtasks: true,
       participations: true,
     },
   })
 
   if (task === null) redirect(`/home/projects/${id}`)
 
-  const members = project.memberships.map(member => {
-    return {
-      id: member.id,
-      name: member.person.name,
-    }
-  })
+  // DRY project validation
+  if (project === null) {
+    redirect('/home/projects')
+  }
+
+  const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
+
+  if (!isOwner) {
+    redirect(`/home/projects/${id}`)
+  }
 
   return (
     <TaskForm
@@ -48,7 +69,7 @@ export default async function UpdateTaskPage({ params: { id, taskId } }: Context
       method="PUT"
       task={task}
       projectId={id}
-      memberships={members}
+      team={project.team}
     />
   )
 }

@@ -18,23 +18,40 @@ export default async function CrateTaskPage({ params: { id } }: Context) {
   const project = await prisma.project.findUnique({
     where: { id },
     include: {
-      memberships: {
+      team: {
         include: {
-          person: true,
+          memberships: {
+            include: {
+              company: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+              person: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
         },
       },
     },
   })
 
   // Todo -> add redirect alert.
-  if (project === null || ((project.personId ?? project.companyId) !== activeUser.id)) redirect('/home/projects')
+  // DRY project validation
+  if (project === null) {
+    redirect('/home/projects')
+  }
 
-  const members = project.memberships.map(member => {
-    return {
-      id: member.id,
-      name: member.person.name,
-    }
-  })
+  const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
 
-  return <TaskForm action="/api/tasks" method="POST" projectId={id} memberships={members} />
+  if (!isOwner) {
+    redirect(`/home/projects/${id}`)
+  }
+
+  return <TaskForm action="/api/tasks" method="POST" projectId={id} team={project.team} />
 }

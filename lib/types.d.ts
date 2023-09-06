@@ -31,6 +31,91 @@ interface Offers extends Offer {
   categories: Category[]
 }
 
+// ----------------------------------------------------------------------
+// --------------------------- Projects ---------------------------------
+// ----------------------------------------------------------------------
+type ProjectMemberships = Array<Membership & {
+  person: {
+    id: string
+    name: string
+  } | null
+  company: {
+    id: string
+    name: string
+  } | null
+}>
+
+type ProjectTeam = Team & {
+  memberships: Array<Membership & {
+    person: {
+      id: string
+      name: string
+    } | null
+    company: {
+      id: string
+      name: string
+    } | null
+  }>
+}
+
+interface ProjectWithTeamAndCategories extends Project {
+  team: Team & {
+    memberships: Array<Membership & {
+      person: {
+        id: string
+        name: string
+      } | null
+      company: {
+        id: string
+        name: string
+      } | null
+    }>
+  }
+  categories: Array<{
+    id: string
+    title: string
+  }>
+}
+
+interface ProjectsWithTeamCategoriesTaskAndSubtask extends Project {
+  team: Team & {
+    memberships: Array<Membership & {
+      person: {
+        id: string
+        name: string
+      } | null
+      company: {
+        id: string
+        name: string
+      } | null
+    }>
+  }
+  categories: Array<{
+    id: string
+    title: string
+  }>
+  tasks: Array<Task & {
+    subtasks: Subtask[]
+    participations: Participation[]
+  }>
+}
+
+interface ProjectsWithTeamAndMessages extends Project {
+  team: Team & {
+    memberships: Array<Membership & {
+      person: {
+        id: string
+        name: string
+      } | null
+      company: {
+        id: string
+        name: string
+      } | null
+      messages: Message[]
+    }>
+  }
+}
+
 interface Projects extends Project {
   team: Team & {
     memberships: Array<Membership & {

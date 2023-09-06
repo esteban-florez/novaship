@@ -23,22 +23,28 @@ export default async function UpdateProjectPage({ params: { id } }: Context) {
   const project = await prisma.project.findFirst({
     where: { id },
     include: {
-      fields: {
+      categories: {
         select: {
           id: true,
           title: true,
         },
       },
-      person: true,
-      company: true,
-      memberships: {
-        select: {
-          id: true,
-          person: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
+      team: {
+        include: {
+          memberships: {
+            include: {
+              person: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+              company: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
             },
           },
         },
@@ -46,18 +52,35 @@ export default async function UpdateProjectPage({ params: { id } }: Context) {
     },
   })
 
-  if (project === null) redirect('/home/projects')
-  if (((project.personId ?? project.companyId) !== activeUser.id)) redirect('/home/projects')
+  // DRY project validation
+  if (project === null) {
+    redirect('/home/projects')
+  }
+  const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
 
-  const fields = await prisma.field.findMany({
+  if (!isOwner) {
+    redirect('/home/projects')
+  }
+
+  const categories = await prisma.category.findMany({
     orderBy: {
       title: 'asc',
     },
   })
 
-  const memberships = await prisma.person.findMany({
-    orderBy: {
-      name: 'asc',
+  const teams = await prisma.team.findMany({
+    where: {
+      memberships: {
+        some: {
+          OR: [
+            { companyId: activeUser.id },
+            { personId: activeUser.id },
+          ],
+        },
+      },
+    },
+    include: {
+      memberships: true,
     },
   })
 
@@ -65,8 +88,8 @@ export default async function UpdateProjectPage({ params: { id } }: Context) {
     <ProjectForm
       method="PUT"
       action={`/api/projects/${id}`}
-      fields={fields}
-      persons={memberships}
+      categories={categories}
+      teams={teams}
       project={project}
       cancelRedirect={`/home/projects/${id}`}
     />
