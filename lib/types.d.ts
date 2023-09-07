@@ -34,17 +34,6 @@ interface Offers extends Offer {
 // ----------------------------------------------------------------------
 // --------------------------- Projects ---------------------------------
 // ----------------------------------------------------------------------
-type ProjectMemberships = Array<Membership & {
-  person: {
-    id: string
-    name: string
-  } | null
-  company: {
-    id: string
-    name: string
-  } | null
-}>
-
 type ProjectTeam = Team & {
   memberships: Array<Membership & {
     person: {

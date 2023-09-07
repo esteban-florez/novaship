@@ -34,6 +34,8 @@ export const schema = object({
     .nonempty(messages.nonempty),
   locationId: string(messages.string)
     .cuid(messages.cuid),
+  jobId: string(messages.string)
+    .cuid(messages.cuid),
   expiresAt: nativeEnum(EXPIRATION_DATES, messages.enum),
   mode: nativeEnum(Mode, messages.enum),
   schedule: nativeEnum(Schedule, messages.enum),

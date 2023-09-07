@@ -21,11 +21,18 @@ export default async function CreateOfferPage() {
 
   const locations = await prisma.location.findMany()
 
+  const jobs = await prisma.job.findMany({
+    orderBy: {
+      title: 'asc',
+    },
+  })
+
   return (
     <OfferForm
       categories={categories}
       skills={skills}
       locations={locations}
+      jobs={jobs}
       method="POST"
       action="/api/offers"
     />

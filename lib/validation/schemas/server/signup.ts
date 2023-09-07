@@ -20,7 +20,7 @@ const personBase = clientPerson.merge(base)
 const omittedKeys = { email: true, password: true } as const
 
 export const basic = object({
-  email: defaults.email.refine(uniqueEmail, 'Este correo ya posee una cuenta.'),
+  email: defaults.email.refine(uniqueEmail, 'Ya existe una cuenta con este correo.'),
   password: defaults.password,
   userType: nativeEnum(UserType, messages.enum),
 })

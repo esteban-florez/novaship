@@ -1,8 +1,7 @@
-import { type Category, type Location } from '@prisma/client'
+import { type Membership, type Category, type Location, type Person } from '@prisma/client'
 import AvatarIcon from './AvatarIcon'
 import Button from './Button'
 import clsx from 'clsx'
-import { type ProjectMemberships } from '@/lib/types'
 
 interface Props {
   title: string
@@ -10,7 +9,9 @@ interface Props {
   description: string
   owner?: string
   location?: Location['title']
-  members?: ProjectMemberships
+  members?: Array<Membership & {
+    person: Person | null
+  }>
   link?: string
 }
 
@@ -47,7 +48,7 @@ export default function Card({ title, categories, description, owner, location, 
               <div className="flex shrink-0 flex-row items-center justify-start -space-x-3">
                 {members.map((member, i) => {
                   if (i <= 2) {
-                    return <AvatarIcon key={member.id} username={member.company?.name ?? member.person?.name ?? ''} className={clsx('h-10 w-10 border-2 border-white bg-black text-white', stackOrder[i])} />
+                    return <AvatarIcon key={member.id} username={member.person?.name ?? ''} className={clsx('h-10 w-10 border-2 border-white bg-black text-white', stackOrder[i])} />
                   } return null
                 })}
                 {members.length > 3 &&

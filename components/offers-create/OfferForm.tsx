@@ -6,7 +6,7 @@ import Select from '@/components/forms/inputs/Select'
 import Textarea from '@/components/forms/inputs/Textarea'
 import FormLayout from '../forms/FormLayout'
 import FormButtons from '../forms/FormButtons'
-import { type Category, type Location, Mode, Schedule, type Skill, type Offer, type Company } from '@prisma/client'
+import { type Category, type Location, Mode, Schedule, type Skill, type Offer, type Company, type Job } from '@prisma/client'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { type HTTP_METHOD } from 'next/dist/server/web/http'
 import { schema } from '@/lib/validation/schemas/offer'
@@ -18,6 +18,7 @@ type Props = React.PropsWithChildren<{
   skills: Skill[]
   categories: Category[]
   locations: Location[]
+  jobs: Job[]
   action: string
   method: HTTP_METHOD
   offer?: (Offer & {
@@ -29,7 +30,7 @@ type Props = React.PropsWithChildren<{
 
 // CHECK -> este componente pesa 177KB | 55KB zipped
 // PENDING -> schedule field.
-export default function OfferForm({ offer, skills, categories, locations, action, method }: Props) {
+export default function OfferForm({ offer, skills, categories, jobs, locations, action, method }: Props) {
   const offerSkills = offer?.skills.map(skill => {
     return skill.id
   })
@@ -104,13 +105,24 @@ export default function OfferForm({ offer, skills, categories, locations, action
               data: locations,
             }}
           />
+          <Select
+            name="jobId"
+            label="Puesto de trabajo"
+            register={register}
+            errors={errors}
+            defaultValue={offer?.jobId ?? undefined}
+            options={{
+              type: 'rows',
+              data: jobs,
+            }}
+          />
         </FormSection>
-        <FormSection title="Destrezas requeridas" description="Seleccione las habilidades y campos necesarios para desempeñar el trabajo.">
+        <FormSection title="Destrezas requeridas" description="Selecciona las habilidades necesarias para desempeñar el trabajo. Selecciona también las categorías">
           <SelectMultiple
             name="categories"
-            label="Campos"
+            label="Categorías laborales"
             control={control}
-            itemsName="Campos"
+            itemsName="Categorías"
             limit={6}
             menuOnTop
             defaultValue={offerCategories ?? undefined}
