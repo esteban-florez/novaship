@@ -5,7 +5,7 @@ import { auth } from '@/lib/auth/pages'
 import PageContent from '@/components/projects-details/PageContent'
 
 export const metadata: Metadata = {
-  title: 'Detalles de Proyecto',
+  title: 'Detalles de proyecto',
 }
 
 interface Context {
@@ -20,37 +20,22 @@ export default async function ProjectPage({ params: { id } }: Context) {
   }
 
   const project = await prisma.project.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
     include: {
-      person: true,
-      company: true,
-      memberships: {
-        where: {
-          deletedAt: null,
-        },
+      team: {
         include: {
-          person: true,
+          memberships: {
+            include: {
+              person: true,
+            },
+          },
         },
       },
-      fields: true,
+      categories: true,
       tasks: {
-        where: {
-          deletedAt: null,
-        },
         include: {
-          subtasks: {
-            where: {
-              deletedAt: null,
-            },
-          },
-          participations: {
-            where: {
-              deletedAt: null,
-            },
-          },
+          subtasks: true,
+          participations: true,
         },
       },
     },
@@ -60,24 +45,8 @@ export default async function ProjectPage({ params: { id } }: Context) {
     redirect('/home/projects')
   }
 
-  const isOwner = activeUser.id === project.personId || activeUser.id === project.companyId
+  const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
+  const isMember = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id)
 
-  // DRY
-  const persons = await prisma.person.findMany({
-    select: {
-      id: true,
-      name: true,
-      email: true,
-    },
-    where: {
-      id: {
-        notIn: project.memberships.map(member => member.person.id),
-      },
-    },
-    orderBy: {
-      name: 'asc',
-    },
-  })
-
-  return <PageContent isOwner={isOwner} project={project} persons={persons} />
+  return <PageContent isOwner={isOwner} isMember={isMember} project={project} />
 }

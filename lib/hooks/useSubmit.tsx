@@ -48,6 +48,8 @@ export default function useSubmit<Fields extends FieldValues>({
         const formData = new FormData()
 
         Object.entries(requestData).forEach(([key, value]) => {
+          if (value === null) return
+
           formData.append(key, value)
         })
 

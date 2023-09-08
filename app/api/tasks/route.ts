@@ -7,13 +7,14 @@ import { object, string } from 'zod'
 import messages from '@/lib/validation/messages'
 import { auth } from '@/lib/auth/api'
 import { redirect } from 'next/navigation'
+import collect from '@/lib/utils/collection'
 
 export async function POST(request: NextRequest) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.user(request)
+    const activeUser = await auth.user(request)
 
     const validationSchema = object({
       projectId: string(messages.string)
@@ -25,9 +26,25 @@ export async function POST(request: NextRequest) {
 
     const project = await prisma.project.findFirst({
       where: { id: appendParsed.projectId },
+      include: {
+        team: {
+          include: {
+            memberships: {
+              where: {
+                OR: [
+                  { companyId: activeUser.id },
+                  { personId: activeUser.id },
+                ],
+              },
+            },
+          },
+        },
+      },
     })
 
-    if (project === null || ((project.companyId ?? project.personId) !== user.id)) redirect(backUrl)
+    if (project === null || collect(project?.team.memberships ?? []).first() === null) {
+      redirect(backUrl)
+    }
 
     await prisma.task.create({
       data: {

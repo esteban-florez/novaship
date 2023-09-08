@@ -16,13 +16,10 @@ export default async function OfferPage({ params: { id } }: Context) {
   const activeUser = await auth.user()
 
   const offer = await prisma.offer.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
     include: {
       company: true,
-      fields: true,
+      categories: true,
       skills: true,
       location: true,
     },

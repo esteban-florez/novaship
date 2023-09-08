@@ -50,8 +50,11 @@ export async function POST(request: NextRequest) {
           skills: {
             connect: (parsed as PersonData).skills.map(skill => ({ id: skill })),
           },
-          fields: {
-            connect: (parsed as PersonData).fields.map(fields => ({ id: fields })),
+          categories: {
+            connect: (parsed as PersonData).categories.map(categories => ({ id: categories })),
+          },
+          jobs: {
+            connect: (parsed as PersonData).jobs.map(job => ({ id: job })),
           },
         },
       })

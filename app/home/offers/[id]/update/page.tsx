@@ -17,39 +17,27 @@ interface Context {
 export default async function UpdateOfferPage({ params: { id } }: Context) {
   const activeUser = await auth.user()
   const offer = await prisma.offer.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
     include: {
       skills: true,
-      fields: true,
+      categories: true,
       company: true,
     },
   })
 
   const skills = await prisma.skill.findMany({
-    where: {
-      deletedAt: null,
-    },
     orderBy: {
       title: 'asc',
     },
   })
 
-  const fields = await prisma.field.findMany({
-    where: {
-      deletedAt: null,
-    },
+  const categories = await prisma.category.findMany({
     orderBy: {
       title: 'asc',
     },
   })
 
   const locations = await prisma.location.findMany({
-    where: {
-      deletedAt: null,
-    },
     orderBy: {
       title: 'asc',
     },
@@ -61,7 +49,7 @@ export default async function UpdateOfferPage({ params: { id } }: Context) {
     <OfferForm
       action={`/api/offers/${id}`}
       method="PUT"
-      fields={fields}
+      categories={categories}
       skills={skills}
       locations={locations}
       offer={offer}

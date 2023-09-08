@@ -6,36 +6,37 @@ import Select from '@/components/forms/inputs/Select'
 import Textarea from '@/components/forms/inputs/Textarea'
 import FormLayout from '../forms/FormLayout'
 import FormButtons from '../forms/FormButtons'
-import { type Field, type Location, Mode, Schedule, type Skill, Target, type Offer, type Company } from '@prisma/client'
+import { type Category, type Location, Mode, Schedule, type Skill, type Offer, type Company, type Job } from '@prisma/client'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { type HTTP_METHOD } from 'next/dist/server/web/http'
 import { schema } from '@/lib/validation/schemas/offer'
-import { expirations, modes, schedules, targets } from '@/lib/translations'
+import { expirations, modes, schedules } from '@/lib/translations'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
 import { EXPIRATION_DATES } from '@/lib/validation/expiration-dates'
 
 type Props = React.PropsWithChildren<{
   skills: Skill[]
-  fields: Field[]
+  categories: Category[]
   locations: Location[]
+  jobs: Job[]
   action: string
   method: HTTP_METHOD
   offer?: (Offer & {
     company: Company
     skills: Skill[]
-    fields: Field[]
+    categories: Category[]
   })
 }>
 
 // CHECK -> este componente pesa 177KB | 55KB zipped
 // PENDING -> schedule field.
-export default function OfferForm({ offer, skills, fields, locations, action, method }: Props) {
+export default function OfferForm({ offer, skills, categories, jobs, locations, action, method }: Props) {
   const offerSkills = offer?.skills.map(skill => {
     return skill.id
   })
 
-  const offerFields = offer?.fields.map(field => {
-    return field.id
+  const offerCategories = offer?.categories.map(category => {
+    return category.id
   })
 
   const {
@@ -104,19 +105,30 @@ export default function OfferForm({ offer, skills, fields, locations, action, me
               data: locations,
             }}
           />
-        </FormSection>
-        <FormSection title="Destrezas requeridas" description="Seleccione las habilidades y campos necesarios para desempeñar el trabajo.">
-          <SelectMultiple
-            name="fields"
-            label="Campos"
-            control={control}
-            itemsName="Campos"
-            limit={6}
-            menuOnTop
-            defaultValue={offerFields ?? undefined}
+          <Select
+            name="jobId"
+            label="Puesto de trabajo"
+            register={register}
+            errors={errors}
+            defaultValue={offer?.jobId ?? undefined}
             options={{
               type: 'rows',
-              data: fields,
+              data: jobs,
+            }}
+          />
+        </FormSection>
+        <FormSection title="Destrezas requeridas" description="Selecciona las habilidades necesarias para desempeñar el trabajo. Selecciona también las categorías">
+          <SelectMultiple
+            name="categories"
+            label="Categorías laborales"
+            control={control}
+            itemsName="Categorías"
+            limit={6}
+            menuOnTop
+            defaultValue={offerCategories ?? undefined}
+            options={{
+              type: 'rows',
+              data: categories,
             }}
           />
           <SelectMultiple
@@ -171,19 +183,8 @@ export default function OfferForm({ offer, skills, fields, locations, action, me
             }}
           />
         </FormSection>
-        <FormSection title="Alcance de la oferta" description="Decide si la oferta tiene como objetivo a estudiantes en pasantías, o por el contrario, solo para aspirantes que no estén realizando pasantías.">
-          <Select
-            name="target"
-            label="Visibilidad"
-            register={register}
-            errors={errors}
-            defaultValue={offer?.target ?? undefined}
-            options={{
-              type: 'enum',
-              data: Target,
-              translation: targets,
-            }}
-          />
+        <FormSection title="Limites de la oferta" description="Decide el número máximo de aspirantes que pueden postularse a la oferta, así como su fecha de expiración.">
+          {/* TODO -> añadir límite de aspirantes simultáneos */}
           <Select
             name="expiresAt"
             label="Fecha de expiración"

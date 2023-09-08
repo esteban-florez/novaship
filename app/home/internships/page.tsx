@@ -11,9 +11,6 @@ export const metadata: Metadata = {
 // TEMPORAL -> disabled
 export default async function IntenshipsPage() {
   const interships = await prisma.internship.findMany({
-    where: {
-      deletedAt: null,
-    },
     // include: {
 
     //   // person: {

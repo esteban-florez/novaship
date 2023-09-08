@@ -17,33 +17,51 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.user(request)
+    const activeUser = await auth.user(request)
 
     const project = await prisma.project.findFirst({
       where: {
         id,
-        deletedAt: null,
       },
       include: {
-        fields: true,
-        memberships: true,
+        categories: true,
+        team: {
+          include: {
+            memberships: {
+              include: {
+                company: {
+                  select: {
+                    id: true,
+                  },
+                },
+                person: {
+                  select: {
+                    id: true,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     })
 
-    if (project?.deletedAt !== null || ((project.personId ?? project.companyId) !== user.id)) {
+    // DRY project validation
+    if (project === null) {
       redirect('/home/projects')
     }
 
-    const projectMembers = project.memberships.map(member => {
-      return member.personId
+    const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
+
+    if (!isOwner) {
+      redirect('/home/projects')
+    }
+
+    const projectCategories = project.categories.map(category => {
+      return category.id
     })
 
-    const projectFields = project.fields.map(field => {
-      return field.id
-    })
-
-    const members = collect(parsed.memberships).deleteDuplicatesFrom(projectMembers)
-    const fields = collect(parsed.fields).deleteDuplicatesFrom(projectFields)
+    const categories = collect(parsed.categories).deleteDuplicatesFrom(projectCategories)
 
     await prisma.project.update({
       where: {
@@ -51,32 +69,17 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
       },
       data: {
         ...parsed,
-        fields: {
+        categories: {
           deleteMany: {
             id: {
-              notIn: parsed.fields,
+              notIn: parsed.categories,
             },
           },
-          connect: fields.map(id => {
+          connect: categories.map(id => {
             return {
               id,
             }
           }),
-        },
-        memberships: {
-          deleteMany: {
-            personId: {
-              notIn: parsed.memberships,
-            },
-          },
-          createMany: {
-            data: members.map(member => {
-              return {
-                personId: member,
-              }
-            }),
-            skipDuplicates: true,
-          },
         },
       },
     })
@@ -89,9 +92,46 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
 
 export async function DELETE(request: NextRequest, { params: { id } }: Context) {
   try {
-    await auth.person(request)
+    const activeUser = await auth.user(request)
 
-    const project = await prisma.project.deleteMany({
+    const project = await prisma.project.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        team: {
+          include: {
+            memberships: {
+              include: {
+                company: {
+                  select: {
+                    id: true,
+                  },
+                },
+                person: {
+                  select: {
+                    id: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    })
+
+    // DRY project validation
+    if (project === null) {
+      redirect('/home/projects')
+    }
+
+    const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
+
+    if (!isOwner) {
+      redirect('/home/projects')
+    }
+
+    await prisma.project.deleteMany({
       where: { id },
     })
 

@@ -1,16 +1,9 @@
-import { type Membership, type Person, type Project } from '@prisma/client'
-import { type VisibilityFilter } from '@/lib/types'
+import { type ProjectWithTeamAndCategories, type VisibilityFilter } from '@/lib/types'
 import EmptyContent from '../EmptyContent'
 import Card from '../Card'
 
 interface Props {
-  // DRY 18
-  projects: Array<Project & {
-    person: Person | null
-    memberships: Array<Membership & {
-      person: Person
-    }>
-  }>
+  projects: ProjectWithTeamAndCategories[]
   visibility: VisibilityFilter
   members: number
   title: string
@@ -34,14 +27,14 @@ export default function Projects({ projects, visibility, members, title }: Props
         if (
           (title === '' || project.title.toLowerCase().includes(title.toLowerCase())) &&
             (visibility === 'ALL' || project.visibility === visibility) &&
-            (members === 0 || project.memberships.length <= members)
+            (members === 0 || project.team.memberships.length <= members)
         ) {
           return (
             <div key={project.id} className="mb-4 break-inside-avoid">
               <div className="rounded-xl border border-solid border-zinc-300 bg-white shadow">
                 <Card
                   title={project.title}
-                  members={project.memberships}
+                  members={project.team.memberships}
                   description={project.description}
                   link={`/home/projects/${project.id}`}
                 />

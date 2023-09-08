@@ -5,13 +5,15 @@ import ImageInput from '@/components/forms/inputs/ImageInput'
 export default function PhotoProfile() {
   const { register, errors, goBack } = useContext(SignUpContext)
 
+  console.log(errors)
+
   return (
     <>
       <h2 className="text-center text-xl font-bold md:text-3xl">
         ¡Ponle <span className="text-primary">cara</span> a tu <span className="text-secondary">perfil</span>!
       </h2>
-      <p>
-        La primera impresión cuenta, sube una foto que transmita confianza y profesionalismo.
+      <p className="max-w-xl text-center">
+        Puedes subir tu foto de perfil de manera opcional. Si no tienes ninguna foto en este momento, puedes subirla después.
       </p>
       <div className="mx-auto w-full pt-4">
         <ImageInput

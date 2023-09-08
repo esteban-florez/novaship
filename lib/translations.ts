@@ -19,6 +19,7 @@ export const routes: Rec = {
   subtask: 'Subtarea',
   update: 'Actualizar',
   chat: 'Chat',
+  teams: 'Equipo de trabajo',
 }
 
 export const statuses = {
@@ -61,11 +62,6 @@ export const modes = {
   REMOTE: 'Remoto',
   ONSITE: 'Presencial',
   HYBRID: 'Semi-presencial',
-} as const
-
-export const targets = {
-  INTERNS: 'Pasantes',
-  CANDIDATS: 'Postulantes',
 } as const
 
 export const actions = {

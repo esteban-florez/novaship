@@ -1,8 +1,4 @@
-'use client'
-
-import { type TeamGroupTab, type OptionPerson } from '@/lib/types'
-import { type Membership, type Person } from '@prisma/client'
-import { ListBulletIcon } from '@heroicons/react/24/solid'
+import { type Team, type Membership, type Person } from '@prisma/client'
 import { EyeIcon } from '@heroicons/react/24/outline'
 import AddMembersTab from './AddMembersTab'
 import TeamGroupTabs from './TeamGroupTabs'
@@ -14,15 +10,21 @@ import Member from './Member'
 
 interface Props {
   id: string
+  team: Team & {
+    memberships: Array<Membership & {
+      person: Person | null
+    }>
+  }
   isOwner: boolean
   memberships: Array<Membership & {
     person: Person
   }>
   persons: OptionPerson[]
   personsCount: OptionPerson[]
+  isMember: boolean
 }
 
-export default function TeamGroup({ id, isOwner, memberships, persons, personsCount }: Props) {
+export default function TeamGroup({ id, team, isOwner, isMember, memberships, persons, personsCount }: Props) {
   const membershipsCount = memberships?.length ?? 0
   const [tab, setTab] = useState<TeamGroupTab>('members')
 

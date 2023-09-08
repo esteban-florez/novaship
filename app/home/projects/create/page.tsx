@@ -2,6 +2,7 @@ import ProjectForm from '@/components/projects/ProjectForm'
 import { auth } from '@/lib/auth/pages'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Registrar proyecto',
@@ -10,26 +11,37 @@ export const metadata: Metadata = {
 export default async function CreateProjectPage() {
   const activeUser = await auth.user()
 
-  const fields = await prisma.field.findMany({
+  const categories = await prisma.category.findMany()
+  const teams = await prisma.team.findMany({
     where: {
-      deletedAt: null,
-    },
-  })
-  const persons = await prisma.person.findMany({
-    where: {
-      id: {
-        not: activeUser.id,
+      memberships: {
+        some: {
+          OR: [
+            { companyId: activeUser.id },
+            { personId: activeUser.id },
+          ],
+        },
       },
-      deletedAt: null,
+    },
+    include: {
+      memberships: true,
     },
   })
+
+  const myTeams = teams.filter(team => {
+    return team.memberships.find(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
+  })
+
+  if (myTeams.length <= 0) {
+    redirect('/home/projects')
+  }
 
   return (
     <ProjectForm
       action="/api/projects"
       method="POST"
-      fields={fields}
-      persons={persons}
+      categories={categories}
+      teams={teams}
       cancelRedirect="/home/projects"
     />
   )

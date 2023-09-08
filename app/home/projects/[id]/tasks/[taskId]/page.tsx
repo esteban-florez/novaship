@@ -16,10 +16,7 @@ interface Context {
 
 export default async function TaskPage({ params: { id, taskId } }: Context) {
   const project = await prisma.project.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
   })
 
   if (project === null) redirect('/home/projects')
@@ -29,11 +26,7 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
       id: taskId,
     },
     include: {
-      subtasks: {
-        where: {
-          deletedAt: null,
-        },
-      },
+      subtasks: true,
     },
   })
 
@@ -41,9 +34,9 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
 
   return (
     <FormLayout>
-      <h2 className="border-b px-4 py-2 font-semibold">{task.title}</h2>
-      <p className="p-2 text-neutral-600">{task.description}</p>
-      <div className="flex flex-col gap-2 px-8 py-4">
+      <h2 className="border-b px-4 py-2 text-xl font-semibold">{task.title}</h2>
+      <p className="mb-2 px-4 py-2 text-neutral-600">{task.description}</p>
+      <div className="flex flex-col gap-2 px-4">
         {task.subtasks.map(subtask => {
           return (
             <SubtaskItem
@@ -55,28 +48,24 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
           )
         })}
       </div>
-      <div className="mt-2 flex justify-end gap-x-2">
-        <div className="basis-1/4">
-          <Button
-            url={`/home/projects/${project.id}`}
-            style="OUTLINE"
-            color="EMPTY"
-            hover="SECONDARY"
-          >
-            <ArrowLeftIcon className="h-5 w-5" />
-            Volver al proyecto
-          </Button>
-        </div>
-        <div className="basis-1/4">
-          <Button
-            url={`/home/projects/${project.id}/tasks/${taskId}/subtasks/create`}
-            style="DEFAULT"
-            color="PRIMARY"
-          >
-            <PlusIcon className="h-5 w-5" />
-            Añadir subtarea
-          </Button>
-        </div>
+      <div className="mt-2 flex justify-end gap-x-2 text-sm">
+        <Button
+          url={`/home/projects/${project.id}`}
+          style="OUTLINE"
+          color="EMPTY"
+          hover="SECONDARY"
+        >
+          <ArrowLeftIcon className="h-5 w-5" />
+          Proyecto
+        </Button>
+        <Button
+          url={`/home/projects/${project.id}/tasks/${taskId}/subtasks/create`}
+          style="DEFAULT"
+          color="PRIMARY"
+        >
+          <PlusIcon className="h-5 w-5" />
+          Subtarea
+        </Button>
       </div>
     </FormLayout>
   )

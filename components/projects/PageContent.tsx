@@ -2,21 +2,12 @@
 
 import PageNav from './PageNav'
 import { useState } from 'react'
-import { type TabProp, type VisibilityFilter } from '@/lib/types'
-import { type Membership, type Person, type Project } from '@prisma/client'
+import { type ProjectWithTeamAndCategories, type TabProp, type VisibilityFilter } from '@/lib/types'
 import ProjectsCard from './ProjectsCard'
 
-// DRY 18
-type Projects = Array<Project & {
-  person: Person | null
-  memberships: Array<Membership & {
-    person: Person
-  }>
-}>
-
 type Props = React.PropsWithChildren<{
-  projects: Projects
-  personalProjects: Projects
+  projects: ProjectWithTeamAndCategories[]
+  personalProjects: ProjectWithTeamAndCategories[]
 }>
 
 export default function PageContent({ projects, personalProjects }: Props) {

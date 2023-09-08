@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { type Location, type UserType as UserTypeEnum } from '@prisma/client'
+import { type Job, type Location, type UserType as UserTypeEnum } from '@prisma/client'
 import Steps from './Steps'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { schema as personSchema } from '@/lib/validation/schemas/signup/person'
@@ -9,37 +9,38 @@ import { schema as nonPersonSchema } from '@/lib/validation/schemas/signup/non-p
 import { SignUpContext } from './SignUpContext'
 import clsx from 'clsx'
 import UserType from './steps/personal/UserType'
-import { type OptionSkill, type SelectableField } from '@/lib/types'
+import { type OptionSkill, type SelectableCategory } from '@/lib/types'
 import collect from '@/lib/utils/collection'
 
 type Props = React.PropsWithChildren <{
-  fields: SelectableField[]
+  categories: SelectableCategory[]
   skills: OptionSkill[]
   locations: Location[]
+  jobs: Job[]
 }>
 
-export default function SignUpForm({ fields: fieldsData, skills, locations }: Props) {
+export default function SignUpForm({ categories: categoriesData, skills, locations, jobs }: Props) {
   // TODO -> corregir los textos de este formulario
-  const [fields, setFields] = useState(fieldsData)
+  const [categories, setCategories] = useState(categoriesData)
   const [userType, setUserType] = useState<UserTypeEnum | null>(null)
   const [step, setStep] = useState<number>(0)
 
-  const selectedFields = fields.filter(field => field.selected)
+  const selectedCategories = categories.filter(category => category.selected)
   const schema = userType === 'PERSON' ? personSchema : nonPersonSchema
   const {
-    register, formState: { errors }, alert, control,
+    register, formState: { errors }, alert, control, setValue,
     clearErrors, reset, trigger, serverErrors, handleSubmit,
   } = useSubmit({
     append: {
       userType,
-      fields: collect(selectedFields).ids(),
+      categories: collect(selectedCategories).ids(),
     },
     schema,
     asFormData: true,
   })
 
   function goNext() {
-    if (step >= 4) return
+    if (step >= 5) return
     setStep(step + 1)
   }
 
@@ -55,12 +56,14 @@ export default function SignUpForm({ fields: fieldsData, skills, locations }: Pr
     goNext,
     trigger,
     reset,
-    fields,
-    selectedFields,
-    setFields,
+    categories,
+    selectedCategories,
+    setCategories,
     skills,
+    jobs,
     control,
     clearErrors,
+    setValue,
   }
 
   return (

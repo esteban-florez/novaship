@@ -1,15 +1,14 @@
-import { type Membership, type Field, type Person, type Location } from '@prisma/client'
+import { type Membership, type Category, type Location, type Person } from '@prisma/client'
 import AvatarIcon from './AvatarIcon'
 import Button from './Button'
 import clsx from 'clsx'
 
 interface Props {
   title: string
-  categories?: Field[]
+  categories?: Category[]
   description: string
   owner?: string
   location?: Location['title']
-  status?: string
   members?: Array<Membership & {
     person: Person | null
   }>
@@ -18,7 +17,7 @@ interface Props {
 
 const stackOrder = ['z-40', 'z-30', 'z-20']
 
-export default function Card({ title, categories, description, owner, location, status, members, link }: Props) {
+export default function Card({ title, categories, description, owner, location, members, link }: Props) {
   return (
     <>
       <div className="relative">
@@ -33,7 +32,10 @@ export default function Card({ title, categories, description, owner, location, 
           <ul className="-mt-1 line-clamp-2 flex flex-row flex-wrap font-semibold text-primary">
             {categories?.map(category => {
               return (
-                <li className="me-1 cursor-pointer text-sm after:text-neutral-800 after:content-[','] last:after:content-[] hover:text-primary/40" key={category.id}>
+                <li
+                  key={category.id}
+                  className="me-1 cursor-pointer text-sm after:text-neutral-800 after:content-[','] last:after:content-[] hover:text-primary/40"
+                >
                   {category.title}
                 </li>
               )

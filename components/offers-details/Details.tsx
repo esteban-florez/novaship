@@ -7,11 +7,11 @@ interface Props {
   title: string
   expiresAt: Date | null
   description: string
-  fields: string[]
+  categories: string[]
   updateOffer: string
 }
 
-export default function Details({ id, isOwner, title, description, expiresAt, fields, updateOffer }: Props) {
+export default function Details({ id, isOwner, title, description, expiresAt, categories, updateOffer }: Props) {
   return (
     <div className="card rounded-xl bg-white shadow-xl lg:flex-row">
       <div className="relative flex lg:basis-2/5">
@@ -45,8 +45,8 @@ export default function Details({ id, isOwner, title, description, expiresAt, fi
 
         <h3 className="w-5/6 text-xl font-bold sm:text-2xl">{title}</h3>
         <div className="flex flex-wrap gap-2 text-base text-primary">
-          {fields.map(field => {
-            return <span key={field} className="badge badge-outline">{field}</span>
+          {categories.map(category => {
+            return <span key={category} className="badge badge-outline">{category}</span>
           })}
         </div>
 

@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { SignUpContext } from '../../SignUpContext'
 import { type Location, type UserType } from '@prisma/client'
 import Select from '@/components/forms/inputs/Select'
+import clsx from 'clsx'
 
 type Props = React.PropsWithChildren<{
   userType: UserType
@@ -75,20 +76,20 @@ export default function BasicData({ userType, locations }: Props) {
           <div className="col-span-2 md:col-span-1">
             <Input label="Teléfono:" type="number" name="phone" register={register} errors={errors} placeholder="Ej. 04121234567" />
           </div>
-          <div className="col-span-2 md:col-span-1">
-            {isPerson
-              ? (
+          {isPerson &&
+            (
+              <div className="col-span-2 md:col-span-1">
                 <Input type="date" label="Fecha de nacimiento:" name="birth" register={register} errors={errors} placeholder="Fecha de nacimiento" />
-                )
-              : (
-                <Select name="locationId" register={register} errors={errors} label="Dirección:" options={{ type: 'rows', data: locations }} />
-                )}
+              </div>
+            )}
+          <div className={clsx('col-span-2', !isPerson && 'md:col-span-1')}>
+            <Select name="locationId" register={register} errors={errors} label="Dirección:" options={{ type: 'rows', data: locations }} />
           </div>
           <div className="col-span-2">
             <Textarea height={2} label="Sobre ti:" name="description" register={register} errors={errors} placeholder="Ingresa una breve descripción para tu perfil..." config={{ required: false }} />
           </div>
         </div>
-        <div className="flex justify-between">
+        <div className="mb-4 flex justify-between">
           <button onClick={goBack} type="button" className="btn-neutral btn mt-4">
             Volver
           </button>

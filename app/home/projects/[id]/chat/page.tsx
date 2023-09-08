@@ -1,7 +1,7 @@
 // import ChatsBar from '@/components/chats/ChatsBar'
 import AvatarIcon from '@/components/AvatarIcon'
 import CurrentChat from '@/components/chats/CurrentChat'
-// import { auth } from '@/lib/auth/pages'
+import { auth } from '@/lib/auth/pages'
 import prisma from '@/prisma/client'
 import { redirect } from 'next/navigation'
 
@@ -10,26 +10,34 @@ interface Context {
 }
 
 export default async function ChatsPage({ params: { id } }: Context) {
-  // const activeUser = await auth.user()
+  const activeUser = await auth.user()
 
   if (id === null) {
     redirect('/home/projects')
   }
 
   const project = await prisma.project.findFirst({
-    where: {
-      id,
-      deletedAt: null,
-    },
+    where: { id },
     include: {
-      person: true,
-      company: true,
-      memberships: {
-        where: {
-          deletedAt: null,
-        },
+      team: {
         include: {
-          person: true,
+          memberships: {
+            include: {
+              company: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+              person: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+              messages: true,
+            },
+          },
         },
       },
     },
@@ -39,8 +47,13 @@ export default async function ChatsPage({ params: { id } }: Context) {
     redirect('/home/projects')
   }
 
-  // const isOwner = activeUser.id === project.personId || activeUser.id === project.companyId
+  const isMember = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id)
 
+  if (!isMember) {
+    redirect('/home/projects')
+  }
+
+  // TODO -> re-estilar el chat
   return (
     <section className="chat-height flex w-full px-6 py-4">
       {/* esto es para guiarme */}

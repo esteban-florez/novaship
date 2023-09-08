@@ -7,13 +7,14 @@ import { object, string } from 'zod'
 import messages from '@/lib/validation/messages'
 import { auth } from '@/lib/auth/api'
 import { redirect } from 'next/navigation'
+import collect from '@/lib/utils/collection'
 
 export async function PUT(request: NextRequest) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.user(request)
+    const activeUser = await auth.user(request)
 
     const validationSchema = object({
       taskId: string(messages.string)
@@ -29,13 +30,30 @@ export async function PUT(request: NextRequest) {
     const task = await prisma.task.findFirst({
       where: {
         id: appendParsed.taskId,
-        deletedAt: null,
       },
       include: {
         project: {
-          select: {
-            personId: true,
-            companyId: true,
+          include: {
+            team: {
+              include: {
+                memberships: {
+                  include: {
+                    person: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                    company: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
         },
         participations: {
@@ -54,12 +72,20 @@ export async function PUT(request: NextRequest) {
       },
     })
 
-    const projectOwner = (task?.project.personId ?? task?.project.companyId) === user.id
+    if (task === null) {
+      redirect(`/home/projects/${appendParsed.projectId}`)
+    }
+
+    const projectOwner = task.project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
 
     const isLeader = task?.participations.find(participation => {
-      const participationMatchUser = participation.membership.personId === user.id
-      return Boolean((participation.isLeader && participationMatchUser) || projectOwner)
+      const memberLeader = (participation.membership.personId ?? participation.membership.companyId) === activeUser.id && participation.isLeader
+      return Boolean(memberLeader || projectOwner)
     })
+
+    if (isLeader == null) {
+      redirect(`/home/projects/${appendParsed.projectId}`)
+    }
 
     if (task === null || (isLeader == null)) redirect(`/home/projects/${appendParsed.projectId}`)
 
@@ -86,20 +112,32 @@ interface Context {
 
 export async function DELETE(request: NextRequest, { params: { id } }: Context) {
   try {
-    const user = await auth.user(request)
+    const activeUser = await auth.user(request)
 
     const subtask = await prisma.subtask.findFirst({
       where: {
         id,
-        deletedAt: null,
       },
       include: {
         task: {
           include: {
             project: {
-              select: {
-                personId: true,
-                companyId: true,
+              include: {
+                team: {
+                  include: {
+                    memberships: {
+                      where: {
+                        OR: [
+                          { companyId: activeUser.id },
+                          { personId: activeUser.id },
+                        ],
+                        AND: {
+                          isLeader: true,
+                        },
+                      },
+                    },
+                  },
+                },
               },
             },
           },
@@ -109,7 +147,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
 
     if (subtask === null) redirect('/home/projects')
 
-    if ((subtask.task.project.personId ?? subtask.task.project.companyId) !== user.id) {
+    if (collect(subtask.task.project.team.memberships ?? []).first() === null) {
       redirect(`/home/projects/${subtask.task.projectId}/tasks/${subtask.taskId}`)
     }
 

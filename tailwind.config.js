@@ -25,7 +25,7 @@ module.exports = {
           secondary: '#45aaf2',
           'secondary-content': '#ffffff',
           accent: '#2bcbba',
-          'action-content': 'fffffff',
+          'accent-content': '#ffffff',
           'neutral-content': '#ffffff',
           // 'base-100': '#E5E7EB',
           // 'base-200': '#F3F4F6',

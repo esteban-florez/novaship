@@ -1,9 +1,9 @@
 import { type UseFormRegisterReturn, type FieldErrors, type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
 import {
-  type Person, type Company, type Institute, type Field, type Skill,
+  type Person, type Company, type Institute, type Category, type Skill,
   type Offer, type Location, type Project, type Task, type Participation,
-  type Membership, type Subtask,
+  type Membership, type Subtask, type Team,
 } from '@prisma/client'
 import { type days } from './translations'
 
@@ -12,13 +12,13 @@ type Selectable<T> = T & {
 }
 
 type OptionSkill = Pick<Skill, 'id' | 'title'>
-type OptionField = Pick<Field, 'id' | 'title'>
+type OptionCategory = Pick<Category, 'id' | 'title'>
 type OptionPerson = Pick<Person, 'id' | 'name' | 'email'>
 
-type SelectableField = Selectable<OptionField>
+type SelectableCategory = Selectable<OptionCategory>
 type SelectableSkill = Selectable<OptionSkill>
 type SelectablePerson = Selectable<OptionPerson>
-type SelectableOption = OptionField | OptionSkill | OptionPerson
+type SelectableOption = OptionCategory | OptionSkill | OptionPerson
 
 type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE' | 'NEUTRAL'
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
@@ -28,16 +28,90 @@ type VisibilityFilter = 'PRIVATE' | 'PUBLIC' | 'ALL'
 interface Offers extends Offer {
   company: Company
   location: Location
-  fields: Field[]
+  categories: Category[]
+}
+
+// ----------------------------------------------------------------------
+// --------------------------- Projects ---------------------------------
+// ----------------------------------------------------------------------
+type ProjectTeam = Team & {
+  memberships: Array<Membership & {
+    person: {
+      id: string
+      name: string
+    } | null
+    company: {
+      id: string
+      name: string
+    } | null
+  }>
+}
+
+interface ProjectWithTeamAndCategories extends Project {
+  team: Team & {
+    memberships: Array<Membership & {
+      person: {
+        id: string
+        name: string
+      } | null
+      company: {
+        id: string
+        name: string
+      } | null
+    }>
+  }
+  categories: Array<{
+    id: string
+    title: string
+  }>
+}
+
+interface ProjectsWithTeamCategoriesTaskAndSubtask extends Project {
+  team: Team & {
+    memberships: Array<Membership & {
+      person: {
+        id: string
+        name: string
+      } | null
+      company: {
+        id: string
+        name: string
+      } | null
+    }>
+  }
+  categories: Array<{
+    id: string
+    title: string
+  }>
+  tasks: Array<Task & {
+    subtasks: Subtask[]
+    participations: Participation[]
+  }>
+}
+
+interface ProjectsWithTeamAndMessages extends Project {
+  team: Team & {
+    memberships: Array<Membership & {
+      person: {
+        id: string
+        name: string
+      } | null
+      company: {
+        id: string
+        name: string
+      } | null
+      messages: Message[]
+    }>
+  }
 }
 
 interface Projects extends Project {
-  company: Company | null
-  person: Person | null
-  fields: Field[]
-  memberships: Array<Membership & {
-    person: Person
-  }>
+  team: Team & {
+    memberships: Array<Membership & {
+      person: Person | null
+    }>
+  }
+  categories: Category[]
   tasks: Array<Task & {
     subtasks: Subtask[]
     participations: Participation[]
@@ -79,7 +153,7 @@ type Schedule = Record<keyof typeof days, number[]>
 type OffersWithRelationships = Offer & {
   company: Company
   location: Location
-  fields: Field[]
+  categories: Category[]
 }
 
 type UserWithType = (Person & { type: 'PERSON' })

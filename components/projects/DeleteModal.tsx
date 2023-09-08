@@ -3,7 +3,7 @@
 import { TrashIcon } from '@heroicons/react/24/outline'
 import Modal from '../modal/Modal'
 import useDeleteRequest from '@/lib/hooks/useDeleteRequest'
-import Button from '../modal/Button'
+import Button from '../Button'
 import CloseModalButton from '../modal/CloseModalButton'
 import { useId } from 'react'
 
@@ -25,7 +25,7 @@ export default function DeleteModal({ title, action }: Props) {
         id={id}
         icon={<TrashIcon className="h-4 w-4" />}
         title="Eliminar"
-        button="btn btn-sm btn-error hover:btn-white rounded-md shadow-md"
+        className="inline-flex cursor-pointer items-center justify-center gap-x-2 rounded-md border bg-white px-6 py-2 text-neutral-600  shadow-md hover:bg-error hover:text-white"
       >
         <h4 className="text-center font-semibold">¿Está seguro que quiere borrarlo?</h4>
         <img src="/delete.webp" alt="Imagen de un registro siendo borrado" className="mx-auto w-60 p-4" />
@@ -36,7 +36,11 @@ export default function DeleteModal({ title, action }: Props) {
           </p>
           <div className="flex justify-center gap-x-4">
             <CloseModalButton id={id} text="Cancelar" />
-            <Button className="btn-error btn-outline btn px-6 py-2">
+            <Button
+              style="DEFAULT"
+              color="ERROR"
+              hover="WHITE"
+            >
               <TrashIcon className="h-5 w-5" />
               Eliminar
             </Button>

@@ -24,10 +24,9 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
     const offer = await prisma.offer.findFirst({
       where: {
         id,
-        deletedAt: null,
       },
       include: {
-        fields: true,
+        categories: true,
         skills: true,
         location: true,
       },
@@ -37,16 +36,11 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
       redirect('/home/projects')
     }
 
-    const offerSkills = offer.skills.map(field => {
-      return field.id
-    })
-
-    const offerFields = offer.fields.map(field => {
-      return field.id
-    })
+    const offerSkills = offer.skills.map(skill => skill.id)
+    const offerCategories = offer.categories.map(category => category.id)
 
     const skills = collect(parsed.skills).deleteDuplicatesFrom(offerSkills)
-    const fields = collect(parsed.fields).deleteDuplicatesFrom(offerFields)
+    const categories = collect(parsed.categories).deleteDuplicatesFrom(offerCategories)
 
     await prisma.offer.update({
       where: {
@@ -54,17 +48,13 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
       },
       data: {
         ...parsed,
-        fields: {
+        categories: {
           deleteMany: {
             id: {
-              notIn: parsed.fields,
+              notIn: parsed.categories,
             },
           },
-          connect: fields.map(id => {
-            return {
-              id,
-            }
-          }),
+          connect: categories.map(id => ({ id })),
         },
         skills: {
           deleteMany: {
@@ -72,11 +62,7 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
               notIn: parsed.skills,
             },
           },
-          connect: skills.map(id => {
-            return {
-              id,
-            }
-          }),
+          connect: skills.map(id => ({ id })),
         },
         expiresAt: getExpirationDate(parsed.expiresAt),
       },
@@ -95,7 +81,6 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
     const offer = await prisma.offer.findFirst({
       where: {
         id,
-        deletedAt: null,
       },
     })
 

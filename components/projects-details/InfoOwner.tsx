@@ -3,16 +3,16 @@ import AvatarIcon from '../AvatarIcon'
 import Button from '../Button'
 
 interface Props {
-  owner: string
+  name: string
   email: string
-  description: string | null
+  description: string
 }
 
-export default function InfoOwner({ owner, email, description }: Props) {
+export default function InfoOwner({ name, email, description }: Props) {
   return (
     <>
       <div className="flex items-center justify-start gap-2">
-        <AvatarIcon username={owner} className="h-12 w-12 bg-black text-white" />
+        <AvatarIcon username={name} className="h-12 w-12 bg-black text-white" />
         <div className="flex flex-col">
           <p className="text-lg font-semibold">{owner}</p>
           <p className="-my-1 text-sm">{email}</p>

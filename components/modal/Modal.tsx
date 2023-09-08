@@ -1,18 +1,16 @@
-import clsx from 'clsx'
-
 type Props = React.PropsWithChildren<{
   id: string
   icon: React.ReactElement
   title?: string
-  button: string
+  className: string
   onClick?: () => void
 }>
 
 // TEMPORAL -> cambiar los modales por este nuevo
-export default function Modal({ id, icon, title, button, children }: Props) {
+export default function Modal({ id, icon, title, className, children }: Props) {
   return (
     <>
-      <label htmlFor={id} className={clsx(button)}>
+      <label htmlFor={id} className={className}>
         <div className="flex items-center">
           {icon}
           <p className="ml-1 text-sm">{title}</p>

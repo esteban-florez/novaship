@@ -18,12 +18,8 @@ export async function POST(request: NextRequest) {
         data: {
           ...parsed,
           companyId: user.id,
-          fields: {
-            connect: parsed.fields.map(field => {
-              return {
-                id: field,
-              }
-            }),
+          categories: {
+            connect: parsed.categories.map(category => ({ id: category })),
           },
           skills: {
             connect: parsed.skills.map(skill => {

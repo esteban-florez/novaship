@@ -10,32 +10,32 @@ export async function POST(request: NextRequest) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.user(request)
+    const activeUser = await auth.user(request)
 
-    const ids = {
-      companyId: user.type === 'COMPANY' ? user.id : null,
-      personId: user.type === 'PERSON' ? user.id : null,
-    }
+    const team = await prisma.team.findFirst({
+      where: {
+        memberships: {
+          some: {
+            OR: [
+              { companyId: activeUser.id },
+              { personId: activeUser.id },
+            ],
+          },
+        },
+      },
+    })
+
+    if (team === null) return NextResponse.redirect(url('home/projects'))
 
     await prisma.project.create({
       data: {
         ...parsed,
-        ...ids,
-        fields: {
-          connect: parsed.fields.map(field => {
+        categories: {
+          connect: parsed.categories.map(category => {
             return {
-              id: field,
+              id: category,
             }
           }),
-        },
-        memberships: {
-          createMany: {
-            data: parsed.memberships.map(person => {
-              return {
-                personId: person,
-              }
-            }),
-          },
         },
       },
     })
