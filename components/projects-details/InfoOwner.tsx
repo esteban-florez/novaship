@@ -20,12 +20,12 @@ export default function InfoOwner({ owner, email, description }: Props) {
       </div>
       <p className="mb-1 line-clamp-3 text-sm">{description}</p>
       <Button
-        style="OUTLINE"
+        style="DEFAULT"
         color="SECONDARY"
         hover="WHITE"
       >
-        <p className="text-black">Ver más</p>
-        <ArrowRightIcon className="h-4 w-4 text-black" />
+        Ver perfil
+        <ArrowRightIcon className="h-4 w-4" />
       </Button>
     </>
   )

@@ -11,15 +11,15 @@ interface Props {
 
 export default function ProjectDetails({ id, title, description, fields, isOwner }: Props) {
   return (
-    <div className="card rounded-xl bg-white shadow-xl xl:flex-row">
-      <div className="relative flex xl:basis-2/4">
+    <div className="card rounded-xl bg-white shadow-xl lg:flex-row">
+      <div className="relative flex lg:basis-2/4 xl:basis-2/3">
         <img
           src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           alt="Imagen de fondo carrusel"
-          className="h-32 w-full rounded-t-lg object-cover md:h-44 xl:h-full xl:rounded-l-lg"
+          className="h-32 w-full rounded-t-lg object-cover md:h-44 lg:h-full lg:rounded-l-lg"
         />
-        <img src="/onda-vertical.webp" alt="Onda-vertical" className="absolute bottom-0 right-0 hidden h-full xl:block" />
-        <img src="/onda-horizontal.webp" alt="Onda-vertical" className="absolute bottom-0 block w-full xl:hidden" />
+        <img src="/onda-vertical.webp" alt="Onda-vertical" className="absolute bottom-0 right-0 hidden h-full lg:block" />
+        <img src="/onda-horizontal.webp" alt="Onda-vertical" className="absolute bottom-0 block w-full lg:hidden" />
       </div>
       <div className="flex flex-col justify-center rounded-t-none p-4 xl:rounded-l-none">
         <h3 className="text-xl font-bold sm:text-2xl">{title}</h3>
@@ -33,15 +33,15 @@ export default function ProjectDetails({ id, title, description, fields, isOwner
           })}
         </div>
         <p className="line-clamp-6 py-3">{description}</p>
-        <div className="flex flex-col justify-between gap-3 md:flex-row md:gap-0 xl:w-auto">
+        <div className="flex flex-col justify-between gap-3 md:flex-row md:gap-0 lg:w-auto">
           <Button
             url="/home/projects"
-            style="DEFAULT"
-            color="WHITE"
-            hover="SECONDARY"
+            style="OUTLINE"
+            color="NEUTRAL"
+            hover="NEUTRAL"
           >
-            <ArrowLeftIcon className="h-4 w-4" />
-            Volver al listado
+            <ArrowLeftIcon className="h-4 w-4 text-neutral" />
+            <p className="text-neutral">Volver al listado</p>
           </Button>
           {isOwner
             ? (

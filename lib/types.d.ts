@@ -20,7 +20,7 @@ type SelectableSkill = Selectable<OptionSkill>
 type SelectablePerson = Selectable<OptionPerson>
 type SelectableOption = OptionField | OptionSkill | OptionPerson
 
-type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE' | 'GHOST'
+type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE' | 'NEUTRAL'
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 
 type VisibilityFilter = 'PRIVATE' | 'PUBLIC' | 'ALL'
