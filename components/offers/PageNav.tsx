@@ -11,10 +11,16 @@ interface Props {
   onSearch: (value: string) => void
 }
 
+const OFFERS_TAB_TRANSLATION = {
+  All: 'Todas',
+  Mine: 'Mis ofertas',
+  Applied: 'Ofertas aplicadas',
+}
+
 export default function PageNav({ search, tab, onTabClick, onSearch }: Props) {
   const navChildren = [{
     title: 'All',
-    content: 'Todos',
+    content: 'Todas',
     icon: <ListBulletIcon className="h-5 w-5" />,
   }, {
     title: 'Mine',
@@ -22,7 +28,7 @@ export default function PageNav({ search, tab, onTabClick, onSearch }: Props) {
     icon: <BriefcaseIcon className="h-5 w-5" />,
   }, {
     title: 'Applied',
-    content: 'Trabajos aplicados',
+    content: 'Ofertas aplicadas',
     icon: <BookmarkIcon className="h-5 w-5" />,
   }]
 
@@ -46,12 +52,11 @@ export default function PageNav({ search, tab, onTabClick, onSearch }: Props) {
       </div>
       <div className="w-full xl:hidden">
         <Collapse
-          title="Categorías"
+          title={`Categorías - ${OFFERS_TAB_TRANSLATION[tab]}`}
           bg="bg-white"
         >
           <div className="flex flex-col gap-2">
             {navChildren.map((children) => {
-              // const isActive = children === 'Todos'
               return (
                 <Button
                   key={children.title}
@@ -63,7 +68,6 @@ export default function PageNav({ search, tab, onTabClick, onSearch }: Props) {
                   {children.icon}
                   {children.content}
                 </Button>
-                // <NavButton key={children} >{children}</NavButton>
               )
             })}
           </div>
