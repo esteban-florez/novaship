@@ -2,7 +2,7 @@
 
 import PageNav from './PageNav'
 import { useState } from 'react'
-import { type ProjectWithTeamAndCategories, type TabProp, type VisibilityFilter } from '@/lib/types'
+import { type ProjectWithTeamAndCategories, type TabProp } from '@/lib/types'
 import ProjectsCard from './ProjectsCard'
 
 type Props = React.PropsWithChildren<{
@@ -12,7 +12,6 @@ type Props = React.PropsWithChildren<{
 
 export default function PageContent({ projects, personalProjects }: Props) {
   const [tab, setTab] = useState<TabProp>('All')
-  const [visibility, setVisibility] = useState<VisibilityFilter>('ALL')
   const [members, setMembers] = useState(0)
   const [title, setTitle] = useState('')
 
@@ -22,7 +21,6 @@ export default function PageContent({ projects, personalProjects }: Props) {
     if (name === 'title') {
       setTitle(value)
     }
-    if (name === 'visibility' && (value === 'PRIVATE' || value === 'PUBLIC' || value === 'ALL')) setVisibility(value)
     if (name === 'members') {
       const newValue = parseInt(value)
       if (typeof newValue === 'number') {
@@ -41,7 +39,6 @@ export default function PageContent({ projects, personalProjects }: Props) {
       <ProjectsCard
         title={title}
         members={members}
-        visibility={visibility}
         projects={tab === 'All' ? projects : personalProjects}
       />
     </>

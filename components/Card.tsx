@@ -1,7 +1,8 @@
-import { type Membership, type Category, type Location, type Person } from '@prisma/client'
+import { type Category, type Location } from '@prisma/client'
 import AvatarIcon from './AvatarIcon'
 import Button from './Button'
 import clsx from 'clsx'
+import { type ProjectMemberships } from '@/lib/types'
 
 interface Props {
   title: string
@@ -9,14 +10,13 @@ interface Props {
   description: string
   owner?: string
   location?: Location['title']
-  members?: Array<Membership & {
-    person: Person | null
-  }>
+  members?: ProjectMemberships
   link?: string
 }
 
 const stackOrder = ['z-40', 'z-30', 'z-20']
 
+// TODO -> mover el boton a bajo (flex-col) para las ofertas
 export default function Card({ title, categories, description, owner, location, members, link }: Props) {
   return (
     <>
@@ -26,7 +26,6 @@ export default function Card({ title, categories, description, owner, location, 
       </div>
       <div className="card card-compact bg-base-100 shadow-lg">
         <div className="flex flex-col gap-3 rounded-t-xl px-4 py-1">
-
           {/* Ofertas */}
           <h3 className="text-lg font-bold sm:text-xl">{title}</h3>
           <ul className="-mt-1 line-clamp-2 flex flex-row flex-wrap font-semibold text-primary">
@@ -43,13 +42,19 @@ export default function Card({ title, categories, description, owner, location, 
           </ul>
           <p className="line-clamp-3 text-sm">{description}</p>
           <div className="flex flex-col gap-3 pb-3 md:flex-row md:items-center md:justify-between md:gap-1">
-            {/* XD */}
-            {members !== null && (members != null) &&
+            {members != null &&
               <div className="flex shrink-0 flex-row items-center justify-start -space-x-3">
                 {members.map((member, i) => {
                   if (i <= 2) {
-                    return <AvatarIcon key={member.id} username={member.person?.name ?? ''} className={clsx('h-10 w-10 border-2 border-white bg-black text-white', stackOrder[i])} />
-                  } return null
+                    return (
+                      <AvatarIcon
+                        key={member.id}
+                        username={member.person?.name ?? member.company?.name ?? ''}
+                        className={clsx('h-10 w-10 border-2 border-white bg-black text-white', stackOrder[i], i > 0 && 'ms-1')}
+                      />
+                    )
+                  }
+                  return null
                 })}
                 {members.length > 3 &&
                   <div className={clsx(

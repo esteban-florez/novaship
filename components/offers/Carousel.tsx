@@ -1,16 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import Btn from './Carrousel/Btn'
-import Content from './Carrousel/Content'
-import Dots from './Carrousel/Dots'
+import Btn from './Carousel/Btn'
+import Content from './Carousel/Content'
+import Dots from './Carousel/Dots'
 import { type OffersWithRelationships } from '@/lib/types'
 
 interface Props {
   offers: OffersWithRelationships[]
 }
 
-export default function Carrousel({ offers }: Props) {
+export default function Carousel({ offers }: Props) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const offer = offers[currentSlide]
   const previousSlide = currentSlide === 0 ? offers.length - 1 : currentSlide - 1

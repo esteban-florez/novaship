@@ -17,6 +17,7 @@
 - Añadir opcion de registrar campo si no existe.
 - Crear componente que lea la url para mostrar un alert.
 - Llevarte a donde cometiste el error en signup.
+- ExpiresAt handler.
 
 # Ideas
 
