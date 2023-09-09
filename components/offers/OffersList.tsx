@@ -1,10 +1,10 @@
-import { type Offers } from '@/lib/types'
+import { type SuggestedOffersWithRelationships } from '@/lib/types'
 import OfferItem from './OfferItem'
 import { includesValue } from '@/lib/utils/text'
 
 interface Props {
   search: string
-  offers: Offers[]
+  offers: SuggestedOffersWithRelationships
 }
 
 export default function OffersList({ search, offers }: Props) {
@@ -24,7 +24,7 @@ export default function OffersList({ search, offers }: Props) {
               title={offer.title}
               categories={offer.categories}
               description={offer.description}
-              company={offer.company}
+              companyName={offer.company.name}
               location={offer.location.title}
             />
           )

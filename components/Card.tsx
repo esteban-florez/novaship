@@ -1,4 +1,3 @@
-import { type Category, type Location } from '@prisma/client'
 import AvatarIcon from './AvatarIcon'
 import Button from './Button'
 import clsx from 'clsx'
@@ -6,10 +5,13 @@ import { type ProjectMemberships } from '@/lib/types'
 
 interface Props {
   title: string
-  categories?: Category[]
+  categories?: Array<{
+    id: string
+    title: string
+  }>
   description: string
   owner?: string
-  location?: Location['title']
+  location?: string
   members?: ProjectMemberships
   link?: string
 }

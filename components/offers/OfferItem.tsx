@@ -1,13 +1,15 @@
-import { type Location, type Category, type Company } from '@prisma/client'
 import Card from '../Card'
 
 type Props = React.PropsWithChildren<{
   id: string
   title: string
-  categories: Category[]
+  categories: Array<{
+    id: string
+    title: string
+  }>
   description: string
-  company: Company
-  location: Location['title']
+  companyName: string
+  location: string
 }>
 
 export default function OfferItem({
@@ -15,7 +17,7 @@ export default function OfferItem({
   title,
   categories,
   description,
-  company,
+  companyName,
   location,
 }: Props) {
   return (
@@ -26,7 +28,7 @@ export default function OfferItem({
           title={title}
           categories={categories}
           description={description}
-          owner={company.name}
+          owner={companyName}
           location={location}
         />
       </div>

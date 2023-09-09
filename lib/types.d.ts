@@ -23,6 +23,31 @@ type SelectableOption = OptionCategory | OptionSkill | OptionPerson
 type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE' | 'NEUTRAL'
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 
+// ----------------------------------------------------------------------
+// --------------------------- Projects ---------------------------------
+// ----------------------------------------------------------------------
+type SuggestedOffersWithRelationships = Array<Offer & {
+  company: {
+    id: string
+    name: string
+  }
+  location: {
+    title: string
+  }
+  job: {
+    id: string
+    title: string
+  }
+  categories: Array<{
+    id: string
+    title: string
+  }>
+  skills: Array<{
+    id: string
+    title: string
+  }>
+}>
+
 interface Offers extends Offer {
   company: Company
   location: Location
@@ -145,7 +170,7 @@ type UseSubmitResult = null | 'loading' | ApiResponseBody
 type TabProp = 'All' | 'Mine'
 type TeamGroupTab = 'members' | 'add'
 type ProjectDetailsTab = 'Files' | 'Tasks'
-type OffersTab = 'All' | 'Mine' | 'Applied'
+type OffersTab = 'All' | 'Mine' | 'Applied' | 'Suggested'
 
 interface ApiResponseBody {
   errorType?: keyof typeof ERRORS

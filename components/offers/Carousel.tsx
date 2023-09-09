@@ -4,10 +4,10 @@ import { useState } from 'react'
 import Btn from './Carousel/Btn'
 import Content from './Carousel/Content'
 import Dots from './Carousel/Dots'
-import { type OffersWithRelationships } from '@/lib/types'
+import { type SuggestedOffersWithRelationships } from '@/lib/types'
 
 interface Props {
-  offers: OffersWithRelationships[]
+  offers: SuggestedOffersWithRelationships
 }
 
 export default function Carousel({ offers }: Props) {

@@ -1,11 +1,13 @@
 import AvatarIcon from '@/components/AvatarIcon'
 import Button from '@/components/Button'
-import { type Category } from '@prisma/client'
 
 interface Props {
   id: string
   title: string
-  categories: Category[]
+  categories: Array<{
+    id: string
+    title: string
+  }>
   description: string
   owner: string
   location: string

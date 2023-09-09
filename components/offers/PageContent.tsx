@@ -2,19 +2,20 @@
 
 import Carousel from '@/components/offers/Carousel'
 import PageNav from '@/components/offers/PageNav'
-import { type Offers, type OffersTab } from '@/lib/types'
+import { type SuggestedOffersWithRelationships, type OffersTab } from '@/lib/types'
 import { useState } from 'react'
 import OffersList from './OffersList'
 import { type UserType } from '@prisma/client'
 
 interface Props {
-  carouselOffers: Offers[]
-  generalOffers: Offers[]
-  myOffers: Offers[]
+  carouselOffers: SuggestedOffersWithRelationships
+  generalOffers: SuggestedOffersWithRelationships
+  suggestedOffers: SuggestedOffersWithRelationships
+  myOffers: SuggestedOffersWithRelationships
   userType: UserType
 }
 
-export default function PageContent({ carouselOffers, generalOffers, myOffers, userType }: Props) {
+export default function PageContent({ carouselOffers, generalOffers, myOffers, suggestedOffers, userType }: Props) {
   const [tab, setTab] = useState<OffersTab>('All')
   const [search, setSearch] = useState('')
 
@@ -30,6 +31,7 @@ export default function PageContent({ carouselOffers, generalOffers, myOffers, u
     All: generalOffers,
     Mine: myOffers,
     Applied: myOffers,
+    Suggested: suggestedOffers,
   }
 
   return (

@@ -1,7 +1,7 @@
 import SearchInput from '../SearchInput'
 import Collapse from '../Collapse'
 import Button from '../Button'
-import { BookmarkIcon, BriefcaseIcon, ListBulletIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { BookmarkIcon, BriefcaseIcon, LightBulbIcon, ListBulletIcon, PlusIcon } from '@heroicons/react/24/outline'
 import { type OffersTab } from '@/lib/types'
 import { type UserType } from '@prisma/client'
 
@@ -17,6 +17,7 @@ const OFFERS_TAB_TRANSLATION = {
   All: 'Todas',
   Mine: 'Mis ofertas',
   Applied: 'Ofertas aplicadas',
+  Suggested: 'Ofertas sugeridas',
 }
 
 export default function PageNav({ userType, search, tab, onTabClick, onSearch }: Props) {
@@ -34,6 +35,11 @@ export default function PageNav({ userType, search, tab, onTabClick, onSearch }:
     title: 'Applied',
     content: 'Ofertas aplicadas',
     icon: <BookmarkIcon className="h-5 w-5" />,
+    condition: userType === 'PERSON',
+  }, {
+    title: 'Suggested',
+    content: 'Ofertas sugeridas',
+    icon: <LightBulbIcon className="h-5 w-5" />,
     condition: userType === 'PERSON',
   }]
 
@@ -88,15 +94,16 @@ export default function PageNav({ userType, search, tab, onTabClick, onSearch }:
       </div>
       <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row md:place-items-center md:justify-end xl:w-auto">
         <SearchInput searchText={search} setSearchText={onSearch} />
-        <Button
-          url="/home/offers/create"
-          style="DEFAULT"
-          color="PRIMARY"
-          hover="WHITE"
-        >
-          <PlusIcon className="h-5 w-5" />
-          Agregar
-        </Button>
+        {userType === 'COMPANY' &&
+          <Button
+            url="/home/offers/create"
+            style="DEFAULT"
+            color="PRIMARY"
+            hover="WHITE"
+          >
+            <PlusIcon className="h-5 w-5" />
+            Agregar
+          </Button>}
       </div>
     </div>
   )
