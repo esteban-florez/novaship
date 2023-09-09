@@ -59,7 +59,7 @@ export default function PageNav({ userType, search, tab, onTabClick, onSearch }:
           return null
         })}
       </div>
-      <div className="w-full xl:hidden">
+      <div className="mb-4 w-full sm:mb-0 xl:hidden">
         <Collapse
           title={`Categorías - ${OFFERS_TAB_TRANSLATION[tab]}`}
           bg="bg-white"

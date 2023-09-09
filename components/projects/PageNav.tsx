@@ -1,16 +1,17 @@
 import { ListBulletIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
 import Button from '../Button'
 import { type TabProp } from '@/lib/types'
-import Input from '../forms/inputs/Input'
+import SearchInput from '../SearchInput'
 
 interface Props {
+  search: string
   active: TabProp
-  onInput: (event: OnInputEvent | SelectOnInputEvent) => void
   onTabClick: (tabOption?: TabProp) => void
+  onSearch: (value: string) => void
 }
 
 // DRY Filter
-export default function PageNav({ active, onInput, onTabClick }: Props) {
+export default function PageNav({ search, active, onTabClick, onSearch }: Props) {
   return (
     <div className="flex w-full columns-1 flex-col items-start justify-between gap-4 p-4 lg:columns-2 lg:flex-row lg:items-center lg:gap-0">
       <div className="order-2 mt-3 flex w-full flex-col gap-1 sm:mt-0 sm:flex-row sm:gap-x-3 lg:order-1">
@@ -34,8 +35,8 @@ export default function PageNav({ active, onInput, onTabClick }: Props) {
         </Button>
       </div>
       <div className="order-1 flex w-full flex-col items-center justify-between gap-x-3 sm:flex-row lg:order-2 lg:place-items-center lg:justify-end xl:w-auto">
-        <Input name="title" placeholder="Buscar..." onInput={onInput} className="h-10 w-auto rounded-md border border-neutral-400 bg-white shadow-inner sm:my-3" />
-        <div className="w-full sm:w-auto">
+        <SearchInput searchText={search} setSearchText={onSearch} />
+        <div className="mt-2 w-full sm:mt-0 sm:w-auto">
           <Button
             url="/home/projects/create"
             style="DEFAULT"

@@ -34,7 +34,9 @@ export default function PageContent({ carouselOffers, generalOffers, myOffers, u
 
   return (
     <>
-      <Carousel offers={carouselOffers} />
+      <Carousel
+        offers={carouselOffers}
+      />
       <PageNav
         tab={tab}
         onTabClick={handleChangeTab}
@@ -42,7 +44,10 @@ export default function PageContent({ carouselOffers, generalOffers, myOffers, u
         onSearch={handleSearch}
         userType={userType}
       />
-      <OffersList offers={OFFERS_OPTION[tab]} search={search} />
+      <OffersList
+        offers={OFFERS_OPTION[tab]}
+        search={search}
+      />
     </>
   )
 }
