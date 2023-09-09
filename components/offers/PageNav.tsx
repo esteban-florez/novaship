@@ -3,8 +3,10 @@ import Collapse from '../Collapse'
 import Button from '../Button'
 import { BookmarkIcon, BriefcaseIcon, ListBulletIcon, PlusIcon } from '@heroicons/react/24/outline'
 import { type OffersTab } from '@/lib/types'
+import { type UserType } from '@prisma/client'
 
 interface Props {
+  userType: UserType
   search: string
   tab: OffersTab
   onTabClick: (tabOption?: OffersTab) => void
@@ -17,37 +19,44 @@ const OFFERS_TAB_TRANSLATION = {
   Applied: 'Ofertas aplicadas',
 }
 
-export default function PageNav({ search, tab, onTabClick, onSearch }: Props) {
+export default function PageNav({ userType, search, tab, onTabClick, onSearch }: Props) {
   const navChildren = [{
     title: 'All',
     content: 'Todas',
     icon: <ListBulletIcon className="h-5 w-5" />,
+    condition: true,
   }, {
     title: 'Mine',
     content: 'Mis ofertas',
     icon: <BriefcaseIcon className="h-5 w-5" />,
+    condition: userType === 'COMPANY',
   }, {
     title: 'Applied',
     content: 'Ofertas aplicadas',
     icon: <BookmarkIcon className="h-5 w-5" />,
+    condition: userType === 'PERSON',
   }]
 
   return (
     <div className="flex w-full flex-col items-center justify-between px-4 py-5 md:flex-row xl:px-6">
       <div className="hidden gap-2 xl:flex">
         {navChildren.map((children) => {
-          return (
-            <Button
-              key={children.title}
-              style="DEFAULT"
-              color={children.title === tab ? 'PRIMARY' : 'WHITE'}
-              hover={children.title === tab ? 'WHITE' : 'PRIMARY'}
-              onClick={() => { onTabClick(children.title as OffersTab) }}
-            >
-              {children.icon}
-              {children.content}
-            </Button>
-          )
+          if (children.condition) {
+            return (
+              <Button
+                key={children.title}
+                style="DEFAULT"
+                color={children.title === tab ? 'PRIMARY' : 'WHITE'}
+                hover={children.title === tab ? 'WHITE' : 'PRIMARY'}
+                onClick={() => { onTabClick(children.title as OffersTab) }}
+              >
+                {children.icon}
+                {children.content}
+              </Button>
+            )
+          }
+
+          return null
         })}
       </div>
       <div className="w-full xl:hidden">
@@ -57,18 +66,22 @@ export default function PageNav({ search, tab, onTabClick, onSearch }: Props) {
         >
           <div className="flex flex-col gap-2">
             {navChildren.map((children) => {
-              return (
-                <Button
-                  key={children.title}
-                  style="DEFAULT"
-                  color={children.title === tab ? 'PRIMARY' : 'WHITE'}
-                  hover={children.title === tab ? 'WHITE' : 'PRIMARY'}
-                  onClick={() => { onTabClick(children.title as OffersTab) }}
-                >
-                  {children.icon}
-                  {children.content}
-                </Button>
-              )
+              if (children.condition) {
+                return (
+                  <Button
+                    key={children.title}
+                    style="DEFAULT"
+                    color={children.title === tab ? 'PRIMARY' : 'WHITE'}
+                    hover={children.title === tab ? 'WHITE' : 'PRIMARY'}
+                    onClick={() => { onTabClick(children.title as OffersTab) }}
+                  >
+                    {children.icon}
+                    {children.content}
+                  </Button>
+                )
+              }
+
+              return null
             })}
           </div>
         </Collapse>

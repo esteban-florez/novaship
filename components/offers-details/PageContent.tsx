@@ -10,9 +10,10 @@ import InfoUser from './InfoUser'
 import Collapse from '../Collapse'
 import AvatarInfo from './AvatarInfo'
 import { type Company, type Category, type Location, type Offer, type Skill } from '@prisma/client'
+import { getExpirationDiff } from '@/lib/validation/expiration-dates'
 
 interface Props {
-  userId: string
+  isOwner: boolean
   offer: Offer & {
     categories: Category[]
     location: Location
@@ -21,7 +22,7 @@ interface Props {
   }
 }
 
-export default function PageContent({ userId, offer }: Props) {
+export default function PageContent({ isOwner, offer }: Props) {
   const offerCategories = offer.categories.map((category) => {
     return category.title
   })
@@ -49,12 +50,11 @@ export default function PageContent({ userId, offer }: Props) {
       <div className="col-span-7">
         <Details
           id={offer.id}
-          isOwner={userId === offer.companyId}
+          isOwner={isOwner}
           title={offer.title}
-          expiresAt={offer.expiresAt}
+          expiresAt={getExpirationDiff(offer.createdAt, offer.expiresAt ?? new Date())}
           description={offer.description}
           categories={offerCategories}
-          updateOffer={offer.id}
         />
         <div className="mt-4 block lg:hidden">
           <Collapse

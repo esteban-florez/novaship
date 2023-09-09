@@ -67,7 +67,7 @@ export default function Card({ title, categories, description, owner, location, 
               </div>}
             {owner !== undefined &&
               <div className="flex items-center gap-2">
-                <AvatarIcon username="Pedro Lopez" className="bg-black text-white" />
+                <AvatarIcon username={owner} className="bg-black text-white" />
                 <div className="flex flex-col">
                   <h5 className="text-sm font-bold">{owner}</h5>
                   <small className="-mt-1 text-xs">{location}</small>

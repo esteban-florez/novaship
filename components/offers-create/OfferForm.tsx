@@ -10,9 +10,9 @@ import { type Category, type Location, Mode, Schedule, type Skill, type Offer, t
 import useSubmit from '@/lib/hooks/useSubmit'
 import { type HTTP_METHOD } from 'next/dist/server/web/http'
 import { schema } from '@/lib/validation/schemas/offer'
-import { expirations, modes, schedules } from '@/lib/translations'
+import { modes, schedules } from '@/lib/translations'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
-import { EXPIRATION_DATES } from '@/lib/validation/expiration-dates'
+import { EXPIRATION_DATES, getExpirationId } from '@/lib/validation/expiration-dates'
 
 type Props = React.PropsWithChildren<{
   skills: Skill[]
@@ -28,8 +28,6 @@ type Props = React.PropsWithChildren<{
   })
 }>
 
-// CHECK -> este componente pesa 177KB | 55KB zipped
-// PENDING -> schedule field.
 export default function OfferForm({ offer, skills, categories, jobs, locations, action, method }: Props) {
   const offerSkills = offer?.skills.map(skill => {
     return skill.id
@@ -38,6 +36,10 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
   const offerCategories = offer?.categories.map(category => {
     return category.id
   })
+
+  const offerExpiresAt = offer?.expiresAt != null
+    ? getExpirationId(offer.createdAt, offer.expiresAt)
+    : undefined
 
   const {
     handleSubmit, alert, serverErrors,
@@ -80,18 +82,6 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
               type: 'enum',
               data: Mode,
               translation: modes,
-            }}
-          />
-          <Input
-            name="limit"
-            placeholder="Ej: 10"
-            label="Límite de postulantes"
-            register={register}
-            errors={errors}
-            type="number"
-            config={{
-              valueAsNumber: true,
-              value: offer?.limit ?? undefined,
             }}
           />
           <Select
@@ -184,16 +174,29 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
           />
         </FormSection>
         <FormSection title="Limites de la oferta" description="Decide el número máximo de aspirantes que pueden postularse a la oferta, así como su fecha de expiración.">
-          {/* TODO -> añadir límite de aspirantes simultáneos */}
+          <Input
+            name="limit"
+            placeholder="Ej: 10"
+            label="Límite de postulantes"
+            register={register}
+            errors={errors}
+            type="number"
+            config={{
+              valueAsNumber: true,
+              value: offer?.limit ?? undefined,
+            }}
+          />
           <Select
             name="expiresAt"
             label="Fecha de expiración"
             register={register}
             errors={errors}
+            config={{
+              value: offerExpiresAt,
+            }}
             options={{
-              type: 'enum',
+              type: 'rows',
               data: EXPIRATION_DATES,
-              translation: expirations,
             }}
           />
         </FormSection>

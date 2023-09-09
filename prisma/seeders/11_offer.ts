@@ -4,8 +4,7 @@ import numbers from '@/lib/utils/number'
 import types from '@/lib/utils/types'
 import { Mode, Schedule } from '@prisma/client'
 import collect from '@/lib/utils/collection'
-
-const ExpireOptions = [1, 3, 5, 7, 15, 30]
+import { ExpireOptions } from '@/lib/validation/expiration-dates'
 
 export default async function offer() {
   const MAX = data.titles.length
@@ -13,6 +12,7 @@ export default async function offer() {
   const locations = await prisma.location.findMany({ select: { id: true } })
   const jobs = await prisma.job.findMany({ select: { id: true } })
   const skills = await prisma.skill.findMany({ select: { id: true } })
+  const categories = await prisma.category.findMany({ select: { id: true } })
 
   for (let i = 0; i < MAX; i++) {
     const position = numbers(MAX - 1).random()
@@ -20,7 +20,7 @@ export default async function offer() {
     const description = data.titles[position]
 
     const date = new Date()
-    date.setDate(date.getDate() + ExpireOptions[Math.floor(Math.random() * ExpireOptions.length)])
+    date.setDate(date.getDate() + numbers(ExpireOptions).randomValue())
 
     await prisma.offer.create({
       data: {
@@ -30,6 +30,9 @@ export default async function offer() {
         mode: types(Mode).random(),
         salary: numbers(80, 520).random(),
         schedule: types(Schedule).random(),
+        categories: {
+          connect: collect(categories).random(6).all(),
+        },
         job: {
           connect: collect(jobs).random().first(),
         },

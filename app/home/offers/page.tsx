@@ -20,8 +20,15 @@ export default async function OffersPage() {
 
   const allOffers = offers.filter(offer => offer.companyId !== activeUser.id)
   const myOffers = offers.filter(offer => offer.companyId === activeUser.id)
+  const carouselOffers = allOffers.splice(0, 5)
+  const userType = activeUser.type
 
-  const carruselOffers = allOffers.splice(0, 5)
-
-  return <PageContent generalOffers={allOffers} myOffers={myOffers} carruselOffers={carruselOffers} />
+  return (
+    <PageContent
+      generalOffers={allOffers}
+      myOffers={myOffers}
+      carouselOffers={carouselOffers}
+      userType={userType}
+    />
+  )
 }

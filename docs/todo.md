@@ -18,6 +18,7 @@
 - Crear componente que lea la url para mostrar un alert.
 - Llevarte a donde cometiste el error en signup.
 - ExpiresAt handler.
+- deletedAt middleware.
 
 # Ideas
 

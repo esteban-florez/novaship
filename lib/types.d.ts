@@ -23,8 +23,6 @@ type SelectableOption = OptionCategory | OptionSkill | OptionPerson
 type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE' | 'NEUTRAL'
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 
-type VisibilityFilter = 'PRIVATE' | 'PUBLIC' | 'ALL'
-
 interface Offers extends Offer {
   company: Company
   location: Location
@@ -34,6 +32,17 @@ interface Offers extends Offer {
 // ----------------------------------------------------------------------
 // --------------------------- Projects ---------------------------------
 // ----------------------------------------------------------------------
+type ProjectMemberships = Array<Membership & {
+  person: {
+    id: string
+    name: string
+  } | null
+  company: {
+    id: string
+    name: string
+  } | null
+}>
+
 type ProjectTeam = Team & {
   memberships: Array<Membership & {
     person: {

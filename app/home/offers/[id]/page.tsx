@@ -29,5 +29,5 @@ export default async function OfferPage({ params: { id } }: Context) {
     redirect('/home/offers')
   }
 
-  return <PageContent offer={offer} userId={activeUser.id} />
+  return <PageContent offer={offer} isOwner={offer.companyId === activeUser.id} />
 }

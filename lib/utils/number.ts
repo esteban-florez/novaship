@@ -62,6 +62,14 @@ class Numbers<T extends number> {
   random() {
     return Math.floor(Math.random() * (this.MAX_VALUE - this.MIN_VALUE + 1) + this.MIN_VALUE)
   }
+
+  /**
+   * Returns a random value from array
+   * @returns number
+   */
+  randomValue() {
+    return this.number[Math.floor(Math.random() * this.number.length)]
+  }
 }
 
 /**
