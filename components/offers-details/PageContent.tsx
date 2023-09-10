@@ -1,5 +1,6 @@
 import {
   BanknotesIcon,
+  CheckIcon,
   ClockIcon,
   HomeModernIcon,
 } from '@heroicons/react/24/outline'
@@ -31,17 +32,17 @@ export default function PageContent({ isOwner, offer }: Props) {
     {
       title: 'Modalidad',
       content: modes[offer.mode],
-      icon: <HomeModernIcon className="h-12 w-12 text-primary" />,
+      icon: <HomeModernIcon />,
     },
     {
       title: 'Salario',
       content: [offer.salary, ' $'],
-      icon: <BanknotesIcon className="h-12 w-12 text-primary" />,
+      icon: <BanknotesIcon />,
     },
     {
       title: 'Horas',
       content: offer.hours ?? 'No especificado',
-      icon: <ClockIcon className="h-12 w-12 text-primary" />,
+      icon: <ClockIcon />,
     },
   ]
 
@@ -71,10 +72,10 @@ export default function PageContent({ isOwner, offer }: Props) {
         </div>
       </div>
       <div className="col-span-7 lg:col-span-4 xl:col-span-5">
-        <div className="grid grid-cols-2 gap-x-2 gap-y-3">
+        <div className="grid grid-cols-3 gap-x-2 gap-y-3">
           {atributtes.map((atr) => {
             return (
-              <div className="col-span-2 md:col-span-1" key={atr.title}>
+              <div className="col-span-3 md:col-span-1 lg:col-span-3 xl:col-span-1" key={atr.title}>
                 <Atributtes
                   title={atr.title}
                   icon={atr.icon}
@@ -86,10 +87,17 @@ export default function PageContent({ isOwner, offer }: Props) {
           })}
         </div>
         <div className="card mt-4 bg-white p-4 shadow-lg">
-          <h6 className="text-lg font-bold md:text-xl">Habilidades requeridas</h6>
-          {offer.skills.map(skill => {
-            return <p key={skill.id}>{skill.title}</p>
-          })}
+          <h6 className="text-lg font-bold md:text-2xl">Habilidades requeridas</h6>
+          <ul className="mt-2 flex flex-col">
+            {offer.skills.map(skill => {
+              return (
+                <div className="flex items-center gap-1.5" key={skill.id}>
+                  <CheckIcon className="h-5 w-5 text-primary" />
+                  <li className="text-base md:text-lg">{skill.title}</li>
+                </div>
+              )
+            })}
+          </ul>
         </div>
       </div>
       <div className="sticky hidden lg:col-span-3 lg:block xl:col-span-2">

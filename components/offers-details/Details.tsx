@@ -29,9 +29,9 @@ export default function Details({ id, isOwner, title, description, expiresAt, ca
       </div>
       <div className="flex w-full flex-col rounded-t-none p-4 xl:rounded-l-none">
         <h3 className="w-5/6 text-xl font-bold sm:text-2xl">{title}</h3>
-        <div className="flex flex-wrap gap-2 text-base text-primary">
+        <div className="flex flex-wrap gap-1 text-base font-semibold text-secondary">
           {categories.map(category => {
-            return <span key={category} className="badge badge-outline">{category}</span>
+            return <span key={category} className="-mt-1 cursor-pointer after:text-secondary after:content-[','] last:after:content-[] hover:text-secondary/60">{category}</span>
           })}
         </div>
         <p className="line-clamp-6 py-3">{description}</p>

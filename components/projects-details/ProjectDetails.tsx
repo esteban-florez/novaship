@@ -48,7 +48,7 @@ export default function ProjectDetails({ id, title, description, categories, isO
           {!isMember && !isOwner &&
             <Button
               style="DEFAULT"
-              color="SECONDARY"
+              color="PRIMARY"
               hover="WHITE"
             >
               <PencilIcon className="h-4 w-4" />

@@ -27,10 +27,10 @@ export default function Card({ title, categories, description, owner, location, 
         <img src="/onda-horizontal.webp" alt="Onda-horizontal" className="absolute bottom-0 w-full" />
       </div>
       <div className="card card-compact bg-base-100 shadow-lg">
-        <div className="flex flex-col gap-3 rounded-t-xl px-4 py-1">
+        <div className="flex flex-col gap-3 rounded-t-xl p-4 pt-1">
           {/* Ofertas */}
           <h3 className="text-lg font-bold sm:text-xl">{title}</h3>
-          <ul className="-mt-1 line-clamp-2 flex flex-row flex-wrap font-semibold text-primary">
+          <ul className="-mt-3 line-clamp-2 flex flex-row flex-wrap font-semibold text-primary">
             {categories?.map(category => {
               return (
                 <li
@@ -43,7 +43,7 @@ export default function Card({ title, categories, description, owner, location, 
             })}
           </ul>
           <p className="line-clamp-3 text-sm">{description}</p>
-          <div className="flex flex-col gap-3 pb-3 md:flex-row md:items-center md:justify-between md:gap-1">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-1">
             {members != null &&
               <div className="flex shrink-0 flex-row items-center justify-start -space-x-3">
                 {members.map((member, i) => {

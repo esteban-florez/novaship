@@ -10,11 +10,9 @@ interface Props {
 export default function InfoOwner({ name, description }: Props) {
   return (
     <>
-      <div className="flex items-center justify-start gap-2">
+      <div className="flex flex-col items-center justify-start gap-2 xl:flex-row">
         <AvatarIcon username={name} className="h-12 w-12 bg-black text-white" />
-        <div className="flex flex-col">
-          <p className="text-lg font-semibold">{name}</p>
-        </div>
+        <p className="text-center text-base font-semibold xl:text-start">{name}</p>
       </div>
       <p className="mb-1 line-clamp-3 text-sm">{description}</p>
       <Button
