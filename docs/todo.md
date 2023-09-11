@@ -15,6 +15,7 @@
 - Llevarte a donde cometiste el error en signup.
 - ExpiresAt handler.
 - deletedAt middleware.
+- Funcion para enviar datos a las rutas sin validacion.
 
 # Ideas
 

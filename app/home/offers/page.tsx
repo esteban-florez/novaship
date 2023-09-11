@@ -51,6 +51,11 @@ export default async function OffersPage() {
           title: true,
         },
       },
+      hiring: {
+        select: {
+          personId: true,
+        },
+      },
     },
   })
 
@@ -72,6 +77,9 @@ export default async function OffersPage() {
 
   const allOffers = offers.filter(offer => offer.companyId !== activeUser.id)
   const myOffers = offers.filter(offer => offer.companyId === activeUser.id)
+  const appliedOffers = offers.filter(offer => {
+    return offer.hiring.some(hiring => hiring.personId === activeUser.id)
+  })
   const carouselOffers = allOffers.splice(0, 5)
   const userType = activeUser.type
 
@@ -80,6 +88,7 @@ export default async function OffersPage() {
       generalOffers={allOffers}
       carouselOffers={carouselOffers}
       suggestedOffers={suggestedOffers}
+      appliedOffers={appliedOffers}
       myOffers={myOffers}
       userType={userType}
     />

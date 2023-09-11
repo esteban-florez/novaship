@@ -1,31 +1,55 @@
 import {
+  ArrowRightIcon,
   BanknotesIcon,
   ClockIcon,
   HomeModernIcon,
 } from '@heroicons/react/24/outline'
-import { modes } from '@/lib/translations'
+import { modes, offerStatuses } from '@/lib/translations'
 import Atributtes from './Atributtes'
 import Details from './Details'
 import InfoUser from './InfoUser'
 import Collapse from '../Collapse'
 import AvatarInfo from './AvatarInfo'
-import { type Company, type Category, type Location, type Offer, type Skill } from '@prisma/client'
+import { type Offer, type Status } from '@prisma/client'
 import { getExpirationDiff } from '@/lib/validation/expiration-dates'
+import AvatarIcon from '../AvatarIcon'
+import Button from '../Button'
 
 interface Props {
-  isOwner: boolean
+  userId: string
   offer: Offer & {
-    categories: Category[]
-    location: Location
-    company: Company
-    skills: Skill[]
+    company: {
+      description: string
+      name: string
+    }
+    hiring: Array<{
+      id: string
+      personId: string
+      person: {
+        name: string
+      }
+      status: Status | null
+    }>
+    location: {
+      title: string
+    }
+    categories: Array<{
+      title: string
+    }>
+    skills: Array<{
+      id: string
+      title: string
+    }>
   }
 }
 
-export default function PageContent({ isOwner, offer }: Props) {
+export default function PageContent({ userId, offer }: Props) {
+  const isOwner = offer.companyId === userId
+  const userHasApplied = offer.hiring.some(hiring => hiring.personId === userId)
   const offerCategories = offer.categories.map((category) => {
     return category.title
   })
+  const userHiringStatus = offer.hiring.find(hiring => hiring.personId === userId)?.status
 
   const atributtes = [
     {
@@ -55,6 +79,8 @@ export default function PageContent({ isOwner, offer }: Props) {
           expiresAt={getExpirationDiff(offer.createdAt, offer.expiresAt ?? new Date())}
           description={offer.description}
           categories={offerCategories}
+          userHasApplied={userHasApplied}
+          hiringStatus={userHiringStatus ?? 'PENDING'}
         />
         <div className="mt-4 block lg:hidden">
           <Collapse
@@ -101,6 +127,31 @@ export default function PageContent({ isOwner, offer }: Props) {
             description={offer.company.description}
           />
         </div>
+      </div>
+      <div className="card col-span-7 bg-white p-4 shadow">
+        <h2 className="text-xl font-semibold">Postulaciones - {offer.hiring.length}</h2>
+        {isOwner &&
+          <section className="mt-2 flex flex-col gap-4 sm:flex-row">
+            {offer.hiring.map(hiring => {
+              return (
+                <div key={hiring.id} className="flex flex-col gap-2 rounded-md border px-2 py-1">
+                  <div className="flex items-center gap-x-2">
+                    <AvatarIcon username={hiring.person.name} />
+                    <p>{hiring.person.name}</p>
+                  </div>
+                  <span className="text-center font-semibold text-neutral-600">{offerStatuses[hiring.status ?? 'PENDING']}</span>
+                  <Button
+                    url={`/home/offers/${offer.id}/hiring/${hiring.id}`}
+                    color="PRIMARY"
+                    hover="WHITE"
+                  >
+                    Ver petición
+                    <ArrowRightIcon className="h-5 w-5" />
+                  </Button>
+                </div>
+              )
+            })}
+          </section>}
       </div>
     </section>
   )

@@ -11,11 +11,12 @@ interface Props {
   carouselOffers: SuggestedOffersWithRelationships
   generalOffers: SuggestedOffersWithRelationships
   suggestedOffers: SuggestedOffersWithRelationships
+  appliedOffers: SuggestedOffersWithRelationships
   myOffers: SuggestedOffersWithRelationships
   userType: UserType
 }
 
-export default function PageContent({ carouselOffers, generalOffers, myOffers, suggestedOffers, userType }: Props) {
+export default function PageContent({ carouselOffers, generalOffers, myOffers, suggestedOffers, appliedOffers, userType }: Props) {
   const [tab, setTab] = useState<OffersTab>('All')
   const [search, setSearch] = useState('')
 
@@ -30,7 +31,7 @@ export default function PageContent({ carouselOffers, generalOffers, myOffers, s
   const OFFERS_OPTION = {
     All: generalOffers,
     Mine: myOffers,
-    Applied: myOffers,
+    Applied: appliedOffers,
     Suggested: suggestedOffers,
   }
 

@@ -18,10 +18,41 @@ export default async function OfferPage({ params: { id } }: Context) {
   const offer = await prisma.offer.findFirst({
     where: { id },
     include: {
-      company: true,
-      categories: true,
-      skills: true,
-      location: true,
+      company: {
+        select: {
+          description: true,
+          name: true,
+        },
+      },
+      categories: {
+        select: {
+          title: true,
+        },
+      },
+      skills: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
+      location: {
+        select: {
+          title: true,
+        },
+      },
+      hiring: {
+        select: {
+          id: true,
+          personId: true,
+          status: true,
+          person: {
+            select: {
+              name: true,
+            },
+          },
+        },
+
+      },
     },
   })
 
@@ -29,5 +60,10 @@ export default async function OfferPage({ params: { id } }: Context) {
     redirect('/home/offers')
   }
 
-  return <PageContent offer={offer} isOwner={offer.companyId === activeUser.id} />
+  return (
+    <PageContent
+      offer={offer}
+      userId={activeUser.id}
+    />
+  )
 }
