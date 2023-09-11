@@ -19,7 +19,7 @@ export const routes: Rec = {
   subtask: 'Subtarea',
   update: 'Actualizar',
   chat: 'Chat',
-  teams: 'Equipo de trabajo',
+  teams: 'Equipos de trabajo',
 }
 
 export const statuses = {

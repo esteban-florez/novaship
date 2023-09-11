@@ -7,9 +7,10 @@ interface Props {
   owner: string
   location: string
   description: string
+  verification?: boolean
 }
 
-export default function InfoUser({ avatarInfo = false, owner, location, description }: Props) {
+export default function InfoUser({ owner, location, description, avatarInfo = false, verification = true }: Props) {
   return (
     <>
       {avatarInfo &&
@@ -19,21 +20,17 @@ export default function InfoUser({ avatarInfo = false, owner, location, descript
           <p className="-my-1 text-center text-sm">{location}</p>
         </div>}
       <div className="divider mt-0" />
-      <p className="mb-3 line-clamp-4 text-base">{description}</p>
-      <div className="mb-4 flex flex-col gap-1">
-        <div className="flex items-center gap-2">
-          <CheckBadgeIcon className="h-6 w-6 text-secondary" />
-          <p className="text-sm">Empresa verificada</p>
+      <p className="mb-3 line-clamp-3 text-base">{description}</p>
+      {verification && (
+        <div className="mb-4 flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <CheckBadgeIcon className="h-6 w-6 text-secondary" />
+            <p className="text-sm">Empresa verificada</p>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <CheckBadgeIcon className="h-6 w-6 text-secondary" />
-          <p className="text-sm">1 oferta idk</p>
-        </div>
-      </div>
+      )}
       <Button
-        style="DEFAULT"
         color="SECONDARY"
-        hover="WHITE"
       >
         Ver más
       </Button>

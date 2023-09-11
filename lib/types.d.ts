@@ -31,6 +31,11 @@ interface Offers extends Offer {
   categories: Category[]
 }
 
+type MembershipWithRelations = Membership & {
+  person: Person | null
+  company: Company | null
+}
+
 // ----------------------------------------------------------------------
 // --------------------------- Projects ---------------------------------
 // ----------------------------------------------------------------------
