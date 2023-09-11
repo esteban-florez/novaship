@@ -29,6 +29,22 @@ class Collection<T> {
     }) as string[]
   }
 
+  titles() {
+    return this.array.map(element => {
+      const isObject = typeof element === 'object' && element !== null
+
+      if (!isObject) {
+        throw new Error('Failed to extract titles: The elements are not objects.')
+      }
+
+      if (!('title' in element)) {
+        throw new Error('Failed to extract titles: The elements are missing \'id\' property.')
+      }
+
+      return element.title
+    }) as string[]
+  }
+
   random(amount = 1) {
     const arrayCopy = structuredClone(this.array)
     const result = []

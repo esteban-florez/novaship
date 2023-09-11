@@ -16,6 +16,7 @@ interface Context {
 
 export default async function UpdateOfferPage({ params: { id } }: Context) {
   const activeUser = await auth.user()
+
   const offer = await prisma.offer.findFirst({
     where: { id },
     include: {
@@ -25,30 +26,20 @@ export default async function UpdateOfferPage({ params: { id } }: Context) {
     },
   })
 
-  const skills = await prisma.skill.findMany({
-    orderBy: {
-      title: 'asc',
-    },
-  })
+  const locations = await prisma.location.findMany()
+  const skills = await prisma.skill.findMany({ orderBy: { title: 'asc' } })
+  const categories = await prisma.category.findMany({ orderBy: { title: 'asc' } })
+  const jobs = await prisma.job.findMany({ orderBy: { title: 'asc' } })
 
-  const categories = await prisma.category.findMany({
-    orderBy: {
-      title: 'asc',
-    },
-  })
-
-  const locations = await prisma.location.findMany({
-    orderBy: {
-      title: 'asc',
-    },
-  })
-
-  if (offer === null || offer.companyId !== activeUser.id) redirect('/home/offers')
+  if (offer === null || offer.companyId !== activeUser.id) {
+    redirect('/home/offers')
+  }
 
   return (
     <OfferForm
-      action={`/api/offers/${id}`}
       method="PUT"
+      action={`/api/offers/${id}`}
+      jobs={jobs}
       categories={categories}
       skills={skills}
       locations={locations}

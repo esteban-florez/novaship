@@ -63,5 +63,10 @@ export default async function ProjectsPage() {
     }).length > 0
   })
 
-  return <PageContent projects={availableProjects} personalProjects={personalProjects} />
+  return (
+    <PageContent
+      projects={availableProjects}
+      personalProjects={personalProjects}
+    />
+  )
 }

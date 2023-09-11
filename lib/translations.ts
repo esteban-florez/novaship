@@ -20,6 +20,7 @@ export const routes: Rec = {
   update: 'Actualizar',
   chat: 'Chat',
   teams: 'Equipos de trabajo',
+  hiring: 'Postulaciones',
 }
 
 export const statuses = {
@@ -84,3 +85,9 @@ export const expirations = {
   DAYS15: '15 días',
   DAYS31: '31 días',
 }
+
+export const offerStatuses = {
+  PENDING: 'Pendiente',
+  REJECTED: 'Rechazada',
+  ACCEPTED: 'Aceptada',
+} as const

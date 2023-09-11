@@ -135,7 +135,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
       where: { id },
     })
 
-    return NextResponse.json(project)
+    return NextResponse.redirect(url('/home/projects'))
   } catch (error) {
     return handleError(error)
   }

@@ -4,10 +4,6 @@
 - Hacer middleware de autenticación.
 - Añadir validaciones front y back.
 - Icono de hamburguesa necesita interactividad (Esteban).
-- Iconos para cada archivo.extension en los archivos del proyecto, doc, xlc, txt, etc.
-- Función para añadir n campos de experiencias.
-- Revisar rutas: /user/profile y /profile.
-- Arreglar los perfiles (ruta /home/profile no existe, en el navbar).
 - Rediseñar el chat
 - Guiar al usuario por la aplicación.
 - Banner recordatorio de completar perfil.
@@ -17,6 +13,9 @@
 - Añadir opcion de registrar campo si no existe.
 - Crear componente que lea la url para mostrar un alert.
 - Llevarte a donde cometiste el error en signup.
+- ExpiresAt handler.
+- deletedAt middleware.
+- Funcion para enviar datos a las rutas sin validacion.
 
 # Ideas
 

@@ -2,7 +2,6 @@ import { type Team, type Membership, type Person } from '@prisma/client'
 import { EyeIcon } from '@heroicons/react/24/outline'
 import InfoOwner from './InfoOwner'
 import Button from '../Button'
-
 interface Props {
   id: string
   team: Team & {

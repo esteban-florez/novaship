@@ -19,11 +19,14 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.user(request)
+    const activeUser = await auth.user(request)
 
     const offer = await prisma.offer.findFirst({
       where: {
-        id,
+        AND: [
+          { id },
+          { companyId: activeUser.id },
+        ],
       },
       include: {
         categories: true,
@@ -32,7 +35,7 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
       },
     })
 
-    if (offer === null || offer.companyId !== user.id) {
+    if (offer === null) {
       redirect('/home/projects')
     }
 
@@ -80,15 +83,20 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
 
     const offer = await prisma.offer.findFirst({
       where: {
-        id,
+        AND: [
+          { id },
+          { companyId: activeUser.id },
+        ],
       },
     })
 
-    if (offer !== null && offer.companyId === activeUser.id) {
-      await prisma.offer.deleteMany({
-        where: { id },
-      })
+    if (offer == null) {
+      redirect('/home/projects')
     }
+
+    await prisma.offer.deleteMany({
+      where: { id },
+    })
 
     return NextResponse.redirect(url('/home/offers'))
   } catch (error) {

@@ -1,7 +1,7 @@
 import { array, nativeEnum, number, object, string, type z } from 'zod'
 import messages from '../messages'
 import { Mode, Schedule } from '@prisma/client'
-import { EXPIRATION_DATES } from '../expiration-dates'
+import { dates } from '../expiration-dates'
 
 export type Fields = z.infer<typeof schema>
 
@@ -13,8 +13,8 @@ export const schema = object({
     .min(15, messages.min(15))
     .max(255, messages.max(255)),
   hours: number(messages.number)
-    .min(8, messages.min(8))
-    .max(50, messages.max(50))
+    .min(1, messages.min(1))
+    .max(60, messages.max(60))
     .int()
     .positive(),
   limit: number(messages.number)
@@ -23,8 +23,8 @@ export const schema = object({
     .int()
     .positive(),
   salary: number(messages.number)
-    .min(8, messages.min(8))
-    .max(50, messages.max(50))
+    .min(1, messages.min(1))
+    .max(2000, messages.max(2000))
     .positive(),
   categories: array(string(messages.string)
     .cuid(messages.cuid), messages.array)
@@ -36,7 +36,7 @@ export const schema = object({
     .cuid(messages.cuid),
   jobId: string(messages.string)
     .cuid(messages.cuid),
-  expiresAt: nativeEnum(EXPIRATION_DATES, messages.enum),
+  expiresAt: nativeEnum(dates, messages.enum),
   mode: nativeEnum(Mode, messages.enum),
   schedule: nativeEnum(Schedule, messages.enum),
 })

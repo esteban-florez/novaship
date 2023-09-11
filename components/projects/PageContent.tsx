@@ -2,7 +2,7 @@
 
 import PageNav from './PageNav'
 import { useState } from 'react'
-import { type ProjectWithTeamAndCategories, type TabProp, type VisibilityFilter } from '@/lib/types'
+import { type ProjectWithTeamAndCategories, type TabProp } from '@/lib/types'
 import ProjectsCard from './ProjectsCard'
 
 type Props = React.PropsWithChildren<{
@@ -12,24 +12,7 @@ type Props = React.PropsWithChildren<{
 
 export default function PageContent({ projects, personalProjects }: Props) {
   const [tab, setTab] = useState<TabProp>('All')
-  const [visibility, setVisibility] = useState<VisibilityFilter>('ALL')
-  const [members, setMembers] = useState(0)
-  const [title, setTitle] = useState('')
-
-  const handleChange = (event: OnInputEvent | SelectOnInputEvent) => {
-    const { name, value } = event.target
-
-    if (name === 'title') {
-      setTitle(value)
-    }
-    if (name === 'visibility' && (value === 'PRIVATE' || value === 'PUBLIC' || value === 'ALL')) setVisibility(value)
-    if (name === 'members') {
-      const newValue = parseInt(value)
-      if (typeof newValue === 'number') {
-        setMembers(newValue >= 0 ? newValue : 0)
-      }
-    }
-  }
+  const [search, setSearch] = useState('')
 
   const handleChangeTab = (tabOption?: TabProp) => {
     if (tabOption !== null && tabOption !== undefined) setTab(tabOption)
@@ -37,11 +20,14 @@ export default function PageContent({ projects, personalProjects }: Props) {
 
   return (
     <>
-      <PageNav active={tab} onInput={handleChange} onTabClick={handleChangeTab} />
+      <PageNav
+        search={search}
+        active={tab}
+        onSearch={setSearch}
+        onTabClick={handleChangeTab}
+      />
       <ProjectsCard
-        title={title}
-        members={members}
-        visibility={visibility}
+        search={search}
         projects={tab === 'All' ? projects : personalProjects}
       />
     </>

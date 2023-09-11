@@ -1,16 +1,15 @@
-import { type ProjectWithTeamAndCategories, type VisibilityFilter } from '@/lib/types'
+import { type ProjectWithTeamAndCategories } from '@/lib/types'
 import EmptyContent from '../EmptyContent'
 import Card from '../Card'
+import { includesValue } from '@/lib/utils/text'
 
 interface Props {
+  search: string
   projects: ProjectWithTeamAndCategories[]
-  visibility: VisibilityFilter
-  members: number
-  title: string
 }
 
 // TODO -> pagination
-export default function Projects({ projects, visibility, members, title }: Props) {
+export default function Projects({ search, projects }: Props) {
   if (projects.length === 0) {
     return (
       <EmptyContent title="No encontramos nada..." className="sm:w-2/4">
@@ -25,9 +24,8 @@ export default function Projects({ projects, visibility, members, title }: Props
     >
       {projects.map(project => {
         if (
-          (title === '' || project.title.toLowerCase().includes(title.toLowerCase())) &&
-            (visibility === 'ALL' || project.visibility === visibility) &&
-            (members === 0 || project.team.memberships.length <= members)
+          (search === '' || includesValue(project.title, search)) ||
+          (includesValue(project.description, search))
         ) {
           return (
             <div key={project.id} className="mb-4 break-inside-avoid">

@@ -20,10 +20,33 @@ type SelectableSkill = Selectable<OptionSkill>
 type SelectablePerson = Selectable<OptionPerson>
 type SelectableOption = OptionCategory | OptionSkill | OptionPerson
 
-type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE' | 'GHOST'
+type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE' | 'NEUTRAL'
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 
-type VisibilityFilter = 'PRIVATE' | 'PUBLIC' | 'ALL'
+// ----------------------------------------------------------------------
+// --------------------------- Projects ---------------------------------
+// ----------------------------------------------------------------------
+type SuggestedOffersWithRelationships = Array<Offer & {
+  company: {
+    id: string
+    name: string
+  }
+  location: {
+    title: string
+  }
+  job: {
+    id: string
+    title: string
+  }
+  categories: Array<{
+    id: string
+    title: string
+  }>
+  skills: Array<{
+    id: string
+    title: string
+  }>
+}>
 
 interface Offers extends Offer {
   company: Company
@@ -39,6 +62,17 @@ type MembershipWithRelations = Membership & {
 // ----------------------------------------------------------------------
 // --------------------------- Projects ---------------------------------
 // ----------------------------------------------------------------------
+type ProjectMemberships = Array<Membership & {
+  person: {
+    id: string
+    name: string
+  } | null
+  company: {
+    id: string
+    name: string
+  } | null
+}>
+
 type ProjectTeam = Team & {
   memberships: Array<Membership & {
     person: {
@@ -141,7 +175,7 @@ type UseSubmitResult = null | 'loading' | ApiResponseBody
 type TabProp = 'All' | 'Mine'
 type TeamGroupTab = 'members' | 'add'
 type ProjectDetailsTab = 'Files' | 'Tasks'
-type OffersTab = 'All' | 'Mine' | 'Applied'
+type OffersTab = 'All' | 'Mine' | 'Applied' | 'Suggested'
 
 interface ApiResponseBody {
   errorType?: keyof typeof ERRORS

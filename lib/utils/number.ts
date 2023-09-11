@@ -25,6 +25,7 @@ class Numbers<T extends number> {
     }
   }
 
+  // PENDING -> revisar
   /**
    * Returns a random phone number with format (0000) 000 00 00
    * @returns string
@@ -34,7 +35,8 @@ class Numbers<T extends number> {
     this.MAX_VALUE = 9_999_999
 
     const code = ['0412', '0414', '0416', '0424', '0426']
-    const phone = `${collect(code).random().first()}${this.random()}`
+    const selectedCode = collect(code).random().first()
+    const phone = `${selectedCode}${this.random()}`
     return phone.toString()
   }
 
@@ -61,6 +63,14 @@ class Numbers<T extends number> {
    */
   random() {
     return Math.floor(Math.random() * (this.MAX_VALUE - this.MIN_VALUE + 1) + this.MIN_VALUE)
+  }
+
+  /**
+   * Returns a random value from array
+   * @returns number
+   */
+  randomValue() {
+    return this.number[Math.floor(Math.random() * this.number.length)]
   }
 }
 
