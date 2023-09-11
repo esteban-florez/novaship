@@ -49,16 +49,24 @@ export default function Details({ id, isOwner, title, description, expiresAt, ca
           />
           <img src="/onda-vertical.webp" alt="Onda-vertical" className="absolute bottom-0 right-0 hidden h-full select-none lg:block" />
           <img src="/onda-horizontal.webp" alt="Onda-vertical" className="absolute bottom-0 block w-full select-none lg:hidden" />
+          {/* <img
+            src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            alt="Imagen de fondo carrusel"
+            className="h-32 w-full select-none rounded-t-lg object-cover md:h-44 lg:h-auto lg:rounded-l-lg"
+            />
+          <img src="/onda-vertical.webp" alt="Onda-vertical" className="absolute bottom-0 right-0 hidden h-full select-none lg:block" />
+          <img src="/onda-horizontal.webp" alt="Onda-vertical" className="absolute bottom-0 block w-full select-none lg:hidden" /> */}
+          {/* </div> */}
         </div>
         <div className="flex w-full flex-col rounded-t-none p-4 xl:rounded-l-none">
           <h3 className="w-5/6 text-xl font-bold sm:text-2xl">{title}</h3>
-          <div className="flex flex-wrap gap-2 text-base text-primary">
+          <div className="flex flex-wrap gap-1 text-base font-semibold text-neutral-600">
             {categories.map(category => {
-              return <span key={category} className="badge badge-outline">{category}</span>
+              return <span key={category} className="-mt-1 after:text-neutral-600 after:content-[','] last:after:content-[]">{category}</span>
             })}
           </div>
           <p className="line-clamp-6 py-3">{description}</p>
-          <div className="mx-auto flex w-full flex-col items-center justify-between gap-3 sm:mx-0 sm:w-auto sm:flex-row sm:gap-1 sm:text-sm lg:gap-2">
+          <div className="mx-auto flex w-full flex-col justify-between gap-3 sm:mx-0 sm:w-auto sm:flex-row sm:gap-1 sm:text-sm lg:gap-2">
             <Button
               url="/home/offers"
               style="DEFAULT"
@@ -69,30 +77,31 @@ export default function Details({ id, isOwner, title, description, expiresAt, ca
               Volver al listado
             </Button>
             <div className="flex flex-col gap-3 sm:flex-row">
-              {userHasApplied &&
-                <span className="mx-auto font-semibold text-neutral-600 sm:mx-0 sm:me-4">
-                  {statusMessages[hiringStatus]}
-                </span>}
-              {(!isOwner && !userHasApplied) &&
-                <form action="/api/hiring" method="POST" onSubmit={handleSubmit}>
-                  <Input
-                    name="offerId"
-                    placeholder=""
-                    value={id}
-                    className="hidden"
-                    register={register}
-                  />
-                  <Button
-                    style="DEFAULT"
-                    color="PRIMARY"
-                    hover="WHITE"
-                  >
-                    <PencilIcon className="h-4 w-4" />
-                    ¡Quiero Aplicar!
-                  </Button>
-                </form>}
+              <div className="flex flex-col gap-3 sm:flex-row">
+                {userHasApplied &&
+                  <span className="mx-auto font-semibold text-neutral-600 sm:mx-0 sm:me-4">
+                    {statusMessages[hiringStatus]}
+                  </span>}
+                {(!isOwner && !userHasApplied) &&
+                  <form action="/api/hiring" method="POST" onSubmit={handleSubmit}>
+                    <Input
+                      name="offerId"
+                      placeholder=""
+                      value={id}
+                      className="hidden"
+                      register={register}
+                    />
+                    <Button
+                      style="DEFAULT"
+                      color="PRIMARY"
+                      hover="WHITE"
+                    >
+                      <PencilIcon className="h-4 w-4" />
+                      ¡Quiero Aplicar!
+                    </Button>
+                  </form>}
 
-              {isOwner &&
+                {isOwner &&
                 (
                   <>
                     <Button
@@ -110,6 +119,7 @@ export default function Details({ id, isOwner, title, description, expiresAt, ca
                     />
                   </>
                 )}
+              </div>
             </div>
           </div>
         </div>
