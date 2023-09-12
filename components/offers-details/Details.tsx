@@ -49,14 +49,6 @@ export default function Details({ id, isOwner, title, description, expiresAt, ca
           />
           <img src="/onda-vertical.webp" alt="Onda-vertical" className="absolute bottom-0 right-0 hidden h-full select-none lg:block" />
           <img src="/onda-horizontal.webp" alt="Onda-vertical" className="absolute bottom-0 block w-full select-none lg:hidden" />
-          {/* <img
-            src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            alt="Imagen de fondo carrusel"
-            className="h-32 w-full select-none rounded-t-lg object-cover md:h-44 lg:h-auto lg:rounded-l-lg"
-            />
-          <img src="/onda-vertical.webp" alt="Onda-vertical" className="absolute bottom-0 right-0 hidden h-full select-none lg:block" />
-          <img src="/onda-horizontal.webp" alt="Onda-vertical" className="absolute bottom-0 block w-full select-none lg:hidden" /> */}
-          {/* </div> */}
         </div>
         <div className="flex w-full flex-col rounded-t-none p-4 xl:rounded-l-none">
           <h3 className="w-5/6 text-xl font-bold sm:text-2xl">{title}</h3>

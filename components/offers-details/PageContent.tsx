@@ -65,7 +65,7 @@ export default function PageContent({ userId, offer }: Props) {
     },
     {
       title: 'Horas',
-      content: offer.hours ?? 'No especificado',
+      content: offer.hours,
       icon: <ClockIcon />,
     },
   ]
@@ -97,18 +97,17 @@ export default function PageContent({ userId, offer }: Props) {
           </Collapse>
         </div>
       </div>
-      <div className="col-span-7 lg:col-span-4 xl:col-span-5">
-        <div className="grid grid-cols-3 gap-x-2 gap-y-3">
+      <div className="col-span-7 lg:col-span-5">
+        <div className="card flex-row items-center rounded-xl bg-white shadow-lg">
           {atributtes.map((atr) => {
             return (
-              <div className="col-span-3 md:col-span-1 lg:col-span-3 xl:col-span-1" key={atr.title}>
-                <Atributtes
-                  title={atr.title}
-                  icon={atr.icon}
-                >
-                  {atr.content}
-                </Atributtes>
-              </div>
+              <Atributtes
+                key={atr.title}
+                title={atr.title}
+                icon={atr.icon}
+              >
+                {atr.content}
+              </Atributtes>
             )
           })}
         </div>
@@ -126,7 +125,7 @@ export default function PageContent({ userId, offer }: Props) {
           </ul>
         </div>
       </div>
-      <div className="sticky hidden lg:col-span-3 lg:block xl:col-span-2">
+      <div className="sticky hidden lg:col-span-2 lg:block">
         <div className="card bg-white p-4 shadow-md lg:self-start">
           <InfoUser
             avatarInfo
