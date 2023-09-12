@@ -6,6 +6,7 @@ import { type SuggestedOffersWithRelationships, type OffersTab } from '@/lib/typ
 import { useState } from 'react'
 import OffersList from './OffersList'
 import { type UserType } from '@prisma/client'
+import Pagination from '../pagination'
 
 interface Props {
   carouselOffers: SuggestedOffersWithRelationships
@@ -51,6 +52,7 @@ export default function PageContent({ carouselOffers, generalOffers, myOffers, s
         offers={OFFERS_OPTION[tab]}
         search={search}
       />
+      <Pagination />
     </>
   )
 }
