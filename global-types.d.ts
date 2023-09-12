@@ -26,3 +26,9 @@ type SelectOptionsConfig = {
     title: string
   }>
 }
+
+interface PageContext {
+  params: {
+    id: string
+  }
+}

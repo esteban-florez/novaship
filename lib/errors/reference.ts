@@ -7,3 +7,5 @@ export const ERRORS = {
 } as const
 
 export class AuthError extends Error {}
+
+export class DBError extends Error {}

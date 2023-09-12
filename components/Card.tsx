@@ -30,6 +30,20 @@ export default function Card({ title, categories, description, owner, location, 
         <div className="flex flex-col gap-3 rounded-t-xl p-4 pt-1">
           {/* Ofertas */}
           <h3 className="text-lg font-bold sm:text-xl">{title}</h3>
+          {(categories !== undefined && categories?.length > 0) && (
+            <ul className="-mt-1 line-clamp-2 flex flex-row flex-wrap font-semibold text-primary">
+              {categories?.map(category => {
+                return (
+                  <li
+                    key={category.id}
+                    className="me-1 cursor-pointer text-sm after:text-neutral-800 after:content-[','] last:after:content-[] hover:text-primary/40"
+                  >
+                    {category.title}
+                  </li>
+                )
+              })}
+            </ul>
+          )}
           <ul className="-mt-3 line-clamp-2 flex flex-row flex-wrap font-semibold text-primary">
             {categories?.map(category => {
               return (

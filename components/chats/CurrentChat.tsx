@@ -1,18 +1,27 @@
 import Message from './Message'
 import ChatFooter from './ChatFooter'
-import { type Company, type Membership, type Person, type Project } from '@prisma/client'
+import {
+  type Team,
+  type Membership,
+  type Person,
+  type Project,
+  type Company,
+  type Message as MessageType,
+} from '@prisma/client'
 // import AvatarIcon from '../AvatarIcon'
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/solid'
 
-interface Props {
+type Props = React.PropsWithChildren<{
   project: Project & {
-    person: Person | null
-    company: Company | null
-    memberships: Array<Membership & {
-      person: Person
-    }>
+    team: Team & {
+      memberships: Array<Membership & {
+        person: Person | null
+        company: Company | null
+        messages: MessageType[]
+      }>
+    }
   }
-}
+}>
 
 export default function CurrentChat({ project }: Props) {
   return (

@@ -23,18 +23,8 @@ export default async function ChatsPage({ params: { id } }: Context) {
         include: {
           memberships: {
             include: {
-              company: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
-              person: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
+              company: true,
+              person: true,
               messages: true,
             },
           },

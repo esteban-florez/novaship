@@ -12,16 +12,6 @@ const SIDEBAR_LINKS = [
     icon: <HomeIcon className="h-6 w-6" />,
   },
   {
-    href: '/home/internships',
-    title: 'Pasantías',
-    icon: <AcademicCapIcon className="h-6 w-6" />,
-  },
-  {
-    href: '/home/offers',
-    title: 'Ofertas',
-    icon: <BriefcaseIcon className="h-6 w-6" />,
-  },
-  {
     href: '/home/projects',
     title: 'Proyectos',
     icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
@@ -30,6 +20,16 @@ const SIDEBAR_LINKS = [
     href: '/home/teams',
     title: 'Equipos',
     icon: <UserGroupIcon className="h-6 w-6" />,
+  },
+  {
+    href: '/home/offers',
+    title: 'Ofertas',
+    icon: <BriefcaseIcon className="h-6 w-6" />,
+  },
+  {
+    href: '/home/internships',
+    title: 'Pasantías',
+    icon: <AcademicCapIcon className="h-6 w-6" />,
   },
   {
     href: '/home/admin',

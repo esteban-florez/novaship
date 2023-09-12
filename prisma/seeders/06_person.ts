@@ -10,6 +10,7 @@ export default async function person() {
     const skills = await prisma.skill.findMany({ select: { id: true } })
     const categories = await prisma.category.findMany({ select: { id: true } })
     const locations = await prisma.location.findMany({ select: { id: true } })
+    const grades = await prisma.grade.findMany({ select: { id: true } })
 
     const name = collect(persons.names).random().first()
     const surname = collect(persons.surnames).random().first()
@@ -34,6 +35,9 @@ export default async function person() {
         ci: numbers().ci(),
         birth: new Date(),
         employable: numbers(1, 2).random() === 1,
+        grades: {
+          connect: collect(grades).random().first(),
+        },
         location: {
           connect: collect(locations).random().first(),
         },
