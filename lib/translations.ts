@@ -21,6 +21,7 @@ export const routes: Rec = {
   chat: 'Chat',
   teams: 'Equipos de trabajo',
   hiring: 'Postulaciones',
+  memberships: 'Miembros',
 }
 
 export const statuses = {

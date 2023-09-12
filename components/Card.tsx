@@ -2,6 +2,7 @@ import AvatarIcon from './AvatarIcon'
 import Button from './Button'
 import clsx from 'clsx'
 import { type ProjectMemberships } from '@/lib/types'
+import InlineList from './InlineList'
 
 interface Props {
   title: string
@@ -31,31 +32,8 @@ export default function Card({ title, categories, description, owner, location, 
           {/* Ofertas */}
           <h3 className="text-lg font-bold sm:text-xl">{title}</h3>
           {(categories !== undefined && categories?.length > 0) && (
-            <ul className="-mt-1 line-clamp-2 flex flex-row flex-wrap font-semibold text-primary">
-              {categories?.map(category => {
-                return (
-                  <li
-                    key={category.id}
-                    className="me-1 cursor-pointer text-sm after:text-neutral-800 after:content-[','] last:after:content-[] hover:text-primary/40"
-                  >
-                    {category.title}
-                  </li>
-                )
-              })}
-            </ul>
+            <InlineList items={categories.map(({ title }) => title)} />
           )}
-          <ul className="-mt-3 line-clamp-2 flex flex-row flex-wrap font-semibold text-primary">
-            {categories?.map(category => {
-              return (
-                <li
-                  key={category.id}
-                  className="me-1 cursor-pointer text-sm after:text-neutral-800 after:content-[','] last:after:content-[] hover:text-primary/40"
-                >
-                  {category.title}
-                </li>
-              )
-            })}
-          </ul>
           <p className="line-clamp-3 text-sm">{description}</p>
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-1">
             {members != null &&

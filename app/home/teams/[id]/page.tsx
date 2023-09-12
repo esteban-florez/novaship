@@ -1,6 +1,5 @@
 import { type Metadata } from 'next'
 import prisma from '@/prisma/client'
-import { redirect } from 'next/navigation'
 import InfoUser from '@/components/offers-details/InfoUser'
 import AvatarIcon from '@/components/AvatarIcon'
 import { getTeamLeader, getMember } from '@/lib/utils/tables'
@@ -8,41 +7,22 @@ import Link from 'next/link'
 import { type Grade, type Person } from '@prisma/client'
 import { ArrowLeftIcon } from '@heroicons/react/24/solid'
 import { BriefcaseIcon } from '@heroicons/react/24/outline'
+import { getTeam } from '@/lib/data-fetching/teams'
+import InlineList from '@/components/InlineList'
 
 export const metadata: Metadata = {
   title: 'Equipos de trabajo',
 }
 
-export default async function TeamsPage({ params: { id } }: PageContext) {
-  const team = await prisma.team.findUnique({
-    where: { id },
-    include: {
-      categories: true,
-      contracts: true,
-      projects: true,
-      memberships: {
-        include: {
-          person: {
-            include: {
-              grades: true,
-            },
-          },
-          company: true,
-        },
-      },
-    },
-  })
-
-  if (team === null) {
-    redirect('home/teams')
-  }
+export default async function TeamPage({ params: { id } }: PageContext) {
+  const team = await getTeam(id)
 
   const { categories, memberships, projects } = team
-
   const leaderMembership = getTeamLeader(team)
   const leader = getMember(leaderMembership)
   // TODO -> algoritmo de proyecto destacado
-  const featuredProject = projects[0]
+  const publicProjects = projects.filter(project => project.visibility === 'PUBLIC')
+  const featuredProject = publicProjects[0]
 
   const location = await prisma.location.findUniqueOrThrow({
     where: { id: leader.locationId },
@@ -52,17 +32,9 @@ export default async function TeamsPage({ params: { id } }: PageContext) {
     <section className="flex flex-wrap items-start gap-4 p-4 lg:flex-nowrap">
       <div className="rounded-md bg-white p-4 shadow lg:w-2/3">
         <h1 className="mb-0 text-2xl font-bold">{team.name}</h1>
-        <div className="flex flex-wrap gap-2 text-base text-primary">
-          {categories.map(category => {
-            return (
-              <span key={category.title} className="-my-1 font-semibold text-primary after:content-[','] last:after:content-['.']">
-                {category.title}
-              </span>
-            )
-          })}
-        </div>
+        <InlineList items={categories.map(({ title }) => title)} />
         <p className="mt-3 line-clamp-2">{team.description}</p>
-        <div className="mt-4 flex gap-2">
+        <div className="mt-4 flex flex-col gap-2 md:flex-row">
           <Link href="/home/teams" className="btn-neutral btn">
             <ArrowLeftIcon className="h-5 w-5" />
             Volver al listado
@@ -73,7 +45,7 @@ export default async function TeamsPage({ params: { id } }: PageContext) {
           </button>
         </div>
         <div className="divider divider-vertical my-2" />
-        <div className="grid grid-cols-[15rem_3rem_1fr]">
+        <div className="flex flex-col lg:grid lg:grid-cols-[15rem_3rem_1fr]">
           <div>
             <div className="flex items-center justify-between pb-2">
               <h2 className="pl-2 text-lg font-semibold">
@@ -103,11 +75,11 @@ export default async function TeamsPage({ params: { id } }: PageContext) {
               })}
             </ul>
           </div>
-          <div className="divider divider-horizontal" />
+          <div className="divider divider-vertical my-2 lg:divider-horizontal" />
           <div>
             <div className="flex items-center justify-between pb-2">
               <h2 className="pl-2 text-lg font-semibold">
-                Proyectos ({projects.length})
+                Proyectos ({publicProjects.length})
               </h2>
               {projects.length > 0 && (
                 <Link href={`/home/teams/${team.id}/projects`} className="text-sm font-semibold text-primary underline transition-all">

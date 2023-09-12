@@ -1,4 +1,4 @@
-import { type Team } from '@prisma/client'
+import { type Visibility, type Team } from '@prisma/client'
 import { DBError } from '../errors/reference'
 import { type MembershipWithRelations } from '../types'
 
@@ -24,4 +24,10 @@ export function getTeamLeader(team: TeamWithMemberships) {
   }
 
   return leader
+}
+
+export function getPublicProjects<T>(projects: Array<T & {
+  visibility: Visibility
+}>) {
+  return projects.filter(project => project.visibility === 'PUBLIC')
 }
