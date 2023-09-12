@@ -6,7 +6,7 @@ import { type SuggestedOffersWithRelationships, type OffersTab } from '@/lib/typ
 import { useState } from 'react'
 import OffersList from './OffersList'
 import { type UserType } from '@prisma/client'
-import Pagination from '../pagination'
+import Pagination from '../Pagination'
 
 interface Props {
   carouselOffers: SuggestedOffersWithRelationships
