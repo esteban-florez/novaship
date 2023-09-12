@@ -7,7 +7,7 @@ type Props = React.PropsWithChildren<{
 
 export default function InlineList({ items, className = '' }: Props) {
   return (
-    <ul className="-mt-1 leading-none text-primary">
+    <ul className="-mt-1 line-clamp-2 leading-none text-primary">
       {items.map((item, index, array) => {
         const isLast = index === array.length - 1
 

@@ -1,33 +1,25 @@
 import Card from '@/components/Card'
 import EmptyContent from '@/components/EmptyContent'
-import PageTitle from '@/components/PageTitle'
 import { getTeam } from '@/lib/data-fetching/teams'
 import { getPublicProjects } from '@/lib/utils/tables'
-import Link from 'next/link'
+import TeamsTitle from '../../TeamsTitle'
 
 export default async function TeamProjectsPage({ params: { id } }: PageContext) {
   const team = await getTeam(id)
   const { projects: allProjects } = team
   const projects = getPublicProjects(allProjects)
+  const a = [...projects, ...projects, ...projects]
 
   return (
     <>
-      <PageTitle
+      <TeamsTitle
         title="Proyectos del equipo"
-        subtitle={{
-          label: 'Equipo',
-          name: team.name,
-          url: `/home/teams/${team.id}`,
-        }}
-      >
-        <Link href={`/home/teams/${team.id}/contracts/create`} className="btn-primary btn">
-          Contratar este equipo
-        </Link>
-      </PageTitle>
+        team={team}
+      />
       {projects.length > 0
         ? (
-          <section className="grid grid-cols-3 gap-3 p-4">
-            {projects.map(project => (
+          <section className="grid gap-3 p-4 lg:grid-cols-2">
+            {a.map(project => (
               <div key={project.id}>
                 <Card
                   title={project.title}

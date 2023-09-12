@@ -12,7 +12,7 @@ type Props = React.PropsWithChildren<{
 
 export default function PageTitle({ title, children, subtitle }: Props) {
   return (
-    <section className="flex items-center justify-between bg-white p-4 shadow">
+    <section className="flex flex-col justify-between gap-2 bg-white p-4 shadow md:flex-row md:items-center md:gap-0">
       <div className="flex flex-col">
         <h1 className="text-3xl font-bold tracking-tighter">
           {title}

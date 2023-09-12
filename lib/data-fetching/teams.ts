@@ -19,9 +19,14 @@ export const getTeam = cache(async (id: string) => {
             person: {
               include: {
                 grades: true,
+                location: true,
               },
             },
-            company: true,
+            company: {
+              include: {
+                location: true,
+              },
+            },
           },
         },
       },

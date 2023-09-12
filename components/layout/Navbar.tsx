@@ -2,11 +2,13 @@ import ProfileDropdown from '@/components/layout/ProfileDropdown'
 import { Bars3Icon } from '@heroicons/react/24/solid'
 import Breadcrumbs from './Breadcrumbs'
 // import NotificationDropdown from './NotificationDropdown'
-import { format } from '@/lib/utils/date'
+// import { format } from '@/lib/utils/date'
 
 // TODO -> ¿Como se manejarán las notificaciones?
+// con volante, como un CARRO BRUUUUMMMMMMMMM
 export default function Navbar() {
-  const date = format(new Date())
+  // descomentar pa mostrarselo a Ana namas, que pendejada lo de la fecha
+  // const date = format(new Date())
 
   return (
     <nav className="navbar border-b bg-white shadow-md">
@@ -17,9 +19,9 @@ export default function Navbar() {
         <Breadcrumbs />
       </div>
       <div className="w-3/4 text-sm sm:navbar-end sm:text-base">
-        <p className="px-5">
+        {/* <p className="px-5">
           {date}
-        </p>
+        </p> */}
         {/* <NotificationDropdown /> */}
         <ProfileDropdown />
       </div>

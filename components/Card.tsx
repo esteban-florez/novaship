@@ -30,11 +30,13 @@ export default function Card({ title, categories, description, owner, location, 
       <div className="card card-compact bg-base-100 shadow-lg">
         <div className="flex flex-col gap-3 rounded-t-xl p-4 pt-1">
           {/* Ofertas */}
-          <h3 className="text-lg font-bold sm:text-xl">{title}</h3>
+          <h3 className="line-clamp-1 text-lg font-bold sm:text-xl lg:line-clamp-2">
+            {title}
+          </h3>
           {(categories !== undefined && categories?.length > 0) && (
             <InlineList items={categories.map(({ title }) => title)} />
           )}
-          <p className="line-clamp-3 text-sm">{description}</p>
+          <p className="line-clamp-2 text-sm lg:line-clamp-3">{description}</p>
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-1">
             {members != null &&
               <div className="flex shrink-0 flex-row items-center justify-start -space-x-3">
