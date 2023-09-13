@@ -12,6 +12,8 @@ type SelectOnInputEvent = React.BaseSyntheticEvent<InputEvent, HTMLSelectElement
 
 type SelectOptionsArray = Array<{ value: string, label: string }>
 
+interface SearchParamsProps { searchParams: Record<string, string | string[] | undefined> }
+
 type SelectOptionsConfig = {
   type: 'enum'
   data: Rec

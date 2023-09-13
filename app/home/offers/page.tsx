@@ -8,20 +8,20 @@ export const metadata: Metadata = {
   title: 'Ofertas',
 }
 
-export default async function OffersPage({
-  searchParams,
-}: {
-  searchParams: Record<string, string | string[] | undefined>
-}) {
+export default async function OffersPage({ searchParams }: SearchParamsProps) {
   const activeUser = await auth.user()
 
+  // DRY Pagination
   const pageNumber = +(searchParams.page ?? 1)
-  const pageSize = 15
+  const pageSize = 20
+  // Ignores outdated offers
+  // No muestra mis ofertas (empresa)
   const totalRecords = await prisma.offer.count({
     where: {
-      expiresAt: {
-        gte: new Date(),
-      },
+      OR: [
+        { companyId: activeUser.id },
+        { expiresAt: { gte: new Date() } },
+      ],
     },
   })
   const totalPages = Math.ceil(totalRecords / pageSize)
@@ -37,7 +37,7 @@ export default async function OffersPage({
   })
 
   const offers = await prisma.offer.findMany({
-    skip: pageNumber * pageSize,
+    skip: (pageNumber - 1) * pageSize,
     take: pageSize,
     include: {
       categories: {

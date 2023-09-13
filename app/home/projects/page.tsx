@@ -12,12 +12,22 @@ export const fetchCache = 'force-no-store'
 
 export const revalidate = 0
 
-// TODO -> Añadir pagination
 // TODO -> Mantener la pestaña escogida al regresar a /projects
-export default async function ProjectsPage() {
+export default async function ProjectsPage({ searchParams }: SearchParamsProps) {
   const activeUser = await auth.user()
 
+  // DRY Pagination
+  const pageNumber = +(searchParams.page ?? 1)
+  const pageSize = 20
+  const totalRecords = await prisma.project.count({
+    where: { visibility: 'PUBLIC' },
+  })
+  const totalPages = Math.ceil(totalRecords / pageSize)
+  const hasNextPage = pageNumber < totalPages
+
   const projects = await prisma.project.findMany({
+    skip: (pageNumber - 1) * pageSize,
+    take: pageSize,
     include: {
       categories: {
         select: {
@@ -67,6 +77,8 @@ export default async function ProjectsPage() {
     <PageContent
       projects={availableProjects}
       personalProjects={personalProjects}
+      pageNumber={pageNumber}
+      hasNextPage={hasNextPage}
     />
   )
 }
