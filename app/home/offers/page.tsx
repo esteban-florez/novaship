@@ -8,8 +8,24 @@ export const metadata: Metadata = {
   title: 'Ofertas',
 }
 
-export default async function OffersPage() {
+export default async function OffersPage({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>
+}) {
   const activeUser = await auth.user()
+
+  const pageNumber = +(searchParams.page ?? 1)
+  const pageSize = 15
+  const totalRecords = await prisma.offer.count({
+    where: {
+      expiresAt: {
+        gte: new Date(),
+      },
+    },
+  })
+  const totalPages = Math.ceil(totalRecords / pageSize)
+  const hasNextPage = pageNumber <= totalPages
 
   const user = await prisma.person.findFirst({
     where: { id: activeUser.id },
@@ -21,6 +37,8 @@ export default async function OffersPage() {
   })
 
   const offers = await prisma.offer.findMany({
+    skip: pageNumber * pageSize,
+    take: pageSize,
     include: {
       categories: {
         select: {
@@ -91,6 +109,8 @@ export default async function OffersPage() {
       appliedOffers={appliedOffers}
       myOffers={myOffers}
       userType={userType}
+      pageNumber={pageNumber}
+      hasNextPage={hasNextPage}
     />
   )
 }

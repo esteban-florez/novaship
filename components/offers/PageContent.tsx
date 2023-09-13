@@ -15,9 +15,11 @@ interface Props {
   appliedOffers: SuggestedOffersWithRelationships
   myOffers: SuggestedOffersWithRelationships
   userType: UserType
+  pageNumber: number
+  hasNextPage: boolean
 }
 
-export default function PageContent({ carouselOffers, generalOffers, myOffers, suggestedOffers, appliedOffers, userType }: Props) {
+export default function PageContent({ carouselOffers, generalOffers, myOffers, suggestedOffers, appliedOffers, userType, pageNumber, hasNextPage }: Props) {
   const [tab, setTab] = useState<OffersTab>('All')
   const [search, setSearch] = useState('')
 
@@ -48,11 +50,15 @@ export default function PageContent({ carouselOffers, generalOffers, myOffers, s
         onSearch={handleSearch}
         userType={userType}
       />
+      <Pagination
+        url="/home/offers"
+        pageNumber={pageNumber}
+        hasNextPage={hasNextPage}
+      />
       <OffersList
         offers={OFFERS_OPTION[tab]}
         search={search}
       />
-      <Pagination />
     </>
   )
 }

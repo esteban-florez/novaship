@@ -1,5 +1,6 @@
 # To-Do
 
+- Limitar longitud en los inputs a 20 caracteres, excluyendo usuarios (solo para titulos/nombres)
 - Revalidate data.
 - Hacer middleware de autenticación.
 - Añadir validaciones front y back.
