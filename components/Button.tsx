@@ -4,11 +4,11 @@ import Link from 'next/link'
 
 // DRY classname
 const className = {
-  DEFAULT: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border shadow-md',
-  ICON: 'p-2 rounded-sm transition-colors delay-75 duration-delay-75',
-  OUTLINE: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border bg-transparent transition-colors delay-75 duration-delay-75 shadow-md',
-  TAB: 'px-6 py-2 inline-flex justify-center items-center rounded-lg gap-x-2 font-semibold shadow-lg sm:text-lg transition-colors delay-75 duration-delay-75',
-  DISABLED: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border opacity-50 cursor-not-allowed ',
+  DEFAULT: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border shadow-md text-sm font-semibold transition-colors',
+  ICON: 'p-2 rounded-sm transition-colors delay-75 duration-delay-75 text-sm font-semibold',
+  OUTLINE: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border bg-transparent transition-colors delay-75 duration-delay-75 shadow-md text-sm font-semibold',
+  TAB: 'px-6 py-2 inline-flex justify-center items-center rounded-lg gap-x-2 font-semibold shadow-lg sm:text-lg transition-colors delay-75 duration-delay-75 text-sm',
+  DISABLED: 'px-6 py-2 inline-flex justify-center items-center rounded-md gap-x-2 border opacity-50 cursor-not-allowed',
   colors: {
     PRIMARY: 'bg-primary text-primary-content border-primary focus:bg-primary focus:text-primary-content',
     SECONDARY: 'bg-secondary text-secondary-content border-secondary focus:bg-secondary focus:text-secondary-content',

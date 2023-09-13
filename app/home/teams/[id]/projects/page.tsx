@@ -8,7 +8,6 @@ export default async function TeamProjectsPage({ params: { id } }: PageContext) 
   const team = await getTeam(id)
   const { projects: allProjects } = team
   const projects = getPublicProjects(allProjects)
-  const a = [...projects, ...projects, ...projects]
 
   return (
     <>
@@ -19,7 +18,7 @@ export default async function TeamProjectsPage({ params: { id } }: PageContext) 
       {projects.length > 0
         ? (
           <section className="grid gap-3 p-4 lg:grid-cols-2">
-            {a.map(project => (
+            {projects.map(project => (
               <div key={project.id}>
                 <Card
                   title={project.title}
