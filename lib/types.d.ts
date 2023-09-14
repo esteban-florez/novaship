@@ -24,6 +24,16 @@ type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' 
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 
 // ----------------------------------------------------------------------
+// ---------------------------- General ---------------------------------
+// ----------------------------------------------------------------------
+interface PaginationButtonProps {
+  url: string
+  show: 'button' | 'link'
+  toPage: number
+  direction: 'prev' | 'next'
+}
+
+// ----------------------------------------------------------------------
 // --------------------------- Projects ---------------------------------
 // ----------------------------------------------------------------------
 type SuggestedOffersWithRelationships = Array<Offer & {

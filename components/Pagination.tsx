@@ -1,13 +1,31 @@
-export default function Pagination() {
+import Button from './pagination/Button'
+
+interface Props {
+  url: string
+  pageNumber: number
+  hasNextPage: boolean
+}
+
+export default function Pagination({ url, pageNumber, hasNextPage }: Props) {
+  const prevNumber = pageNumber > 1 ? pageNumber - 1 : 0
+  const nextNumber = pageNumber + 1
+
   return (
     <div className="join mb-10 w-full justify-center">
       <div className="card flex-row rounded-lg border border-solid border-zinc-300 shadow-md">
-        <button className="join-item btn bg-white">«</button>
-        <button className="join-item btn bg-white">1</button>
-        <button className="btn-primary btn-active join-item btn">2</button>
-        <button className="join-item btn bg-white">3</button>
-        <button className="join-item btn bg-white">4</button>
-        <button className="join-item btn bg-white">»</button>
+        <Button
+          url={url}
+          direction="prev"
+          toPage={prevNumber}
+          show={pageNumber === 1 ? 'button' : 'link'}
+        />
+        <button className="join-item btn cursor-default">Página {pageNumber}</button>
+        <Button
+          url={url}
+          direction="next"
+          toPage={nextNumber}
+          show={hasNextPage ? 'link' : 'button'}
+        />
       </div>
     </div>
   )

@@ -8,7 +8,6 @@ interface Props {
   projects: ProjectWithTeamAndCategories[]
 }
 
-// TODO -> pagination
 export default function Projects({ search, projects }: Props) {
   if (projects.length === 0) {
     return (

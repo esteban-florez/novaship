@@ -7,6 +7,7 @@ import { url } from '@/lib/utils/url'
 import { object, string } from 'zod'
 import messages from '@/lib/validation/messages'
 
+// PENDING -> falta actualizar interview
 export async function POST(request: NextRequest) {
   let data
   try {
