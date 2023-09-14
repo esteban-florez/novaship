@@ -6,6 +6,8 @@ export const ERRORS = {
   RESPONSE_SYNTAX: 'RESPONSE_SYNTAX',
 } as const
 
-export class AuthError extends Error {}
+export class AuthenticationError extends Error {}
+
+export class AuthorizationError extends Error {}
 
 export class DBError extends Error {}

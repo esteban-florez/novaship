@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 import { ZodError } from 'zod'
-import { AuthError } from './reference'
+import { AuthenticationError, AuthorizationError } from './reference'
 import { NextResponse } from 'next/server'
 import { url } from '../utils/url'
 
@@ -17,8 +17,13 @@ function json(status: number, body: object) {
 }
 
 export function handleError(error: unknown, data: Record<string, unknown> = {}) {
-  if (error instanceof AuthError) {
+  if (error instanceof AuthenticationError) {
     return NextResponse.redirect(url('auth/login?redirected'))
+  }
+
+  if (error instanceof AuthorizationError) {
+    // Handle unauthorized actions
+    return NextResponse.redirect(url('home'))
   }
 
   if (error instanceof SyntaxError) {

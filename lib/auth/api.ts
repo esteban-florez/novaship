@@ -2,7 +2,7 @@ import lucia from './lucia'
 import prisma from '@/prisma/client'
 import { cookies } from 'next/headers'
 import { type NextRequest } from 'next/server'
-import { AuthError } from '../errors/reference'
+import { AuthenticationError } from '../errors/reference'
 import { type UserWithType } from '../types'
 
 export const auth = {
@@ -70,7 +70,7 @@ async function sessionOrThrow(request: NextRequest) {
   const session = await authRequest.validate()
 
   if (session === null) {
-    throw new AuthError('AuthError: Unauthenticated user in auth-required API.')
+    throw new AuthenticationError('AuthenticationError: Unauthenticated user in auth-required API.')
   }
 
   return session

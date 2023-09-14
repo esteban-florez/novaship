@@ -1,7 +1,7 @@
 import lucia from './lucia'
 import prisma from '@/prisma/client'
 import { cookies } from 'next/headers'
-import { AuthError } from '../errors/reference'
+import { AuthenticationError } from '../errors/reference'
 import { type UserWithType } from '../types'
 
 /**
@@ -73,7 +73,7 @@ async function sessionOrThrow() {
   const currentSession = await session()
 
   if (currentSession === null) {
-    throw new AuthError('AuthError: Unauthenticated user in auth-required page.')
+    throw new AuthenticationError('AuthenticationError: Unauthenticated user in auth-required page.')
   }
 
   return currentSession
