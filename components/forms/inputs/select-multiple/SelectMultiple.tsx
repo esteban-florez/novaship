@@ -1,9 +1,9 @@
 import CustomLabel from '../CustomLabel'
 import InputError from '../../InputError'
-import useSelectOptions from '@/lib/hooks/useSelectOptions'
 import { type Control, useController, type RegisterOptions } from 'react-hook-form'
 import SelectMultipleMenu from './SelectMultipleMenu'
 import SelectedItems from '../SelectedItems'
+import getSelectOptions from '@/lib/shared/getSelectOptions'
 
 type Props = React.PropsWithChildren<{
   name: string
@@ -27,7 +27,7 @@ export default function SelectMultiple({
     name: initialName, control, defaultValue, rules: config,
   })
   const fieldValue = field.value as string[]
-  const options = useSelectOptions(optionsData) as SelectOptionsArray
+  const options = getSelectOptions(optionsData) as SelectOptionsArray
 
   const initialValue: { selected: SelectOptionsArray, available: SelectOptionsArray } = {
     selected: [],

@@ -73,7 +73,7 @@ class Collection<T> {
     return this.array.filter(val => !arr.includes(val))
   }
 
-  toOptions() {
+  toOptions(labelProp?: string) {
     return this.array.map(model => {
       if (typeof model !== 'object' || model === null) {
         throw new Error(
@@ -88,6 +88,18 @@ class Collection<T> {
       const option = {
         value: model.id as string,
         label: '',
+      }
+
+      if (labelProp !== undefined) {
+        const rec = model as Record<string, unknown>
+        const label = rec[labelProp]
+
+        if (typeof label !== 'string') {
+          throw new Error('Failed to convert rows into select options: labelProp is not defined in row.')
+        }
+
+        option.label = label
+        return option
       }
 
       if ('name' in model && typeof model.name === 'string') {

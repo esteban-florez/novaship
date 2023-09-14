@@ -1,7 +1,7 @@
 import useClickOutside from '@/lib/hooks/useClickOutside'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
-import { type KeyboardEvent, useState, type ChangeEvent } from 'react'
+import { type KeyboardEvent, useState, type ChangeEvent, useRef } from 'react'
 
 type Props = React.PropsWithChildren<{
   options: SelectOptionsArray
@@ -22,6 +22,7 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
   const [search, setSearch] = useState('')
   const [hovered, setHovered] = useState<number | null>(null)
   const menuRef = useClickOutside<HTMLDivElement>(() => { closeMenu() })
+  const ulRef = useRef<HTMLUListElement>(null)
 
   const filteredOptions = options.filter(filterBySearch)
   const lastOptionIndex = filteredOptions.length - 1
@@ -34,6 +35,9 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
   function closeMenu() {
     setHidden(true)
     setHovered(null)
+    if (ulRef.current !== null) {
+      ulRef.current.scroll(0, 0)
+    }
   }
 
   function handleOptionClick(optionValue: string) {
@@ -43,6 +47,7 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
   }
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+    setHidden(false)
     setHovered(null)
     setSearch(e.target.value)
   }
@@ -57,7 +62,12 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
       globalThis.canRun = true
     }, 100)
 
+    if (event.code === 'ArrowUp' || event.code === 'ArrowDown' || event.code === 'Enter' || event.code === 'Escape') {
+      event.preventDefault()
+    }
+
     if (event.code === 'ArrowUp') {
+      setHidden(false)
       if (hovered === null || hovered === 0) {
         setHovered(lastOptionIndex)
         return
@@ -65,12 +75,17 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
 
       setHovered(hovered - 1)
     } else if (event.code === 'ArrowDown') {
+      setHidden(false)
       if (hovered === null || hovered === lastOptionIndex) {
         setHovered(0)
         return
       }
 
       setHovered(hovered + 1)
+    } else if (event.code === 'Enter' && hovered !== null) {
+      handleOptionClick(filteredOptions[hovered].value)
+    } else if (event.code === 'Escape') {
+      closeMenu()
     }
   }
 
@@ -93,11 +108,11 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
     <div className="relative mb-3 w-full" ref={menuRef}>
       <ChevronDownIcon className="pointer-events-none absolute right-2 top-4 z-10 h-4 w-4 stroke-2" />
       <input
-        className="input relative w-full border border-neutral-300 bg-base-100 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-primary"
+        className="input relative w-full border border-neutral-300 bg-base-100 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-primary disabled:border-neutral-300 placeholder:disabled:text-neutral-500"
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         onFocus={() => { setHidden(false) }}
-        placeholder="Seleccionar..."
+        placeholder={disabled ? 'Seleccionaste el máximo de opciones' : 'Seleccionar...'}
         value={search}
         type="text"
         disabled={disabled}
@@ -107,6 +122,7 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
           className={clsx(
             'menu absolute z-20 max-h-52 w-full flex-nowrap overflow-y-auto rounded-md border border-neutral-300 bg-white text-sm shadow-lg scrollbar-thin scrollbar-thumb-neutral-300/75', hidden && 'hidden', menuOnTop && 'bottom-[115%]', !menuOnTop && 'top-[115%]'
           )}
+          ref={ulRef}
         >
           {filteredOptions.length === 0
             ? (

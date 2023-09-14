@@ -1,12 +1,13 @@
 import collect from '../utils/collection'
 
-export default function useSelectOptions(options: SelectOptionsConfig | undefined) {
+export default function getSelectOptions(options: SelectOptionsConfig | undefined) {
   if (options === undefined) return undefined
 
   const { type, data } = options
 
   if (type === 'rows') {
-    return collect(data).toOptions()
+    const { label } = options
+    return collect(data).toOptions(label)
   }
 
   return Object.values(data)

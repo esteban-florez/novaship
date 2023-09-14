@@ -2,7 +2,7 @@ import useInput from '@/lib/hooks/useInput'
 import CustomLabel from './CustomLabel'
 import { type SharedInputProps } from '@/lib/types'
 import InputError from '../InputError'
-import useSelectOptions from '@/lib/hooks/useSelectOptions'
+import getSelectOptions from '@/lib/shared/getSelectOptions'
 
 type Props = React.PropsWithChildren<{
   onInput?: (event: SelectOnInputEvent) => void
@@ -18,7 +18,7 @@ export default function Select({
   const { registerProps, errorMessage } = useInput({
     register, errors, name, config,
   })
-  const options = useSelectOptions(optionsData)
+  const options = getSelectOptions(optionsData)
 
   return (
     <>

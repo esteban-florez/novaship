@@ -20,6 +20,7 @@ type SelectOptionsConfig = {
   translation: Rec
 } | {
   type: 'rows'
+  label?: string
   data: Array<{
     id: string
     name: string

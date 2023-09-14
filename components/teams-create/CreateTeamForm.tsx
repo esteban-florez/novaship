@@ -58,60 +58,21 @@ export default function CreateTeamForm({ persons, categories }: Props) {
           }}
         />
       </FormSection>
-      <FormSection title="Miembros del equipo" description="Desde aquí puedes buscar a las personas que quieras invitar a formar parte del equipo.">
+      <FormSection title="Miembros del equipo" description="Desde aquí puedes buscar mediante el correo eléctronico a las personas que quieras invitar a formar parte del equipo..">
+        {/* TODO -> crear hacer mejores estilos para este select, hacer que las opciones muestren email, imagen y nombre. E igualmente la lista de seleccionados debe ser un collapse. */}
         <SelectMultiple
           name="memberships"
           label="Selecciona los miembros del equipo"
           control={control}
           itemsName="Personas"
-          limit={5}
+          limit={20}
           menuOnTop
           options={{
             type: 'rows',
             data: persons,
+            label: 'email',
           }}
         />
-        {/* <>
-          <CustomLabel id="memberships" label="Selecciona los miembros" />
-          <ReactSelect
-            isMulti
-            unstyled
-            name="memberships"
-            hideSelectedOptions
-            menuPlacement="top"
-            placeholder="Seleccionar..."
-            controlShouldRenderValue={false}
-            menuIsOpen
-            components={{
-              Option: (props) => {
-                const { person } = props.data
-                return (
-                  <div {...props}>
-                    <PersonOption person={person} />
-                  </div>
-                )
-              },
-            }}
-            options={persons.map(person => ({
-              person,
-              label: 'ciaoosu',
-              value: person.id,
-            }))}
-            filterOption={(option, search) => {
-              const lowerSearch = search.toLowerCase()
-              const { email, name } = option.data.person
-              const emailIncludes = email.toLowerCase().includes(lowerSearch)
-              const nameIncludes = name.toLowerCase().includes(lowerSearch)
-              return emailIncludes || nameIncludes
-            }}
-            classNames={{
-              container: () => 'rounded-lg border border-neutral-300',
-              control: (state) => clsx('rounded-lg py-[13px] pl-4 pr-2 text-sm transition-all', state.menuIsOpen && 'ring-2 ring-primary'),
-              menu: () => 'text-sm bg-white border-neutral-300 border rounded-lg my-2 shadow',
-              placeholder: () => 'text-neutral-400',
-            }}
-          />
-        </> */}
       </FormSection>
       <FormButtons url="/home/offers" />
     </form>
