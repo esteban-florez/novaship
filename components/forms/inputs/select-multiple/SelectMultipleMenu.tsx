@@ -1,7 +1,7 @@
 import useClickOutside from '@/lib/hooks/useClickOutside'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { type KeyboardEvent, useState, type ChangeEvent } from 'react'
 
 type Props = React.PropsWithChildren<{
   options: SelectOptionsArray
@@ -10,30 +10,92 @@ type Props = React.PropsWithChildren<{
   addOption: (optionValue: string) => void
 }>
 
+declare global {
+  // eslint-disable-next-line no-var
+  var canRun: boolean
+}
+
+globalThis.canRun = true
+
 export default function SelectMultipleMenu({ options, menuOnTop, addOption, disabled }: Props) {
   const [hidden, setHidden] = useState(true)
   const [search, setSearch] = useState('')
-  const menuRef = useClickOutside<HTMLDivElement>(() => { setHidden(true) })
+  const [hovered, setHovered] = useState<number | null>(null)
+  const menuRef = useClickOutside<HTMLDivElement>(() => { closeMenu() })
 
   const filteredOptions = options.filter(filterBySearch)
+  const lastOptionIndex = filteredOptions.length - 1
 
   function filterBySearch({ label }: { label: string }) {
     const lower = label.toLowerCase()
     return lower.includes(search.toLowerCase())
   }
 
+  function closeMenu() {
+    setHidden(true)
+    setHovered(null)
+  }
+
   function handleOptionClick(optionValue: string) {
     setSearch('')
-    setHidden(true)
+    closeMenu()
     addOption(optionValue)
+  }
+
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+    setHovered(null)
+    setSearch(e.target.value)
+  }
+
+  function handleKeyDown(event: KeyboardEvent) {
+    if (!globalThis.canRun) {
+      return
+    }
+
+    globalThis.canRun = false
+    setTimeout(() => {
+      globalThis.canRun = true
+    }, 100)
+
+    if (event.code === 'ArrowUp') {
+      if (hovered === null || hovered === 0) {
+        setHovered(lastOptionIndex)
+        return
+      }
+
+      setHovered(hovered - 1)
+    } else if (event.code === 'ArrowDown') {
+      if (hovered === null || hovered === lastOptionIndex) {
+        setHovered(0)
+        return
+      }
+
+      setHovered(hovered + 1)
+    }
+  }
+
+  function isVisible(ele: HTMLElement) {
+    const { parentElement: container } = ele
+    if (container === null) return false
+
+    const eleTop = ele.offsetTop
+    const eleBottom = eleTop + ele.clientHeight
+
+    const containerTop = container.scrollTop
+    const containerBottom = containerTop + container.clientHeight
+
+    return (
+      (eleTop >= containerTop && eleBottom <= containerBottom)
+    )
   }
 
   return (
     <div className="relative mb-3 w-full" ref={menuRef}>
-      <ChevronDownIcon className="pointer-events-none absolute right-2 top-4 z-30 h-4 w-4" />
+      <ChevronDownIcon className="pointer-events-none absolute right-2 top-4 z-10 h-4 w-4 stroke-2" />
       <input
-        className="input relative z-20 w-full border border-neutral-300 bg-base-200 text-sm transition-colors focus:outline-none"
-        onChange={(e) => { setSearch(e.target.value) }}
+        className="input relative w-full border border-neutral-300 bg-base-100 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-primary"
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
         onFocus={() => { setHidden(false) }}
         placeholder="Seleccionar..."
         value={search}
@@ -43,7 +105,7 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
       {!disabled && (
         <ul
           className={clsx(
-            'menu absolute z-50 max-h-40 w-full flex-nowrap overflow-y-auto rounded-md border border-neutral-300 bg-white text-sm scrollbar-thin scrollbar-thumb-neutral-300/75', hidden && 'hidden', menuOnTop && 'bottom-full'
+            'menu absolute z-20 max-h-52 w-full flex-nowrap overflow-y-auto rounded-md border border-neutral-300 bg-white text-sm shadow-lg scrollbar-thin scrollbar-thumb-neutral-300/75', hidden && 'hidden', menuOnTop && 'bottom-[115%]', !menuOnTop && 'top-[115%]'
           )}
         >
           {filteredOptions.length === 0
@@ -52,9 +114,19 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
                 No se encontró ninguna opción.
               </li>
               )
-            : filteredOptions.map(({ value, label }) => (
+            : filteredOptions.map(({ value, label }, index) => (
               <button
-                className="cursor-pointer rounded-md p-2 text-left transition-colors hover:bg-neutral-200" key={value} onClick={() => { handleOptionClick(value) }}
+                className={clsx('cursor-pointer rounded-md p-2 text-left transition-colors', index === hovered && 'bg-neutral-200')}
+                onClick={() => { handleOptionClick(value) }}
+                onMouseEnter={() => { setHovered(index) }}
+                key={value}
+                ref={(node) => {
+                  if (node === null || hovered !== index || isVisible(node)) return
+                  node.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                  })
+                }}
               >
                 {label}
               </button>

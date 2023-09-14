@@ -2,7 +2,7 @@ import InfoUser from '@/components/offers-details/InfoUser'
 import { getTeam } from '@/lib/data-fetching/teams'
 import { getMember } from '@/lib/utils/tables'
 import { type Company, type Person, type Location, type Membership } from '@prisma/client'
-import TeamsTitle from '../../TeamsTitle'
+import TeamsTitle from '@/components/teams/TeamsTitle'
 import clsx from 'clsx'
 import EmptyContent from '@/components/EmptyContent'
 

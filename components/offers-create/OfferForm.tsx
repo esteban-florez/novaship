@@ -113,7 +113,7 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
             label="Categorías laborales"
             control={control}
             itemsName="Categorías"
-            limit={6}
+            limit={5}
             menuOnTop
             defaultValue={offerCategories ?? undefined}
             options={{
@@ -126,7 +126,7 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
             label="Habilidades"
             control={control}
             itemsName="Habilidades"
-            limit={6}
+            limit={5}
             menuOnTop
             defaultValue={offerSkills ?? undefined}
             options={{

@@ -16,7 +16,6 @@
   "dependencies": {
     "@heroicons/react": "2.0.18",
     "@hookform/resolvers": "3.1.1",
-    "@imbios/next-pwa": "1.1.1",
     "@lucia-auth/adapter-prisma": "2.0.0",
     "@prisma/client": "4.15.0",
     "@types/react": "18.2.8",
