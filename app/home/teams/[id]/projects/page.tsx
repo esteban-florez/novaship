@@ -2,7 +2,7 @@ import Card from '@/components/Card'
 import EmptyContent from '@/components/EmptyContent'
 import { getTeam } from '@/lib/data-fetching/teams'
 import { getPublicProjects } from '@/lib/utils/tables'
-import TeamsTitle from '../../TeamsTitle'
+import TeamsTitle from '@/components/teams/TeamsTitle'
 
 export default async function TeamProjectsPage({ params: { id } }: PageContext) {
   const team = await getTeam(id)

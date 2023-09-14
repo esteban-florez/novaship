@@ -28,7 +28,7 @@ export default function Input({
       <input
         onInput={onInput} id={name} name={name} type={type} step={step}
         placeholder={placeholder} {...registerProps}
-        className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', className)} defaultValue={value}
+        className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-100 transition-all focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', className)} defaultValue={value}
       />
       {children}
       <InputError message={errorMessage} />

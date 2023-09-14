@@ -9,7 +9,7 @@ export default function ChatFooter() {
       <button type="button" className="rounded-lg p-2 text-primary transition-colors hover:bg-primary hover:text-white">
         <FaceSmileIcon className="h-7 w-7" />
       </button>
-      <textarea rows={1} className="mx-4 w-full resize-none rounded-lg border border-neutral-200 bg-base-200 p-2 shadow-inner focus:outline-none focus:ring focus:ring-primary" placeholder="Escribe tu mensaje aquí..." />
+      <textarea rows={1} className="mx-4 w-full resize-none rounded-lg border border-neutral-200 bg-base-100 p-2 shadow-inner transition-all focus:outline-none focus:ring focus:ring-primary" placeholder="Escribe tu mensaje aquí..." />
       <button type="submit" className="inline-flex justify-center rounded-full p-2 text-primary transition-colors hover:bg-primary hover:text-white">
         <PaperAirplaneIcon className="h-7 w-7" />
       </button>

@@ -61,6 +61,7 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
     },
   })
 
+  // TODO -> Estos algoritmos son: O(n^2), hay que mejorarlos.
   const availableProjects = projects.filter(project => {
     return project.team.memberships.filter(member => {
       return (member.companyId ?? member.personId) !== activeUser.id && project.visibility === 'PUBLIC'

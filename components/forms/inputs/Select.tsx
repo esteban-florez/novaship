@@ -26,7 +26,7 @@ export default function Select({
       <select
         id={name} name={name} onInput={onInput}
         defaultValue={defaultValue} {...registerProps}
-        className="select select-md mb-3 w-full border-neutral-300 bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary"
+        className="select select-md mb-3 w-full border-neutral-300 bg-base-100 transition-all focus:outline-none focus:ring-2 focus:ring-primary"
       >
         {!noDefault && <option value="" disabled>Seleccionar...</option>}
         {options?.map(({ value, label }) => (
