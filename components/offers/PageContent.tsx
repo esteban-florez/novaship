@@ -19,6 +19,7 @@ interface Props {
   hasNextPage: boolean
 }
 
+// TODO -> arreglar la paginacion para varias pestañas, tabs o filtros
 export default function PageContent({ carouselOffers, generalOffers, myOffers, suggestedOffers, appliedOffers, userType, pageNumber, hasNextPage }: Props) {
   const [tab, setTab] = useState<OffersTab>('All')
   const [search, setSearch] = useState('')
@@ -50,11 +51,12 @@ export default function PageContent({ carouselOffers, generalOffers, myOffers, s
         onSearch={handleSearch}
         userType={userType}
       />
-      <Pagination
-        url="/home/offers"
-        pageNumber={pageNumber}
-        hasNextPage={hasNextPage}
-      />
+      {tab === 'All' &&
+        <Pagination
+          url="/home/offers"
+          pageNumber={pageNumber}
+          hasNextPage={hasNextPage}
+        />}
       <OffersList
         offers={OFFERS_OPTION[tab]}
         search={search}

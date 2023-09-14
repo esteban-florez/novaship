@@ -1,11 +1,10 @@
 import {
-  ArrowRightIcon,
   BanknotesIcon,
   CheckIcon,
   ClockIcon,
   HomeModernIcon,
 } from '@heroicons/react/24/outline'
-import { modes, offerStatuses } from '@/lib/translations'
+import { modes } from '@/lib/translations'
 import Atributtes from './Atributtes'
 import Details from './Details'
 import InfoUser from './InfoUser'
@@ -13,8 +12,7 @@ import Collapse from '../Collapse'
 import AvatarInfo from './AvatarInfo'
 import { type Offer, type Status } from '@prisma/client'
 import { getExpirationDiff } from '@/lib/validation/expiration-dates'
-import AvatarIcon from '../AvatarIcon'
-import Button from '../Button'
+import HiringList from './HiringList'
 
 interface Props {
   userId: string
@@ -138,27 +136,10 @@ export default function PageContent({ userId, offer }: Props) {
       <div className="card col-span-7 bg-white p-4 shadow">
         <h2 className="text-xl font-semibold">Postulaciones - {offer.hiring.length}</h2>
         {isOwner &&
-          <section className="mt-2 flex flex-col gap-4 sm:flex-row">
-            {offer.hiring.map(hiring => {
-              return (
-                <div key={hiring.id} className="flex flex-col gap-2 rounded-md border px-2 py-1">
-                  <div className="flex items-center gap-x-2">
-                    <AvatarIcon username={hiring.person.name} />
-                    <p>{hiring.person.name}</p>
-                  </div>
-                  <span className="text-center font-semibold text-neutral-600">{offerStatuses[hiring.status ?? 'PENDING']}</span>
-                  <Button
-                    url={`/home/offers/${offer.id}/hiring/${hiring.id}`}
-                    color="PRIMARY"
-                    hover="WHITE"
-                  >
-                    Ver petición
-                    <ArrowRightIcon className="h-5 w-5" />
-                  </Button>
-                </div>
-              )
-            })}
-          </section>}
+          <HiringList
+            offerId={offer.id}
+            hiring={offer.hiring}
+          />}
       </div>
     </section>
   )

@@ -13,15 +13,11 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
 
   // DRY Pagination
   const pageNumber = +(searchParams.page ?? 1)
-  const pageSize = 20
+  const pageSize = 50
   // Ignores outdated offers
-  // No muestra mis ofertas (empresa)
   const totalRecords = await prisma.offer.count({
     where: {
-      OR: [
-        { companyId: activeUser.id },
-        { expiresAt: { gte: new Date() } },
-      ],
+      expiresAt: { gte: new Date() },
     },
   })
   const totalPages = Math.ceil(totalRecords / pageSize)
@@ -33,6 +29,46 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
       categories: true,
       jobs: true,
       skills: true,
+    },
+  })
+
+  const myOffers = await prisma.offer.findMany({
+    where: { companyId: activeUser.id },
+    include: {
+      categories: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
+      job: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
+      skills: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
+      company: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      location: {
+        select: {
+          title: true,
+        },
+      },
+      hiring: {
+        select: {
+          personId: true,
+        },
+      },
     },
   })
 
@@ -94,7 +130,6 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
   })
 
   const allOffers = offers.filter(offer => offer.companyId !== activeUser.id)
-  const myOffers = offers.filter(offer => offer.companyId === activeUser.id)
   const appliedOffers = offers.filter(offer => {
     return offer.hiring.some(hiring => hiring.personId === activeUser.id)
   })

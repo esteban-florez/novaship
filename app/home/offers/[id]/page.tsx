@@ -50,11 +50,13 @@ export default async function OfferPage({ params: { id } }: Context) {
               name: true,
             },
           },
+          interviews: true,
         },
-
       },
     },
   })
+
+  console.log(offer?.hiring.map(hiring => hiring.interviews))
 
   if (offer === null) {
     redirect('/home/offers')
