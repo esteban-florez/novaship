@@ -1,17 +1,36 @@
+'use client'
+
 import Link from 'next/link'
 import PageTitle from '../PageTitle'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
 import Pagination from '../Pagination'
 import { type Team } from '@prisma/client'
 import Card from '../Card'
+import PageNav from './PageNav'
+import { type TabProp } from '@/lib/types'
+import { useState } from 'react'
 
 interface Props {
-  teams: Team[]
+  myTeams: Team[]
+  allTeams: Team[]
   pageNumber: number
   hasNextPage: boolean
 }
 
-export default function PageContent({ teams, pageNumber, hasNextPage }: Props) {
+export default function PageContent({ myTeams, allTeams, pageNumber, hasNextPage }: Props) {
+  const [tab, setTab] = useState<TabProp>('All')
+
+  const handleChangeTab = (tabOption?: TabProp) => {
+    if (tabOption !== null && tabOption !== undefined) setTab(tabOption)
+  }
+
+  const TEAMS_OPTION = {
+    All: allTeams,
+    Mine: myTeams,
+  }
+
+  const teams = TEAMS_OPTION[tab]
+
   return (
     <>
       <PageTitle
@@ -23,6 +42,10 @@ export default function PageContent({ teams, pageNumber, hasNextPage }: Props) {
           Crear equipo
         </Link>
       </PageTitle>
+      <PageNav
+        tab={tab}
+        onTabClick={handleChangeTab}
+      />
       <Pagination
         url="/home/teams"
         pageNumber={pageNumber}

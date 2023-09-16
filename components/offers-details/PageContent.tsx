@@ -87,7 +87,6 @@ export default function PageContent({ userId, offer }: Props) {
             bg="bg-white"
           >
             <InfoUser
-              avatarInfo={false}
               owner={offer.company.name}
               location={offer.location.title}
               description={offer.company.description}
@@ -126,7 +125,6 @@ export default function PageContent({ userId, offer }: Props) {
       <div className="sticky hidden lg:col-span-2 lg:block">
         <div className="card bg-white p-4 shadow-md lg:self-start">
           <InfoUser
-            avatarInfo
             owner={offer.company.name}
             location={offer.location.title}
             description={offer.company.description}

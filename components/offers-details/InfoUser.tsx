@@ -3,23 +3,22 @@ import AvatarIcon from '../AvatarIcon'
 import Button from '../Button'
 
 interface Props {
-  avatarInfo: boolean
   owner: string
   location: string
-  description: string
+  description?: string
   verification?: boolean
 }
 
-export default function InfoUser({ owner, location, description, avatarInfo = false, verification = true }: Props) {
+export default function InfoUser({ owner, location, description, verification = true }: Props) {
   return (
     <>
-      {avatarInfo &&
-        <div className="mb-5 flex flex-col items-center justify-center">
-          <AvatarIcon username={owner} className="mb-2 h-16 w-16 bg-black text-white" />
+      <div className="mb-2 flex items-center justify-center gap-2">
+        <AvatarIcon username={owner} className="h-14 w-14 bg-black text-white" />
+        <div className="mb-2 flex flex-col">
           <p className="text-lg font-semibold">{owner}</p>
           <p className="-my-1 text-center text-sm">{location}</p>
-        </div>}
-      <div className="divider mt-0" />
+        </div>
+      </div>
       <p className="mb-3 line-clamp-3 text-base">{description}</p>
       {verification && (
         <div className="mb-4 flex flex-col gap-1">
@@ -30,6 +29,7 @@ export default function InfoUser({ owner, location, description, avatarInfo = fa
         </div>
       )}
       <Button
+        url="#"
         color="SECONDARY"
       >
         Ver más
