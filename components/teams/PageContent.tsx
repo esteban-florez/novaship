@@ -14,10 +14,10 @@ interface Props {
   myTeams: Team[]
   allTeams: Team[]
   pageNumber: number
-  hasNextPage: boolean
+  nextPage: boolean
 }
 
-export default function PageContent({ myTeams, allTeams, pageNumber, hasNextPage }: Props) {
+export default function PageContent({ myTeams, allTeams, pageNumber, nextPage }: Props) {
   const [tab, setTab] = useState<TabProp>('All')
 
   const handleChangeTab = (tabOption?: TabProp) => {
@@ -46,11 +46,12 @@ export default function PageContent({ myTeams, allTeams, pageNumber, hasNextPage
         tab={tab}
         onTabClick={handleChangeTab}
       />
-      <Pagination
-        url="/home/teams"
-        pageNumber={pageNumber}
-        hasNextPage={hasNextPage}
-      />
+      {tab === 'All' &&
+        <Pagination
+          url="/home/teams"
+          pageNumber={pageNumber}
+          nextPage={nextPage}
+        />}
       <section className="mx-auto w-full columns-1 gap-4 rounded-lg p-4
       md:columns-2 lg:columns-3 xl:rounded-tl-none"
       >

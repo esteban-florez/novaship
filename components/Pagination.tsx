@@ -3,10 +3,10 @@ import Button from './pagination/Button'
 interface Props {
   url: string
   pageNumber: number
-  hasNextPage: boolean
+  nextPage: boolean
 }
 
-export default function Pagination({ url, pageNumber, hasNextPage }: Props) {
+export default function Pagination({ url, pageNumber, nextPage }: Props) {
   const prevNumber = pageNumber > 1 ? pageNumber - 1 : 0
   const nextNumber = pageNumber + 1
 
@@ -24,7 +24,7 @@ export default function Pagination({ url, pageNumber, hasNextPage }: Props) {
           url={url}
           direction="next"
           toPage={nextNumber}
-          show={hasNextPage ? 'link' : 'button'}
+          show={nextPage ? 'link' : 'button'}
         />
       </div>
     </div>

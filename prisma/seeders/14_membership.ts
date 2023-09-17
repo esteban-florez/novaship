@@ -2,6 +2,7 @@ import collect from '@/lib/utils/collection'
 import prisma from '../client'
 import numbers from '@/lib/utils/number'
 
+// CHECK -> no incluye miembros en todos los teams
 export default async function membership() {
   const teams = await prisma.team.findMany({ select: { id: true } })
   const personsData = await prisma.person.findMany({ select: { id: true } })

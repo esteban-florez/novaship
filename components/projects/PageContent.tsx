@@ -7,13 +7,13 @@ import ProjectsCard from './ProjectsCard'
 import Pagination from '../Pagination'
 
 type Props = React.PropsWithChildren<{
-  hasNextPage: boolean
+  nextPage: boolean
   pageNumber: number
   projects: ProjectWithTeamAndCategories[]
   personalProjects: ProjectWithTeamAndCategories[]
 }>
 
-export default function PageContent({ projects, personalProjects, hasNextPage, pageNumber }: Props) {
+export default function PageContent({ projects, personalProjects, nextPage, pageNumber }: Props) {
   const [tab, setTab] = useState<TabProp>('All')
   const [search, setSearch] = useState('')
 
@@ -29,11 +29,12 @@ export default function PageContent({ projects, personalProjects, hasNextPage, p
         onSearch={setSearch}
         onTabClick={handleChangeTab}
       />
-      <Pagination
-        url="/home/projects"
-        hasNextPage={hasNextPage}
-        pageNumber={pageNumber}
-      />
+      {tab === 'All' &&
+        <Pagination
+          url="/home/projects"
+          pageNumber={pageNumber}
+          nextPage={nextPage}
+        />}
       <ProjectsCard
         search={search}
         projects={tab === 'All' ? projects : personalProjects}

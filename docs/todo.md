@@ -17,6 +17,8 @@
 - ExpiresAt handler.
 - deletedAt middleware.
 - Funcion para enviar datos a las rutas sin validacion.
+- Añadir campo a modelo [offer] para mostrar en carrusel.
+- Revalidar data.
 
 # Ideas
 

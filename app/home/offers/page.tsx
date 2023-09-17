@@ -2,150 +2,83 @@ import { type Metadata } from 'next'
 import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/pages'
 import PageContent from '@/components/offers/PageContent'
-import collect from '@/lib/utils/collection'
+import { getOffers } from '@/lib/data-fetching/offer'
+import getPaginationProps from '@/lib/utils/pagination'
+import { getUserData } from '@/lib/data-fetching/user'
 
 export const metadata: Metadata = {
   title: 'Ofertas',
 }
 
+// TODO -> dividir las categorias y asignar una paginacion individual.
 export default async function OffersPage({ searchParams }: SearchParamsProps) {
-  const activeUser = await auth.user()
+  const { id, type } = await auth.user()
 
   // DRY Pagination
   const pageNumber = +(searchParams.page ?? 1)
-  const pageSize = 50
-  // Ignores outdated offers
   const totalRecords = await prisma.offer.count({
+    // where: { expiresAt: { gte: new Date() } },
+  })
+  const { nextPage, skip, take } = getPaginationProps({ pageNumber, totalRecords })
+
+  const { jobs, categories, skills } = await getUserData({ id })
+  const offers = await getOffers({
     where: {
-      expiresAt: { gte: new Date() },
+      AND: [
+        { companyId: { not: id } },
+        // { expiresAt: { gte: new Date() } }
+      ],
     },
+    skip: pageNumber === 1 ? 5 : skip,
+    take,
   })
-  const totalPages = Math.ceil(totalRecords / pageSize)
-  const hasNextPage = pageNumber <= totalPages
-
-  const user = await prisma.person.findFirst({
-    where: { id: activeUser.id },
-    include: {
-      categories: true,
-      jobs: true,
-      skills: true,
+  const carouselOffers = await getOffers({ where: { companyId: { not: id } }, skip: 0, take: 5 })
+  const myOffers = await getOffers({ where: { companyId: id }, skip, take })
+  const appliedOffers = await getOffers({
+    where: {
+      hiring: { some: { personId: id } },
     },
+    skip,
+    take,
   })
-
-  const myOffers = await prisma.offer.findMany({
-    where: { companyId: activeUser.id },
-    include: {
-      categories: {
-        select: {
-          id: true,
-          title: true,
+  const suggestedOffers = await getOffers({
+    where: {
+      OR: [
+        {
+          categories: {
+            some: {
+              id: { in: categories },
+            },
+          },
         },
-      },
-      job: {
-        select: {
-          id: true,
-          title: true,
+        {
+          jobId: {
+            in: jobs,
+          },
         },
-      },
-      skills: {
-        select: {
-          id: true,
-          title: true,
+        {
+          skills: {
+            some: {
+              id: { in: skills },
+            },
+          },
         },
-      },
-      company: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-      location: {
-        select: {
-          title: true,
-        },
-      },
-      hiring: {
-        select: {
-          personId: true,
-        },
-      },
+      ],
     },
+    take,
+    skip,
   })
-
-  const offers = await prisma.offer.findMany({
-    skip: (pageNumber - 1) * pageSize,
-    take: pageSize,
-    include: {
-      categories: {
-        select: {
-          id: true,
-          title: true,
-        },
-      },
-      job: {
-        select: {
-          id: true,
-          title: true,
-        },
-      },
-      skills: {
-        select: {
-          id: true,
-          title: true,
-        },
-      },
-      company: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-      location: {
-        select: {
-          title: true,
-        },
-      },
-      hiring: {
-        select: {
-          personId: true,
-        },
-      },
-    },
-  })
-
-  const userCategories = collect(user?.categories ?? []).titles()
-  const userJobs = collect(user?.jobs ?? []).titles()
-  const userSkills = collect(user?.skills ?? []).titles()
-
-  const suggestedOffers = offers.filter(itemQuery => {
-    if (
-      (itemQuery.categories.some(category => userCategories.includes(category.title))) ||
-      (userJobs.includes(itemQuery.job.title)) ||
-      (itemQuery.skills.some(skill => userSkills.includes(skill.title)))
-    ) {
-      return itemQuery
-    }
-
-    return null
-  })
-
-  const allOffers = offers.filter(offer => offer.companyId !== activeUser.id)
-  const appliedOffers = offers.filter(offer => {
-    return offer.hiring.some(hiring => hiring.personId === activeUser.id)
-  })
-  const carouselOffers = allOffers.splice(0, 5)
-  const userType = activeUser.type
 
   return (
     <PageContent
-      generalOffers={allOffers}
+      generalOffers={offers}
       carouselOffers={carouselOffers}
       suggestedOffers={suggestedOffers}
       appliedOffers={appliedOffers}
       myOffers={myOffers}
-      userType={userType}
+      userType={type}
       pageNumber={pageNumber}
-      hasNextPage={hasNextPage}
+      nextPage={nextPage}
     />
   )
 }
