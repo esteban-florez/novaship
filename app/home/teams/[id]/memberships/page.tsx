@@ -5,6 +5,11 @@ import { type Company, type Person, type Location, type Membership } from '@pris
 import TeamsTitle from '@/components/teams/TeamsTitle'
 import clsx from 'clsx'
 import EmptyContent from '@/components/EmptyContent'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Miembros del equipo',
+}
 
 export default async function TeamMembershipsPage({ params: { id } }: PageContext) {
   const team = await getTeam(id)
@@ -41,7 +46,6 @@ export default async function TeamMembershipsPage({ params: { id } }: PageContex
                       </div>
                     )}
                     <InfoUser
-                      avatarInfo
                       verification={false}
                       owner={member.name}
                       description={member.description}

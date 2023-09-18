@@ -7,6 +7,7 @@ import { useState } from 'react'
 import OffersList from './OffersList'
 import { type UserType } from '@prisma/client'
 import Pagination from '../Pagination'
+import PageTitle from '../PageTitle'
 
 interface Props {
   carouselOffers: SuggestedOffersWithRelationships
@@ -41,6 +42,10 @@ export default function PageContent({ carouselOffers, generalOffers, myOffers, s
 
   return (
     <>
+      <PageTitle
+        title="Ofertas laborales"
+        subtitle="Encuentra ofertas que se adapten a tus habilidades y experiencias."
+      />
       <Carousel
         offers={carouselOffers}
       />

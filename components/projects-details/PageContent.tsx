@@ -8,6 +8,7 @@ import TeamGroup from './TeamGroup'
 import Button from '../Button'
 import { PlusIcon } from '@heroicons/react/24/outline'
 import TaskItem from './tasks/TaskItem'
+import PageTitle from '../PageTitle'
 // import Files from './Files'
 // import TaskItem from './tasks/TaskItem'
 // import EmptyContent from '../EmptyContent'
@@ -68,53 +69,56 @@ export default function PageContent({ isOwner, isMember, project }: Props) {
   // }
 
   return (
-    <section className="px-6 py-4">
-      <div className="grid grid-cols-7 gap-4">
-        <div className="col-span-7 xl:col-span-5">
-          <ProjectDetails
-            id={project.id}
-            isOwner={isOwner}
-            isMember={isMember}
-            title={project.title}
-            categories={projectCategories}
-            description={project.description}
-          />
+    <>
+      <PageTitle title='Proyectos' subtitle='Descubre los proyectos que rondan la web.' breadcrumbs={project.title} />
+      <section className="px-6 py-4">
+        <div className="grid grid-cols-7 gap-4">
+          <div className="col-span-7 xl:col-span-5">
+            <ProjectDetails
+              id={project.id}
+              isOwner={isOwner}
+              isMember={isMember}
+              title={project.title}
+              categories={projectCategories}
+              description={project.description}
+            />
+          </div>
+          {(isOwner || isMember) &&
+            <div className="col-span-7 lg:col-span-5">
+              {/* {(isOwner || isMember) && <PageNav tab={tab} onTabClick={handleChangeTab} />} */}
+              <div className="card rounded-lg bg-white p-5 shadow-lg">
+                {isOwner &&
+                  <div className="flex items-center justify-end">
+                    <Button
+                      url={`/home/projects/${project.id}/tasks/create`}
+                      color="PRIMARY"
+                      hover="WHITE"
+                    >
+                      <PlusIcon className="h-5 w-5" />
+                      Agregar tarea
+                    </Button>
+                  </div>}
+                {project.tasks.map(task => {
+                  return (
+                    <TaskItem
+                      key={task.id}
+                      projectId={project.id}
+                      task={task}
+                    />
+                  )
+                })}
+              </div>
+            </div>}
+          <div className="col-span-7 lg:col-span-2">
+            <TeamGroup
+              id={project.id}
+              team={project.team}
+              isOwner={isOwner}
+              isMember={isMember}
+            />
+          </div>
         </div>
-        {(isOwner || isMember) &&
-          <div className="col-span-7 lg:col-span-5">
-            {/* {(isOwner || isMember) && <PageNav tab={tab} onTabClick={handleChangeTab} />} */}
-            <div className="card rounded-lg bg-white p-5 shadow-lg">
-              {isOwner &&
-                <div className="flex items-center justify-end">
-                  <Button
-                    url={`/home/projects/${project.id}/tasks/create`}
-                    color="PRIMARY"
-                    hover="WHITE"
-                  >
-                    <PlusIcon className="h-5 w-5" />
-                    Agregar tarea
-                  </Button>
-                </div>}
-              {project.tasks.map(task => {
-                return (
-                  <TaskItem
-                    key={task.id}
-                    projectId={project.id}
-                    task={task}
-                  />
-                )
-              })}
-            </div>
-          </div>}
-        <div className="col-span-7 lg:col-span-2">
-          <TeamGroup
-            id={project.id}
-            team={project.team}
-            isOwner={isOwner}
-            isMember={isMember}
-          />
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }

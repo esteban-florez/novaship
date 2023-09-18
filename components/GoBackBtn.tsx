@@ -1,19 +1,22 @@
 'use client'
 
-import { ArrowLeftIcon } from '@heroicons/react/24/solid'
+import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline'
 import { useRouter } from 'next/navigation'
+import Button from './Button'
 
-export default function GoBackBtn({ children }: React.PropsWithChildren) {
+export default function GoBackBtn() {
   const router = useRouter()
 
   return (
-    <button
-      onClick={() => {
-        router.back()
-      }} className="btn-primary btn-sm btn border-none px-6"
-    >
-      <ArrowLeftIcon className="h-6 w-6" />
-      {children}
-    </button>
+    <div className='mt-2'>
+      <Button
+        color='WHITE'
+        hover='SECONDARY'
+        onClick={() => router.back()}
+      >
+        <ArrowLeftCircleIcon className='w-5 -5' />
+        Volver atrás
+      </Button>
+    </div>
   )
 }

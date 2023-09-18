@@ -1,3 +1,5 @@
+// TODO -> improve this shit
+
 const DATES = [
   { id: 'DAYS1', name: '1 día', time: 1 },
   { id: 'DAYS3', name: '3 día', time: 3 },

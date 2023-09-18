@@ -2,8 +2,14 @@ import Card from '@/components/Card'
 import EmptyContent from '@/components/EmptyContent'
 import { getTeam } from '@/lib/data-fetching/teams'
 import { getPublicProjects } from '@/lib/utils/tables'
+import { Metadata } from 'next'
 import TeamsTitle from '@/components/teams/TeamsTitle'
 
+export const metadata: Metadata = {
+  title: 'Proyectos del equipo',
+}
+
+// PENDING -> Contratar equipo
 export default async function TeamProjectsPage({ params: { id } }: PageContext) {
   const team = await getTeam(id)
   const { projects: allProjects } = team
@@ -12,7 +18,7 @@ export default async function TeamProjectsPage({ params: { id } }: PageContext) 
   return (
     <>
       <TeamsTitle
-        title="Proyectos del equipo"
+        title="Miembros del equipo"
         team={team}
       />
       {projects.length > 0

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { type ProjectWithTeamAndCategories, type TabProp } from '@/lib/types'
 import ProjectsCard from './ProjectsCard'
 import Pagination from '../Pagination'
+import PageTitle from '../PageTitle'
 
 type Props = React.PropsWithChildren<{
   nextPage: boolean
@@ -23,6 +24,10 @@ export default function PageContent({ projects, personalProjects, nextPage, page
 
   return (
     <>
+      <PageTitle
+        title='Proyectos'
+        subtitle='Descubre los proyectos que rondan la web.'
+      />
       <PageNav
         search={search}
         active={tab}

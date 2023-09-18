@@ -1,7 +1,7 @@
 import PageTitle from '@/components/PageTitle'
-import { BriefcaseIcon } from '@heroicons/react/24/outline'
+// import { BriefcaseIcon } from '@heroicons/react/24/outline'
 import { type Team } from '@prisma/client'
-import Link from 'next/link'
+// import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   title: string
@@ -17,11 +17,12 @@ export default function TeamsTitle({ title, team }: Props) {
         name: team.name,
         url: `/home/teams/${team.id}`,
       }}
+      breadcrumbs={team.name}
     >
-      <Link href={`/home/teams/${team.id}/contracts/create`} className="btn-primary btn">
+      {/* <Link href={`/home/teams/${team.id}/contracts/create`} className="btn-primary btn">
         <BriefcaseIcon className="h-5 w-5" />
         Contratar equipo
-      </Link>
+      </Link> */}
     </PageTitle>
   )
 }

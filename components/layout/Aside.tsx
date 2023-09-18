@@ -2,8 +2,10 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, ShieldCheckIcon, UserGroupIcon } from '@heroicons/react/24/outline'
+import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, ShieldCheckIcon, UserGroupIcon, Bars3Icon } from '@heroicons/react/24/outline'
 import AsideLink from './AsideLink'
+import { useState } from 'react'
+import clsx from 'clsx'
 
 const SIDEBAR_LINKS = [
   {
@@ -38,7 +40,9 @@ const SIDEBAR_LINKS = [
   },
 ]
 
+// TODO -> responsive
 export default function Aside() {
+  const [active, isActive] = useState(true)
   const pathname = usePathname()
 
   const handleActivelink = (link: string) => {
@@ -47,18 +51,29 @@ export default function Aside() {
   }
 
   return (
-    <aside className="sticky top-0 hidden h-screen flex-col bg-white shadow-md sm:flex">
+    <aside className={clsx({
+      'hidden sticky top-0 h-screen flex-col bg-white shadow-md sm:flex': true,
+      'w-20': !active
+    })}>
       <div className="py-[18px] text-center">
-        <Link
-          href="/home"
-          className="rounded-full bg-primary px-4 py-2 text-2xl font-bold text-white shadow-md"
-        >
-          novaship
-        </Link>
+        {active &&
+          <Link
+            href="/home"
+            className="rounded-full bg-primary px-4 py-2 text-2xl font-bold text-white shadow-md"
+          >
+            novaship
+          </Link>
+        }
+        <button className="btn-ghost btn-circle btn" onClick={() => isActive(!active)}>
+          <Bars3Icon className="h-6 w-6" />
+        </button>
       </div>
-      <ul className="menu h-full gap-4 px-8 py-6 shadow">
+      <ul className={clsx({
+        "menu h-full gap-4 py-6 shadow": true,
+        'px-8': active
+      })}>
         {SIDEBAR_LINKS.map(link => (
-          <AsideLink key={link.href} link={link} active={handleActivelink(link.href)} />
+          <AsideLink key={link.href} link={link} active={handleActivelink(link.href)} iconOnly={active} />
         ))}
       </ul>
     </aside>
