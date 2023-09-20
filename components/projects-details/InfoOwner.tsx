@@ -5,22 +5,27 @@ import Button from '../Button'
 interface Props {
   name: string
   description: string
+  members?: number
 }
 
-export default function InfoOwner({ name, description }: Props) {
+export default function InfoOwner({ name, description, members }: Props) {
   return (
     <>
       <div className="flex flex-col items-center justify-start gap-2 xl:flex-row">
         <AvatarIcon username={name} className="h-12 w-12 bg-black text-white" />
-        <p className="text-center text-base font-semibold xl:text-start">{name}</p>
+        <div className="mb-2 flex flex-col">
+          <p className="text-base font-semibold">{name}</p>
+          <p className="-my-1 text-sm">{members} miembros</p>
+        </div>
       </div>
       <p className="mb-1 line-clamp-3 text-sm">{description}</p>
       <Button
+        url="#"
         style="DEFAULT"
         color="SECONDARY"
         hover="WHITE"
       >
-        Ver perfil
+        Ver equipo
         <ArrowRightIcon className="h-4 w-4" />
       </Button>
     </>

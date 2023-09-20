@@ -13,8 +13,8 @@ interface Props {
 
 export default function ProjectDetails({ id, title, description, categories, isOwner, isMember }: Props) {
   return (
-    <div className="card rounded-xl bg-white shadow-xl lg:flex-row">
-      <div className="relative flex lg:basis-1/4">
+    <div className="card rounded-xl bg-white shadow-lg lg:flex-row">
+      <div className="relative flex lg:basis-2/6">
         <img
           src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           alt="Imagen de fondo carrusel"
@@ -25,10 +25,10 @@ export default function ProjectDetails({ id, title, description, categories, isO
       </div>
       <div className="flex flex-col justify-center rounded-t-none p-4 lg:basis-3/4 xl:rounded-l-none">
         <h3 className="text-xl font-bold sm:text-2xl">{title}</h3>
-        <div className="flex flex-wrap gap-2 text-base text-primary">
+        <div className="flex flex-wrap gap-2 text-base font-semibold text-neutral-600">
           {categories.map(category => {
             return (
-              <span key={category} className="-my-1 font-semibold text-primary after:content-[','] last:after:content-[]">
+              <span key={category} className="-mt-1 after:text-neutral-600 after:content-[','] last:after:content-[]">
                 {category}
               </span>
             )
@@ -38,9 +38,9 @@ export default function ProjectDetails({ id, title, description, categories, isO
         <div className="mx-auto flex w-full flex-col justify-between gap-3 sm:mx-0 sm:w-auto sm:flex-row sm:gap-1 sm:text-sm lg:gap-2">
           <Button
             url="/home/projects"
-            style="OUTLINE"
-            color="WHITE"
-            hover="SECONDARY"
+            style="DEFAULT"
+            color="NEUTRAL"
+            hover="WHITE"
           >
             <ArrowLeftIcon className="h-4 w-4" />
             Volver al listado
