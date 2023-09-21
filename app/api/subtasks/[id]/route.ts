@@ -7,7 +7,6 @@ import { object, string } from 'zod'
 import messages from '@/lib/validation/messages'
 import { auth } from '@/lib/auth/api'
 import { redirect } from 'next/navigation'
-import collect from '@/lib/utils/collection'
 
 export async function PUT(request: NextRequest) {
   let data
@@ -147,7 +146,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
 
     if (subtask === null) redirect('/home/projects')
 
-    if (collect(subtask.task.project.team.memberships ?? []).first() === null) {
+    if (subtask.task.project.team.memberships[0] === null) {
       redirect(`/home/projects/${subtask.task.projectId}/tasks/${subtask.taskId}`)
     }
 

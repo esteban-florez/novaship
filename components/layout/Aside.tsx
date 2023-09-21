@@ -53,8 +53,9 @@ export default function Aside() {
   return (
     <aside className={clsx({
       'hidden sticky top-0 h-screen flex-col bg-white shadow-md sm:flex': true,
-      'w-20': !active
-    })}>
+      'w-20': !active,
+    })}
+    >
       <div className="py-[18px] text-center">
         {active &&
           <Link
@@ -62,16 +63,16 @@ export default function Aside() {
             className="rounded-full bg-primary px-4 py-2 text-2xl font-bold text-white shadow-md"
           >
             novaship
-          </Link>
-        }
-        <button className="btn-ghost btn-circle btn" onClick={() => isActive(!active)}>
+          </Link>}
+        <button className="btn-ghost btn-circle btn" onClick={() => { isActive(!active) }}>
           <Bars3Icon className="h-6 w-6" />
         </button>
       </div>
       <ul className={clsx({
-        "menu h-full gap-4 py-6 shadow": true,
-        'px-8': active
-      })}>
+        'menu h-full gap-4 py-6 shadow': true,
+        'px-8': active,
+      })}
+      >
         {SIDEBAR_LINKS.map(link => (
           <AsideLink key={link.href} link={link} active={handleActivelink(link.href)} iconOnly={active} />
         ))}

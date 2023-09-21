@@ -20,6 +20,7 @@ Representa a un usuario de tipo persona natural.
 - **email**: Correo electrónico.
 - **ci**: Cédula.
 - **birth**: Fecha de nacimiento.
+- **gender**: Sexo.
 - **image**: Enlace de la imagen de perfil.
 - **phone**: Número telefónico.
 - **description**: Biografía corta de la persona (Sobre mí).
@@ -88,6 +89,7 @@ Representa un equipo de trabajo formado por personas, y liderado por una persona
 Representa un miembro de un equipo de trabajo, ya sea una persona o empresa.
 
 - **isLeader**: Si es *"true"*, este miembro es el líder del equipo de trabajo. Siempre es *"true"* si el miembro es empresa.
+- **confirmed**: Si es *"true"*, la persona ya acepto la invitación y se confirmó que es miembro del equipo. De lo contrario, no.
 - [**Company**](#company): Empresa líder del equipo. Es *"null"* si el miembro es persona.
 - [**Person**](#person): Persona miembro del equipo. Es *"null"* si el miembro es empresa.
 - [**Team**](#team): Equipo de trabajo al que pertenece el miembro.
@@ -394,3 +396,9 @@ Parte interesada de una solicitud de pasantía o de contratación por oferta (ve
 
 - **PERSON**: La que realizó la solicitud fué la persona (o pasante) y debe confirmar la empresa.
 - **COMPANY**: La que realizó la solicitud fué la empresa y debe confirmar la persona (o pasante).
+
+## Gender
+Sexo de una persona (ver [Person](#person)).
+
+- **MALE**: Hombre.
+- **FEMALE**: Mujer.

@@ -25,8 +25,8 @@ export default function PageContent({ projects, personalProjects, nextPage, page
   return (
     <>
       <PageTitle
-        title='Proyectos'
-        subtitle='Descubre los proyectos que rondan la web.'
+        title="Proyectos"
+        subtitle="Descubre los proyectos que rondan la web."
       />
       <PageNav
         search={search}

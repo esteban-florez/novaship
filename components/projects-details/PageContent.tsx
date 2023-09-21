@@ -70,7 +70,7 @@ export default function PageContent({ isOwner, isMember, project }: Props) {
 
   return (
     <>
-      <PageTitle title='Proyectos' subtitle='Descubre los proyectos que rondan la web.' breadcrumbs={project.title} />
+      <PageTitle title="Proyectos" subtitle="Descubre los proyectos que rondan la web." breadcrumbs={project.title} />
       <section className="px-6 py-4">
         <div className="grid grid-cols-7 gap-4">
           <div className="col-span-7 xl:col-span-5">

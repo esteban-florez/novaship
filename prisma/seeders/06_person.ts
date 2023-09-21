@@ -4,6 +4,7 @@ import prisma from '../client'
 import persons from '@/prisma/data/persons.json'
 import { seederQueries } from '../seed'
 import collect from '@/lib/utils/collection'
+import { Gender } from '@prisma/client'
 
 export default async function person() {
   for (let i = 0; i < seederQueries.persons; i++) {
@@ -35,6 +36,7 @@ export default async function person() {
         ci: numbers().ci(),
         birth: new Date(),
         employable: numbers(1, 2).random() === 1,
+        gender: collect(Object.values(Gender)).random().first(),
         grades: {
           connect: collect(grades).random().first(),
         },

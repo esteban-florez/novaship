@@ -30,3 +30,6 @@
 La pasantía empieza, la empresa debe ir registrado la cantidad de horas completadas por el pasante. Cuando haya completado todas las horas, finalizará el proceso de pasantías y se marcará como completada. El estudiante y la institución serán notificados de ello.
 
 - ¿Como funcionaría la contratación de equipos en detalle (paso a paso)?
+
+- ¿Como se crean los equipos de una sola persona?
+- R: La creación de equipos de una sola persona solo ocurre cuando vas a crear un proyecto y no quieres vincularlo a ningún equipo, sino que deseas que seas el unico que trabaje en dicho proyecto. En el formulario de creación de proyecto, deberías tener un radio para elegir, con dos opciones: "Vincular a uno de mis equipos" (opción predeterminada) y "Proyecto personal". Dependiendo de la seleccionada, se debe mostrar u ocultar el select de equipos. Luego, en el back-end se debe chequear el valor del radio enviado, para determinar si se crea un nuevo equipo y el proyecto, o el proyecto vinculado a un equipo existente.

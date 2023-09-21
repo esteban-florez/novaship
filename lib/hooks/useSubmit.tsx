@@ -20,6 +20,7 @@ interface UseSubmitOptions<Fields> {
   onError?: () => void | Promise<void>
 }
 
+// TODO -> quizás esto está demasiado grande, maneja muchas cosas. Quizás sea más conveniente dividrlo en dos: componente <Form> que tenga el envío de la petición y muestre los resultados, etc. Y el hook useForm normalito que le pase las cosas al componente Form
 export default function useSubmit<Fields extends FieldValues>({
   method, append, schema, defaultValues, asFormData = false,
   onSuccess, onError, refreshOnSuccess = false,

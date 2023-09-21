@@ -5,7 +5,7 @@ import { type Company, type Person, type Location, type Membership } from '@pris
 import TeamsTitle from '@/components/teams/TeamsTitle'
 import clsx from 'clsx'
 import EmptyContent from '@/components/EmptyContent'
-import { Metadata } from 'next'
+import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Miembros del equipo',
