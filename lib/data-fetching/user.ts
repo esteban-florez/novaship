@@ -2,7 +2,7 @@ import prisma from '@/prisma/client'
 import { cache } from 'react'
 import collect from '../utils/collection'
 
-export const getUserData = cache(async ({ id }: { id: string }) => {
+export const getPersonRelatedIds = cache(async ({ id }: { id: string }) => {
   const user = await prisma.person.findFirst({
     where: { id },
     include: {

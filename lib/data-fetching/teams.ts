@@ -3,14 +3,8 @@ import { type Prisma } from '@prisma/client'
 import { redirect } from 'next/navigation'
 import { cache } from 'react'
 
-interface GetAllOffersProps {
-  where?: Prisma.TeamWhereInput
-  skip: number
-  take: number
-}
-
 // TODO -> añadir categorias.
-export const getTeams = cache(async ({ where, skip, take }: GetAllOffersProps) => {
+export const getTeams = cache(async ({ where, skip, take }: QueryConfig<Prisma.TeamWhereInput>) => {
   return await prisma.team.findMany({
     skip,
     take,

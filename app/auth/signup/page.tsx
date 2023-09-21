@@ -42,6 +42,7 @@ export default async function SignUpPage() {
           </div>
         </section>
         <section className="grid w-full place-items-center p-4 lg:w-3/4">
+          {/* TODO -> refactorizar este componente con composición para que sea mejor, y aplicar lo que aprendí xDDDD */}
           <SignUpForm jobs={jobs} categories={categories} skills={skills} locations={locations} />
         </section>
       </section>

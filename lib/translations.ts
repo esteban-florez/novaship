@@ -72,7 +72,7 @@ export const actions = {
 } as const
 
 export const taskStatuses = {
-  PENDING: 'Pendiente',
+  PENDING: 'Por empezar',
   PROGRESS: 'En progreso',
   REVIEW: 'En revisión',
   DONE: 'Terminada',
@@ -88,7 +88,7 @@ export const expirations = {
 }
 
 export const offerStatuses = {
-  PENDING: 'Pendiente',
+  PENDING: 'En espera',
   REJECTED: 'Rechazada',
   ACCEPTED: 'Aceptada',
 } as const

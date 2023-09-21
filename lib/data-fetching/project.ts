@@ -2,13 +2,7 @@ import prisma from '@/prisma/client'
 import { type Prisma } from '@prisma/client'
 import { cache } from 'react'
 
-interface GetAllOffersProps {
-  where?: Prisma.ProjectWhereInput
-  skip: number
-  take: number
-}
-
-export const getProjects = cache(async ({ where, skip, take }: GetAllOffersProps) => {
+export const getProjects = cache(async ({ where, skip, take }: QueryConfig<Prisma.ProjectWhereInput>) => {
   return await prisma.project.findMany({
     where,
     skip,
