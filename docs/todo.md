@@ -18,6 +18,7 @@
 - Llevarte a donde cometiste el error en signup.
 - Arreglar typing animation.
 - Arreglar <Input> checkbox y radio.
+- Mejorar transicion del aside.
 
 # Schemas
 - Ofert: el titulo deberia ser mayor a 20 caracteres.

@@ -7,6 +7,9 @@ module.exports = {
   content: ["./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      transitionProperty: {
+        width: "width",
+      },
       animation: {
         typing: "typing 2s steps(8), blink 1s infinite",
       },
