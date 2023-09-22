@@ -35,3 +35,9 @@ interface PageContext {
     id: string
   }
 }
+
+interface QueryConfig<T> {
+  where?: T
+  skip?: number
+  take?: number
+}

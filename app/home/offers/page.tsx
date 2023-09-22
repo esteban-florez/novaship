@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth/pages'
 import PageContent from '@/components/offers/PageContent'
 import { getOffers } from '@/lib/data-fetching/offer'
 import getPaginationProps from '@/lib/utils/pagination'
-import { getUserData } from '@/lib/data-fetching/user'
+import { getPersonRelatedIds } from '@/lib/data-fetching/user'
 
 export const metadata: Metadata = {
   title: 'Ofertas',
@@ -21,7 +21,7 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
   })
   const { nextPage, skip, take } = getPaginationProps({ pageNumber, totalRecords })
 
-  const { jobs, categories, skills } = await getUserData({ id })
+  const { jobs, categories, skills } = await getPersonRelatedIds({ id })
   const offers = await getOffers({
     where: {
       AND: [

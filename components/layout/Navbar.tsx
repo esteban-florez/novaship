@@ -10,8 +10,8 @@ export default function Navbar() {
 
   return (
     <nav className="navbar border-b bg-white shadow-md">
-      <div className="navbar-start"></div>
-      <div className="text-sm navbar-end sm:text-base">
+      <div className="navbar-start" />
+      <div className="navbar-end text-sm sm:text-base">
         {/* <p className="px-5">
           {date}
         </p> */}

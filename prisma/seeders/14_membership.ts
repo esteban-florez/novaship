@@ -2,7 +2,6 @@ import collect from '@/lib/utils/collection'
 import prisma from '../client'
 import numbers from '@/lib/utils/number'
 
-// CHECK -> no incluye miembros en todos los teams
 export default async function membership() {
   const teams = await prisma.team.findMany({ select: { id: true } })
   const personsData = await prisma.person.findMany({ select: { id: true } })
@@ -19,6 +18,7 @@ export default async function membership() {
     const leader = await prisma.membership.create({
       data: {
         isLeader: true,
+        confirmed: true,
         companyId: randomBoolean ? companies.random().first().id : null,
         personId: randomBoolean ? null : persons.random().first().id,
         teamId: team.id,
@@ -32,6 +32,7 @@ export default async function membership() {
       .map(person => ({
         teamId: team.id,
         personId: person.id,
+        confirmed: coinFlip.random() === 0,
       }))
 
     await prisma.membership.createMany({
