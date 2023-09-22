@@ -16,13 +16,6 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
   const pageNumber = +(searchParams.page ?? 1)
   const totalRecords = await prisma.team.count()
 
-  console.log(await prisma.team.findFirst({
-    where: { id: 'clm5ur2gt01f1v9z4ag8v5ybp' },
-    include: {
-      memberships: true,
-    },
-  }))
-
   const { nextPage, skip, take } = getPaginationProps({ pageNumber, totalRecords })
 
   const teams = await getTeams({
@@ -42,7 +35,7 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
   const myTeams = await getTeams({
     where: {
       memberships: {
-        every: {
+        some: {
           isLeader: true,
           OR: [
             { companyId: id },

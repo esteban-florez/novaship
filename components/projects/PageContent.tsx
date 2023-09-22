@@ -8,13 +8,14 @@ import Pagination from '../Pagination'
 import PageTitle from '../PageTitle'
 
 type Props = React.PropsWithChildren<{
+  filter: string | string[]
   nextPage: boolean
   pageNumber: number
   projects: ProjectWithTeamAndCategories[]
   personalProjects: ProjectWithTeamAndCategories[]
 }>
 
-export default function PageContent({ projects, personalProjects, nextPage, pageNumber }: Props) {
+export default function PageContent({ filter, projects, personalProjects, nextPage, pageNumber }: Props) {
   const [tab, setTab] = useState<TabProp>('All')
   const [search, setSearch] = useState('')
 
@@ -29,12 +30,13 @@ export default function PageContent({ projects, personalProjects, nextPage, page
         subtitle="Descubre los proyectos que rondan la web."
       />
       <PageNav
+        filter={filter}
         search={search}
         active={tab}
         onSearch={setSearch}
         onTabClick={handleChangeTab}
       />
-      {tab === 'All' &&
+      {filter === 'all' &&
         <Pagination
           url="/home/projects"
           pageNumber={pageNumber}
@@ -42,7 +44,7 @@ export default function PageContent({ projects, personalProjects, nextPage, page
         />}
       <ProjectsCard
         search={search}
-        projects={tab === 'All' ? projects : personalProjects}
+        projects={filter === 'all' ? projects : personalProjects}
       />
     </>
   )

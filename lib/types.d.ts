@@ -24,17 +24,7 @@ type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' 
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 
 // ----------------------------------------------------------------------
-// ---------------------------- General ---------------------------------
-// ----------------------------------------------------------------------
-interface PaginationButtonProps {
-  url: string
-  show: 'button' | 'link'
-  toPage: number
-  direction: 'prev' | 'next'
-}
-
-// ----------------------------------------------------------------------
-// --------------------------- Projects ---------------------------------
+// --------------------------- Offers ---------------------------------
 // ----------------------------------------------------------------------
 type SuggestedOffersWithRelationships = Array<Offer & {
   company: {
@@ -57,12 +47,21 @@ type SuggestedOffersWithRelationships = Array<Offer & {
     title: string
   }>
 }>
-
 interface Offers extends Offer {
   company: Company
   location: Location
   categories: Category[]
 }
+
+type OffersWithRelationships = Offer & {
+  company: Company
+  location: Location
+  categories: Category[]
+}
+
+// ----------------------------------------------------------------------
+// --------------------------- Memberships ---------------------------------
+// ----------------------------------------------------------------------
 
 type MembershipWithRelations = Membership & {
   person: Person | null
@@ -170,6 +169,7 @@ interface Projects extends Project {
 type SharedInputProps = {
   label?: string
   className?: string
+  labelClassName?: string
   value?: string
 } & UseInputProps
 
@@ -182,11 +182,18 @@ interface UseInputProps {
 
 type UseSubmitResult = null | 'loading' | ApiResponseBody
 
+// ----------------------------------------------------------------------
+// --------------------------- Tabs ---------------------------------
+// ----------------------------------------------------------------------
+
 type TabProp = 'All' | 'Mine'
 type TeamGroupTab = 'members' | 'add'
 type ProjectDetailsTab = 'Files' | 'Tasks'
 type OffersTab = 'All' | 'Mine' | 'Applied' | 'Suggested'
 
+// ----------------------------------------------------------------------
+// --------------------------- API ---------------------------------
+// ----------------------------------------------------------------------
 interface ApiResponseBody {
   errorType?: keyof typeof ERRORS
   errors?: {
@@ -198,12 +205,6 @@ interface ApiResponseBody {
 }
 
 type Schedule = Record<keyof typeof days, number[]>
-
-type OffersWithRelationships = Offer & {
-  company: Company
-  location: Location
-  categories: Category[]
-}
 
 type UserWithType = (Person & { type: 'PERSON' })
 | (Company & { type: 'COMPANY' })

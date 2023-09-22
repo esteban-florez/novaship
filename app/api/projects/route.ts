@@ -10,28 +10,62 @@ export async function POST(request: NextRequest) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const activeUser = await auth.user(request)
+    const { id, type } = await auth.user(request)
 
-    const team = await prisma.team.findFirst({
-      where: {
-        memberships: {
-          some: {
-            OR: [
-              { companyId: activeUser.id },
-              { personId: activeUser.id },
-            ],
+    const ids = {
+      personId: type === 'PERSON' ? id : null,
+      companyId: type === 'COMPANY' ? id : null,
+    }
+
+    let team
+
+    if (parsed.teamwork === 'Solo') {
+      team = await prisma.team.create({
+        data: {
+          name: 'Pendiente',
+          description: 'Pendiente',
+          memberships: {
+            connectOrCreate: {
+              where: { id },
+              create: {
+                ...ids,
+                isLeader: true,
+                confirmed: true,
+              },
+            },
           },
         },
-      },
-    })
+      })
+    }
 
-    if (team === null) return NextResponse.redirect(url('home/projects'))
+    if (parsed.teamwork === 'Team') {
+      team = await prisma.team.findFirst({
+        where: {
+          memberships: {
+            every: {
+              isLeader: true,
+              OR: [
+                { companyId: id },
+                { personId: id },
+              ],
+            },
+          },
+        },
+      })
+    }
 
-    await prisma.project.create({
+    if (team == null) {
+      return NextResponse.redirect(url('home/projects'))
+    }
+
+    const { teamwork, ...parsedData } = parsed
+
+    const { id: projectId } = await prisma.project.create({
       data: {
-        ...parsed,
+        ...parsedData,
+        teamId: team.id,
         categories: {
-          connect: parsed.categories.map(category => {
+          connect: parsedData.categories.map(category => {
             return {
               id: category,
             }
@@ -40,7 +74,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.redirect(url('home/projects'))
+    return NextResponse.redirect(url(`home/projects/${projectId}`))
   } catch (error) {
     return handleError(error, data)
   }

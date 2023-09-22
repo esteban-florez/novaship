@@ -16,7 +16,11 @@ interface Props {
 export default function TeamGroup({ id, team, isOwner, isMember }: Props) {
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-4 shadow-lg">
-      <InfoOwner name={team.name} description={team.description} />
+      <InfoOwner
+        id={team.id}
+        name={team.name}
+        description={team.description}
+      />
       {(isOwner || isMember) &&
         (
           <>

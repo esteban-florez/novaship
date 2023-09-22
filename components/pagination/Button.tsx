@@ -1,8 +1,14 @@
-import { type PaginationButtonProps } from '@/lib/types'
 import clsx from 'clsx'
 import Link from 'next/link'
 
-export default function Button({ url, toPage, show, direction }: PaginationButtonProps) {
+interface PaginationParams {
+  url: string
+  show: 'button' | 'link'
+  toPage: number
+  direction: 'prev' | 'next'
+}
+
+export default function Button({ url, toPage, show, direction }: PaginationParams) {
   const icon = direction === 'prev' ? '«' : '»'
 
   if (show === 'button') {
