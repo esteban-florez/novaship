@@ -14,6 +14,7 @@ interface Context {
   }
 }
 
+// TODO -> redirect if not owner.
 export default async function UpdateProjectPage({ params: { id } }: Context) {
   const activeUser = await auth.user()
 

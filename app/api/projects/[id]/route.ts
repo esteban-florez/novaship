@@ -63,16 +63,18 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
 
     const categories = collect(parsed.categories).deleteDuplicatesFrom(projectCategories)
 
+    const { teamwork, ...parsedData } = parsed
+
     await prisma.project.update({
       where: {
         id,
       },
       data: {
-        ...parsed,
+        ...parsedData,
         categories: {
           deleteMany: {
             id: {
-              notIn: parsed.categories,
+              notIn: parsedData.categories,
             },
           },
           connect: categories.map(id => {

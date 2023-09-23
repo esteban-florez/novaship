@@ -23,6 +23,7 @@ interface Props {
   project?: ProjectWithTeamAndCategories
 }
 
+// TODO -> encontrar una manera de obtener teamwork al actualizar
 export default function ProjectForm({ cancelRedirect, method, action, categories, teams, project }: Props) {
   const projectCategories = project?.categories.map(category => {
     return category.id
