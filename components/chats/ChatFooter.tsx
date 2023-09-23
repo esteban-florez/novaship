@@ -2,7 +2,7 @@ import { FaceSmileIcon, PaperAirplaneIcon, PhotoIcon } from '@heroicons/react/24
 
 export default function ChatFooter() {
   return (
-    <footer className="flex items-center border-t-2 border-neutral-300 px-3">
+    <footer className="flex items-center border-t border-neutral-300 px-3">
       <button type="button" className="inline-flex justify-center rounded-lg p-2 text-primary transition-colors hover:bg-primary hover:text-white">
         <PhotoIcon className="h-7 w-7" />
       </button>
