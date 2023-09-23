@@ -30,7 +30,7 @@ export default function Jobs() {
         ¿Estás en <span className="text-secondary">busca</span> de <span className="text-primary">empleo</span>?
       </h2>
       <p>
-        Selecciona si estás en busca de empleo, y en cuáles empleos estás interesado.
+        Selecciona si estás en busca de empleo, y en cuáles puestos de trabajo estás interesado.
       </p>
       <div className="mx-auto w-full pt-4">
         <Select name="employable" defaultValue="true" label="¿Estás en busca de empleo?" options={{ type: 'rows', data: [{ title: 'Sí', id: 'true' }, { title: 'No', id: 'false' }] }} onInput={handleEmployableInput} noDefault register={register} errors={errors} />

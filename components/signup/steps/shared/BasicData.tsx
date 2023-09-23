@@ -2,9 +2,9 @@ import Input from '@/components/forms/inputs/Input'
 import Textarea from '@/components/forms/inputs/Textarea'
 import { useContext } from 'react'
 import { SignUpContext } from '../../SignUpContext'
-import { type Location, type UserType } from '@prisma/client'
+import { Gender, type Location, type UserType } from '@prisma/client'
 import Select from '@/components/forms/inputs/Select'
-import clsx from 'clsx'
+import { genders } from '@/lib/translations'
 
 type Props = React.PropsWithChildren<{
   userType: UserType
@@ -32,7 +32,7 @@ export default function BasicData({ userType, locations }: Props) {
     const fieldsToValidate = ['name', 'email', 'password', 'phone', 'description']
 
     if (isPerson) {
-      fieldsToValidate.push('ci', 'birth')
+      fieldsToValidate.push('ci', 'birth', 'gender')
     } else {
       fieldsToValidate.push('rif')
     }
@@ -40,7 +40,7 @@ export default function BasicData({ userType, locations }: Props) {
     const valid = await trigger(fieldsToValidate)
 
     if (valid) {
-      clearErrors(['skills', 'fields', 'image'])
+      clearErrors(['skills', 'fields', 'image', 'certification'])
       goNext()
     }
   }
@@ -73,16 +73,21 @@ export default function BasicData({ userType, locations }: Props) {
           <div className="col-span-2 md:col-span-1">
             <Input label="Ingresa tu contraseña:" name="password" register={register} errors={errors} type="password" placeholder="Ingresa tu contraseña..." />
           </div>
-          <div className="col-span-2 md:col-span-1">
-            <Input label="Teléfono:" type="number" name="phone" register={register} errors={errors} placeholder="Ej. 04121234567" />
-          </div>
           {isPerson &&
             (
               <div className="col-span-2 md:col-span-1">
                 <Input type="date" label="Fecha de nacimiento:" name="birth" register={register} errors={errors} placeholder="Fecha de nacimiento" />
               </div>
             )}
-          <div className={clsx('col-span-2', !isPerson && 'md:col-span-1')}>
+          {isPerson && (
+            <div className="col-span-2 md:col-span-1">
+              <Select name="gender" register={register} errors={errors} label="Sexo:" options={{ type: 'enum', data: Gender, translation: genders }} />
+            </div>
+          )}
+          <div className="col-span-2 md:col-span-1">
+            <Input label="Teléfono:" type="number" name="phone" register={register} errors={errors} placeholder="Ej. 04121234567" />
+          </div>
+          <div className="col-span-2 md:col-span-1">
             <Select name="locationId" register={register} errors={errors} label="Dirección:" options={{ type: 'rows', data: locations }} />
           </div>
           <div className="col-span-2">

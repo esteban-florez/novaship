@@ -16,7 +16,7 @@ export const base = object({
   locationId: string(messages.string)
     .cuid(messages.cuid),
   description: string(messages.string)
-    .min(50, messages.min(50))
+    .min(50, messages.min(10))
     .max(255, messages.max(255)),
   image: defaults.client.image,
 })

@@ -16,7 +16,7 @@ export default function RifStep() {
   return (
     <div className="px-20">
       <h2 className="text-center text-xl font-bold md:text-3xl">
-        ¡Valida tu <span className="text-primary">éxito</span>!
+        Sube una <span className="text-primary">imagen</span> de tu <span className="text-secondary">RIF</span>
       </h2>
       <p className="text-center">
         Sube una imagen de tu RIF para verificar el registro de tu empresa. Asegúrate que la imagen sea clara y legible.

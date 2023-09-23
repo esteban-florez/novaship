@@ -92,3 +92,8 @@ export const offerStatuses = {
   REJECTED: 'Rechazada',
   ACCEPTED: 'Aceptada',
 } as const
+
+export const genders = {
+  MALE: 'Hombre',
+  FEMALE: 'Mujer',
+}
