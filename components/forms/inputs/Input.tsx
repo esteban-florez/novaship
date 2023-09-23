@@ -15,7 +15,7 @@ type Props = React.PropsWithChildren<{
 
 export default function Input({
   name, placeholder, label, register, step, config = {}, errors = {},
-  type = 'text', value = '', className = '', children, onInput,
+  type = 'text', value = '', className = '', labelClassName = '', children, onInput,
 }: Props) {
   const { errorMessage, hasError, registerProps } = useInput({
     register, config, errors, name,
@@ -23,8 +23,7 @@ export default function Input({
 
   return (
     <>
-      {label !== undefined && <CustomLabel id={name} label={label} />}
-      {/* <div className="relative"> */}
+      {label !== undefined && <CustomLabel id={name} label={label} className={labelClassName} />}
       <input
         onInput={onInput} id={name} name={name} type={type} step={step}
         placeholder={placeholder} {...registerProps}
@@ -32,7 +31,6 @@ export default function Input({
       />
       {children}
       <InputError message={errorMessage} />
-      {/* </div> */}
     </>
   )
 }

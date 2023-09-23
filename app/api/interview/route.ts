@@ -45,14 +45,12 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    const interview = await prisma.interview.create({
+    await prisma.interview.create({
       data: {
         ...interviewData,
         hiringId: appendParsed.hiringId,
       },
     })
-
-    console.log(interview)
 
     return NextResponse.redirect(url(`/home/offers/${appendParsed.offerId}`))
   } catch (error) {

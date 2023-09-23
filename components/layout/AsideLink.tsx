@@ -13,7 +13,7 @@ type Props = React.PropsWithChildren<{
 export default function AsideLink({ link, active, iconOnly }: Props) {
   return (
     <li className="rounded-l-xl font-bold">
-      <Link href={link.href} className={`py-4 ${active ? 'active pointer-events-none' : ''}`}>
+      <Link href={link.href} className={`py-4 ${iconOnly ? '' : 'mx-auto'} ${active ? 'active pointer-events-none' : ''}`}>
         {link.icon}
         {iconOnly ? link.title : ''}
       </Link>

@@ -14,6 +14,7 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
   const { id } = await auth.user()
 
   // DRY Pagination
+  const filter = searchParams.filter ?? 'all'
   const pageNumber = +(searchParams.page ?? 1)
   const totalRecords = await prisma.project.count({
     where: { visibility: 'PUBLIC' },
@@ -61,6 +62,7 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
       personalProjects={personalProjects}
       pageNumber={pageNumber}
       nextPage={nextPage}
+      filter={filter}
     />
   )
 }

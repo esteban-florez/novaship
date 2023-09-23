@@ -52,19 +52,22 @@ export default function Aside() {
 
   return (
     <aside className={clsx({
-      'hidden sticky top-0 h-screen flex-col bg-white shadow-md sm:flex': true,
-      'w-20': !active,
+      'sticky top-0 h-screen flex-col bg-white shadow-md sm:flex transition-all duration-500 ease-in-out': true,
+      'z-50 w-[17.5rem]': active,
+      'z-50 w-20': !active,
     })}
     >
       <div className="py-[18px] text-center">
-        {active &&
-          <Link
-            href="/home"
-            className="rounded-full bg-primary px-4 py-2 text-2xl font-bold text-white shadow-md"
-          >
-            novaship
-          </Link>}
-        <button className="btn-ghost btn-circle btn" onClick={() => { isActive(!active) }}>
+        <Link
+          href="/home"
+          className={clsx(
+            'rounded-full bg-primary px-4 py-2 text-2xl font-bold text-white shadow-md',
+            active && 'visible', !active && 'invisible'
+          )}
+        >
+          novaship
+        </Link>
+        <button className="btn-ghost btn-circle btn self-center" onClick={() => { isActive(!active) }}>
           <Bars3Icon className="h-6 w-6" />
         </button>
       </div>

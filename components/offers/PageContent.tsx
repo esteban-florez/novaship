@@ -22,7 +22,7 @@ interface Props {
 
 // TODO -> arreglar la paginacion para varias pestañas, tabs o filtros
 export default function PageContent({ carouselOffers, generalOffers, myOffers, suggestedOffers, appliedOffers, userType, pageNumber, nextPage }: Props) {
-  const [tab, setTab] = useState<OffersTab>('All')
+  const [tab, setTab] = useState<OffersTab>(userType === 'PERSON' ? 'Suggested' : 'All')
   const [search, setSearch] = useState('')
 
   const handleChangeTab = (tabOption?: OffersTab) => {

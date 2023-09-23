@@ -3,12 +3,13 @@ import AvatarIcon from '../AvatarIcon'
 import Button from '../Button'
 
 interface Props {
+  id: string
   name: string
   description: string
   members?: number
 }
 
-export default function InfoOwner({ name, description, members }: Props) {
+export default function InfoOwner({ name, description, id, members }: Props) {
   return (
     <>
       <div className="flex flex-col items-center justify-start gap-2 xl:flex-row">
@@ -20,7 +21,7 @@ export default function InfoOwner({ name, description, members }: Props) {
       </div>
       <p className="mb-1 line-clamp-3 text-sm">{description}</p>
       <Button
-        url="#"
+        url={`/home/teams/${id}`}
         style="DEFAULT"
         color="SECONDARY"
         hover="WHITE"

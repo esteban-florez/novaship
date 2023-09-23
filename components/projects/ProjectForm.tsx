@@ -23,7 +23,7 @@ interface Props {
   project?: ProjectWithTeamAndCategories
 }
 
-// TODO -> responsive
+// TODO -> encontrar una manera de obtener teamwork al actualizar
 export default function ProjectForm({ cancelRedirect, method, action, categories, teams, project }: Props) {
   const projectCategories = project?.categories.map(category => {
     return category.id
@@ -83,12 +83,33 @@ export default function ProjectForm({ cancelRedirect, method, action, categories
             }}
           />
         </FormSection>
-        <FormSection title="Miembros del proyecto" description="Añada algunos colaboradores a su proyecto para llevarlo a cabo.">
-          <Select
-            name="teamId"
-            label="Equipos de trabajo"
+        <FormSection title="Equipos de trabajo" description="Seleccione como desea trabajar en este proyecto.">
+          <Input
+            name="teamwork"
+            placeholder=""
+            type="radio"
+            label="Individual"
+            value="Solo"
             register={register}
             errors={errors}
+          />
+          <Input
+            name="teamwork"
+            placeholder=""
+            type="radio"
+            label="En equipo"
+            className="peer"
+            value="Team"
+            register={register}
+            errors={errors}
+          />
+          <Select
+            name="teamId"
+            label="Equipos"
+            labelClassName="hidden peer-checked:block"
+            register={register}
+            errors={errors}
+            className="hidden peer-checked:block"
             defaultValue={project?.teamId ?? undefined}
             options={{
               type: 'rows',

@@ -17,7 +17,12 @@ export default function TeamGroup({ id, team, isOwner, isMember }: Props) {
   const membersCount = team.memberships.length
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-4 shadow-lg">
-      <InfoOwner name={team.name} description={team.description} members={membersCount} />
+      <InfoOwner
+        id={team.id}
+        name={team.name}
+        description={team.description}
+        members={membersCount}
+      />
       {(isOwner || isMember) &&
         (
           <>

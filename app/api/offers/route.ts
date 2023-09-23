@@ -11,13 +11,13 @@ export async function POST(request: NextRequest) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.user(request)
+    const { id, type } = await auth.user(request)
 
-    if (user.type === 'COMPANY') {
-      await prisma.offer.create({
+    if (type === 'COMPANY') {
+      const { id: offerId } = await prisma.offer.create({
         data: {
           ...parsed,
-          companyId: user.id,
+          companyId: id,
           categories: {
             connect: parsed.categories.map(category => ({ id: category })),
           },
@@ -31,6 +31,8 @@ export async function POST(request: NextRequest) {
           expiresAt: getExpirationDate(parsed.expiresAt),
         },
       })
+
+      return NextResponse.redirect(url(`/home/offers/${offerId}`))
     }
 
     return NextResponse.redirect(url('/home/offers'))
