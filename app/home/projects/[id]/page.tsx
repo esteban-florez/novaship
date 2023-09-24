@@ -32,6 +32,15 @@ export default async function ProjectPage({ params: { id } }: Context) {
         },
       },
       categories: true,
+      files: {
+        include: {
+          membership: {
+            include: {
+              participations: true,
+            },
+          },
+        },
+      },
       tasks: {
         include: {
           subtasks: true,

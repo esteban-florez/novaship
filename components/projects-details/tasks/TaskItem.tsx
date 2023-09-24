@@ -22,23 +22,25 @@ export default function TaskItem({ projectId, task }: Props) {
   }
 
   return (
-    <section className="mt-2 flex w-full flex-col rounded-sm border px-4 py-2 shadow transition-colors delay-150 duration-150 hover:bg-neutral-200">
-      <header className="flex items-center gap-x-2">
-        <h2 className="font-semibold">{task.title}</h2>
-        <span className={clsx({
-          'h-4 w-4 rounded-full': true,
-          'bg-success': task.status === 'DONE',
-          'bg-warning': task.status === 'PENDING',
-          'bg-secondary': task.status === 'PROGRESS',
-          'bg-primary': task.status === 'REVIEW',
-        })}
-        />
-        <p className="text-sm font-semibold text-neutral-600">{taskStatuses[task.status ?? 'PENDING']}</p>
+    <section className="flex flex-col rounded-md border px-4 py-2 shadow transition-colors delay-150 duration-150 hover:bg-neutral-200">
+      <header className="mb-1 gap-x-2">
+        <h2 className="text-xl font-semibold">{task.title}</h2>
+        <div className="-mt-1 flex items-center gap-1">
+          <span className={clsx({
+            'h-3 w-3 rounded-full': true,
+            'bg-success': task.status === 'DONE',
+            'bg-warning': task.status === 'PENDING',
+            'bg-secondary': task.status === 'PROGRESS',
+            'bg-primary': task.status === 'REVIEW',
+          })}
+          />
+          <p className="text-sm font-semibold text-neutral-600">{taskStatuses[task.status ?? 'PENDING']}</p>
+        </div>
       </header>
-      <main className="mt-2 flex flex-col">
-        <p className="text-sm text-neutral-600">{task.description}</p>
+      <main>
+        <p className="text-base">{task.description}</p>
         {task.subtasks.length === 0
-          ? (<p className="text-neutral-600">No hay subtareas registradas por los momentos.</p>)
+          ? (<p className="my-1 text-sm font-semibold text-neutral-500">No hay subtareas registradas por los momentos.</p>)
           : (
             <div className="stats stats-vertical my-2 shadow lg:stats-horizontal">
 

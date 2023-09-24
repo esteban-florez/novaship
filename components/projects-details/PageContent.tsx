@@ -1,14 +1,12 @@
-// 'use client'
+'use client'
 
-import { /* type ProjectDetailsTab, */ type Projects } from '@/lib/types'
+import { type ProjectDetailsTab, type Projects } from '@/lib/types'
 import ProjectDetails from './ProjectDetails'
 import TeamGroup from './TeamGroup'
-// import PageNav from './PageNav'
-// import { useState } from 'react'
-import Button from '../Button'
-import { PlusIcon } from '@heroicons/react/24/outline'
-import TaskItem from './tasks/TaskItem'
-import EmptyContent from '../EmptyContent'
+import PageNav from './PageNav'
+import { useState } from 'react'
+import Tasks from './tasks/Tasks'
+import Files from './files/Files'
 // import Files from './Files'
 // import TaskItem from './tasks/TaskItem'
 // import EmptyContent from '../EmptyContent'
@@ -21,11 +19,11 @@ interface Props {
 
 // TODO -> pasar files y tasks a un componente (client)
 export default function PageContent({ isOwner, isMember, project }: Props) {
-  // const [tab, setTab] = useState<ProjectDetailsTab>('Tasks')
+  const [tab, setTab] = useState<ProjectDetailsTab>('Tasks')
 
-  // const handleChangeTab = (tabOption?: ProjectDetailsTab) => {
-  //   if (tabOption !== null && tabOption !== undefined) setTab(tabOption)
-  // }
+  const handleChangeTab = (tabOption?: ProjectDetailsTab) => {
+    if (tabOption !== null && tabOption !== undefined) setTab(tabOption)
+  }
 
   const projectCategories = project.categories.map(category => {
     return category.title
@@ -85,34 +83,15 @@ export default function PageContent({ isOwner, isMember, project }: Props) {
           <div className="col-span-7 lg:col-span-5">
             {/* {(isOwner || isMember) && <PageNav tab={tab} onTabClick={handleChangeTab} />} */}
             {isOwner &&
-              <div className="flex items-center justify-end">
-                <Button
-                  url={`/home/projects/${project.id}/tasks/create`}
-                  color="PRIMARY"
-                  hover="WHITE"
-                >
-                  <PlusIcon className="h-5 w-5" />
-                  Agregar tarea
-                </Button>
-              </div>}
+              <PageNav
+                id={project.id}
+                tab={tab}
+                onTabClick={handleChangeTab}
+              />}
             <div className="card mt-3 rounded-lg bg-white p-5 shadow-lg">
-              {project.tasks.length > 0
-                ? (
-                    project.tasks.map(task => {
-                      return (
-                        <TaskItem
-                          key={task.id}
-                          projectId={project.id}
-                          task={task}
-                        />
-                      )
-                    })
-                  )
-                : (
-                  <EmptyContent title="¡Nada que mostrar!">
-                    Este equipo no ha creado ninguna tarea aún.
-                  </EmptyContent>
-                  )}
+              {tab === 'Tasks'
+                ? <Tasks projectId={project.id} tasks={project.tasks} />
+                : <Files projectId={project.id} files={project.files} />}
             </div>
           </div>}
         {!(isOwner || isMember) &&

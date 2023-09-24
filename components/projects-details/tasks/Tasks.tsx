@@ -11,10 +11,14 @@ interface Props {
 
 export default function Tasks({ projectId, tasks }: Props) {
   return (
-    <div className="flex flex-col space-y-4 rounded-lg rounded-tl-none">
+    <div className="flex w-full flex-col gap-3">
       {tasks.map(task => {
         return (
-          <TaskItem key={task.id} task={task} projectId={projectId} />
+          <TaskItem
+            key={task.id}
+            task={task}
+            projectId={projectId}
+          />
         )
       })}
     </div>
