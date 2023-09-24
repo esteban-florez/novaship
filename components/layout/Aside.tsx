@@ -40,10 +40,9 @@ const SIDEBAR_LINKS = [
   },
 ]
 
-// TODO -> responsive
-// DEV -> Hidden temporal
+// TODO -> transicion mas suave
 export default function Aside() {
-  const [active, isActive] = useState(true)
+  const [active, setActive] = useState(true)
   const pathname = usePathname()
 
   const handleActivelink = (link: string) => {
@@ -53,28 +52,29 @@ export default function Aside() {
 
   return (
     <aside className={clsx({
-      'hidden sticky top-0 h-screen flex-col bg-white shadow-md sm:flex transition-all duration-500 ease-in-out': true,
-      'z-50 w-[17.5rem]': active,
-      'z-50 w-20': !active,
+      'z-50 top-0 h-screen flex-col bg-white shadow-md sm:flex sm:sticky transition-all delay-150 duration-300 ease-out': true,
+      'fixed w-screen sm:w-[17.5rem]': active,
+      'w-0 sm:w-20': !active,
     })}
     >
-      <div className="py-[18px] text-center">
+      <div className="py-[18px] text-center sm:inline-flex sm:justify-center sm:gap-x-2">
         <Link
           href="/home"
           className={clsx(
-            'rounded-full bg-primary px-4 py-2 text-2xl font-bold text-white shadow-md',
-            active && 'visible', !active && 'invisible'
+            'rounded-full bg-primary px-4 py-2 text-2xl font-bold text-white shadow-md sm:text-xl',
+            active && '', !active && 'hidden'
           )}
         >
           novaship
         </Link>
-        <button className="btn-ghost btn-circle btn self-center" onClick={() => { isActive(!active) }}>
+        <button className="btn-ghost btn-circle btn -mt-2 self-center sm:mt-0" onClick={() => { setActive(!active) }}>
           <Bars3Icon className="h-6 w-6" />
         </button>
       </div>
       <ul className={clsx({
-        'menu h-full gap-4 py-6 shadow': true,
+        'menu h-full gap-2 py-6 shadow': true,
         'px-8': active,
+        'hidden sm:block': !active,
       })}
       >
         {SIDEBAR_LINKS.map(link => (
