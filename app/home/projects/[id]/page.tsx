@@ -8,11 +8,8 @@ export const metadata: Metadata = {
   title: 'Detalles de proyecto',
 }
 
-interface Context {
-  params: { id: string }
-}
-
-export default async function ProjectPage({ params: { id } }: Context) {
+// TODO -> pasar la query a data-fetching
+export default async function ProjectPage({ params: { id } }: PageContext) {
   const activeUser = await auth.user()
 
   if (id === null) {

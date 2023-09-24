@@ -89,7 +89,7 @@ export default function Details({ id, isOwner, title, description, expiresAt, ca
                       hover="WHITE"
                     >
                       <PencilIcon className="h-4 w-4" />
-                      ¡Quiero Aplicar!
+                      ¡Aplicar!
                     </Button>
                   </form>}
 

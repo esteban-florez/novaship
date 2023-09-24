@@ -3,12 +3,7 @@ import Button from '../Button'
 import { actions } from '@/lib/translations'
 import { usePathname } from 'next/navigation'
 
-interface Props {
-  url: string
-}
-
-// TODO -> usar router.back()
-export default function FormButtons({ url }: Props) {
+export default function FormButtons({ url }: { url: string }) {
   const path = usePathname()
   const pathMethod = path.split('/').at(-1) as 'create' | 'update'
 

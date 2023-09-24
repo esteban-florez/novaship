@@ -41,6 +41,7 @@ const SIDEBAR_LINKS = [
 ]
 
 // TODO -> responsive
+// DEV -> Hidden temporal
 export default function Aside() {
   const [active, isActive] = useState(true)
   const pathname = usePathname()
@@ -52,7 +53,7 @@ export default function Aside() {
 
   return (
     <aside className={clsx({
-      'sticky top-0 h-screen flex-col bg-white shadow-md sm:flex transition-all duration-500 ease-in-out': true,
+      'hidden sticky top-0 h-screen flex-col bg-white shadow-md sm:flex transition-all duration-500 ease-in-out': true,
       'z-50 w-[17.5rem]': active,
       'z-50 w-20': !active,
     })}

@@ -7,25 +7,10 @@ export const metadata: Metadata = {
 }
 
 export default async function CreateOfferPage() {
-  const skills = await prisma.skill.findMany({
-    orderBy: {
-      title: 'asc',
-    },
-  })
-
-  const categories = await prisma.category.findMany({
-    orderBy: {
-      title: 'asc',
-    },
-  })
-
+  const skills = await prisma.skill.findMany({ orderBy: { title: 'asc' } })
+  const categories = await prisma.category.findMany({ orderBy: { title: 'asc' } })
+  const jobs = await prisma.job.findMany({ orderBy: { title: 'asc' } })
   const locations = await prisma.location.findMany()
-
-  const jobs = await prisma.job.findMany({
-    orderBy: {
-      title: 'asc',
-    },
-  })
 
   return (
     <OfferForm
@@ -35,6 +20,7 @@ export default async function CreateOfferPage() {
       jobs={jobs}
       method="POST"
       action="/api/offers"
+      backUrl="/home/offers"
     />
   )
 }

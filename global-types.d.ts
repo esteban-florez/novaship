@@ -14,6 +14,12 @@ type SelectOptionsArray = Array<{ value: string, label: string }>
 
 interface SearchParamsProps { searchParams: Record<string, string | string[] | undefined> }
 
+interface FormProps {
+  backUrl: string
+  method: 'POST' | 'PUT'
+  action: string
+}
+
 type SelectOptionsConfig = {
   type: 'enum'
   data: Rec

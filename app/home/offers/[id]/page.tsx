@@ -1,6 +1,6 @@
 import PageContent from '@/components/offers-details/PageContent'
 import { auth } from '@/lib/auth/pages'
-import prisma from '@/prisma/client'
+import { getOffer } from '@/lib/data-fetching/offer'
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
@@ -13,48 +13,8 @@ interface Context {
 }
 
 export default async function OfferPage({ params: { id } }: Context) {
-  const activeUser = await auth.user()
-
-  const offer = await prisma.offer.findFirst({
-    where: { id },
-    include: {
-      company: {
-        select: {
-          description: true,
-          name: true,
-        },
-      },
-      categories: {
-        select: {
-          title: true,
-        },
-      },
-      skills: {
-        select: {
-          id: true,
-          title: true,
-        },
-      },
-      location: {
-        select: {
-          title: true,
-        },
-      },
-      hiring: {
-        select: {
-          id: true,
-          personId: true,
-          status: true,
-          person: {
-            select: {
-              name: true,
-            },
-          },
-          interviews: true,
-        },
-      },
-    },
-  })
+  const { id: userId } = await auth.user()
+  const offer = await getOffer({ id })
 
   if (offer === null) {
     redirect('/home/offers')
@@ -63,7 +23,7 @@ export default async function OfferPage({ params: { id } }: Context) {
   return (
     <PageContent
       offer={offer}
-      userId={activeUser.id}
+      userId={userId}
     />
   )
 }

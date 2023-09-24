@@ -13,7 +13,11 @@ type Selectable<T> = T & {
 
 type OptionSkill = Pick<Skill, 'id' | 'title'>
 type OptionCategory = Pick<Category, 'id' | 'title'>
+type OptionLocation = Pick<Location, 'id' | 'title'>
+type OptionJob = Pick<Job, 'id' | 'title'>
 type OptionPerson = Pick<Person, 'id' | 'name' | 'email'>
+type OptionCompany = Pick<Company, 'id' | 'name'>
+type OptionTeam = Pick<Team, 'id' | 'name'>
 
 type SelectableCategory = Selectable<OptionCategory>
 type SelectableSkill = Selectable<OptionSkill>

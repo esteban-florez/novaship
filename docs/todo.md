@@ -19,6 +19,7 @@
 - Arreglar typing animation.
 - Arreglar <Input> checkbox y radio.
 - Mejorar transicion del aside.
+- Añadir backups.
 
 # Schemas
 - Ofert: el titulo deberia ser mayor a 20 caracteres.

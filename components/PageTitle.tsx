@@ -12,6 +12,7 @@ type Props = React.PropsWithChildren<{
   breadcrumbs?: string[] | string
 }>
 
+// TODO -> actualizar diseño
 export default function PageTitle({ title, children, subtitle, breadcrumbs }: Props) {
   return (
     <section className="mb-4 flex flex-col justify-between gap-2 bg-white p-4 shadow md:flex-row md:items-center md:gap-0">
