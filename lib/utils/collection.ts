@@ -67,9 +67,7 @@ class Collection<T> {
     })
   }
 
-  // Check type
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  deleteDuplicatesFrom(arr: any[]) {
+  deleteDuplicatesFrom(arr: T[]) {
     return this.array.filter(val => !arr.includes(val))
   }
 

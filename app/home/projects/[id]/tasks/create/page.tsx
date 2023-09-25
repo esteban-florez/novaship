@@ -41,7 +41,7 @@ export default async function CrateTaskPage({ params: { id } }: Context) {
     },
   })
 
-  // Todo -> add redirect alert.
+  // TODO -> add redirect alert.
   // DRY project validation
   if (project === null) {
     redirect('/home/projects')

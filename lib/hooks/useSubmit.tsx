@@ -67,6 +67,7 @@ export default function useSubmit<Fields extends FieldValues>({
 
       if (response.redirected) {
         router.push(response.url)
+        router.refresh()
         return
       }
 

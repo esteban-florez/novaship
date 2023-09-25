@@ -1,6 +1,4 @@
 import SignUpForm from '@/components/signup/SignUpForm'
-import selectable from '@/lib/data-fetching/selectable'
-import { type SelectableSkill } from '@/lib/types'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import Link from 'next/link'
@@ -16,7 +14,8 @@ export default async function SignUpPage() {
 
   const jobs = await prisma.job.findMany()
   const locations = await prisma.location.findMany()
-  const categories = await selectable<SelectableSkill>({ model: 'category' })
+  const categories = (await prisma.skill.findMany())
+    .map(({ id, title }) => ({ id, title, selected: false }))
 
   return (
     <>
@@ -43,7 +42,12 @@ export default async function SignUpPage() {
         </section>
         <section className="grid w-full place-items-center p-4 lg:w-3/4">
           {/* TODO -> refactorizar este componente con composición para que sea mejor, y aplicar lo que aprendí xDDDD */}
-          <SignUpForm jobs={jobs} categories={categories} skills={skills} locations={locations} />
+          <SignUpForm
+            jobs={jobs}
+            categories={categories}
+            skills={skills}
+            locations={locations}
+          />
         </section>
       </section>
     </>

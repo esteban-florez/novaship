@@ -1,6 +1,5 @@
 # To-Do
 
-- Añadir validaciones front y back.
 - Rediseñar el chat.
 - Guiar al usuario por la aplicación.
 - Banner recordatorio de completar perfil.
@@ -9,7 +8,6 @@
 - deletedAt middleware.
 - Funcion para enviar datos a las rutas sin validacion.
 - Añadir campo a modelo [offer] para mostrar en carrusel.
-- Revalidar data.
 - Cambiar componentes PageContent por composición de componentes (JSX as children).
 - ExpiresAt handler.
 - Validar campos únicos en signup, y verificar el resto de los campos únicos.
@@ -20,6 +18,7 @@
 - Arreglar <Input> checkbox y radio.
 - Mejorar transicion del aside.
 - Añadir backups.
+- Signup con Google.
 
 # Schemas
 - Ofert: el titulo deberia ser mayor a 20 caracteres.

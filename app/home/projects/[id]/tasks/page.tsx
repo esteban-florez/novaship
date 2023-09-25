@@ -13,7 +13,7 @@ interface Context {
 }
 
 export default async function TasksPage({ params: { id } }: Context) {
-  // Todo -> add redirect alert.
+  // TODO -> add redirect alert.
   if (id === null) redirect('/home/projects')
 
   const project = await prisma.project.findFirst({

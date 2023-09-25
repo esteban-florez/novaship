@@ -1,15 +1,15 @@
 'use client'
 
+import useDeleteRequest from '@/lib/hooks/useDeleteRequest'
 // import Link from 'next/link'
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid'
-import useFormHandling from '@/lib/hooks/useFormHandling'
 
-interface DropdownProps {
+type Props = React.PropsWithChildren<{
   username: string
-}
+}>
 
-export default function ProfileDropdownMenu({ username }: DropdownProps) {
-  const { onSubmit, alert } = useFormHandling({ method: 'DELETE' })
+export default function ProfileDropdownMenu({ username }: Props) {
+  const { alert, handleSubmit } = useDeleteRequest()
 
   return (
     <>
@@ -20,7 +20,7 @@ export default function ProfileDropdownMenu({ username }: DropdownProps) {
           <EyeIcon className="h-5 w-5" />
           Ver perfil
         </Link> */}
-        <form action="/api/auth/signout" method="POST" onSubmit={onSubmit}>
+        <form action="/api/auth/signout" method="DELETE" onSubmit={handleSubmit}>
           <button className="flex gap-1 font-semibold text-error" type="submit">
             <ArrowLeftOnRectangleIcon className="h-5 w-5" />
             Cerrar sesión
