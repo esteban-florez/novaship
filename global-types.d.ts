@@ -47,3 +47,10 @@ interface QueryConfig<T> {
   skip?: number
   take?: number
 }
+
+type AlertType = 'info' | 'warning' | 'error' | 'success' | 'loading'
+
+interface AlertData {
+  type: AlertType
+  message: string
+}

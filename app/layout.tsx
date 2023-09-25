@@ -1,3 +1,4 @@
+import Alert from '@/components/Alert'
 import '@/styles/globals.css'
 import clsx from 'clsx'
 import { type Metadata } from 'next'
@@ -37,7 +38,9 @@ export default function RootLayout({
   return (
     <html lang="es" className={clsx('h-full bg-white', ubuntu.className)} data-theme="light">
       <body className="h-full">
-        {children}
+        <Alert>
+          {children}
+        </Alert>
       </body>
     </html>
   )

@@ -1,4 +1,13 @@
-import { ArrowPathIcon, CheckBadgeIcon, ExclamationTriangleIcon, InformationCircleIcon, XCircleIcon, XMarkIcon } from '@heroicons/react/24/outline'
+'use client'
+
+import {
+  ArrowPathIcon,
+  CheckBadgeIcon,
+  ExclamationTriangleIcon,
+  InformationCircleIcon,
+  XCircleIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 
 const DEFAULT_TOASTS = {
@@ -24,9 +33,7 @@ const DEFAULT_TOASTS = {
   },
 }
 
-type Props = React.PropsWithChildren<{
-  type: 'info' | 'warning' | 'error' | 'success' | 'loading'
-  message: string
+type Props = React.PropsWithChildren<AlertData & {
   onClose: () => void
 }>
 
