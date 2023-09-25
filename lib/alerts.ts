@@ -1,13 +1,12 @@
-function a(type: AlertType, message: string) {
-  return {
-    type, message,
-  }
-}
+type AlertList = Record<string, AlertData | undefined>
 
-export const alerts: Record<string, AlertData | undefined> = {
-  success: a('success', 'Alerta de éxito'),
-  error: a('error', 'Alert de error'),
-  info: a('info', 'Alert de error'),
-  loading: a('loading', 'Alert de error'),
-  warning: a('warning', 'War'),
+export const alerts: AlertList = {
+  project_created: {
+    type: 'success',
+    message: 'El proyecto fué creado con éxito.',
+  },
+  redirected: {
+    type: 'info',
+    message: 'Fuiste redireccionado.',
+  },
 }
