@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint --fix",
     "prepare": "husky install",
-    "vercel-build": "prisma generate && prisma migrate reset --skip-seed && prisma migrate deploy && prisma db seed && next build"
+    "vercel-build": "prisma generate && prisma migrate reset --skip-seed --force && prisma migrate deploy && prisma db seed && next build"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
