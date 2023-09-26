@@ -13,18 +13,18 @@ export const schema = object({
     .min(15, messages.min(15))
     .max(255, messages.max(255)),
   hours: number(messages.number)
-    .min(1, messages.min(1))
-    .max(60, messages.max(60))
+    .min(1, messages.minNumber(1))
+    .max(60, messages.maxNumber(60))
     .int()
     .positive(),
   limit: number(messages.number)
-    .min(1, messages.min(1))
-    .max(50, messages.max(50))
+    .min(1, messages.minNumber(1))
+    .max(50, messages.maxNumber(50))
     .int()
     .positive(),
   salary: number(messages.number)
-    .min(1, messages.min(1))
-    .max(2000, messages.max(2000))
+    .min(1, messages.minNumber(1))
+    .max(2000, messages.maxNumber(2000))
     .positive(),
   categories: array(string(messages.string)
     .cuid(messages.cuid), messages.array)

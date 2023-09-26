@@ -1,5 +1,6 @@
 import ProjectForm from '@/components/projects/ProjectForm'
 import { auth } from '@/lib/auth/pages'
+import { getMyTeams } from '@/lib/data-fetching/teams'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 
@@ -8,25 +9,12 @@ export const metadata: Metadata = {
 }
 
 export default async function CreateProjectPage() {
-  const { id } = await auth.user()
+  const { id: userId } = await auth.user()
 
-  const categories = await prisma.category.findMany()
-  const teams = await prisma.team.findMany({
-    where: {
-      memberships: {
-        some: {
-          isLeader: true,
-          OR: [
-            { companyId: id },
-            { personId: id },
-          ],
-        },
-      },
-    },
-    include: {
-      memberships: true,
-    },
+  const categories = await prisma.category.findMany({
+    select: { id: true, title: true },
   })
+  const teams = await getMyTeams({ userId })
 
   return (
     <ProjectForm
@@ -34,7 +22,7 @@ export default async function CreateProjectPage() {
       method="POST"
       categories={categories}
       teams={teams}
-      cancelRedirect="/home/projects"
+      backUrl="/home/projects"
     />
   )
 }

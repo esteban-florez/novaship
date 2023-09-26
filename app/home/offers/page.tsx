@@ -17,7 +17,7 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
   // DRY Pagination
   const pageNumber = +(searchParams.page ?? 1)
   const totalRecords = await prisma.offer.count({
-    // where: { expiresAt: { gte: new Date() } },
+    where: { expiresAt: { gte: new Date() } },
   })
   const { nextPage, skip, take } = getPaginationProps({ pageNumber, totalRecords })
 
@@ -26,7 +26,7 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
     where: {
       AND: [
         { companyId: { not: id } },
-        // { expiresAt: { gte: new Date() } }
+        { expiresAt: { gte: new Date() } },
       ],
     },
     skip: pageNumber === 1 ? 5 : skip,

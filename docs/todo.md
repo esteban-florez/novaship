@@ -1,6 +1,5 @@
 # To-Do
 
-- Añadir validaciones front y back.
 - Rediseñar el chat.
 - Guiar al usuario por la aplicación.
 - Banner recordatorio de completar perfil.
@@ -9,7 +8,6 @@
 - deletedAt middleware.
 - Funcion para enviar datos a las rutas sin validacion.
 - Añadir campo a modelo [offer] para mostrar en carrusel.
-- Revalidar data.
 - Cambiar componentes PageContent por composición de componentes (JSX as children).
 - ExpiresAt handler.
 - Validar campos únicos en signup, y verificar el resto de los campos únicos.
@@ -19,6 +17,10 @@
 - Arreglar typing animation.
 - Arreglar <Input> checkbox y radio.
 - Mejorar transicion del aside.
+- Añadir backups.
+- Signup con Google.
+- Reemplazar la función redirect() por notFound() en los sitios donde tenga más sentido, y hacer una UI de notFound.
+- Añadir alert de acción no permitida (?).
 
 # Schemas
 - Ofert: el titulo deberia ser mayor a 20 caracteres.
@@ -29,3 +31,4 @@
 - Opciones de ver, editar y eliminar como un overlay en el elemento al hacer hover.
 - Mostrar un popup al hacer hover en los avatares de los miembros en /projects.
 - Fechas de entrega en tareas y subtareas.
+- Cambiar las respuestas de redirección (NextResponse.redirect y redirect) en los Route Handlers, por respuestas "200 OK". Y en su lugar indicarle la ruta a redirigir al hook useSubmit, o a lo que sea que haga la petición fetch() a la API.

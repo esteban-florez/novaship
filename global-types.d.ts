@@ -14,6 +14,12 @@ type SelectOptionsArray = Array<{ value: string, label: string }>
 
 interface SearchParamsProps { searchParams: Record<string, string | string[] | undefined> }
 
+interface FormProps {
+  backUrl: string
+  method: 'POST' | 'PUT'
+  action: string
+}
+
 type SelectOptionsConfig = {
   type: 'enum'
   data: Rec
@@ -40,4 +46,11 @@ interface QueryConfig<T> {
   where?: T
   skip?: number
   take?: number
+}
+
+type AlertType = 'info' | 'warning' | 'error' | 'success' | 'loading'
+
+interface AlertData {
+  type: AlertType
+  message: string
 }

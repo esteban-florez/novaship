@@ -8,13 +8,11 @@ export const metadata: Metadata = {
   title: 'Tareas',
 }
 
-interface Context {
-  params: { id: string }
-}
-
-export default async function TasksPage({ params: { id } }: Context) {
-  // Todo -> add redirect alert.
-  if (id === null) redirect('/home/projects')
+// TODO -> alert pending
+export default async function TasksPage({ params: { id } }: PageContext) {
+  if (id === null) {
+    redirect('/home/projects')
+  }
 
   const project = await prisma.project.findFirst({
     where: { id },

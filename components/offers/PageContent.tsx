@@ -56,16 +56,16 @@ export default function PageContent({ carouselOffers, generalOffers, myOffers, s
         onSearch={handleSearch}
         userType={userType}
       />
+      <OffersList
+        offers={OFFERS_OPTION[tab]}
+        search={search}
+      />
       {tab === 'All' &&
         <Pagination
           url="/home/offers"
           pageNumber={pageNumber}
           nextPage={nextPage}
         />}
-      <OffersList
-        offers={OFFERS_OPTION[tab]}
-        search={search}
-      />
     </>
   )
 }

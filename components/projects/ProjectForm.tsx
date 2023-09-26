@@ -7,27 +7,22 @@ import Select from '../forms/inputs/Select'
 import Textarea from '../forms/inputs/Textarea'
 import { schema } from '@/lib/validation/schemas/project'
 import useSubmit from '@/lib/hooks/useSubmit'
-import { Visibility, type Category, type Team } from '@prisma/client'
+import { Visibility } from '@prisma/client'
 import { visibilities } from '@/lib/translations'
 import FormLayout from '../forms/FormLayout'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
-import { type ProjectWithTeamAndCategories } from '@/lib/types'
+import { type OptionCategory, type OptionTeam, type ProjectWithTeamAndCategories } from '@/lib/types'
+import PageTitle from '../PageTitle'
 
-// DRY 5
-interface Props {
-  cancelRedirect: string
-  method: 'POST' | 'PUT'
-  action: string
-  categories: Category[]
-  teams: Team[]
+interface Props extends FormProps {
+  categories: OptionCategory[]
+  teams: OptionTeam[]
   project?: ProjectWithTeamAndCategories
 }
 
 // TODO -> encontrar una manera de obtener teamwork al actualizar
-export default function ProjectForm({ cancelRedirect, method, action, categories, teams, project }: Props) {
-  const projectCategories = project?.categories.map(category => {
-    return category.id
-  })
+export default function ProjectForm({ backUrl, method, action, categories, teams, project }: Props) {
+  const projectCategories = project?.categories.map(category => category.id)
 
   const {
     handleSubmit, alert, serverErrors,
@@ -38,87 +33,94 @@ export default function ProjectForm({ cancelRedirect, method, action, categories
   })
 
   return (
-    <FormLayout>
-      <form onSubmit={handleSubmit} method="POST" action={action}>
-        {serverErrors}
-        {alert}
-        <FormSection title="Información del proyecto" description="Asigne un título que explique de que trata el proyecto, así como una descripción del mismo para tener una mejor idea y por último si es público o privado.">
-          <Input
-            name="title"
-            label="Título"
-            placeholder="Ej: Página web administrativa"
-            value={project?.title}
-            register={register}
-            errors={errors}
-          />
-          <Textarea
-            name="description"
-            label="Descripción"
-            placeholder="Ej: Página web de carácter administrativo para la empresa..."
-            value={project?.description}
-            register={register}
-            errors={errors}
-          />
-          <Select
-            name="visibility"
-            defaultValue={project?.visibility ?? undefined}
-            register={register}
-            errors={errors}
-            label="Selecciona la privacidad"
-            options={{ type: 'enum', data: Visibility, translation: visibilities }}
-          />
-        </FormSection>
-        <FormSection title="Campos requeridos" description="Elige los campos necesarios para ser parte del proyecto.">
-          <SelectMultiple
-            name="categories"
-            label="Campos"
-            itemsName="Campos"
-            control={control}
-            defaultValue={projectCategories}
-            limit={5}
-            menuOnTop
-            options={{
-              type: 'rows',
-              data: categories,
-            }}
-          />
-        </FormSection>
-        <FormSection title="Equipos de trabajo" description="Seleccione como desea trabajar en este proyecto.">
-          <Input
-            name="teamwork"
-            placeholder=""
-            type="radio"
-            label="Individual"
-            value="Solo"
-            register={register}
-            errors={errors}
-          />
-          <Input
-            name="teamwork"
-            placeholder=""
-            type="radio"
-            label="En equipo"
-            className="peer"
-            value="Team"
-            register={register}
-            errors={errors}
-          />
-          <Select
-            name="teamId"
-            label="Equipos"
-            labelClassName="hidden peer-checked:block"
-            register={register}
-            errors={errors}
-            className="hidden peer-checked:block"
-            defaultValue={project?.teamId ?? undefined}
-            options={{
-              type: 'rows',
-              data: teams,
-            }}
-          />
-        </FormSection>
-        <FormButtons url={cancelRedirect} />
-      </form>
-    </FormLayout>
+    <>
+      <PageTitle
+        title="Registrar nuevo proyecto"
+        subtitle="Rellena los datos para crear un nuevo proyecto o actualizar uno existente."
+        breadcrumbs={project?.title}
+      />
+      <FormLayout>
+        <form onSubmit={handleSubmit} method="POST" action={action}>
+          {serverErrors}
+          {alert}
+          <FormSection title="Información del proyecto" description="Asigne un título que explique de que trata el proyecto, así como una descripción del mismo para tener una mejor idea y por último si es público o privado.">
+            <Input
+              name="title"
+              label="Título"
+              placeholder="Ej: Página web administrativa"
+              value={project?.title}
+              register={register}
+              errors={errors}
+            />
+            <Textarea
+              name="description"
+              label="Descripción"
+              placeholder="Ej: Página web de carácter administrativo para la empresa..."
+              value={project?.description}
+              register={register}
+              errors={errors}
+            />
+            <Select
+              name="visibility"
+              defaultValue={project?.visibility ?? undefined}
+              register={register}
+              errors={errors}
+              label="Selecciona la privacidad"
+              options={{ type: 'enum', data: Visibility, translation: visibilities }}
+            />
+          </FormSection>
+          <FormSection title="Campos requeridos" description="Elige los campos necesarios para ser parte del proyecto.">
+            <SelectMultiple
+              name="categories"
+              label="Campos"
+              itemsName="Campos"
+              control={control}
+              defaultValue={projectCategories}
+              limit={5}
+              menuOnTop
+              options={{
+                type: 'rows',
+                data: categories,
+              }}
+            />
+          </FormSection>
+          <FormSection title="Equipos de trabajo" description="Seleccione como desea trabajar en este proyecto.">
+            <Input
+              name="teamwork"
+              placeholder=""
+              type="radio"
+              label="Individual"
+              value="Solo"
+              register={register}
+              errors={errors}
+            />
+            <Input
+              name="teamwork"
+              placeholder=""
+              type="radio"
+              label="En equipo"
+              className="peer"
+              value="Team"
+              register={register}
+              errors={errors}
+            />
+            <Select
+              name="teamId"
+              label="Equipos"
+              labelClassName="hidden peer-checked:block"
+              register={register}
+              errors={errors}
+              className="hidden peer-checked:block"
+              defaultValue={project?.teamId ?? undefined}
+              options={{
+                type: 'rows',
+                data: teams,
+              }}
+            />
+          </FormSection>
+          <FormButtons url={backUrl} />
+        </form>
+      </FormLayout>
+    </>
   )
 }

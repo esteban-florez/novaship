@@ -1,8 +1,9 @@
-import { ChevronRightIcon, EllipsisHorizontalIcon, HashtagIcon } from '@heroicons/react/24/outline'
+import { EllipsisHorizontalIcon, HashtagIcon } from '@heroicons/react/24/outline'
 import AvatarIcon from '../AvatarIcon'
 import Link from 'next/link'
 import { type UserWithType } from '@/lib/types'
 import { type Task, type Company, type Membership, type Person, type Project, type Team } from '@prisma/client'
+import ChatsBarDropdown from './ChatsBarDropdown'
 
 interface Props {
   activeUser: UserWithType
@@ -40,11 +41,7 @@ export default function ChatsBar({ project, activeUser, isMember }: Props) {
               General
             </span>
           </Link>
-          <details className="dropdown border-b border-neutral-300 shadow">
-            <summary className="btn w-full items-center justify-start border-none bg-white p-0 text-base font-normal hover:bg-white">
-              <ChevronRightIcon className="h-5 w-5" />
-              Tareas
-            </summary>
+          <ChatsBarDropdown>
             <ul className="dropdown-content menu z-[1] gap-1 p-2">
               {project.tasks.map(task => {
                 return (
@@ -54,7 +51,7 @@ export default function ChatsBar({ project, activeUser, isMember }: Props) {
                 )
               })}
             </ul>
-          </details>
+          </ChatsBarDropdown>
         </div>
       </div>
       <div className="sticky inset-x-0 bottom-0 flex items-center gap-2 rounded-bl-lg border-t border-neutral-300 bg-white px-2 py-2.5">

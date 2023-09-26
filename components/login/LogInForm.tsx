@@ -1,6 +1,5 @@
 'use client'
 
-import GoogleSignUpButton from '../GoogleSignUpButton'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { type Fields, schema } from '@/lib/validation/schemas/login'
 import Input from '../forms/inputs/Input'
@@ -32,7 +31,6 @@ export default function LogInForm() {
         <button type="submit" className="btn-primary btn mt-6 w-full md:w-auto">
           Iniciar sesión
         </button>
-        <GoogleSignUpButton />
       </div>
     </form>
   )

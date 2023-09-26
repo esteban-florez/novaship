@@ -14,12 +14,15 @@ interface Context {
   params: { id: string, taskId: string }
 }
 
+// TODO -> alert pending
 export default async function TaskPage({ params: { id, taskId } }: Context) {
   const project = await prisma.project.findFirst({
     where: { id },
   })
 
-  if (project === null) redirect('/home/projects')
+  if (project === null) {
+    redirect('/home/projects?alert=project_not_found')
+  }
 
   const task = await prisma.task.findFirst({
     where: {
@@ -30,7 +33,9 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
     },
   })
 
-  if (task === null) redirect(`/home/projects/${project.id}`)
+  if (task === null) {
+    redirect(`/home/projects/${project.id}`)
+  }
 
   return (
     <FormLayout>

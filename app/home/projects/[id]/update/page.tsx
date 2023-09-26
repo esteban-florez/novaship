@@ -3,50 +3,31 @@ import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
 import ProjectForm from '@/components/projects/ProjectForm'
+import { getProject } from '@/lib/data-fetching/project'
+import { getMyTeams } from '@/lib/data-fetching/teams'
 
 export const metadata: Metadata = {
   title: 'Actualizar Proyecto',
 }
 
-interface Context {
-  params: {
-    id: string
+export default async function UpdateProjectPage({ params: { id } }: PageContext) {
+  const { id: userId } = await auth.user()
+
+  if (id === null) {
+    redirect('/home/projects?alert=project_not_found')
   }
-}
 
-// TODO -> redirect if not owner.
-export default async function UpdateProjectPage({ params: { id } }: Context) {
-  const activeUser = await auth.user()
-
-  if (id === null) redirect('/home/projects')
-
-  // DRY 5
-  const project = await prisma.project.findFirst({
-    where: { id },
-    include: {
-      categories: {
-        select: {
-          id: true,
-          title: true,
-        },
-      },
+  const project = await getProject({
+    id,
+    where: {
       team: {
-        include: {
-          memberships: {
-            include: {
-              person: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
-              company: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
-            },
+        memberships: {
+          some: {
+            isLeader: true,
+            OR: [
+              { companyId: userId },
+              { personId: userId },
+            ],
           },
         },
       },
@@ -55,35 +36,13 @@ export default async function UpdateProjectPage({ params: { id } }: Context) {
 
   // DRY project validation
   if (project === null) {
-    redirect('/home/projects')
-  }
-  const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
-
-  if (!isOwner) {
-    redirect('/home/projects')
+    redirect('/home/projects?alert=project_not_found')
   }
 
   const categories = await prisma.category.findMany({
-    orderBy: {
-      title: 'asc',
-    },
+    select: { id: true, title: true }, orderBy: { title: 'asc' },
   })
-
-  const teams = await prisma.team.findMany({
-    where: {
-      memberships: {
-        some: {
-          OR: [
-            { companyId: activeUser.id },
-            { personId: activeUser.id },
-          ],
-        },
-      },
-    },
-    include: {
-      memberships: true,
-    },
-  })
+  const teams = await getMyTeams({ userId })
 
   return (
     <ProjectForm
@@ -92,7 +51,7 @@ export default async function UpdateProjectPage({ params: { id } }: Context) {
       categories={categories}
       teams={teams}
       project={project}
-      cancelRedirect={`/home/projects/${id}`}
+      backUrl={`/home/projects/${id}`}
     />
   )
 }

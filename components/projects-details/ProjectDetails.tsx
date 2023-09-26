@@ -52,7 +52,7 @@ export default function ProjectDetails({ id, title, description, categories, isO
               hover="WHITE"
             >
               <PencilIcon className="h-4 w-4" />
-              ¡Quiero Aplicar!
+              ¡Aplicar!
             </Button>}
           {isOwner &&
             (

@@ -8,15 +8,12 @@ export const metadata: Metadata = {
   title: 'Detalles de proyecto',
 }
 
-interface Context {
-  params: { id: string }
-}
-
-export default async function ProjectPage({ params: { id } }: Context) {
+// TODO -> pasar la query a data-fetching
+export default async function ProjectPage({ params: { id } }: PageContext) {
   const activeUser = await auth.user()
 
   if (id === null) {
-    redirect('/home/projects')
+    redirect('/home/projects?alert=project_not_found')
   }
 
   const project = await prisma.project.findFirst({
@@ -51,7 +48,7 @@ export default async function ProjectPage({ params: { id } }: Context) {
   })
 
   if (project === null) {
-    redirect('/home/projects')
+    redirect('/home/projects?alert=project_not_found')
   }
 
   const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)

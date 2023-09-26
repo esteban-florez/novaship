@@ -3,8 +3,10 @@ import { handleError } from '../errors/fetch'
 import { type ApiResponseBody, type UseSubmitResult } from '../types'
 import ServerErrors from '@/components/forms/ServerErrors'
 import SubmitAlert from '@/components/forms/SubmitAlert'
+import { useRouter } from 'next/navigation'
 
 export default function useDeleteRequest() {
+  const router = useRouter()
   const [showAlert, setShowAlert] = useState(true)
   const [showErrors, setShowErrors] = useState(true)
   const [result, setResult] = useState<UseSubmitResult>(null)
@@ -22,10 +24,16 @@ export default function useDeleteRequest() {
         method: 'DELETE',
       })
 
+      if (response.redirected) {
+        router.push(response.url)
+        return
+      }
+
       const body = await response.json() as ApiResponseBody
 
       setResult(body)
     } catch (error) {
+      console.log(error)
       const body = handleError(error)
       setResult(body)
     }

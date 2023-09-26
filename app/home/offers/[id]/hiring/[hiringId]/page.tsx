@@ -12,6 +12,7 @@ interface Context {
   params: { id: string, hiringId: string }
 }
 
+// TODO -> alert pending
 export default async function HiringPage({ params: { id, hiringId } }: Context) {
   const activeUser = await auth.user()
 
