@@ -46,12 +46,6 @@ export default function PageContent({ myTeams, allTeams, pageNumber, nextPage }:
         tab={tab}
         onTabClick={handleChangeTab}
       />
-      {tab === 'All' &&
-        <Pagination
-          url="/home/teams"
-          pageNumber={pageNumber}
-          nextPage={nextPage}
-        />}
       <section className="mx-auto w-full columns-1 gap-4 rounded-lg p-4
       md:columns-2 lg:columns-3 xl:rounded-tl-none"
       >
@@ -69,6 +63,12 @@ export default function PageContent({ myTeams, allTeams, pageNumber, nextPage }:
           )
         })}
       </section>
+      {tab === 'All' &&
+        <Pagination
+          url="/home/teams"
+          pageNumber={pageNumber}
+          nextPage={nextPage}
+        />}
     </>
   )
 }

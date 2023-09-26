@@ -36,16 +36,16 @@ export default function PageContent({ filter, projects, personalProjects, nextPa
         onSearch={setSearch}
         onTabClick={handleChangeTab}
       />
+      <ProjectsCard
+        search={search}
+        projects={filter === 'all' ? projects : personalProjects}
+      />
       {filter === 'all' &&
         <Pagination
           url="/home/projects"
           pageNumber={pageNumber}
           nextPage={nextPage}
         />}
-      <ProjectsCard
-        search={search}
-        projects={filter === 'all' ? projects : personalProjects}
-      />
     </>
   )
 }
