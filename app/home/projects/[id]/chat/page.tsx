@@ -4,15 +4,11 @@ import { auth } from '@/lib/auth/pages'
 import prisma from '@/prisma/client'
 import { redirect } from 'next/navigation'
 
-interface Context {
-  params: { id: string }
-}
-
-export default async function ChatsPage({ params: { id } }: Context) {
+export default async function ChatsPage({ params: { id } }: PageContext) {
   const activeUser = await auth.user()
 
   if (id === null) {
-    redirect('/home/projects')
+    redirect('/home/projects?alert=project_not_found')
   }
 
   const project = await prisma.project.findFirst({
@@ -34,12 +30,12 @@ export default async function ChatsPage({ params: { id } }: Context) {
   })
 
   if (project === null) {
-    redirect('/home/projects')
+    redirect('/home/projects?alert=project_not_found')
   }
   const isMember = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id)
 
   if (!isMember) {
-    redirect('/home/projects')
+    redirect('/home/projects?alert=project_not_member')
   }
 
   // TODO -> re-estilar el chat

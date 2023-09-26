@@ -13,7 +13,7 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
   const activeUser = await auth.user()
 
   if (id === null) {
-    redirect('/home/projects')
+    redirect('/home/projects?alert=project_not_found')
   }
 
   const project = await prisma.project.findFirst({
@@ -39,7 +39,7 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
   })
 
   if (project === null) {
-    redirect('/home/projects')
+    redirect('/home/projects?alert=project_not_found')
   }
 
   const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)

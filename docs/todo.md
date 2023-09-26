@@ -20,6 +20,7 @@
 - Añadir backups.
 - Signup con Google.
 - Reemplazar la función redirect() por notFound() en los sitios donde tenga más sentido, y hacer una UI de notFound.
+- Añadir alert de acción no permitida (?).
 
 # Schemas
 - Ofert: el titulo deberia ser mayor a 20 caracteres.

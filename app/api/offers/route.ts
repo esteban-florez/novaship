@@ -32,9 +32,10 @@ export async function POST(request: NextRequest) {
         },
       })
 
-      return NextResponse.redirect(url(`/home/offers/${offerId}`))
+      return NextResponse.redirect(url(`/home/offers/${offerId}?alert=offer_created`))
     }
 
+    // TODO -> revisar que alerta colocar.
     return NextResponse.redirect(url('/home/offers'))
   } catch (error) {
     handleError(error, data)

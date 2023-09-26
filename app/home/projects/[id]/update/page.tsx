@@ -14,7 +14,7 @@ export default async function UpdateProjectPage({ params: { id } }: PageContext)
   const { id: userId } = await auth.user()
 
   if (id === null) {
-    redirect('/home/projects')
+    redirect('/home/projects?alert=project_not_found')
   }
 
   const project = await getProject({
@@ -36,7 +36,7 @@ export default async function UpdateProjectPage({ params: { id } }: PageContext)
 
   // DRY project validation
   if (project === null) {
-    redirect('/home/projects')
+    redirect('/home/projects?alert=project_not_found')
   }
 
   const categories = await prisma.category.findMany({

@@ -14,6 +14,7 @@ interface Context {
   }
 }
 
+// TODO -> alert pending
 // TODO -> cambiar la page por un modal
 export default async function CreateSubtaskPage({ params: { id, taskId } }: Context) {
   const project = await prisma.project.findFirst({

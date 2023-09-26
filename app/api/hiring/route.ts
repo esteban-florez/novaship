@@ -5,6 +5,7 @@ import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/api'
 import { url } from '@/lib/utils/url'
 
+// TODO -> revisar redirect alerts.
 export async function POST(request: NextRequest) {
   let data
   try {
@@ -68,7 +69,7 @@ export async function POST(request: NextRequest) {
       })
 
       if (offer === null) {
-        return NextResponse.redirect(url('/home/offers'))
+        return NextResponse.redirect(url('/home/offers?alert=offer_not_found'))
       }
 
       const hiring = await prisma.hiring.create({

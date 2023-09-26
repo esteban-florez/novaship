@@ -17,7 +17,7 @@ export default async function OfferPage({ params: { id } }: Context) {
   const offer = await getOffer({ id })
 
   if (offer === null) {
-    redirect('/home/offers')
+    redirect('/home/offers?alert=offer_not_found')
   }
 
   return (
