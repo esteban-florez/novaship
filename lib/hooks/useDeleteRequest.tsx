@@ -26,6 +26,7 @@ export default function useDeleteRequest() {
 
       if (response.redirected) {
         router.push(response.url)
+        router.refresh()
         return
       }
 
