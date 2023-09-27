@@ -4,7 +4,7 @@ import AvatarIcon from '../AvatarIcon'
 interface Props {
   title: string
   participation?: string
-  date: Date
+  date?: Date
 }
 
 export default function Files({ title, participation, date }: Props) {
@@ -17,7 +17,7 @@ export default function Files({ title, participation, date }: Props) {
             <AvatarIcon username={participation ?? ''} className="h-6 w-6" />
             <div className="flex flex-col">
               <p className="text-base">{participation}</p>
-              <p className="text-sm">Hace {date.getDate()} días</p>
+              <p className="text-sm">Hace {date?.getDate()} días</p>
             </div>
           </div>
         </div>

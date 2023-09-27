@@ -12,7 +12,8 @@ interface Context {
   params: { id: string }
 }
 
-export default async function CrateTaskPage({ params: { id } }: Context) {
+// TODO -> alert pending
+export default async function CreateTaskPage({ params: { id } }: Context) {
   const activeUser = await auth.user()
 
   const project = await prisma.project.findUnique({

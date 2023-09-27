@@ -3,7 +3,7 @@ import { type ERRORS } from './errors/reference'
 import {
   type Person, type Company, type Institute, type Category, type Skill,
   type Offer, type Location, type Project, type Task, type Participation,
-  type Membership, type Subtask, type Team,
+  type Membership, type Subtask, type Team, type File,
 } from '@prisma/client'
 import { type days } from './translations'
 
@@ -164,6 +164,11 @@ interface Projects extends Project {
     }>
   }
   categories: Category[]
+  files: Array<File & {
+    membership: Membership & {
+      participations: Participation[]
+    }
+  }>
   tasks: Array<Task & {
     subtasks: Subtask[]
     participations: Participation[]

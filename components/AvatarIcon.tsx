@@ -19,7 +19,7 @@ export default function AvatarIcon({
 }: Props) {
   const avatarContent = image !== null
     ? <Image src={image} alt="Foto de perfil" />
-    : <span>{capitalizeString(username, 2)}</span>
+    : <span>{capitalizeString(username, 1)}</span>
 
   return (
     <div className={clsx('placeholder avatar', status !== null && 'relative')}>

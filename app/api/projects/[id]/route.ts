@@ -6,13 +6,8 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { redirect } from 'next/navigation'
 import collect from '@/lib/utils/collection'
-interface Context {
-  params: {
-    id: string
-  }
-}
 
-export async function PUT(request: NextRequest, { params: { id } }: Context) {
+export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
     data = await request.json()
@@ -48,13 +43,13 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
 
     // DRY project validation
     if (project === null) {
-      redirect('/home/projects')
+      redirect('/home/projects?alert=project_not_found')
     }
 
     const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
 
     if (!isOwner) {
-      redirect('/home/projects')
+      redirect('/home/projects?alert=project_not_found')
     }
 
     const projectCategories = project.categories.map(category => {
@@ -86,13 +81,13 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
       },
     })
 
-    return NextResponse.redirect(url('home/projects'))
+    return NextResponse.redirect(url('home/projects?alert=project_updated'))
   } catch (error) {
     return handleError(error, data)
   }
 }
 
-export async function DELETE(request: NextRequest, { params: { id } }: Context) {
+export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
     const activeUser = await auth.user(request)
 
@@ -124,20 +119,20 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
 
     // DRY project validation
     if (project === null) {
-      redirect('/home/projects')
+      redirect('/home/projects?alert=project_not_found')
     }
 
     const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
 
     if (!isOwner) {
-      redirect('/home/projects')
+      redirect('/home/projects?alert=project_not_found')
     }
 
     await prisma.project.deleteMany({
       where: { id },
     })
 
-    return NextResponse.redirect(url('/home/projects'))
+    return NextResponse.redirect(url('/home/projects?alert=project_deleted'))
   } catch (error) {
     return handleError(error)
   }

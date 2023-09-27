@@ -9,6 +9,7 @@ import { auth } from '@/lib/auth/api'
 import { redirect } from 'next/navigation'
 import collect from '@/lib/utils/collection'
 
+// TODO -> alert pending
 export async function POST(request: NextRequest) {
   let data
   try {

@@ -6,6 +6,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { redirect } from 'next/navigation'
 
+// TODO -> alert pending
 export async function PUT(request: NextRequest) {
   let data
   try {

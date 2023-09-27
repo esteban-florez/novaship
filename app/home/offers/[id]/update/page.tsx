@@ -14,7 +14,7 @@ export default async function UpdateOfferPage({ params: { id } }: PageContext) {
   const offer = await getMyOffer({ id, userId })
 
   if (offer === null) {
-    redirect('/home/offers')
+    redirect('/home/offers?alert=offer_not_found')
   }
 
   const locations = await prisma.location.findMany()

@@ -1,4 +1,3 @@
-import Filter from '@/components/projects-details/tasks/Filter'
 import Tasks from '@/components/projects-details/tasks/Tasks'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
@@ -8,13 +7,11 @@ export const metadata: Metadata = {
   title: 'Tareas',
 }
 
-interface Context {
-  params: { id: string }
-}
-
-export default async function TasksPage({ params: { id } }: Context) {
-  // TODO -> add redirect alert.
-  if (id === null) redirect('/home/projects')
+// TODO -> alert pending
+export default async function TasksPage({ params: { id } }: PageContext) {
+  if (id === null) {
+    redirect('/home/projects')
+  }
 
   const project = await prisma.project.findFirst({
     where: { id },
@@ -54,7 +51,7 @@ export default async function TasksPage({ params: { id } }: Context) {
     <div className="my-4 grid grid-cols-10 gap-4 px-6">
       <div className="col-span-10 lg:col-span-7">
         {/* <ProjectDetails project={} /> */}
-        <Filter />
+        {/* <Filter /> */}
         <Tasks projectId={id} tasks={project.tasks} />
       </div>
       <div className="hidden gap-4 lg:col-span-3 lg:flex lg:flex-col">

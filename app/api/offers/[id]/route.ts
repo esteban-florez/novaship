@@ -8,13 +8,7 @@ import { redirect } from 'next/navigation'
 import collect from '@/lib/utils/collection'
 import { getExpirationDate } from '@/lib/validation/expiration-dates'
 
-interface Context {
-  params: {
-    id: string
-  }
-}
-
-export async function PUT(request: NextRequest, { params: { id } }: Context) {
+export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
     data = await request.json()
@@ -36,7 +30,7 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
     })
 
     if (offer === null) {
-      redirect('/home/projects')
+      redirect('/home/projects?alert=offer_not_found')
     }
 
     const offerSkills = offer.skills.map(skill => skill.id)
@@ -71,13 +65,13 @@ export async function PUT(request: NextRequest, { params: { id } }: Context) {
       },
     })
 
-    return NextResponse.redirect(url(`/home/offers/${id}`))
+    return NextResponse.redirect(url(`/home/offers/${id}?alert=offer_updated`))
   } catch (error) {
     return handleError(error, data)
   }
 }
 
-export async function DELETE(request: NextRequest, { params: { id } }: Context) {
+export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
     const activeUser = await auth.user(request)
 
@@ -91,14 +85,14 @@ export async function DELETE(request: NextRequest, { params: { id } }: Context) 
     })
 
     if (offer == null) {
-      redirect('/home/projects')
+      redirect('/home/projects?alert=offer_not_found')
     }
 
     await prisma.offer.deleteMany({
       where: { id },
     })
 
-    return NextResponse.redirect(url('/home/offers'))
+    return NextResponse.redirect(url('/home/offers?alert=offer_deleted'))
   } catch (error) {
     return handleError(error)
   }

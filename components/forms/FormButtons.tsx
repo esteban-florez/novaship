@@ -3,7 +3,8 @@ import Button from '../Button'
 import { actions } from '@/lib/translations'
 import { usePathname } from 'next/navigation'
 
-export default function FormButtons({ url }: { url: string }) {
+// TODO - añdir prop para el label del boton y router.back() para el boton de volver
+export default function FormButtons({ url, label }: { url: string, label?: string }) {
   const path = usePathname()
   const pathMethod = path.split('/').at(-1) as 'create' | 'update'
 

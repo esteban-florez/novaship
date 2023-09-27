@@ -8,6 +8,7 @@ import messages from '@/lib/validation/messages'
 import { auth } from '@/lib/auth/api'
 import { redirect } from 'next/navigation'
 
+// TODO -> alert pending
 export async function PUT(request: NextRequest) {
   let data
   try {

@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.redirect(url(`/home/teams/${teamId}`))
+    return NextResponse.redirect(url(`/home/teams/${teamId}?alert=team_created`))
   } catch (error) {
     return handleError(error, data)
   }
