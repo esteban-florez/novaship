@@ -39,30 +39,6 @@ export const auth = {
     user.type = authUser.type
     return user as UserWithType
   },
-  /**
-   * Usar solo dentro de "/app/api". Lanza una excepción si no ninguna compañía autenticada.
-   */
-  async company(request: NextRequest) {
-    return await prisma.company.findUniqueOrThrow(await options(request))
-  },
-  /**
-   * Usar solo dentro de "/app/api". Lanza una excepción si no ninguna institución autenticada.
-   */
-  async institute(request: NextRequest) {
-    return await prisma.institute.findUniqueOrThrow(await options(request))
-  },
-  /**
-   * Usar solo dentro de "/app/api". Lanza una excepción si no ninguna persona autenticada.
-   */
-  async person(request: NextRequest) {
-    return await prisma.person.findUniqueOrThrow(await options(request))
-  },
-}
-
-async function options(request: NextRequest) {
-  const session = await sessionOrThrow(request)
-
-  return { where: { authUserId: session.userId } }
 }
 
 async function sessionOrThrow(request: NextRequest) {

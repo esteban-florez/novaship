@@ -35,29 +35,6 @@ export const auth = {
     user.type = authUser.type
     return user as UserWithType
   },
-  /**
-   * Nota: Usar solo dentro de "/app/home". Lanza una excepción si no ninguna compañía autenticada.
-   */
-  async company() {
-    return await prisma.company.findUniqueOrThrow(await options())
-  },
-  /**
-   * Nota: Usar solo dentro de "/app/home". Lanza una excepción si no ninguna institución autenticada.
-   */
-  async institute() {
-    return await prisma.institute.findUniqueOrThrow(await options())
-  },
-  /**
-   * Nota: Usar solo dentro de "/app/home". Lanza una excepción si no ninguna persona autenticada.
-   */
-  async person() {
-    return await prisma.person.findUniqueOrThrow(await options())
-  },
-}
-
-async function options() {
-  const session = await sessionOrThrow()
-  return { where: { authUserId: session.userId } }
 }
 
 /**
