@@ -45,6 +45,10 @@ export default function Aside() {
   const [active, setActive] = useState(true)
   const pathname = usePathname()
 
+  const handleClick = () => {
+    window.innerWidth > 768 ? setActive(true) : setActive(false)
+  }
+
   const handleActivelink = (link: string) => {
     const [, , path] = link.split('/')
     return link === pathname || (pathname.includes(path) && path !== '')
@@ -60,6 +64,7 @@ export default function Aside() {
       <div className="py-[18px] text-center sm:inline-flex sm:justify-center sm:gap-x-2">
         <Link
           href="/home"
+          onClick={() => { handleClick() }}
           className={clsx(
             'rounded-full bg-primary px-4 py-2 text-2xl font-bold text-white shadow-md sm:text-xl',
             active && '', !active && 'hidden'
@@ -78,7 +83,13 @@ export default function Aside() {
       })}
       >
         {SIDEBAR_LINKS.map(link => (
-          <AsideLink key={link.href} link={link} active={handleActivelink(link.href)} iconOnly={active} />
+          <AsideLink
+            key={link.href}
+            link={link}
+            active={handleActivelink(link.href)}
+            iconOnly={active}
+            onClick={() => { handleClick() }}
+          />
         ))}
       </ul>
     </aside>
