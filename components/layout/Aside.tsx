@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, ShieldCheckIcon, UserGroupIcon, Bars3Icon } from '@heroicons/react/24/outline'
+import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, Bars3Icon } from '@heroicons/react/24/outline'
 import AsideLink from './AsideLink'
 import { useState } from 'react'
 import clsx from 'clsx'
@@ -33,11 +33,11 @@ const SIDEBAR_LINKS = [
     title: 'Pasantías',
     icon: <AcademicCapIcon className="h-6 w-6" />,
   },
-  {
-    href: '/home/admin',
-    title: 'Administración',
-    icon: <ShieldCheckIcon className="h-6 w-6" />,
-  },
+  // {
+  //   href: '/home/admin',
+  //   title: 'Administración',
+  //   icon: <ShieldCheckIcon className="h-6 w-6" />,
+  // },
 ]
 
 // TODO -> transicion mas suave

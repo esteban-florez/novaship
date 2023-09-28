@@ -5,9 +5,9 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'El proyecto fue registrado con éxito.',
   },
-  project_not_found: {
+  project_team_required: {
     type: 'info',
-    message: 'No se encontró el proyecto.',
+    message: 'Se necesita un equipo para registrar un proyecto',
   },
   project_deleted: {
     type: 'warning',
@@ -25,10 +25,6 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'La oferta ha sido actualizada con éxito.',
   },
-  offer_not_found: {
-    type: 'info',
-    message: 'No se encontró la oferta.',
-  },
   offer_deleted: {
     type: 'warning',
     message: 'La oferta ha sido borrada.',
@@ -36,10 +32,6 @@ export const alerts: AlertList = {
   team_created: {
     type: 'success',
     message: 'El equipo de trabajo fue registrado con éxito.',
-  },
-  team_not_found: {
-    type: 'info',
-    message: 'No se encontró el equipo de trabajo.',
   },
   redirected: {
     type: 'info',

@@ -4,7 +4,7 @@ import { handleError } from '@/lib/errors/api'
 import prisma from '@/prisma/client'
 import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import collect from '@/lib/utils/collection'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
@@ -43,19 +43,16 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     // DRY project validation
     if (project === null) {
-      redirect('/home/projects?alert=project_not_found')
+      notFound()
     }
 
     const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
 
     if (!isOwner) {
-      redirect('/home/projects?alert=project_not_found')
+      notFound()
     }
 
-    const projectCategories = project.categories.map(category => {
-      return category.id
-    })
-
+    const projectCategories = project.categories.map(category => category.id)
     const categories = collect(parsed.categories).deleteDuplicatesFrom(projectCategories)
 
     const { teamwork, ...parsedData } = parsed
@@ -119,13 +116,13 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
 
     // DRY project validation
     if (project === null) {
-      redirect('/home/projects?alert=project_not_found')
+      notFound()
     }
 
     const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
 
     if (!isOwner) {
-      redirect('/home/projects?alert=project_not_found')
+      notFound()
     }
 
     await prisma.project.deleteMany({

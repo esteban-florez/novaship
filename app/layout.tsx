@@ -36,8 +36,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={clsx('h-full bg-white', ubuntu.className)} data-theme="light">
-      <body className="h-full">
+    <html lang="es" className={clsx('bg-white', ubuntu.className)} data-theme="light">
+      <body className="">
         <Alert>
           {children}
         </Alert>

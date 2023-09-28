@@ -1,6 +1,6 @@
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
 import ProjectForm from '@/components/projects/ProjectForm'
 import { getProject } from '@/lib/data-fetching/project'
@@ -14,7 +14,7 @@ export default async function UpdateProjectPage({ params: { id } }: PageContext)
   const { id: userId } = await auth.user()
 
   if (id === null) {
-    redirect('/home/projects?alert=project_not_found')
+    notFound()
   }
 
   const project = await getProject({
@@ -36,7 +36,7 @@ export default async function UpdateProjectPage({ params: { id } }: PageContext)
 
   // DRY project validation
   if (project === null) {
-    redirect('/home/projects?alert=project_not_found')
+    notFound()
   }
 
   const categories = await prisma.category.findMany({
