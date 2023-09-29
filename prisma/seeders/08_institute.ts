@@ -6,10 +6,11 @@ import { seederQueries } from '../seed'
 import collect from '@/lib/utils/collection'
 
 export default async function institute() {
-  const locations = await prisma.location.findMany({ select: { id: true } })
+  const locations = collect(await prisma.location.findMany({ select: { id: true } }))
+  const positionRange = numbers(institutes.names.length - 1)
 
   for (let i = 0; i < seederQueries.institute; i++) {
-    const position = numbers(institutes.names.length - 1).random()
+    const position = positionRange.random()
     const name = institutes.names[position]
     const description = institutes.descriptions[position]
     const email = `i${i}@institute.dev`
@@ -37,7 +38,7 @@ export default async function institute() {
           },
         },
         location: {
-          connect: collect(locations).random().first(),
+          connect: locations.random().first(),
         },
       },
     })

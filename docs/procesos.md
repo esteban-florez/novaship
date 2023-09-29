@@ -39,19 +39,6 @@
   ## Revisión de tareas
   Las tareas en revisión serán chequeadas por el responsable de la tarea. Este podrá aprobarla y pasará a completada, o volver a ponerla en progreso, con un determinado comentario.
 
-# Contratación de equipos
-  ## Inicio de contratación
-  Los usuarios de la aplicación pueden contratar un equipo de trabajo para que realizen un proyecto en específico.
-
-  ## Características necesarias
-  El usuario que contrata deberá ingresar el título, una descripción general, y las diferentes características del proyecto.
-
-  ## Preguntas y respuestas
-  El equipo de trabajo podrá realizar preguntas sobre las dudas que tengan, las cuales serán respondidas por el usuario que contrata.
-
-  ## Confirmación de contratación
-  El equipo de trabajo decidirá el precio de la contratación, y el usuario que contrata deberá confirmar si está de acuerdo, iniciando de ese modo un nuevo proyecto.
-
 # Aspirantes
   ## Registrarse como aspirante
   Las personas podrán registrarse como "En busca de empleo", para volverse aspirantes y poder ser reclutados por las empresas.
@@ -135,3 +122,15 @@
   ## Horas completadas
   La institución deberá especificar el número de horas necesarias para las pasantías, y la empresa deberá confirmar que las horas fueron completadas.
   
+<!-- # Contratación de equipos
+  ## Inicio de contratación
+  Los usuarios de la aplicación pueden contratar un equipo de trabajo para que realizen un proyecto en específico.
+
+  ## Características necesarias
+  El usuario que contrata deberá ingresar el título, una descripción general, y las diferentes características del proyecto.
+
+  ## Preguntas y respuestas
+  El equipo de trabajo podrá realizar preguntas sobre las dudas que tengan, las cuales serán respondidas por el usuario que contrata.
+
+  ## Confirmación de contratación
+  El equipo de trabajo decidirá el precio de la contratación, y el usuario que contrata deberá confirmar si está de acuerdo, iniciando de ese modo un nuevo proyecto. -->

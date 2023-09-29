@@ -4,11 +4,9 @@ import path from 'path'
 import { pathToFileURL } from 'url'
 
 export const seederQueries = {
-  persons: 140,
-  companies: 100,
-  institute: 100,
-  memberships: 90,
-  participations: 20,
+  persons: 30,
+  companies: 15,
+  institute: 15,
   internships: 15,
   recruitments: 10,
   hirings: 15,
@@ -16,6 +14,7 @@ export const seederQueries = {
 }
 
 async function seed() {
+  console.time('Seeded')
   const seedFilesPath = path.join(__dirname, 'seeders')
   const seedFiles = fs.readdirSync(seedFilesPath)
 
@@ -23,8 +22,11 @@ async function seed() {
     const seedFilePath = path.join(seedFilesPath, seedFile)
     const seedFileUrl = pathToFileURL(seedFilePath).href
     const { default: seedFunction } = await import(seedFileUrl)
-    await seedFunction(prisma)
+    console.time(seedFile)
+    await seedFunction()
+    console.timeEnd(seedFile)
   }
+  console.timeEnd('Seeded')
 }
 
 let totalQueries = 0
@@ -65,6 +67,7 @@ function formatLog({ name, value = 0, bold = false, color = '\x1b[35m' }: LogPro
 
 seed()
   .then(async () => {
+    console.time('Logging')
     formatLog({ name: 'Database seeded successfully 👌', bold: true, color: '\x1b[32m' })
     formatLog({ name: '🟣 AuthKeys', value: await prisma.authKey.count() })
     formatLog({ name: '🟣 Categories', value: await prisma.category.count() })
@@ -95,6 +98,7 @@ seed()
     formatLog({ name: '🟣 Users', value: await prisma.authUser.count() })
     formatLog({ name: '🟣 Vacants', value: await prisma.vacant.count() })
     formatLog({ name: 'Total queries', value: totalQueries, bold: true })
+    console.timeEnd('Logging')
   })
   .catch((error) => {
     console.error('Seeding error:', error)
