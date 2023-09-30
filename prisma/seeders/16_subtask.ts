@@ -7,7 +7,10 @@ import numbers from '@/lib/utils/number'
 
 export default async function subtask() {
   const MAX = subtasks.titles.length
-  const tasks = await prisma.task.findMany({ select: { id: true } })
+  const tasks = collect(await prisma.task.findMany({
+    where: { status: null },
+    select: { id: true },
+  }))
 
   for (let i = 1; i < MAX; i++) {
     const position = numbers(MAX - 1).random()
@@ -17,7 +20,7 @@ export default async function subtask() {
         title: subtasks.titles[position],
         description: subtasks.descriptions[position],
         status: types(TaskStatus).random(),
-        taskId: collect(tasks).random().first().id,
+        taskId: tasks.random().first().id,
       },
     })
   }

@@ -149,7 +149,7 @@ Representa un proyecto vinculado a un persona (proyecto personal) o un equipo de
 
 - **title**: Título. 
 - **description**: Descripción.
-- **image**: Enlace a la imagen de perfil..
+- **image**: Enlace a la imagen de portada del proyecto.
 - **preview**: Enlace a una previsualización (demo).
 - **visibility**: Visibilidad del proyecto (ver [Visibility](#visibility)).
 - [**Person**](#person): Persona vinculada al proyecto. Es *"null"* si el proyecto fué vinculado a un equipo. 
