@@ -1,4 +1,3 @@
-import { capitalizeString } from '@/lib/utils/text'
 import clsx from 'clsx'
 import Image from 'next/image'
 
@@ -10,6 +9,12 @@ type Props = React.PropsWithChildren<{
   className?: string
 }>
 
+function initials(str: string, length: number) {
+  const capitalizedString = str.replace(/[^A-Z]+/g, '')
+
+  return capitalizedString.slice(0, length)
+}
+
 export default function AvatarIcon({
   username,
   image = null,
@@ -19,7 +24,7 @@ export default function AvatarIcon({
 }: Props) {
   const avatarContent = image !== null
     ? <Image src={image} alt="Foto de perfil" />
-    : <span>{capitalizeString(username, 1)}</span>
+    : <span>{initials(username, 2)}</span>
 
   return (
     <div className={clsx('placeholder avatar', status !== null && 'relative')}>

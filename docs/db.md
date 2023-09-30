@@ -155,7 +155,7 @@ Representa un proyecto vinculado a un persona (proyecto personal) o un equipo de
 - [**Person**](#person): Persona vinculada al proyecto. Es *"null"* si el proyecto fué vinculado a un equipo. 
 - [**Team**](#team): Equipo de trabajo vinculado al proyecto. Es *"null"* si el proyecto vinculado a una persona. 
 - [**Contract**](#contract): Contratación relacionada con el proyecto. Es *"null"* si el proyecto no está relacionado con ninguna contratación.
-- [**Category[]**](#category): Categoría laboral a las que pertenece. 
+- [**Category[]**](#category): Categorías laborales a las que pertenece. 
 - [**Task[]**](#task): Tareas en las que se divide.
 - [**Message[]**](#message): Mensajes enviados en el chat de proyecto.
 - [**File[]**](#file): Archivos subidos. 

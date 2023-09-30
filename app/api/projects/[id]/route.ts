@@ -6,36 +6,28 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import collect from '@/lib/utils/collection'
+import { getProjectLeader } from '@/lib/utils/tables'
 
+// ESTEBAN ESTABAS HACIENDO ESTO ACUERDATE
+// ya arregle ambas rutas como tal, creo
+// falta ver donde se usan, arreglar el form
+// y el schema si es necesario
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const activeUser = await auth.user(request)
+    const user = await auth.user(request)
 
-    const project = await prisma.project.findFirst({
-      where: {
-        id,
-      },
+    const project = await prisma.project.findUnique({
+      where: { id },
       include: {
         categories: true,
+        person: true,
         team: {
           include: {
-            memberships: {
-              include: {
-                company: {
-                  select: {
-                    id: true,
-                  },
-                },
-                person: {
-                  select: {
-                    id: true,
-                  },
-                },
-              },
-            },
+            memberships: true,
+            leader: true,
           },
         },
       },
@@ -46,21 +38,19 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       notFound()
     }
 
-    const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
+    const isOwner = getProjectLeader(project).id === user.id
 
     if (!isOwner) {
       notFound()
     }
 
-    const projectCategories = project.categories.map(category => category.id)
-    const categories = collect(parsed.categories).deleteDuplicatesFrom(projectCategories)
+    const projectCategories = collect(project.categories).ids()
+    const newCategories = collect(parsed.categories).deleteDuplicatesFrom(projectCategories)
 
     const { teamwork, ...parsedData } = parsed
 
     await prisma.project.update({
-      where: {
-        id,
-      },
+      where: { id },
       data: {
         ...parsedData,
         categories: {
@@ -69,11 +59,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
               notIn: parsedData.categories,
             },
           },
-          connect: categories.map(id => {
-            return {
-              id,
-            }
-          }),
+          connect: newCategories.map(id => ({ id })),
         },
       },
     })
@@ -86,29 +72,16 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
 export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
-    const activeUser = await auth.user(request)
+    const user = await auth.user(request)
 
-    const project = await prisma.project.findFirst({
-      where: {
-        id,
-      },
+    const project = await prisma.project.findUnique({
+      where: { id },
       include: {
+        person: true,
         team: {
           include: {
-            memberships: {
-              include: {
-                company: {
-                  select: {
-                    id: true,
-                  },
-                },
-                person: {
-                  select: {
-                    id: true,
-                  },
-                },
-              },
-            },
+            memberships: true,
+            leader: true,
           },
         },
       },
@@ -119,7 +92,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       notFound()
     }
 
-    const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
+    const isOwner = getProjectLeader(project).id === user.id
 
     if (!isOwner) {
       notFound()
