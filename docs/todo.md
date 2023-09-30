@@ -34,7 +34,6 @@
 - Mostrar estado de carga de formularios con modal, así como los errores de validación del Servidor.
 - Mecanismo de alertas tipo "Toast" globales y crear componente que lea la url para mostrar un alert.
 - Llevarte a donde cometiste el error en signup.
-- Arreglar typing animation.
 - Arreglar <Input> checkbox y radio.
 - Mejorar transicion del aside.
 - Añadir backups.
@@ -42,6 +41,7 @@
 - Reemplazar la función redirect() por notFound() en los sitios donde tenga más sentido, y hacer una UI de notFound.
 - Corregir dropdown de notificaciones que se buguea un poco en responsive (transiciones algo bruscas).
 - Mecanismo para destacar ofertas y equipo mediante suscripción.
+- Ocular aside en mobile por defecto.
 
 # Schemas
 - Ofert: el titulo deberia ser mayor a 20 caracteres.

@@ -2,13 +2,13 @@ import ChatsBar from '@/components/chats/ChatsBar'
 import CurrentChat from '@/components/chats/CurrentChat'
 import { auth } from '@/lib/auth/pages'
 import prisma from '@/prisma/client'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 
 export default async function ChatsPage({ params: { id } }: PageContext) {
   const activeUser = await auth.user()
 
   if (id === null) {
-    redirect('/home/projects?alert=project_not_found')
+    notFound()
   }
 
   const project = await prisma.project.findFirst({
@@ -30,7 +30,7 @@ export default async function ChatsPage({ params: { id } }: PageContext) {
   })
 
   if (project === null) {
-    redirect('/home/projects?alert=project_not_found')
+    notFound()
   }
   const isMember = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id)
 

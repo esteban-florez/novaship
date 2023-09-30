@@ -4,7 +4,7 @@ import { handleError } from '@/lib/errors/api'
 import prisma from '@/prisma/client'
 import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import collect from '@/lib/utils/collection'
 import { getExpirationDate } from '@/lib/validation/expiration-dates'
 
@@ -30,7 +30,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
     })
 
     if (offer === null) {
-      redirect('/home/projects?alert=offer_not_found')
+      notFound()
     }
 
     const offerSkills = offer.skills.map(skill => skill.id)
@@ -85,7 +85,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
     })
 
     if (offer == null) {
-      redirect('/home/projects?alert=offer_not_found')
+      notFound()
     }
 
     await prisma.offer.deleteMany({

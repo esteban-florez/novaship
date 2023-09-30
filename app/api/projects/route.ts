@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (team == null) {
-      return NextResponse.redirect(url('home/projects?alert=team_not_found'))
+      return NextResponse.redirect(url('home/projects?alert=project_team_required'))
     }
 
     const { teamwork, ...parsedData } = parsed

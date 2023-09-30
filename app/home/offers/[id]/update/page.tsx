@@ -3,7 +3,7 @@ import { auth } from '@/lib/auth/pages'
 import { getMyOffer } from '@/lib/data-fetching/offer'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Actualizar oferta',
@@ -14,7 +14,7 @@ export default async function UpdateOfferPage({ params: { id } }: PageContext) {
   const offer = await getMyOffer({ id, userId })
 
   if (offer === null) {
-    redirect('/home/offers?alert=offer_not_found')
+    notFound()
   }
 
   const locations = await prisma.location.findMany()
