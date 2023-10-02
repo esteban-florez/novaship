@@ -5,9 +5,9 @@ export default function CardSkeleton() {
     <div className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg p-4 pt-1
       md:columns-2 lg:columns-3 xl:rounded-tl-none"
     >
-      {items.map(item => {
+      {items.map((_, index) => {
         return (
-          <div key={item} className="mb-4 break-inside-avoid">
+          <div key={index} className="mb-4 break-inside-avoid">
             <div className="rounded-xl border border-solid border-zinc-300 bg-white shadow">
               <div className="h-14 w-full rounded-t-lg bg-neutral-300" />
               <div className="mx-4 mb-1 mt-4 h-4 w-1/3 rounded-lg bg-neutral-300" />

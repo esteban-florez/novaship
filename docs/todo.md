@@ -6,13 +6,6 @@
 - Buscar metáfora del logo (cambiarlo) y ponerlo en el sidebar.
 - Poner el título "Novaship" en el navbar.
 
-
-### Jesús
-- Hacer que por defecto se seleccione los "Sugeridos" en los listados.
-- Collage del home, con contenido de la app.
-- Barra de busqueda de primera en listados.
-
-
 ### Esteban
 - Cambiar el layout los forms: título del campo, descripción, y debajo el input.
 - Cambiar orden de items del sidebar según prioridad.
@@ -38,12 +31,8 @@
 - Mejorar transicion del aside.
 - Añadir backups.
 - Signup con Google.
-- Reemplazar la función redirect() por notFound() en los sitios donde tenga más sentido, y hacer una UI de notFound.
 - Corregir dropdown de notificaciones que se buguea un poco en responsive (transiciones algo bruscas).
 - Ocular aside en mobile por defecto.
-
-# Schemas
-- Ofert: el titulo deberia ser mayor a 20 caracteres.
 
 # Ideas
 

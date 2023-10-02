@@ -13,6 +13,7 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
   const { id } = await auth.user()
 
   // DRY Pagination
+  const filter = searchParams.filter ?? 'all'
   const pageNumber = +(searchParams.page ?? 1)
   const totalRecords = await prisma.team.count()
 
@@ -54,6 +55,7 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
       myTeams={myTeams}
       nextPage={nextPage}
       pageNumber={pageNumber}
+      filter={filter}
     />
   )
 }

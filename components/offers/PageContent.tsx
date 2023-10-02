@@ -1,6 +1,5 @@
 'use client'
 
-import Carousel from '@/components/offers/Carousel'
 import PageNav from '@/components/offers/PageNav'
 import { type SuggestedOffersWithRelationships, type OffersTab } from '@/lib/types'
 import { useState } from 'react'
@@ -8,6 +7,10 @@ import OffersList from './OffersList'
 import { type UserType } from '@prisma/client'
 import Pagination from '../Pagination'
 import PageTitle from '../PageTitle'
+import Carousel from '../carousel/Carousel'
+import Link from 'next/link'
+import Button from '../Button'
+import { PlusIcon } from '@heroicons/react/24/outline'
 
 interface Props {
   carouselOffers: SuggestedOffersWithRelationships
@@ -18,26 +21,21 @@ interface Props {
   userType: UserType
   pageNumber: number
   nextPage: boolean
+  filter: string | string[]
 }
 
 // TODO -> arreglar la paginacion para varias pestañas, tabs o filtros
-export default function PageContent({ carouselOffers, generalOffers, myOffers, suggestedOffers, appliedOffers, userType, pageNumber, nextPage }: Props) {
-  const [tab, setTab] = useState<OffersTab>(userType === 'PERSON' ? 'Suggested' : 'All')
-  const [search, setSearch] = useState('')
-
-  const handleChangeTab = (tabOption?: OffersTab) => {
-    if (tabOption !== null && tabOption !== undefined) setTab(tabOption)
+export default function PageContent({ carouselOffers, generalOffers, myOffers, suggestedOffers, appliedOffers, userType, pageNumber, nextPage, filter }: Props) {
+  const OFFER_TABS = {
+    all: generalOffers,
+    personal: myOffers,
+    suggested: suggestedOffers,
+    applied: appliedOffers,
   }
+  const [search, setSearch] = useState('')
 
   const handleSearch = (value: string) => {
     setSearch(value)
-  }
-
-  const OFFERS_OPTION = {
-    All: generalOffers,
-    Mine: myOffers,
-    Applied: appliedOffers,
-    Suggested: suggestedOffers,
   }
 
   return (
@@ -45,22 +43,29 @@ export default function PageContent({ carouselOffers, generalOffers, myOffers, s
       <PageTitle
         title="Ofertas laborales"
         subtitle="Encuentra ofertas que se adapten a tus habilidades y experiencias."
-      />
-      <Carousel
-        offers={carouselOffers}
-      />
+      >
+        {userType === 'COMPANY' &&
+          <Link href="/home/offers/create">
+            <Button
+              color="PRIMARY"
+            >
+              <PlusIcon className="h-6 w-6" />
+              Agregar
+            </Button>
+          </Link>}
+      </PageTitle>
+      <Carousel items={carouselOffers} />
       <PageNav
-        tab={tab}
-        onTabClick={handleChangeTab}
+        filter={filter}
         search={search}
         onSearch={handleSearch}
         userType={userType}
       />
       <OffersList
-        offers={OFFERS_OPTION[tab]}
+        offers={OFFER_TABS[filter as OffersTab]}
         search={search}
       />
-      {tab === 'All' &&
+      {filter === 'all' &&
         <Pagination
           url="/home/offers"
           pageNumber={pageNumber}

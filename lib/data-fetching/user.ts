@@ -5,10 +5,22 @@ import collect from '../utils/collection'
 export const getPersonRelatedIds = cache(async ({ id }: { id: string }) => {
   const user = await prisma.person.findFirst({
     where: { id },
-    include: {
-      categories: true,
-      jobs: true,
-      skills: true,
+    select: {
+      categories: {
+        select: {
+          id: true,
+        },
+      },
+      jobs: {
+        select: {
+          id: true,
+        },
+      },
+      skills: {
+        select: {
+          id: true,
+        },
+      },
     },
   })
 

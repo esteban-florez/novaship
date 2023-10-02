@@ -1,89 +1,79 @@
 import SearchInput from '../SearchInput'
 import Collapse from '../Collapse'
-import Button from '../Button'
-import { BookmarkIcon, BriefcaseIcon, LightBulbIcon, ListBulletIcon, PlusIcon } from '@heroicons/react/24/outline'
-import { type OffersTab } from '@/lib/types'
+import { BookmarkIcon, BriefcaseIcon, LightBulbIcon, ListBulletIcon } from '@heroicons/react/24/outline'
 import { type UserType } from '@prisma/client'
+import { type OffersTab } from '@/lib/types'
+import Link from 'next/link'
+import clsx from 'clsx'
 
 interface Props {
   userType: UserType
   search: string
-  tab: OffersTab
-  onTabClick: (tabOption?: OffersTab) => void
+  filter: string | string[]
   onSearch: (value: string) => void
 }
 
-const OFFERS_TAB_TRANSLATION = {
-  All: 'Todas',
-  Mine: 'Mis ofertas',
-  Applied: 'Ofertas aplicadas',
-  Suggested: 'Ofertas sugeridas',
-}
+export default function PageNav({ userType, search, filter, onSearch }: Props) {
+  const OFFERS_TAB_TRANSLATION = {
+    all: 'Todas',
+    suggested: 'Ofertas sugeridas',
+    personal: 'Mis ofertas',
+    applied: 'Ofertas aplicadas',
+  }
 
-export default function PageNav({ userType, search, tab, onTabClick, onSearch }: Props) {
-  const navChildren = [{
-    title: 'All',
+  const links = [{
+    title: 'all',
     content: 'Todas',
     icon: <ListBulletIcon className="h-5 w-5" />,
+    query: 'all',
     condition: true,
   }, {
-    title: 'Mine',
+    title: 'personal',
     content: 'Mis ofertas',
     icon: <BriefcaseIcon className="h-5 w-5" />,
+    query: 'personal',
     condition: userType === 'COMPANY',
   }, {
-    title: 'Applied',
+    title: 'applied',
     content: 'Ofertas aplicadas',
     icon: <BookmarkIcon className="h-5 w-5" />,
+    query: 'applied',
     condition: userType === 'PERSON',
   }, {
-    title: 'Suggested',
+    title: 'suggested',
     content: 'Ofertas sugeridas',
     icon: <LightBulbIcon className="h-5 w-5" />,
+    query: 'suggested',
     condition: userType === 'PERSON',
   }]
 
   return (
-    <div className="flex w-full flex-col items-center justify-between px-4 py-5 md:flex-row xl:px-6">
-      <div className="hidden gap-2 xl:flex">
-        {navChildren.map((children) => {
-          if (children.condition) {
-            return (
-              <Button
-                key={children.title}
-                style="DEFAULT"
-                color={children.title === tab ? 'PRIMARY' : 'WHITE'}
-                hover={children.title === tab ? 'WHITE' : 'PRIMARY'}
-                onClick={() => { onTabClick(children.title as OffersTab) }}
-              >
-                {children.icon}
-                {children.content}
-              </Button>
-            )
-          }
-
-          return null
-        })}
+    <div className="flex w-full flex-col gap-y-4 px-4 py-5 xl:px-6">
+      <div className="w-full sm:w-2/4">
+        <SearchInput searchText={search} setSearchText={onSearch} />
       </div>
-      <div className="mb-4 w-full sm:mb-0 xl:hidden">
+      <div className="w-full sm:w-2/4">
         <Collapse
-          title={`Categorías - ${OFFERS_TAB_TRANSLATION[tab]}`}
+          title={`Categorías - ${OFFERS_TAB_TRANSLATION[filter as OffersTab]}`}
           bg="bg-white"
         >
           <div className="flex flex-col gap-2">
-            {navChildren.map((children) => {
-              if (children.condition) {
+            {links.map((link) => {
+              if (link.condition) {
                 return (
-                  <Button
-                    key={children.title}
-                    style="DEFAULT"
-                    color={children.title === tab ? 'PRIMARY' : 'WHITE'}
-                    hover={children.title === tab ? 'WHITE' : 'PRIMARY'}
-                    onClick={() => { onTabClick(children.title as OffersTab) }}
+                  <Link
+                    key={link.title}
+                    href={{
+                      pathname: '/home/offers',
+                      query: { filter: link.query },
+                    }}
+                    className={clsx(
+                      'btn', link.title === filter ? 'btn-primary hover:btn-ghost' : 'hover:btn-primary'
+                    )}
                   >
-                    {children.icon}
-                    {children.content}
-                  </Button>
+                    {link.icon}
+                    {link.content}
+                  </Link>
                 )
               }
 
@@ -91,19 +81,6 @@ export default function PageNav({ userType, search, tab, onTabClick, onSearch }:
             })}
           </div>
         </Collapse>
-      </div>
-      <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row md:place-items-center md:justify-end xl:w-auto">
-        <SearchInput searchText={search} setSearchText={onSearch} />
-        {userType === 'COMPANY' &&
-          <Button
-            url="/home/offers/create"
-            style="DEFAULT"
-            color="PRIMARY"
-            hover="WHITE"
-          >
-            <PlusIcon className="h-5 w-5" />
-            Agregar
-          </Button>}
       </div>
     </div>
   )

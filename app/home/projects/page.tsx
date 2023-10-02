@@ -4,6 +4,7 @@ import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/pages'
 import getPaginationProps from '@/lib/utils/pagination'
 import { getProjects } from '@/lib/data-fetching/project'
+import { getPersonRelatedIds } from '@/lib/data-fetching/user'
 
 export const metadata: Metadata = {
   title: 'Proyectos',
@@ -14,12 +15,26 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
   const { id } = await auth.user()
 
   // DRY Pagination
-  const filter = searchParams.filter ?? 'all'
+  // TODO -> arreglar el filtro por defecto
+  const filter = searchParams.filter ?? 'suggested'
   const pageNumber = +(searchParams.page ?? 1)
   const totalRecords = await prisma.project.count({
     where: { visibility: 'PUBLIC' },
   })
   const { nextPage, skip, take } = getPaginationProps({ pageNumber, totalRecords })
+  const { categories } = await getPersonRelatedIds({ id })
+
+  const suggestedProjects = await getProjects({
+    where: {
+      categories: {
+        every: {
+          id: { in: categories },
+        },
+      },
+    },
+    take,
+    skip,
+  })
 
   const personalProjects = await getProjects({
     where: {
@@ -60,6 +75,7 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
     <PageContent
       projects={availableProjects}
       personalProjects={personalProjects}
+      suggestedProjects={suggestedProjects}
       pageNumber={pageNumber}
       nextPage={nextPage}
       filter={filter}

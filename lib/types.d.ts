@@ -198,7 +198,9 @@ type UseSubmitResult = null | 'loading' | ApiResponseBody
 type TabProp = 'All' | 'Mine'
 type TeamGroupTab = 'members' | 'add'
 type ProjectDetailsTab = 'Files' | 'Tasks'
-type OffersTab = 'All' | 'Mine' | 'Applied' | 'Suggested'
+type OffersTab = 'all' | 'personal' | 'applied' | 'suggested'
+type TeamsTab = 'all' | 'personal'
+type ProjectsTab = 'all' | 'suggested' | 'personal'
 
 // ----------------------------------------------------------------------
 // --------------------------- API ---------------------------------

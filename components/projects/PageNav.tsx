@@ -1,64 +1,71 @@
-import { ListBulletIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
-import Button from '../Button'
-import { type TabProp } from '@/lib/types'
+import { GlobeAltIcon, ListBulletIcon, StarIcon } from '@heroicons/react/24/outline'
 import SearchInput from '../SearchInput'
 import Link from 'next/link'
+import Collapse from '../Collapse'
+import { type ProjectsTab } from '@/lib/types'
+import clsx from 'clsx'
 
 interface Props {
   filter: string | string[]
   search: string
-  active: TabProp
-  onTabClick: (tabOption?: TabProp) => void
   onSearch: (value: string) => void
 }
 
+const PROJECTS_TAB_TRANSLATION = {
+  all: 'Todos',
+  suggested: 'Proyectos sugeridos',
+  personal: 'Mis proyectos',
+}
+
 // DRY Filter
-export default function PageNav({ filter, search, active, onTabClick, onSearch }: Props) {
+export default function PageNav({ filter, search, onSearch }: Props) {
+  const links = [{
+    title: 'all',
+    content: 'Todos',
+    icon: <GlobeAltIcon className="h-5 w-5" />,
+    query: 'all',
+  }, {
+    title: 'personal',
+    content: 'Mis proyectos',
+    icon: <ListBulletIcon className="h-5 w-5" />,
+    query: 'personal',
+  }, {
+    title: 'suggested',
+    content: 'Proyectos sugeridos',
+    icon: <StarIcon className="h-5 w-5" />,
+    query: 'suggested',
+  }]
+
   return (
-    <div className="flex w-full columns-1 flex-col items-start justify-between gap-4 p-4 lg:columns-2 lg:flex-row lg:items-center lg:gap-0">
-      <div className="order-2 mt-3 flex w-full flex-col gap-1 sm:mt-0 sm:flex-row sm:gap-x-3 lg:order-1">
-        <Link href={{
-          pathname: '/home/projects',
-          query: { filter: 'all' },
-        }}
-        >
-          <Button
-            style="TAB"
-            color={filter === 'all' ? 'PRIMARY' : 'WHITE'}
-            hover={filter === 'all' ? 'WHITE' : 'PRIMARY'}
-          >
-            <ListBulletIcon className="h-6 w-6" />
-            Todos
-          </Button>
-        </Link>
-        <Link href={{
-          pathname: '/home/projects',
-          query: { filter: 'personal' },
-        }}
-        >
-          <Button
-            style="TAB"
-            color={filter === 'personal' ? 'PRIMARY' : 'WHITE'}
-            hover={filter === 'personal' ? 'WHITE' : 'PRIMARY'}
-          >
-            <StarIcon className="h-6 w-6" />
-            Mis proyectos
-          </Button>
-        </Link>
-      </div>
-      <div className="order-1 flex w-full flex-col items-center justify-between gap-x-3 sm:flex-row lg:order-2 lg:place-items-center lg:justify-end xl:w-auto">
+    <div className="flex w-full flex-col items-start justify-between gap-4 p-4 lg:gap-0">
+      <div className="mb-2 flex w-full flex-col items-center justify-between gap-x-3 sm:flex-row lg:place-items-center">
         <SearchInput searchText={search} setSearchText={onSearch} />
-        <div className="mt-2 w-full sm:mt-0 sm:w-auto">
-          <Button
-            url="/home/projects/create"
-            style="DEFAULT"
-            color="PRIMARY"
-            hover="WHITE"
-          >
-            <PlusIcon className="h-6 w-6" />
-            Agregar
-          </Button>
-        </div>
+      </div>
+      <div className="mt-3 flex w-full flex-col gap-1 sm:mt-0 sm:w-2/4 sm:flex-row sm:gap-x-3">
+        <Collapse
+          title={`Categorías - ${PROJECTS_TAB_TRANSLATION[filter as ProjectsTab]}`}
+          bg="bg-white"
+        >
+          <div className="flex flex-col gap-2">
+            {links.map((link) => {
+              return (
+                <Link
+                  key={link.title}
+                  href={{
+                    pathname: '/home/projects',
+                    query: { filter: link.query },
+                  }}
+                  className={clsx(
+                    'btn', link.title === filter ? 'btn-primary hover:btn-ghost' : 'hover:btn-primary'
+                  )}
+                >
+                  {link.icon}
+                  {link.content}
+                </Link>
+              )
+            })}
+          </div>
+        </Collapse>
       </div>
     </div>
   )

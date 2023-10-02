@@ -2,10 +2,13 @@
 
 import PageNav from './PageNav'
 import { useState } from 'react'
-import { type ProjectWithTeamAndCategories, type TabProp } from '@/lib/types'
+import { type ProjectsTab, type ProjectWithTeamAndCategories } from '@/lib/types'
 import ProjectsCard from './ProjectsCard'
 import Pagination from '../Pagination'
 import PageTitle from '../PageTitle'
+import { PlusIcon } from '@heroicons/react/24/outline'
+import Button from '../Button'
+import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   filter: string | string[]
@@ -13,14 +16,15 @@ type Props = React.PropsWithChildren<{
   pageNumber: number
   projects: ProjectWithTeamAndCategories[]
   personalProjects: ProjectWithTeamAndCategories[]
+  suggestedProjects: ProjectWithTeamAndCategories[]
 }>
 
-export default function PageContent({ filter, projects, personalProjects, nextPage, pageNumber }: Props) {
-  const [tab, setTab] = useState<TabProp>('All')
+export default function PageContent({ filter, projects, personalProjects, suggestedProjects, nextPage, pageNumber }: Props) {
   const [search, setSearch] = useState('')
-
-  const handleChangeTab = (tabOption?: TabProp) => {
-    if (tabOption !== null && tabOption !== undefined) setTab(tabOption)
+  const PROJECT_TABS = {
+    all: projects,
+    personal: personalProjects,
+    suggested: suggestedProjects,
   }
 
   return (
@@ -28,17 +32,24 @@ export default function PageContent({ filter, projects, personalProjects, nextPa
       <PageTitle
         title="Proyectos"
         subtitle="Descubre los proyectos que rondan la web."
-      />
+      >
+        <Link href="/home/projects/create">
+          <Button
+            color="PRIMARY"
+          >
+            <PlusIcon className="h-6 w-6" />
+            Agregar
+          </Button>
+        </Link>
+      </PageTitle>
       <PageNav
         filter={filter}
         search={search}
-        active={tab}
         onSearch={setSearch}
-        onTabClick={handleChangeTab}
       />
       <ProjectsCard
         search={search}
-        projects={filter === 'all' ? projects : personalProjects}
+        projects={PROJECT_TABS[filter as ProjectsTab]}
       />
       {filter === 'all' &&
         <Pagination

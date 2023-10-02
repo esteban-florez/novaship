@@ -15,6 +15,8 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
   const { id, type } = await auth.user()
 
   // DRY Pagination
+  // TODO -> arreglar el filtro por defecto
+  const filter = searchParams.filter ?? 'suggested'
   const pageNumber = +(searchParams.page ?? 1)
   const totalRecords = await prisma.offer.count({
     where: { expiresAt: { gte: new Date() } },
@@ -79,6 +81,7 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
       userType={type}
       pageNumber={pageNumber}
       nextPage={nextPage}
+      filter={filter}
     />
   )
 }

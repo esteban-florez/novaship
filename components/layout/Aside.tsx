@@ -41,6 +41,7 @@ const SIDEBAR_LINKS = [
 ]
 
 // TODO -> transicion mas suave
+// TODO -> añadir filtro a los links
 export default function Aside() {
   const [active, setActive] = useState(true)
   const pathname = usePathname()
