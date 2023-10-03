@@ -4,12 +4,10 @@
 - Foto por defecto en boton de perfil.
 - Mensaje más general en el login.
 - Buscar metáfora del logo (cambiarlo) y ponerlo en el sidebar.
-- Poner el título "Novaship" en el navbar.
 
 ### Esteban
 - Cambiar el layout los forms: título del campo, descripción, y debajo el input.
 - Cambiar orden de items del sidebar según prioridad.
-- Hacer submenu en el sidebar.
 
 # To-Do
 

@@ -1,8 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, Bars3Icon } from '@heroicons/react/24/outline'
+import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, Bars3Icon, ListBulletIcon, GlobeAltIcon, StarIcon, UsersIcon, BookmarkIcon } from '@heroicons/react/24/outline'
 import AsideLink from './AsideLink'
 import { useState } from 'react'
 import clsx from 'clsx'
@@ -17,16 +16,60 @@ const SIDEBAR_LINKS = [
     href: '/home/projects',
     title: 'Proyectos',
     icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
+    submenu: [
+      {
+        href: '/home/teams?filter=all',
+        title: 'Equipos',
+        icon: <UserGroupIcon className="h-6 w-6" />,
+      },
+      {
+        href: '/home/teams?filter=personal',
+        title: 'Mis equipos',
+        icon: <UsersIcon className="h-6 w-6" />,
+      },
+      {
+        href: '/home/projects?filter=all',
+        title: 'Todos',
+        icon: <GlobeAltIcon className="h-6 w-6" />,
+      },
+      {
+        href: '/home/projects?filter=personal',
+        title: 'Personales',
+        icon: <ListBulletIcon className="h-6 w-6" />,
+      },
+      {
+        href: '/home/projects?filter=suggested',
+        title: 'Sugeridos',
+        icon: <StarIcon className="h-6 w-6" />,
+      },
+    ],
   },
-  {
-    href: '/home/teams',
-    title: 'Equipos',
-    icon: <UserGroupIcon className="h-6 w-6" />,
-  },
+  // {
+  //   href: '/home/teams',
+  //   title: 'Equipos',
+  //   icon: <UserGroupIcon className="h-6 w-6" />,
+  // },
   {
     href: '/home/offers',
     title: 'Ofertas',
     icon: <BriefcaseIcon className="h-6 w-6" />,
+    submenu: [
+      {
+        href: '/home/offers?filter=all',
+        title: 'Todas',
+        icon: <GlobeAltIcon className="h-6 w-6" />,
+      },
+      {
+        href: '/home/offers?filter=applied',
+        title: 'Aplicadas',
+        icon: <BookmarkIcon className="h-6 w-6" />,
+      },
+      {
+        href: '/home/offers?filter=suggested',
+        title: 'Aplicadas',
+        icon: <StarIcon className="h-6 w-6" />,
+      },
+    ],
   },
   {
     href: '/home/internships',
@@ -42,6 +85,7 @@ const SIDEBAR_LINKS = [
 
 // TODO -> transicion mas suave
 // TODO -> añadir filtro a los links
+// TODO -> mejorar los submenus
 export default function Aside() {
   const [active, setActive] = useState(true)
   const pathname = usePathname()
@@ -63,16 +107,6 @@ export default function Aside() {
     })}
     >
       <div className="py-[18px] text-center sm:inline-flex sm:justify-center sm:gap-x-2">
-        <Link
-          href="/home"
-          onClick={() => { handleClick() }}
-          className={clsx(
-            'rounded-full bg-primary px-4 py-2 text-2xl font-bold text-white shadow-md sm:text-xl',
-            active && '', !active && 'hidden'
-          )}
-        >
-          novaship
-        </Link>
         <button className="btn-ghost btn-circle btn -mt-2 self-center sm:mt-0" onClick={() => { setActive(!active) }}>
           <Bars3Icon className="h-6 w-6" />
         </button>
