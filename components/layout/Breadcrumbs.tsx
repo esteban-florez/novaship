@@ -39,7 +39,7 @@ export default function Breadcrumbs({ breadcrumbs = '' }: Props) {
   }
 
   return (
-    <div className="mt-3 hidden items-center justify-start sm:flex">
+    <div className="hidden items-center justify-start sm:flex">
       <ul className="flex font-bold text-neutral-600">
         <li className="flex items-center">~</li>
         {segments.map(segment => {
@@ -47,7 +47,7 @@ export default function Breadcrumbs({ breadcrumbs = '' }: Props) {
             <li key={segment} className="flex items-center before:me-3 before:ms-2 before:block before:opacity-90 before:content-['/']">
               {segment === currentSegment
                 ? <span className="text-primary">{getLinkName(segment)}</span>
-                : <Link href={getStructuredLink(segment)} className="hover:text-accent hover:underline">{getLinkName(segment)}</Link>}
+                : <Link href={getStructuredLink(segment)} className="hover:text-secondary hover:underline">{getLinkName(segment)}</Link>}
             </li>
           )
         })}
