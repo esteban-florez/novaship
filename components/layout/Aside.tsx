@@ -13,6 +13,33 @@ const SIDEBAR_LINKS = [
     icon: <HomeIcon className="h-6 w-6" />,
   },
   {
+    href: '/home/internships',
+    title: 'Pasantías',
+    icon: <AcademicCapIcon className="h-6 w-6" />,
+  },
+  {
+    href: '/home/offers',
+    title: 'Ofertas',
+    icon: <BriefcaseIcon className="h-6 w-6" />,
+    submenu: [
+      {
+        href: '/home/offers?filter=all',
+        title: 'Todas',
+        icon: <GlobeAltIcon className="h-6 w-6" />,
+      },
+      {
+        href: '/home/offers?filter=applied',
+        title: 'Aplicadas',
+        icon: <BookmarkIcon className="h-6 w-6" />,
+      },
+      {
+        href: '/home/offers?filter=suggested',
+        title: 'Aplicadas',
+        icon: <StarIcon className="h-6 w-6" />,
+      },
+    ],
+  },
+  {
     href: '/home/projects',
     title: 'Proyectos',
     icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
@@ -49,33 +76,6 @@ const SIDEBAR_LINKS = [
   //   title: 'Equipos',
   //   icon: <UserGroupIcon className="h-6 w-6" />,
   // },
-  {
-    href: '/home/offers',
-    title: 'Ofertas',
-    icon: <BriefcaseIcon className="h-6 w-6" />,
-    submenu: [
-      {
-        href: '/home/offers?filter=all',
-        title: 'Todas',
-        icon: <GlobeAltIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/offers?filter=applied',
-        title: 'Aplicadas',
-        icon: <BookmarkIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/offers?filter=suggested',
-        title: 'Aplicadas',
-        icon: <StarIcon className="h-6 w-6" />,
-      },
-    ],
-  },
-  {
-    href: '/home/internships',
-    title: 'Pasantías',
-    icon: <AcademicCapIcon className="h-6 w-6" />,
-  },
   // {
   //   href: '/home/admin',
   //   title: 'Administración',
