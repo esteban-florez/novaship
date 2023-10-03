@@ -13,6 +13,9 @@ import FormLayout from '../forms/FormLayout'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
 import { type OptionCategory, type OptionTeam, type ProjectWithTeamAndCategories } from '@/lib/types'
 import PageTitle from '../PageTitle'
+import SignupRadio from '../signup/SignupRadio'
+import { useState } from 'react'
+import { UserIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 
 interface Props extends FormProps {
   categories: OptionCategory[]
@@ -23,13 +26,17 @@ interface Props extends FormProps {
 // TODO -> encontrar una manera de obtener teamwork al actualizar
 export default function ProjectForm({ backUrl, method, action, categories, teams, project }: Props) {
   const projectCategories = project?.categories.map(category => category.id)
+  let initialTeamwork = null
+  if (method === 'PUT') {
+    initialTeamwork = project?.teamId === null ? 'single' : 'group'
+  }
+  const [teamwork, setTeamwork] = useState<string | null>(initialTeamwork)
 
   const {
     handleSubmit, alert, serverErrors,
     register, formState: { errors }, control,
   } = useSubmit({
-    schema,
-    method,
+    schema, method, append: { teamwork },
   })
 
   return (
@@ -85,40 +92,41 @@ export default function ProjectForm({ backUrl, method, action, categories, teams
             />
           </FormSection>
           <FormSection title="Equipos de trabajo" description="Seleccione como desea trabajar en este proyecto.">
-            <Input
-              name="teamwork"
-              placeholder=""
-              type="radio"
-              label="Individual"
-              value="Solo"
-              register={register}
-              errors={errors}
-            />
-            <Input
-              name="teamwork"
-              placeholder=""
-              type="radio"
-              label="En equipo"
-              className="peer"
-              value="Team"
-              register={register}
-              errors={errors}
-            />
-            <Select
-              name="teamId"
-              label="Equipos"
-              labelClassName="hidden peer-checked:block"
-              register={register}
-              errors={errors}
-              className="hidden peer-checked:block"
-              defaultValue={project?.teamId ?? undefined}
-              options={{
-                type: 'rows',
-                data: teams,
-              }}
-            />
+            <div className="flex w-full justify-between gap-2">
+              <SignupRadio
+                name="teamwork"
+                value="group"
+                label="En equipo"
+                className="w-full"
+                icon={<UserGroupIcon className="h-10 w-10 text-white" />}
+                active={teamwork === 'group'}
+                onInput={() => { setTeamwork('group') }}
+              />
+              <SignupRadio
+                name="teamwork"
+                value="single"
+                label="Individual"
+                className="w-full"
+                icon={<UserIcon className="h-10 w-10 text-white" />}
+                active={teamwork === 'single'}
+                onInput={() => { setTeamwork('single') }}
+              />
+            </div>
+            {teamwork === 'group' && (
+              <Select
+                name="teamId"
+                label="Equipos"
+                register={register}
+                errors={errors}
+                defaultValue={project?.teamId ?? undefined}
+                options={{
+                  type: 'rows',
+                  data: teams,
+                }}
+              />
+            )}
           </FormSection>
-          <FormButtons url={backUrl} />
+          <FormButtons url={backUrl} disableSubmit={teamwork === null} />
         </form>
       </FormLayout>
     </>

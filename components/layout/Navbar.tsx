@@ -9,7 +9,9 @@ export default function Navbar() {
 
   return (
     <nav className="navbar border-b bg-white shadow-md">
-      <div className="navbar-start" />
+      <div className="navbar-start">
+        <h2 className="pl-2 text-3xl font-bold">Novaship</h2>
+      </div>
       <div className="navbar-end text-sm sm:text-base">
         <p className="px-5">
           {date}

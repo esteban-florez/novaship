@@ -4,7 +4,7 @@ import { actions } from '@/lib/translations'
 import { usePathname } from 'next/navigation'
 
 // TODO - añdir prop para el label del boton y router.back() para el boton de volver
-export default function FormButtons({ url, label }: { url: string, label?: string }) {
+export default function FormButtons({ url, label, disableSubmit }: { url: string, label?: string, disableSubmit?: boolean }) {
   const path = usePathname()
   const pathMethod = path.split('/').at(-1) as 'create' | 'update'
 
@@ -14,7 +14,7 @@ export default function FormButtons({ url, label }: { url: string, label?: strin
         <ArrowLeftIcon className="h-4 w-4" />
         Cancelar
       </Button>
-      <Button color="PRIMARY">
+      <Button color="PRIMARY" isDisabled={disableSubmit}>
         <PlusIcon className="h-4 w-4" />
         {actions[pathMethod]}
       </Button>

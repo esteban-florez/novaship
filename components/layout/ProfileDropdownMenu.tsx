@@ -18,8 +18,8 @@ export default function ProfileDropdownMenu({ username, email }: Props) {
     <>
       {alert}
       <div className="dropdown-content z-10 flex w-max flex-col rounded-lg border border-base-300 bg-white p-2 shadow-md">
-        <Link href="#" className="flex items-center gap-2 rounded-md px-3 py-2 hover:bg-neutral-200">
-          <AvatarIcon username={username} className="h-10 w-10 bg-black text-white" />
+        <Link href="/home/profile" className="flex items-center gap-2 rounded-md px-3 py-2 hover:bg-neutral-200">
+          <AvatarIcon username={username} image="/icon.jpg" />
           <div className="mb-2 flex flex-col">
             <p className="text-lg font-semibold">{username}</p>
             <p className="-my-1 text-sm">{email}</p>

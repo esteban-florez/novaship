@@ -18,7 +18,7 @@ export default function AvatarIcon({
   className = 'bg-primary text-white',
 }: Props) {
   const avatarContent = image !== null
-    ? <Image src={image} alt="Foto de perfil" />
+    ? <Image src={image} alt="Foto de perfil" width="10" height="10" />
     : <span>{capitalizeString(username, 1)}</span>
 
   return (
