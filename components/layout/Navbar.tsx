@@ -16,16 +16,17 @@ export default function Navbar() {
         <Link
           href="/home"
           className={clsx(
-            'p-2 text-3xl font-bold'
+            'p-2 text-3xl font-bold text-primary'
           )}
         >
           Novaship
         </Link>
       </div>
       <div className="navbar-end text-sm sm:text-base">
-        <p className="px-5">
-          {date}
-        </p>
+        <div className="flex flex-col items-center px-5 ">
+          <p>{date}</p>
+          <p className="-mt-2 text-sm">Poner la hora</p>
+        </div>
         {/* <NotificationDropdown /> */}
         <ProfileDropdown />
       </div>

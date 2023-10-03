@@ -14,9 +14,9 @@ export default function LoginPage() {
       <div className="z-10 grid h-screen grid-cols-7 place-items-center">
         <section className="order-2 col-span-7 my-6 flex w-full flex-col p-6 md:order-1 md:col-span-5 md:mr-20 md:w-3/5 lg:w-3/6">
           <h2 className="text-center text-2xl font-bold sm:text-3xl md:text-4xl">
-            ¡Tu <span className="text-primary">plataforma</span> de <span className="text-secondary">ofertas</span> de trabajo!
+            ¡Tu <span className="text-primary">plataforma</span> de <span className="text-secondary">trabajo</span> virtual!
           </h2>
-          <p className="text-center text-base">El acceso a tus sueños a un solo clic de distancia</p>
+          <p className="text-center text-base">El primer paso hacia tu grandeza comienza aquí</p>
           <LogInForm />
           <div className="divider divider-vertical my-2" />
           <Link
