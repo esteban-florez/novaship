@@ -20,7 +20,7 @@ export default function Member({ name, email, action, onClick }: Props) {
       onClick={onClick}
     >
       <div className="flex items-center gap-2">
-        <AvatarIcon username={name} className="bg-primary text-primary-content" />
+        <AvatarIcon className="bg-primary text-primary-content" />
         <div className="flex flex-col">
           <p className="line-clamp-1 font-semibold transition-colors">{name}</p>
           <p className="-mt-1 text-sm transition-colors">{email}</p>

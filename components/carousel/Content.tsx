@@ -43,7 +43,7 @@ export default function Content(props: Props) {
         <footer className="flex flex-col justify-between gap-4 sm:flex-row md:items-center lg:gap-6">
           {props.destination === 'offers' &&
             <div className="order-1 flex flex-row items-center justify-start gap-2 rounded-lg lg:order-none">
-              <AvatarIcon username={props.owner} className="bg-black text-white" />
+              <AvatarIcon className="bg-black text-white" />
               <div className="flex flex-col">
                 <h5 className="font-bold text-white lg:text-base">{props.owner}</h5>
                 <small className="-mt-1 text-white">{props.location}</small>

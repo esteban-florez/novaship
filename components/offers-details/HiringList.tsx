@@ -23,7 +23,7 @@ export default function HiringList({ offerId, hiring }: Props) {
         return (
           <div key={hiring.id} className="card flex flex-col gap-2 rounded-md border border-neutral-300 px-8 py-4 shadow-xl">
             <div className="flex items-center gap-x-2">
-              <AvatarIcon username={hiring.person.name} />
+              <AvatarIcon />
               <p>{hiring.person.name}</p>
             </div>
             <span className="text-center font-semibold text-neutral-600">{offerStatuses[hiring.status ?? 'PENDING']}</span>

@@ -55,7 +55,7 @@ export default function ChatsBar({ project, activeUser, isMember }: Props) {
         </div>
       </div>
       <div className="sticky inset-x-0 bottom-0 flex items-center gap-2 rounded-bl-lg border-t border-neutral-300 bg-white px-2 py-2.5">
-        <AvatarIcon username={activeUser.name} className="h-8 w-8 bg-neutral text-neutral-content" />
+        <AvatarIcon className="h-8 w-8 bg-neutral text-neutral-content" />
         <div className="flex flex-col">
           <p className="text-base font-semibold">{activeUser.name}</p>
           {isMember

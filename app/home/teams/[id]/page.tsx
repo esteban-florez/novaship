@@ -125,7 +125,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
 
                 return (
                   <Link href={`/home/users/${member.id}`} className="group flex items-center gap-1 rounded-lg border-2 border-neutral-300 p-2 transition-colors hover:border-primary" key={member.id}>
-                    <AvatarIcon username={member.name} image={member.image} />
+                    <AvatarIcon image={member.image} />
                     <div className="flex flex-col">
                       <p className="font-semibold transition-colors group-hover:text-primary">{member.name}</p>
                       {member.grades.length > 0 && <span className="-mt-1 text-sm">{member.grades[0].title}</span>}

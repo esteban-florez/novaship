@@ -8,7 +8,7 @@ interface Props {
 export default function AvatarInfo({ owner, location }: Props) {
   return (
     <div className="flex items-center gap-2">
-      <AvatarIcon username={owner} className="bg-black text-white" />
+      <AvatarIcon className="bg-black text-white" />
       <div className="flex flex-col">
         <h5 className="text-lg font-bold">{owner}</h5>
         <small className="-mt-1 text-sm">{location}</small>

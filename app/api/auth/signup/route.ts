@@ -6,6 +6,7 @@ import lucia from '@/lib/auth/lucia'
 import { person, nonPerson, basic } from '@/lib/validation/schemas/server/signup'
 import prisma from '@/prisma/client'
 import { type z } from 'zod'
+import { storeFile } from '@/lib/storage/storeFile'
 
 type PersonData = z.infer<typeof person>
 type NonPersonData = z.infer<typeof nonPerson>
@@ -39,8 +40,11 @@ export async function POST(request: NextRequest) {
 
     const id = authUser.id as string
 
-    // TODO -> falta meter aqui los links de la imagen y la certificacion
-    const shared = { email, authUserId: id, image: null }
+    const profileImagePath = parsed.image !== undefined
+      ? await storeFile(parsed.image)
+      : null
+
+    const shared = { email, authUserId: id, image: profileImagePath }
 
     if (userType === 'PERSON') {
       await prisma.person.create({
@@ -58,14 +62,19 @@ export async function POST(request: NextRequest) {
           },
         },
       })
-    } else if (userType === 'COMPANY') {
-      await prisma.company.create({
-        data: { ...parsed as NonPersonData, ...shared, certification: 'TODO' },
-      })
     } else {
-      await prisma.institute.create({
-        data: { ...parsed as NonPersonData, ...shared, certification: 'TODO' },
-      })
+      const nonPersonData = parsed as NonPersonData
+      const certification = await storeFile(nonPersonData.certification)
+
+      if (userType === 'COMPANY') {
+        await prisma.company.create({
+          data: { ...nonPersonData, ...shared, certification },
+        })
+      } else {
+        await prisma.institute.create({
+          data: { ...nonPersonData, ...shared, certification },
+        })
+      }
     }
 
     const session = await lucia.createSession(authUser.id)

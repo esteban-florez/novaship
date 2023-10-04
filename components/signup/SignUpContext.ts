@@ -1,5 +1,5 @@
 import { type SelectableCategory, type OptionSkill } from '@/lib/types'
-import { type Job } from '@prisma/client'
+import { type UserType, type Job } from '@prisma/client'
 import { createContext } from 'react'
 import { type Control, type FieldErrors, type RegisterOptions, type UseFormRegisterReturn } from 'react-hook-form'
 
@@ -16,6 +16,7 @@ interface SignUpContextType {
   setCategories: (categories: SelectableCategory[]) => void
   skills: OptionSkill[]
   jobs: Job[]
+  userType: UserType
   clearErrors: (name?: string | string[]) => void
   setValue: (name: string, value: unknown) => void
 }

@@ -13,7 +13,7 @@ export default function InfoOwner({ name, description, id, members }: Props) {
   return (
     <>
       <div className="flex flex-col items-center justify-start gap-2 xl:flex-row">
-        <AvatarIcon username={name} className="h-12 w-12 bg-black text-white" />
+        <AvatarIcon className="h-12 w-12 bg-black text-white" />
         <div className="mb-2 flex flex-col">
           <p className="text-base font-semibold">{name}</p>
           <p className="-my-1 text-sm">{members} miembros</p>
