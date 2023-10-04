@@ -1,19 +1,20 @@
-import { type Team, type Membership, type Person } from '@prisma/client'
-import { EyeIcon } from '@heroicons/react/24/outline'
+import { type Team, type Membership, type Leader } from '@prisma/client'
 import InfoOwner from './InfoOwner'
-import Button from '../Button'
 interface Props {
   id: string
   team: Team & {
-    memberships: Array<Membership & {
-      person: Person | null
-    }>
-  }
+    leader: Leader
+    memberships: Membership[]
+  } | null
   isOwner: boolean
   isMember: boolean
 }
 
 export default function TeamGroup({ id, team, isOwner, isMember }: Props) {
+  if (team == null) {
+    return null
+  }
+  
   const membersCount = team.memberships.length
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-4 shadow-lg">
@@ -23,7 +24,8 @@ export default function TeamGroup({ id, team, isOwner, isMember }: Props) {
         description={team.description}
         members={membersCount}
       />
-      {(isOwner || isMember) &&
+      {/* TEMPORAL DISABLED */}
+      {/* {(isOwner || isMember) &&
         (
           <>
             <div className="divider my-0" />
@@ -37,7 +39,7 @@ export default function TeamGroup({ id, team, isOwner, isMember }: Props) {
               Ver chat
             </Button>
           </>
-        )}
+        )} */}
     </div>
   )
 }

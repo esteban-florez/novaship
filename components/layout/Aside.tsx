@@ -6,6 +6,7 @@ import AsideLink from './AsideLink'
 import { useState } from 'react'
 import clsx from 'clsx'
 
+// TODO -> mover equipos a otra pestaña
 const SIDEBAR_LINKS = [
   {
     href: '/home',

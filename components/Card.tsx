@@ -1,8 +1,8 @@
 import AvatarIcon from './AvatarIcon'
 import Button from './Button'
 import clsx from 'clsx'
-import { type ProjectMemberships } from '@/lib/types'
 import InlineList from './InlineList'
+import { type ProjectMembership } from '@/lib/types'
 
 interface Props {
   title: string
@@ -13,7 +13,7 @@ interface Props {
   description: string
   owner?: string
   location?: string
-  members?: ProjectMemberships
+  members?: ProjectMembership[]
   link?: string
 }
 
