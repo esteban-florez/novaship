@@ -25,7 +25,6 @@ export default function Navbar() {
       <div className="navbar-end text-sm sm:text-base">
         <div className="flex flex-col items-center px-5 ">
           <p>{date}</p>
-          <p className="-mt-2 text-sm">Poner la hora</p>
         </div>
         {/* <NotificationDropdown /> */}
         <ProfileDropdown />
