@@ -1,6 +1,6 @@
-import { type Visibility, type Team } from '@prisma/client'
+import { type Visibility, type Team, type Project, type Person, type Leader, type Company } from '@prisma/client'
 import { DBError } from '../errors/reference'
-import { type MembershipWithRelations } from '../types'
+import { type UserWithType, type MembershipWithRelations } from '../types'
 
 export function getMember(membership: MembershipWithRelations) {
   const member = membership.company ?? membership.person
@@ -12,18 +12,43 @@ export function getMember(membership: MembershipWithRelations) {
   return member
 }
 
-type TeamWithMemberships = Team & {
-  memberships: MembershipWithRelations[]
+type ProjectWithRelations = Project & {
+  person: Person | null
+  team: TeamWithRelations | null
 }
 
-export function getTeamLeader(team: TeamWithMemberships) {
-  const leader = team.memberships.find(membership => membership.isLeader)
+export function getProjectLeader(project: ProjectWithRelations): UserWithType {
+  const { person, team } = project
 
-  if (leader === undefined) {
-    throw new DBError('DBError: Invalid Team without leader.')
+  if (person !== null) {
+    return { ...person, type: 'PERSON' }
   }
 
-  return leader
+  if (team !== null) {
+    return getTeamLeader(team)
+  }
+
+  throw new DBError('DBError: Invalid Project without leader.')
+}
+
+type TeamWithRelations = Team & {
+  leader: Leader & {
+    person: Person | null
+    company: Company | null
+  }
+}
+
+export function getTeamLeader(team: TeamWithRelations): UserWithType {
+  if (team !== null) {
+    const { leader: { person, company } } = team
+    if (person !== null) {
+      return { ...person, type: 'PERSON' }
+    } else if (company !== null) {
+      return { ...company, type: 'COMPANY' }
+    }
+  }
+
+  throw new DBError('DBError: Invalid Team without leader.')
 }
 
 export function getPublicProjects<T>(projects: Array<T & {

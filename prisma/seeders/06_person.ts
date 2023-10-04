@@ -8,14 +8,17 @@ import { Gender } from '@prisma/client'
 import types from '@/lib/utils/types'
 
 export default async function person() {
-  for (let i = 0; i < seederQueries.persons; i++) {
-    const skills = await prisma.skill.findMany({ select: { id: true } })
-    const categories = await prisma.category.findMany({ select: { id: true } })
-    const locations = await prisma.location.findMany({ select: { id: true } })
-    const grades = await prisma.grade.findMany({ select: { id: true } })
+  const skills = await prisma.skill.findMany({ select: { id: true } })
+  const categories = await prisma.category.findMany({ select: { id: true } })
+  const locations = await prisma.location.findMany({ select: { id: true } })
+  const grades = await prisma.grade.findMany({ select: { id: true } })
+  const names = collect(persons.names)
+  const surnames = collect(persons.surnames)
+  const descriptions = collect(persons.descriptions)
 
-    const name = collect(persons.names).random().first()
-    const surname = collect(persons.surnames).random().first()
+  for (let i = 0; i < seederQueries.persons; i++) {
+    const name = names.random().first()
+    const surname = surnames.random().first()
     const fullname = `${name} ${surname}`
     const email = `u${i}@user.dev`
 
@@ -33,7 +36,7 @@ export default async function person() {
         name: fullname,
         email,
         phone: numbers().phone(),
-        description: collect(persons.descriptions).random().first(),
+        description: descriptions.random().first(),
         ci: numbers().ci(),
         birth: new Date(),
         employable: numbers(1, 2).random() === 1,

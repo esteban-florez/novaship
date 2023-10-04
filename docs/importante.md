@@ -36,23 +36,23 @@ R: Al crear proyectos en la app, estos quedan en tu "Portafolio". Los demás usu
 - ¿Desde donde se realizaría el proceso de contratación?
 R: Desde un proyecto se podrá ver sus miembros/autor y contratarlos, o desde el perfil de una persona se podrán ver los proyectos del portafolio y contratar.
 
-- ¿Como funcionaría la contratación de equipos en detalle (paso a paso)? TODO
-R: Aun no se sabe.
+- ¿Como funcionaría la contratación de equipos en detalle (paso a paso)?
+R: Primero, una persona desea contratar a un equipo.
 
 - ¿Como funcionan los equipos de trabajo?
 R: Un equipo de trabajo es una entidad propia que puede realizar varios proyectos, ser contratado, comunicarse entre sí mediante la aplicación, etc.
-
-- ¿Quien puede crear un equipo de trabajo? TODO
-R: Por ahora, empresas y personas. (yo, Esteban, pienso que sería mejor para la DB y para la separación de roles que solo las personas hagan equipos. Pero hay que conversarlo con los profes).
-
-- ¿Los proyectos tienen que estar vinculados a un equipo obligatoriamente?
-R: Si, vean el diagramita. Para crear proyectos es obligatorio vincularlo a un equipo de trabajo. Si al momento de crear el proyecto, el usuario que crea no tienen ningún equipo de trabajo, puede crearlo en ese mismo momento.
   Equipos de trabajo
   * Lider -> Persona o Empresa
   * Miembros -> Personas
   * Crean proyectos
   * Pueden ser contratados
   * Tienen un chat
+
+- ¿Quien puede crear un equipo de trabajo? TODO
+R: Por ahora, empresas y personas. (yo, Esteban, pienso que sería mejor para la DB y para la separación de roles que solo las personas hagan equipos. Pero hay que conversarlo con los profes).
+
+- ¿Los proyectos tienen que estar vinculados a un equipo obligatoriamente?
+R: Si eres empresa, si, obligatorio seleccionar un equipo del que seas líder. Si eres persona, puedes vincularlo a un equipo del que seas líder, o puedes ponerlo como "Proyecto personal".
 
 - ¿Son realmente necesarias las instituciones? TODO
 R: Por ahora si. Pero sería posible eliminar las instituciones, y más bien hacer que para registrarte como pasante tengas que llenar un formato que nosotros proporcionemos, y subirlo sellado y firmado por la institución en la que estudias.
@@ -65,14 +65,3 @@ R: Basicamente todo empieza por la institución que crea la pasantía, con el tr
   2. Que sea el pasante el que busque una "oferta de pasantes", igualmente mandando una solicitud. Si la empresa acepta, empieza el proceso de pasantía.
 
 Cuando pasantía empieza, la empresa debe ir registrado la cantidad de horas completadas por el pasante. Cuando haya completado todas las horas, finalizará el proceso de pasantías y se marcará como completada. El estudiante y la institución serán notificados de ello.
-
-- ¿Como se crean los equipos de un solo usuario?
-R: La creación de equipos de un solo usuario ocurre cuando una persona/empresa va a crear un proyecto y no quiere vincularlo a ningún equipo, sino que desea ser el único que trabaje en dicho proyecto.
-
-En el formulario de creación de proyecto, deberías tener un radio para elegir, con dos opciones: "Vincular a uno de mis equipos" (opción predeterminada) y "No vincular a un equipo". Dependiendo de la seleccionada, se debe mostrar u ocultar el select de equipos.
-
-Luego, en el back-end se debe chequear el valor del radio enviado, para determinar si se crea un nuevo equipo y el proyecto, o el proyecto vinculado a un equipo existente.
-
-- ¿Como se mostrarían los equipos de una sola persona a los demás usuarios?
-R: No debería mostrarse como "equipo", no debería listarse con los demás equipos. En el caso estar relacionado con un proyecto, o con un contrato, debería mostrarse el equipo como tal, sino que directamente el usuario que es unico miembro del equipo.
-

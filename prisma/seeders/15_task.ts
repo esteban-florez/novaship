@@ -1,24 +1,47 @@
 import prisma from '../client'
 import tasks from '@/prisma/data/tasks.json'
-import types from '@/lib/utils/types'
 import { TaskStatus } from '@prisma/client'
 import collect from '@/lib/utils/collection'
 import numbers from '@/lib/utils/number'
+import coinflip from '@/lib/utils/coinflip'
 
 export default async function task() {
   const MAX = tasks.titles.length
-  const projects = await prisma.project.findMany({ select: { id: true } })
-
-  for (let i = 0; i < MAX; i++) {
-    const position = numbers(MAX - 1).random()
-
-    await prisma.task.create({
-      data: {
-        title: tasks.titles[position],
-        description: tasks.descriptions[position],
-        status: types(TaskStatus).random(),
-        projectId: collect(projects).random().first().id,
+  const tasksRange = numbers(0, MAX - 1)
+  const projects = await prisma.project.findMany({
+    include: {
+      team: {
+        include: {
+          memberships: true,
+        },
       },
-    })
-  }
+      person: true,
+    },
+  })
+
+  const tasksData = projects.flatMap(project => {
+    const projectTasks = []
+
+    let personId
+    if (project.team !== null) {
+      const members = collect(project.team.memberships)
+      personId = members.random().first().personId
+    } else {
+      personId = project.personId as string
+    }
+
+    for (let i = 0; i < 5; i++) {
+      const index = tasksRange.random()
+      projectTasks.push({
+        title: tasks.titles[index],
+        description: tasks.descriptions[index],
+        status: coinflip() ? TaskStatus.PENDING : null,
+        projectId: project.id,
+        personId,
+      })
+    }
+    return projectTasks
+  })
+
+  await prisma.task.createMany({ data: tasksData })
 }

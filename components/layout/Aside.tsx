@@ -100,8 +100,7 @@ export default function Aside() {
   }
 
   return (
-    <aside className={clsx({
-      'z-50 top-0 h-screen flex-col bg-white shadow-md sm:flex sm:sticky transition-all delay-150 duration-300 ease-out': true,
+    <aside className={clsx('top-0 z-50 h-screen flex-col flex-nowrap overflow-y-scroll bg-white shadow-lg transition-all delay-150 duration-300 ease-out scrollbar-thin sm:sticky sm:flex', {
       'fixed w-screen sm:w-[17.5rem]': active,
       'w-0 sm:w-20': !active,
     })}

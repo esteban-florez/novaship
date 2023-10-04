@@ -30,4 +30,5 @@
 - Añadir backups.
 - Signup con Google.
 - Corregir dropdown de notificaciones que se buguea un poco en responsive (transiciones algo bruscas).
+- Mecanismo para destacar ofertas y equipo mediante suscripción.
 - Ocular aside en mobile por defecto.

@@ -39,6 +39,12 @@ Representa a un usuario de tipo persona natural.
 - [**Review[]**](#review): Reseñas realizadas por una empresa a la persona.
 - [**Contract[]**](#contract): Contrataciones a equipos realizadas por la persona.
 - [**Internship[]**](#internship): Pasantías de la persona.
+- [**Invitation[]**](#invitation): Invitaciones a formar parte de equipos.
+- [**Project[]**](#project): Proyectos personales.
+- [**Leader[]**](#leader): "Líder", relaciona la persona con los equipos (ver [Team](#team)) de los cuales es líder.
+- [**Participation[]**](#participation): Tareas en las que es participante.
+- [**Task[]**](#task): Tareas de las cuales es responsable.
+- [**Message[]**](#message): Mensajes enviados.
 
 ## Company
 Representa un usuario de tipo empresa.
@@ -53,12 +59,12 @@ Representa un usuario de tipo empresa.
 - **verifiedAt**: Fecha de verificación de la cuenta empresarial.
 - [**AuthUser**](#authuser): Tabla de autenticación.
 - [**Location**](#location): Dirección.
-- [**Membership[]**](#membership): "Membresías", enlazan a la empresa con los equipos de trabajo creados por esta.
 - [**Offer[]**](#offer): Ofertas laborales publicadas por la empresa.
 - [**Vacant[]**](#vacant): Ofertas para pasantías publicadas por la empresa.
 - [**Review[]**](#review): Reseñas publicadas por la empresa en perfiles de personas.
-- [**Contract[]**](#contract): Contrataciones a equipos realizadas por la persona.
 - [**Internship[]**](#internship): Pasantías en la empresa.
+- [**Leader[]**](#leader): "Líder", relaciona la empresa con los equipos (ver [Team](#team)) de los cuales es líder.
+- [**Message[]**](#message): Mensajes enviados.
 
 ## Institute
 Representa un usuario de tipo institución.
@@ -80,25 +86,39 @@ Representa un equipo de trabajo formado por personas, y liderado por una persona
 
 - **name**: Nombre.
 - **description**: Descripción.
+- **featuredUntil**: Fecha hasta la cual el equipo estará destacado.
+- [**Leader**](#leader): "Líder", relaciona al equipo con la persona/empresa que es el líder.
 - [**Project[]**](#project): Proyectos creados por el equipo de trabajo.
+- [**Invitation[]**](#invitation): Invitaciones a formar parte del equipo.
 - [**Membership[]**](#membership): Miembros del equipo de trabajo, personas o empresa.
 - [**Contract[]**](#contract): Contrataciones al equipo de trabajo por parte de una persona o empresa.
-- [**Category[]**](#category): Categorías laborales a las que pertenece el equipo de trabajo.
+- [**Category[]**](#category): Categorías a las que pertenece el equipo.
+- [**Message[]**](#message): Mensajes pertenecientes al chat del equipo.
+
+## Leader
+Representa el líder de un equipo de trabajo, ya sea persona o empresa.
+
+- [**Person**](#person): Persona líder. Es *"null"* si el líder es una empresa.
+- [**Company**](#company): Empresa líder. Es *"null"* si el líder es una persona.
+- [**Team**](#team): Equipo del líder.
+
+## Invitation
+Representa una invitación por parte de un equipo a una persona para que sea miembro.
+
+- **status**: Estado de la invitación (ver [Status](#status))
+- [**Membership**](#membership): Miembro creado al aceptar la invitación. Es *"null"* si la invitación no fué aceptada.
+- [**Team**](#team): Equipo que envía la invitación.
+- [**Person**](#person): Persona invitada.
 
 ## Membership
-Representa un miembro de un equipo de trabajo, ya sea una persona o empresa.
+Representa una persona miembro de un equipo de trabajo.
 
-- **isLeader**: Si es *"true"*, este miembro es el líder del equipo de trabajo. Siempre es *"true"* si el miembro es empresa.
-- **confirmed**: Si es *"true"*, la persona ya acepto la invitación y se confirmó que es miembro del equipo. De lo contrario, no.
-- [**Company**](#company): Empresa líder del equipo. Es *"null"* si el miembro es persona.
-- [**Person**](#person): Persona miembro del equipo. Es *"null"* si el miembro es empresa.
+- [**Person**](#person): Persona miembro del equipo.
 - [**Team**](#team): Equipo de trabajo al que pertenece el miembro.
-- [**File[]**](#file): Archivos subidos por el miembro a algún proyecto del equipo.
-- [**Participation[]**](#participation): "Participaciones", enlaza al miembro con las tareas de proyectos de las cuales es participante.
-- [**Message[]**](#message): Mensajes enviados por el miembro en el chat de equipo de trabajo, chat de proyecto, o chat de alguna tarea de proyecto específica
+- [**Invitation**](#invitation): Invitación mediante la cual se agregó el miembro.
 
 ## Contract
-Representa la contratación de un equipo de trabajo para realizar un proyecto de una persona o empresa.
+Representa la contratación de un equipo de trabajo para realizar un proyecto de una persona.
 
 - **title**: Título del proyecto de la contratación.
 - **description**: Descripción general del proyecto a realizar.
@@ -106,8 +126,7 @@ Representa la contratación de un equipo de trabajo para realizar un proyecto de
 - **price**: Precio a pagar por el proyecto.
 - [**Project**](#project): Proyecto creado por la contratación. Es *"null"* si aún no se ha concretado la contratación.
 - [**Team**](#team): Equipo que es contratado para el proyecto.
-- [**Person**](#person): Persona que contrata al equipo. Es *"null"* si es contratado por una empresa.
-- [**Company**](#company): Empresa que contrata al equipo. Es *"null"* si es contratado por una persona.
+- [**Person**](#person): Persona que contrata al equipo.
 - [**Feature[]**](#feature): Características del proyecto a realizar.
 - [**Question[]**](#question): Preguntas realizadas por el equipo para aclarar dudas sobre el proyecto.
 
@@ -126,16 +145,17 @@ Representa una pregunta realizada por el equipo de trabajo al que contrata para 
 - [**Contract**](#contract): Contratación a la cual pertenece la pregunta.
 
 ## Project
-Representa un proyecto realizado por un equipo de trabajo. En caso de que el equipo de trabajo sea de un solo miembro se considera este como "autor del proyecto".
+Representa un proyecto vinculado a un persona (proyecto personal) o un equipo de trabajo.
 
 - **title**: Título. 
 - **description**: Descripción.
-- **image**: Enlace a la imagen de perfil..
+- **image**: Enlace a la imagen de portada del proyecto.
 - **preview**: Enlace a una previsualización (demo).
 - **visibility**: Visibilidad del proyecto (ver [Visibility](#visibility)).
-- [**Team**](#team): Equipo de trabajo que realiza el proyecto. 
+- [**Person**](#person): Persona vinculada al proyecto. Es *"null"* si el proyecto fué vinculado a un equipo. 
+- [**Team**](#team): Equipo de trabajo vinculado al proyecto. Es *"null"* si el proyecto vinculado a una persona. 
 - [**Contract**](#contract): Contratación relacionada con el proyecto. Es *"null"* si el proyecto no está relacionado con ninguna contratación.
-- [**Category[]**](#category): Categoría laboral a las que pertenece. 
+- [**Category[]**](#category): Categorías laborales a las que pertenece. 
 - [**Task[]**](#task): Tareas en las que se divide.
 - [**Message[]**](#message): Mensajes enviados en el chat de proyecto.
 - [**File[]**](#file): Archivos subidos. 
@@ -147,6 +167,7 @@ Representa una tarea de un proyecto. Posee un responsable de tarea, que verifica
 - **description**: Descripción.
 - **status**: Estado de progreso (ver [TaskStatus](#taskstatus)). En caso de poseer subtareas, este campo es *"null"*, ya que depende del status de las subtareas.
 - [**Project**](#project): Proyecto al que pertenece.
+- [**Person**](#person): Persona responsable de la tarea.
 - [**Subtask[]**](#subtask): Subtareas en las que se divide.
 - [**Participation[]**](#participation): Participantes de la tarea, enlace con [Membership](#membership).
 - [**Message[]**](#message): Mensajes enviados en el chat de tarea.
@@ -171,8 +192,7 @@ Representa una revisión de una tarea o subtarea.
 ## Participation
 Representa un miembro de equipo que es participante de una tarea.
 
-- **isLeader**: Si es *"true"*, este participante es el responsable de tarea.
-- [**Membership[]**](#membership): Miembro del equipo de trabajo que participa en la tarea, enlace con [Person](#person).
+- [**Person[]**](#person): Persona miembro del equipo de trabajo que participa en la tarea.
 - [**Task[]**](#task): Tarea en la que participa.
 
 ## File
@@ -181,7 +201,6 @@ Archivo subido por algún miembro del equipo de trabajo a un proyecto en especí
 - **title**: Título.
 - **src**: Enlace al archivo subido.
 - [**Project**](#project): Proyecto al cual fué subido el archivo. 
-- [**Membership**](#membership): "Membresía", miembro del equipo de trabajo que subió el archivo al proyecto.
 
 ## Offer
 Representa una oferta laboral publicada por una empresa.
@@ -194,6 +213,7 @@ Representa una oferta laboral publicada por una empresa.
 - **salary**: Sueldo en dolares por hora.
 - **limit**: Límite de postulantes simultáneos a la oferta. Cuando se alcance el límite, la oferta se ocultará.
 - **expiresAt**: Fecha de expiración de la oferta. Cuando llegue la fecha, la oferta se ocultará.
+- **featuredUntil**: Fecha hasta la cual la oferta estará destacada.
 - [**Company**](#company): Empresa que la publica.
 - [**Location**](#location): Ubicación.
 - [**Job**](#job): Puesto de trabajo ofrecido.
@@ -274,7 +294,9 @@ Representa una reseña dejada por una empresa en el perfil de una persona.
 Representa un mensaje enviado en algún chat de la aplicación.
 
 - **content**: Contenido del mensaje.
-- [**Membership**](#membership): Miembro del equipo que mandó el mensaje. 
+- [**Person**](#person): Persona que mandó el mensaje. Es *"null"* si fué mandado por empresa.
+- [**Company**](#company): Empreesa que mandó el mensaje. Es *"null"* si fué mandado por persona.
+- [**Team**](#team): Equipo al que pertenece el mensaje.
 - [**Project**](#project): Proyecto al que pertenece el mensaje, *"null"* si el mensaje no es de algún proyecto.
 - [**Task**](#task): Tarea al que pertenece el mensaje, *"null"* si el mensaje no es de alguna tarea.
 
@@ -355,11 +377,11 @@ Horario de trabajo (ver [Offer](#offer)).
 - **PARTTIME**: Tiempo parcial.
 
 ## Status
-Estado de una solicitud (ver [Hiring](#hiring) y [Recruitment](#recruitment)).
+Estado de una solicitud (ver [Hiring](#hiring) y [Recruitment](#recruitment)) o de una invitación a equipo (ver [Invitation](#invitation)).
 
-- **PENDING**: Solicitud pendiente.
-- **REJECTED**: Solicitud rechazada.
-- **ACCEPTED**: Solicitud aceptada.
+- **PENDING**: Solicitud/invitación pendiente.
+- **REJECTED**: Solicitud/invitación rechazada.
+- **ACCEPTED**: Solicitud/invitación aceptada.
 
 ## Platform
 Plataforma de videollamada de entrevista (ver [Interview](#interview)).
