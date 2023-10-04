@@ -24,6 +24,7 @@ export const auth = {
         company: true,
         institute: true,
         person: true,
+        admin: true,
       },
       where: {
         id: session.userId,
@@ -31,8 +32,9 @@ export const auth = {
     })
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const user: any = authUser.company ?? authUser.institute ?? authUser.person
+    const user: any = authUser.company ?? authUser.institute ?? authUser.person ?? authUser.admin
     user.type = authUser.type
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     return user as UserWithType
   },
 }

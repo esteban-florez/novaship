@@ -514,10 +514,21 @@ model AuthUser {
   person       Person?
   company      Company?
   institute    Institute?
+  admin        Admin?
   auth_session AuthSession[]
   auth_key     AuthKey[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  adminId      String?
+}
+
+model Admin {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  image      String
+  authUser   AuthUser @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authUserId String   @unique
 }
 
 model AuthSession {
@@ -579,6 +590,7 @@ enum UserType {
   PERSON
   COMPANY
   INSTITUTE
+  ADMIN
 }
 
 enum Stage {

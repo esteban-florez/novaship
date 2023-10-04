@@ -10,7 +10,7 @@ export default async function ProfileDropdown() {
       <label tabIndex={0} className="btn-ghost btn-circle btn">
         <AvatarIcon image={image} />
       </label>
-      <ProfileDropdownMenu username={name} email={email} />
+      <ProfileDropdownMenu username={name} email={email} image={image} />
     </div>
   )
 }

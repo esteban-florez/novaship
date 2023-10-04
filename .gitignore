@@ -43,3 +43,6 @@ wiwd.md
 
 # usercontent
 public/usercontent
+
+# admins
+prisma/data/admins.json

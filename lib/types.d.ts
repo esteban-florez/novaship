@@ -3,7 +3,7 @@ import { type ERRORS } from './errors/reference'
 import {
   type Person, type Company, type Institute, type Category, type Skill,
   type Offer, type Location, type Project, type Task, type Participation,
-  type Membership, type Subtask, type Team, type File,
+  type Membership, type Subtask, type Team, type File, type Admin,
 } from '@prisma/client'
 import { type days } from './translations'
 
@@ -97,37 +97,36 @@ type ProjectTeam = Team & {
 interface ProjectsFull extends Project {
   person: Person | null
   team: (Team & {
-      leader: Leader
-      memberships: Array<Membership & {
-        person: Person
-      }>
+    leader: Leader
+    memberships: Array<Membership & {
+      person: Person
+    }>
   }) | null
   categories: Category[]
 }
 interface ProjectWithTeamAndCategories {
+  id: string
+  person: {
     id: string
-    person: {
+    name: string
+  } | null
+  team: {
+    id: string
+    memberships: Array<{
+      id: string
+      person: {
         id: string
         name: string
-    } | null
-    team: {
-        id: string
-        memberships: {
-            id: string
-            person: {
-                id: string
-                name: string
-            }
-        }[]
-        name: string
-    } | null
-    categories: {
-        id: string
-        title: string
-    }[]
-    description: string
+      }
+    }>
+    name: string
+  } | null
+  categories: Array<{
+    id: string
+    title: string
+  }>
+  description: string
 }
-
 
 interface ProjectsWithTeamCategoriesTaskAndSubtask extends Project {
   team: Team & {
@@ -227,3 +226,4 @@ type Schedule = Record<keyof typeof days, number[]>
 type UserWithType = (Person & { type: 'PERSON' })
 | (Company & { type: 'COMPANY' })
 | (Institute & { type: 'INSTITUTE' })
+| (Admin & { type: 'ADMIN' })
