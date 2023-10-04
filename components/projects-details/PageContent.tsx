@@ -1,20 +1,14 @@
 'use client'
 
-import { type ProjectDetailsTab, type Projects } from '@/lib/types'
+import { type ProjectsFull, type ProjectDetailsTab } from '@/lib/types'
 import ProjectDetails from './ProjectDetails'
 import TeamGroup from './TeamGroup'
-import PageNav from './PageNav'
 import { useState } from 'react'
-import Tasks from './tasks/Tasks'
-import Files from './files/Files'
-// import Files from './Files'
-// import TaskItem from './tasks/TaskItem'
-// import EmptyContent from '../EmptyContent'
 
 interface Props {
   isOwner: boolean
   isMember: boolean
-  project: Projects
+  project: ProjectsFull
 }
 
 // TODO -> pasar files y tasks a un componente (client)
@@ -82,17 +76,18 @@ export default function PageContent({ isOwner, isMember, project }: Props) {
         {(isOwner || isMember) &&
           <div className="col-span-7 lg:col-span-5">
             {/* {(isOwner || isMember) && <PageNav tab={tab} onTabClick={handleChangeTab} />} */}
-            {isOwner &&
+            {/* TEMPORAL DISABLED */}
+            {/* {isOwner &&
               <PageNav
                 id={project.id}
                 tab={tab}
                 onTabClick={handleChangeTab}
-              />}
-            <div className="card mt-3 rounded-lg bg-white p-5 shadow-lg">
+              />} */}
+            {/* <div className="card mt-3 rounded-lg bg-white p-5 shadow-lg">
               {tab === 'Tasks'
                 ? <Tasks projectId={project.id} tasks={project.tasks} />
                 : <Files projectId={project.id} files={project.files} />}
-            </div>
+            </div> */}
           </div>}
         {!(isOwner || isMember) &&
           <div className="col-span-7 lg:col-span-5">

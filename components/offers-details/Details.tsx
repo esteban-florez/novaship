@@ -83,14 +83,15 @@ export default function Details({ id, isOwner, title, description, expiresAt, ca
                       className="hidden"
                       register={register}
                     />
-                    <Button
+                    {/* TEMPORAL DISABLED */}
+                    {/* <Button
                       style="DEFAULT"
                       color="PRIMARY"
                       hover="WHITE"
                     >
                       <PencilIcon className="h-4 w-4" />
                       ¡Aplicar!
-                    </Button>
+                    </Button> */}
                   </form>}
 
                 {isOwner &&

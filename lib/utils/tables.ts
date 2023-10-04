@@ -3,7 +3,7 @@ import { DBError } from '../errors/reference'
 import { type UserWithType, type MembershipWithRelations } from '../types'
 
 export function getMember(membership: MembershipWithRelations) {
-  const member = membership.company ?? membership.person
+  const member = membership.person
 
   if (member === null) {
     throw new DBError('DBError: Invalid membership without Person and Company.')

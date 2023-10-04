@@ -2,7 +2,7 @@
 
 import PageNav from './PageNav'
 import { useState } from 'react'
-import { type ProjectsTab, type ProjectWithTeamAndCategories } from '@/lib/types'
+import { ProjectsFull, type ProjectsTab } from '@/lib/types'
 import ProjectsCard from './ProjectsCard'
 import Pagination from '../Pagination'
 import PageTitle from '../PageTitle'
@@ -14,9 +14,9 @@ type Props = React.PropsWithChildren<{
   filter: string | string[]
   nextPage: boolean
   pageNumber: number
-  projects: ProjectWithTeamAndCategories[]
-  personalProjects: ProjectWithTeamAndCategories[]
-  suggestedProjects: ProjectWithTeamAndCategories[]
+  projects: ProjectsFull[]
+  personalProjects: ProjectsFull[]
+  suggestedProjects: ProjectsFull[]
 }>
 
 export default function PageContent({ filter, projects, personalProjects, suggestedProjects, nextPage, pageNumber }: Props) {

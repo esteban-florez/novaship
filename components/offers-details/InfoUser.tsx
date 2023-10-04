@@ -1,6 +1,5 @@
 import { CheckBadgeIcon } from '@heroicons/react/24/outline'
 import AvatarIcon from '../AvatarIcon'
-import Button from '../Button'
 
 interface Props {
   owner: string
@@ -28,12 +27,13 @@ export default function InfoUser({ owner, location, description, verification = 
           </div>
         </div>
       )}
-      <Button
+      {/* TEMPORAL DISABLED */}
+      {/* <Button
         url="#"
         color="SECONDARY"
       >
         Ver más
-      </Button>
+      </Button> */}
     </>
   )
 }

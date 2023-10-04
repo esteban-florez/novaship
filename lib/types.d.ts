@@ -69,22 +69,17 @@ type OffersWithRelationships = Offer & {
 
 type MembershipWithRelations = Membership & {
   person: Person | null
-  company: Company | null
 }
 
 // ----------------------------------------------------------------------
 // --------------------------- Projects ---------------------------------
 // ----------------------------------------------------------------------
-type ProjectMemberships = Array<Membership & {
+type ProjectMembership = Membership & {
   person: {
     id: string
     name: string
   } | null
-  company: {
-    id: string
-    name: string
-  } | null
-}>
+}
 
 type ProjectTeam = Team & {
   memberships: Array<Membership & {
@@ -99,33 +94,45 @@ type ProjectTeam = Team & {
   }>
 }
 
-interface ProjectWithTeamAndCategories extends Project {
-  team: Team & {
-    memberships: Array<Membership & {
-      person: {
-        id: string
-        name: string
-      } | null
-      company: {
-        id: string
-        name: string
-      } | null
-    }>
-  }
-  categories: Array<{
-    id: string
-    title: string
-  }>
+interface ProjectsFull extends Project {
+  person: Person | null
+  team: (Team & {
+      leader: Leader
+      memberships: Array<Membership & {
+        person: Person
+      }>
+  }) | null
+  categories: Category[]
 }
+interface ProjectWithTeamAndCategories {
+    id: string
+    person: {
+        id: string
+        name: string
+    } | null
+    team: {
+        id: string
+        memberships: {
+            id: string
+            person: {
+                id: string
+                name: string
+            }
+        }[]
+        name: string
+    } | null
+    categories: {
+        id: string
+        title: string
+    }[]
+    description: string
+}
+
 
 interface ProjectsWithTeamCategoriesTaskAndSubtask extends Project {
   team: Team & {
-    memberships: Array<Membership & {
+    memberships: Array<{
       person: {
-        id: string
-        name: string
-      } | null
-      company: {
         id: string
         name: string
       } | null

@@ -7,14 +7,11 @@ import { cache } from 'react'
 export const getMyTeams = cache(async ({ userId }: { userId: string }) => {
   return await prisma.team.findMany({
     where: {
-      memberships: {
-        some: {
-          isLeader: true,
-          OR: [
-            { companyId: userId },
-            { personId: userId },
-          ],
-        },
+      leader: {
+        OR: [
+          { personId: userId },
+          { companyId: userId }
+        ]
       },
     },
     include: {
@@ -47,6 +44,12 @@ export const getTeam = cache(async (id: string) => {
     return await prisma.team.findUniqueOrThrow({
       where: { id },
       include: {
+        leader: {
+          include: {
+            person: true,
+            company: true
+          }
+        },
         categories: true,
         contracts: true,
         projects: {
@@ -59,11 +62,6 @@ export const getTeam = cache(async (id: string) => {
             person: {
               include: {
                 grades: true,
-                location: true,
-              },
-            },
-            company: {
-              include: {
                 location: true,
               },
             },
