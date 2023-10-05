@@ -7,7 +7,7 @@ export async function storeFile(file: Blob) {
   if (method === 'filesystem') {
     publicPath = await withFs(file)
   } else if (method === 'none') {
-    publicPath = ''
+    publicPath = '/card.webp'
   }
 
   return publicPath

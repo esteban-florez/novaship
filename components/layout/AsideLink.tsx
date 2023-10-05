@@ -14,16 +14,15 @@ type Props = React.PropsWithChildren<{
 export default function AsideLink({ link, active, iconOnly, onClick }: Props) {
   const [openDropdown, setOpenDropdown] = useState(false)
   link.visible ??= true
-  const renderLink = link.submenu === undefined && link.visible
 
   return (
     <li className="rounded-l-xl font-bold even:sm:my-2">
-      {renderLink &&
+      {link.submenu === undefined && link.visible &&
         <Link href={link.href} onClick={onClick} className={`py-4 ${iconOnly ? '' : 'mx-auto'} ${active ? 'active pointer-events-auto cursor-pointer hover:active' : ''}`}>
           {link.icon}
           <span className={clsx(iconOnly ? '' : 'hidden')}>{link.title}</span>
         </Link>}
-      {link.submenu !== undefined &&
+      {link.submenu !== undefined && link.visible &&
         <>
           <div onClick={() => { setOpenDropdown(!openDropdown) }} className={`py-4 ${iconOnly ? '' : 'mx-auto'} ${active ? 'active hover:active' : ''}`}>
             {link.icon}

@@ -4,10 +4,11 @@ type Props = React.PropsWithChildren<{
   title?: string
   className: string
   onClick?: () => void
+  forceOpen?: boolean
 }>
 
 // TEMPORAL -> cambiar los modales por este nuevo
-export default function Modal({ id, icon, title, className, children }: Props) {
+export default function Modal({ id, icon, title, className, children, forceOpen = false }: Props) {
   return (
     <>
       <label htmlFor={id} className={className}>
@@ -16,10 +17,16 @@ export default function Modal({ id, icon, title, className, children }: Props) {
           <p className="ml-1 text-sm">{title}</p>
         </div>
       </label>
-      <input type="checkbox" id={id} className="modal-toggle" />
+      {forceOpen
+        ? (
+          <input type="checkbox" id={id} className="modal-toggle" key="forced" checked readOnly />
+          )
+        : (
+          <input type="checkbox" id={id} className="modal-toggle" key="normal" />
+          )}
       <div className="modal p-0">
         <div className="modal-box p-0">
-          <article className="mt-4 px-8 py-4 text-neutral-600">{children}</article>
+          <article className="mt-4 px-8 py-4">{children}</article>
         </div>
       </div>
     </>

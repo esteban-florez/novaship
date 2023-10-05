@@ -16,5 +16,5 @@ export async function withFs(file: Blob) {
   const view = new Uint8Array(buffer)
   await writeFile(filePath, view)
 
-  return publicPath
+  return '/' + publicPath
 }

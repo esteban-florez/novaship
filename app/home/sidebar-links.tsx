@@ -1,5 +1,5 @@
 import { type UserWithType } from '@/lib/types'
-import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, ListBulletIcon, GlobeAltIcon, StarIcon, UsersIcon, BookmarkIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
+import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, ListBulletIcon, GlobeAltIcon, StarIcon, UsersIcon, BookmarkIcon, ShieldCheckIcon, CheckBadgeIcon } from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
   const links: SidebarLinkWithSubmenu[] = [
@@ -77,6 +77,13 @@ export function sidebarLinks(user: UserWithType) {
       title: 'Administración',
       icon: <ShieldCheckIcon className="h-6 w-6" />,
       visible: user.type === 'ADMIN',
+      submenu: [
+        {
+          href: '/home/admin/verifications',
+          title: 'Verificación de usuarios',
+          icon: <CheckBadgeIcon className="h-6 w-6" />,
+        },
+      ],
     },
   ]
 
