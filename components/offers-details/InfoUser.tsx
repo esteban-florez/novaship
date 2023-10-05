@@ -1,6 +1,5 @@
 import { CheckBadgeIcon } from '@heroicons/react/24/outline'
 import AvatarIcon from '../AvatarIcon'
-import Button from '../Button'
 
 interface Props {
   owner: string
@@ -13,7 +12,7 @@ export default function InfoUser({ owner, location, description, verification = 
   return (
     <>
       <div className="mb-2 flex items-center justify-center gap-2">
-        <AvatarIcon username={owner} className="h-14 w-14 bg-black text-white" />
+        <AvatarIcon className="h-14 w-14 bg-black text-white" />
         <div className="mb-2 flex flex-col">
           <p className="text-lg font-semibold">{owner}</p>
           <p className="-my-1 text-center text-sm">{location}</p>
@@ -28,12 +27,13 @@ export default function InfoUser({ owner, location, description, verification = 
           </div>
         </div>
       )}
-      <Button
+      {/* TEMPORAL DISABLED */}
+      {/* <Button
         url="#"
         color="SECONDARY"
       >
         Ver más
-      </Button>
+      </Button> */}
     </>
   )
 }

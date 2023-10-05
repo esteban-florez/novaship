@@ -64,6 +64,7 @@ export default function SignUpForm({ categories: categoriesData, skills, locatio
     control,
     clearErrors,
     setValue,
+    userType: userType as UserTypeEnum,
   }
 
   return (

@@ -30,17 +30,11 @@ export default async function offer() {
         mode: types(Mode).random(),
         salary: numbers(80, 520).random(),
         schedule: types(Schedule).random(),
+        jobId: collect(jobs).random().first().id,
+        companyId: collect(companies).random().first().id,
+        locationId: collect(locations).random().first().id,
         categories: {
           connect: collect(categories).random(6).all(),
-        },
-        job: {
-          connect: collect(jobs).random().first(),
-        },
-        company: {
-          connect: collect(companies).random().first(),
-        },
-        location: {
-          connect: collect(locations).random().first(),
         },
         skills: {
           connect: collect(skills).random(5).all(),

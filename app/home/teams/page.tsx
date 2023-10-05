@@ -21,29 +21,52 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
 
   const teams = await getTeams({
     where: {
-      memberships: {
-        every: {
-          OR: [
-            { companyId: { not: id } },
-            { personId: { not: id } },
-          ],
+      OR: [
+        {
+          leader: {
+            OR: [
+              { personId: { not: id } },
+              { companyId: {not: id } }
+            ]
+          },
         },
-      },
+        {
+          memberships: {
+            some: {
+              personId: { not: id },
+              invitation: {
+                status: 'ACCEPTED'
+              }
+            }
+          }
+        }
+      ]
     },
     skip,
     take,
   })
   const myTeams = await getTeams({
     where: {
-      memberships: {
-        some: {
-          isLeader: true,
-          OR: [
-            { companyId: id },
-            { personId: id },
-          ],
+      OR: [
+        {
+          leader: {
+            OR: [
+              { personId: id },
+              { companyId: id }
+            ]
+          },
         },
-      },
+        {
+          memberships: {
+            some: {
+              personId: id,
+              invitation: {
+                status: 'ACCEPTED'
+              }
+            }
+          }
+        }
+      ]
     },
     skip,
     take,

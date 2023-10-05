@@ -14,7 +14,7 @@ export default function Files({ title, participation, date }: Props) {
         <div className="flex flex-col">
           <h3 className="text-base font-bold sm:text-lg">{title}</h3>
           <div className="flex flex-row gap-1">
-            <AvatarIcon username={participation ?? ''} className="h-6 w-6" />
+            <AvatarIcon className="h-6 w-6" />
             <div className="flex flex-col">
               <p className="text-base">{participation}</p>
               <p className="text-sm">Hace {date?.getDate()} días</p>

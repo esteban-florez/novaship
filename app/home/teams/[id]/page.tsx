@@ -22,13 +22,14 @@ export default async function TeamPage({ params: { id } }: PageContext) {
 
   const { categories, memberships, projects } = team
   const leaderMembership = getTeamLeader(team)
-  const leader = getMember(leaderMembership)
+  // CHECK -> no entendi que hacias aqui xd
+  // const leader = getMember(leaderMembership)
   // TODO -> algoritmo de proyecto destacado
   const publicProjects = projects.filter(project => project.visibility === 'PUBLIC')
   const featuredProject = publicProjects[0]
 
   const location = await prisma.location.findUniqueOrThrow({
-    where: { id: leader.locationId },
+    where: { id: leaderMembership.locationId },
   })
 
   return (
@@ -56,13 +57,13 @@ export default async function TeamPage({ params: { id } }: PageContext) {
           </div>
           <div className="block lg:hidden">
             <Collapse
-              title={<AvatarInfo owner={leader.name} location={location.title} />}
+              title={<AvatarInfo owner={leaderMembership.name} location={location.title} />}
               bg="bg-white"
             >
               <InfoUser
                 verification={false}
-                owner={leader.name}
-                description={leader.description}
+                owner={leaderMembership.name}
+                description={leaderMembership.description}
                 location={location.title}
               />
             </Collapse>
@@ -101,8 +102,8 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             <p className="mb-3 border-0 border-b-2 border-secondary text-center text-xl font-bold uppercase text-secondary">Lider del equipo</p>
             <InfoUser
               verification={false}
-              owner={leader.name}
-              description={leader.description}
+              owner={leaderMembership.name}
+              description={leaderMembership.description}
               location={location.title}
             />
           </div>
@@ -117,7 +118,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             </div>
             <ul className="flex flex-col gap-2">
               {memberships.slice(0, 4).map(membership => {
-                if (membership.isLeader) return undefined
+                if (team.leader) return undefined
 
                 const member = getMember(membership) as Person & {
                   grades: Grade[]
@@ -125,7 +126,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
 
                 return (
                   <Link href={`/home/users/${member.id}`} className="group flex items-center gap-1 rounded-lg border-2 border-neutral-300 p-2 transition-colors hover:border-primary" key={member.id}>
-                    <AvatarIcon username={member.name} image={member.image} />
+                    <AvatarIcon image={member.image} />
                     <div className="flex flex-col">
                       <p className="font-semibold transition-colors group-hover:text-primary">{member.name}</p>
                       {member.grades.length > 0 && <span className="-mt-1 text-sm">{member.grades[0].title}</span>}

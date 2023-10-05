@@ -1,8 +1,8 @@
 import AvatarIcon from './AvatarIcon'
 import Button from './Button'
 import clsx from 'clsx'
-import { type ProjectMemberships } from '@/lib/types'
 import InlineList from './InlineList'
+import { type ProjectMembership } from '@/lib/types'
 
 interface Props {
   title: string
@@ -13,7 +13,7 @@ interface Props {
   description: string
   owner?: string
   location?: string
-  members?: ProjectMemberships
+  members?: ProjectMembership[]
   link?: string
 }
 
@@ -45,7 +45,6 @@ export default function Card({ title, categories, description, owner, location, 
                     return (
                       <AvatarIcon
                         key={member.id}
-                        username={member.person?.name ?? member.company?.name ?? ''}
                         className={clsx('h-10 w-10 border-2 border-white bg-black text-white', stackOrder[i], i > 0 && 'ms-1')}
                       />
                     )
@@ -63,7 +62,7 @@ export default function Card({ title, categories, description, owner, location, 
               </div>}
             {owner !== undefined &&
               <div className="flex items-center gap-2">
-                <AvatarIcon username={owner} className="bg-black text-white" />
+                <AvatarIcon className="bg-black text-white" />
                 <div className="flex flex-col">
                   <h5 className="text-sm font-bold">{owner}</h5>
                   <small className="-mt-1 text-xs">{location}</small>

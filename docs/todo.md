@@ -30,13 +30,6 @@
 - Añadir backups.
 - Signup con Google.
 - Corregir dropdown de notificaciones que se buguea un poco en responsive (transiciones algo bruscas).
+- Mecanismo para destacar ofertas y equipo mediante suscripción.
 - Ocular aside en mobile por defecto.
-
-# Ideas
-
-- Añadir opcion de registrar Category, Grade, Location, Skill y Job si no existen.
-- Opciones de ver, editar y eliminar como un overlay en el elemento al hacer hover.
-- Mostrar un popup al hacer hover en los avatares de los miembros en /projects.
-- Fechas de entrega en tareas y subtareas.
-- Cambiar las respuestas de redirección (NextResponse.redirect y redirect) en los Route Handlers, por respuestas "200 OK". Y en su lugar indicarle la ruta a redirigir al hook useSubmit, o a lo que sea que haga la petición fetch() a la API.
-- Actualización de campos individuales en el perfil. 
+- Añadir chartjs.

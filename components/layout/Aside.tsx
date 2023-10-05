@@ -6,6 +6,7 @@ import AsideLink from './AsideLink'
 import { useState } from 'react'
 import clsx from 'clsx'
 
+// TODO -> mover equipos a otra pestaña
 const SIDEBAR_LINKS = [
   {
     href: '/home',
@@ -100,8 +101,7 @@ export default function Aside() {
   }
 
   return (
-    <aside className={clsx({
-      'z-50 top-0 h-screen flex-col bg-white shadow-md sm:flex sm:sticky transition-all delay-150 duration-300 ease-out': true,
+    <aside className={clsx('top-0 z-50 h-screen flex-col flex-nowrap overflow-y-scroll shadow-lg transition-all delay-150 duration-300 ease-out scrollbar-thin sm:sticky sm:flex', {
       'fixed w-screen sm:w-[17.5rem]': active,
       'w-0 sm:w-20': !active,
     })}
@@ -111,8 +111,7 @@ export default function Aside() {
           <Bars3Icon className="h-6 w-6" />
         </button>
       </div>
-      <ul className={clsx({
-        'menu h-full gap-2 py-6 shadow': true,
+      <ul className={clsx('menu h-full flex-nowrap gap-2 py-6 shadow', {
         'px-8': active,
         'hidden sm:block': !active,
       })}

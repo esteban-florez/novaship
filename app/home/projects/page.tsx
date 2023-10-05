@@ -38,16 +38,19 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
 
   const personalProjects = await getProjects({
     where: {
-      team: {
-        memberships: {
-          some: {
-            OR: [
-              { companyId: id },
-              { personId: id },
-            ],
-          },
-        },
-      },
+      OR: [
+        { personId: id },
+        {
+          team: {
+            leader: {
+              OR: [
+                { personId: id },
+                { companyId: id },
+              ]
+            }
+          }
+        }
+      ]
     },
     skip,
     take,
@@ -57,14 +60,12 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
     where: {
       visibility: 'PUBLIC',
       team: {
-        memberships: {
-          some: {
-            OR: [
-              { companyId: { not: id } },
-              { personId: { not: id } },
-            ],
-          },
-        },
+        leader: {
+          OR: [
+            { personId: { not: id } },
+            { companyId: { not: id } },
+          ]
+        }
       },
     },
     skip,

@@ -1,11 +1,11 @@
-import { type ProjectWithTeamAndCategories } from '@/lib/types'
+import { type ProjectsFull } from '@/lib/types'
 import EmptyContent from '../EmptyContent'
 import Card from '../Card'
 import { includesValue } from '@/lib/utils/text'
 
 interface Props {
   search: string
-  projects: ProjectWithTeamAndCategories[]
+  projects: ProjectsFull[]
 }
 
 export default function Projects({ search, projects }: Props) {
@@ -31,7 +31,7 @@ export default function Projects({ search, projects }: Props) {
               <div className="rounded-xl border border-solid border-zinc-300 bg-white shadow">
                 <Card
                   title={project.title}
-                  members={project.team.memberships}
+                  members={project.team?.memberships}
                   description={project.description}
                   link={`/home/projects/${project.id}`}
                 />

@@ -3,7 +3,7 @@ import { type ERRORS } from './errors/reference'
 import {
   type Person, type Company, type Institute, type Category, type Skill,
   type Offer, type Location, type Project, type Task, type Participation,
-  type Membership, type Subtask, type Team, type File,
+  type Membership, type Subtask, type Team, type File, type Admin,
 } from '@prisma/client'
 import { type days } from './translations'
 
@@ -69,22 +69,17 @@ type OffersWithRelationships = Offer & {
 
 type MembershipWithRelations = Membership & {
   person: Person | null
-  company: Company | null
 }
 
 // ----------------------------------------------------------------------
 // --------------------------- Projects ---------------------------------
 // ----------------------------------------------------------------------
-type ProjectMemberships = Array<Membership & {
+type ProjectMembership = Membership & {
   person: {
     id: string
     name: string
   } | null
-  company: {
-    id: string
-    name: string
-  } | null
-}>
+}
 
 type ProjectTeam = Team & {
   memberships: Array<Membership & {
@@ -99,33 +94,44 @@ type ProjectTeam = Team & {
   }>
 }
 
-interface ProjectWithTeamAndCategories extends Project {
-  team: Team & {
+interface ProjectsFull extends Project {
+  person: Person | null
+  team: (Team & {
+    leader: Leader
     memberships: Array<Membership & {
+      person: Person
+    }>
+  }) | null
+  categories: Category[]
+}
+interface ProjectWithTeamAndCategories {
+  id: string
+  person: {
+    id: string
+    name: string
+  } | null
+  team: {
+    id: string
+    memberships: Array<{
+      id: string
       person: {
         id: string
         name: string
-      } | null
-      company: {
-        id: string
-        name: string
-      } | null
+      }
     }>
-  }
+    name: string
+  } | null
   categories: Array<{
     id: string
     title: string
   }>
+  description: string
 }
 
 interface ProjectsWithTeamCategoriesTaskAndSubtask extends Project {
   team: Team & {
-    memberships: Array<Membership & {
+    memberships: Array<{
       person: {
-        id: string
-        name: string
-      } | null
-      company: {
         id: string
         name: string
       } | null
@@ -220,3 +226,4 @@ type Schedule = Record<keyof typeof days, number[]>
 type UserWithType = (Person & { type: 'PERSON' })
 | (Company & { type: 'COMPANY' })
 | (Institute & { type: 'INSTITUTE' })
+| (Admin & { type: 'ADMIN' })

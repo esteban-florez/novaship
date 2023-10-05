@@ -137,14 +137,15 @@ export default function PageContent({ userId, offer }: Props) {
             />
           </div>
         </div>
-        <div className="card col-span-7 bg-white p-4 shadow">
+        {/* TEMPORAL DISABLED */}
+        {/* <div className="card col-span-7 bg-white p-4 shadow">
           <h2 className="text-xl font-semibold">Postulaciones - {offer.hiring.length}</h2>
           {isOwner &&
             <HiringList
               offerId={offer.id}
               hiring={offer.hiring}
             />}
-        </div>
+        </div> */}
       </section>
     </>
   )

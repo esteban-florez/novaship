@@ -12,34 +12,40 @@ datasource db {
 // --------------------------- User models ------------------------------
 // ----------------------------------------------------------------------
 model Person {
-  id          String       @id @default(cuid())
-  name        String
-  email       String       @unique
-  ci          String       @unique
-  birth       DateTime
-  gender      Gender
-  image       String?
-  phone       String       @unique
-  description String
-  employable  Boolean
-  curriculum  String?
-  schedule    Json?
-  authUser    AuthUser     @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  authUserId  String       @unique
-  location    Location     @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  locationId  String
-  memberships Membership[]
-  categories  Category[]
-  grades      Grade[]
-  skills      Skill[]
-  jobs        Job[]
-  experiences Experience[]
-  hirings     Hiring[]
-  reviews     Review[]
-  contracts   Contract[]
-  internships Internship[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id             String          @id @default(cuid())
+  name           String
+  email          String          @unique
+  ci             String          @unique
+  birth          DateTime
+  gender         Gender
+  image          String?
+  phone          String          @unique
+  description    String
+  employable     Boolean
+  curriculum     String?
+  schedule       Json?
+  authUser       AuthUser        @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authUserId     String          @unique
+  location       Location        @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  locationId     String
+  memberships    Membership[]
+  categories     Category[]
+  grades         Grade[]
+  skills         Skill[]
+  jobs           Job[]
+  experiences    Experience[]
+  hirings        Hiring[]
+  reviews        Review[]
+  contracts      Contract[]
+  internships    Internship[]
+  invitations    Invitation[]
+  projects       Project[]
+  leaderships    Leader[]
+  participations Participation[]
+  tasks          Task[]
+  messages       Message[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
   // deletedAt   DateTime?
 }
 
@@ -58,10 +64,10 @@ model Company {
   locationId    String
   offers        Offer[]
   reviews       Review[]
-  membership    Membership[]
-  contracts     Contract[]
   internships   Internship[]
   vacants       Vacant[]
+  leaderships   Leader[]
+  messages      Message[]
   verifiedAt    DateTime?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
@@ -92,33 +98,58 @@ model Institute {
 // --------------------------- Team models ------------------------------
 // ----------------------------------------------------------------------
 model Team {
-  id          String       @id @default(cuid())
-  name        String
-  description String       @db.Text
-  projects    Project[]
-  memberships Membership[]
-  contracts   Contract[]
-  categories  Category[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id            String       @id @default(cuid())
+  name          String
+  description   String       @db.Text
+  featuredUntil DateTime?
+  leader        Leader       @relation(fields: [leaderId], references: [id])
+  leaderId      String       @unique
+  projects      Project[]
+  invitations   Invitation[]
+  memberships   Membership[]
+  contracts     Contract[]
+  categories    Category[]
+  messages      Message[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  // deletedAt   DateTime?
+}
+
+model Leader {
+  id        String   @id @default(cuid())
+  person    Person?  @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  personId  String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  companyId String?
+  team      Team?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // deletedAt   DateTime?
+}
+
+model Invitation {
+  id         String      @unique @default(cuid())
+  status     Status
+  membership Membership?
+  team       Team        @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  teamId     String
+  person     Person      @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  personId   String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
   // deletedAt   DateTime?
 }
 
 model Membership {
-  id             String          @id @default(cuid())
-  isLeader       Boolean         @default(false)
-  confirmed      Boolean         @default(false)
-  company        Company?        @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  companyId      String?
-  person         Person?         @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  personId       String?
-  team           Team            @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  teamId         String
-  files          File[]
-  participations Participation[]
-  messages       Message[]
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  id           String     @id @default(cuid())
+  person       Person     @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  personId     String
+  team         Team       @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  teamId       String
+  invitation   Invitation @relation(fields: [invitationId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  invitationId String     @unique
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
   // deletedAt      DateTime?
 }
 
@@ -132,10 +163,8 @@ model Contract {
   projectId   String?    @unique
   team        Team       @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   teamId      String
-  person      Person?    @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  personId    String?
-  company     Company?   @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  companyId   String?
+  person      Person     @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  personId    String
   features    Feature[]
   questions   Question[]
   createdAt   DateTime   @default(now())
@@ -175,8 +204,10 @@ model Project {
   image       String?    @unique
   preview     String?    @unique
   visibility  Visibility
-  team        Team       @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  teamId      String
+  person      Person?    @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  personId    String?
+  team        Team?      @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  teamId      String?
   contract    Contract?
   categories  Category[]
   tasks       Task[]
@@ -194,6 +225,8 @@ model Task {
   status         TaskStatus?
   project        Project         @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   projectId      String
+  person         Person          @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  personId       String
   subtasks       Subtask[]
   participations Participation[]
   messages       Message[]
@@ -229,27 +262,24 @@ model Revision {
 }
 
 model Participation {
-  id           String     @id @default(cuid())
-  isLeader     Boolean    @default(false)
-  membership   Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  membershipId String
-  task         Task       @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  taskId       String
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  id        String   @id @default(cuid())
+  person    Person   @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  personId  String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  taskId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   // deletedAt    DateTime?
 }
 
 model File {
-  id           String     @id @default(cuid())
-  title        String
-  src          String
-  project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  projectId    String
-  membership   Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  membershipId String
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  id        String   @id @default(cuid())
+  title     String
+  src       String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  projectId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   // deletedAt    DateTime?
 }
 
@@ -257,26 +287,27 @@ model File {
 // -------------------------- Offer models ------------------------------
 // ----------------------------------------------------------------------
 model Offer {
-  id          String     @id @default(cuid())
-  title       String
-  description String     @db.Text
-  mode        Mode
-  hours       Int?
-  schedule    Schedule
-  salary      Float
-  limit       Int
-  company     Company    @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  companyId   String
-  location    Location   @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  locationId  String
-  job         Job        @relation(fields: [jobId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  jobId       String
-  categories  Category[]
-  skills      Skill[]
-  hiring      Hiring[]
-  expiresAt   DateTime?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id            String     @id @default(cuid())
+  title         String
+  description   String     @db.Text
+  mode          Mode
+  hours         Int?
+  schedule      Schedule
+  salary        Float
+  limit         Int
+  company       Company    @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  companyId     String
+  location      Location   @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  locationId    String
+  job           Job        @relation(fields: [jobId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  jobId         String
+  categories    Category[]
+  skills        Skill[]
+  hiring        Hiring[]
+  expiresAt     DateTime?
+  featuredUntil DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
   // deletedAt   DateTime?
 }
 
@@ -396,16 +427,20 @@ model Review {
 // --------------------------- Misc models ------------------------------
 // ----------------------------------------------------------------------
 model Message {
-  id           String     @id @default(cuid())
-  content      String     @db.Text
-  membership   Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  membershipId String
-  project      Project?   @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  projectId    String?
-  task         Task?      @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  taskId       String?
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  person    Person?  @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  personId  String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  companyId String?
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  teamId    String
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  projectId String?
+  task      Task?    @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  taskId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   // deletedAt    DateTime?
 }
 
@@ -479,10 +514,21 @@ model AuthUser {
   person       Person?
   company      Company?
   institute    Institute?
+  admin        Admin?
   auth_session AuthSession[]
   auth_key     AuthKey[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  adminId      String?
+}
+
+model Admin {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  image      String
+  authUser   AuthUser @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authUserId String   @unique
 }
 
 model AuthSession {
@@ -544,6 +590,7 @@ enum UserType {
   PERSON
   COMPANY
   INSTITUTE
+  ADMIN
 }
 
 enum Stage {

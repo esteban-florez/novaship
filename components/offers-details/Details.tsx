@@ -43,7 +43,7 @@ export default function Details({ id, isOwner, title, description, expiresAt, ca
             <p className="text-sm font-semibold">{expiresAtDate}</p>
           </div>
           <img
-            src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            src="/card.webp"
             alt="Imagen de fondo carrusel"
             className="h-32 w-full select-none rounded-t-lg object-cover md:h-44 lg:h-auto lg:rounded-l-lg"
           />
@@ -83,14 +83,15 @@ export default function Details({ id, isOwner, title, description, expiresAt, ca
                       className="hidden"
                       register={register}
                     />
-                    <Button
+                    {/* TEMPORAL DISABLED */}
+                    {/* <Button
                       style="DEFAULT"
                       color="PRIMARY"
                       hover="WHITE"
                     >
                       <PencilIcon className="h-4 w-4" />
                       ¡Aplicar!
-                    </Button>
+                    </Button> */}
                   </form>}
 
                 {isOwner &&

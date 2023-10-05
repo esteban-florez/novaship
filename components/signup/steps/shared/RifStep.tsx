@@ -3,7 +3,7 @@ import { SignUpContext } from '../../SignUpContext'
 import ImageInput from '@/components/forms/inputs/ImageInput'
 
 export default function RifStep() {
-  const { register, errors, goBack, goNext, trigger } = useContext(SignUpContext)
+  const { register, errors, goBack, goNext, trigger, userType } = useContext(SignUpContext)
 
   async function handleNext() {
     const valid = await trigger('certification')
@@ -19,7 +19,7 @@ export default function RifStep() {
         Sube una <span className="text-primary">imagen</span> de tu <span className="text-secondary">RIF</span>
       </h2>
       <p className="text-center">
-        Sube una imagen de tu RIF para verificar el registro de tu empresa. Asegúrate que la imagen sea clara y legible.
+        Sube una imagen de tu RIF para verificar el registro de tu {userType === 'INSTITUTE' ? 'institución' : 'empresa'}. Asegúrate que la imagen sea clara y legible.
       </p>
       <div className="mx-auto w-full pt-4">
         <ImageInput name="certification" register={register} errors={errors} preview={false} />

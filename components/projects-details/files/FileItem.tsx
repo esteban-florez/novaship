@@ -30,14 +30,13 @@ export default function FileItem({ projectId, file }: Props) {
               return (
                 <AvatarIcon
                   key={participation.id}
-                  username="Pa"
                   className={clsx('h-10 w-10 border-2 border-white bg-black text-white', stackOrder[i], i > 0 && 'ms-1')}
                 />
               )
             }
             return (
               <div className="flex flex-row gap-1" key={participation.id}>
-                <AvatarIcon username="pa" className="h-6 w-6" />
+                <AvatarIcon className="h-6 w-6" />
                 <div className="flex flex-col">
                   <p className="text-base">{participation.id}</p>
                   <p className="text-sm">Hace {participation.updatedAt.getDate()} días</p>
