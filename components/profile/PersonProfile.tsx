@@ -1,6 +1,7 @@
-// import { ArrowUpTrayIcon, EyeIcon, PlusIcon } from '@heroicons/react/24/outline'
-import { type Review, type Person } from '@prisma/client'
-// import Button from '../Button'
+import { ArrowUpTrayIcon, ChevronDoubleRightIcon, EnvelopeOpenIcon, EyeIcon, PencilIcon, PlusIcon, MapPinIcon, PhoneIcon, DocumentTextIcon, FireIcon, ClipboardIcon } from '@heroicons/react/24/outline'
+import { type Review, type Person, type Membership } from '@prisma/client'
+import Button from '../Button'
+import EmptyContent from '../EmptyContent'
 
 interface Props {
   person: (Person & {
@@ -25,6 +26,7 @@ interface Props {
       id: string
       title: string
     }>
+    memberships: Membership[]
     skills: Array<{
       id: string
       title: string
@@ -39,93 +41,109 @@ export default function PersonProfile({ person }: Props) {
         <div className="col-span-9">
           <div className="h-16 w-full rounded-t-xl bg-neutral" />
           <div className="card rounded-t-none bg-white p-4 pt-2 shadow-md">
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <img alt="foto de perfil" src="/icon.jpg" className="-mt-12 h-24 w-24 rounded-md border border-neutral-300 bg-neutral-200" />
-              <div className="flex flex-col">
-                <p className="text-xl font-bold">{person?.name}</p>
-                {person?.grades.map(grade => {
-                  return (
-                    <p className="-mt-2 text-base font-bold text-primary after:content-[','] last:after:content-[]" key={grade.id}>{grade.title}</p>
-                  )
-                })}
+              <div className="flex w-full items-center justify-between">
+                <div className="flex flex-col">
+                  <p className="text-2xl font-bold">{person?.name}</p>
+                  {person?.grades.map(grade => {
+                    return (
+                      <p className="-mt-1.5 text-base font-bold text-primary after:content-[','] last:after:content-[]" key={grade.id}>{grade.title}</p>
+                    )
+                  })}
+                </div>
+                <Button url="#" color="SECONDARY" hover="WHITE">
+                  <PencilIcon className="h-5 w-5" />
+                  Editar perfil
+                </Button>
               </div>
             </div>
           </div>
         </div>
-        <div className="col-span-3">
-          <div className="card bg-white shadow-md">Datos del usuario</div>
+        <div className="card col-span-3 gap-3 bg-white p-4 text-base shadow-md">
+          <div className="flex flex-col">
+            <div className="flex items-center gap-1">
+              <DocumentTextIcon className="h-6 w-6 text-neutral-700" />
+              <h4 className="text-xl font-bold">Detalles</h4>
+            </div>
+            <p>{person?.description}</p>
+          </div>
+          <div className="flex flex-col">
+            <div className="flex items-center gap-1">
+              <FireIcon className="h-6 w-6 text-neutral-700" />
+              <h4 className="text-xl font-bold">Habilidades</h4>
+            </div>
+            <ul className="mt-1 text-base leading-none">
+              {person?.skills.map(skill => {
+                return (
+                  <li className="my-1 flex items-center gap-1" key={skill.id}>
+                    <ChevronDoubleRightIcon className="h-4 w-4" />
+                    {skill.title}
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+          <div className="flex flex-col">
+            <div className="mb-2 flex items-center gap-1">
+              <ClipboardIcon className="h-6 w-6 text-neutral-700" />
+              <h4 className="text-xl font-bold">Curriculum</h4>
+            </div>
+            {person?.curriculum === null
+              ? (
+                <div className="flex w-full flex-col gap-2">
+                  <Button url="#" style="TAB" color="NEUTRAL" hover="WHITE">
+                    <PlusIcon className="h-5 w-5" />
+                    <p className="text-sm">Crear curriculum</p>
+                  </Button>
+                  <Button url="#" style="TAB" color="NEUTRAL" hover="WHITE">
+                    <ArrowUpTrayIcon className="h-5 w-5" />
+                    <p className="text-sm">Subir curriculum</p>
+                  </Button>
+                </div>
+                )
+              : (
+                <Button url="#" color="PRIMARY" hover="WHITE">
+                  <EyeIcon className="h-5 w-5" />
+                  Ver curriculum
+                </Button>
+                )}
+            <div className="divider" />
+            <h4 className="mb-2 text-xl font-bold">Información personal</h4>
+            <ul className="line-clamp-2 flex flex-col gap-1.5 text-base leading-none">
+              <li className="flex items-center gap-2">
+                <EnvelopeOpenIcon className="h-6 w-6" />
+                <p>{person?.email}</p>
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPinIcon className="h-6 w-6" />
+                <p>{person?.location.title}</p>
+              </li>
+              <li className="flex items-center gap-2">
+                <PhoneIcon className="h-6 w-6" />
+                <p>{person?.phone}</p>
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="col-span-6 flex flex-col gap-4">
           {/* TODO -> Poner que se pueda ver por botones como las ofertas */}
-          <div className="card bg-white shadow-md">Proyectos (2)</div>
-          <div className="card bg-white shadow-md">Reseñas</div>
-        </div>
-      </div>
-      {/* <div className="grid grid-cols-9 gap-4 px-8 py-4">
-        <div className="col-span-3">
-          <div className="relative">
-            <div className="h-20 w-full rounded-t-xl bg-primary object-cover" />
-            <img src="/onda-horizontal.webp" alt="Onda-horizontal" className="absolute bottom-0 w-full" />
-          </div>
-          <div className="card rounded-t-none bg-white p-4 shadow-md">
-            <div className="-mt-16 flex flex-col items-center gap-2 text-center">
-              <img alt="foto de perfil" ref={person?.image} className="h-20 w-20 rounded-md border border-neutral-300 bg-neutral-200" />
-              {person?.grades === null && <p className="text-xl font-bold">{person?.name}</p>}
-              {person?.grades.map(grade => {
-                if (person.grades.length > 1) {
-                  return (
-                    <div className="flex flex-col items-center gap-1" key={grade.id}>
-                      <p className="text-xl font-bold">{person?.name}</p>
-                      <p className="text-base text-secondary after:content-[','] last:after:content-[]">{grade.title}</p>
-                    </div>
-                  )
-                }
-                return (
-                  <div className="flex items-center gap-1" key={grade.id}>
-                    <p className="text-xl font-bold">{person?.name}</p>
-                    <p className="pt-1 text-base font-bold text-neutral/60">· {grade.title}</p>
-                  </div>
-                )
-              })}
-              <p className="-mt-4 text-base">{person?.email}</p>
-              <p className="-mt-1 text-base">{person?.description}</p>
-              <div className="w-full">
-                {person?.curriculum === null
-                  ? (
-                    <div className="flex w-full flex-col gap-2 px-4">
-                      <Button url="#" color="SECONDARY" hover="WHITE">
-                        <PlusIcon className="h-5 w-5" />
-                        Crear curriculum
-                      </Button>
-                      <Button url="#" color="SECONDARY" hover="WHITE">
-                        <ArrowUpTrayIcon className="h-5 w-5" />
-                        Subir curriculum
-                      </Button>
-                    </div>
-                    )
-                  : (
-                    <Button url="#" color="PRIMARY" hover="WHITE">
-                      <EyeIcon className="h-5 w-5" />
-                      Ver curriculum
-                    </Button>
-                    )}
-              </div>
-            </div>
-            <div className="divider my-1" />
-            <p className="text-sm">{person?.location.title}</p>
-            {person?.skills.map(skill => {
+          <div className="card bg-white shadow-md">
+            {person?.memberships.map(membership => {
+              if (membership.isLeader) {
+                <div className="card bg-white shadow-md">Reseñas</div>
+              }
               return (
-                <span key={skill.id}>{skill.title}</span>
+                <EmptyContent key={membership.id} title="No hay proyectos en este momento" />
               )
             })}
-            <span>schedule</span>
+          </div>
+          <div className="card bg-white shadow-md">
+            {/* TODO -> No entiendo como usar eto, cuando lo pongo en null no tal pero entonces tiene un coso y cuando le hago map no saca los datos no c */}
+            {person?.reviews !== null && <EmptyContent title="No hay reseñas en este momento" />}
           </div>
         </div>
-        <div className="col-span-6 flex flex-col gap-3">
-          <div className="card rounded-lg bg-white p-4 shadow-md">ola</div>
-          <div className="card rounded-lg bg-white p-4 shadow-md">ola</div>
-        </div>
-      </div> */}
+      </div>
     </>
   )
 }
