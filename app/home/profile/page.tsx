@@ -45,6 +45,15 @@ export default async function ProfilePage() {
             title: true,
           },
         },
+        memberships: {
+          where: {
+            isLeader: true,
+            OR: [
+              { companyId: id },
+              { personId: id },
+            ],
+          },
+        },
         reviews: true,
         skills: {
           select: {
