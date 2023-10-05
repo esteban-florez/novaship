@@ -4,7 +4,7 @@ type Props = React.PropsWithChildren<{
 
 export default function Dropdown({ label, children }: Props) {
   return (
-    <div className="w-full sm:w-auto dropdown-end dropdown z-20">
+    <div className="w-full sm:w-auto dropdown-end dropdown">
       <label tabIndex={0} className="bg-white border-neutral-400 hover:border-neutral-400 shadow-md btn sm:btn-wide btn-block">
         <button>{label}</button>
       </label>
