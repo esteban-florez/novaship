@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, Bars3Icon, ListBulletIcon, GlobeAltIcon, StarIcon, UsersIcon, BookmarkIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 import AsideLink from './AsideLink'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 
 // TODO -> mover equipos a otra pestaña
@@ -85,12 +85,15 @@ const SIDEBAR_LINKS = [
   },
 ]
 
-// TODO -> transicion mas suave
 // TODO -> añadir filtro a los links
 // TODO -> mejorar los submenus
 export default function Aside() {
-  const [active, setActive] = useState(window.innerWidth > 768)
+  const [active, setActive] = useState(true)
   const pathname = usePathname()
+
+  useEffect(() => {
+    setActive(window.innerWidth > 768)
+  }, [])
 
   const handleClick = () => {
     setActive(window.innerWidth > 768)
