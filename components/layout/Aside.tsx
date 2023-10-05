@@ -7,6 +7,7 @@ import { useState } from 'react'
 import clsx from 'clsx'
 
 // TODO -> mover equipos a otra pestaña
+// TODO -> arreglar burger button en mobile
 const SIDEBAR_LINKS = [
   {
     href: '/home',
@@ -35,7 +36,7 @@ const SIDEBAR_LINKS = [
       },
       {
         href: '/home/offers?filter=suggested',
-        title: 'Aplicadas',
+        title: 'Sugeridas',
         icon: <StarIcon className="h-6 w-6" />,
       },
     ],
@@ -88,11 +89,11 @@ const SIDEBAR_LINKS = [
 // TODO -> añadir filtro a los links
 // TODO -> mejorar los submenus
 export default function Aside() {
-  const [active, setActive] = useState(true)
+  const [active, setActive] = useState(window.innerWidth > 768)
   const pathname = usePathname()
 
   const handleClick = () => {
-    window.innerWidth > 768 ? setActive(true) : setActive(false)
+    setActive(window.innerWidth > 768)
   }
 
   const handleActivelink = (link: string) => {
