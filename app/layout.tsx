@@ -37,7 +37,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={clsx('bg-white', ubuntu.className)} data-theme="light">
-      <body className="">
+      <body className="scrollbar">
         <Alert>
           {children}
         </Alert>

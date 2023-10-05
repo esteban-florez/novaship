@@ -1,7 +1,3 @@
-import Link from 'next/link'
-
-// DEV -> esta super bug hay que revisarlo mas a detalle
-// No agarra los breakpoints correctamente
 export default function NotFound() {
   return (
     <main className="device-height flex-center">
@@ -12,7 +8,9 @@ export default function NotFound() {
         <section className="px-4">
           <h2 className="text-balance text-2xl font-bold">Ups... Parece que hubo un error.</h2>
           <p className="font-semibold text-neutral-600">La página a la que está intentando acceder no existe.</p>
-          <Link className="btn-primary btn-block btn mx-auto mt-5" href="/">Volver al inicio</Link>
+          <a className="btn-primary btn-block btn mx-auto mt-5" href="/home">
+            Volver al inicio
+          </a>
         </section>
       </div>
     </main>
