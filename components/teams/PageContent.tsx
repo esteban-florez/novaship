@@ -2,15 +2,16 @@
 
 import Link from 'next/link'
 import PageTitle from '../PageTitle'
-import { PlusIcon } from '@heroicons/react/24/outline'
+import { BriefcaseIcon, ListBulletIcon, PlusIcon } from '@heroicons/react/24/outline'
 import Pagination from '../Pagination'
 import { type Team } from '@prisma/client'
 import Card from '../Card'
-import PageNav from './PageNav'
 import Button from '../Button'
 import { type TeamsTab } from '@/lib/types'
 import { useState } from 'react'
 import { includesValue } from '@/lib/utils/text'
+import PageNav from '../PageNav'
+import clsx from 'clsx'
 interface Props {
   myTeams: Team[]
   allTeams: Team[]
@@ -25,6 +26,21 @@ export default function PageContent({ filter, myTeams, allTeams, pageNumber, nex
     all: allTeams,
     personal: myTeams,
   }
+  const TEAMS_TAB_TRANSLATION = {
+    all: 'Todos',
+    personal: 'Mis equipos',
+  }
+  const links = [{
+    title: 'all',
+    content: 'Todos',
+    icon: <ListBulletIcon className="h-5 w-5" />,
+    query: 'all',
+  }, {
+    title: 'personal',
+    content: 'Mis Equipos',
+    icon: <BriefcaseIcon className="h-5 w-5" />,
+    query: 'personal',
+  }]
 
   const handleSearch = (value: string) => {
     setSearch(value)
@@ -45,11 +61,23 @@ export default function PageContent({ filter, myTeams, allTeams, pageNumber, nex
           </Button>
         </Link>
       </PageTitle>
-      <PageNav
-        search={search}
-        onSearch={handleSearch}
-        filter={filter}
-      />
+      <PageNav dropdownLabel={`Categorías - ${TEAMS_TAB_TRANSLATION[filter as TeamsTab]}`} search={search} onSearch={setSearch}>
+        {links.map((link) => {
+          return (
+            <Link
+              key={link.title}
+              href={{
+                pathname: '/home/teams',
+                query: { filter: link.query },
+              }}
+              className={clsx('btn', link.title === filter ? 'btn-primary hover:btn-ghost' : 'hover:btn-primary')}
+            >
+              {link.icon}
+              {link.content}
+            </Link>
+          )
+        })}
+      </PageNav>
       <section className="mx-auto w-full columns-1 gap-4 rounded-lg p-4
       md:columns-2 lg:columns-3 xl:rounded-tl-none"
       >
