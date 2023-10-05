@@ -21,7 +21,7 @@ export default function TestForm({ locations }: Props) {
     serverErrors,
     control,
     formState: { errors },
-  } = useSubmit({ schema, refreshOnSuccess: true })
+  } = useSubmit({ schema })
 
   return (
     <form className="p-8" action="/api/test" method="POST" onSubmit={handleSubmit}>

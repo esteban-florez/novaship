@@ -15,7 +15,7 @@ export default function SearchInput({ searchText, setSearchText }: Props) {
         placeholder="Buscar"
         value={searchText}
         onChange={onChange}
-        className="input-bordered input input-sm w-full rounded-full bg-base-300 shadow-inner outline-none transition-colors focus:ring focus:ring-primary sm:w-auto"
+        className="input-bordered input input-sm w-full rounded-full bg-base-300 shadow-inner outline-none transition-all focus:ring focus:ring-primary sm:w-auto"
       />
     </>
   )

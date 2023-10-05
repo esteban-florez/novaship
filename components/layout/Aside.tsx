@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, Bars3Icon, ListBulletIcon, GlobeAltIcon, StarIcon, UsersIcon, BookmarkIcon } from '@heroicons/react/24/outline'
+import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, Bars3Icon, ListBulletIcon, GlobeAltIcon, StarIcon, UsersIcon, BookmarkIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 import AsideLink from './AsideLink'
 import { useState } from 'react'
 import clsx from 'clsx'
@@ -72,16 +72,16 @@ const SIDEBAR_LINKS = [
       },
     ],
   },
-  // {
-  //   href: '/home/teams',
-  //   title: 'Equipos',
-  //   icon: <UserGroupIcon className="h-6 w-6" />,
-  // },
-  // {
-  //   href: '/home/admin',
-  //   title: 'Administración',
-  //   icon: <ShieldCheckIcon className="h-6 w-6" />,
-  // },
+  {
+    href: '/home/teams',
+    title: 'Equipos',
+    icon: <UserGroupIcon className="h-6 w-6" />,
+  },
+  {
+    href: '/home/admin',
+    title: 'Administración',
+    icon: <ShieldCheckIcon className="h-6 w-6" />,
+  },
 ]
 
 // TODO -> transicion mas suave
@@ -101,7 +101,7 @@ export default function Aside() {
   }
 
   return (
-    <aside className={clsx('top-0 z-50 h-screen flex-col flex-nowrap overflow-y-scroll shadow-lg transition-all delay-150 duration-300 ease-out scrollbar-thin sm:sticky sm:flex', {
+    <aside className={clsx('top-0 z-50 h-screen flex-col flex-nowrap overflow-y-scroll shadow-lg transition-all delay-150 duration-300 ease-out scrollbar-thin scrollbar-thumb-neutral-300/75 sm:sticky sm:flex', {
       'fixed w-screen sm:w-[17.5rem]': active,
       'w-0 sm:w-20': !active,
     })}

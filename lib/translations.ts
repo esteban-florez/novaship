@@ -34,6 +34,7 @@ export const userTypes = {
   PERSON: 'Persona natural',
   COMPANY: 'Empresa',
   INSTITUTE: 'Institución',
+  ADMIN: 'Administrador',
 } as const
 
 export const visibilities = {

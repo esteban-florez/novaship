@@ -30,6 +30,10 @@ export default function useDeleteRequest() {
         return
       }
 
+      if (response.ok) {
+        router.refresh()
+      }
+
       const body = await response.json() as ApiResponseBody
 
       setResult(body)
