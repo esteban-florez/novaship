@@ -1,93 +1,19 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, Bars3Icon, ListBulletIcon, GlobeAltIcon, StarIcon, UsersIcon, BookmarkIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon } from '@heroicons/react/24/outline'
 import AsideLink from './AsideLink'
 import { useState } from 'react'
 import clsx from 'clsx'
 
-// TODO -> mover equipos a otra pestaña
-const SIDEBAR_LINKS = [
-  {
-    href: '/home',
-    title: 'Inicio',
-    icon: <HomeIcon className="h-6 w-6" />,
-  },
-  {
-    href: '/home/internships',
-    title: 'Pasantías',
-    icon: <AcademicCapIcon className="h-6 w-6" />,
-  },
-  {
-    href: '/home/offers',
-    title: 'Ofertas',
-    icon: <BriefcaseIcon className="h-6 w-6" />,
-    submenu: [
-      {
-        href: '/home/offers?filter=all',
-        title: 'Todas',
-        icon: <GlobeAltIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/offers?filter=applied',
-        title: 'Aplicadas',
-        icon: <BookmarkIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/offers?filter=suggested',
-        title: 'Aplicadas',
-        icon: <StarIcon className="h-6 w-6" />,
-      },
-    ],
-  },
-  {
-    href: '/home/projects',
-    title: 'Proyectos',
-    icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
-    submenu: [
-      {
-        href: '/home/teams?filter=all',
-        title: 'Equipos',
-        icon: <UserGroupIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/teams?filter=personal',
-        title: 'Mis equipos',
-        icon: <UsersIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/projects?filter=all',
-        title: 'Todos',
-        icon: <GlobeAltIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/projects?filter=personal',
-        title: 'Personales',
-        icon: <ListBulletIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/projects?filter=suggested',
-        title: 'Sugeridos',
-        icon: <StarIcon className="h-6 w-6" />,
-      },
-    ],
-  },
-  {
-    href: '/home/teams',
-    title: 'Equipos',
-    icon: <UserGroupIcon className="h-6 w-6" />,
-  },
-  {
-    href: '/home/admin',
-    title: 'Administración',
-    icon: <ShieldCheckIcon className="h-6 w-6" />,
-  },
-]
+type Props = React.PropsWithChildren<{
+  links: SidebarLinkWithSubmenu[]
+}>
 
 // TODO -> transicion mas suave
 // TODO -> añadir filtro a los links
 // TODO -> mejorar los submenus
-export default function Aside() {
+export default function Aside({ links }: Props) {
   const [active, setActive] = useState(true)
   const pathname = usePathname()
 
@@ -116,7 +42,7 @@ export default function Aside() {
         'hidden sm:block': !active,
       })}
       >
-        {SIDEBAR_LINKS.map(link => (
+        {links.map(link => (
           <AsideLink
             key={link.href}
             link={link}
