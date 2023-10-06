@@ -26,16 +26,19 @@ export default function AsideLink({ link, active, iconOnly, onClick }: Props) {
   return (
     <li className="rounded-l-xl font-bold even:sm:my-2">
       {link.submenu === undefined &&
-        <Link href={link.href} onClick={onClick} className={`py-4 ${iconOnly ? '' : 'mx-auto'} ${active ? 'active pointer-events-auto cursor-pointer hover:active' : ''}`}>
+        <Link href={link.href} onClick={onClick} className={`rounded-r-none px-6 py-4 ${active ? 'pointer-events-auto cursor-pointer bg-base-300 px-8 hover:bg-primary' : ''}`}>
           {link.icon}
           <span className={clsx(iconOnly ? '' : 'hidden')}>{link.title}</span>
         </Link>}
       {'submenu' in link &&
+        // TODO -> Hacer que se pueda ir al listado sin tener que abrir el submenu
         <>
-          <div onClick={() => { setOpenDropdown(!openDropdown) }} className={`py-4 ${iconOnly ? '' : 'mx-auto'} ${active ? 'active hover:active' : ''}`}>
-            {link.icon}
-            <span className={clsx(iconOnly ? '' : 'hidden')}>{link.title}</span>
-            <ChevronDownIcon className="h-6 w-6 self-end" />
+          <div className={`flex items-center justify-between rounded-r-none px-6 py-2 ${active ? 'bg-base-300 pl-8' : ''}`}>
+            <Link href={link.href} className="flex gap-2 py-2">
+              {link.icon}
+              <span className={clsx(iconOnly ? '' : 'hidden')}>{link.title}</span>
+            </Link>
+            <ChevronDownIcon onClick={() => { setOpenDropdown(!openDropdown) }} className="h-10 w-10 self-end py-2" />
           </div>
           <ul className={clsx({
             'transition-all delay-75 duration-75': true,
@@ -46,7 +49,7 @@ export default function AsideLink({ link, active, iconOnly, onClick }: Props) {
             {link.submenu?.map(item => {
               return (
                 <li key={item.title} className="rounded-l-xl font-bold first:mt-4 even:sm:my-2">
-                  <Link href={item.href} onClick={onClick} className={`${iconOnly ? '' : 'mx-auto'} ${active ? ' pointer-events-auto cursor-pointer' : ''}`}>
+                  <Link href={item.href} onClick={onClick} className={`rounded-r-none ${active ? ' pointer-events-auto cursor-pointer' : ''}`}>
                     {item.icon}
                     <span className={clsx(iconOnly ? '' : 'hidden', 'text-sm')}>{item.title}</span>
                   </Link>
