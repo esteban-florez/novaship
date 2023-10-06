@@ -4,8 +4,8 @@ import { usePathname } from 'next/navigation'
 import {
   HomeIcon, BriefcaseIcon, AcademicCapIcon,
   ClipboardDocumentListIcon, UserGroupIcon,
-  Bars3Icon, ListBulletIcon, GlobeAltIcon,
-  StarIcon, UsersIcon, ShieldCheckIcon, PlusIcon,
+  Bars3Icon, ListBulletIcon, ShieldCheckIcon,
+  StarIcon, UsersIcon, PlusIcon, GlobeAltIcon,
 } from '@heroicons/react/24/outline'
 import AsideLink from './AsideLink'
 import { useState } from 'react'

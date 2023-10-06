@@ -13,7 +13,6 @@ interface UseSubmitOptions<Fields> {
   schema: ZodType
   asFormData?: boolean
   defaultValues?: DefaultValues<Fields>
-  refreshOnSuccess?: boolean
   append?: object
   method?: HTTP_METHOD
   onSuccess?: () => void | Promise<void>
@@ -22,8 +21,8 @@ interface UseSubmitOptions<Fields> {
 
 // TODO -> quizás esto está demasiado grande, maneja muchas cosas. Quizás sea más conveniente dividrlo en dos: componente <Form> que tenga el envío de la petición y muestre los resultados, etc. Y el hook useForm normalito que le pase las cosas al componente Form
 export default function useSubmit<Fields extends FieldValues>({
-  method, append, schema, defaultValues, asFormData = false,
-  onSuccess, onError, refreshOnSuccess = false,
+  method, append, schema, defaultValues,
+  asFormData = false, onSuccess, onError,
 }: UseSubmitOptions<Fields>) {
   const [showAlert, setShowAlert] = useState(true)
   const [showErrors, setShowErrors] = useState(true)
@@ -74,9 +73,7 @@ export default function useSubmit<Fields extends FieldValues>({
       const body = await response.json() as ApiResponseBody
 
       if (response.ok) {
-        if (refreshOnSuccess) {
-          router.refresh()
-        }
+        router.refresh()
 
         if (onSuccess !== undefined) {
           void onSuccess()

@@ -1,10 +1,10 @@
 import { type UseSubmitResult } from '@/lib/types'
 import Toast from '../Toast'
 
-const generic = 'Hubo un error al envíar los datos, por favor intenta de nuevo...'
+const generic = 'Hubo un error inesperado, por favor intenta de nuevo...'
 
 const messages: Record<string, string> = {
-  SUCCESS: '¡Los datos se enviaron correctamente!',
+  SUCCESS: '¡Operación exitosa!',
   VALIDATION: 'Existe un error en los datos, por favor verifícalos...',
   SERVER: 'Hubo un error en el servidor, intenta de nuevo más tarde...',
   RESPONSE_SYNTAX: generic,

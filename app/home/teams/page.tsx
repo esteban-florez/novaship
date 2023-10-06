@@ -26,8 +26,8 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
           leader: {
             OR: [
               { personId: { not: id } },
-              { companyId: {not: id } }
-            ]
+              { companyId: { not: id } },
+            ],
           },
         },
         {
@@ -35,12 +35,12 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
             some: {
               personId: { not: id },
               invitation: {
-                status: 'ACCEPTED'
-              }
-            }
-          }
-        }
-      ]
+                status: 'ACCEPTED',
+              },
+            },
+          },
+        },
+      ],
     },
     skip,
     take,
@@ -52,8 +52,8 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
           leader: {
             OR: [
               { personId: id },
-              { companyId: id }
-            ]
+              { companyId: id },
+            ],
           },
         },
         {
@@ -61,12 +61,12 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
             some: {
               personId: id,
               invitation: {
-                status: 'ACCEPTED'
-              }
-            }
-          }
-        }
-      ]
+                status: 'ACCEPTED',
+              },
+            },
+          },
+        },
+      ],
     },
     skip,
     take,
