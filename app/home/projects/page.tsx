@@ -46,11 +46,11 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
               OR: [
                 { personId: id },
                 { companyId: id },
-              ]
-            }
-          }
-        }
-      ]
+              ],
+            },
+          },
+        },
+      ],
     },
     skip,
     take,
@@ -64,8 +64,8 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
           OR: [
             { personId: { not: id } },
             { companyId: { not: id } },
-          ]
-        }
+          ],
+        },
       },
     },
     skip,

@@ -12,7 +12,6 @@ import Collapse from '../Collapse'
 import AvatarInfo from './AvatarInfo'
 import { type Offer, type Status } from '@prisma/client'
 import { getExpirationDiff } from '@/lib/validation/expiration-dates'
-import HiringList from './HiringList'
 import PageTitle from '../PageTitle'
 
 interface Props {

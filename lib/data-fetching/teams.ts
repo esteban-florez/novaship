@@ -51,7 +51,6 @@ export const getTeam = cache(async (id: string) => {
           },
         },
         categories: true,
-        contracts: true,
         projects: {
           include: {
             categories: true,

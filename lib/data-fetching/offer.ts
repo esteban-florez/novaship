@@ -69,7 +69,6 @@ export const getOffer = cache(async ({ id }: { id: string }) => {
               name: true,
             },
           },
-          interviews: true,
         },
       },
       company: {

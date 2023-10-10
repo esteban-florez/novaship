@@ -65,3 +65,5 @@ interface SidebarLink {
 type SidebarLinkWithSubmenu = SidebarLink & {
   submenu?: SidebarLink[]
 }
+
+type NonAdmin = 'PERSON' | 'COMPANY' | 'INSTITUTE'

@@ -1,15 +1,12 @@
 import SignupRadio from '@/components/signup/SignupRadio'
-import { UserType as UserTypeEnum } from '@prisma/client'
 import { userTypes as translation } from '@/lib/translations'
 import { BuildingLibraryIcon, BuildingOffice2Icon, UserIcon } from '@heroicons/react/24/outline'
 import { useContext } from 'react'
 import { SignUpContext } from '../../SignUpContext'
 
-type UserTypeLiteral = keyof typeof UserTypeEnum
-
 type Props = React.PropsWithChildren<{
-  userType: UserTypeLiteral | null
-  setUserType: (string: UserTypeLiteral) => void
+  userType: NonAdmin | null
+  setUserType: (string: NonAdmin) => void
 }>
 
 const radios = {
@@ -36,7 +33,9 @@ export default function UserType({ userType, setUserType }: Props) {
     goNext()
   }
 
-  const options = Object.values(UserTypeEnum).map((type) => {
+  const nonAdmin = ['PERSON', 'COMPANY', 'INSTITUTE'] as const
+
+  const options = nonAdmin.map((type) => {
     const label = translation[type]
     const { description, icon } = radios[type]
     return (

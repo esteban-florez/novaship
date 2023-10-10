@@ -12,7 +12,7 @@ export default async function ProfilePage() {
   const { id, type } = await auth.user()
 
   if (type === 'PERSON') {
-    const person = await prisma.person.findFirst({
+    const person = await prisma.person.findUniqueOrThrow({
       where: { id },
       include: {
         categories: {
@@ -45,16 +45,6 @@ export default async function ProfilePage() {
             title: true,
           },
         },
-        memberships: {
-          where: {
-            isLeader: true,
-            OR: [
-              { companyId: id },
-              { personId: id },
-            ],
-          },
-        },
-        reviews: true,
         skills: {
           select: {
             id: true,
@@ -63,8 +53,9 @@ export default async function ProfilePage() {
         },
       },
     })
+
     return <PersonProfile person={person} />
   }
 
-  redirect('/home')
+  redirect('home?alert=redirected')
 }

@@ -24,22 +24,6 @@ export default function TeamGroup({ id, team, isOwner, isMember }: Props) {
         description={team.description}
         members={membersCount}
       />
-      {/* TEMPORAL DISABLED */}
-      {/* {(isOwner || isMember) &&
-        (
-          <>
-            <div className="divider my-0" />
-            <Button
-              url={`/home/projects/${id}/chat`}
-              style="DEFAULT"
-              color="SECONDARY"
-              hover="WHITE"
-            >
-              <EyeIcon className="h-5 w-5" />
-              Ver chat
-            </Button>
-          </>
-        )} */}
     </div>
   )
 }

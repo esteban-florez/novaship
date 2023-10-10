@@ -39,6 +39,6 @@ export const alerts: AlertList = {
   },
   redirected: {
     type: 'info',
-    message: 'Fuiste redireccionado.',
+    message: 'Pa fuera, pala calle.',
   },
 }
