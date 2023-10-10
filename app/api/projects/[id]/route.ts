@@ -8,10 +8,6 @@ import { notFound } from 'next/navigation'
 import collect from '@/lib/utils/collection'
 import { getProjectLeader } from '@/lib/utils/tables'
 
-// ESTEBAN ESTABAS HACIENDO ESTO ACUERDATE
-// ya arregle ambas rutas como tal, creo
-// falta ver donde se usan, arreglar el form
-// y el schema si es necesario
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {

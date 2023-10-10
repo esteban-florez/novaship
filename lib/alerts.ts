@@ -33,6 +33,10 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'El equipo de trabajo fue registrado con éxito.',
   },
+  verified_user: {
+    type: 'success',
+    message: 'El usuario fué confirmado con éxito.',
+  },
   redirected: {
     type: 'info',
     message: 'Fuiste redireccionado.',

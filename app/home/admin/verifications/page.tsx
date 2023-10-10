@@ -1,3 +1,4 @@
+import VerifyButton from '@/components/admin/VerifyButton'
 import Modal from '@/components/modal/Modal'
 import { userTypes } from '@/lib/translations'
 import prisma from '@/prisma/client'
@@ -57,12 +58,7 @@ export default async function VerificationsPage(
                     <Link className="btn-secondary btn-sm btn" href={`/home/admin/verifications?selected=${user.id}`}>
                       Ver RIF
                     </Link>
-                    <button className="btn-success btn-sm btn">
-                      Verificar
-                    </button>
-                    <button className="btn-error btn-sm btn">
-                      Rechazar
-                    </button>
+                    <VerifyButton id={user.id} type={user.type} />
                   </td>
                 </tr>
               )

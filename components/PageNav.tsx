@@ -9,7 +9,7 @@ type Props = React.PropsWithChildren<{
 
 export default function PageNav({ dropdownLabel, children, search, onSearch }: Props) {
   return (
-    <div className="w-full p-4 flex flex-col items-center justify-between gap-4 sm:flex-row lg:gap-0">
+    <div className="flex w-full flex-col items-center justify-between gap-4 p-4 sm:flex-row lg:gap-0">
       <SearchInput searchText={search} setSearchText={onSearch} />
       <Dropdown label={dropdownLabel}>
         {children}
