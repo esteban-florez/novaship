@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ProjectsFull, type ProjectsTab } from '@/lib/types'
+import { type ProjectsFull, type ProjectsTab } from '@/lib/types'
 import ProjectsCard from './ProjectsCard'
 import Pagination from '../Pagination'
 import PageTitle from '../PageTitle'
@@ -22,7 +22,7 @@ type Props = React.PropsWithChildren<{
 
 export default function PageContent({ filter, projects, personalProjects, suggestedProjects, nextPage, pageNumber }: Props) {
   const [search, setSearch] = useState('')
-    const PROJECT_TABS = {
+  const PROJECT_TABS = {
     all: projects,
     personal: personalProjects,
     suggested: suggestedProjects,

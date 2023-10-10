@@ -13,7 +13,6 @@ import { modes, schedules } from '@/lib/translations'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
 import { EXPIRATION_DATES, getExpirationId } from '@/lib/validation/expiration-dates'
 import { type OptionCategory, type OptionCompany, type OptionJob, type OptionLocation, type OptionSkill } from '@/lib/types'
-import PageTitle from '../PageTitle'
 
 interface Props extends FormProps {
   skills: OptionSkill[]
@@ -45,7 +44,6 @@ export default function OfferForm({ backUrl, offer, skills, categories, jobs, lo
 
   return (
     <>
-      <PageTitle title="Registrar nueva oferta" subtitle="Rellena los datos para crear o actualizar una nueva oferta e indica su alcance y habilidades requeridas." />
       <FormLayout>
         {alert}
         {serverErrors}

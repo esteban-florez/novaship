@@ -11,13 +11,13 @@ const query = {
         leader: true,
         memberships: {
           include: {
-            person: true
-          }
-        }
-      }
+            person: true,
+          },
+        },
+      },
     },
-    categories: true
-  }
+    categories: true,
+  },
 }
 
 export const getProject = cache(async ({ id, where }: { id: string, where?: Prisma.ProjectWhereInput }) => {

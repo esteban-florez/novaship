@@ -14,7 +14,7 @@ export default function TeamGroup({ id, team, isOwner, isMember }: Props) {
   if (team == null) {
     return null
   }
-  
+
   const membersCount = team.memberships.length
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-4 shadow-lg">

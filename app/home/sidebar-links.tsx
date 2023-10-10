@@ -97,7 +97,7 @@ export function sidebarLinks(user: UserWithType) {
       submenu: [
         {
           href: '/home/admin/verifications',
-          title: 'Verificación de usuarios',
+          title: 'Verificaciones',
           icon: <CheckBadgeIcon className="h-6 w-6" />,
         },
       ],
