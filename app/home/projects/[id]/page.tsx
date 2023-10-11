@@ -65,10 +65,8 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
         {project.personId !== userId &&
           <div className="col-span-7 lg:col-span-2 lg:col-start-6">
             <TeamGroup
-              id={project.id}
               person={user}
               team={project.team}
-              showChat={(isOwner || isMember)}
             />
           </div>
         }

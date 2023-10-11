@@ -6,6 +6,10 @@
   @apply normal-case px-6 py-2 h-auto min-h-fit;
 }
 
+.btn-circle {
+  @apply p-1;
+}
+
 .flex-center {
   @apply flex items-center justify-center;
 }

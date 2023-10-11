@@ -10,8 +10,8 @@ type Props = React.PropsWithChildren<{
   links: SidebarLinkWithSubmenu[]
 }>
 
-// TODO -> añadir filtro a los links
-// TODO -> mejorar los submenus
+// TODO -> mejorar los submenus (estilos, children active)
+// TODO -> solo mantener 1 submenu abierto
 export default function Aside({ links }: Props) {
   const [active, setActive] = useState(true)
   const pathname = usePathname()
@@ -30,14 +30,14 @@ export default function Aside({ links }: Props) {
   }
 
   return (
-    <aside className={clsx('top-0 z-50 h-screen flex-col flex-nowrap shadow-lg transition-all delay-150 duration-300 ease-out sm:sticky sm:flex', {
+    <aside className={clsx('top-0 z-50 h-screen flex-col flex-nowrap shadow-lg transition-all delay-150 duration-300 ease-out sm:sticky sm:flex bg-white', {
       'fixed w-screen sm:w-[17.8rem]': active,
       'w-0 sm:w-32': !active,
     })}
     >
-      <div className="py-2.5 text-end sm:inline-flex sm:justify-end sm:gap-x-2">
-        <button className="btn-ghost btn-circle btn -mt-2 self-center sm:mt-0" onClick={() => { setActive(!active) }}>
-          <Bars3Icon className="h-6 w-6" />
+      <div className="py-2.5 text-center sm:inline-flex sm:justify-center sm:gap-x-2">
+        <button className="btn btn-ghost -mt-2 self-center sm:mt-0" onClick={() => { setActive(!active) }}>
+          <Bars3Icon className="h-7 w-7 text-black" />
         </button>
       </div>
       <ul className={clsx('menu h-full flex-nowrap gap-2 py-5 pl-4 pr-0 shadow scrollbar', {
@@ -51,7 +51,7 @@ export default function Aside({ links }: Props) {
             link={link}
             active={handleActivelink(link.href)}
             iconOnly={active}
-            onClick={() => { handleClick() }}
+            onClick={() => handleClick()}
           />
         ))}
       </ul>
