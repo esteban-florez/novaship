@@ -15,12 +15,12 @@ export default function FormButtons({ label, disableSubmit }: Props) {
   const pathMethod = path.split('/').at(-1) as 'create' | 'update'
 
   return (
-    <div className="flex justify-end gap-x-2 border-t pt-4">
-      <BackButton />
+    <div className="flex flex-col gap-2 border-t pt-4 md:flex-row md:justify-end">
       <Button color="PRIMARY" isDisabled={disableSubmit}>
         <PlusIcon className="h-4 w-4" />
         {label ?? actions[pathMethod]}
       </Button>
+      <BackButton />
     </div>
   )
 }
