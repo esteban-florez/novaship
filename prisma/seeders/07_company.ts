@@ -4,6 +4,7 @@ import prisma from '../client'
 import companies from '@/prisma/data/companies.json'
 import { seederQueries } from '../seed'
 import collect from '@/lib/utils/collection'
+import coinflip from '@/lib/utils/coinflip'
 
 export default async function company() {
   const locations = collect(await prisma.location.findMany({ select: { id: true } }))
@@ -31,12 +32,13 @@ export default async function company() {
         rif: numbers().rif(),
         description,
         phone: numbers().phone(),
-        certification: 'PENDING',
+        certification: '/rif.png',
         authUser: {
           connect: {
             id: authUser.id,
           },
         },
+        verifiedAt: coinflip() ? new Date() : null,
         location: {
           connect: locations.random().first(),
         },

@@ -53,3 +53,16 @@ interface AlertData {
   type: AlertType
   message: string
 }
+
+interface SidebarLink {
+  href: string
+  title: string
+  icon: JSX.Element
+  visible?: boolean
+}
+
+type SidebarLinkWithSubmenu = SidebarLink & {
+  submenu?: SidebarLink[]
+}
+
+type NonAdmin = 'PERSON' | 'COMPANY' | 'INSTITUTE'

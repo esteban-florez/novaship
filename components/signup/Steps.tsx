@@ -9,7 +9,7 @@ import Jobs from './steps/personal/Jobs'
 
 type Props = React.PropsWithChildren<{
   step: number
-  userType: UserType
+  userType: NonAdmin
   locations: Location[]
 }>
 

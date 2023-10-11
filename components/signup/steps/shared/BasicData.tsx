@@ -2,12 +2,12 @@ import Input from '@/components/forms/inputs/Input'
 import Textarea from '@/components/forms/inputs/Textarea'
 import { useContext } from 'react'
 import { SignUpContext } from '../../SignUpContext'
-import { Gender, type Location, type UserType } from '@prisma/client'
+import { Gender, type Location } from '@prisma/client'
 import Select from '@/components/forms/inputs/Select'
 import { genders } from '@/lib/translations'
 
 type Props = React.PropsWithChildren<{
-  userType: UserType
+  userType: NonAdmin
   locations: Location[]
 }>
 

@@ -10,8 +10,8 @@ export const getMyTeams = cache(async ({ userId }: { userId: string }) => {
       leader: {
         OR: [
           { personId: userId },
-          { companyId: userId }
-        ]
+          { companyId: userId },
+        ],
       },
     },
     include: {
@@ -47,11 +47,10 @@ export const getTeam = cache(async (id: string) => {
         leader: {
           include: {
             person: true,
-            company: true
-          }
+            company: true,
+          },
         },
         categories: true,
-        contracts: true,
         projects: {
           include: {
             categories: true,

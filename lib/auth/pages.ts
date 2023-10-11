@@ -3,6 +3,7 @@ import prisma from '@/prisma/client'
 import { cookies } from 'next/headers'
 import { AuthenticationError } from '../errors/reference'
 import { type UserWithType } from '../types'
+import { cache } from 'react'
 
 /**
  * Nota: Usar solo dentro de "/app/home"
@@ -17,7 +18,7 @@ export const auth = {
   /**
    * Nota: Usar solo dentro de "/app/home". Lanza una excepción si no hay ningún usuario autenticado.
    */
-  async user() {
+  user: cache(async () => {
     const session = await sessionOrThrow()
     const authUser = await prisma.authUser.findUniqueOrThrow({
       include: {
@@ -36,7 +37,7 @@ export const auth = {
     user.type = authUser.type
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     return user as UserWithType
-  },
+  }),
 }
 
 /**

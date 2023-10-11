@@ -22,7 +22,7 @@ type Props = React.PropsWithChildren <{
 export default function SignUpForm({ categories: categoriesData, skills, locations, jobs }: Props) {
   // TODO -> corregir los textos de este formulario
   const [categories, setCategories] = useState(categoriesData)
-  const [userType, setUserType] = useState<UserTypeEnum | null>(null)
+  const [userType, setUserType] = useState<NonAdmin | null>(null)
   const [step, setStep] = useState<number>(0)
 
   const selectedCategories = categories.filter(category => category.selected)

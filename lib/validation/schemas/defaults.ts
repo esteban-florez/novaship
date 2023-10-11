@@ -26,6 +26,8 @@ const clientImageSchema = isInstance(File, messages.file)
   .refine(imageFormat, messages.imageFormat)
   .refine(imageSize, messages.imageSize)
 
+const idSchema = string(messages.string).cuid(messages.cuid)
+
 export const defaults = {
   email: string(messages.string)
     .trim()
@@ -40,7 +42,8 @@ export const defaults = {
     .refine(hasSymbol, messages.hasSymbol),
   birth: date(dateOptions).max(today18YearsAgo, messages.birth),
   date: date(dateOptions),
-  ids: array(string(messages.string).cuid(messages.cuid), messages.array),
+  id: idSchema,
+  ids: array(idSchema, messages.array),
   client: {
     image: preprocess(extractFile, clientImageSchema.nullable()),
     requiredImage: preprocess(extractFile, clientImageSchema),

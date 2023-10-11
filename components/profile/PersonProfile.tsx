@@ -1,7 +1,6 @@
-import { ArrowUpTrayIcon, ChevronDoubleRightIcon, EnvelopeOpenIcon, EyeIcon, PencilIcon, PlusIcon, MapPinIcon, PhoneIcon, DocumentTextIcon, FireIcon, ClipboardIcon } from '@heroicons/react/24/outline'
-import { type Review, type Person, type Membership } from '@prisma/client'
+import { ChevronDoubleRightIcon, EnvelopeOpenIcon, EyeIcon, PencilIcon, MapPinIcon, PhoneIcon, DocumentTextIcon, FireIcon, ClipboardIcon } from '@heroicons/react/24/outline'
+import { type Person } from '@prisma/client'
 import Button from '../Button'
-import EmptyContent from '../EmptyContent'
 
 interface Props {
   person: (Person & {
@@ -9,7 +8,6 @@ interface Props {
       id: string
       title: string
     }
-    reviews: Review[]
     categories: Array<{
       id: string
       title: string
@@ -26,12 +24,11 @@ interface Props {
       id: string
       title: string
     }>
-    memberships: Membership[]
     skills: Array<{
       id: string
       title: string
     }>
-  }) | null
+  })
 }
 
 export default function PersonProfile({ person }: Props) {
@@ -89,31 +86,16 @@ export default function PersonProfile({ person }: Props) {
               <ClipboardIcon className="h-6 w-6 text-neutral-700" />
               <h4 className="text-xl font-bold">Curriculum</h4>
             </div>
-            {person?.curriculum === null
-              ? (
-                <div className="flex w-full flex-col gap-2">
-                  <Button url="#" style="TAB" color="NEUTRAL" hover="WHITE">
-                    <PlusIcon className="h-5 w-5" />
-                    <p className="text-sm">Crear curriculum</p>
-                  </Button>
-                  <Button url="#" style="TAB" color="NEUTRAL" hover="WHITE">
-                    <ArrowUpTrayIcon className="h-5 w-5" />
-                    <p className="text-sm">Subir curriculum</p>
-                  </Button>
-                </div>
-                )
-              : (
-                <Button url="#" color="PRIMARY" hover="WHITE">
-                  <EyeIcon className="h-5 w-5" />
-                  Ver curriculum
-                </Button>
-                )}
+            <Button url="#" color="PRIMARY" hover="WHITE">
+              <EyeIcon className="h-5 w-5" />
+              Ver curriculum
+            </Button>
             <div className="divider" />
             <h4 className="mb-2 text-xl font-bold">Información personal</h4>
             <ul className="line-clamp-2 flex flex-col gap-1.5 text-base leading-none">
               <li className="flex items-center gap-2">
                 <EnvelopeOpenIcon className="h-6 w-6" />
-                <p>{person?.email}</p>
+                <p>{person.email}</p>
               </li>
               <li className="flex items-center gap-2">
                 <MapPinIcon className="h-6 w-6" />
@@ -124,23 +106,6 @@ export default function PersonProfile({ person }: Props) {
                 <p>{person?.phone}</p>
               </li>
             </ul>
-          </div>
-        </div>
-        <div className="col-span-6 flex flex-col gap-4">
-          {/* TODO -> Poner que se pueda ver por botones como las ofertas */}
-          <div className="card bg-white shadow-md">
-            {person?.memberships.map(membership => {
-              if (membership.isLeader) {
-                <div className="card bg-white shadow-md">Reseñas</div>
-              }
-              return (
-                <EmptyContent key={membership.id} title="No hay proyectos en este momento" />
-              )
-            })}
-          </div>
-          <div className="card bg-white shadow-md">
-            {/* TODO -> No entiendo como usar eto, cuando lo pongo en null no tal pero entonces tiene un coso y cuando le hago map no saca los datos no c */}
-            {person?.reviews !== null && <EmptyContent title="No hay reseñas en este momento" />}
           </div>
         </div>
       </div>

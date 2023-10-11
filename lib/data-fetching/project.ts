@@ -17,10 +17,10 @@ const query = {
         },
         memberships: {
           include: {
-            person: true
-          }
-        }
-      }
+            person: true,
+          },
+        },
+      },
     },
     categories: true,
     tasks: {

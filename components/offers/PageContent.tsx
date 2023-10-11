@@ -34,7 +34,7 @@ export default function PageContent({ carouselOffers, generalOffers, myOffers, s
     suggested: suggestedOffers,
     applied: appliedOffers,
   }
-    const OFFERS_TAB_TRANSLATION = {
+  const OFFERS_TAB_TRANSLATION = {
     all: 'Todas',
     suggested: 'Ofertas sugeridas',
     personal: 'Mis ofertas',

@@ -36,15 +36,12 @@ Representa a un usuario de tipo persona natural.
 - [**Job[]**](#job): Puestos de trabajo que busca la persona (en caso de que **employable** sea true).
 - [**Experience[]**](#experience): Experiencias previas del usuario.
 - [**Hiring[]**](#hiring): Contrataciones/postulaciones de la persona.
-- [**Review[]**](#review): Reseñas realizadas por una empresa a la persona.
-- [**Contract[]**](#contract): Contrataciones a equipos realizadas por la persona.
 - [**Internship[]**](#internship): Pasantías de la persona.
 - [**Invitation[]**](#invitation): Invitaciones a formar parte de equipos.
 - [**Project[]**](#project): Proyectos personales.
 - [**Leader[]**](#leader): "Líder", relaciona la persona con los equipos (ver [Team](#team)) de los cuales es líder.
 - [**Participation[]**](#participation): Tareas en las que es participante.
 - [**Task[]**](#task): Tareas de las cuales es responsable.
-- [**Message[]**](#message): Mensajes enviados.
 
 ## Company
 Representa un usuario de tipo empresa.
@@ -61,10 +58,8 @@ Representa un usuario de tipo empresa.
 - [**Location**](#location): Dirección.
 - [**Offer[]**](#offer): Ofertas laborales publicadas por la empresa.
 - [**Vacant[]**](#vacant): Ofertas para pasantías publicadas por la empresa.
-- [**Review[]**](#review): Reseñas publicadas por la empresa en perfiles de personas.
 - [**Internship[]**](#internship): Pasantías en la empresa.
 - [**Leader[]**](#leader): "Líder", relaciona la empresa con los equipos (ver [Team](#team)) de los cuales es líder.
-- [**Message[]**](#message): Mensajes enviados.
 
 ## Institute
 Representa un usuario de tipo institución.
@@ -91,9 +86,7 @@ Representa un equipo de trabajo formado por personas, y liderado por una persona
 - [**Project[]**](#project): Proyectos creados por el equipo de trabajo.
 - [**Invitation[]**](#invitation): Invitaciones a formar parte del equipo.
 - [**Membership[]**](#membership): Miembros del equipo de trabajo, personas o empresa.
-- [**Contract[]**](#contract): Contrataciones al equipo de trabajo por parte de una persona o empresa.
 - [**Category[]**](#category): Categorías a las que pertenece el equipo.
-- [**Message[]**](#message): Mensajes pertenecientes al chat del equipo.
 
 ## Leader
 Representa el líder de un equipo de trabajo, ya sea persona o empresa.
@@ -117,33 +110,6 @@ Representa una persona miembro de un equipo de trabajo.
 - [**Team**](#team): Equipo de trabajo al que pertenece el miembro.
 - [**Invitation**](#invitation): Invitación mediante la cual se agregó el miembro.
 
-## Contract
-Representa la contratación de un equipo de trabajo para realizar un proyecto de una persona.
-
-- **title**: Título del proyecto de la contratación.
-- **description**: Descripción general del proyecto a realizar.
-- **state**: Estado actual del contrato (ver [State](#state)).
-- **price**: Precio a pagar por el proyecto.
-- [**Project**](#project): Proyecto creado por la contratación. Es *"null"* si aún no se ha concretado la contratación.
-- [**Team**](#team): Equipo que es contratado para el proyecto.
-- [**Person**](#person): Persona que contrata al equipo.
-- [**Feature[]**](#feature): Características del proyecto a realizar.
-- [**Question[]**](#question): Preguntas realizadas por el equipo para aclarar dudas sobre el proyecto.
-
-## Feature
-Representa una característica del proyecto a realizar por un equipo contratado.
-
-- **title**: Título.
-- **description**: Descripción.
-- [**Contract**](#contract): Contratación a la cual pertenece la característica.
-
-## Question
-Representa una pregunta realizada por el equipo de trabajo al que contrata para aclarar dudas sobre el proyecto o la contratación.
-
-- **content**: Pregunta realizada.
-- **answer**: Respuesta del que contrata. Es *"null"* si aún no ha respondido.
-- [**Contract**](#contract): Contratación a la cual pertenece la pregunta.
-
 ## Project
 Representa un proyecto vinculado a un persona (proyecto personal) o un equipo de trabajo.
 
@@ -154,10 +120,8 @@ Representa un proyecto vinculado a un persona (proyecto personal) o un equipo de
 - **visibility**: Visibilidad del proyecto (ver [Visibility](#visibility)).
 - [**Person**](#person): Persona vinculada al proyecto. Es *"null"* si el proyecto fué vinculado a un equipo. 
 - [**Team**](#team): Equipo de trabajo vinculado al proyecto. Es *"null"* si el proyecto vinculado a una persona. 
-- [**Contract**](#contract): Contratación relacionada con el proyecto. Es *"null"* si el proyecto no está relacionado con ninguna contratación.
 - [**Category[]**](#category): Categorías laborales a las que pertenece. 
 - [**Task[]**](#task): Tareas en las que se divide.
-- [**Message[]**](#message): Mensajes enviados en el chat de proyecto.
 - [**File[]**](#file): Archivos subidos. 
 
 ## Task
@@ -170,7 +134,6 @@ Representa una tarea de un proyecto. Posee un responsable de tarea, que verifica
 - [**Person**](#person): Persona responsable de la tarea.
 - [**Subtask[]**](#subtask): Subtareas en las que se divide.
 - [**Participation[]**](#participation): Participantes de la tarea, enlace con [Membership](#membership).
-- [**Message[]**](#message): Mensajes enviados en el chat de tarea.
 - [**Revision[]**](#revision): Revisiones de la tarea hechas por el responsable.
 
 ## Subtask
@@ -283,22 +246,13 @@ Representa una experiencia laboral de una persona.
 - [**Person**](#person): Persona a la que pertence.
 - [**Job**](#job): Puesto de trabajo.
 
-## Review
-Representa una reseña dejada por una empresa en el perfil de una persona.
+## Notification
+Representa una notificación.
 
-- **content**: Texto de la reseña.
-- [**Person**](#person): Persona a la que pertenece.
-- [**Company**](#company): Empresa autora
-
-## Message
-Representa un mensaje enviado en algún chat de la aplicación.
-
-- **content**: Contenido del mensaje.
-- [**Person**](#person): Persona que mandó el mensaje. Es *"null"* si fué mandado por empresa.
-- [**Company**](#company): Empreesa que mandó el mensaje. Es *"null"* si fué mandado por persona.
-- [**Team**](#team): Equipo al que pertenece el mensaje.
-- [**Project**](#project): Proyecto al que pertenece el mensaje, *"null"* si el mensaje no es de algún proyecto.
-- [**Task**](#task): Tarea al que pertenece el mensaje, *"null"* si el mensaje no es de alguna tarea.
+- **title**: Título.
+- **content**: Contenido.
+- **href**: Link a donde lleva la notificación al hacer click (opcional).
+- [**AuthUser**](#authuser): Usuario de la notificación.
 
 ## Location
 Representa una ubicación.
@@ -383,12 +337,6 @@ Estado de una solicitud (ver [Hiring](#hiring) y [Recruitment](#recruitment)) o 
 - **REJECTED**: Solicitud/invitación rechazada.
 - **ACCEPTED**: Solicitud/invitación aceptada.
 
-## Platform
-Plataforma de videollamada de entrevista (ver [Interview](#interview)).
-
-- **MEET**: Google Meet.
-- **ZOOM**: Zoom.
-
 ## UserType
 Tipo de usuario (ver [AuthUser](#authuser)).
 
@@ -399,19 +347,10 @@ Tipo de usuario (ver [AuthUser](#authuser)).
 ## Stage
 Etapas de una pasantía (ver [Internship](#internship)).
 
-- **PENDING**: Aún no se ha conseguido una empresa para realizarla.
+- **PENDING**: Se inscribió al pasante, pero este aún no ha aceptado.
+- **ACCEPTED**: El pasante aceptó, pero no se ha conseguido una empresa para realizarla
 - **ACTIVE**: Se consiguió la empresa, y la pasantía está en curso.
-- **DROPPED**: La pasantía fué cancelada/abandonada.
-
-## State
-Estado de una contratación de un equipo de trabajo (ver [Contract](#contract)).
-
-- **REQUESTED**: La empresa/persona ha solicitado la contratación y está en espera de confirmación del equipo.
-- **REJECTED**: El equipo rechazó la contratación.
-- **PLANNING**: El equipo aceptó la contratación y están considerando el precio y haciendo preguntas.
-- **PRICING**: El equipo puso un precio y está esperando la confirmación de la empresa/persona que contrata.
-- **CONFIRMED**: La empresa/persona ha aceptado el precio y proyecto inició.
-- **CANCELED**: La empresa/persona canceló la contratación.
+- **DROPPED**: La pasantía fué cancelada/abandonada/rechazada.
 
 ## Interested
 Parte interesada de una solicitud de pasantía o de contratación por oferta (ver [Hiring](#hiring) y [Recruitment](#recruitment)).

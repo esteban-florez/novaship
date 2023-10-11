@@ -6,11 +6,11 @@ import { type ApiResponseBody, type UseSubmitResult } from '../types'
 import { handleError } from '../errors/fetch'
 import { type FieldValues, useForm, type DefaultValues } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { type ZodType } from 'zod'
+import { any, type ZodType } from 'zod'
 import ServerErrors from '@/components/forms/ServerErrors'
 
 interface UseSubmitOptions<Fields> {
-  schema: ZodType
+  schema?: ZodType
   asFormData?: boolean
   defaultValues?: DefaultValues<Fields>
   append?: object
@@ -20,10 +20,11 @@ interface UseSubmitOptions<Fields> {
 }
 
 // TODO -> quizás esto está demasiado grande, maneja muchas cosas. Quizás sea más conveniente dividrlo en dos: componente <Form> que tenga el envío de la petición y muestre los resultados, etc. Y el hook useForm normalito que le pase las cosas al componente Form
-export default function useSubmit<Fields extends FieldValues>({
-  method, append, schema, defaultValues,
-  asFormData = false, onSuccess, onError,
-}: UseSubmitOptions<Fields>) {
+export default function useSubmit<Fields extends FieldValues>(options?: UseSubmitOptions<Fields>) {
+  const {
+    method, append, schema, defaultValues,
+    asFormData = false, onSuccess, onError,
+  } = options ?? {}
   const [showAlert, setShowAlert] = useState(true)
   const [showErrors, setShowErrors] = useState(true)
   const [result, setResult] = useState<UseSubmitResult>(null)
@@ -31,7 +32,7 @@ export default function useSubmit<Fields extends FieldValues>({
 
   const useFormReturn = useForm<Fields>({
     mode: 'onTouched',
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema ?? any()),
     defaultValues,
   })
 
@@ -67,6 +68,7 @@ export default function useSubmit<Fields extends FieldValues>({
       if (response.redirected) {
         router.push(response.url)
         router.refresh()
+        setResult(null)
         return
       }
 

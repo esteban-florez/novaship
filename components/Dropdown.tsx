@@ -1,5 +1,3 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
-
 type Props = React.PropsWithChildren<{
   label: string
 }>
@@ -7,13 +5,11 @@ type Props = React.PropsWithChildren<{
 // TODO -> transicion o usar el swap de daisy y alinear el icon
 export default function Dropdown({ label, children }: Props) {
   return (
-    <div className="w-full sm:w-auto dropdown-end dropdown">
-      <label tabIndex={0} className="group bg-white border-neutral-400 hover:border-neutral-400 shadow-md btn sm:btn-wide btn-block transition-all delay-75 duration-75 ">
-        <button className="peer">{label}</button>
-        <ChevronDownIcon className="w-6 h-6 block peer-focus:hidden" />
-        <ChevronUpIcon className="w-6 h-6 hidden peer-focus:block" />
+    <div className="dropdown-end dropdown z-20 w-full sm:w-auto">
+      <label tabIndex={0} className="btn-block btn border-neutral-400 bg-white shadow-md sm:btn-wide hover:border-neutral-400">
+        <button>{label}</button>
       </label>
-      <div className="dropdown-content z-10 flex w-full flex-col rounded-lg border border-base-300 bg-white gap-y-2 p-2 shadow-lg">
+      <div className="dropdown-content z-10 flex w-full flex-col gap-y-2 rounded-lg border border-base-300 bg-white p-2 shadow-lg">
         {children}
       </div>
     </div>

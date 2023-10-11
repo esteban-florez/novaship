@@ -1,93 +1,18 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, Bars3Icon, ListBulletIcon, GlobeAltIcon, StarIcon, UsersIcon, BookmarkIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon } from '@heroicons/react/24/outline'
 import AsideLink from './AsideLink'
 import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 
-// TODO -> mover equipos a otra pestaña
-// TODO -> arreglar burger button en mobile
-const SIDEBAR_LINKS = [
-  {
-    href: '/home',
-    title: 'Inicio',
-    icon: <HomeIcon className="h-6 w-6" />,
-  },
-  {
-    href: '/home/internships',
-    title: 'Pasantías',
-    icon: <AcademicCapIcon className="h-6 w-6" />,
-  },
-  {
-    href: '/home/offers',
-    title: 'Ofertas',
-    icon: <BriefcaseIcon className="h-6 w-6" />,
-    submenu: [
-      {
-        href: '/home/offers?filter=all',
-        title: 'Todas',
-        icon: <GlobeAltIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/offers?filter=applied',
-        title: 'Aplicadas',
-        icon: <BookmarkIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/offers?filter=suggested',
-        title: 'Sugeridas',
-        icon: <StarIcon className="h-6 w-6" />,
-      },
-    ],
-  },
-  {
-    href: '/home/projects',
-    title: 'Proyectos',
-    icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
-    submenu: [
-      {
-        href: '/home/teams?filter=all',
-        title: 'Equipos',
-        icon: <UserGroupIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/teams?filter=personal',
-        title: 'Mis equipos',
-        icon: <UsersIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/projects?filter=all',
-        title: 'Todos',
-        icon: <GlobeAltIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/projects?filter=personal',
-        title: 'Personales',
-        icon: <ListBulletIcon className="h-6 w-6" />,
-      },
-      {
-        href: '/home/projects?filter=suggested',
-        title: 'Sugeridos',
-        icon: <StarIcon className="h-6 w-6" />,
-      },
-    ],
-  },
-  {
-    href: '/home/teams',
-    title: 'Equipos',
-    icon: <UserGroupIcon className="h-6 w-6" />,
-  },
-  {
-    href: '/home/admin',
-    title: 'Administración',
-    icon: <ShieldCheckIcon className="h-6 w-6" />,
-  },
-]
+type Props = React.PropsWithChildren<{
+  links: SidebarLinkWithSubmenu[]
+}>
 
 // TODO -> añadir filtro a los links
 // TODO -> mejorar los submenus
-export default function Aside() {
+export default function Aside({ links }: Props) {
   const [active, setActive] = useState(true)
   const pathname = usePathname()
 
@@ -105,22 +30,22 @@ export default function Aside() {
   }
 
   return (
-    <aside className={clsx('top-0 z-50 h-screen flex-col flex-nowrap overflow-y-scroll shadow-lg transition-all delay-150 duration-300 ease-out scrollbar-thin scrollbar-thumb-neutral-300/75 sm:sticky sm:flex', {
-      'fixed w-screen sm:w-[17.5rem]': active,
-      'w-0 sm:w-20': !active,
+    <aside className={clsx('top-0 z-50 h-screen flex-col flex-nowrap shadow-lg transition-all delay-150 duration-300 ease-out sm:sticky sm:flex', {
+      'fixed w-screen sm:w-[17.8rem]': active,
+      'w-0 sm:w-32': !active,
     })}
     >
-      <div className="py-[18px] text-center sm:inline-flex sm:justify-center sm:gap-x-2">
+      <div className="py-2.5 text-end sm:inline-flex sm:justify-end sm:gap-x-2">
         <button className="btn-ghost btn-circle btn -mt-2 self-center sm:mt-0" onClick={() => { setActive(!active) }}>
           <Bars3Icon className="h-6 w-6" />
         </button>
       </div>
-      <ul className={clsx('menu h-full flex-nowrap gap-2 py-6 shadow', {
-        'px-8': active,
+      <ul className={clsx('menu h-full flex-nowrap gap-2 py-5 pl-4 pr-0 shadow scrollbar', {
+        '': active,
         'hidden sm:block': !active,
       })}
       >
-        {SIDEBAR_LINKS.map(link => (
+        {links.map(link => (
           <AsideLink
             key={link.href}
             link={link}
