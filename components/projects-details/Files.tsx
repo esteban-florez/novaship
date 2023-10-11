@@ -5,9 +5,10 @@ interface Props {
   title: string
   participation?: string
   date?: Date
+  projectId: string
 }
 
-export default function Files({ title, participation, date }: Props) {
+export default function Files({ projectId, title, participation, date }: Props) {
   return (
     <>
       <div className="flex flex-col items-center justify-between rounded-lg border border-solid border-gray-400 p-3 px-5 md:flex-row">

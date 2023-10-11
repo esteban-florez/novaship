@@ -3,7 +3,7 @@ import { type ERRORS } from './errors/reference'
 import {
   type Person, type Company, type Institute, type Category, type Skill,
   type Offer, type Location, type Project, type Task, type Participation,
-  type Membership, type Subtask, type Team, type File, type Admin,
+  type Membership, type Subtask, type Team, type File, type Admin, Revision,
 } from '@prisma/client'
 import { type days } from './translations'
 
@@ -97,7 +97,10 @@ type ProjectTeam = Team & {
 interface ProjectsFull extends Project {
   person: Person | null
   team: (Team & {
-    leader: Leader
+    leader: Leader & {
+      person: Person
+      company: Company
+    }
     memberships: Array<Membership & {
       person: Person
     }>
@@ -179,6 +182,28 @@ interface Projects extends Project {
     subtasks: Subtask[]
     participations: Participation[]
   }>
+}
+
+interface TasksProps {
+  projectId: string
+  tasks: Array<Task & {
+    subtasks: Array<Subtask & {
+      revisions: Revision[]
+    }>
+    participations: Participation[]
+    revisions: Revision[]
+  }>
+}
+
+interface TaskProps {
+  projectId: string
+  task: Task & {
+    subtasks: Array<Subtask & {
+      revisions: Revision[]
+    }>
+    participations: Participation[]
+    revisions: Revision[]
+  }
 }
 
 type SharedInputProps = {

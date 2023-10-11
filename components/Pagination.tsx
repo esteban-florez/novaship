@@ -1,4 +1,4 @@
-import Button from './pagination/Button'
+import Link from 'next/link'
 
 interface Props {
   url: string
@@ -6,6 +6,7 @@ interface Props {
   nextPage: boolean
 }
 
+// TODO -> perdurar la query
 export default function Pagination({ url, pageNumber, nextPage }: Props) {
   const prevNumber = pageNumber > 1 ? pageNumber - 1 : 0
   const nextNumber = pageNumber + 1
@@ -13,19 +14,31 @@ export default function Pagination({ url, pageNumber, nextPage }: Props) {
   return (
     <div className="join mb-10 w-full justify-center">
       <div className="card flex-row rounded-lg border border-solid border-zinc-300 shadow-md">
-        <Button
-          url={url}
-          direction="prev"
-          toPage={prevNumber}
-          show={pageNumber === 1 ? 'button' : 'link'}
-        />
+        {pageNumber === 1 && <button className="join-item btn bg-white" disabled>«</button>}
+        {pageNumber !== 1 &&
+          <Link
+            href={{
+              pathname: url,
+              query: { page: prevNumber },
+            }}
+            className='join-item btn bg-white'
+          >
+            «
+          </Link>
+        }
         <button className="join-item btn cursor-default">Página {pageNumber}</button>
-        <Button
-          url={url}
-          direction="next"
-          toPage={nextNumber}
-          show={nextPage ? 'link' : 'button'}
-        />
+        {nextPage &&
+          <Link
+            href={{
+              pathname: url,
+              query: { page: nextNumber },
+            }}
+            className='join-item btn bg-white'
+          >
+            »
+          </Link>
+        }
+        {!nextPage && <button className="join-item btn bg-white" disabled>»</button>}
       </div>
     </div>
   )

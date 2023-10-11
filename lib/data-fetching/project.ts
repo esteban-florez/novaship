@@ -3,12 +3,18 @@ import { type Prisma } from '@prisma/client'
 import { cache } from 'react'
 
 // TODO -> optimize query
+// : Prisma.ProjectFindFirstArgs
 const query = {
   include: {
     person: true,
     team: {
       include: {
-        leader: true,
+        leader: {
+          include: {
+            company: true,
+            person: true
+          }
+        },
         memberships: {
           include: {
             person: true
@@ -16,7 +22,19 @@ const query = {
         }
       }
     },
-    categories: true
+    categories: true,
+    tasks: {
+      include: {
+        subtasks: {
+          include: {
+            revisions: true
+          }
+        },
+        revisions: true,
+        participations: true
+      }
+    },
+    files: true
   }
 }
 
@@ -29,6 +47,37 @@ export const getProject = cache(async ({ id, where }: { id: string, where?: Pris
     ...query,
   })
 })
+
+export const getMyProject = cache(async ({ id, userId }: { id: string, userId: string }) => {
+  return await prisma.project.findFirst({
+    where: {
+      id,
+      OR: [
+        { personId: userId },
+        {
+          team: {
+            leader: {
+              OR: [
+                { personId: userId },
+                { companyId: userId },
+              ]
+            }
+          }
+        }
+      ]
+    },
+    ...query,
+  })
+})
+
+export const deleteProject = async ({ id, where }: { id: string, where: Prisma.ProjectWhereInput }) => {
+  return await prisma.project.deleteMany({
+    where: {
+      id,
+      ...where
+    }
+  })
+}
 
 export const getProjects = cache(async ({ where, skip, take }: QueryConfig<Prisma.ProjectWhereInput>) => {
   return await prisma.project.findMany({

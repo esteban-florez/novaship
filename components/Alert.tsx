@@ -23,6 +23,7 @@ function getAlertData(alert: string | null) {
   return alerts[alert]
 }
 
+// TODO -> el alert del delete se sobrepone al url params 
 export default function Alert({ children }: React.PropsWithChildren) {
   const router = useRouter()
   const pathname = usePathname()

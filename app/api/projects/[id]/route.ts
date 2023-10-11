@@ -6,100 +6,134 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import collect from '@/lib/utils/collection'
-import { getProjectLeader } from '@/lib/utils/tables'
+import { deleteProject, getProject } from '@/lib/data-fetching/project'
 
-// ESTEBAN ESTABAS HACIENDO ESTO ACUERDATE
-// ya arregle ambas rutas como tal, creo
-// falta ver donde se usan, arreglar el form
-// y el schema si es necesario
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const user = await auth.user(request)
+    const { id: userId, type } = await auth.user(request)
 
-    const project = await prisma.project.findUnique({
-      where: { id },
-      include: {
-        categories: true,
-        person: true,
-        team: {
-          include: {
-            memberships: true,
-            leader: true,
-          },
-        },
-      },
+    // DRY My records
+    const project = await getProject({
+      id,
+      where: {
+        OR: [
+          { personId: userId },
+          {
+            team: {
+              leader: {
+                OR: [
+                  { personId: userId },
+                  { companyId: userId },
+                ]
+              }
+            },
+          }
+        ]
+      }
     })
 
-    // DRY project validation
     if (project === null) {
-      notFound()
-    }
-
-    const isOwner = getProjectLeader(project).id === user.id
-
-    if (!isOwner) {
       notFound()
     }
 
     const projectCategories = collect(project.categories).ids()
     const newCategories = collect(parsed.categories).deleteDuplicatesFrom(projectCategories)
 
-    const { teamwork, ...parsedData } = parsed
-
-    await prisma.project.update({
-      where: { id },
-      data: {
-        ...parsedData,
-        categories: {
-          deleteMany: {
-            id: {
-              notIn: parsedData.categories,
+    if (type === 'PERSON') {
+      if (parsed.teamId != null) {
+        const updateParsed = { personId: null,...parsed }
+        const { teamId, ...rest } = updateParsed
+        const parsedData = project.teamId !== parsed.teamId ? { teamId: project.teamId ?? teamId, ...rest } : updateParsed
+  
+        await prisma.project.update({
+          where: { id },
+          data: {
+            ...parsedData,
+            categories: {
+              deleteMany: {
+                id: {
+                  notIn: parsed.categories,
+                },
+              },
+              connect: newCategories.map(id => ({ id })),
             },
           },
-          connect: newCategories.map(id => ({ id })),
-        },
-      },
-    })
+        })
 
-    return NextResponse.redirect(url('home/projects?alert=project_updated'))
+        // TODO -> revisar mejor cual alert se muestra en que situación.
+        const alert = project.teamId === null ? 'project_updated' : 'project_team_unalterable'
+
+        return NextResponse.redirect(url(`home/projects/${project.id}?alert=${alert}`))
+      } else {
+        await prisma.project.update({
+          where: { id },
+          data: {
+            ...parsed,
+            categories: {
+              deleteMany: {
+                id: {
+                  notIn: parsed.categories,
+                },
+              },
+              connect: newCategories.map(id => ({ id })),
+            },
+          },
+        })
+      }
+    }
+
+    if (type === 'COMPANY') {
+      const { teamId, ...rest } = parsed
+      const parsedData = project.teamId !== parsed.teamId ? rest : parsed
+
+      await prisma.project.update({
+        where: { id },
+        data: {
+          ...parsedData,
+          categories: {
+            deleteMany: {
+              id: {
+                notIn: parsed.categories,
+              },
+            },
+            connect: newCategories.map(id => ({ id })),
+          },
+        },
+      })
+    }
+
+    return NextResponse.redirect(url(`home/projects/${project.id}?alert=project_updated`))
   } catch (error) {
     return handleError(error, data)
   }
 }
 
+// TODO -> test
 export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
-    const user = await auth.user(request)
+    const { id: userId } = await auth.user(request)
 
-    const project = await prisma.project.findUnique({
-      where: { id },
-      include: {
-        person: true,
-        team: {
-          include: {
-            memberships: true,
-            leader: true,
-          },
-        },
-      },
-    })
-
-    // DRY project validation
-    if (project === null) {
-      notFound()
-    }
-
-    const isOwner = getProjectLeader(project).id === user.id
-
-    if (!isOwner) {
-      notFound()
-    }
-
-    await prisma.project.deleteMany({
-      where: { id },
+    // DRY My records
+    await deleteProject({
+      id,
+      where: {
+        OR: [
+          { personId: userId },
+          {
+            team: {
+              leader: {
+                OR: [
+                  { personId: userId },
+                  { companyId: userId },
+                ]
+              }
+            },
+          }
+        ]
+      }
     })
 
     return NextResponse.redirect(url('/home/projects?alert=project_deleted'))

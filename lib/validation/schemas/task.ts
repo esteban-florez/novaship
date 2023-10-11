@@ -11,7 +11,12 @@ export const schema = object({
     .min(15, messages.min(15))
     .max(255, messages.max(255)),
   members: array(string(), messages.array)
-    .nonempty(messages.nonempty),
+    .nonempty(messages.nonempty)
+    .optional(),
   responsable: string(messages.string)
-    .cuid(messages.cuid),
+    .cuid(messages.cuid)
+    .optional(),
+  projectId: string(messages.string)
+    .cuid(messages.cuid)
+    .optional(),
 })

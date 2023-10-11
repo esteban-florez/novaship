@@ -33,3 +33,9 @@
 - Mecanismo para destacar ofertas y equipo mediante suscripción.
 - Ocular aside en mobile por defecto.
 - Añadir chartjs.
+- Loaders para forms.
+- Mantener los filtros al usar la api.
+- Hacer helpers (getTeamLeader, isMemberFromTeam).
+- Validación: no puede aplicarse a un proyecto que sea personal.
+- Hacer un nuevo componente modal.
+- Pasar subtareas y revisiones a modales.

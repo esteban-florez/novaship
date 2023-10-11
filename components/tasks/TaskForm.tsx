@@ -9,29 +9,33 @@ import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
 import Select from '../forms/inputs/Select'
 import Textarea from '../forms/inputs/Textarea'
 import FormLayout from '../forms/FormLayout'
-import { type Participation, type Task } from '@prisma/client'
-import { type HTTP_METHOD } from 'next/dist/server/web/http'
-import { type ProjectTeam } from '@/lib/types'
+import { type Participation, type Task, type Membership, type Person } from '@prisma/client'
 
-interface Props {
-  action: string
-  method: HTTP_METHOD
+interface Props extends FormProps {
   projectId: string
   task?: Task & {
     participations: Participation[]
   }
-  team: ProjectTeam
+  person?: {
+    id: string
+    name: string
+  }
+  memberships?: Array<Membership & {
+    person: Person
+  }>
 }
 
 // NOTE -> se debe añadir el responsable a la lista de miembros seleccionados
-export default function TaskForm({ action, method, projectId, task, team }: Props) {
-  const taskLeader = task?.participations.find(participation => participation.isLeader)?.membershipId ?? undefined
-  const selectedMembers = task?.participations.map(participation => participation.membershipId) ?? undefined
-  const cancelUrl = `/home/projects/${projectId}`
+export default function TaskForm({ action, method, projectId, person, task, memberships }: Props) {
+  const taskLeader = task?.personId
+  const selectedMembers = task?.participations.map(participation => participation.personId)
+  const members = memberships?.map(member => {
+    return { id: member.person.id, name: member.person.name }
+  }) ?? []
 
-  const memberships: Array<{ id: string, name: string }> = team.memberships
-    .filter(member => !member.isLeader && member.companyId === null)
-    .map(member => ({ id: member.id, name: member.person?.name ?? member.company?.name ?? '' }))
+  if (person != null) {
+    members.push(person)
+  }
 
   const {
     register, formState: { errors },
@@ -68,32 +72,34 @@ export default function TaskForm({ action, method, projectId, task, team }: Prop
             errors={errors}
           />
         </FormSection>
-        <FormSection title="Participantes" description="Designe a las personas que completerán la tarea.">
-          <Select
-            name="responsable"
-            label="Responsable"
-            defaultValue={taskLeader}
-            register={register}
-            errors={errors}
-            options={{
-              type: 'rows',
-              data: memberships,
-            }}
-          />
-          <SelectMultiple
-            name="members"
-            control={control}
-            defaultValue={selectedMembers}
-            menuOnTop
-            label="Participantes"
-            itemsName="Miembros"
-            options={{
-              type: 'rows',
-              data: memberships,
-            }}
-          />
-        </FormSection>
-        <FormButtons url={cancelUrl} />
+        {memberships != null &&
+          <FormSection title="Participantes" description="Designe a las personas que completerán la tarea.">
+            <Select
+              name="responsable"
+              label="Responsable"
+              defaultValue={taskLeader}
+              register={register}
+              errors={errors}
+              options={{
+                type: 'rows',
+                data: members,
+              }}
+            />
+            <SelectMultiple
+              name="members"
+              control={control}
+              defaultValue={selectedMembers}
+              menuOnTop
+              label="Participantes"
+              itemsName="Miembros"
+              options={{
+                type: 'rows',
+                data: members,
+              }}
+            />
+          </FormSection>
+        }
+        <FormButtons label={method === 'PUT' ? 'Actualizar' : 'Registrar'} />
       </form>
     </FormLayout>
   )

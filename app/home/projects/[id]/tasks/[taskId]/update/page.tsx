@@ -1,8 +1,9 @@
 import TaskForm from '@/components/tasks/TaskForm'
 import { auth } from '@/lib/auth/pages'
-import prisma from '@/prisma/client'
+import { getMyProject } from '@/lib/data-fetching/project'
+import { getMyTask } from '@/lib/data-fetching/task'
 import { type Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Actualizar tarea',
@@ -12,57 +13,21 @@ interface Context {
   params: { id: string, taskId: string }
 }
 
-// TODO -> alert pending
+// TODO -> data refresh
 export default async function UpdateTaskPage({ params: { id, taskId } }: Context) {
-  const activeUser = await auth.user()
+  const { id: userId, name, type } = await auth.user()
 
-  const project = await prisma.project.findUnique({
-    where: { id },
-    include: {
-      team: {
-        include: {
-          memberships: {
-            include: {
-              company: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
-              person: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  })
-
-  if (project === null) redirect('/home/projects')
-
-  const task = await prisma.task.findFirst({
-    where: { id: taskId },
-    include: {
-      participations: true,
-    },
-  })
-
-  if (task === null) redirect(`/home/projects/${id}`)
-
-  // DRY project validation
-  if (project === null) {
-    redirect('/home/projects')
+  const project = await getMyProject({ id, userId })
+  if (project == null) {
+    notFound()
   }
 
-  const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
-
-  if (!isOwner) {
-    redirect(`/home/projects/${id}`)
+  const task = await getMyTask({ id: taskId, userId })
+  if (task == null) {
+    notFound()
   }
+
+  const person = { id: userId, name }
 
   return (
     <TaskForm
@@ -70,7 +35,8 @@ export default async function UpdateTaskPage({ params: { id, taskId } }: Context
       method="PUT"
       task={task}
       projectId={id}
-      team={project.team}
+      person={type === 'PERSON' ? person : undefined}
+      memberships={project.team?.memberships}
     />
   )
 }

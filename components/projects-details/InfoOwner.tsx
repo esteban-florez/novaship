@@ -6,7 +6,7 @@ interface Props {
   id: string
   name: string
   description: string
-  members?: number
+  members?: number | null
 }
 
 export default function InfoOwner({ name, description, id, members }: Props) {
@@ -16,7 +16,7 @@ export default function InfoOwner({ name, description, id, members }: Props) {
         <AvatarIcon className="h-12 w-12 bg-black text-white" />
         <div className="mb-2 flex flex-col">
           <p className="text-base font-semibold">{name}</p>
-          <p className="-my-1 text-sm">{members} miembros</p>
+          {members != null && <p className="-my-1 text-sm">{members} miembros</p>}
         </div>
       </div>
       <p className="mb-1 line-clamp-3 text-sm">{description}</p>
@@ -26,7 +26,7 @@ export default function InfoOwner({ name, description, id, members }: Props) {
         color="SECONDARY"
         hover="WHITE"
       >
-        Ver equipo
+        {members != null ? 'Ver equipo' : 'Ver perfil'}
         <ArrowRightIcon className="h-4 w-4" />
       </Button>
     </>

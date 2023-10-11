@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .btn {
-  @apply normal-case;
+  @apply normal-case px-6 py-2 h-auto min-h-fit;
 }
 
 .flex-center {
