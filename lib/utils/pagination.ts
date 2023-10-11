@@ -1,7 +1,7 @@
 interface Props {
-  pageNumber: number
   totalRecords: number
   pageSize?: number
+  pageNumber?: number
 }
 
 // TODO
@@ -9,7 +9,7 @@ interface Props {
 // 2. Implementar los tabs de busqueda (all, mine, etc).
 // 3. Arreglar el componente para soportar las tabs (mencionado arriba).
 
-export default function getPaginationProps({ pageNumber, totalRecords, pageSize = 20 }: Props) {
+export default function getPaginationProps({ totalRecords, pageNumber = 1, pageSize = 20 }: Props) {
   const totalPages = Math.ceil(totalRecords / pageSize)
   const nextPage = pageNumber < totalPages
 

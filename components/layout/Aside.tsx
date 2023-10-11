@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { Bars3Icon } from '@heroicons/react/24/outline'
 import AsideLink from './AsideLink'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 
 type Props = React.PropsWithChildren<{
@@ -26,8 +26,26 @@ export default function Aside({ links }: Props) {
     return link === pathname || (pathname.includes(path) && path !== '')
   }
 
+  useEffect(() => {
+    const toggleOnResize = () => {
+      if (window.innerWidth > 767) {
+        console.log('ac')
+        setActive(true)
+      } else {
+        console.log('de')
+        setActive(false)
+      }
+    }
+
+    window.addEventListener('resize', toggleOnResize)
+
+    return () => {
+      window.removeEventListener('resize', toggleOnResize)
+    }
+  }, [])
+
   return (
-    <aside className={clsx('top-0 z-50 h-screen flex-col flex-nowrap shadow-lg transition-all delay-150 duration-300 ease-out sm:sticky sm:flex', {
+    <aside className={clsx('top-0 z-50 h-screen flex-col flex-nowrap bg-white shadow-lg transition-all delay-150 duration-300 ease-out sm:sticky sm:flex', {
       'fixed w-screen sm:w-[17.8rem]': active,
       'w-0 sm:w-32': !active,
     })}

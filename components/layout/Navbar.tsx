@@ -23,7 +23,7 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="navbar-end text-sm sm:text-base">
-        <div className="flex flex-col items-center px-5 ">
+        <div className="hidden flex-col items-center px-5 md:flex">
           <p>{date}</p>
         </div>
         {/* <NotificationDropdown /> */}

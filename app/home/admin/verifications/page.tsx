@@ -1,6 +1,7 @@
 import VerifyButton from '@/components/admin/VerifyButton'
 import Modal from '@/components/modal/Modal'
 import { userTypes } from '@/lib/translations'
+import { param } from '@/lib/utils/search-params'
 import prisma from '@/prisma/client'
 import { DocumentIcon } from '@heroicons/react/24/outline'
 import { type UserType } from '@prisma/client'
@@ -10,9 +11,7 @@ export default async function VerificationsPage(
   ctx: SearchParamsProps
 ) {
   const { selected } = ctx.searchParams
-  const selectedId = Array.isArray(selected)
-    ? selected[0]
-    : selected
+  const selectedId = param(selected)
 
   const query = { where: { verifiedAt: null } }
 

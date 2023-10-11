@@ -63,6 +63,8 @@
     "project": "./tsconfig.json"
   },
   "lint-staged": {
-    "*.{ts,tsx}": []
+    "*.{ts,tsx}": [
+      "eslint --cache --fix"
+    ]
   }
 }

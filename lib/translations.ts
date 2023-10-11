@@ -22,6 +22,8 @@ export const routes: Rec = {
   teams: 'Equipos de trabajo',
   hiring: 'Postulaciones',
   memberships: 'Miembros',
+  verifications: 'Verificaciones',
+  select: 'Inscribir pasante',
 }
 
 export const statuses = {
