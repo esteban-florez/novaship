@@ -1,5 +1,6 @@
-import { object, string, type z } from 'zod'
+import { nativeEnum, object, string, type z } from 'zod'
 import messages from '../messages'
+import { TaskStatus } from '@prisma/client'
 
 export type Fields = z.infer<typeof schema>
 
@@ -10,4 +11,5 @@ export const schema = object({
   description: string(messages.string)
     .min(15, messages.min(15))
     .max(255, messages.max(255)),
+  status: nativeEnum(TaskStatus, messages.enum).optional(),
 })

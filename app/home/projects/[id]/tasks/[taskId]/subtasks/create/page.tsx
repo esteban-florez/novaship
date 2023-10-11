@@ -1,7 +1,9 @@
 import SubtaskForm from '@/components/subtasks/SubtaskForm'
+import { auth } from '@/lib/auth/pages'
+import { getMyTask } from '@/lib/data-fetching/task'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Registrar subtarea',
@@ -14,22 +16,19 @@ interface Context {
   }
 }
 
-// TODO -> alert pending
-// TODO -> cambiar la page por un modal
+// TODO -> volver un modal
 export default async function CreateSubtaskPage({ params: { id, taskId } }: Context) {
+  const { id: userId } = await auth.user()
   const project = await prisma.project.findFirst({
     where: { id },
   })
 
   if (project === null) redirect('/home/projects')
 
-  const task = await prisma.task.findFirst({
-    where: {
-      id: taskId,
-    },
-  })
-
-  if (task === null) redirect(`/home/projects/${id}/tasks`)
+  const task = await getMyTask({ id: taskId, userId })
+  if (task === null) {
+    notFound()
+  }
 
   return (
     <SubtaskForm

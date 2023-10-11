@@ -1,28 +1,21 @@
-import { type Team, type Membership, type Leader } from '@prisma/client'
+import { type Team, type Membership, type Leader, type Person } from '@prisma/client'
 import InfoOwner from './InfoOwner'
 interface Props {
-  id: string
   team: Team & {
     leader: Leader
     memberships: Membership[]
   } | null
-  isOwner: boolean
-  isMember: boolean
+  person: Person
 }
 
-export default function TeamGroup({ id, team, isOwner, isMember }: Props) {
-  if (team == null) {
-    return null
-  }
-
-  const membersCount = team.memberships.length
+export default function TeamGroup({ team, person }: Props) {
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-4 shadow-lg">
       <InfoOwner
-        id={team.id}
-        name={team.name}
-        description={team.description}
-        members={membersCount}
+        id={team?.id ?? person.id}
+        name={team?.name ?? person.name}
+        description={team?.description ?? person.description}
+        members={team?.memberships.length ?? null}
       />
     </div>
   )

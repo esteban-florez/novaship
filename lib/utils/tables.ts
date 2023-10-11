@@ -1,6 +1,6 @@
-import { type Visibility, type Team, type Project, type Person, type Leader, type Company } from '@prisma/client'
+import { type Visibility, type Team, type Person, type Leader, type Company } from '@prisma/client'
 import { DBError } from '../errors/reference'
-import { type UserWithType, type MembershipWithRelations } from '../types'
+import { type UserWithType, type MembershipWithRelations, type ProjectsFull } from '../types'
 
 export function getMember(membership: MembershipWithRelations) {
   const member = membership.person
@@ -12,12 +12,7 @@ export function getMember(membership: MembershipWithRelations) {
   return member
 }
 
-type ProjectWithRelations = Project & {
-  person: Person | null
-  team: TeamWithRelations | null
-}
-
-export function getProjectLeader(project: ProjectWithRelations): UserWithType {
+export function getProjectLeader(project: ProjectsFull): UserWithType {
   const { person, team } = project
 
   if (person !== null) {

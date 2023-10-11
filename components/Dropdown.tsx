@@ -2,6 +2,7 @@ type Props = React.PropsWithChildren<{
   label: string
 }>
 
+// TODO -> transicion o usar el swap de daisy y alinear el icon
 export default function Dropdown({ label, children }: Props) {
   return (
     <div className="dropdown-end dropdown z-20 w-full sm:w-auto">

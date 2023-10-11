@@ -7,12 +7,11 @@ import FormSection from '../forms/FormSection'
 import Input from '../forms/inputs/Input'
 import Textarea from '../forms/inputs/Textarea'
 import FormButtons from '../forms/FormButtons'
-import { type HTTP_METHOD } from 'next/dist/server/web/http'
-import { type Subtask } from '@prisma/client'
+import { TaskStatus, type Subtask } from '@prisma/client'
+import Select from '../forms/inputs/Select'
+import { taskStatuses } from '@/lib/translations'
 
-interface Props {
-  action: string
-  method: HTTP_METHOD
+interface Props extends FormProps {
   taskId: string
   projectId: string
   subtask?: Subtask
@@ -27,8 +26,6 @@ export default function SubtaskForm({ action, method, taskId, projectId, subtask
     method,
     append: {
       taskId,
-      projectId,
-      subtaskId: subtask?.id,
     },
   })
 
@@ -54,8 +51,21 @@ export default function SubtaskForm({ action, method, taskId, projectId, subtask
             register={register}
             errors={errors}
           />
+          {method === 'PUT' &&
+            <Select
+              name="status"
+              label="Estado"
+              defaultValue={subtask?.status}
+              register={register}
+              errors={errors}
+              options={{
+                type: 'enum',
+                data: TaskStatus,
+                translation: taskStatuses,
+              }}
+            />}
         </FormSection>
-        <FormButtons />
+        <FormButtons label={method === 'PUT' ? 'Actualizar' : 'Registrar'} />
       </form>
     </FormLayout>
   )

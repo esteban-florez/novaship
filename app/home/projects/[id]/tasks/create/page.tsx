@@ -1,58 +1,30 @@
 import { type Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import TaskForm from '@/components/tasks/TaskForm'
 import { auth } from '@/lib/auth/pages'
-import prisma from '@/prisma/client'
+import { getMyProject } from '@/lib/data-fetching/project'
 
 export const metadata: Metadata = {
   title: 'Registrar tarea',
 }
 
-interface Context {
-  params: { id: string }
-}
+export default async function CreateTaskPage({ params: { id } }: PageContext) {
+  const { id: userId, name, type } = await auth.user()
 
-// TODO -> alert pending
-export default async function CreateTaskPage({ params: { id } }: Context) {
-  const activeUser = await auth.user()
-
-  const project = await prisma.project.findUnique({
-    where: { id },
-    include: {
-      team: {
-        include: {
-          memberships: {
-            include: {
-              company: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
-              person: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  })
-
-  // TODO -> add redirect alert.
-  // DRY project validation
-  if (project === null) {
-    redirect('/home/projects')
+  const project = await getMyProject({ id, userId })
+  if (project == null) {
+    notFound()
   }
 
-  const isOwner = project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader)
+  const person = { id: userId, name }
 
-  if (!isOwner) {
-    redirect(`/home/projects/${id}`)
-  }
-
-  return <TaskForm action="/api/tasks" method="POST" projectId={id} team={project.team} />
+  return (
+    <TaskForm
+      action="/api/tasks"
+      method="POST"
+      projectId={id}
+      person={type === 'PERSON' ? person : undefined}
+      memberships={project.team?.memberships}
+    />
+  )
 }

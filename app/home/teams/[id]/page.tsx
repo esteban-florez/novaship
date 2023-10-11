@@ -118,8 +118,6 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             </div>
             <ul className="flex flex-col gap-2">
               {memberships.slice(0, 4).map(membership => {
-                if (team.leader) return undefined
-
                 const member = getMember(membership) as Person & {
                   grades: Grade[]
                 }

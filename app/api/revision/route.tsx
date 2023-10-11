@@ -1,0 +1,54 @@
+import { handleError } from '@/lib/errors/api'
+import { auth } from '@/lib/auth/api'
+import { schema } from '@/lib/validation/schemas/revision'
+import prisma from '@/prisma/client'
+import { type NextRequest, NextResponse } from 'next/server'
+import { url } from '@/lib/utils/url'
+import { getMyTask } from '@/lib/data-fetching/task'
+import { notFound } from 'next/navigation'
+import { getMySubtask } from '@/lib/data-fetching/subtask'
+
+export async function POST(request: NextRequest) {
+  let data
+  try {
+    data = await request.json()
+    const parsed = schema.parse(data)
+    const { id } = await auth.user(request)
+
+    if (parsed.taskId != null) {
+      const task = await getMyTask({ id: parsed.taskId, userId: id })
+      if (task == null) {
+        notFound()
+      }
+
+      await prisma.revision.create({
+        data: {
+          ...parsed,
+          taskId: task?.id,
+        },
+      })
+
+      return NextResponse.redirect(url(`home/projects/${task.projectId}?alert=task_revision_created`))
+    }
+
+    if (parsed.subtaskId != null) {
+      const subtask = await getMySubtask({ id: parsed.subtaskId, userId: id })
+      if (subtask == null) {
+        notFound()
+      }
+
+      await prisma.revision.create({
+        data: {
+          ...parsed,
+          subtaskId: subtask?.id,
+        },
+      })
+
+      return NextResponse.redirect(url(`home/projects/${subtask.task.projectId}?alert=subtask_revision_created`))
+    }
+
+    return NextResponse.redirect(url('home/projects'))
+  } catch (error) {
+    return handleError(error, data)
+  }
+}

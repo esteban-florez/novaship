@@ -4,141 +4,75 @@ import { handleError } from '@/lib/errors/api'
 import prisma from '@/prisma/client'
 import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
+import { deleteTask, getMyTask } from '@/lib/data-fetching/task'
+import collect from '@/lib/utils/collection'
 
-// TODO -> alert pending
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const activeUser = await auth.user(request)
+    const { id: userId } = await auth.user(request)
 
-    const task = await prisma.task.findFirst({
-      where: {
-        id: data.taskId,
-      },
-      include: {
-        project: {
-          include: {
-            team: {
-              include: {
-                memberships: {
-                  include: {
-                    company: {
-                      select: {
-                        id: true,
-                        name: true,
-                      },
-                    },
-                    person: {
-                      select: {
-                        id: true,
-                        name: true,
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    })
-
-    // DRY project validation
-    const isOwner = task?.project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader) ?? false
-
-    if (task === null || !isOwner) {
-      redirect('/home/projects')
+    const task = await getMyTask({ id, userId })
+    if (task == null) {
+      notFound()
     }
 
-    await prisma.task.update({
-      where: {
-        id: data.taskId,
-      },
-      data: {
-        title: parsed.title,
-        description: parsed.description,
-        participations: {
-          deleteMany: {
-            id: {
-              notIn: parsed.members,
+    const { members, projectId, responsable, ...rest } = parsed
+
+    if (members != null) {
+      const taskParticipations = task.participations.map(participation => participation.personId)
+      const newParticipations = collect(members).deleteDuplicatesFrom(taskParticipations)
+
+      await prisma.task.update({
+        where: { id },
+        data: {
+          ...rest,
+          personId: responsable,
+          participations: {
+            deleteMany: {
+              // id: { notIn: members }
+              personId: { notIn: members },
+            },
+            createMany: {
+              data: newParticipations.map(participation => {
+                return {
+                  personId: participation,
+                }
+              }),
             },
           },
-          createMany: {
-            data: parsed.members.map(member => {
-              return {
-                membershipId: member,
-                isLeader: member === parsed.responsable,
-              }
-            }),
-            skipDuplicates: true,
-          },
         },
-      },
-    })
+      })
+    } else {
+      await prisma.task.update({
+        where: { id },
+        data: {
+          ...rest,
+        },
+      })
+    }
 
-    return NextResponse.redirect(url(`/home/projects/${task.projectId}`))
+    return NextResponse.redirect(url(`/home/projects/${task.projectId}?alert=task_updated`))
   } catch (error) {
     return handleError(error, data)
   }
 }
 
-interface Context {
-  params: {
-    id: string
-  }
-}
-
-export async function DELETE(request: NextRequest, { params: { id } }: Context) {
+export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
-    const activeUser = await auth.user(request)
+    const { id: userId } = await auth.user(request)
 
-    const task = await prisma.task.findFirst({
-      where: {
-        id,
-      },
-      include: {
-        project: {
-          include: {
-            team: {
-              include: {
-                memberships: {
-                  include: {
-                    company: {
-                      select: {
-                        id: true,
-                        name: true,
-                      },
-                    },
-                    person: {
-                      select: {
-                        id: true,
-                        name: true,
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    })
-
-    // DRY project validation
-    const isOwner = task?.project.team.memberships.some(member => (member.companyId ?? member.personId) === activeUser.id && member.isLeader) ?? false
-
-    if (task === null || !isOwner) {
-      redirect('/home/projects')
+    const task = await getMyTask({ id, userId })
+    if (task == null) {
+      notFound()
     }
 
-    const deletedTask = await prisma.task.delete({
-      where: { id },
-    })
+    await deleteTask({ id, userId })
 
-    return NextResponse.json(deletedTask)
+    return NextResponse.redirect(url(`/home/projects/${task.projectId}?alert=task_deleted`))
   } catch (error) {
     return handleError(error)
   }

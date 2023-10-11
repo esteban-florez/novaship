@@ -1,7 +1,8 @@
 import SubtaskForm from '@/components/subtasks/SubtaskForm'
-import prisma from '@/prisma/client'
+import { auth } from '@/lib/auth/pages'
+import { getMySubtask } from '@/lib/data-fetching/subtask'
 import { type Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Actualizar subtarea',
@@ -15,31 +16,20 @@ interface Context {
   }
 }
 
-// TODO -> alert pending
-export default async function UpdateSubtaskPage({ params: { id, taskId, subtaskId } }: Context) {
-  const project = await prisma.project.findFirst({
-    where: { id },
-  })
+// TODO -> volver un modal
+export default async function UpdateSubtaskPage({ params: { id, subtaskId } }: Context) {
+  const { id: userId } = await auth.user()
+  const subtask = await getMySubtask({ id: subtaskId, userId })
 
-  if (project === null) redirect('/home/projects')
-
-  const task = await prisma.task.findFirst({
-    where: { id: taskId },
-  })
-
-  if (task === null) redirect(`/home/projects/${id}/tasks`)
-
-  const subtask = await prisma.subtask.findFirst({
-    where: { id: subtaskId },
-  })
-
-  if (subtask === null) redirect(`/home/projects/${id}/tasks/${taskId}`)
+  if (subtask === null) {
+    notFound()
+  }
 
   return (
     <SubtaskForm
       action={`/api/subtasks/${subtask.id}`}
       method="PUT"
-      taskId={task.id}
+      taskId={subtask.task.id}
       projectId={id}
       subtask={subtask}
     />

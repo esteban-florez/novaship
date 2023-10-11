@@ -1,6 +1,6 @@
 - (Listo) Validaciones en formularios.
-- (En progreso) Añadir paginación a ofertas y un filtro de categorías.
-- (Pendiente) Filtrar y cargar ofertas acordes al perfil.
+- (Listo) Añadir paginación a ofertas y un filtro de categorías.
+- (Listo) Filtrar y cargar ofertas acordes al perfil.
 - (Pendiente) Añadir opciones en el perfil profesional de que tipo de ofertas le gustaría ver.
 - (Pendiente) Redirigir al perfil para completarlo si se intenta postular y no tiene perfil.
 - (Pendiente) Añadir un recordatorio / notificación para que completen el perfil.
@@ -11,7 +11,7 @@
 - (Pendiente) Estadísticas de las ofertas laborales para la empresa.
 - (Pendiente) Estadísticas de seguimiento de ofertas.
 - (Listo) Solo chat de proyectos.
-- (Pendiente) Proyectos a parte de ofertas en el inicio (Este no lo entendí del todo).
+- (Listo) Proyectos a parte de ofertas en el inicio (Este no lo entendí del todo).
 
 Monetización
 

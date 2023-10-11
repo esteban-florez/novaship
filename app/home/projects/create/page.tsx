@@ -9,11 +9,9 @@ export const metadata: Metadata = {
 }
 
 export default async function CreateProjectPage() {
-  const { id: userId } = await auth.user()
+  const { id: userId, type } = await auth.user()
 
-  const categories = await prisma.category.findMany({
-    select: { id: true, title: true },
-  })
+  const categories = await prisma.category.findMany({ select: { id: true, title: true } })
   const teams = await getMyTeams({ userId })
 
   return (
@@ -22,6 +20,7 @@ export default async function CreateProjectPage() {
       method="POST"
       categories={categories}
       teams={teams}
+      userType={type}
     />
   )
 }

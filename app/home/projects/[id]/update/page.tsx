@@ -3,7 +3,7 @@ import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
 import ProjectForm from '@/components/projects/ProjectForm'
-import { getProject } from '@/lib/data-fetching/project'
+import { getMyProject, getProject } from '@/lib/data-fetching/project'
 import { getMyTeams } from '@/lib/data-fetching/teams'
 
 export const metadata: Metadata = {
@@ -11,37 +11,18 @@ export const metadata: Metadata = {
 }
 
 export default async function UpdateProjectPage({ params: { id } }: PageContext) {
-  const { id: userId } = await auth.user()
+  const { id: userId, type } = await auth.user()
 
   if (id === null) {
     notFound()
   }
 
-  const project = await getProject({
-    id,
-    where: {
-      team: {
-        memberships: {
-          some: {
-            isLeader: true,
-            OR: [
-              { companyId: userId },
-              { personId: userId },
-            ],
-          },
-        },
-      },
-    },
-  })
-
-  // DRY project validation
+  const project = await getMyProject({ id, userId })
   if (project === null) {
     notFound()
   }
 
-  const categories = await prisma.category.findMany({
-    select: { id: true, title: true }, orderBy: { title: 'asc' },
-  })
+  const categories = await prisma.category.findMany({ select: { id: true, title: true }, orderBy: { title: 'asc' } })
   const teams = await getMyTeams({ userId })
 
   return (
@@ -51,6 +32,7 @@ export default async function UpdateProjectPage({ params: { id } }: PageContext)
       categories={categories}
       teams={teams}
       project={project}
+      userType={type}
     />
   )
 }

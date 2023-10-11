@@ -1,5 +1,10 @@
 import { type UserWithType } from '@/lib/types'
-import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, ListBulletIcon, GlobeAltIcon, StarIcon, UsersIcon, ShieldCheckIcon, CheckBadgeIcon, PlusIcon } from '@heroicons/react/24/outline'
+import {
+  HomeIcon, BriefcaseIcon, AcademicCapIcon,
+  ClipboardDocumentListIcon, UserGroupIcon,
+  GlobeAltIcon, StarIcon, ShieldCheckIcon,
+  CheckBadgeIcon, PlusIcon, UsersIcon,
+} from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
   const links: SidebarLinkWithSubmenu[] = [
@@ -27,7 +32,7 @@ export function sidebarLinks(user: UserWithType) {
       icon: <BriefcaseIcon className="h-6 w-6" />,
       submenu: [
         {
-          href: '/home/offers?filter=all',
+          href: user.type === 'PERSON' ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
           title: 'Lista de ofertas',
           icon: <GlobeAltIcon className="h-6 w-6" />,
         },
@@ -35,14 +40,16 @@ export function sidebarLinks(user: UserWithType) {
           href: '/home/offers/create',
           title: 'Crear ofertas',
           icon: <PlusIcon className="h-6 w-6" />,
+          visible: user.type === 'COMPANY',
         },
         {
           href: '/home/offers?filter=suggested',
           title: 'Mis ofertas',
           icon: <StarIcon className="h-6 w-6" />,
+          visible: user.type === 'COMPANY',
         },
         {
-          href: '/home/offers?filter=suggested',
+          href: '/home/offers?filter=applied',
           title: 'Postulaciones',
           icon: <StarIcon className="h-6 w-6" />,
         },
@@ -54,17 +61,17 @@ export function sidebarLinks(user: UserWithType) {
       icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
       submenu: [
         {
-          href: '/home/teams?filter=all',
+          href: '/home/projects?filter=suggested',
           title: 'Lista de proyectos',
           icon: <UserGroupIcon className="h-6 w-6" />,
         },
         {
-          href: '/home/teams?filter=personal',
+          href: '/home/projects/create',
           title: 'Crear proyecto',
           icon: <UsersIcon className="h-6 w-6" />,
         },
         {
-          href: '/home/projects?filter=all',
+          href: '/home/projects?filter=personal',
           title: 'Mis proyectos',
           icon: <GlobeAltIcon className="h-6 w-6" />,
         },
@@ -90,11 +97,12 @@ export function sidebarLinks(user: UserWithType) {
           title: 'Mis equipos',
           icon: <GlobeAltIcon className="h-6 w-6" />,
         },
-        {
-          href: '/home/projects?filter=personal',
-          title: 'Postulaciones',
-          icon: <ListBulletIcon className="h-6 w-6" />,
-        },
+        // TODO -> añadir funcionalidad
+        // {
+        //   href: '/home/projects?filter=personal',
+        //   title: 'Postulaciones',
+        //   icon: <ListBulletIcon className="h-6 w-6" />,
+        // },
       ],
     },
     {

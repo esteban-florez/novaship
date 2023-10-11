@@ -42,10 +42,6 @@ export default function PageContent({ filter, myTeams, allTeams, pageNumber, nex
     query: 'personal',
   }]
 
-  const handleSearch = (value: string) => {
-    setSearch(value)
-  }
-
   return (
     <>
       <PageTitle

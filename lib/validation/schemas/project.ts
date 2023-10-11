@@ -1,15 +1,10 @@
-import { array, discriminatedUnion, literal, nativeEnum, object, string, type z } from 'zod'
+import { array, nativeEnum, object, string, type z } from 'zod'
 import messages from '../messages'
 import { Visibility } from '@prisma/client'
 
 export type Fields = z.infer<typeof schema>
 
-const TEAM_OPTIONS = {
-  SOLO: 'Solo',
-  TEAM: 'Team',
-} as const
-
-const base = object({
+export const schema = object({
   title: string(messages.string)
     .min(5, messages.min(5))
     .max(20, messages.max(20)),
@@ -20,17 +15,7 @@ const base = object({
   categories: array(string(messages.string)
     .cuid(messages.cuid), messages.array)
     .nonempty(messages.nonempty),
+  teamId: string(messages.string)
+    .cuid(messages.cuid)
+    .optional(),
 })
-
-export const schema = discriminatedUnion(
-  'teamwork', [
-    object({
-      teamwork: literal(TEAM_OPTIONS.SOLO),
-    }).merge(base),
-    object({
-      teamwork: literal(TEAM_OPTIONS.TEAM),
-      teamId: string(messages.string)
-        .cuid(messages.cuid),
-    }).merge(base),
-  ]
-)

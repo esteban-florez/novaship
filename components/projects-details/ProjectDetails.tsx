@@ -7,11 +7,12 @@ interface Props {
   title: string
   description: string
   categories: string[]
+  isPrivate: boolean
   isOwner: boolean
   isMember: boolean
 }
 
-export default function ProjectDetails({ id, title, description, categories, isOwner, isMember }: Props) {
+export default function ProjectDetails({ id, title, description, categories, isPrivate, isOwner, isMember }: Props) {
   return (
     <div className="card rounded-xl bg-white shadow-lg lg:flex-row">
       <div className="relative flex lg:basis-2/6">
@@ -25,6 +26,8 @@ export default function ProjectDetails({ id, title, description, categories, isO
       </div>
       <div className="flex flex-col justify-center rounded-t-none p-4 lg:basis-3/4 xl:rounded-l-none">
         <h3 className="text-xl font-bold sm:text-2xl">{title}</h3>
+        {isPrivate &&
+          <span className="-mt-1 mb-2 font-semibold text-neutral-400">Su proyecto actualmente no es visible para el público</span>}
         <div className="flex flex-wrap gap-2 text-base font-semibold text-neutral-600">
           {categories.map(category => {
             return (
@@ -47,7 +50,6 @@ export default function ProjectDetails({ id, title, description, categories, isO
           </Button>
           {!isMember && !isOwner &&
             <Button
-              style="DEFAULT"
               color="PRIMARY"
               hover="WHITE"
             >
@@ -59,7 +61,6 @@ export default function ProjectDetails({ id, title, description, categories, isO
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Button
                   url={`/home/projects/${id}/update`}
-                  style="DEFAULT"
                   color="PRIMARY"
                   hover="WHITE"
                 >

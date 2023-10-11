@@ -21,12 +21,12 @@ export default function PageTitle({ title, children, subtitle, breadcrumbs }: Pr
           {title}
         </h1>
         {typeof subtitle === 'string' && (
-          <p className="-mt-1.5 font-semibold text-neutral-600">
+          <p className="mt-1 font-semibold text-neutral-600 sm:-mt-1.5">
             {subtitle}
           </p>
         )}
         {typeof subtitle === 'object' && (
-          <span className="-mt-1.5 font-semibold">
+          <span className="mt-1 font-semibold sm:-mt-1.5">
             {subtitle.label}:{' '}
             <Link className="text-primary underline" href={subtitle.url}>
               {subtitle.name}
