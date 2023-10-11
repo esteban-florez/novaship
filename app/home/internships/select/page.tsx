@@ -18,7 +18,7 @@ export default async function SelectInternPage({ searchParams }: SearchParamsPro
 
   const { search, page } = searchParams
   const searchedCI = param(search)
-  const pageNumber = Number(param(page))
+  const pageNumber = Number(param(page) ?? 1)
 
   const where = {
     ci: {

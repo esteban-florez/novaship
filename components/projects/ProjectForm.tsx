@@ -24,7 +24,7 @@ interface Props extends FormProps {
 }
 
 // TODO -> encontrar una manera de obtener teamwork al actualizar
-export default function ProjectForm({ backUrl, method, action, categories, teams, project }: Props) {
+export default function ProjectForm({ method, action, categories, teams, project }: Props) {
   const projectCategories = project?.categories.map(category => category.id)
   let initialTeamwork = null
   if (method === 'PUT') {
@@ -126,7 +126,7 @@ export default function ProjectForm({ backUrl, method, action, categories, teams
               />
             )}
           </FormSection>
-          <FormButtons url={backUrl} disableSubmit={teamwork === null} />
+          <FormButtons disableSubmit={teamwork === null} />
         </form>
       </FormLayout>
     </>

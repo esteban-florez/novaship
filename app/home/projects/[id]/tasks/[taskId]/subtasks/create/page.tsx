@@ -37,7 +37,6 @@ export default async function CreateSubtaskPage({ params: { id, taskId } }: Cont
       method="POST"
       taskId={task.id}
       projectId={id}
-      cancelUrl={`/home/projects/${id}/tasks/${taskId}`}
     />
   )
 }

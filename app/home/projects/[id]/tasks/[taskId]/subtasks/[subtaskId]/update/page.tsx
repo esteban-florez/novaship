@@ -42,7 +42,6 @@ export default async function UpdateSubtaskPage({ params: { id, taskId, subtaskI
       taskId={task.id}
       projectId={id}
       subtask={subtask}
-      cancelUrl={`/home/projects/${id}/tasks/${taskId}`}
     />
   )
 }

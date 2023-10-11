@@ -51,7 +51,6 @@ export default async function UpdateProjectPage({ params: { id } }: PageContext)
       categories={categories}
       teams={teams}
       project={project}
-      backUrl={`/home/projects/${id}`}
     />
   )
 }

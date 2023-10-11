@@ -22,7 +22,6 @@ export default async function CreateProjectPage() {
       method="POST"
       categories={categories}
       teams={teams}
-      backUrl="/home/projects"
     />
   )
 }

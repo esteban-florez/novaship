@@ -74,7 +74,7 @@ export default function CreateTeamForm({ persons, categories }: Props) {
           }}
         />
       </FormSection>
-      <FormButtons url="/home/teams" />
+      <FormButtons />
     </form>
   )
 }

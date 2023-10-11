@@ -29,10 +29,8 @@ export default function Aside({ links }: Props) {
   useEffect(() => {
     const toggleOnResize = () => {
       if (window.innerWidth > 767) {
-        console.log('ac')
         setActive(true)
       } else {
-        console.log('de')
         setActive(false)
       }
     }

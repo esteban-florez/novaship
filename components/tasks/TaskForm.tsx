@@ -25,12 +25,10 @@ interface Props {
 
 // NOTE -> se debe añadir el responsable a la lista de miembros seleccionados
 export default function TaskForm({ action, method, projectId, task, team }: Props) {
-  const taskLeader = task?.participations.find(participation => participation.isLeader)?.membershipId ?? undefined
-  const selectedMembers = task?.participations.map(participation => participation.membershipId) ?? undefined
-  const cancelUrl = `/home/projects/${projectId}`
+  const taskLeader = task?.personId
+  const selectedMembers = task?.participations.map(participation => participation.personId)
 
   const memberships: Array<{ id: string, name: string }> = team.memberships
-    .filter(member => !member.isLeader && member.companyId === null)
     .map(member => ({ id: member.id, name: member.person?.name ?? member.company?.name ?? '' }))
 
   const {
@@ -93,7 +91,7 @@ export default function TaskForm({ action, method, projectId, task, team }: Prop
             }}
           />
         </FormSection>
-        <FormButtons url={cancelUrl} />
+        <FormButtons />
       </form>
     </FormLayout>
   )

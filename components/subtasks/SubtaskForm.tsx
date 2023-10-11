@@ -16,10 +16,9 @@ interface Props {
   taskId: string
   projectId: string
   subtask?: Subtask
-  cancelUrl: string
 }
 
-export default function SubtaskForm({ action, method, taskId, projectId, subtask, cancelUrl }: Props) {
+export default function SubtaskForm({ action, method, taskId, projectId, subtask }: Props) {
   const {
     register, formState: { errors },
     alert, serverErrors, handleSubmit,
@@ -56,7 +55,7 @@ export default function SubtaskForm({ action, method, taskId, projectId, subtask
             errors={errors}
           />
         </FormSection>
-        <FormButtons url={cancelUrl} />
+        <FormButtons />
       </form>
     </FormLayout>
   )
