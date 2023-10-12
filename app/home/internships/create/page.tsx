@@ -27,7 +27,7 @@ export default async function CreateInternshipPage({ searchParams }: SearchParam
   }
 
   const grades = await prisma.grade.findMany()
-  const categories = await prisma.grade.findMany()
+  const categories = await prisma.category.findMany()
 
   return (
     <>
@@ -38,7 +38,11 @@ export default async function CreateInternshipPage({ searchParams }: SearchParam
       <section className="flex flex-col gap-2 p-4 lg:flex-row lg:items-start">
         <div className="rounded-lg bg-white p-4 shadow-md lg:w-2/3">
           <FormSection title="Datos de la pasantía" description="Ingresa la duración de la pasantía en horas, la carrera y las categorías a las que pertenece.">
-            <InternshipForm categories={categories} grades={grades} />
+            <InternshipForm
+              categories={categories}
+              grades={grades}
+              personId={person.id}
+            />
           </FormSection>
         </div>
         <div className="flex flex-col rounded-lg bg-white p-3 shadow-md lg:w-1/3">

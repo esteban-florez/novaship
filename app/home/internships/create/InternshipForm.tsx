@@ -11,13 +11,14 @@ import { type Category, type Grade } from '@prisma/client'
 type Props = React.PropsWithChildren<{
   categories: Category[]
   grades: Grade[]
+  personId: string
 }>
 
-export default function InternshipForm({ categories, grades }: Props) {
+export default function InternshipForm({ categories, grades, personId }: Props) {
   const {
     register, formState: { errors, isSubmitting },
     control, alert, serverErrors, handleSubmit,
-  } = useSubmit({ schema })
+  } = useSubmit({ schema, append: { personId } })
 
   return (
     <form method="POST" action="/api/internships" onSubmit={handleSubmit}>
