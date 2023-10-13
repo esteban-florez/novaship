@@ -5,32 +5,30 @@ import { auth } from '@/lib/auth/pages'
 import getPaginationProps from '@/lib/utils/pagination'
 import { getProjects } from '@/lib/data-fetching/project'
 import { getPersonRelatedIds } from '@/lib/data-fetching/user'
-import { ProjectsFull, ProjectsTab } from '@/lib/types'
+import { type ProjectsFull, type ProjectsTab } from '@/lib/types'
 import { GlobeAltIcon, ListBulletIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
 import PageTitle from '@/components/PageTitle'
 import Link from 'next/link'
 import Button from '@/components/Button'
 import Pagination from '@/components/Pagination'
 import clsx from 'clsx'
-import { Prisma } from '@prisma/client'
+import { type Prisma } from '@prisma/client'
 
 export const metadata: Metadata = {
   title: 'Proyectos',
 }
 
-type FilterQueries = {
+interface FilterQueries {
   suggested: Prisma.ProjectWhereInput
   personal: Prisma.ProjectWhereInput
   all: Prisma.ProjectWhereInput
 }
 
-// TODO -> Mantener la pestaña escogida al regresar a /projects
 export default async function ProjectsPage({ searchParams }: SearchParamsProps) {
   const { id } = await auth.user()
   const { categories } = await getPersonRelatedIds({ id })
 
   // DRY Pagination
-  // TODO ->mejorar logica
   const filter = searchParams.filter ?? 'all'
   const pageNumber = +(searchParams.page ?? 1)
   const FILTER_QUERIES: FilterQueries = {
@@ -44,27 +42,32 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
       OR: [
         { personId: { not: id } },
         {
-          team: {
-            OR: [
-              {
-                leader: {
-                  OR: [
-                    { personId: { not: id } },
-                    { companyId: { not: id } },
-                  ]
-                }
+          AND: [
+            { personId: null },
+            {
+              team: {
+                OR: [
+                  {
+                    leader: {
+                      OR: [
+                        { personId: { not: id } },
+                        { companyId: { not: id } },
+                      ],
+                    },
+                  },
+                  {
+                    memberships: {
+                      some: {
+                        personId: { not: id },
+                      },
+                    },
+                  },
+                ],
               },
-              {
-                memberships: {
-                  some: {
-                    personId: { not: id }
-                  }
-                }
-              }
-            ]
-          }
-        }
-      ]
+            },
+          ],
+        },
+      ],
     },
     personal: {
       OR: [
@@ -77,20 +80,20 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
                   OR: [
                     { personId: id },
                     { companyId: id },
-                  ]
-                }
+                  ],
+                },
               },
               {
                 memberships: {
                   some: {
-                    personId: id
-                  }
-                }
-              }
-            ]
-          }
-        }
-      ]
+                    personId: id,
+                  },
+                },
+              },
+            ],
+          },
+        },
+      ],
     },
     all: {
       visibility: 'PUBLIC',
@@ -107,38 +110,37 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
                       OR: [
                         { personId: id },
                         { companyId: id },
-                      ]
+                      ],
                     },
                   },
                   {
                     memberships: {
                       some: { personId: id },
                     },
-                  }
-                ]
+                  },
+                ],
               },
-            }
-          ]
-        }
-      ]
-    }
+            },
+          ],
+        },
+      ],
+    },
   }
   const totalRecords = await prisma.project.count({ where: FILTER_QUERIES[filter as keyof FilterQueries] })
   const { nextPage, skip, take } = getPaginationProps({ pageNumber, totalRecords })
 
-
   let projects: ProjectsFull[] = []
 
   if (filter === 'suggested') {
-    projects = await getProjects({ where: FILTER_QUERIES['suggested'], take, skip })
+    projects = await getProjects({ where: FILTER_QUERIES.suggested, take, skip })
   }
 
   if (filter === 'personal') {
-    projects = await getProjects({ where: FILTER_QUERIES['personal'], take, skip })
+    projects = await getProjects({ where: FILTER_QUERIES.personal, take, skip })
   }
 
   if (filter === 'all') {
-    projects = await getProjects({ where: FILTER_QUERIES['all'], skip, take })
+    projects = await getProjects({ where: FILTER_QUERIES.all, skip, take })
   }
 
   const PROJECTS_TAB_TRANSLATION = {
@@ -196,7 +198,6 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
         })}
       </PageContent>
       <Pagination
-        url="/home/projects"
         pageNumber={pageNumber}
         nextPage={nextPage}
       />

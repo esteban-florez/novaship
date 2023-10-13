@@ -1,16 +1,16 @@
-"use client"
+'use client'
 
-import { useState } from "react"
+import { useState } from 'react'
 import ProjectsCard from './ProjectsCard'
-import { ProjectsFull } from "@/lib/types"
-import PageNav from "../PageNav"
+import { type ProjectsFull } from '@/lib/types'
+import PageNav from '../PageNav'
 
 type Props = React.PropsWithChildren<{
   projects: ProjectsFull[]
   dropdownLabel: string
 }>
 
-export default function ProjectsContent({ projects, dropdownLabel, children }: Props) {
+export default function PageContent({ projects, dropdownLabel, children }: Props) {
   const [search, setSearch] = useState('')
 
   return (

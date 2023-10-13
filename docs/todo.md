@@ -1,13 +1,8 @@
 # Correciones de Ana
 
 ### Myriam
-- Foto por defecto en boton de perfil.
 - Mensaje más general en el login.
 - Buscar metáfora del logo (cambiarlo) y ponerlo en el sidebar.
-
-### Esteban
-- Cambiar el layout los forms: título del campo, descripción, y debajo el input.
-- Cambiar orden de items del sidebar según prioridad.
 
 # To-Do
 
@@ -29,9 +24,7 @@
 - Mejorar transicion del aside.
 - Añadir backups.
 - Signup con Google.
-- Corregir dropdown de notificaciones que se buguea un poco en responsive (transiciones algo bruscas).
 - Mecanismo para destacar ofertas y equipo mediante suscripción.
-- Ocular aside en mobile por defecto.
 - Añadir chartjs.
 - Loaders para forms.
 - Mantener los filtros al usar la api.

@@ -1,9 +1,9 @@
 import prisma from '@/prisma/client'
 import { type Prisma } from '@prisma/client'
 import { cache } from 'react'
+import { ProjectsFull } from '../types'
 
 // TODO -> optimize query
-// : Prisma.ProjectFindFirstArgs
 const query = {
   include: {
     person: true,
@@ -88,5 +88,5 @@ export const getProjects = cache(async ({ where, skip, take }: QueryConfig<Prism
     orderBy: {
       title: 'asc',
     },
-  })
+  }) as ProjectsFull[]
 })

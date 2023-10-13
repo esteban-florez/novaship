@@ -14,7 +14,7 @@ export function sidebarLinks(user: UserWithType) {
       icon: <AcademicCapIcon className="h-6 w-6" />,
     },
     {
-      href: '/home/offers',
+      href: user.type === 'PERSON' ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
       title: 'Ofertas',
       icon: <BriefcaseIcon className="h-6 w-6" />,
       submenu: [
@@ -43,7 +43,7 @@ export function sidebarLinks(user: UserWithType) {
       ],
     },
     {
-      href: '/home/projects',
+      href: '/home/projects?filter=suggested',
       title: 'Proyectos',
       icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
       submenu: [
@@ -65,7 +65,7 @@ export function sidebarLinks(user: UserWithType) {
       ],
     },
     {
-      href: '/home/teams',
+      href: '/home/teams?filter=all',
       title: 'Equipos',
       icon: <UserGroupIcon className="h-6 w-6" />,
       submenu: [
