@@ -1,14 +1,13 @@
 'use client'
 
-import PageTitle from "@/components/PageTitle"
-import FormButtons from "@/components/forms/FormButtons"
-import FormLayout from "@/components/forms/FormLayout"
-import FormSection from "@/components/forms/FormSection"
-import Textarea from "@/components/forms/inputs/Textarea"
-import useSubmit from "@/lib/hooks/useSubmit"
-import { schema } from "@/lib/validation/schemas/revision"
-import { Revision } from "@prisma/client"
-
+import PageTitle from '@/components/PageTitle'
+import FormButtons from '@/components/forms/FormButtons'
+import FormLayout from '@/components/forms/FormLayout'
+import FormSection from '@/components/forms/FormSection'
+import Textarea from '@/components/forms/inputs/Textarea'
+import useSubmit from '@/lib/hooks/useSubmit'
+import { schema } from '@/lib/validation/schemas/revision'
+import { type Revision } from '@prisma/client'
 
 interface Props extends FormProps {
   revision?: Revision
@@ -19,13 +18,14 @@ interface Props extends FormProps {
 export default function RevisionForm({ method, action, revision, taskId, subtaskId }: Props) {
   const {
     handleSubmit, alert, serverErrors,
-    register, formState: { errors }
+    register, formState: { errors },
   } = useSubmit({
-    schema, method,
+    schema,
+    method,
     append: {
       taskId,
       subtaskId,
-    }
+    },
   })
 
   return (

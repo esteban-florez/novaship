@@ -17,10 +17,10 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
         task: {
           select: {
             id: true,
-            projectId: true
-          }
-        }
-      }
+            projectId: true,
+          },
+        },
+      },
     })
 
     if (revision == null) {
@@ -29,16 +29,16 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     await prisma.revision.update({
       data: {
-        ...parsed
+        ...parsed,
       },
-      where: { id }
+      where: { id },
     })
 
-    if (parsed.taskId != null) {
+    if (parsed.taskId != null && revision.task != null) {
       return NextResponse.redirect(url(`/home/projects/${revision.task?.projectId}/tasks/${revision.task?.id}?alert=task_revision_updated`))
     }
 
-    if (parsed.subtaskId != null) {
+    if (parsed.subtaskId != null && revision.task != null) {
       return NextResponse.redirect(url(`/home/projects/${revision.task?.projectId}/tasks/${revision.task?.id}?alert=subtask_revision_updated`))
     }
 
@@ -60,10 +60,10 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
         task: {
           select: {
             id: true,
-            projectId: true
-          }
-        }
-      }
+            projectId: true,
+          },
+        },
+      },
     })
 
     if (revision == null) {
@@ -71,14 +71,14 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
     }
 
     await prisma.revision.delete({
-      where: { id }
+      where: { id },
     })
 
-    if (revision.taskId != null) {
+    if (revision.taskId != null && revision.task != null) {
       return NextResponse.redirect(url(`/home/projects/${revision.task?.projectId}/tasks/${revision.taskId}?alert=task_revision_deleted`))
     }
 
-    if (revision.subtaskId != null) {
+    if (revision.subtaskId != null && revision.task != null) {
       return NextResponse.redirect(url(`/home/projects/${revision.task?.projectId}/tasks/${revision.task?.id}?alert=subtask_revision_deleted`))
     }
 

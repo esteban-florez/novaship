@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
       data: {
         ...parsed,
         taskId: appendParsed.taskId,
-        status: 'PENDING'
+        status: 'PENDING',
       },
     })
 

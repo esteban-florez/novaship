@@ -1,4 +1,4 @@
-import { type Location, type UserType } from '@prisma/client'
+import { type Location } from '@prisma/client'
 import clsx from 'clsx'
 import PhotoProfile from './steps/shared/PhotoProfile'
 import Categories from './steps/personal/Categories'

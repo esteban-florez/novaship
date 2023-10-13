@@ -1,21 +1,21 @@
-import prisma from "@/prisma/client"
-import { type Prisma } from "@prisma/client"
-import { cache } from "react"
+import prisma from '@/prisma/client'
+import { type Prisma } from '@prisma/client'
+import { cache } from 'react'
 
 const query = {
   include: {
     revisions: true,
     participations: {
       include: {
-        person: true
-      }
+        person: true,
+      },
     },
     subtasks: {
       include: {
-        revisions: true
-      }
+        revisions: true,
+      },
     },
-  }
+  },
 }
 
 export const getMyTask = cache(async ({ id, userId }: { id: string, userId: string }) => {
@@ -31,14 +31,14 @@ export const getMyTask = cache(async ({ id, userId }: { id: string, userId: stri
                 OR: [
                   { personId: userId },
                   { companyId: userId },
-                ]
-              }
-            }
-          }
-        ]
-      }
+                ],
+              },
+            },
+          },
+        ],
+      },
     },
-    ...query
+    ...query,
   })
 })
 
@@ -48,7 +48,7 @@ export const getTask = cache(async ({ id, where }: { id: string, where?: Prisma.
       id,
       ...where,
     },
-    ...query
+    ...query,
   })
 })
 
@@ -65,12 +65,12 @@ export const deleteTask = async ({ id, userId }: { id: string, userId: string })
                 OR: [
                   { personId: userId },
                   { companyId: userId },
-                ]
-              }
-            }
-          }
-        ]
-      }
-    }
+                ],
+              },
+            },
+          },
+        ],
+      },
+    },
   })
 }

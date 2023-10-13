@@ -15,19 +15,19 @@ export async function POST(request: NextRequest) {
 
     if (type === 'PERSON') {
       if (parsed.teamId == null) {
-         ({ id: projectId } = await prisma.project.create({
+        ({ id: projectId } = await prisma.project.create({
           data: {
             ...parsed,
             personId: id,
             categories: {
               connect: parsed.categories.map(category => {
                 return {
-                  id: category
+                  id: category,
                 }
-              })
-            }
-          }
-        }))        
+              }),
+            },
+          },
+        }))
       } else {
         ({ id: projectId } = await prisma.project.create({
           data: {
@@ -35,11 +35,11 @@ export async function POST(request: NextRequest) {
             categories: {
               connect: parsed.categories.map(category => {
                 return {
-                  id: category
+                  id: category,
                 }
-              })
-            }
-          }
+              }),
+            },
+          },
         }))
       }
     }
@@ -51,11 +51,11 @@ export async function POST(request: NextRequest) {
           categories: {
             connect: parsed.categories.map(category => {
               return {
-                id: category
+                id: category,
               }
-            })
-          }
-        }
+            }),
+          },
+        },
       }))
     }
 

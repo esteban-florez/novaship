@@ -14,7 +14,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
     data = await request.json()
     const parsed = schema.parse(data)
     const { id: userId } = await auth.user(request)
-    
+
     const task = await getMyTask({ id, userId })
     if (task == null) {
       notFound()
@@ -34,24 +34,24 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
           participations: {
             deleteMany: {
               // id: { notIn: members }
-              personId: { notIn: members }
+              personId: { notIn: members },
             },
             createMany: {
               data: newParticipations.map(participation => {
                 return {
-                  personId: participation
+                  personId: participation,
                 }
-              })
-            }
-          }
-        }
+              }),
+            },
+          },
+        },
       })
     } else {
       await prisma.task.update({
         where: { id },
         data: {
           ...rest,
-        }
+        },
       })
     }
 

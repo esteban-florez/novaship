@@ -3,7 +3,7 @@ import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
 import ProjectForm from '@/components/projects/ProjectForm'
-import { getMyProject, getProject } from '@/lib/data-fetching/project'
+import { getMyProject } from '@/lib/data-fetching/project'
 import { getMyTeams } from '@/lib/data-fetching/teams'
 
 export const metadata: Metadata = {

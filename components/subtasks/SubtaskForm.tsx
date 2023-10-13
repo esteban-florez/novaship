@@ -54,17 +54,16 @@ export default function SubtaskForm({ action, method, taskId, projectId, subtask
           {method === 'PUT' &&
             <Select
               name="status"
-              label='Estado'
+              label="Estado"
               defaultValue={subtask?.status}
               register={register}
               errors={errors}
               options={{
                 type: 'enum',
                 data: TaskStatus,
-                translation: taskStatuses
+                translation: taskStatuses,
               }}
-            />
-          }
+            />}
         </FormSection>
         <FormButtons label={method === 'PUT' ? 'Actualizar' : 'Registrar'} />
       </form>

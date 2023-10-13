@@ -7,7 +7,7 @@ import Select from '../forms/inputs/Select'
 import Textarea from '../forms/inputs/Textarea'
 import { schema } from '@/lib/validation/schemas/project'
 import useSubmit from '@/lib/hooks/useSubmit'
-import { UserType, Visibility } from '@prisma/client'
+import { type UserType, Visibility } from '@prisma/client'
 import { visibilities } from '@/lib/translations'
 import FormLayout from '../forms/FormLayout'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
@@ -34,9 +34,9 @@ export default function ProjectForm({ method, action, categories, teams, project
 
   const {
     handleSubmit, alert, serverErrors,
-    register, formState: { errors }, control
+    register, formState: { errors }, control,
   } = useSubmit({
-    schema, method
+    schema, method,
   })
 
   return (
@@ -93,7 +93,7 @@ export default function ProjectForm({ method, action, categories, teams, project
           </FormSection>
           <FormSection title="Equipos de trabajo" description="Seleccione como desea trabajar en este proyecto.">
             {!(userType === 'COMPANY' || initialTeamwork === 'group') &&
-              <div className="flex flex-col sm:flex-row w-full justify-between gap-2">
+              <div className="flex w-full flex-col justify-between gap-2 sm:flex-row">
                 <SignupRadio
                   name="teamwork"
                   value="group"
@@ -112,8 +112,7 @@ export default function ProjectForm({ method, action, categories, teams, project
                   active={teamwork === 'single'}
                   onInput={() => { setTeamwork('single') }}
                 />
-              </div>
-            }
+              </div>}
             {teamwork === 'group' && (
               <>
                 <Select
@@ -128,8 +127,7 @@ export default function ProjectForm({ method, action, categories, teams, project
                   }}
                 />
                 {method === 'PUT' &&
-                  <small className='font-semibold text-neutral-600'>No puede cambiar el equipo una vez registrado.</small>
-                }
+                  <small className="font-semibold text-neutral-600">No puede cambiar el equipo una vez registrado.</small>}
               </>
             )}
           </FormSection>

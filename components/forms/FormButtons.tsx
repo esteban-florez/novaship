@@ -5,7 +5,7 @@ export default function FormButtons({ label, disableSubmit }: { label: string, d
   return (
     <div className="flex justify-end gap-x-2 border-t pt-4">
       <GoBackBtn />
-      <button disabled={disableSubmit} className='btn btn-primary'>
+      <button disabled={disableSubmit} className="btn-primary btn">
         <PlusIcon className="h-4 w-4" />
         {label}
       </button>

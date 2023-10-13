@@ -24,7 +24,7 @@ export default function DeleteModal({ title, action }: Props) {
         id={id}
         icon={<TrashIcon className="h-4 w-4" />}
         title="Eliminar"
-        className="join-item btn btn-error text-white hover:bg-white hover:text-neutral-600 hover:border-error"
+        className="btn-error join-item btn text-white hover:border-error hover:bg-white hover:text-neutral-600"
       >
         <h4 className="text-center font-semibold">¿Está seguro que quiere borrarlo?</h4>
         <img src="/delete.webp" alt="Imagen de un registro siendo borrado" className="mx-auto w-60 p-4" />

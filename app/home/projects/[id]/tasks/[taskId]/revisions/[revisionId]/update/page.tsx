@@ -1,10 +1,10 @@
-import RevisionForm from "@/components/projects-details/revisions/RevisionForm";
-import prisma from "@/prisma/client";
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import RevisionForm from '@/components/projects-details/revisions/RevisionForm'
+import prisma from '@/prisma/client'
+import { type Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
-  title: 'Actualizar revisión de tarea'
+  title: 'Actualizar revisión de tarea',
 }
 
 interface Params {
@@ -20,8 +20,8 @@ export default async function UpdateTaskRevisionPage({ params: { taskId, revisio
   const revision = await prisma.revision.findFirst({
     where: {
       id: revisionId,
-      taskId
-    }
+      taskId,
+    },
   })
   if (revision == null) {
     notFound()

@@ -11,5 +11,5 @@ export const schema = object({
   description: string(messages.string)
     .min(15, messages.min(15))
     .max(255, messages.max(255)),
-  status: nativeEnum(TaskStatus, messages.enum).optional()
+  status: nativeEnum(TaskStatus, messages.enum).optional(),
 })

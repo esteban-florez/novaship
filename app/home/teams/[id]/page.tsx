@@ -2,7 +2,7 @@ import { type Metadata } from 'next'
 import prisma from '@/prisma/client'
 import InfoUser from '@/components/offers-details/InfoUser'
 import AvatarIcon from '@/components/AvatarIcon'
-import { getTeamLeader, getMember } from '@/lib/utils/tables'
+import { getMember } from '@/lib/utils/tables'
 import Link from 'next/link'
 import { type Grade, type Person } from '@prisma/client'
 import { ArrowLeftIcon } from '@heroicons/react/24/solid'
@@ -12,6 +12,7 @@ import InlineList from '@/components/InlineList'
 import Collapse from '@/components/Collapse'
 import AvatarInfo from '@/components/offers-details/AvatarInfo'
 import PageTitle from '@/components/PageTitle'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Equipo de trabajo',
@@ -21,12 +22,16 @@ export default async function TeamPage({ params: { id } }: PageContext) {
   const team = await getTeam(id)
 
   const { categories, memberships, projects } = team
-  const leaderMembership = getTeamLeader(team)
-  // CHECK -> no entendi que hacias aqui xd
-  // const leader = getMember(leaderMembership)
   // TODO -> algoritmo de proyecto destacado
   const publicProjects = projects.filter(project => project.visibility === 'PUBLIC')
   const featuredProject = publicProjects[0]
+
+  // TODO -> getTeamLeader function update
+  const leaderMembership = (team.leader.company ?? team.leader.person)
+
+  if (leaderMembership === null) {
+    notFound()
+  }
 
   const location = await prisma.location.findUniqueOrThrow({
     where: { id: leaderMembership.locationId },
@@ -118,8 +123,6 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             </div>
             <ul className="flex flex-col gap-2">
               {memberships.slice(0, 4).map(membership => {
-                if (team.leader) return undefined
-
                 const member = getMember(membership) as Person & {
                   grades: Grade[]
                 }

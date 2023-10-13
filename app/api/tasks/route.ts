@@ -32,14 +32,14 @@ export async function POST(request: NextRequest) {
           participations: {
             create: members?.map(member => {
               return {
-                personId: member
+                personId: member,
               }
-            })
+            }),
           },
           projectId: parsed.projectId,
           personId: responsable,
-          status: 'PENDING'
-        }
+          status: 'PENDING',
+        },
       })
 
       return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks/${task.id}`))
@@ -50,8 +50,8 @@ export async function POST(request: NextRequest) {
         ...rest,
         projectId: parsed.projectId,
         personId: userId,
-        status: 'PENDING'
-      }
+        status: 'PENDING',
+      },
     })
 
     return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks/${task.id}`))

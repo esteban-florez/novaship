@@ -9,20 +9,20 @@ export default function Navbar() {
   const date = format(new Date())
 
   return (
-    <nav className="navbar flex-col sm:flex-row border-b bg-white shadow-md relative">
+    <nav className="navbar relative flex-col border-b bg-white shadow-md sm:flex-row">
       <div className="w-full sm:navbar-start">
         <Link
           href="/home"
-          className="sm:p-2 text-3xl font-bold text-primary mx-auto sm:mx-0"
+          className="mx-auto text-3xl font-bold text-primary sm:mx-0 sm:p-2"
         >
           Novaship
         </Link>
       </div>
-      <div className="w-full sm:navbar-end text-sm sm:text-base">
-        <div className="mx-auto sm:mx-0 flex flex-col items-center px-5 ">
+      <div className="w-full text-sm sm:navbar-end sm:text-base">
+        <div className="mx-auto flex flex-col items-center px-5 sm:mx-0 ">
           <p>{date}</p>
         </div>
-        <div className="absolute top-0 right-2 sm:static">
+        <div className="absolute right-2 top-0 sm:static">
           <ProfileDropdown />
         </div>
         {/* <NotificationDropdown /> */}

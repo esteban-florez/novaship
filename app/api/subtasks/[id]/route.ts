@@ -29,7 +29,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
-    return NextResponse.redirect(url(`/home/projects/${subtask.task.projectId}/tasks/${subtask.taskId}`))
+    return NextResponse.redirect(url(`/home/projects/${subtask.task.projectId}/tasks/${subtask.taskId}?alert=subtask_updated`))
   } catch (error) {
     handleError(error, data)
   }
@@ -40,6 +40,10 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
     const { id: userId } = await auth.user(request)
     const subtask = await getMySubtask({ id, userId })
     const deletedSubtask = await deleteSubtask({ id, userId })
+
+    if (subtask == null) {
+      notFound()
+    }
 
     if (deletedSubtask.count === 0) {
       notFound()

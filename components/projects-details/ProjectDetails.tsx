@@ -26,9 +26,8 @@ export default function ProjectDetails({ id, title, description, categories, isP
       </div>
       <div className="flex flex-col justify-center rounded-t-none p-4 lg:basis-3/4 xl:rounded-l-none">
         <h3 className="text-xl font-bold sm:text-2xl">{title}</h3>
-        {isPrivate && 
-          <span className='-mt-1 mb-2 font-semibold text-neutral-400'>Su proyecto actualmente no es visible para el público</span>
-        }
+        {isPrivate &&
+          <span className="-mt-1 mb-2 font-semibold text-neutral-400">Su proyecto actualmente no es visible para el público</span>}
         <div className="flex flex-wrap gap-2 text-base font-semibold text-neutral-600">
           {categories.map(category => {
             return (

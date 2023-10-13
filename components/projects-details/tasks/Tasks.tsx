@@ -1,5 +1,5 @@
 import TaskItem from './TaskItem'
-import { TasksProps } from '@/lib/types'
+import { type TasksProps } from '@/lib/types'
 
 export default function Tasks({ projectId, tasks }: TasksProps) {
   return (

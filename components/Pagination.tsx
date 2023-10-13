@@ -11,7 +11,7 @@ export default function Pagination({ pageNumber, nextPage }: Props) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const search = searchParams.get('filter')
-  const filterQuery = search == '' ? 'all' : search
+  const filterQuery = search === '' ? 'all' : search
   const prevNumber = pageNumber > 1 ? pageNumber - 1 : 0
   const nextNumber = pageNumber + 1
 

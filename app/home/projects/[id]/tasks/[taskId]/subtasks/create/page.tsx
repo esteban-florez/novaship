@@ -26,9 +26,9 @@ export default async function CreateSubtaskPage({ params: { id, taskId } }: Cont
   if (project === null) redirect('/home/projects')
 
   const task = await getMyTask({ id: taskId, userId })
-if (task === null) {
-  notFound()
-}
+  if (task === null) {
+    notFound()
+  }
 
   return (
     <SubtaskForm

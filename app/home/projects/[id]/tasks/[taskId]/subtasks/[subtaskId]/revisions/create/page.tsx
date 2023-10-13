@@ -1,11 +1,11 @@
-import RevisionForm from "@/components/projects-details/revisions/RevisionForm";
-import { auth } from "@/lib/auth/pages";
-import { getMySubtask } from "@/lib/data-fetching/subtask";
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import RevisionForm from '@/components/projects-details/revisions/RevisionForm'
+import { auth } from '@/lib/auth/pages'
+import { getMySubtask } from '@/lib/data-fetching/subtask'
+import { type Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
-  title: 'Registrar revisión de subtarea'
+  title: 'Registrar revisión de subtarea',
 }
 
 interface Params {

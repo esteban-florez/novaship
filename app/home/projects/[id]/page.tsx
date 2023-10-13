@@ -2,7 +2,6 @@ import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
 import { getProject } from '@/lib/data-fetching/project'
-import { getProjectLeader } from '@/lib/utils/tables'
 import ProjectDetails from '@/components/projects-details/ProjectDetails'
 import TeamGroup from '@/components/projects-details/TeamGroup'
 import prisma from '@/prisma/client'
@@ -17,7 +16,7 @@ export const metadata: Metadata = {
 
 export default async function ProjectPage({ params: { id } }: PageContext) {
   const { id: userId } = await auth.user()
-  const user = await prisma.person.findFirst({ where: { id: userId} })
+  const user = await prisma.person.findFirst({ where: { id: userId } })
 
   if (id === null || user == null) {
     notFound()
@@ -28,11 +27,9 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
     notFound()
   }
 
-  project.tasks
-
   // TODO -> funciones getleader e isMember
   const projectCategories = project.categories.map(category => category.title)
-  const isOwner = getProjectLeader(project).id === userId
+  const isOwner = project.personId === userId ?? (project.team?.leader.personId ?? project.team?.leader.companyId === userId)
   const isMember = (project.team?.memberships.find(member => member.personId === userId)) != null
 
   return (
@@ -50,26 +47,24 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
           />
         </div>
         {(isOwner || isMember) &&
-          <div className={clsx("col-span-7", project.personId !== userId && "lg:col-span-5")}>
+          <div className={clsx('col-span-7', project.personId !== userId && 'lg:col-span-5')}>
             <div className="card rounded-lg bg-white p-5 shadow-lg">
               <div className="mb-4 flex-col">
-                <Link href={`/home/projects/${id}/tasks/create`} className="btn btn-block sm:w-auto btn-primary hover:bg-white hover:border-primary hover:text-neutral-600">
-                  <PlusIcon className="w-5 h-5" />
+                <Link href={`/home/projects/${id}/tasks/create`} className="btn-primary btn-block btn hover:border-primary hover:bg-white hover:text-neutral-600 sm:w-auto">
+                  <PlusIcon className="h-5 w-5" />
                   Nueva tarea
                 </Link>
               </div>
               <Tasks projectId={project.id} tasks={project.tasks} />
             </div>
-          </div>
-        }
+          </div>}
         {project.personId !== userId &&
           <div className="col-span-7 lg:col-span-2 lg:col-start-6">
             <TeamGroup
               person={user}
               team={project.team}
             />
-          </div>
-        }
+          </div>}
       </div>
     </section>
   )

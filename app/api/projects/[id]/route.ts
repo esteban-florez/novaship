@@ -27,12 +27,12 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
                 OR: [
                   { personId: userId },
                   { companyId: userId },
-                ]
-              }
+                ],
+              },
             },
-          }
-        ]
-      }
+          },
+        ],
+      },
     })
 
     if (project === null) {
@@ -44,10 +44,10 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     if (type === 'PERSON') {
       if (parsed.teamId != null) {
-        const updateParsed = { personId: null,...parsed }
+        const updateParsed = { personId: null, ...parsed }
         const { teamId, ...rest } = updateParsed
         const parsedData = project.teamId !== parsed.teamId ? { teamId: project.teamId ?? teamId, ...rest } : updateParsed
-  
+
         await prisma.project.update({
           where: { id },
           data: {
@@ -128,12 +128,12 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
                 OR: [
                   { personId: userId },
                   { companyId: userId },
-                ]
-              }
+                ],
+              },
             },
-          }
-        ]
-      }
+          },
+        ],
+      },
     })
 
     return NextResponse.redirect(url('/home/projects?alert=project_deleted'))

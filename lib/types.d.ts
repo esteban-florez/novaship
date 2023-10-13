@@ -62,13 +62,21 @@ type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 // ----------------------------------------------------------------------
 interface TeamsFull extends Team {
   categories: Category[]
-  leader: Leader
-  projects: Project[]
+  leader: Leader & {
+    person: Person
+    company: Company
+  }
+  projects: Array<Project & {
+    categories: Category[]
+  }>
   contracts: Contract[]
   invitations: Invitation[]
   memberships: Array<
   Membership & {
-    person: Person
+    person: Person & {
+      grades: Grade[]
+      location: Location
+    }
   }
   >
 }

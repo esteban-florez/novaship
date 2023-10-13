@@ -37,7 +37,7 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
       <div className="px-4 py-2">
         <div className="border-b">
           <h2 className="-mb-2 text-xl font-semibold">{task.title}</h2>
-          <small className='text-semibold text-neutral-600'>Encargado - {person?.name}</small>
+          <small className="font-semibold text-neutral-600">Encargado - {person?.name}</small>
         </div>
         <p className="mb-2 text-neutral-600">{task.description}</p>
         <ul>
@@ -50,19 +50,19 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
           })}
         </ul>
         <div className="mb-2">
-          <h6 className='font-semibold'>Revisiones</h6>
+          <h6 className="font-semibold">Revisiones</h6>
           <ul>
             {task.revisions.map(revision => {
               return (
-                <li key={task.id} className='flex justify-between border rounded-md py-2 px-4 hover:bg-neutral-300 transition-all delay-75 duration-75'>
+                <li key={task.id} className="flex justify-between rounded-md border px-4 py-2 transition-all delay-75 duration-75 hover:bg-neutral-300">
                   <div>
-                    <p className='-mb-2'>{revision.content}</p>
-                    <small className='font-semibold text-neutral-600'>{format(revision.createdAt)}</small>
+                    <p className="-mb-2">{revision.content}</p>
+                    <small className="font-semibold text-neutral-600">{format(revision.createdAt)}</small>
                   </div>
                   <div className="join">
                     <div className="tooltip" data-tip="Editar revisión">
-                      <Link href={`/home/projects/${id}/tasks/${taskId}/revisions/${revision.id}/update`} className='join-item btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary'>
-                        <PencilIcon className='h-4 w-4' />
+                      <Link href={`/home/projects/${id}/tasks/${taskId}/revisions/${revision.id}/update`} className="btn-primary join-item btn hover:border-primary hover:bg-white hover:text-neutral-600">
+                        <PencilIcon className="h-4 w-4" />
                       </Link>
                     </div>
                     <div className="tooltip" data-tip="Borrar revisión">
@@ -75,7 +75,7 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
           </ul>
         </div>
         <div className="mt-2 flex flex-col gap-2">
-          <h6 className='font-semibold'>Subtareas</h6>
+          <h6 className="font-semibold">Subtareas</h6>
           {task.subtasks.map(subtask => {
             return (
               <SubtaskItem

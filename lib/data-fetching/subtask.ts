@@ -1,14 +1,14 @@
-import prisma from "@/prisma/client"
-import { cache } from "react"
+import prisma from '@/prisma/client'
+import { cache } from 'react'
 
 const query = {
   include: {
     task: {
       include: {
-        project: true
-      }
-    }
-  }
+        project: true,
+      },
+    },
+  },
 }
 
 export const getMySubtask = cache(async ({ id, userId }: { id: string, userId: string }) => {
@@ -28,17 +28,17 @@ export const getMySubtask = cache(async ({ id, userId }: { id: string, userId: s
                       OR: [
                         { personId: userId },
                         { companyId: userId },
-                      ]
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
+                      ],
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
     },
-    ...query
+    ...query,
   })
 })
 
@@ -59,15 +59,15 @@ export const deleteSubtask = async ({ id, userId }: { id: string, userId: string
                       OR: [
                         { personId: userId },
                         { companyId: userId },
-                      ]
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
+                      ],
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
   })
 }

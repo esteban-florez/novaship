@@ -97,8 +97,7 @@ export default function TaskForm({ action, method, projectId, person, task, memb
                 data: members,
               }}
             />
-          </FormSection>
-        }
+          </FormSection>}
         <FormButtons label={method === 'PUT' ? 'Actualizar' : 'Registrar'} />
       </form>
     </FormLayout>

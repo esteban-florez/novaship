@@ -48,6 +48,7 @@ export const getProject = cache(async ({ id, where }: { id: string, where?: Pris
   })
 })
 
+// TODO -> check ts error, remove as ProjectsFull
 export const getMyProject = cache(async ({ id, userId }: { id: string, userId: string }) => {
   return await prisma.project.findFirst({
     where: {
@@ -67,7 +68,7 @@ export const getMyProject = cache(async ({ id, userId }: { id: string, userId: s
       ],
     },
     ...query,
-  })
+  }) as ProjectsFull
 })
 
 export const deleteProject = async ({ id, where }: { id: string, where: Prisma.ProjectWhereInput }) => {
@@ -79,6 +80,7 @@ export const deleteProject = async ({ id, where }: { id: string, where: Prisma.P
   })
 }
 
+// TODO -> check ts error, remove as ProjectsFull
 export const getProjects = cache(async ({ where, skip, take }: QueryConfig<Prisma.ProjectWhereInput>) => {
   return await prisma.project.findMany({
     where,

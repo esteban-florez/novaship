@@ -24,8 +24,8 @@ export async function POST(request: NextRequest) {
       await prisma.revision.create({
         data: {
           ...parsed,
-          taskId: task?.id
-        }
+          taskId: task?.id,
+        },
       })
 
       return NextResponse.redirect(url(`home/projects/${task.projectId}?alert=task_revision_created`))
@@ -40,8 +40,8 @@ export async function POST(request: NextRequest) {
       await prisma.revision.create({
         data: {
           ...parsed,
-          subtaskId: subtask?.id
-        }
+          subtaskId: subtask?.id,
+        },
       })
 
       return NextResponse.redirect(url(`home/projects/${subtask.task.projectId}?alert=subtask_revision_created`))
