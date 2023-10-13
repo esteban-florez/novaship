@@ -1,7 +1,7 @@
 import prisma from '@/prisma/client'
 import { type Prisma } from '@prisma/client'
 import { cache } from 'react'
-import { ProjectsFull } from '../types'
+import { type ProjectsFull } from '../types'
 
 // TODO -> optimize query
 const query = {
@@ -12,8 +12,8 @@ const query = {
         leader: {
           include: {
             company: true,
-            person: true
-          }
+            person: true,
+          },
         },
         memberships: {
           include: {
@@ -27,15 +27,15 @@ const query = {
       include: {
         subtasks: {
           include: {
-            revisions: true
-          }
+            revisions: true,
+          },
         },
         revisions: true,
-        participations: true
-      }
+        participations: true,
+      },
     },
-    files: true
-  }
+    files: true,
+  },
 }
 
 export const getProject = cache(async ({ id, where }: { id: string, where?: Prisma.ProjectWhereInput }) => {
@@ -60,11 +60,11 @@ export const getMyProject = cache(async ({ id, userId }: { id: string, userId: s
               OR: [
                 { personId: userId },
                 { companyId: userId },
-              ]
-            }
-          }
-        }
-      ]
+              ],
+            },
+          },
+        },
+      ],
     },
     ...query,
   })
@@ -74,8 +74,8 @@ export const deleteProject = async ({ id, where }: { id: string, where: Prisma.P
   return await prisma.project.deleteMany({
     where: {
       id,
-      ...where
-    }
+      ...where,
+    },
   })
 }
 

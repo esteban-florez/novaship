@@ -4,8 +4,6 @@ import prisma from '@/prisma/client'
 import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
-import { object, string } from 'zod'
-import messages from '@/lib/validation/messages'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
