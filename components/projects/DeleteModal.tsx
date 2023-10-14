@@ -2,9 +2,9 @@
 
 import { TrashIcon } from '@heroicons/react/24/outline'
 import Modal from '../modal/Modal'
-import useDeleteRequest from '@/lib/hooks/useDeleteRequest'
 import CloseModalButton from '../modal/CloseModalButton'
 import { useId } from 'react'
+import useSubmit from '@/lib/hooks/useSubmit'
 
 interface Props {
   title: string
@@ -15,7 +15,7 @@ interface Props {
 // TODO -> mover a /components o una nueva carpeta de modales
 export default function DeleteModal({ title, action, showLabel = false }: Props) {
   const id = useId()
-  const { handleSubmit, alert, serverErrors } = useDeleteRequest()
+  const { handleSubmit, alert, serverErrors } = useSubmit({ method: 'DELETE' })
 
   return (
     <>
