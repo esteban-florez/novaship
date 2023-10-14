@@ -1,6 +1,5 @@
 import { ChevronDoubleRightIcon, EnvelopeOpenIcon, EyeIcon, PencilIcon, MapPinIcon, PhoneIcon, DocumentTextIcon, FireIcon, ClipboardIcon } from '@heroicons/react/24/outline'
 import { type Person } from '@prisma/client'
-import Button from '../Button'
 
 interface Props {
   person: (Person & {
@@ -49,10 +48,11 @@ export default function PersonProfile({ person }: Props) {
                     )
                   })}
                 </div>
-                <Button url="#" color="SECONDARY" hover="WHITE">
+                {/* FUTURE LINK */}
+                <button className="btn btn-secondary hover:bg-white hover:text-neutral-600 hover:border-secondary">
                   <PencilIcon className="h-5 w-5" />
                   Editar perfil
-                </Button>
+                </button>
               </div>
             </div>
           </div>
@@ -86,10 +86,11 @@ export default function PersonProfile({ person }: Props) {
               <ClipboardIcon className="h-6 w-6 text-neutral-700" />
               <h4 className="text-xl font-bold">Curriculum</h4>
             </div>
-            <Button url="#" color="PRIMARY" hover="WHITE">
-              <EyeIcon className="h-5 w-5" />
-              Ver curriculum
-            </Button>
+            {/* FUTURE LINK */}
+            <button className="btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary">
+              <PencilIcon className="h-5 w-5" />
+              Editar perfil
+            </button>
             <div className="divider" />
             <h4 className="mb-2 text-xl font-bold">Información personal</h4>
             <ul className="line-clamp-2 flex flex-col gap-1.5 text-base leading-none">

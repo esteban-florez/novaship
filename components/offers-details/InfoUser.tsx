@@ -27,13 +27,6 @@ export default function InfoUser({ owner, location, description, verification = 
           </div>
         </div>
       )}
-      {/* TEMPORAL DISABLED */}
-      {/* <Button
-        url="#"
-        color="SECONDARY"
-      >
-        Ver más
-      </Button> */}
     </>
   )
 }

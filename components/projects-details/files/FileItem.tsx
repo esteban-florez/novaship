@@ -2,8 +2,8 @@ import { PencilIcon, EyeIcon } from '@heroicons/react/24/outline'
 import { type Participation, type File, type Membership } from '@prisma/client'
 import DeleteModal from '@/components/projects/DeleteModal'
 import AvatarIcon from '@/components/AvatarIcon'
-import Button from '@/components/Button'
 import clsx from 'clsx'
+import Link from 'next/link'
 
 interface Props {
   projectId: string
@@ -48,22 +48,18 @@ export default function FileItem({ projectId, file }: Props) {
         </div>
       </main>
       <div className="mt-2 flex flex-col gap-2 text-sm sm:flex-row">
-        <Button
-          url={`/home/projects/${projectId}/files/${file.id}`}
-          color="WHITE"
-          hover="PRIMARY"
-        >
-          <EyeIcon className="h-5 w-5" />
-          Ver
-        </Button>
-        <Button
-          url={`/home/projects/${projectId}/files/${file.id}/update`}
-          color="WHITE"
-          hover="PRIMARY"
-        >
-          <PencilIcon className="h-5 w-5" />
-          Editar
-        </Button>
+        <Link href={`/home/projects/${projectId}/files/${file.id}`}>
+          <button className="btn bg-white hover:btn-primary">
+            <EyeIcon className="h-5 w-5" />
+            Ver
+          </button>
+        </Link>
+        <Link href={`/home/projects/${projectId}/files/${file.id}/update`}>
+          <button className="btn bg-white hover:btn-primary">
+            <PencilIcon className="h-5 w-5" />
+            Editar
+          </button>
+        </Link>
         <DeleteModal title={file.title} action={`/api/files/${file.id}`} />
       </div>
     </section>

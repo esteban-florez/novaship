@@ -2,8 +2,7 @@ import SubtaskItem from '@/components/projects/SubtaskItem'
 import { type Metadata } from 'next'
 import FormLayout from '@/components/forms/FormLayout'
 import { notFound } from 'next/navigation'
-import Button from '@/components/Button'
-import { ArrowLeftIcon, PencilIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { PencilIcon, PlusIcon } from '@heroicons/react/24/outline'
 import { getMyTask } from '@/lib/data-fetching/task'
 import { auth } from '@/lib/auth/pages'
 import { format } from '@/lib/utils/date'
@@ -11,6 +10,7 @@ import Link from 'next/link'
 import DeleteModal from '@/components/projects/DeleteModal'
 import prisma from '@/prisma/client'
 import AvatarIcon from '@/components/AvatarIcon'
+import GoBackBtn from '@/components/GoBackBtn'
 
 export const metadata: Metadata = {
   title: 'Detalles de Tarea',
@@ -90,23 +90,13 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
           })}
         </div>
         <div className="mt-2 flex justify-end gap-x-2 text-sm">
-          <Button
-            url={`/home/projects/${task.projectId}`}
-            style="OUTLINE"
-            color="EMPTY"
-            hover="SECONDARY"
-          >
-            <ArrowLeftIcon className="h-4 w-4" />
-            Proyecto
-          </Button>
-          <Button
-            url={`/home/projects/${task.projectId}/tasks/${taskId}/subtasks/create`}
-            style="DEFAULT"
-            color="PRIMARY"
-          >
-            <PlusIcon className="h-4 w-4" />
-            Subtarea
-          </Button>
+          <GoBackBtn label='Proyecto' />
+          <Link href={`/home/projects/${task.projectId}/tasks/${taskId}/subtasks/create`}>
+            <button className='btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary'>
+              <PlusIcon className="h-4 w-4" />
+              Subtarea
+            </button>
+          </Link>
         </div>
       </div>
     </FormLayout>

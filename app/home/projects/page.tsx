@@ -9,7 +9,6 @@ import { type ProjectsFull, type ProjectsTab } from '@/lib/types'
 import { GlobeAltIcon, ListBulletIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
 import PageTitle from '@/components/PageTitle'
 import Link from 'next/link'
-import Button from '@/components/Button'
 import Pagination from '@/components/Pagination'
 import clsx from 'clsx'
 import { type Prisma } from '@prisma/client'
@@ -172,12 +171,10 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
         subtitle="Descubre los proyectos que rondan la web."
       >
         <Link href="/home/projects/create">
-          <Button
-            color="PRIMARY"
-          >
+          <button className="btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary">
             <PlusIcon className="h-6 w-6" />
             Agregar
-          </Button>
+          </button>
         </Link>
       </PageTitle>
       <PageContent dropdownLabel={`Categorías - ${PROJECTS_TAB_TRANSLATION[filter as ProjectsTab]}`} projects={projects}>

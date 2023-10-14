@@ -1,6 +1,7 @@
-import { ArrowLeftIcon, PencilIcon } from '@heroicons/react/24/outline'
-import Button from '../Button'
+import { PencilIcon } from '@heroicons/react/24/outline'
 import DeleteModal from '../projects/DeleteModal'
+import Link from 'next/link'
+import GoBackBtn from '../GoBackBtn'
 
 interface Props {
   id: string
@@ -39,37 +40,25 @@ export default function ProjectDetails({ id, title, description, categories, isP
         </div>
         <p className="line-clamp-6 py-3">{description}</p>
         <div className="mx-auto flex w-full flex-col justify-between gap-3 sm:mx-0 sm:w-auto sm:flex-row sm:gap-1 sm:text-sm lg:gap-2">
-          <Button
-            url="/home/projects"
-            style="DEFAULT"
-            color="NEUTRAL"
-            hover="WHITE"
-          >
-            <ArrowLeftIcon className="h-4 w-4" />
-            Volver al listado
-          </Button>
+          <GoBackBtn label='Volver al listado' />
           {!isMember && !isOwner &&
-            <Button
-              color="PRIMARY"
-              hover="WHITE"
-            >
+            <button className='btn btn-primary hover:bg-white hover:text-neutral hover:border-primary'>
               <PencilIcon className="h-4 w-4" />
               ¡Aplicar!
-            </Button>}
+            </button>}
           {isOwner &&
             (
               <div className="flex flex-col gap-3 sm:flex-row">
-                <Button
-                  url={`/home/projects/${id}/update`}
-                  color="PRIMARY"
-                  hover="WHITE"
-                >
-                  <PencilIcon className="h-4 w-4" />
-                  Actualizar
-                </Button>
+                <Link href={`/home/projects/${id}/update`}>
+                  <button className='btn btn-primary hover:bg-white hover:text-neutral hover:border-primary'>
+                    <PencilIcon className="h-4 w-4" />
+                    Actualizar
+                  </button>
+                </Link>
                 <DeleteModal
                   title={title}
                   action={`/api/projects/${id}`}
+                  showLabel
                 />
               </div>
             )}

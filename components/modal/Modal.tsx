@@ -12,10 +12,8 @@ export default function Modal({ id, icon, title, className, children, forceOpen 
   return (
     <>
       <label htmlFor={id} className={className}>
-        <div className="flex items-center">
-          {icon}
-          <p className="ml-1 text-sm">{title}</p>
-        </div>
+        {icon}
+        {title}
       </label>
       {forceOpen
         ? (

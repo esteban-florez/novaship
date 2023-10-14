@@ -65,7 +65,7 @@ export default function TaskItem({ projectId, task }: TaskProps) {
         <h5 className="-mb-2 font-bold">{task.title}</h5>
         <small className="font-semibold text-neutral-600">{format(task.createdAt)}</small>
         <span className="my-1 flex gap-2 font-semibold text-neutral-600">{taskStatus()}</span>
-        <p className="mt-0 line-clamp-3 sm:-mt-1">{task.description}</p>
+        <p className="mt-0 line-clamp-3 leading-tight sm:-mt-1">{task.description}</p>
       </div>
       <div className="col-span-full sm:col-span-3">
         <div className="join">
@@ -84,12 +84,14 @@ export default function TaskItem({ projectId, task }: TaskProps) {
               <EyeIcon className="h-4 w-4" />
             </Link>
           </div>
+          <div className="tooltip" data-tip="Borrar tarea">
+            <DeleteModal title={task.title} action={`/api/tasks/${task.id}`} />
+          </div>
           <div className="tooltip" data-tip="Añadir revisión">
             <Link href={`/home/projects/${projectId}/tasks/${task.id}/revisions/create`} className="btn-primary join-item btn hover:border-primary hover:bg-white hover:text-neutral-600">
               <ChatBubbleBottomCenterTextIcon className="h-4 w-4" />
             </Link>
           </div>
-          <DeleteModal title={task.title} action={`/api/tasks/${task.id}`} />
         </div>
       </div>
     </section>

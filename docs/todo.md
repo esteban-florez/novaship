@@ -32,3 +32,13 @@
 - Validación: no puede aplicarse a un proyecto que sea personal.
 - Hacer un nuevo componente modal.
 - Pasar subtareas y revisiones a modales.
+
+# Plugins
+
+- PDF downloader.
+- Graficos.
+
+# Database
+
+- Model subtask participation
+- Model log event
