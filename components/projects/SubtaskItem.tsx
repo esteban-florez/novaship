@@ -49,13 +49,13 @@ export default function SubtaskItem({ projectId, taskId, subtask, editAction, re
             <PencilIcon className="h-4 w-4" />
           </Link>
         </div>
+        <div className="tooltip" data-tip="Borrar subtarea">
+          <DeleteModal title={subtask.title} action={`/api/subtasks/${subtask.id}`} />
+        </div>
         <div className="tooltip" data-tip="Añadir revisión">
           <Link href={revisionAction} className="btn-primary join-item btn hover:border-primary hover:bg-white hover:text-neutral-600">
             <PlusIcon className="h-4 w-4" />
           </Link>
-        </div>
-        <div className="tooltip" data-tip="Borrar subtarea">
-          <DeleteModal title={subtask.title} action={`/api/subtasks/${subtask.id}`} />
         </div>
       </div>
     </section>
