@@ -46,25 +46,24 @@ model Person {
 }
 
 model Company {
-  id            String       @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String
-  email         String       @unique
-  rif           String       @unique
+  email         String    @unique
+  rif           String    @unique
   image         String?
-  description   String       @db.Text
-  phone         String       @unique
+  description   String    @db.Text
+  phone         String    @unique
   certification String
-  authUser      AuthUser     @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  authUserId    String       @unique
-  location      Location     @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authUser      AuthUser  @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authUserId    String    @unique
+  location      Location  @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   locationId    String
   offers        Offer[]
-  internships   Internship[]
   vacants       Vacant[]
   leaderships   Leader[]
   verifiedAt    DateTime?
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   // deletedAt     DateTime?
 }
 
@@ -243,6 +242,7 @@ model Offer {
   schedule      Schedule
   salary        Float
   limit         Int
+  hidden        Boolean    @default(false)
   company       Company    @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   companyId     String
   location      Location   @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -261,7 +261,7 @@ model Offer {
 
 model Hiring {
   id         String     @id @default(cuid())
-  status     Status?    @default(PENDING)
+  status     Status     @default(PENDING)
   interested Interested
   offer      Offer      @relation(fields: [offerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   offerId    String
@@ -279,13 +279,11 @@ model Internship {
   id           String        @id @default(cuid())
   hours        Int
   completed    Int
-  stage        Stage         @default(PENDING)
+  status       Status        @default(PENDING)
   person       Person        @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   personId     String
   institute    Institute     @relation(fields: [instituteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   instituteId  String
-  company      Company?      @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  companyId    String?
   grade        Grade         @relation(fields: [gradeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   gradeId      String
   recruitments Recruitment[]
@@ -299,6 +297,7 @@ model Vacant {
   id           String        @id @default(cuid())
   title        String
   limit        Int
+  hidden       Boolean       @default(false)
   job          Job           @relation(fields: [jobId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   jobId        String
   company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -317,7 +316,7 @@ model Vacant {
 
 model Recruitment {
   id           String     @id @default(cuid())
-  status       Status?    @default(PENDING)
+  status       Status     @default(PENDING)
   interested   Interested
   internship   Internship @relation(fields: [internshipId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   internshipId String
@@ -503,14 +502,6 @@ enum UserType {
   COMPANY
   INSTITUTE
   ADMIN
-}
-
-enum Stage {
-  PENDING
-  ACCEPTED
-  ACTIVE
-  COMPLETED
-  DROPPED
 }
 
 enum Interested {
