@@ -10,7 +10,7 @@ type Props = React.PropsWithChildren<{
   dropdownLabel: string
 }>
 
-export default function ProjectsContent({ projects, dropdownLabel, children }: Props) {
+export default function PageContent({ projects, dropdownLabel, children }: Props) {
   const [search, setSearch] = useState('')
 
   return (

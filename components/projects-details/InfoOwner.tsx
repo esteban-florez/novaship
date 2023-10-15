@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import AvatarIcon from '../AvatarIcon'
-import Button from '../Button'
+import Link from 'next/link'
 
 interface Props {
   id: string
@@ -20,15 +20,12 @@ export default function InfoOwner({ name, description, id, members }: Props) {
         </div>
       </div>
       <p className="mb-1 line-clamp-3 text-sm">{description}</p>
-      <Button
-        url={`/home/teams/${id}`}
-        style="DEFAULT"
-        color="SECONDARY"
-        hover="WHITE"
-      >
-        {members != null ? 'Ver equipo' : 'Ver perfil'}
-        <ArrowRightIcon className="h-4 w-4" />
-      </Button>
+      <Link href={`/home/teams/${id}`}>
+        <button className='btn btn-block btn-secondary hover:bg-white hover:text-neutral-600 hover:border-secondary'>
+          {members != null ? 'Ver equipo' : 'Ver perfil'}
+          <ArrowRightIcon className="h-4 w-4" />
+        </button>
+      </Link>
     </>
   )
 }

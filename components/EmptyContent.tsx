@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import Button from './Button'
+import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   title: string
@@ -22,14 +22,11 @@ export default function EmptyContent({ title, children, image, button, className
       <p className="font-semibold text-gray-500 sm:text-lg">{children}</p>
       {hasButton &&
         <div className="mx-auto">
-          <Button
-            url={button.url}
-            style="DEFAULT"
-            color="PRIMARY"
-            hover="WHITE"
-          >
-            {button.text}
-          </Button>
+          <Link href={button.url}>
+            <button className='btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary'>
+              {button.text}
+            </button>
+          </Link>
         </div>}
     </article>
   )

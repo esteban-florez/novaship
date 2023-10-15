@@ -2,7 +2,7 @@ import { type Metadata } from 'next'
 import prisma from '@/prisma/client'
 import InfoUser from '@/components/offers-details/InfoUser'
 import AvatarIcon from '@/components/AvatarIcon'
-import { getTeamLeader, getMember } from '@/lib/utils/tables'
+import { getMember } from '@/lib/utils/tables'
 import Link from 'next/link'
 import { type Grade, type Person } from '@prisma/client'
 import { ArrowLeftIcon } from '@heroicons/react/24/solid'
@@ -12,6 +12,8 @@ import InlineList from '@/components/InlineList'
 import Collapse from '@/components/Collapse'
 import AvatarInfo from '@/components/offers-details/AvatarInfo'
 import PageTitle from '@/components/PageTitle'
+import { notFound } from 'next/navigation'
+import GoBackBtn from '@/components/GoBackBtn'
 
 export const metadata: Metadata = {
   title: 'Equipo de trabajo',
@@ -21,12 +23,16 @@ export default async function TeamPage({ params: { id } }: PageContext) {
   const team = await getTeam(id)
 
   const { categories, memberships, projects } = team
-  const leaderMembership = getTeamLeader(team)
-  // CHECK -> no entendi que hacias aqui xd
-  // const leader = getMember(leaderMembership)
   // TODO -> algoritmo de proyecto destacado
   const publicProjects = projects.filter(project => project.visibility === 'PUBLIC')
   const featuredProject = publicProjects[0]
+
+  // TODO -> getTeamLeader function update
+  const leaderMembership = (team.leader.company ?? team.leader.person)
+
+  if (leaderMembership === null) {
+    notFound()
+  }
 
   const location = await prisma.location.findUniqueOrThrow({
     where: { id: leaderMembership.locationId },
@@ -45,11 +51,8 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             <InlineList items={categories.map(({ title }) => title)} />
             <p className="mt-3 line-clamp-2">{team.description}</p>
             <div className="mt-4 flex flex-col justify-between gap-2 md:flex-row">
-              <Link href="/home/teams" className="btn-neutral btn">
-                <ArrowLeftIcon className="h-5 w-5" />
-                Volver al listado
-              </Link>
-              <button className="btn-primary btn">
+              <GoBackBtn label='Volver al listado' />
+              <button className="btn-primary btn hover:bg-white hover:text-neutral-600 hover:border-primary">
                 <BriefcaseIcon className="h-5 w-5" />
                 Contratar equipo
               </button>
@@ -110,7 +113,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
           <div className="flex flex-col rounded-md bg-white p-4 shadow-md first-letter:w-full">
             <div className="flex items-center justify-between pb-2">
               <h2 className="pl-2 text-lg font-semibold">
-                Miembros ({memberships.length - 1})
+                Miembros ({memberships.length})
               </h2>
               <Link href={`/home/teams/${team.id}/memberships`} className="text-sm font-semibold text-primary underline transition-all">
                 Ver todos

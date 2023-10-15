@@ -15,5 +15,4 @@
   "editor.tabSize": 2,
   "files.eol": "\n",
   "eslint.run": "onSave",
-  "typescript.tsdk": "node_modules/typescript/lib",
 }

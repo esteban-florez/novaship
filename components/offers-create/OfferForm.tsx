@@ -26,7 +26,7 @@ interface Props extends FormProps {
   })
 }
 
-export default function OfferForm({ offer, skills, categories, jobs, locations, action, method }: Props) {
+export default function OfferForm({ backUrl, offer, skills, categories, jobs, locations, action, method }: Props) {
   const offerSkills = offer?.skills.map(skill => skill.id)
   const offerCategories = offer?.categories.map(category => category.id)
 
@@ -194,7 +194,7 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
               }}
             />
           </FormSection>
-          <FormButtons />
+          <FormButtons url={backUrl} />
         </form>
       </FormLayout>
     </>

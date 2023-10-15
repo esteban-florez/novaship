@@ -65,6 +65,10 @@ export const alerts: AlertList = {
     type: 'info',
     message: 'La revisión de la subtarea ha sido actualizada.',
   },
+  subtask_updated: {
+    type: 'success',
+    message: 'La subtarea ha sido actualizada con éxito.',
+  },
   offer_created: {
     type: 'success',
     message: 'La oferta fue registrada con éxito.',

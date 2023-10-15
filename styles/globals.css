@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .btn {
-  @apply normal-case px-6 py-2 h-auto min-h-fit;
+  @apply normal-case px-6 py-2.5 h-auto min-h-fit rounded-md;
 }
 
 .btn-circle {
@@ -32,7 +32,7 @@
 }
 
 .scrollbar {
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 

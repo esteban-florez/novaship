@@ -1,7 +1,6 @@
 import VerifyButton from '@/components/admin/VerifyButton'
 import Modal from '@/components/modal/Modal'
 import { userTypes } from '@/lib/translations'
-import { param } from '@/lib/utils/search-params'
 import prisma from '@/prisma/client'
 import { DocumentIcon } from '@heroicons/react/24/outline'
 import { type UserType } from '@prisma/client'
@@ -11,7 +10,9 @@ export default async function VerificationsPage(
   ctx: SearchParamsProps
 ) {
   const { selected } = ctx.searchParams
-  const selectedId = param(selected)
+  const selectedId = Array.isArray(selected)
+    ? selected[0]
+    : selected
 
   const query = { where: { verifiedAt: null } }
 
@@ -73,7 +74,7 @@ export default async function VerificationsPage(
           title="RIF"
           forceOpen
         >
-          <div className="-mt-4">
+          <div className="-mt-4 flex flex-col">
             <h2 className="text-center text-lg font-semibold">
               Detalles del usuario
             </h2>
@@ -83,7 +84,7 @@ export default async function VerificationsPage(
               <p>RIF: <b>{selectedUser.rif}</b></p>
             </div>
             <img className="mx-auto my-2 h-auto w-full" src={selectedUser.certification} alt="Rif del usuario" />
-            <Link className="btn-neutral btn" scroll={false} href="/home/admin/verifications">
+            <Link className="self-center btn btn-wide bg-neutral-200 text-neutral-600 hover:bg-neutral-300 border-neutral-300 hover:border-neutral-500" scroll={false} href="/home/admin/verifications">
               Cerrar
             </Link>
           </div>
