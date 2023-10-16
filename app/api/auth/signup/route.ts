@@ -47,6 +47,7 @@ export async function POST(request: NextRequest) {
     const shared = { email, authUserId: id, image: profileImagePath }
 
     if (userType === 'PERSON') {
+      console.log(parsed, shared)
       await prisma.person.create({
         data: {
           ...parsed as PersonData,

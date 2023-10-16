@@ -65,6 +65,7 @@ export default function InternshipCard({ internship }: Props) {
             <DeleteModal
               action={`/home/internships/${internship.id}`}
               title="Eliminar pasantía"
+              showLabel
             />
           )}
           {stage === 'ACCEPTED' && (

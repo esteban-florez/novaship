@@ -25,7 +25,7 @@ export default function DeleteModal({ title, action, showLabel = false }: Props)
         id={id}
         icon={<TrashIcon className="h-4 w-4" />}
         title={showLabel ? 'Eliminar' : ''}
-        className="join-item btn-error btn text-white hover:border-error hover:bg-white hover:text-neutral-600"
+        className="btn-error btn"
       >
         <h4 className="text-center text-neutral-600 font-bold">¿Está seguro que quiere borrarlo?</h4>
         <img src="/delete.webp" alt="Imagen de un registro siendo borrado" className="mx-auto w-60 p-4" />
@@ -34,7 +34,7 @@ export default function DeleteModal({ title, action, showLabel = false }: Props)
           <span className="-mt-4 text-center">será borrado...</span>
           <div className="flex justify-center gap-x-4">
             <CloseModalButton id={id} text="Cancelar" />
-            <button className="btn btn-error text-white hover:bg-white hover:text-neutral-600 hover:border-error">
+            <button className="btn btn-error">
               <TrashIcon className="h-5 w-5" />
               Eliminar
             </button>

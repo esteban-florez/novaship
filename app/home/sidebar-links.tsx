@@ -14,7 +14,7 @@ export function sidebarLinks(user: UserWithType) {
       icon: <AcademicCapIcon className="h-6 w-6" />,
       submenu: [
         {
-          href: `/home/institutes/${user.id}/internships`,
+          href: '/home/institutes/me',
           title: 'Mis pasantes',
           icon: <StarIcon className="h-6 w-6" />,
           visible: ['INSTITUTE', 'ADMIN'].includes(user.type),
