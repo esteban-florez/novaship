@@ -1,10 +1,10 @@
 'use client'
 
-import useDeleteRequest from '@/lib/hooks/useDeleteRequest'
 // import Link from 'next/link'
 import { ArrowLeftOnRectangleIcon, /* Cog6ToothIcon, */ EyeIcon } from '@heroicons/react/24/solid'
 import AvatarIcon from '../AvatarIcon'
 import Link from 'next/link'
+import useSubmit from '@/lib/hooks/useSubmit'
 
 interface Props {
   username: string
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function ProfileDropdownMenu({ username, email, image }: Props) {
-  const { alert, handleSubmit } = useDeleteRequest()
+  const { alert, handleSubmit } = useSubmit({ method: 'DELETE' })
 
   return (
     <>

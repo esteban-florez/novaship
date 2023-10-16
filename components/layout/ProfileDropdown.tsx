@@ -6,7 +6,7 @@ export default async function ProfileDropdown() {
   const { name, email, image } = await auth.user()
 
   return (
-    <div className="dropdown-end dropdown z-20">
+    <div className="dropdown-end dropdown z-50">
       <label tabIndex={0} className="btn-ghost btn-circle btn">
         <AvatarIcon image={image} />
       </label>

@@ -37,15 +37,22 @@ type Props = React.PropsWithChildren<AlertData & {
   onClose: () => void
 }>
 
-// TODO -> hacerlo responsive
+// TODO -> nuevo diseño o verificar responsive
+// INFO -> si el message es muy largo no se ve bien
 export default function Toast({ type, message, onClose }: Props) {
   const { style, icon } = DEFAULT_TOASTS[type]
 
   return (
-    <div className="toast-end toast-bottom toast z-[9999]">
-      <div className={clsx('alert p-4 shadow-lg', style)}>
+    <div className="toast-center sm:toast-end toast-bottom toast z-[9999]">
+      <div className={clsx('alert p-4 shadow-lg inline-flex', style)}>
         {icon}
-        <p className="inline">{message}</p>
+        <p className={clsx({
+          'break-normal': true,
+          'text-sm': message.length > 15,
+          'text-base': message.length < 15,
+        })}
+        >{message}
+        </p>
         {type !== 'loading' && (
           <button onClick={onClose}>
             <XMarkIcon className="h-6 w-6" />

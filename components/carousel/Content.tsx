@@ -1,5 +1,5 @@
 import AvatarIcon from '@/components/AvatarIcon'
-import Button from '@/components/Button'
+import Link from 'next/link'
 
 type Props = {
   title: string
@@ -49,13 +49,11 @@ export default function Content(props: Props) {
                 <small className="-mt-1 text-white">{props.location}</small>
               </div>
             </div>}
-          <Button
-            url={props.destination === 'home' ? props.link : `/home/offers/${props.id}`}
-            style="DEFAULT"
-            color="SECONDARY"
-          >
-            Ver más
-          </Button>
+          <Link href={props.destination === 'home' ? props.link : `/home/offers/${props.id}`}>
+            <button className="btn btn-wide btn-secondary hover:bg-white hover:text-neutral-600 hover:border-secondary">
+              Ver más
+            </button>
+          </Link>
         </footer>
       </div>
     </section>

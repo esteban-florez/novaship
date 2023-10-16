@@ -1,12 +1,13 @@
 'use client'
 
-import { ArrowLeftIcon, PencilIcon } from '@heroicons/react/24/outline'
+import { PencilIcon } from '@heroicons/react/24/outline'
 import { schema } from '@/lib/validation/schemas/hiring'
-import Button from '../Button'
 import DeleteModal from '../projects/DeleteModal'
 import useSubmit from '@/lib/hooks/useSubmit'
 import Input from '../forms/inputs/Input'
 import { type Status } from '@prisma/client'
+import Link from 'next/link'
+import GoBackBtn from '../GoBackBtn'
 interface Props {
   id: string
   isOwner: boolean
@@ -59,15 +60,7 @@ export default function Details({ id, isOwner, title, description, expiresAt, ca
           </div>
           <p className="line-clamp-6 py-3">{description}</p>
           <div className="mx-auto flex w-full flex-col justify-between gap-3 sm:mx-0 sm:w-auto sm:flex-row sm:gap-1 sm:text-sm lg:gap-2">
-            <Button
-              url="/home/offers"
-              style="DEFAULT"
-              color="WHITE"
-              hover="SECONDARY"
-            >
-              <ArrowLeftIcon className="h-4 w-4" />
-              Volver al listado
-            </Button>
+            <GoBackBtn label="Volver al listado" />
             <div className="flex flex-col gap-3 sm:flex-row">
               <div className="flex flex-col gap-3 sm:flex-row">
                 {userHasApplied &&
@@ -84,31 +77,25 @@ export default function Details({ id, isOwner, title, description, expiresAt, ca
                       register={register}
                     />
                     {/* TEMPORAL DISABLED */}
-                    {/* <Button
-                      style="DEFAULT"
-                      color="PRIMARY"
-                      hover="WHITE"
-                    >
-                      <PencilIcon className="h-4 w-4" />
-                      ¡Aplicar!
-                    </Button> */}
+                    {/* <button className="btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary">
+                        <PencilIcon className="h-4 w-4" />
+                        ¡Aplicar!
+                      </button> */}
                   </form>}
 
                 {isOwner &&
                 (
                   <>
-                    <Button
-                      url={`/home/offers/${id}/update`}
-                      style="DEFAULT"
-                      color="PRIMARY"
-                      hover="WHITE"
-                    >
-                      <PencilIcon className="h-4 w-4" />
-                      Actualizar
-                    </Button>
+                    <Link href={`/home/offers/${id}/update`}>
+                      <button className="btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary">
+                        <PencilIcon className="h-4 w-4" />
+                        Actualizar
+                      </button>
+                    </Link>
                     <DeleteModal
                       title={title}
                       action={`/api/offers/${id}`}
+                      showLabel
                     />
                   </>
                 )}

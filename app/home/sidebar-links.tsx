@@ -1,10 +1,5 @@
 import { type UserWithType } from '@/lib/types'
-import {
-  HomeIcon, BriefcaseIcon, AcademicCapIcon,
-  ClipboardDocumentListIcon, UserGroupIcon,
-  GlobeAltIcon, StarIcon, ShieldCheckIcon,
-  CheckBadgeIcon, PlusIcon, UsersIcon,
-} from '@heroicons/react/24/outline'
+import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, GlobeAltIcon, StarIcon, UsersIcon, ShieldCheckIcon, CheckBadgeIcon, PlusIcon } from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
   const links: SidebarLinkWithSubmenu[] = [
@@ -33,7 +28,7 @@ export function sidebarLinks(user: UserWithType) {
       ],
     },
     {
-      href: '/home/offers',
+      href: user.type === 'PERSON' ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
       title: 'Ofertas',
       icon: <BriefcaseIcon className="h-6 w-6" />,
       submenu: [
@@ -62,7 +57,7 @@ export function sidebarLinks(user: UserWithType) {
       ],
     },
     {
-      href: '/home/projects',
+      href: '/home/projects?filter=suggested',
       title: 'Proyectos',
       icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
       submenu: [
@@ -84,7 +79,7 @@ export function sidebarLinks(user: UserWithType) {
       ],
     },
     {
-      href: '/home/teams',
+      href: '/home/teams?filter=all',
       title: 'Equipos',
       icon: <UserGroupIcon className="h-6 w-6" />,
       submenu: [

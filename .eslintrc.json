@@ -42,5 +42,5 @@
     }],
     "@next/next/no-img-element": "off"
   },
-  "ignorePatterns": [".next", "next-env.d.ts", "lucia.d.ts"]
+  "ignorePatterns": ["next-env.d.ts", "tailwind.config.js", "lucia.d.ts"]
 }

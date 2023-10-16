@@ -1,10 +1,10 @@
-import { type SuggestedOffersWithRelationships } from '@/lib/types'
+import { type OffersFull } from '@/lib/types'
 import OfferItem from './OfferItem'
 import { includesValue } from '@/lib/utils/text'
 
 interface Props {
   search: string
-  offers: SuggestedOffersWithRelationships
+  offers: OffersFull[]
 }
 
 export default function OffersList({ search, offers }: Props) {

@@ -70,7 +70,6 @@ export default function SelectMultiple({
         menuOnTop={menuOnTop}
         addOption={addOption}
         disabled={selected.length >= limit || disabled}
-        blurSelect={field.onBlur}
       />
       <InputError message={error?.message} />
       {selected.length > 0 && (
@@ -80,7 +79,7 @@ export default function SelectMultiple({
           onRemove={removeOption}
         />
       )}
-      <select {...field} id={field.name} disabled={disabled} hidden multiple>
+      <select id={field.name} {...field} hidden multiple disabled={disabled}>
         {options?.map(({ value, label }) => (
           <option key={value} value={value}>{label}</option>
         ))}

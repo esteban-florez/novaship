@@ -2,6 +2,34 @@ import prisma from '@/prisma/client'
 import { type Prisma } from '@prisma/client'
 import { redirect } from 'next/navigation'
 import { cache } from 'react'
+import { type TeamsFull } from '../types'
+
+const query = {
+  include: {
+    leader: {
+      include: {
+        person: true,
+        company: true,
+      },
+    },
+    categories: true,
+    projects: {
+      include: {
+        categories: true,
+      },
+    },
+    memberships: {
+      include: {
+        person: {
+          include: {
+            grades: true,
+            location: true,
+          },
+        },
+      },
+    },
+  },
+}
 
 // TODO -> añadir categorias.
 export const getMyTeams = cache(async ({ userId }: { userId: string }) => {
@@ -14,13 +42,7 @@ export const getMyTeams = cache(async ({ userId }: { userId: string }) => {
         ],
       },
     },
-    include: {
-      memberships: {
-        include: {
-          person: true,
-        },
-      },
-    },
+    ...query,
   })
 })
 
@@ -29,44 +51,15 @@ export const getTeams = cache(async ({ where, skip, take }: QueryConfig<Prisma.T
     skip,
     take,
     where,
-    include: {
-      memberships: {
-        include: {
-          person: true,
-        },
-      },
-    },
-  })
+    ...query,
+  }) as TeamsFull[]
 })
 
 export const getTeam = cache(async (id: string) => {
   try {
     return await prisma.team.findUniqueOrThrow({
       where: { id },
-      include: {
-        leader: {
-          include: {
-            person: true,
-            company: true,
-          },
-        },
-        categories: true,
-        projects: {
-          include: {
-            categories: true,
-          },
-        },
-        memberships: {
-          include: {
-            person: {
-              include: {
-                grades: true,
-                location: true,
-              },
-            },
-          },
-        },
-      },
+      ...query,
     })
   } catch (error) {
     console.log(error)

@@ -1,8 +1,8 @@
 import AvatarIcon from './AvatarIcon'
-import Button from './Button'
 import clsx from 'clsx'
 import InlineList from './InlineList'
 import { type ProjectMembership } from '@/lib/types'
+import Link from 'next/link'
 
 interface Props {
   title: string
@@ -20,7 +20,7 @@ interface Props {
 const stackOrder = ['z-40', 'z-30', 'z-20']
 
 // TODO -> mover el boton a bajo (flex-col) para las ofertas
-export default function Card({ title, categories, description, owner, location, members, link }: Props) {
+export default function Card({ title, categories, description, owner, location, members, link = '' }: Props) {
   return (
     <>
       <div className="relative">
@@ -68,14 +68,11 @@ export default function Card({ title, categories, description, owner, location, 
                   <small className="-mt-1 text-xs">{location}</small>
                 </div>
               </div>}
-            <Button
-              url={link}
-              style="DEFAULT"
-              color="SECONDARY"
-              hover="WHITE"
-            >
-              Ver más
-            </Button>
+            <Link href={link}>
+              <button className="btn btn-secondary hover:bg-white hover:text-neutral-600">
+                Ver más
+              </button>
+            </Link>
           </div>
         </div>
       </div>

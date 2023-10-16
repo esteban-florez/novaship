@@ -8,7 +8,6 @@ type Props = React.PropsWithChildren<{
   menuOnTop: boolean
   disabled: boolean
   addOption: (optionValue: string) => void
-  blurSelect: () => void
 }>
 
 declare global {
@@ -18,14 +17,11 @@ declare global {
 
 globalThis.canRun = true
 
-export default function SelectMultipleMenu({ options, menuOnTop, addOption, disabled, blurSelect }: Props) {
+export default function SelectMultipleMenu({ options, menuOnTop, addOption, disabled }: Props) {
   const [hidden, setHidden] = useState(true)
   const [search, setSearch] = useState('')
   const [hovered, setHovered] = useState<number | null>(null)
-  const menuRef = useClickOutside<HTMLDivElement>(() => {
-    if (hidden) return
-    closeMenu()
-  })
+  const menuRef = useClickOutside<HTMLDivElement>(() => { closeMenu() })
   const ulRef = useRef<HTMLUListElement>(null)
 
   const filteredOptions = options.filter(filterBySearch)
@@ -37,8 +33,6 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
   }
 
   function closeMenu() {
-    console.trace('blurred')
-    blurSelect()
     setHidden(true)
     setHovered(null)
     if (ulRef.current !== null) {

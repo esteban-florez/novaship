@@ -9,7 +9,6 @@ import { type ProjectsFull, type ProjectsTab } from '@/lib/types'
 import { GlobeAltIcon, ListBulletIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
 import PageTitle from '@/components/PageTitle'
 import Link from 'next/link'
-import Button from '@/components/Button'
 import Pagination from '@/components/Pagination'
 import clsx from 'clsx'
 import { type Prisma } from '@prisma/client'
@@ -24,13 +23,11 @@ interface FilterQueries {
   all: Prisma.ProjectWhereInput
 }
 
-// TODO -> Mantener la pestaña escogida al regresar a /projects
 export default async function ProjectsPage({ searchParams }: SearchParamsProps) {
   const { id } = await auth.user()
   const { categories } = await getPersonRelatedIds({ id })
 
   // DRY Pagination
-  // TODO ->mejorar logica
   const filter = searchParams.filter ?? 'all'
   const pageNumber = +(searchParams.page ?? 1)
   const FILTER_QUERIES: FilterQueries = {
@@ -44,25 +41,30 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
       OR: [
         { personId: { not: id } },
         {
-          team: {
-            OR: [
-              {
-                leader: {
-                  OR: [
-                    { personId: { not: id } },
-                    { companyId: { not: id } },
-                  ],
-                },
-              },
-              {
-                memberships: {
-                  some: {
-                    personId: { not: id },
+          AND: [
+            { personId: null },
+            {
+              team: {
+                OR: [
+                  {
+                    leader: {
+                      OR: [
+                        { personId: { not: id } },
+                        { companyId: { not: id } },
+                      ],
+                    },
                   },
-                },
+                  {
+                    memberships: {
+                      some: {
+                        personId: { not: id },
+                      },
+                    },
+                  },
+                ],
               },
-            ],
-          },
+            },
+          ],
         },
       ],
     },
@@ -169,12 +171,10 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
         subtitle="Descubre los proyectos que rondan la web."
       >
         <Link href="/home/projects/create">
-          <Button
-            color="PRIMARY"
-          >
+          <button className="btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary">
             <PlusIcon className="h-6 w-6" />
             Agregar
-          </Button>
+          </button>
         </Link>
       </PageTitle>
       <PageContent dropdownLabel={`Categorías - ${PROJECTS_TAB_TRANSLATION[filter as ProjectsTab]}`} projects={projects}>
@@ -195,7 +195,6 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
         })}
       </PageContent>
       <Pagination
-        url="/home/projects"
         pageNumber={pageNumber}
         nextPage={nextPage}
       />

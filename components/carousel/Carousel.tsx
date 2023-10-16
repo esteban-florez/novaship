@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { type SuggestedOffersWithRelationships } from '@/lib/types'
+import { type OffersFull } from '@/lib/types'
 import Btn from './Btn'
 import Content from './Content'
 import Dots from './Dots'
 
 interface Props {
-  items: SuggestedOffersWithRelationships | Array<{
+  items: OffersFull[] | Array<{
     title: string
     description: string
     link: string

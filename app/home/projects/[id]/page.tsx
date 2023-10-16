@@ -2,7 +2,6 @@ import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
 import { getProject } from '@/lib/data-fetching/project'
-import { getProjectLeader } from '@/lib/utils/tables'
 import ProjectDetails from '@/components/projects-details/ProjectDetails'
 import TeamGroup from '@/components/projects-details/TeamGroup'
 import prisma from '@/prisma/client'
@@ -28,11 +27,9 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
     notFound()
   }
 
-  project.tasks
-
   // TODO -> funciones getleader e isMember
   const projectCategories = project.categories.map(category => category.title)
-  const isOwner = getProjectLeader(project).id === userId
+  const isOwner = project.personId === userId ?? (project.team?.leader.personId ?? project.team?.leader.companyId === userId)
   const isMember = (project.team?.memberships.find(member => member.personId === userId)) != null
 
   return (
