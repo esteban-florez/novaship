@@ -31,7 +31,6 @@ export default async function UpdateOfferPage({ params: { id } }: PageContext) {
       skills={skills}
       locations={locations}
       offer={offer}
-      backUrl={`/home/offers/${id}`}
     />
   )
 }

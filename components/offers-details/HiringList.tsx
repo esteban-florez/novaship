@@ -1,8 +1,8 @@
 import { type Status } from '@prisma/client'
 import AvatarIcon from '../AvatarIcon'
-import Button from '../Button'
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { statuses } from '@/lib/translations'
+import Link from 'next/link'
 
 interface Props {
   offerId: string
@@ -29,14 +29,13 @@ export default function HiringList({ offerId, hiring }: Props) {
             <span className="text-center font-semibold text-neutral-600">
               {statuses[hiring.status]}
             </span>
-            <Button
-              url={`/home/offers/${offerId}/hiring/${hiring.id}`}
-              color="PRIMARY"
-              hover="WHITE"
+            <Link
+              className="btn btn-primary"
+              href={`/home/offers/${offerId}/hiring/${hiring.id}`}
             >
               Ver petición
               <ArrowRightIcon className="h-5 w-5" />
-            </Button>
+            </Link>
           </div>
         )
       })}

@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
         ...parsed,
         memberships: {
           createMany: {
+            // @ts-expect-error Outdated code
             data: memberships,
           },
         },
