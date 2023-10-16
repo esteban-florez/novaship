@@ -14,7 +14,7 @@ export default async function SignUpPage() {
 
   const jobs = await prisma.job.findMany()
   const locations = await prisma.location.findMany()
-  const categories = (await prisma.skill.findMany())
+  const categories = (await prisma.category.findMany())
     .map(({ id, title }) => ({ id, title, selected: false }))
 
   return (
@@ -41,7 +41,7 @@ export default async function SignUpPage() {
           </div>
         </section>
         <section className="grid w-full place-items-center p-4 lg:w-3/4">
-          {/* TODO -> refactorizar este componente con composición para que sea mejor, y aplicar lo que aprendí xDDDD */}
+          {/* TODO -> refactorizar este componente con composición */}
           <SignUpForm
             jobs={jobs}
             categories={categories}

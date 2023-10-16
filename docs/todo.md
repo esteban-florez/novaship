@@ -6,6 +6,7 @@
 
 # To-Do
 
+- Recuperación de contraseña.
 - Guiar al usuario por la aplicación.
 - Banner recordatorio de completar perfil.
 - Componente Ads y ubicarlos en el layout.
