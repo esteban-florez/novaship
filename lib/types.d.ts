@@ -3,7 +3,7 @@ import { type ERRORS } from './errors/reference'
 import {
   type Person, type Company, type Institute, type Category, type Skill,
   type Offer, type Location, type Project, type Task, type Participation,
-  type Membership, type Subtask, type Team, type File, type Admin, type Revision,
+  type Membership, type Subtask, type Team, type File, type Admin, type Revision, type Recruitment, type Vacant, type Grade, type Internship,
 } from '@prisma/client'
 import { type days } from './translations'
 
@@ -26,6 +26,20 @@ type SelectableOption = OptionCategory | OptionSkill | OptionPerson
 
 type Colors = 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'CANCEL' | 'EMPTY' | 'ERROR' | 'WHITE' | 'NEUTRAL'
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
+
+// ----------------------------------------------------------------------
+// --------------------------- Internships ------------------------------
+// ----------------------------------------------------------------------
+
+type InternshipWithRelations = Internship & {
+  recruitments: Array<Recruitment & {
+    vacant: Vacant
+  }>
+  categories: Category[]
+  institute: Institute
+  person: Person
+  grade: Grade
+}
 
 // ----------------------------------------------------------------------
 // --------------------------- Offers ---------------------------------

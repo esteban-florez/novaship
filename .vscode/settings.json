@@ -3,14 +3,6 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "Prisma.prisma",
   },
-  "[typescriptreact]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "[typescript]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
   "eslint.format.enable": true,
   "editor.tabSize": 2,
   "files.eol": "\n",

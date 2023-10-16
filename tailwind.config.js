@@ -1,5 +1,4 @@
 import daisyui from "daisyui"
-import scrollbars from "tailwind-scrollbar"
 import themes from "daisyui/src/theming/themes"
 
 /** @type {import('tailwindcss').Config} */
@@ -59,5 +58,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [daisyui, scrollbars],
+  plugins: [daisyui],
 }

@@ -7,7 +7,6 @@
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "plugin:tailwindcss/recommended",
     "standard-with-typescript",
     "standard-jsx",
     "next/core-web-vitals"
@@ -41,7 +40,6 @@
       "children": "never",
       "propElementValues": "always"
     }],
-    "tailwindcss/no-custom-classname": "error",
     "@next/next/no-img-element": "off"
   },
   "ignorePatterns": [".next", "next-env.d.ts", "lucia.d.ts"]

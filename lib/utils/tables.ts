@@ -1,4 +1,4 @@
-import { type Visibility, type Team, type Person, type Leader, type Company } from '@prisma/client'
+import { type Visibility, type Team, type Person, type Leader, type Company, type Internship, type Status } from '@prisma/client'
 import { DBError } from '../errors/reference'
 import { type UserWithType, type MembershipWithRelations, type ProjectsFull } from '../types'
 
@@ -50,4 +50,36 @@ export function getPublicProjects<T>(projects: Array<T & {
   visibility: Visibility
 }>) {
   return projects.filter(project => project.visibility === 'PUBLIC')
+}
+
+interface WithStatus {
+  status: Status
+}
+
+interface WithRecruitments {
+  recruitments: WithStatus[]
+}
+
+export function getInternshipStage(internship: Internship & WithRecruitments) {
+  const { status, completed, hours } = internship
+
+  let statusKey: Stage = status
+
+  if (status === 'ACCEPTED') {
+    if (completed >= hours) {
+      statusKey = 'COMPLETED'
+    }
+
+    const recruitment = getAcceptedRecruitment(internship)
+
+    if (recruitment !== undefined) {
+      statusKey = 'ACTIVE'
+    }
+  }
+
+  return statusKey
+}
+
+export function getAcceptedRecruitment<T>(internship: T & WithRecruitments) {
+  return internship.recruitments.find(recruitment => recruitment.status === 'ACCEPTED')
 }
