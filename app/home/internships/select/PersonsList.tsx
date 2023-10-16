@@ -1,6 +1,6 @@
 import AvatarIcon from '@/components/AvatarIcon'
-import Button from '@/components/Button'
 import { type Person } from '@prisma/client'
+import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   persons: Array<Pick<Person, 'id' | 'name' | 'ci' | 'image'>>
@@ -18,18 +18,18 @@ export default function PersonsList({ persons }: Props) {
           </div>
         </div>
         <div className="flex gap-2">
-          <Button
-            color="PRIMARY"
-            url={`/home/internships/create?person=${person.id}`}
+          <Link
+            className="btn btn-primary"
+            href={`/home/internships/create?person=${person.id}`}
           >
             Inscribir
-          </Button>
-          <Button
-            color="SECONDARY"
-            url={`/home/persons/${person.id}`}
+          </Link>
+          <Link
+            className="btn btn-secondary"
+            href={`/home/persons/${person.id}`}
           >
             Perfil
-          </Button>
+          </Link>
         </div>
       </div>
     ))

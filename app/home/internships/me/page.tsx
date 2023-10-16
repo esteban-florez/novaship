@@ -40,7 +40,6 @@ export default async function MyInternsPage({ searchParams }: SearchParamsProps)
       <Pagination
         pageNumber={pageNumber}
         nextPage={nextPage}
-        url="/home/internships"
       />
     </>
   )

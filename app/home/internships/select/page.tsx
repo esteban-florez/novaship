@@ -75,7 +75,6 @@ export default async function SelectInternPage({ searchParams }: SearchParamsPro
         <Pagination
           nextPage={nextPage}
           pageNumber={pageNumber}
-          url="/home/internships/select"
         />
       </section>
     </>

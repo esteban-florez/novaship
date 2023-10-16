@@ -4,9 +4,9 @@ import { auth } from '@/lib/auth/pages'
 import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation'
 import { param } from '@/lib/utils/search-params'
-import Button from '@/components/Button'
 import InternshipForm from './InternshipForm'
 import FormSection from '@/components/forms/FormSection'
+import Link from 'next/link'
 
 export default async function CreateInternshipPage({ searchParams }: SearchParamsProps) {
   const { type } = await auth.user()
@@ -55,9 +55,9 @@ export default async function CreateInternshipPage({ searchParams }: SearchParam
             location={person.location.title}
             verification={false}
           />
-          <Button url={`/home/persons/${person.id}`} color="SECONDARY">
+          <Link className="btn btn-secondary" href={`/home/persons/${person.id}`}>
             Ver perfil
-          </Button>
+          </Link>
         </div>
       </section>
     </>
