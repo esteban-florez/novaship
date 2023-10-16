@@ -12,6 +12,20 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/internships',
       title: 'Pasantías',
       icon: <AcademicCapIcon className="h-6 w-6" />,
+      submenu: [
+        {
+          href: `/home/institutes/${user.id}/internships`,
+          title: 'Mis pasantes',
+          icon: <StarIcon className="h-6 w-6" />,
+          visible: ['INSTITUTE', 'ADMIN'].includes(user.type),
+        },
+        {
+          href: '/home/internships/select',
+          title: 'Inscribir pasante',
+          icon: <PlusIcon className="h-6 w-6" />,
+          visible: user.type === 'INSTITUTE',
+        },
+      ],
     },
     {
       href: user.type === 'PERSON' ? '/home/offers?filter=suggested' : '/home/offers?filter=all',

@@ -58,7 +58,6 @@ Representa un usuario de tipo empresa.
 - [**Location**](#location): Dirección.
 - [**Offer[]**](#offer): Ofertas laborales publicadas por la empresa.
 - [**Vacant[]**](#vacant): Ofertas para pasantías publicadas por la empresa.
-- [**Internship[]**](#internship): Pasantías en la empresa.
 - [**Leader[]**](#leader): "Líder", relaciona la empresa con los equipos (ver [Team](#team)) de los cuales es líder.
 
 ## Institute
@@ -175,6 +174,7 @@ Representa una oferta laboral publicada por una empresa.
 - **hours**: Número de horas semanales. Opcional si se especifica un horario (**schedule**).
 - **salary**: Sueldo en dolares por hora.
 - **limit**: Límite de postulantes simultáneos a la oferta. Cuando se alcance el límite, la oferta se ocultará.
+- **hidden**: Booleano que indica si fué ocultada manualmente.
 - **expiresAt**: Fecha de expiración de la oferta. Cuando llegue la fecha, la oferta se ocultará.
 - **featuredUntil**: Fecha hasta la cual la oferta estará destacada.
 - [**Company**](#company): Empresa que la publica.
@@ -206,10 +206,9 @@ Representa una pasantía.
 
 - **hours**: Horas necesarias para completarla.
 - **completed**: Horas completadas hasta ahora.
-- **stage**: Etapa de la pasantía (ver [Stage](#stage)).
+- **status**: Estado de la pasantía (ver [Status](#status)).
 - [**Person**](#person): Persona que la realiza.
 - [**Institute**](#institute): Institución responsable.
-- [**Company**](#company): Empresa donde se realiza. Es *"null"* cuando aún no se tiene una empresa.
 - [**Grade**](#grade): Carrera relacionada 
 - [**Recruitment[]**](#recruitment): Solicitudes de pasantías, tanto del pasante a empresa como viceversa. 
 - [**Category[]**](#category): Categorías laborales a las que pertenece.
@@ -220,6 +219,7 @@ Representa una "oferta para pasantes".
 - **title**: Título.
 - **limit**: Límite de pasantes que postulan simultáneamente. Al alcanzar el límite, se oculta.
 - **expiresAt**: Fecha de expiración. Al alcanzar la fecha, se oculta.
+- **hidden**: Booleano que indica si fué ocultada manualmente.
 - [**Job**](#job): Puesto de trabajo para el pasante.
 - [**Company**](#company): Empresa que publica.
 - [**Location**](#location): Ubicación.
@@ -331,7 +331,7 @@ Horario de trabajo (ver [Offer](#offer)).
 - **PARTTIME**: Tiempo parcial.
 
 ## Status
-Estado de una solicitud (ver [Hiring](#hiring) y [Recruitment](#recruitment)) o de una invitación a equipo (ver [Invitation](#invitation)).
+Estado de una solicitud (ver [Hiring](#hiring) y [Recruitment](#recruitment)), de una invitación a equipo (ver [Invitation](#invitation)) o de una pasantía (ver [Internship](#internship)).
 
 - **PENDING**: Solicitud/invitación pendiente.
 - **REJECTED**: Solicitud/invitación rechazada.

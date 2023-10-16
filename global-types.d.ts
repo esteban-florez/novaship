@@ -66,3 +66,5 @@ type SidebarLinkWithSubmenu = SidebarLink & {
 }
 
 type NonAdmin = 'PERSON' | 'COMPANY' | 'INSTITUTE'
+
+type Stage = 'PENDING' | 'REJECTED' | 'ACCEPTED' | 'ACTIVE' | 'COMPLETED'
