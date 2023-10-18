@@ -89,6 +89,10 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'El usuario fué confirmado con éxito.',
   },
+  login_needed: {
+    type: 'warning',
+    message: 'Primero debes iniciar sesión.',
+  },
   redirected: {
     type: 'info',
     message: 'Pa fuera, pala calle.',

@@ -1,8 +1,8 @@
 type Props = React.PropsWithChildren<{
   id: string
-  icon: React.ReactElement
+  icon?: React.ReactElement
   title?: string
-  className: string
+  className?: string
   onClick?: () => void
   forceOpen?: boolean
 }>

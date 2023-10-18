@@ -19,7 +19,7 @@ function json(status: number, body: object) {
 export function handleError(error: unknown, data: Record<string, unknown> = {}) {
   // TODO -> Ver que hacer con estos errores
   if (error instanceof AuthenticationError) {
-    return NextResponse.redirect(url('auth/login?redirected'))
+    return NextResponse.redirect(url('auth/login?alert=login_needed'))
   }
 
   if (error instanceof AuthorizationError) {

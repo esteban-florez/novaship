@@ -5,7 +5,6 @@ import { type Fields, schema } from '@/lib/validation/schemas/login'
 import Input from '../forms/inputs/Input'
 
 export default function LogInForm() {
-  // TODO -> mostrar una alerta de "debes iniciar sesión primero antes de ver esa página" cuando exista un searchParam llamado "redirected".
   const { alert, handleSubmit, register, formState: { errors }, serverErrors } = useSubmit<Fields>({ schema })
 
   return (

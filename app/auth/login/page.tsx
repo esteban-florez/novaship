@@ -1,14 +1,41 @@
 import Link from 'next/link'
 import { type Metadata } from 'next'
 import LogInForm from '@/components/login/LogInForm'
+import { param } from '@/lib/utils/search-params'
+import Modal from '@/components/modal/Modal'
 
 export const metadata: Metadata = {
   title: 'Iniciar Sesión',
 }
 
-export default function LoginPage() {
+const modalsData: Record<string, { title: string, message: string } | undefined> = {
+  registered: {
+    title: '¡Te has registrado con éxito!',
+    message: 'Ahora debes esperar a que los administradores de la aplicación verifiquen tu cuenta. Este proceso puede llevar un par de días.',
+  },
+  unverified: {
+    title: 'Tu cuenta está en proceso de verificación...',
+    message: 'Debes esperar a que los administradores verifiquen tu cuenta antes de iniciar sesión. Este proceso puede llevar un par de días.',
+  },
+}
+
+export default function LoginPage({ searchParams }: SearchParamsProps) {
+  const modalParam = param(searchParams.modal) ?? ''
+  const modalData = modalsData[modalParam]
+
   return (
     <>
+      {modalData !== undefined && (
+        <Modal id="loginModal" forceOpen>
+          <h3 className="font-bold text-primary text-center text-2xl">
+            {modalData.title}
+          </h3>
+          <p className="mt-4">{modalData.message}</p>
+          <Link className="btn btn-primary mt-4" href="/auth/login">
+            Aceptar
+          </Link>
+        </Modal>
+      )}
       <img src="/coso4.webp" alt="Imagen decorativa en esquinas" className="pointer-events-none absolute right-0 top-0 hidden h-full w-2/4 rotate-180 md:block" />
       <img src="/coso3.webp" alt="Imagen decorativa en esquinas" className="pointer-events-none absolute left-0 top-0 block h-2/5 w-full md:hidden" />
       <div className="z-10 grid h-screen grid-cols-7 place-items-center">

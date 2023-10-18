@@ -16,7 +16,7 @@ export const metadata = {
 export default async function MyInternshipsPage({
   searchParams, params: { id: instituteId },
 }: PageContext & SearchParamsProps) {
-  const { id: userId, type } = await auth.user()
+  const { id: userId, type, name } = await auth.user()
   if (type !== 'INSTITUTE' || userId !== instituteId) {
     notFound()
   }
@@ -35,6 +35,7 @@ export default async function MyInternshipsPage({
       <PageTitle
         title="Mis pasantes"
         subtitle="Aqui puedes ver todos los pasantes de tu institución."
+        breadcrumbs={name}
       />
       {internships.length > 0
         ? (
