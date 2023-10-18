@@ -22,9 +22,11 @@ export default function Recruitments({ stage, recruitments }: Props) {
       <p>Aquí aparecen todas las postulaciones de la pasantía, así como las solicitudes de empresas que desean reclutar al pasante.</p>
       {isAccepted || recruitments.length <= 0
         ? (
-          <EmptyContent>
-            {isAccepted ? 'El estudiante debe aceptar la solicitud de pasantía antes de iniciar la búsqueda de empresas...' : ''}
-          </EmptyContent>
+          <div className="pt-4">
+            <EmptyContent title={isAccepted ? '¡No disponible aún!' : undefined}>
+              {isAccepted ? 'El estudiante debe aceptar la solicitud de pasantía para poder postular a empresas...' : ''}
+            </EmptyContent>
+          </div>
           )
         : (
           <div className="flex flex-col">

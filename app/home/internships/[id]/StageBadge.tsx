@@ -1,3 +1,4 @@
+import { STAGE_COLORS } from '@/lib/shared/internship-stage'
 import { stages } from '@/lib/translations'
 import clsx from 'clsx'
 
@@ -7,16 +8,8 @@ type Props = React.PropsWithChildren<{
 }>
 
 export default function StageBadge({ stage, className }: Props) {
-  const colors = {
-    PENDING: 'text-warning brightness-90',
-    REJECTED: 'text-error',
-    ACCEPTED: 'text-success',
-    ACTIVE: 'text-warning brightness-90',
-    COMPLETED: 'text-success',
-  }
-
   return (
-    <span className={clsx(colors[stage], className)}>
+    <span className={clsx('brightness-75', STAGE_COLORS[stage], className)}>
       {stages[stage]}
     </span>
   )

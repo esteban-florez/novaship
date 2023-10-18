@@ -17,12 +17,18 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/internships',
       title: 'Pasantías',
       icon: <AcademicCapIcon className="h-6 w-6" />,
-      visible: admin || institute,
       submenu: [
         {
           href: `/home/institutes/${user.id}/internships`,
           title: 'Mis pasantías',
           icon: <StarIcon className="h-6 w-6" />,
+          visible: institute,
+        },
+        {
+          href: `/home/persons/${user.id}/internships`,
+          title: 'Mis pasantías',
+          icon: <StarIcon className="h-6 w-6" />,
+          visible: person,
         },
         {
           href: '/home/internships/select',

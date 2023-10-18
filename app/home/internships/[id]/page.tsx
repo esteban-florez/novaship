@@ -11,29 +11,7 @@ import { format } from '@/lib/utils/date'
 import { getInternshipCompany, getInternshipStage } from '@/lib/utils/tables'
 import { notFound } from 'next/navigation'
 import { InformationCircleIcon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline'
-
-const stagesText = {
-  PENDING: {
-    text: 'La solicitud de pasantía fué enviada, esperando confirmación del estudiante.',
-    className: 'alert-warning',
-  },
-  REJECTED: {
-    text: 'La solicitud de pasantía fué rechazada por el estudiante.',
-    className: 'alert-error',
-  },
-  ACCEPTED: {
-    text: 'La pasantía fué aceptada por el estudiante y está en búsqueda de empresa.',
-    className: 'alert-success',
-  },
-  ACTIVE: {
-    text: 'La pasantía está actualmente en progreso.',
-    className: 'alert-warning',
-  },
-  COMPLETED: {
-    text: 'Las horas totales de la pasantía fueron completadas.',
-    className: 'alert-success',
-  },
-}
+import { STAGE_ALERTS } from '@/lib/shared/internship-stage'
 
 export default async function InternshipDetailsPage({ params: { id } }: PageContext) {
   const { id: userId } = await auth.user()
@@ -56,7 +34,7 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
 
   const { person, institute, grade, recruitments, hours, createdAt } = internship
   const stage = getInternshipStage(internship)
-  const stageData = stagesText[stage]
+  const stageAlert = STAGE_ALERTS[stage]
 
   const PRE_COMPANY_STAGES = [
     'PENDING', 'REJECTED', 'ACCEPTED',
@@ -130,10 +108,10 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
           <h3 className="font-bold tracking-tighter text-2xl">
             Estado de la pasantía: <StageBadge stage={stage} />
           </h3>
-          <div className={clsx('alert mt-2', stageData.className)}>
+          <div className={clsx('alert mt-2', stageAlert.className)}>
             <InformationCircleIcon className="h-6 w-6" />
             <p>
-              {stageData.text}
+              {stageAlert.text}
             </p>
           </div>
         </div>
