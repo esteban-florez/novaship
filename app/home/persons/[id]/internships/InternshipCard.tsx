@@ -1,16 +1,17 @@
 import StageBadge from '@/app/home/internships/[id]/StageBadge'
+import InternshipActions from '@/components/internships/InternshipActions'
 import { STAGE_COLORS, STAGE_PROGRESS } from '@/lib/shared/internship-stage'
 import { type InternshipWithRelations } from '@/lib/types'
 import { getInternshipStage } from '@/lib/utils/tables'
-import { CheckIcon, ListBulletIcon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { type UserType } from '@prisma/client'
 import clsx from 'clsx'
-import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   internship: InternshipWithRelations
+  userType: UserType
 }>
 
-export default function InternshipCard({ internship }: Props) {
+export default function InternshipCard({ internship, userType }: Props) {
   const { institute, grade } = internship
   const stage = getInternshipStage(internship)
 
@@ -38,33 +39,11 @@ export default function InternshipCard({ internship }: Props) {
           </p>
         </div>
         <div className="divider divider-vertical my-2" />
-        <div className="flex flex-col gap-2">
-          <Link
-            href={`/home/internships/${internship.id}`}
-            className="btn btn-secondary"
-          >
-            <ListBulletIcon className="h-5 w-5" />
-            Detalles
-          </Link>
-          {stage === 'PENDING' && (
-            <div className="flex gap-2 flex-col lg:flex-row">
-              <button className="btn btn-error">
-                <XMarkIcon className="h-5 w-5" />
-                Rechazar
-              </button>
-              <button className="btn btn-success">
-                <CheckIcon className="h-5 w-5" />
-                Aceptar
-              </button>
-            </div>
-          )}
-          {stage === 'ACCEPTED' && (
-            <button className="btn btn-primary">
-              <MagnifyingGlassIcon className="h-5 w-5" />
-              Buscar empresa
-            </button>
-          )}
-        </div>
+        <InternshipActions
+          internship={internship}
+          stage={stage}
+          userType={userType}
+        />
       </div>
     </div>
   )

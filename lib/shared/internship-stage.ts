@@ -25,14 +25,14 @@ export const STAGE_ALERTS = {
   },
   ACCEPTED: {
     text: 'La pasantía fué aceptada por el estudiante y está en búsqueda de empresa.',
-    className: 'alert-success',
+    className: 'alert-warning',
   },
   ACTIVE: {
     text: 'La pasantía está actualmente en progreso.',
-    className: 'alert-warning',
+    className: 'alert-success',
   },
   COMPLETED: {
     text: 'Las horas totales de la pasantía fueron completadas.',
-    className: 'alert-success',
+    className: 'alert-primary',
   },
 }

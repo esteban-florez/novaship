@@ -22,9 +22,10 @@ export default async function MyInternshipsPage({
         breadcrumbs={name}
       />
       <InternshipList
-        Component={InternshipCard}
+        component={InternshipCard}
         where={{ instituteId }}
         searchParams={searchParams}
+        userType={type}
         emptyButton={{
           url: '/home/internships/select',
           text: 'Añadir pasante',

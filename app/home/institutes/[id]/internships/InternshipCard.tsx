@@ -1,16 +1,17 @@
 import { type InternshipWithRelations } from '@/lib/types'
 import AvatarIcon from '@/components/AvatarIcon'
-import { AcademicCapIcon, IdentificationIcon, InformationCircleIcon, ListBulletIcon, PresentationChartBarIcon } from '@heroicons/react/24/outline'
+import { AcademicCapIcon, IdentificationIcon, InformationCircleIcon, PresentationChartBarIcon } from '@heroicons/react/24/outline'
 import { getInternshipStage } from '@/lib/utils/tables'
-import Link from 'next/link'
 import { stages } from '@/lib/translations'
-import DeleteModal from '@/components/projects/DeleteModal'
+import InternshipActions from '@/components/internships/InternshipActions'
+import { type UserType } from '@prisma/client'
 
 type Props = React.PropsWithChildren<{
   internship: InternshipWithRelations
+  userType: UserType
 }>
 
-export default function InternshipCard({ internship }: Props) {
+export default function InternshipCard({ internship, userType }: Props) {
   const { person, grade } = internship
   const isAccepted = internship.status !== 'ACCEPTED'
   const stage = getInternshipStage(internship)
@@ -56,24 +57,11 @@ export default function InternshipCard({ internship }: Props) {
             </li>
           ))}
         </ul>
-        <div className="flex flex-col lg:flex-row gap-2">
-          <Link href={`/home/internships/${internship.id}`} className="btn btn-secondary">
-            <ListBulletIcon className="h-5 w-5" />
-            Detalles
-          </Link>
-          {stage === 'REJECTED' && (
-            <DeleteModal
-              action={`/home/internships/${internship.id}`}
-              title="Eliminar pasantía"
-              showLabel
-            />
-          )}
-          {stage === 'ACCEPTED' && (
-            <Link href="/home" className="btn btn-primary">
-              Buscar empresa
-            </Link>
-          )}
-        </div>
+        <InternshipActions
+          internship={internship}
+          stage={stage}
+          userType={userType}
+        />
       </div>
     </div>
   )
