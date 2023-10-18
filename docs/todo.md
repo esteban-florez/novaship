@@ -6,6 +6,7 @@
 
 # To-Do
 
+- Validación de todos los campos únicos.
 - Recuperación de contraseña.
 - Guiar al usuario por la aplicación.
 - Banner recordatorio de completar perfil.
@@ -14,8 +15,7 @@
 - deletedAt middleware.
 - Añadir campo a modelo [offer] para mostrar en carrusel.
 - ExpiresAt handler.
-- Validar campos únicos en signup, y verificar el resto de los campos únicos.
-- Mostrar estado de carga de formularios con modal, así como los errores de validación del Servidor.
+- Mostrar errores de validación del Servidor con modal.
 - Mecanismo de alertas tipo "Toast" globales y crear componente que lea la url para mostrar un alert.
 - Llevarte a donde cometiste el error en signup.
 - Arreglar <Input> checkbox y radio.
