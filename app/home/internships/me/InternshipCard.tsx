@@ -57,7 +57,7 @@ export default function InternshipCard({ internship }: Props) {
           ))}
         </ul>
         <div className="flex flex-col lg:flex-row gap-2">
-          <Link href={`/home/internship/${internship.id}`} className="btn btn-secondary">
+          <Link href={`/home/internships/${internship.id}`} className="btn btn-secondary">
             <ListBulletIcon className="h-5 w-5" />
             Detalles
           </Link>

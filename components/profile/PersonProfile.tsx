@@ -87,7 +87,7 @@ export default function PersonProfile({ person }: Props) {
               <h4 className="text-xl font-bold">Curriculum</h4>
             </div>
             {/* FUTURE LINK */}
-            <button className="btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary">
+            <button className="btn btn-primary">
               <PencilIcon className="h-5 w-5" />
               Editar perfil
             </button>

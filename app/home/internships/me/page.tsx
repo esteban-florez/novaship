@@ -6,6 +6,7 @@ import getPaginationProps from '@/lib/utils/pagination'
 import { param } from '@/lib/utils/search-params'
 import prisma from '@/prisma/client'
 import InternshipCard from './InternshipCard'
+import EmptyContent from '@/components/EmptyContent'
 
 export const metadata = {
   title: 'Mis pasantes',
@@ -32,15 +33,28 @@ export default async function MyInternsPage({ searchParams }: SearchParamsProps)
         title="Mis pasantes"
         subtitle="Aqui puedes ver todos los pasantes de tu institución."
       />
-      <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 p-4">
-        {internships.map(internship => (
-          <InternshipCard key={internship.id} internship={internship} />
-        ))}
-      </section>
-      <Pagination
-        pageNumber={pageNumber}
-        nextPage={nextPage}
-      />
+      {internships.length > 0
+        ? (
+          <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 p-4">
+            {internships.map(internship => (
+              <InternshipCard key={internship.id} internship={internship} />
+            ))}
+          </section>
+          )
+        : (
+          <EmptyContent
+            button={{
+              url: '/home/internships/select',
+              text: 'Añadir pasante',
+            }}
+          />
+          )}
+      {internships.length > 0 && (
+        <Pagination
+          pageNumber={pageNumber}
+          nextPage={nextPage}
+        />
+      )}
     </>
   )
 }

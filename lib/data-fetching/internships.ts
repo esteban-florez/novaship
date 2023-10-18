@@ -9,7 +9,11 @@ const include = {
   institute: true,
   recruitments: {
     include: {
-      vacant: true,
+      vacant: {
+        include: {
+          company: true,
+        },
+      },
     },
   },
 }

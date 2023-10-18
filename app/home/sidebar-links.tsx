@@ -12,12 +12,12 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/internships',
       title: 'Pasantías',
       icon: <AcademicCapIcon className="h-6 w-6" />,
+      visible: ['INSTITUTE', 'ADMIN'].includes(user.type),
       submenu: [
         {
-          href: '/home/institutes/me',
+          href: '/home/internships/me',
           title: 'Mis pasantes',
           icon: <StarIcon className="h-6 w-6" />,
-          visible: ['INSTITUTE', 'ADMIN'].includes(user.type),
         },
         {
           href: '/home/internships/select',

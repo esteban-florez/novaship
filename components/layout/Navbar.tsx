@@ -6,7 +6,7 @@ import Link from 'next/link'
 // TODO -> ¿Como se manejarán las notificaciones?
 // con volante, como un CARRO BRUUUUMMMMMMMMM
 export default function Navbar() {
-  const date = format(new Date())
+  const date = format(new Date(), true)
 
   return (
     <nav className="navbar relative flex-col border-b bg-white shadow-md sm:flex-row">

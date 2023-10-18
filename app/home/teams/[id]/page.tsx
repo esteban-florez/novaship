@@ -51,7 +51,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             <p className="mt-3 line-clamp-2">{team.description}</p>
             <div className="mt-4 flex flex-col justify-between gap-2 md:flex-row">
               <GoBackBtn label="Volver al listado" />
-              <button className="btn-primary btn hover:bg-white hover:text-neutral-600 hover:border-primary">
+              <button className="btn-primary btn">
                 <BriefcaseIcon className="h-5 w-5" />
                 Contratar equipo
               </button>
