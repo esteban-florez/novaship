@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 import { ZodError } from 'zod'
-import { AuthenticationError, AuthorizationError } from './reference'
+import { AuthenticationError } from './reference'
 import { NextResponse } from 'next/server'
 import { url } from '../utils/url'
 
@@ -20,10 +20,6 @@ export function handleError(error: unknown, data: Record<string, unknown> = {}) 
   // TODO -> Ver que hacer con estos errores
   if (error instanceof AuthenticationError) {
     return NextResponse.redirect(url('auth/login?alert=login_needed'))
-  }
-
-  if (error instanceof AuthorizationError) {
-    return NextResponse.redirect(url('home'))
   }
 
   if (error instanceof SyntaxError) {

@@ -93,6 +93,10 @@ export const alerts: AlertList = {
     type: 'warning',
     message: 'Primero debes iniciar sesión.',
   },
+  bad_creds: {
+    type: 'error',
+    message: 'Credenciales inválidas.',
+  },
   redirected: {
     type: 'info',
     message: 'Pa fuera, pala calle.',

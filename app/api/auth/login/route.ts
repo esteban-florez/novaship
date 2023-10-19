@@ -1,5 +1,6 @@
 import { handleRequest } from '@/lib/auth/api'
 import lucia from '@/lib/auth/lucia'
+import { handleError } from '@/lib/errors/api'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/login'
 import prisma from '@/prisma/client'
@@ -38,7 +39,11 @@ export async function POST(request: NextRequest) {
 
     return redirectToHome
   } catch (error) {
-    console.error(error)
-    return NextResponse.json(null, { status: 400 })
+    const { message } = error as { message: string }
+    if (message === 'AUTH_INVALID_KEY_ID' || message === 'AUTH_INVALID_PASSWORD') {
+      return NextResponse.redirect(url('/auth/login?alert=bad_creds'))
+    }
+
+    return handleError(error)
   }
 }

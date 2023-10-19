@@ -4,11 +4,11 @@ import prisma from '../client'
 import companies from '@/prisma/data/companies.json'
 import { seederQueries } from '../seed'
 import collect from '@/lib/utils/collection'
-import coinflip from '@/lib/utils/coinflip'
 
 export default async function company() {
   const locations = collect(await prisma.location.findMany({ select: { id: true } }))
   const positionRange = numbers(companies.names.length - 1)
+  const unverifiedProbability = numbers(1, 8)
 
   for (let i = 0; i < seederQueries.companies; i++) {
     const position = positionRange.random()
@@ -38,7 +38,7 @@ export default async function company() {
             id: authUser.id,
           },
         },
-        verifiedAt: coinflip() ? new Date() : null,
+        verifiedAt: unverifiedProbability.random() === 5 ? null : new Date(),
         location: {
           connect: locations.random().first(),
         },
