@@ -15,24 +15,9 @@ export const STAGE_PROGRESS = {
 }
 
 export const STAGE_ALERTS = {
-  PENDING: {
-    text: 'La solicitud de pasantía fué enviada, esperando confirmación del estudiante.',
-    className: '',
-  },
-  REJECTED: {
-    text: 'La solicitud de pasantía fué rechazada por el estudiante.',
-    className: 'alert-error',
-  },
-  ACCEPTED: {
-    text: 'La pasantía fué aceptada por el estudiante y está en búsqueda de empresa.',
-    className: 'alert-warning',
-  },
-  ACTIVE: {
-    text: 'La pasantía está actualmente en progreso.',
-    className: 'alert-success',
-  },
-  COMPLETED: {
-    text: 'Las horas totales de la pasantía fueron completadas.',
-    className: 'alert-primary',
-  },
+  PENDING: '',
+  REJECTED: 'alert-error',
+  ACCEPTED: 'alert-warning',
+  ACTIVE: 'alert-success',
+  COMPLETED: 'Las horas totales de la pasantía fueron completadas.',
 }
