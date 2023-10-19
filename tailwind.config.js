@@ -3,7 +3,11 @@ import themes from "daisyui/src/theming/themes"
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}"],
+  content: [
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./lib/shared/internship-stage.ts"
+  ],
   theme: {
     extend: {
       transitionProperty: {

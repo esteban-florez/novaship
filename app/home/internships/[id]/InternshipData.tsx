@@ -2,14 +2,14 @@ import { format } from '@/lib/utils/date'
 import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
-  grade: {
+  grade?: {
     title: string
   }
   internship: {
     hours: number
     createdAt: Date
   }
-  institute: {
+  institute?: {
     id: string
     name: string
   }
@@ -18,12 +18,14 @@ type Props = React.PropsWithChildren<{
 export default function InternshipData({ grade, internship, institute }: Props) {
   return (
     <div className="mt-4">
-      <p>
-        Carrera de la pasantía:
-        <span className="font-bold">
-          {' ' + grade.title}
-        </span>
-      </p>
+      {grade !== undefined && (
+        <p>
+          Carrera de la pasantía:
+          <span className="font-bold">
+            {' ' + grade.title}
+          </span>
+        </p>
+      )}
       <p>
         Fecha:
         <span className="font-bold">
@@ -36,17 +38,19 @@ export default function InternshipData({ grade, internship, institute }: Props) 
           {` ${internship.hours} horas`}
         </span>
       </p>
-      <p>
-        Universidad:{' '}
-        <span className="font-bold">
-          <Link
-            className="underline text-secondary"
-            href={`/home/profile/${institute.id}`}
-          >
-            {institute.name}
-          </Link>
-        </span>
-      </p>
+      {institute !== undefined && (
+        <p>
+          Universidad:{' '}
+          <span className="font-bold">
+            <Link
+              className="underline text-secondary"
+              href={`/home/profile/${institute.id}`}
+            >
+              {institute.name}
+            </Link>
+          </span>
+        </p>
+      )}
     </div>
   )
 }

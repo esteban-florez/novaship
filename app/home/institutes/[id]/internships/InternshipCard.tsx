@@ -35,7 +35,7 @@ export default function InternshipCard({ internship, userType }: Props) {
   ]
 
   return (
-    <div key={person.id} className="card bg-white shadow">
+    <div key={person.id} className="card bg-white shadow break-inside-avoid">
       <div className="card-body">
         <div className="flex items-center gap-2">
           <AvatarIcon image={person.image} />

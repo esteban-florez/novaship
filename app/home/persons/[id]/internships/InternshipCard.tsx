@@ -1,6 +1,6 @@
 import StageBadge from '@/app/home/internships/[id]/StageBadge'
 import InternshipActions from '@/components/internships/InternshipActions'
-import { STAGE_COLORS, STAGE_PROGRESS } from '@/lib/shared/internship-stage'
+import { STAGE_COLORS, STAGE_PROGRESS } from '@/lib/shared/stage-colors'
 import { type InternshipWithRelations } from '@/lib/types'
 import { getInternshipStage } from '@/lib/utils/tables'
 import { type UserType } from '@prisma/client'

@@ -1,4 +1,4 @@
-import { STAGE_COLORS } from '@/lib/shared/internship-stage'
+import { STAGE_COLORS } from '@/lib/shared/stage-colors'
 import { stages } from '@/lib/translations'
 import clsx from 'clsx'
 

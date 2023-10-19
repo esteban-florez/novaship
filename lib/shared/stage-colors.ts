@@ -1,5 +1,5 @@
 export const STAGE_COLORS = {
-  PENDING: 'text-neutral-700',
+  PENDING: 'text-neutral-400',
   REJECTED: 'text-error',
   ACCEPTED: 'text-warning',
   ACTIVE: 'text-success',
