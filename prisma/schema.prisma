@@ -278,7 +278,7 @@ model Hiring {
 model Internship {
   id           String        @id @default(cuid())
   hours        Int
-  completed    Int
+  completed    Int           @default(0)
   status       Status        @default(PENDING)
   person       Person        @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   personId     String

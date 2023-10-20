@@ -25,6 +25,7 @@ export const routes: Rec = {
   verifications: 'Verificaciones',
   select: 'Inscribir pasante',
   institutes: 'Instituciones',
+  persons: 'Personas',
 }
 
 export const userTypes = {

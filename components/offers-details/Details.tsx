@@ -77,28 +77,28 @@ export default function Details({ id, isOwner, title, description, expiresAt, ca
                       register={register}
                     />
                     {/* TEMPORAL DISABLED */}
-                    {/* <button className="btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary">
+                    {/* <button className="btn btn-primary">
                         <PencilIcon className="h-4 w-4" />
                         ¡Aplicar!
                       </button> */}
                   </form>}
 
                 {isOwner &&
-                (
-                  <>
-                    <Link href={`/home/offers/${id}/update`}>
-                      <button className="btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary">
-                        <PencilIcon className="h-4 w-4" />
-                        Actualizar
-                      </button>
-                    </Link>
-                    <DeleteModal
-                      title={title}
-                      action={`/api/offers/${id}`}
-                      showLabel
-                    />
-                  </>
-                )}
+                  (
+                    <>
+                      <Link href={`/home/offers/${id}/update`}>
+                        <button className="btn btn-primary">
+                          <PencilIcon className="h-4 w-4" />
+                          Actualizar
+                        </button>
+                      </Link>
+                      <DeleteModal
+                        title={title}
+                        action={`/api/offers/${id}`}
+                        showLabel
+                      />
+                    </>
+                  )}
               </div>
             </div>
           </div>

@@ -6,10 +6,18 @@ const include = {
   categories: true,
   grade: true,
   person: true,
-  institute: true,
+  institute: {
+    include: {
+      location: true,
+    },
+  },
   recruitments: {
     include: {
-      vacant: true,
+      vacant: {
+        include: {
+          company: true,
+        },
+      },
     },
   },
 }

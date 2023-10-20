@@ -171,7 +171,7 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
         subtitle="Descubre los proyectos que rondan la web."
       >
         <Link href="/home/projects/create">
-          <button className="btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary">
+          <button className="btn btn-primary">
             <PlusIcon className="h-6 w-6" />
             Agregar
           </button>

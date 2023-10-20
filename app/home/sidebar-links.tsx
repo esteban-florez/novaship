@@ -2,6 +2,11 @@ import { type UserWithType } from '@/lib/types'
 import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, GlobeAltIcon, StarIcon, UsersIcon, ShieldCheckIcon, CheckBadgeIcon, PlusIcon } from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
+  const institute = user.type === 'INSTITUTE'
+  const admin = user.type === 'ADMIN'
+  const person = user.type === 'PERSON'
+  const company = user.type === 'COMPANY'
+
   const links: SidebarLinkWithSubmenu[] = [
     {
       href: '/home',
@@ -14,26 +19,32 @@ export function sidebarLinks(user: UserWithType) {
       icon: <AcademicCapIcon className="h-6 w-6" />,
       submenu: [
         {
-          href: '/home/institutes/me',
-          title: 'Mis pasantes',
+          href: `/home/institutes/${user.id}/internships`,
+          title: 'Mis pasantías',
           icon: <StarIcon className="h-6 w-6" />,
-          visible: ['INSTITUTE', 'ADMIN'].includes(user.type),
+          visible: institute,
+        },
+        {
+          href: `/home/persons/${user.id}/internships`,
+          title: 'Mis pasantías',
+          icon: <StarIcon className="h-6 w-6" />,
+          visible: person,
         },
         {
           href: '/home/internships/select',
           title: 'Inscribir pasante',
           icon: <PlusIcon className="h-6 w-6" />,
-          visible: user.type === 'INSTITUTE',
+          visible: institute,
         },
       ],
     },
     {
-      href: user.type === 'PERSON' ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
+      href: person ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
       title: 'Ofertas',
       icon: <BriefcaseIcon className="h-6 w-6" />,
       submenu: [
         {
-          href: user.type === 'PERSON' ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
+          href: person ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
           title: 'Lista de ofertas',
           icon: <GlobeAltIcon className="h-6 w-6" />,
         },
@@ -41,13 +52,13 @@ export function sidebarLinks(user: UserWithType) {
           href: '/home/offers/create',
           title: 'Crear ofertas',
           icon: <PlusIcon className="h-6 w-6" />,
-          visible: user.type === 'COMPANY',
+          visible: company,
         },
         {
           href: '/home/offers?filter=suggested',
           title: 'Mis ofertas',
           icon: <StarIcon className="h-6 w-6" />,
-          visible: user.type === 'COMPANY',
+          visible: company,
         },
         {
           href: '/home/offers?filter=applied',
@@ -110,7 +121,7 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/admin',
       title: 'Administración',
       icon: <ShieldCheckIcon className="h-6 w-6" />,
-      visible: user.type === 'ADMIN',
+      visible: admin,
       submenu: [
         {
           href: '/home/admin/verifications',

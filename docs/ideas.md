@@ -4,7 +4,7 @@
 - Opciones de ver, editar y eliminar como un overlay en el elemento al hacer hover.
 - Mostrar un popup al hacer hover en los avatares de los miembros en /projects.
 - Fechas de entrega en tareas y subtareas.
-- Cambiar las respuestas de redirección (NextResponse.redirect y redirect) en los Route Handlers, por respuestas "200 OK". Y en su lugar indicarle la ruta a redirigir al hook useSubmit, o a lo que sea que haga la petición fetch() a la API.
+- Cambiar las respuestas de redirección (NextResponse.redirect y redirect) en los Route Handlers, por respuestas "200 OK". Y en su lugar retornar la URL a redirigir en el body, y redirigir con router.push().
 - Actualización de campos individuales en el perfil. 
 - Actualizar la versión de Next.js
 

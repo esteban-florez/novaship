@@ -47,7 +47,6 @@ export async function POST(request: NextRequest) {
     const shared = { email, authUserId: id, image: profileImagePath }
 
     if (userType === 'PERSON') {
-      console.log(parsed, shared)
       await prisma.person.create({
         data: {
           ...parsed as PersonData,
@@ -63,25 +62,27 @@ export async function POST(request: NextRequest) {
           },
         },
       })
-    } else {
-      const nonPersonData = parsed as NonPersonData
-      const certification = await storeFile(nonPersonData.certification)
 
-      if (userType === 'COMPANY') {
-        await prisma.company.create({
-          data: { ...nonPersonData, ...shared, certification },
-        })
-      } else {
-        await prisma.institute.create({
-          data: { ...nonPersonData, ...shared, certification },
-        })
-      }
+      const session = await lucia.createSession(authUser.id)
+      authRequest.setSession(session)
+
+      return NextResponse.redirect(url('/home'))
     }
 
-    const session = await lucia.createSession(authUser.id)
-    authRequest.setSession(session)
+    const nonPersonData = parsed as NonPersonData
+    const certification = await storeFile(nonPersonData.certification)
 
-    return NextResponse.redirect(url('/home'))
+    if (userType === 'COMPANY') {
+      await prisma.company.create({
+        data: { ...nonPersonData, ...shared, certification },
+      })
+    } else {
+      await prisma.institute.create({
+        data: { ...nonPersonData, ...shared, certification },
+      })
+    }
+
+    return NextResponse.redirect(url('/auth/login?modal=registered'))
   } catch (error) {
     console.log(error)
     return handleError(error, data)

@@ -1,6 +1,6 @@
-import { type Visibility, type Team, type Person, type Leader, type Company, type Internship, type Status } from '@prisma/client'
+import { type Visibility, type Team, type Person, type Leader, type Company } from '@prisma/client'
 import { DBError } from '../errors/reference'
-import { type UserWithType, type MembershipWithRelations, type ProjectsFull } from '../types'
+import { type UserWithType, type MembershipWithRelations, type ProjectsFull, type InternshipWithRelations } from '../types'
 
 export function getMember(membership: MembershipWithRelations) {
   const member = membership.person
@@ -52,34 +52,34 @@ export function getPublicProjects<T>(projects: Array<T & {
   return projects.filter(project => project.visibility === 'PUBLIC')
 }
 
-interface WithStatus {
-  status: Status
-}
-
-interface WithRecruitments {
-  recruitments: WithStatus[]
-}
-
-export function getInternshipStage(internship: Internship & WithRecruitments) {
+export function getInternshipStage(internship: InternshipWithRelations) {
   const { status, completed, hours } = internship
 
-  let statusKey: Stage = status
+  let stage: Stage = status
 
   if (status === 'ACCEPTED') {
     if (completed >= hours) {
-      statusKey = 'COMPLETED'
+      stage = 'COMPLETED'
     }
 
     const recruitment = getAcceptedRecruitment(internship)
 
     if (recruitment !== undefined) {
-      statusKey = 'ACTIVE'
+      stage = 'ACTIVE'
     }
   }
 
-  return statusKey
+  return stage
 }
 
-export function getAcceptedRecruitment<T>(internship: T & WithRecruitments) {
+export function getAcceptedRecruitment(internship: InternshipWithRelations) {
   return internship.recruitments.find(recruitment => recruitment.status === 'ACCEPTED')
+}
+
+export function getInternshipCompany(internship: InternshipWithRelations) {
+  const accepted = getAcceptedRecruitment(internship)
+
+  if (accepted === undefined) return null
+
+  return accepted.vacant.company
 }

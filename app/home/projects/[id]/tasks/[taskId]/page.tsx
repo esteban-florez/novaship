@@ -105,7 +105,7 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
         <div className="mt-2 flex justify-end gap-x-2 text-sm">
           <GoBackBtn label="Proyecto" />
           <Link href={`/home/projects/${task.projectId}/tasks/${taskId}/subtasks/create`}>
-            <button className="btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary">
+            <button className="btn btn-primary">
               <PlusIcon className="h-4 w-4" />
               Subtarea
             </button>

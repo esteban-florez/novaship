@@ -20,6 +20,22 @@ export default function Aside({ links }: Props) {
     setActive(window.innerWidth > 768)
   }, [])
 
+  useEffect(() => {
+    const toggleOnResize = () => {
+      if (window.innerWidth > 767) {
+        setActive(true)
+      } else {
+        setActive(false)
+      }
+    }
+
+    window.addEventListener('resize', toggleOnResize)
+
+    return () => {
+      window.removeEventListener('resize', toggleOnResize)
+    }
+  }, [])
+
   const handleClick = () => {
     setActive(window.innerWidth > 768)
   }

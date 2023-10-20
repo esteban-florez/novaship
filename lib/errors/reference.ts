@@ -8,6 +8,4 @@ export const ERRORS = {
 
 export class AuthenticationError extends Error {}
 
-export class AuthorizationError extends Error {}
-
 export class DBError extends Error {}
