@@ -68,7 +68,9 @@ type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 type InternshipWithRelations = Internship & {
   recruitments: Array<Recruitment & {
     vacant: Vacant & {
-      company: Company
+      company: Company & {
+        location: Location
+      }
     }
   }>
   categories: Category[]

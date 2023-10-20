@@ -6,7 +6,7 @@ module.exports = {
   content: [
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
-    "./lib/shared/internship-stage.ts"
+    "./lib/shared/stage-colors.ts"
   ],
   theme: {
     extend: {

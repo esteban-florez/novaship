@@ -5,7 +5,7 @@ import Input from '@/components/forms/inputs/Input'
 import Select from '@/components/forms/inputs/Select'
 import SelectMultiple from '@/components/forms/inputs/select-multiple/SelectMultiple'
 import useSubmit from '@/lib/hooks/useSubmit'
-import { schema } from '@/lib/validation/schemas/internship-create'
+import { schema } from '@/lib/validation/schemas/internships/create'
 import { type Category, type Grade } from '@prisma/client'
 
 type Props = React.PropsWithChildren<{

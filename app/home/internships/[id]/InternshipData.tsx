@@ -17,7 +17,7 @@ type Props = React.PropsWithChildren<{
 
 export default function InternshipData({ grade, internship, institute }: Props) {
   return (
-    <div className="mt-4">
+    <div className="mt-4 text-lg">
       {grade !== undefined && (
         <p>
           Carrera de la pasantía:

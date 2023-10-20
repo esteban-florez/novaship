@@ -15,7 +15,11 @@ const include = {
     include: {
       vacant: {
         include: {
-          company: true,
+          company: {
+            include: {
+              location: true,
+            },
+          },
         },
       },
     },

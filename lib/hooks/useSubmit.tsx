@@ -111,5 +111,5 @@ export default function useSubmit<Fields extends FieldValues>(options?: UseSubmi
     : null
 
   const handleSubmit = useFormReturn.handleSubmit(send)
-  return { ...useFormReturn, handleSubmit, alert, result, serverErrors }
+  return { ...useFormReturn, handleSubmit, alert, loading: result === 'loading', serverErrors }
 }

@@ -3,7 +3,6 @@ type Props = React.PropsWithChildren<{
   icon?: React.ReactElement
   title?: string
   className?: string
-  onClick?: () => void
   forceOpen?: boolean
 }>
 
