@@ -1,5 +1,10 @@
 import { type UserWithType } from '@/lib/types'
-import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, GlobeAltIcon, StarIcon, UsersIcon, ShieldCheckIcon, CheckBadgeIcon, PlusIcon } from '@heroicons/react/24/outline'
+import {
+  HomeIcon, BriefcaseIcon, AcademicCapIcon,
+  ClipboardDocumentListIcon, UserGroupIcon,
+  GlobeAltIcon, StarIcon, ShieldCheckIcon,
+  CheckBadgeIcon, PlusIcon,
+} from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
   const institute = user.type === 'INSTITUTE'
@@ -61,7 +66,7 @@ export function sidebarLinks(user: UserWithType) {
           visible: company,
         },
         {
-          href: '/home/offers?filter=suggested',
+          href: '/home/offers?filter=personal',
           title: 'Mis ofertas',
           icon: <StarIcon className="h-6 w-6" />,
           visible: company,
@@ -81,17 +86,17 @@ export function sidebarLinks(user: UserWithType) {
         {
           href: '/home/projects?filter=suggested',
           title: 'Lista de proyectos',
-          icon: <UserGroupIcon className="h-6 w-6" />,
+          icon: <GlobeAltIcon className="h-6 w-6" />,
         },
         {
           href: '/home/projects/create',
           title: 'Crear proyecto',
-          icon: <UsersIcon className="h-6 w-6" />,
+          icon: <PlusIcon className="h-6 w-6" />,
         },
         {
           href: '/home/projects?filter=personal',
           title: 'Mis proyectos',
-          icon: <GlobeAltIcon className="h-6 w-6" />,
+          icon: <StarIcon className="h-6 w-6" />,
         },
       ],
     },
@@ -103,17 +108,17 @@ export function sidebarLinks(user: UserWithType) {
         {
           href: '/home/teams?filter=all',
           title: 'Lista de equipos',
-          icon: <UserGroupIcon className="h-6 w-6" />,
+          icon: <GlobeAltIcon className="h-6 w-6" />,
         },
         {
           href: '/home/teams/create',
           title: 'Crear equipo',
-          icon: <UsersIcon className="h-6 w-6" />,
+          icon: <PlusIcon className="h-6 w-6" />,
         },
         {
           href: '/home/teams?filter=personal',
           title: 'Mis equipos',
-          icon: <GlobeAltIcon className="h-6 w-6" />,
+          icon: <StarIcon className="h-6 w-6" />,
         },
         // TODO -> añadir funcionalidad
         // {

@@ -51,12 +51,13 @@ export default function Aside({ links }: Props) {
       'w-0 sm:w-32': !active,
     })}
     >
-      <div className="py-2.5 text-center sm:inline-flex ms-6 sm:gap-x-2">
+      <div className="pt-2.5 pb-0 text-center sm:inline-flex ms-6 sm:gap-x-2">
+        <img src="/logo.ico" alt="logo." className="mx-auto w-28" />
         <button className="btn-ghost btn -mt-2 self-center sm:mt-0" onClick={() => { setActive(!active) }}>
           <Bars3Icon className="h-7 w-7 text-black" />
         </button>
       </div>
-      <ul className={clsx('menu h-full flex-nowrap gap-2 py-5 px-4 shadow scrollbar', {
+      <ul className={clsx('menu h-full flex-nowrap gap-2 py-2 pl-4 pr-0 shadow scrollbar', {
         '': active,
         'hidden sm:block': !active,
       })}
