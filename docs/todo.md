@@ -23,6 +23,7 @@
 - Hacer un nuevo componente modal.
 - Pasar subtareas y revisiones a modales.
 - Crear invitacion y despues membership.
+- Revisar las dimensiones del logo en responsive.
 
 # HACER
 - Loaders
