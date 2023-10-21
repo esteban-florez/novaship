@@ -15,12 +15,19 @@ export default function Pagination({ pageNumber, nextPage }: Props) {
   const prevNumber = pageNumber > 1 ? pageNumber - 1 : 0
   const nextNumber = pageNumber + 1
 
-  if (nextPage) {
+  if (nextPage || pageNumber > 1) {
     return (
       <div className="join mb-10 w-full justify-center">
         <div className="card flex-row rounded-lg border border-solid border-zinc-300 shadow-md">
-          {pageNumber === 1 && <button className="join-item btn bg-white" disabled>«</button>}
-          {pageNumber !== 1 &&
+          {pageNumber === 1 && (
+            <button
+              className="join-item btn bg-white"
+              disabled
+            >
+              «
+            </button>
+          )}
+          {pageNumber !== 1 && (
             <Link
               href={{
                 pathname,
@@ -29,9 +36,12 @@ export default function Pagination({ pageNumber, nextPage }: Props) {
               className="join-item btn bg-white"
             >
               «
-            </Link>}
-          <button className="join-item btn cursor-default">Página {pageNumber}</button>
-          {nextPage &&
+            </Link>
+          )}
+          <button className="join-item btn cursor-default">
+            Página {pageNumber}
+          </button>
+          {nextPage && (
             <Link
               href={{
                 pathname,
@@ -40,8 +50,16 @@ export default function Pagination({ pageNumber, nextPage }: Props) {
               className="join-item btn bg-white"
             >
               »
-            </Link>}
-          {!nextPage && <button className="join-item btn bg-white" disabled>»</button>}
+            </Link>
+          )}
+          {!nextPage && (
+            <button
+              className="join-item btn bg-white"
+              disabled
+            >
+              »
+            </button>
+          )}
         </div>
       </div>
     )
