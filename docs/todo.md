@@ -1,9 +1,3 @@
-# Correciones de Ana
-
-### Myriam
-- Mensaje más general en el login.
-- Buscar metáfora del logo (cambiarlo) y ponerlo en el sidebar.
-
 # To-Do
 
 - Guiar al usuario por la aplicación.
@@ -18,7 +12,6 @@
 - Mecanismo de alertas tipo "Toast" globales y crear componente que lea la url para mostrar un alert.
 - Llevarte a donde cometiste el error en signup.
 - Arreglar <Input> checkbox y radio.
-- Mejorar transicion del aside.
 - Añadir backups.
 - Signup con Google.
 - Mecanismo para destacar ofertas y equipo mediante suscripción.
@@ -28,11 +21,18 @@
 - Validación: no puede aplicarse a un proyecto que sea personal.
 - Hacer un nuevo componente modal.
 - Pasar subtareas y revisiones a modales.
+- Crear invitacion y despues membership.
+
+# HACER
+- Loaders
+
+# Gráficas - (pendiente)
+
+- Documentacion | https://www.chartjs.org/docs/latest/ | https://react-chartjs-2.js.org/
 
 # Plugins
 
 - PDF downloader.
-- Graficos.
 
 # Database
 
