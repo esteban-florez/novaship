@@ -4,11 +4,11 @@ import institutes from '@/prisma/data/institutes.json'
 import numbers from '@/lib/utils/number'
 import { seederQueries } from '../seed'
 import collect from '@/lib/utils/collection'
-import coinflip from '@/lib/utils/coinflip'
 
 export default async function institute() {
   const locations = collect(await prisma.location.findMany({ select: { id: true } }))
   const positionRange = numbers(institutes.names.length - 1)
+  const unverifiedProbability = numbers(1, 8)
 
   for (let i = 0; i < seederQueries.institute; i++) {
     const position = positionRange.random()
@@ -38,7 +38,7 @@ export default async function institute() {
             id: authUser.id,
           },
         },
-        verifiedAt: coinflip() ? new Date() : null,
+        verifiedAt: unverifiedProbability.random() === 5 ? null : new Date(),
         location: {
           connect: locations.random().first(),
         },

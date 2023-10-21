@@ -1,9 +1,9 @@
 import { auth } from '@/lib/auth/api'
 import { handleError } from '@/lib/errors/api'
-import { AuthorizationError } from '@/lib/errors/reference'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/team'
 import prisma from '@/prisma/client'
+import { notFound } from 'next/navigation'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function POST(request: NextRequest) {
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     const { id, type } = await auth.user(request)
 
     if (type === 'INSTITUTE') {
-      throw new AuthorizationError('AuthorizationError: User of type: "INSTITUTE" cannot create a team.')
+      notFound()
     }
 
     data = await request.json()
@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
         ...parsed,
         memberships: {
           createMany: {
+            // @ts-expect-error Outdated code
             data: memberships,
           },
         },

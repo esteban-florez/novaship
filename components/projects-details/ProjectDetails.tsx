@@ -40,9 +40,9 @@ export default function ProjectDetails({ id, title, description, categories, isP
         </div>
         <p className="line-clamp-6 py-3">{description}</p>
         <div className="mx-auto flex w-full flex-col justify-between gap-3 sm:mx-0 sm:w-auto sm:flex-row sm:gap-1 sm:text-sm lg:gap-2">
-          <GoBackBtn label='Volver al listado' />
+          <GoBackBtn label="Volver al listado" />
           {!isMember && !isOwner &&
-            <button className='btn btn-primary hover:bg-white hover:text-neutral hover:border-primary'>
+            <button className="btn btn-primary hover:bg-white hover:text-neutral hover:border-primary">
               <PencilIcon className="h-4 w-4" />
               ¡Aplicar!
             </button>}
@@ -50,7 +50,7 @@ export default function ProjectDetails({ id, title, description, categories, isP
             (
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link href={`/home/projects/${id}/update`}>
-                  <button className='btn btn-primary hover:bg-white hover:text-neutral hover:border-primary'>
+                  <button className="btn btn-primary hover:bg-white hover:text-neutral hover:border-primary">
                     <PencilIcon className="h-4 w-4" />
                     Actualizar
                   </button>

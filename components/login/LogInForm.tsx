@@ -3,10 +3,22 @@
 import useSubmit from '@/lib/hooks/useSubmit'
 import { type Fields, schema } from '@/lib/validation/schemas/login'
 import Input from '../forms/inputs/Input'
+import { useSearchParams } from 'next/navigation'
 
 export default function LogInForm() {
-  // TODO -> mostrar una alerta de "debes iniciar sesión primero antes de ver esa página" cuando exista un searchParam llamado "redirected".
-  const { alert, handleSubmit, register, formState: { errors }, serverErrors } = useSubmit<Fields>({ schema })
+  const { alert, handleSubmit, register, formState: { errors }, serverErrors, setValue, getValues } = useSubmit<Fields>({ schema })
+  const searchParams = useSearchParams().get('alert')
+
+  if (searchParams === 'bad_creds') {
+    const password = getValues('password')
+    if (password !== '') {
+      setValue('password', '', {
+        shouldValidate: false,
+        shouldDirty: false,
+        shouldTouch: false,
+      })
+    }
+  }
 
   return (
     <form action="/api/auth/login" method="POST" onSubmit={handleSubmit} className="mx-auto w-full pt-4">

@@ -9,11 +9,6 @@ import Textarea from '../forms/inputs/Textarea'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
 import { type OptionCategory } from '@/lib/types'
 import FormButtons from '../forms/FormButtons'
-// import ReactSelect from 'react-select'
-// import CustomLabel from '../forms/inputs/CustomLabel'
-// import clsx from 'clsx'
-// import PersonOption from './PersonOption'
-// import AvatarIcon from '../AvatarIcon'
 
 type Props = React.PropsWithChildren<{
   categories: OptionCategory[]
@@ -74,7 +69,7 @@ export default function CreateTeamForm({ persons, categories }: Props) {
           }}
         />
       </FormSection>
-      <FormButtons url="/home/teams" />
+      <FormButtons />
     </form>
   )
 }

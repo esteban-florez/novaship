@@ -120,7 +120,7 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
       {!disabled && (
         <ul
           className={clsx(
-            'menu absolute z-20 max-h-52 w-full flex-nowrap overflow-y-auto rounded-md border border-neutral-300 bg-white text-sm shadow-lg scrollbar-thin scrollbar-thumb-neutral-300/75', hidden && 'hidden', menuOnTop && 'bottom-[115%]', !menuOnTop && 'top-[115%]'
+            'menu absolute z-20 max-h-52 w-full flex-nowrap overflow-y-auto rounded-md border border-neutral-300 bg-white text-sm shadow-lg scrollbar', hidden && 'hidden', menuOnTop && 'bottom-[115%]', !menuOnTop && 'top-[115%]'
           )}
           ref={ulRef}
         >

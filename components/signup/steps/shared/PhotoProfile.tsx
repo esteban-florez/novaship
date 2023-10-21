@@ -5,8 +5,6 @@ import ImageInput from '@/components/forms/inputs/ImageInput'
 export default function PhotoProfile() {
   const { register, errors, goBack } = useContext(SignUpContext)
 
-  console.log(errors)
-
   return (
     <>
       <h2 className="text-center text-xl font-bold md:text-3xl">

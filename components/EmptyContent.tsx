@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
-  title: string
+  title?: string
   className?: string
   image?: 'content' | 'files' | 'tasks'
   button?: {
@@ -12,7 +12,7 @@ type Props = React.PropsWithChildren<{
 }>
 
 // TODO -> responsive, ajustar al espacio e imagen escogible
-export default function EmptyContent({ title, children, image, button, className }: Props) {
+export default function EmptyContent({ title = 'No hemos encontrado resultados...', children, image, button, className }: Props) {
   const hasButton = button !== null && button !== undefined
 
   return (
@@ -23,7 +23,7 @@ export default function EmptyContent({ title, children, image, button, className
       {hasButton &&
         <div className="mx-auto">
           <Link href={button.url}>
-            <button className='btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary'>
+            <button className="btn btn-primary">
               {button.text}
             </button>
           </Link>

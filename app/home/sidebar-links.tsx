@@ -1,7 +1,17 @@
 import { type UserWithType } from '@/lib/types'
-import { HomeIcon, BriefcaseIcon, AcademicCapIcon, ClipboardDocumentListIcon, UserGroupIcon, GlobeAltIcon, StarIcon, UsersIcon, ShieldCheckIcon, CheckBadgeIcon, PlusIcon } from '@heroicons/react/24/outline'
+import {
+  HomeIcon, BriefcaseIcon, AcademicCapIcon,
+  ClipboardDocumentListIcon, UserGroupIcon,
+  GlobeAltIcon, StarIcon, ShieldCheckIcon,
+  CheckBadgeIcon, PlusIcon,
+} from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
+  const institute = user.type === 'INSTITUTE'
+  const admin = user.type === 'ADMIN'
+  const person = user.type === 'PERSON'
+  const company = user.type === 'COMPANY'
+
   const links: SidebarLinkWithSubmenu[] = [
     {
       href: '/home',
@@ -12,14 +22,34 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/internships',
       title: 'Pasantías',
       icon: <AcademicCapIcon className="h-6 w-6" />,
+      submenu: [
+        {
+          href: `/home/institutes/${user.id}/internships`,
+          title: 'Mis pasantías',
+          icon: <StarIcon className="h-6 w-6" />,
+          visible: institute,
+        },
+        {
+          href: `/home/persons/${user.id}/internships`,
+          title: 'Mis pasantías',
+          icon: <StarIcon className="h-6 w-6" />,
+          visible: person,
+        },
+        {
+          href: '/home/internships/select',
+          title: 'Inscribir pasante',
+          icon: <PlusIcon className="h-6 w-6" />,
+          visible: institute,
+        },
+      ],
     },
     {
-      href: user.type === 'PERSON' ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
+      href: person ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
       title: 'Ofertas',
       icon: <BriefcaseIcon className="h-6 w-6" />,
       submenu: [
         {
-          href: user.type === 'PERSON' ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
+          href: person ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
           title: 'Lista de ofertas',
           icon: <GlobeAltIcon className="h-6 w-6" />,
         },
@@ -27,13 +57,13 @@ export function sidebarLinks(user: UserWithType) {
           href: '/home/offers/create',
           title: 'Crear ofertas',
           icon: <PlusIcon className="h-6 w-6" />,
-          visible: user.type === 'COMPANY',
+          visible: company,
         },
         {
-          href: '/home/offers?filter=suggested',
+          href: '/home/offers?filter=personal',
           title: 'Mis ofertas',
           icon: <StarIcon className="h-6 w-6" />,
-          visible: user.type === 'COMPANY',
+          visible: company,
         },
         {
           href: '/home/offers?filter=applied',
@@ -50,17 +80,17 @@ export function sidebarLinks(user: UserWithType) {
         {
           href: '/home/projects?filter=suggested',
           title: 'Lista de proyectos',
-          icon: <UserGroupIcon className="h-6 w-6" />,
+          icon: <GlobeAltIcon className="h-6 w-6" />,
         },
         {
           href: '/home/projects/create',
           title: 'Crear proyecto',
-          icon: <UsersIcon className="h-6 w-6" />,
+          icon: <PlusIcon className="h-6 w-6" />,
         },
         {
           href: '/home/projects?filter=personal',
           title: 'Mis proyectos',
-          icon: <GlobeAltIcon className="h-6 w-6" />,
+          icon: <StarIcon className="h-6 w-6" />,
         },
       ],
     },
@@ -72,17 +102,17 @@ export function sidebarLinks(user: UserWithType) {
         {
           href: '/home/teams?filter=all',
           title: 'Lista de equipos',
-          icon: <UserGroupIcon className="h-6 w-6" />,
+          icon: <GlobeAltIcon className="h-6 w-6" />,
         },
         {
           href: '/home/teams/create',
           title: 'Crear equipo',
-          icon: <UsersIcon className="h-6 w-6" />,
+          icon: <PlusIcon className="h-6 w-6" />,
         },
         {
           href: '/home/teams?filter=personal',
           title: 'Mis equipos',
-          icon: <GlobeAltIcon className="h-6 w-6" />,
+          icon: <StarIcon className="h-6 w-6" />,
         },
         // TODO -> añadir funcionalidad
         // {
@@ -96,7 +126,7 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/admin',
       title: 'Administración',
       icon: <ShieldCheckIcon className="h-6 w-6" />,
-      visible: user.type === 'ADMIN',
+      visible: admin,
       submenu: [
         {
           href: '/home/admin/verifications',

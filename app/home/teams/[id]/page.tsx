@@ -5,7 +5,6 @@ import AvatarIcon from '@/components/AvatarIcon'
 import { getMember } from '@/lib/utils/tables'
 import Link from 'next/link'
 import { type Grade, type Person } from '@prisma/client'
-import { ArrowLeftIcon } from '@heroicons/react/24/solid'
 import { BriefcaseIcon } from '@heroicons/react/24/outline'
 import { getTeam } from '@/lib/data-fetching/teams'
 import InlineList from '@/components/InlineList'
@@ -51,8 +50,8 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             <InlineList items={categories.map(({ title }) => title)} />
             <p className="mt-3 line-clamp-2">{team.description}</p>
             <div className="mt-4 flex flex-col justify-between gap-2 md:flex-row">
-              <GoBackBtn label='Volver al listado' />
-              <button className="btn-primary btn hover:bg-white hover:text-neutral-600 hover:border-primary">
+              <GoBackBtn label="Volver al listado" />
+              <button className="btn-primary btn">
                 <BriefcaseIcon className="h-5 w-5" />
                 Contratar equipo
               </button>

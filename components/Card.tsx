@@ -69,7 +69,7 @@ export default function Card({ title, categories, description, owner, location, 
                 </div>
               </div>}
             <Link href={link}>
-              <button className='btn btn-secondary hover:bg-white hover:text-neutral-600'>
+              <button className="btn btn-secondary hover:bg-white hover:text-neutral-600">
                 Ver más
               </button>
             </Link>

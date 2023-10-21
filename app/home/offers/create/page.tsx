@@ -23,7 +23,6 @@ export default async function CreateOfferPage() {
         jobs={jobs}
         method="POST"
         action="/api/offers"
-        backUrl="/home/offers"
       />
     </>
   )

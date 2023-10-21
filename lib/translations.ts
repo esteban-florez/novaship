@@ -22,13 +22,11 @@ export const routes: Rec = {
   teams: 'Equipos de trabajo',
   hiring: 'Postulaciones',
   memberships: 'Miembros',
+  verifications: 'Verificaciones',
+  select: 'Inscribir pasante',
+  institutes: 'Instituciones',
+  persons: 'Personas',
 }
-
-export const statuses = {
-  sent: 'Enviado',
-  read: 'Leído',
-  received: 'Recibido',
-} as const
 
 export const userTypes = {
   PERSON: 'Persona natural',
@@ -88,7 +86,7 @@ export const expirations = {
   DAYS31: '31 días',
 }
 
-export const offerStatuses = {
+export const statuses = {
   PENDING: 'En espera',
   REJECTED: 'Rechazada',
   ACCEPTED: 'Aceptada',
@@ -98,3 +96,11 @@ export const genders = {
   MALE: 'Hombre',
   FEMALE: 'Mujer',
 }
+
+export const stages = {
+  PENDING: 'Por confirmar',
+  REJECTED: 'Rechazada',
+  ACCEPTED: 'En busca de empresa',
+  ACTIVE: 'En curso',
+  COMPLETED: 'Completada',
+} as const

@@ -7,8 +7,7 @@ export const seederQueries = {
   persons: 30,
   companies: 15,
   institute: 15,
-  internships: 15,
-  recruitments: 10,
+  internships: 20,
   hirings: 15,
   interviews: 15,
 }

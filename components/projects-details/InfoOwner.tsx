@@ -21,7 +21,7 @@ export default function InfoOwner({ name, description, id, members }: Props) {
       </div>
       <p className="mb-1 line-clamp-3 text-sm">{description}</p>
       <Link href={`/home/teams/${id}`}>
-        <button className='btn btn-block btn-secondary hover:bg-white hover:text-neutral-600 hover:border-secondary'>
+        <button className="btn btn-block btn-secondary hover:bg-white hover:text-neutral-600 hover:border-secondary">
           {members != null ? 'Ver equipo' : 'Ver perfil'}
           <ArrowRightIcon className="h-4 w-4" />
         </button>

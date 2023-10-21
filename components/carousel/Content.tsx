@@ -50,7 +50,7 @@ export default function Content(props: Props) {
               </div>
             </div>}
           <Link href={props.destination === 'home' ? props.link : `/home/offers/${props.id}`}>
-            <button className='btn btn-wide btn-secondary hover:bg-white hover:text-neutral-600 hover:border-secondary'>
+            <button className="btn btn-wide btn-secondary hover:bg-white hover:text-neutral-600 hover:border-secondary">
               Ver más
             </button>
           </Link>

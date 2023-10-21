@@ -49,8 +49,10 @@ export default function Toast({ type, message, onClose }: Props) {
         <p className={clsx({
           'break-normal': true,
           'text-sm': message.length > 15,
-          'text-base': message.length < 15
-        })}>{message}</p>
+          'text-base': message.length < 15,
+        })}
+        >{message}
+        </p>
         {type !== 'loading' && (
           <button onClick={onClose}>
             <XMarkIcon className="h-6 w-6" />

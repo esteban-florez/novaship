@@ -44,7 +44,7 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
         </div>
         <div className="px-4">
           <p className="mb-2 text-neutral-600">{task.description}</p>
-          {!hasParticipations && <small className='text-neutral-600 font-semibold'>No hay participantes registrados.</small>}
+          {!hasParticipations && <small className="text-neutral-600 font-semibold">No hay participantes registrados.</small>}
           {hasParticipations &&
             <ul>
               {task.participations.map(participation => {
@@ -54,13 +54,12 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
                   </li>
                 )
               })}
-            </ul>
-          }
+            </ul>}
         </div>
         <div className="divider" />
-        <div className='px-4'>
+        <div className="px-4">
           <h6 className="-mb-2 font-semibold">Revisiones</h6>
-          {!hasRevisions && <small className='text-neutral-600 font-semibold'>No hay revisiones registradas.</small>}
+          {!hasRevisions && <small className="text-neutral-600 font-semibold">No hay revisiones registradas.</small>}
           {hasRevisions &&
             <ul>
               {task.revisions.map(revision => {
@@ -83,13 +82,12 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
                   </li>
                 )
               })}
-            </ul>
-          }
+            </ul>}
         </div>
         <div className="divider" />
         <div className="mt-2 px-4 flex flex-col gap-2">
           <h6 className="font-semibold">Subtareas</h6>
-          {!hasSubtasks && <small className='text-neutral-600 font-semibold'>No hay subtareas registradas.</small>}
+          {!hasSubtasks && <small className="text-neutral-600 font-semibold">No hay subtareas registradas.</small>}
           {hasSubtasks &&
             task.subtasks.map(subtask => {
               return (
@@ -102,13 +100,12 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
                   revisionAction={`/home/projects/${task.projectId}/tasks/${task.id}/subtasks/${subtask.id}/revisions/create`}
                 />
               )
-            })
-          }
+            })}
         </div>
         <div className="mt-2 flex justify-end gap-x-2 text-sm">
-          <GoBackBtn label='Proyecto' />
+          <GoBackBtn label="Proyecto" />
           <Link href={`/home/projects/${task.projectId}/tasks/${taskId}/subtasks/create`}>
-            <button className='btn btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary'>
+            <button className="btn btn-primary">
               <PlusIcon className="h-4 w-4" />
               Subtarea
             </button>

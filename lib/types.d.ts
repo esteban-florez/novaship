@@ -26,6 +26,10 @@ import {
   type Leader,
   type Contract,
   type Invitation,
+  type Vacant,
+  type Recruitment,
+  type Grade,
+  type Internship,
 } from '@prisma/client'
 import { type days } from './translations'
 
@@ -58,7 +62,23 @@ type Colors =
 type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
 
 // ----------------------------------------------------------------------
-// --------------------------- TEAMS ---------------------------------
+// --------------------------- Internships ------------------------------
+// ----------------------------------------------------------------------
+
+type InternshipWithRelations = Internship & {
+  recruitments: Array<Recruitment & {
+    vacant: Vacant & {
+      company: Company
+    }
+  }>
+  categories: Category[]
+  institute: Institute
+  person: Person
+  grade: Grade
+}
+
+// ----------------------------------------------------------------------
+// ------------------------------ Teams ---------------------------------
 // ----------------------------------------------------------------------
 interface TeamsFull extends Team {
   categories: Category[]
