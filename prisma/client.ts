@@ -6,12 +6,14 @@ const globalForPrisma = globalThis as unknown as {
 const prisma = globalForPrisma.prisma ?? new PrismaClient()
 
 // TODO -> log event middleware
-// INFO -> shows the timelapse per query
 // prisma.$use(async (params, next) => {
-//   const before = Date.now()
 //   const result = await next(params)
-//   const after = Date.now()
-//   console.log(`Query ${params.model}.${params.action} took ${after - before}ms`)
+//   console.log('\n\n',{
+//     'Model': params.model,
+//     'Action': params.action,
+//     'Args': params.args,
+//     'Path': params.dataPath
+//   },'\n\n')
 //   return result
 // })
 

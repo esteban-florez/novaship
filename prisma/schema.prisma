@@ -12,36 +12,38 @@ datasource db {
 // --------------------------- User models ------------------------------
 // ----------------------------------------------------------------------
 model Person {
-  id             String          @id @default(cuid())
-  name           String
-  email          String          @unique
-  ci             String          @unique
-  birth          DateTime
-  gender         Gender
-  image          String?
-  phone          String          @unique
-  description    String
-  employable     Boolean
-  schedule       Json?
-  authUser       AuthUser        @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  authUserId     String          @unique
-  location       Location        @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  locationId     String
-  memberships    Membership[]
-  categories     Category[]
-  grades         Grade[]
-  skills         Skill[]
-  jobs           Job[]
-  experiences    Experience[]
-  hirings        Hiring[]
-  internships    Internship[]
-  invitations    Invitation[]
-  projects       Project[]
-  leaderships    Leader[]
-  participations Participation[]
-  tasks          Task[]
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  id                String             @id @default(cuid())
+  name              String
+  email             String             @unique
+  ci                String             @unique
+  birth             DateTime
+  gender            Gender
+  image             String?
+  phone             String             @unique
+  description       String
+  employable        Boolean
+  schedule          Json?
+  authUser          AuthUser           @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authUserId        String             @unique
+  location          Location           @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  locationId        String
+  memberships       Membership[]
+  categories        Category[]
+  grades            Grade[]
+  skills            Skill[]
+  jobs              Job[]
+  experiences       Experience[]
+  hirings           Hiring[]
+  internships       Internship[]
+  invitations       Invitation[]
+  projects          Project[]
+  leaderships       Leader[]
+  participations    Participation[]
+  subparticipations Subparticipation[]
+  tasks             Task[]
+  // Log               Log[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
   // deletedAt   DateTime?
 }
 
@@ -61,6 +63,7 @@ model Company {
   offers        Offer[]
   vacants       Vacant[]
   leaderships   Leader[]
+  // Log           Log[]
   verifiedAt    DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -81,6 +84,7 @@ model Institute {
   authUser      AuthUser     @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authUserId    String       @unique
   internships   Internship[]
+  // Log           Log[]
   verifiedAt    DateTime?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
@@ -184,15 +188,16 @@ model Task {
 }
 
 model Subtask {
-  id          String     @id @default(cuid())
-  title       String
-  description String
-  revisions   Revision[]
-  status      TaskStatus @default(PENDING)
-  task        Task       @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  taskId      String
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id                String             @id @default(cuid())
+  title             String
+  description       String
+  revisions         Revision[]
+  status            TaskStatus         @default(PENDING)
+  subparticipations Subparticipation[]
+  task              Task               @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  taskId            String
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
   // deletedAt   DateTime?
 }
 
@@ -214,6 +219,17 @@ model Participation {
   personId  String
   task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   taskId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // deletedAt    DateTime?
+}
+
+model Subparticipation {
+  id        String   @id @default(cuid())
+  person    Person   @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  personId  String
+  subtask   Subtask  @relation(fields: [subtaskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  subtaskId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   // deletedAt    DateTime?
@@ -443,6 +459,7 @@ model Admin {
   name       String
   email      String   @unique
   image      String
+  // Log        Log[]
   authUser   AuthUser @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authUserId String   @unique
 }
@@ -467,6 +484,27 @@ model AuthKey {
 
   @@index([user_id])
 }
+
+// ----------------------------------------------------------------------
+// --------------------------- Log Events ------------------------------
+// ----------------------------------------------------------------------
+// model Log {
+//   id          String      @id @default(cuid())
+//   title       String
+//   description String?
+//   action      Action?
+//   responsable Responsable
+//   status      EventStatus
+//   person      Person?     @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+//   personId    String?
+//   company     Company?    @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+//   companyId   String?
+//   institute   Institute?  @relation(fields: [instituteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+//   instituteId String?
+//   admin       Admin?      @relation(fields: [adminId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+//   adminId     String?
+//   createdAt   DateTime    @default(now())
+// }
 
 enum Visibility {
   PUBLIC
@@ -513,3 +551,23 @@ enum Gender {
   MALE
   FEMALE
 }
+
+// enum EventStatus {
+//   SUCCESS
+//   WARNING
+//   ERROR
+//   INFO
+// }
+
+// enum Responsable {
+//   USER
+//   SYSTEM
+// }
+
+// enum Action {
+//   CREATE
+//   DELETE
+//   UPDATE
+//   ERROR
+//   BACKUP
+// }

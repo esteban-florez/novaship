@@ -7,16 +7,13 @@
 - Componente Ads y ubicarlos en el layout.
 - Crear input tipo file y limitar las extensiones.
 - deletedAt middleware.
-- Añadir campo a modelo [offer] para mostrar en carrusel.
 - ExpiresAt handler.
 - Mostrar errores de validación del Servidor con modal.
-- Mecanismo de alertas tipo "Toast" globales y crear componente que lea la url para mostrar un alert.
 - Llevarte a donde cometiste el error en signup.
 - Arreglar <Input> checkbox y radio.
 - Añadir backups.
 - Signup con Google.
 - Mecanismo para destacar ofertas y equipo mediante suscripción.
-- Loaders para forms.
 - Mantener los filtros al usar la api.
 - Hacer helpers (getTeamLeader, isMemberFromTeam).
 - Validación: no puede aplicarse a un proyecto que sea personal.
@@ -24,9 +21,8 @@
 - Pasar subtareas y revisiones a modales.
 - Crear invitacion y despues membership.
 - Revisar las dimensiones del logo en responsive.
-
-# HACER
-- Loaders
+- Logs middleware y model.
+- Middleware para notificaciones
 
 # Gráficas - (pendiente)
 
@@ -35,8 +31,3 @@
 # Plugins
 
 - PDF downloader.
-
-# Database
-
-- Model subtask participation
-- Model log event
