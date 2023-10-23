@@ -1,5 +1,7 @@
 import Carousel from '@/components/carousel/Carousel'
 import { type Metadata } from 'next'
+import BarGraphic from '@/components/graphics/BarGraphic'
+import numbers from '@/lib/utils/number'
 
 export const metadata: Metadata = {
   title: 'Inicio',
@@ -24,7 +26,26 @@ export default function HomePage() {
     },
   ]
 
+  const labels = ['Test 1', 'Test 2', 'Test 3', 'Test 4']
+  const datasets = [
+    {
+      label: 'Label 1',
+      data: labels.map(() => numbers(1, 5).random()),
+      backgroundColor: 'rgb(165,94,234,0.5)',
+    },
+    {
+      label: 'Label 2',
+      data: labels.map(() => numbers(1, 5).random()),
+      backgroundColor: 'rgb(69,170,242,0.5)',
+    },
+  ]
+
   return (
-    <Carousel items={items} />
+    <>
+      <Carousel items={items} />
+      <div className="card bg-white shadow-md m-8">
+        <BarGraphic title="Test" labels={labels} datasets={datasets} />
+      </div>
+    </>
   )
 }

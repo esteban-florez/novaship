@@ -6,7 +6,8 @@
 - Fechas de entrega en tareas y subtareas.
 - Cambiar las respuestas de redirección (NextResponse.redirect y redirect) en los Route Handlers, por respuestas "200 OK". Y en su lugar retornar la URL a redirigir en el body, y redirigir con router.push().
 - Actualización de campos individuales en el perfil. 
-- Actualizar la versión de Next.js
+- Actualizar la versión de Next.js.
+- Mostrar contenido al hacer scroll.
 
 ## Reseñas a personas contratadas
 Las empresas podrán escribir reseñas en los perfiles de los usuarios que hayan contratado.

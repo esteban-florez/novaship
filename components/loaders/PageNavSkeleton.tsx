@@ -1,8 +1,11 @@
 export default function PageNavSkeleton() {
   return (
-    <div className="mb-8 mt-4 grid w-full grid-cols-5 gap-2 border-b bg-white p-4 shadow-sm">
-      <div className="col-span-1 h-8 rounded-full bg-neutral-300 px-4 py-1" />
-      <div className="col-span-3 row-start-2 h-8 rounded-md bg-primary" />
+    // Layout
+    <div className="my-2 flex flex-col sm:flex-row sm:justify-between w-full gap-2 border-b bg-white p-4 shadow-sm">
+      {/* Search */}
+      <div className="basis-1/4 h-8 rounded-full bg-neutral-300 px-4 py-1" />
+      {/* Dropdown */}
+      <div className="basis-1/4 h-8 sm:pe-4 rounded-md bg-primary" />
     </div>
   )
 }
