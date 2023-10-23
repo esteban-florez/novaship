@@ -9,7 +9,7 @@ export default function Navbar() {
   const date = format(new Date(), true)
 
   return (
-    <nav className="navbar relative flex-col border-b bg-white shadow-md sm:flex-row">
+    <nav className="max-h-4 navbar relative flex-col border-b bg-white shadow-md sm:flex-row">
       <div className="w-full sm:navbar-start">
         <Link
           href="/home"

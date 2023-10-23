@@ -48,7 +48,7 @@ export default function Aside({ links }: Props) {
   return (
     <aside
       className={clsx(
-        'top-0 z-[8000] h-screen flex-col flex-nowrap bg-white shadow-lg transition-all delay-150 duration-300 ease-out sm:sticky sm:flex',
+        'top-0 z-[100] h-screen flex-col flex-nowrap bg-white shadow-lg transition-all delay-150 duration-300 ease-out sm:sticky sm:flex',
         {
           'fixed w-screen sm:w-[17.8rem]': active,
           'w-0 sm:w-32': !active,
@@ -57,7 +57,7 @@ export default function Aside({ links }: Props) {
     >
       <div
         className={clsx(
-          'pt-2.5 pb-0 text-center sm:ms-0 sm:gap-x-2',
+          'pt-2 pb-0 text-center sm:ms-0 sm:gap-x-2',
           !active && 'ms-6'
         )}
       >

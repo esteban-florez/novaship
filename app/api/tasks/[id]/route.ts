@@ -33,7 +33,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
           personId: responsable,
           participations: {
             deleteMany: {
-              // id: { notIn: members }
               personId: { notIn: members },
             },
             createMany: {

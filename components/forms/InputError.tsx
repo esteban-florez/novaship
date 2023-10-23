@@ -3,9 +3,11 @@ type Props = React.PropsWithChildren<{
 }>
 
 export default function InputError({ message }: Props) {
-  return message !== undefined && (
-    <p className="-mt-3 text-sm font-semibold text-error">
-      {message}
-    </p>
+  return (
+    message !== undefined && (
+      <p className="-mt-3 text-left text-sm font-semibold text-error">
+        {message}
+      </p>
+    )
   )
 }

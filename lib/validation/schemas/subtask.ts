@@ -12,4 +12,7 @@ export const schema = object({
     .min(15, messages.min(15))
     .max(255, messages.max(255)),
   status: nativeEnum(TaskStatus, messages.enum).optional(),
+  taskId: string(messages.string)
+    .cuid(messages.cuid)
+    .optional(),
 })

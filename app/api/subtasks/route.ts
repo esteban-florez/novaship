@@ -3,8 +3,6 @@ import { schema } from '@/lib/validation/schemas/subtask'
 import { handleError } from '@/lib/errors/api'
 import { url } from '@/lib/utils/url'
 import prisma from '@/prisma/client'
-import { object, string } from 'zod'
-import messages from '@/lib/validation/messages'
 import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { getMyTask } from '@/lib/data-fetching/task'
@@ -16,14 +14,11 @@ export async function POST(request: NextRequest) {
     const parsed = schema.parse(data)
     const { id: userId } = await auth.user(request)
 
-    const validationSchema = object({
-      taskId: string(messages.string)
-        .cuid(messages.cuid),
-    })
+    if (parsed.taskId == null) {
+      notFound()
+    }
 
-    const appendParsed = validationSchema.parse(data)
-
-    const task = await getMyTask({ id: appendParsed.taskId, userId })
+    const task = await getMyTask({ id: parsed.taskId, userId })
     if (task === null) {
       notFound()
     }
@@ -31,7 +26,7 @@ export async function POST(request: NextRequest) {
     await prisma.subtask.create({
       data: {
         ...parsed,
-        taskId: appendParsed.taskId,
+        taskId: parsed.taskId,
         status: 'PENDING',
       },
     })
