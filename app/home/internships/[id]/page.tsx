@@ -75,7 +75,6 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                   internship={internship}
                   stage={stage}
                   userType={type}
-                  details={false}
                 />
               </>
               )
@@ -91,7 +90,6 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                   internship={internship}
                   stage={stage}
                   userType={type}
-                  details={false}
                 />
                 <div className="divider divider-vertical" />
                 <InstituteCard institute={institute} />

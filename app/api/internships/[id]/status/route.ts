@@ -7,14 +7,14 @@ import { notFound } from 'next/navigation'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function PATCH(
-  request: NextRequest, { params: { id: internshipId } }: PageContext
+  request: NextRequest, { params: { id } }: PageContext
 ) {
   try {
     const { id: personId } = await auth.user(request)
 
-    const internship = await prisma.internship.findUnique({
-      where: { id: internshipId },
-    })
+    const where = { id }
+
+    const internship = await prisma.internship.findUnique({ where })
 
     if (internship === null ||
       internship.personId !== personId ||
@@ -25,19 +25,19 @@ export async function PATCH(
     const data = await request.json()
     const parsed = schema.parse(data)
 
-    const updated = await prisma.internship.update({
-      where: { id: internshipId },
+    await prisma.internship.update({
+      where,
       data: parsed,
     })
 
-    if (updated.status === 'REJECTED') {
+    if (parsed.status === 'REJECTED') {
       return NextResponse.redirect(
         url(`home/persons/${personId}/internships?alert=internship_rejected`)
       )
     }
 
     return NextResponse.redirect(url(
-      `home/internships/${updated.id}alert=internship_accepted`
+      `home/internships/${id}alert=internship_accepted`
     ))
   } catch (error) {
     return handleError(error)
