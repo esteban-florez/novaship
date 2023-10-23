@@ -23,14 +23,16 @@ export default async function MyInternshipsPage({
   } as const
 
   const where = {
-    internshipId: type === 'INSTITUTE' ? userId : undefined,
-    recruitments: {
-      some: {
-        vacant: {
-          companyId: type === 'COMPANY' ? userId : undefined,
-        },
-      },
-    },
+    instituteId: type === 'INSTITUTE' ? userId : undefined,
+    recruitments: type === 'COMPANY'
+      ? {
+          some: {
+            vacant: {
+              companyId: userId,
+            },
+          },
+        }
+      : undefined,
   }
 
   return (

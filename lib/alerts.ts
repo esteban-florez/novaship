@@ -93,6 +93,10 @@ export const alerts: AlertList = {
     type: 'warning',
     message: 'Primero debes iniciar sesión.',
   },
+  internship_created: {
+    type: 'success',
+    message: 'La pasantía fué creada con éxito.',
+  },
   internship_accepted: {
     type: 'success',
     message: 'Aceptaste la solicitud de pasantía con éxito.',
@@ -100,6 +104,10 @@ export const alerts: AlertList = {
   internship_rejected: {
     type: 'success',
     message: 'Rechazaste la solicitud de pasantía con éxito.',
+  },
+  internship_deleted: {
+    type: 'success',
+    message: 'La pasantía fué eliminada con éxito.',
   },
   bad_creds: {
     type: 'error',

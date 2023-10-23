@@ -12,7 +12,6 @@ type Props = React.PropsWithChildren<{
   searchParams: Record<string, string | string[] | undefined>
   userType: UserType
   component: React.FC<{
-    userType: UserType
     internship: InternshipWithRelations
   }>
   emptyButton?: {
@@ -22,7 +21,7 @@ type Props = React.PropsWithChildren<{
 }>
 
 export default async function InternshipList({
-  where, searchParams, component, emptyButton, userType,
+  where, searchParams, component, emptyButton,
 }: Props) {
   const Component = component
   const pageNumber = +(param(searchParams.page) ?? 1)
@@ -41,7 +40,6 @@ export default async function InternshipList({
               <Component
                 key={internship.id}
                 internship={internship}
-                userType={userType}
               />
             ))}
           </section>

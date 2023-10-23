@@ -7,7 +7,7 @@ import { useId } from 'react'
 import useSubmit from '@/lib/hooks/useSubmit'
 
 interface Props {
-  title: string
+  title?: string
   action: string
   showLabel?: boolean
 }
@@ -27,14 +27,18 @@ export default function DeleteModal({ title, action, showLabel = false }: Props)
         title={showLabel ? 'Eliminar' : ''}
         className="btn-error btn"
       >
-        <h4 className="text-center text-neutral-600 font-bold">¿Está seguro que quiere borrarlo?</h4>
+        <h4 className="text-center text-neutral-600 font-bold">¿Estás seguro de que quieres eliminar?</h4>
         <img src="/delete.webp" alt="Imagen de un registro siendo borrado" className="mx-auto w-60 p-4" />
         <form action={action} method="POST" onSubmit={handleSubmit} className="py-8 flex flex-col gap-y-4">
-          <p className="text-center font-bold">{title}</p>
-          <span className="-mt-4 text-center">será borrado...</span>
+          {title !== undefined && (
+            <>
+              <p className="text-center font-bold">{title}</p>
+              <span className="-mt-4 text-center">será borrado...</span>
+            </>
+          )}
           <div className="flex justify-center gap-x-4">
             <CloseModalButton id={id} text="Cancelar" />
-            <button className="btn btn-error">
+            <button type="submit" className="btn btn-error">
               <TrashIcon className="h-5 w-5" />
               Eliminar
             </button>

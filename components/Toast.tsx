@@ -43,13 +43,13 @@ export default function Toast({ type, message, onClose }: Props) {
   const { style, icon } = DEFAULT_TOASTS[type]
 
   return (
-    <div className="toast-center sm:toast-end toast-bottom toast z-[9999]">
+    <div className="toast-center sm:toast-end toast-bottom toast z-50">
       <div className={clsx('alert p-4 shadow-lg inline-flex', style)}>
         {icon}
         <p className={clsx({
           'break-normal': true,
-          'text-sm': message.length > 15,
-          'text-base': message.length < 15,
+          'text-sm': message.length > 35,
+          'text-base': message.length < 35,
         })}
         >{message}
         </p>

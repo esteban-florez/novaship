@@ -1,15 +1,14 @@
-import InternshipActions from '@/components/internships/InternshipActions'
 import InternshipProgress from '@/components/internships/InternshipProgress'
 import { type InternshipWithRelations } from '@/lib/types'
 import { getInternshipStage } from '@/lib/utils/tables'
-import { type UserType } from '@prisma/client'
+import { ListBulletIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   internship: InternshipWithRelations
-  userType: UserType
 }>
 
-export default function InternshipCard({ internship, userType }: Props) {
+export default function InternshipCard({ internship }: Props) {
   const { institute, grade } = internship
   const stage = getInternshipStage(internship)
 
@@ -27,11 +26,13 @@ export default function InternshipCard({ internship, userType }: Props) {
           stage={stage}
         />
         <div className="divider divider-vertical my-2" />
-        <InternshipActions
-          internship={internship}
-          stage={stage}
-          userType={userType}
-        />
+        <Link
+          href={`/home/internships/${internship.id}`}
+          className="btn btn-secondary"
+        >
+          <ListBulletIcon className="h-5 w-5" />
+          Detalles
+        </Link>
       </div>
     </div>
   )

@@ -28,12 +28,14 @@ export default function UpdateHours({ internship }: Props) {
       id="updateHoursModal"
       className="btn btn-warning"
       icon={<PencilIcon className="w-5 h-5" />}
-      title="Actualizar"
+      title="Marcar progreso"
     >
       <form method="POST" action={`/api/internships/${internship.id}/completed`} onSubmit={handleSubmit}>
         {serverErrors}
         {alert}
-        <h3>Actualizar pasantía</h3>
+        <h3 className="font-bold text-primary text-2xl">
+          Actualizar horas completadas
+        </h3>
         <Input label="Horas completadas" name="completed" placeholder="Horas completadas" type="number" register={register} errors={errors} config={{ valueAsNumber: true }} step="1" />
         <CloseModalButton id="updateHoursModal" text="Cancelar" />
         <button className="btn btn-success" type="submit">

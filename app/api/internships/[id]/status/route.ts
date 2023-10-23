@@ -30,8 +30,14 @@ export async function PATCH(
       data: parsed,
     })
 
+    if (updated.status === 'REJECTED') {
+      return NextResponse.redirect(
+        url(`home/persons/${personId}/internships?alert=internship_rejected`)
+      )
+    }
+
     return NextResponse.redirect(url(
-      `home/internships/${updated.id}alert=internship_${updated.status.toLowerCase()}`
+      `home/internships/${updated.id}alert=internship_accepted`
     ))
   } catch (error) {
     return handleError(error)
