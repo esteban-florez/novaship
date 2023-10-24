@@ -1,8 +1,33 @@
-import { type Visibility, type Team, type Person, type Leader, type Company } from '@prisma/client'
+import { type Visibility, type Team, type Person, type Leader, type Company, type Membership } from '@prisma/client'
 import { DBError } from '../errors/reference'
-import { type UserWithType, type MembershipWithRelations, type ProjectsFull, type InternshipWithRelations } from '../types'
+import { type UserWithType, type ProjectsFull, type InternshipWithRelations, type MembershipsFull } from '../types'
 
-export function getMember(membership: MembershipWithRelations) {
+type TeamWithRelations = Team & {
+  leader: Leader & {
+    person: Person | null
+    company: Company | null
+  }
+}
+
+type TeamWithMembers = (Team & {
+  leader: Leader & {
+    person: Person | null
+    company: Company | null
+  }
+  memberships: Array<Membership & {
+    person: Person | null
+  }>
+}) | null
+
+export function belongsToTeam(team: TeamWithMembers, userId: string): boolean {
+  if (team !== null) {
+    return team.memberships.find(member => member.person?.id === userId) != null
+  }
+
+  return false
+}
+
+export function getMember(membership: MembershipsFull) {
   const member = membership.person
 
   if (member === null) {
@@ -24,13 +49,6 @@ export function getProjectLeader(project: ProjectsFull): UserWithType {
   }
 
   throw new DBError('DBError: Invalid Project without leader.')
-}
-
-type TeamWithRelations = Team & {
-  leader: Leader & {
-    person: Person | null
-    company: Company | null
-  }
 }
 
 export function getTeamLeader(team: TeamWithRelations): UserWithType {

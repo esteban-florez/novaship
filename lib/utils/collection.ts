@@ -1,3 +1,5 @@
+type GroupedData = Record<string, any[]>
+
 class Collection<T> {
   array
 
@@ -27,6 +29,20 @@ class Collection<T> {
 
       return element.id
     }) as string[]
+  }
+
+  groupBy(param: string) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return this.array.reduce(function (previous: GroupedData, current: any) {
+      const key = current[param]
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+      if (previous[key]) {
+        previous[key].push(current)
+      } else {
+        previous[key] = [current]
+      }
+      return previous
+    }, {})
   }
 
   titles() {

@@ -23,13 +23,33 @@ export async function POST(request: NextRequest) {
       notFound()
     }
 
-    await prisma.subtask.create({
-      data: {
-        ...parsed,
-        taskId: parsed.taskId,
-        status: 'PENDING',
-      },
-    })
+    const { members, ...rest } = parsed
+    if (members != null) {
+      await prisma.subtask.create({
+        data: {
+          ...rest,
+          taskId: parsed.taskId,
+          status: 'PENDING',
+          subparticipations: {
+            createMany: {
+              data: members.map(member => {
+                return {
+                  personId: member,
+                }
+              }),
+            },
+          },
+        },
+      })
+    } else {
+      await prisma.subtask.create({
+        data: {
+          ...rest,
+          taskId: parsed.taskId,
+          status: 'PENDING',
+        },
+      })
+    }
 
     return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks/${task.id}?alert=subtask_created`))
   } catch (error) {

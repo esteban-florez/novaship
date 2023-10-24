@@ -5,7 +5,10 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 
-export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
+export async function PUT(
+  request: NextRequest,
+  { params: { id } }: PageContext
+) {
   let data
   try {
     data = await request.json()
@@ -14,6 +17,17 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
     const revision = await prisma.revision.findFirst({
       where: { id },
       select: {
+        subtask: {
+          select: {
+            id: true,
+            task: {
+              select: {
+                id: true,
+                projectId: true,
+              },
+            },
+          },
+        },
         task: {
           select: {
             id: true,
@@ -34,12 +48,20 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       where: { id },
     })
 
-    if (parsed.taskId != null && revision.task != null) {
-      return NextResponse.redirect(url(`/home/projects/${revision.task?.projectId}/tasks/${revision.task?.id}?alert=task_revision_updated`))
+    if (revision.task != null) {
+      return NextResponse.redirect(
+        url(
+          `/home/projects/${revision.task?.projectId}/tasks/${revision.task?.id}?alert=task_revision_updated`
+        )
+      )
     }
 
-    if (parsed.subtaskId != null && revision.task != null) {
-      return NextResponse.redirect(url(`/home/projects/${revision.task?.projectId}/tasks/${revision.task?.id}?alert=subtask_revision_updated`))
+    if (revision.subtask != null) {
+      return NextResponse.redirect(
+        url(
+          `/home/projects/${revision.subtask.task?.projectId}/tasks/${revision.subtask.task?.id}?alert=subtask_revision_updated`
+        )
+      )
     }
 
     return NextResponse.redirect(url('/home/projects'))
@@ -48,15 +70,27 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
   }
 }
 
-export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
+export async function DELETE(
+  request: NextRequest,
+  { params: { id } }: PageContext
+) {
   try {
     const revision = await prisma.revision.findFirst({
       where: {
         id,
       },
       select: {
-        taskId: true,
-        subtaskId: true,
+        subtask: {
+          select: {
+            id: true,
+            task: {
+              select: {
+                id: true,
+                projectId: true,
+              },
+            },
+          },
+        },
         task: {
           select: {
             id: true,
@@ -74,12 +108,20 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       where: { id },
     })
 
-    if (revision.taskId != null && revision.task != null) {
-      return NextResponse.redirect(url(`/home/projects/${revision.task?.projectId}/tasks/${revision.taskId}?alert=task_revision_deleted`))
+    if (revision.task != null) {
+      return NextResponse.redirect(
+        url(
+          `/home/projects/${revision.task?.projectId}/tasks/${revision.task.id}?alert=task_revision_deleted`
+        )
+      )
     }
 
-    if (revision.subtaskId != null && revision.task != null) {
-      return NextResponse.redirect(url(`/home/projects/${revision.task?.projectId}/tasks/${revision.task?.id}?alert=subtask_revision_deleted`))
+    if (revision.subtask != null) {
+      return NextResponse.redirect(
+        url(
+          `/home/projects/${revision.subtask.task?.projectId}/tasks/${revision.subtask.task?.id}?alert=subtask_revision_deleted`
+        )
+      )
     }
 
     return NextResponse.redirect(url('/home/projects'))

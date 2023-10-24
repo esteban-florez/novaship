@@ -6,16 +6,19 @@ import ProjectDetails from '@/components/projects-details/ProjectDetails'
 import TeamGroup from '@/components/projects-details/TeamGroup'
 import prisma from '@/prisma/client'
 import Tasks from '@/components/projects-details/tasks/Tasks'
-import { PlusIcon } from '@heroicons/react/24/outline'
-import Link from 'next/link'
 import clsx from 'clsx'
+import TaskModal from '@/components/projects-details/tasks/TaskModal'
+import PageTitle from '@/components/PageTitle'
+import { getTasks } from '@/lib/data-fetching/task'
+import TasksGraphic from '@/components/projects-details/TasksGraphic'
+import { belongsToTeam, getProjectLeader } from '@/lib/utils/tables'
 
 export const metadata: Metadata = {
   title: 'Detalles de proyecto',
 }
 
 export default async function ProjectPage({ params: { id } }: PageContext) {
-  const { id: userId } = await auth.user()
+  const { id: userId, type } = await auth.user()
   const user = await prisma.person.findFirst({ where: { id: userId } })
 
   if (id === null || user == null) {
@@ -27,45 +30,69 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
     notFound()
   }
 
-  // TODO -> funciones getleader e isMember
-  const projectCategories = project.categories.map(category => category.title)
-  const isOwner = project.personId === userId ?? (project.team?.leader.personId ?? project.team?.leader.companyId === userId)
-  const isMember = (project.team?.memberships.find(member => member.personId === userId)) != null
+  const projectCategories = project.categories.map((category) => category.title)
+  const leader = getProjectLeader(project)
+  const isOwner = leader.id === userId
+  const isMember = belongsToTeam(project.team, userId)
+
+  const tasks = await getTasks({ where: { projectId: id } })
 
   return (
-    <section className="px-6 py-4">
-      <div className="grid grid-cols-7 gap-4">
-        <div className="col-span-7">
-          <ProjectDetails
-            id={project.id}
-            isPrivate={project.visibility === 'PRIVATE'}
-            isOwner={isOwner}
-            isMember={isMember}
-            title={project.title}
-            categories={projectCategories}
-            description={project.description}
-          />
-        </div>
-        {(isOwner || isMember) &&
-          <div className={clsx('col-span-7', project.personId !== userId && 'lg:col-span-5')}>
-            <div className="card rounded-lg bg-white p-5 shadow-lg">
-              <div className="mb-4 flex-col">
-                <Link href={`/home/projects/${id}/tasks/create`} className="btn-primary btn-block btn hover:border-primary hover:bg-white hover:text-neutral-600 sm:w-auto">
-                  <PlusIcon className="h-5 w-5" />
-                  Nueva tarea
-                </Link>
-              </div>
-              <Tasks projectId={project.id} tasks={project.tasks} />
-            </div>
-          </div>}
-        {project.personId !== userId &&
-          <div className="col-span-7 lg:col-span-2 lg:col-start-6">
-            <TeamGroup
-              person={user}
-              team={project.team}
+    <>
+      <PageTitle breadcrumbs={project.title} />
+      <section className="mt-3 sm:mt-0 sm:px-6 sm:py-4">
+        <div className="grid grid-cols-7 gap-4">
+          <div className="col-span-7">
+            <ProjectDetails
+              id={project.id}
+              isPrivate={project.visibility === 'PRIVATE'}
+              isOwner={isOwner}
+              isMember={isMember}
+              title={project.title}
+              categories={projectCategories}
+              description={project.description}
             />
-          </div>}
-      </div>
-    </section>
+          </div>
+          <div className="col-span-full min-h-[320px] rounded-lg card bg-white sm:p-4 shadow-lg">
+            <TasksGraphic tasks={tasks} />
+          </div>
+          {(isOwner || isMember) && (
+            <div
+              className={clsx(
+                'col-span-7',
+                project.personId !== userId && 'lg:col-span-5'
+              )}
+            >
+              <div className="card rounded-lg bg-white py-4 sm:p-5 shadow-lg">
+                <div className="px-4 sm:px-0 mb-4">
+                  <TaskModal
+                    action="/api/tasks"
+                    method="POST"
+                    projectId={id}
+                    memberships={project.team?.memberships}
+                    person={user}
+                    buttonLabel="Nueva tarea"
+                  />
+                </div>
+                <Tasks
+                  projectId={project.id}
+                  memberships={project.team?.memberships}
+                  person={type === 'PERSON' ? user : undefined}
+                  tasks={project.tasks}
+                />
+              </div>
+            </div>
+          )}
+          {project.personId !== userId && (
+            <div className="col-span-7 lg:col-span-2 lg:col-start-6">
+              <TeamGroup
+                person={user}
+                team={project.team}
+              />
+            </div>
+          )}
+        </div>
+      </section>
+    </>
   )
 }

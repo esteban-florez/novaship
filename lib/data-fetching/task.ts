@@ -12,6 +12,11 @@ const query = {
     },
     subtasks: {
       include: {
+        subparticipations: {
+          include: {
+            person: true,
+          },
+        },
         revisions: true,
       },
     },
@@ -49,6 +54,17 @@ export const getTask = cache(async ({ id, where }: { id: string, where?: Prisma.
       ...where,
     },
     ...query,
+  })
+})
+
+export const getTasks = cache(async ({ where, skip, take }: QueryConfig<Prisma.TaskWhereInput>) => {
+  return await prisma.task.findMany({
+    where: {
+      ...where,
+    },
+    ...query,
+    take,
+    skip,
   })
 })
 

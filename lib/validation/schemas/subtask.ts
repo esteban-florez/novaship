@@ -1,4 +1,4 @@
-import { nativeEnum, object, string, type z } from 'zod'
+import { array, nativeEnum, object, string, type z } from 'zod'
 import messages from '../messages'
 import { TaskStatus } from '@prisma/client'
 
@@ -14,5 +14,8 @@ export const schema = object({
   status: nativeEnum(TaskStatus, messages.enum).optional(),
   taskId: string(messages.string)
     .cuid(messages.cuid)
+    .optional(),
+  members: array(string(), messages.array)
+    .nonempty(messages.nonempty)
     .optional(),
 })

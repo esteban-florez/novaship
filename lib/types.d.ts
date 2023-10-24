@@ -117,7 +117,7 @@ interface OffersFull extends Offer {
 // --------------------------- Memberships ---------------------------------
 // ----------------------------------------------------------------------
 
-type MembershipWithRelations = Membership & {
+interface MembershipsFull extends Membership {
   person: Person | null
 }
 
@@ -136,8 +136,8 @@ interface ProjectsFull extends Project {
   team:
   | (Team & {
     leader: Leader & {
-      person: Person
-      company: Company
+      person: Person | null
+      company: Company | null
     }
     memberships: Array<
     Membership & {
@@ -159,34 +159,6 @@ interface ProjectsFull extends Project {
   }
   >
   files: File[]
-}
-
-interface TasksProps {
-  projectId: string
-  tasks: Array<
-  Task & {
-    subtasks: Array<
-    Subtask & {
-      revisions: Revision[]
-    }
-    >
-    participations: Participation[]
-    revisions: Revision[]
-  }
-  >
-}
-
-interface TaskProps {
-  projectId: string
-  task: Task & {
-    subtasks: Array<
-    Subtask & {
-      revisions: Revision[]
-    }
-    >
-    participations: Participation[]
-    revisions: Revision[]
-  }
 }
 
 type SharedInputProps = {

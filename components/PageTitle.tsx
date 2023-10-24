@@ -4,8 +4,10 @@ import Breadcrumbs from './layout/Breadcrumbs'
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 
 type Props = React.PropsWithChildren<{
-  title: string
-  subtitle?: string | {
+  title?: string
+  subtitle?:
+  | string
+  | {
     label: string
     name: string
     url: string
@@ -14,7 +16,12 @@ type Props = React.PropsWithChildren<{
 }>
 
 // TODO -> actualizar diseño
-export default function PageTitle({ title, children, subtitle, breadcrumbs }: Props) {
+export default function PageTitle({
+  title,
+  children,
+  subtitle,
+  breadcrumbs,
+}: Props) {
   if (subtitle === 'string') {
     return (
       <p className="mt-1 font-semibold text-neutral-600 sm:-mt-1.5">
@@ -37,14 +44,19 @@ export default function PageTitle({ title, children, subtitle, breadcrumbs }: Pr
     <section className="flex flex-col justify-between gap-2 bg-white px-4 py-3 shadow-lg md:flex-row md:items-center md:gap-0">
       <div>
         <Breadcrumbs breadcrumbs={breadcrumbs} />
-        <div className="flex items-center gap-2">
-          <h1 className="text-3xl font-bold tracking-tighter">
-            {title}
-          </h1>
-          <div className="tooltip mt-1" data-tip={subtitle}>
-            <InformationCircleIcon className="h-6 w-6 hover:text-primary" />
-          </div>
-        </div>
+        {title != null && (
+          <>
+            <div className="flex items-center gap-2">
+              <h1 className="text-3xl font-bold tracking-tighter">{title}</h1>
+              <div
+                className="tooltip mt-1"
+                data-tip={subtitle}
+              >
+                <InformationCircleIcon className="h-6 w-6 hover:text-primary" />
+              </div>
+            </div>
+          </>
+        )}
       </div>
       {children}
     </section>

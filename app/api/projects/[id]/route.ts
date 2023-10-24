@@ -6,7 +6,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import collect from '@/lib/utils/collection'
-import { deleteProject, getProject } from '@/lib/data-fetching/project'
+import { deleteProject, getMyProject } from '@/lib/data-fetching/project'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -15,26 +15,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
     const parsed = schema.parse(data)
     const { id: userId, type } = await auth.user(request)
 
-    // DRY My records
-    const project = await getProject({
-      id,
-      where: {
-        OR: [
-          { personId: userId },
-          {
-            team: {
-              leader: {
-                OR: [
-                  { personId: userId },
-                  { companyId: userId },
-                ],
-              },
-            },
-          },
-        ],
-      },
-    })
-
+    const project = await getMyProject({ id, userId })
     if (project === null) {
       notFound()
     }
@@ -53,12 +34,13 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
           data: {
             ...parsedData,
             categories: {
-              deleteMany: {
-                id: {
-                  notIn: parsed.categories,
-                },
-              },
-              connect: newCategories.map(id => ({ id })),
+              set: parsed.categories.map(id => ({ id })),
+              // deleteMany: {
+              //   id: {
+              //     notIn: parsed.categories,
+              //   },
+              // },
+              // connect: newCategories.map(id => ({ id })),
             },
           },
         })

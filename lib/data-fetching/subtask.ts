@@ -3,6 +3,11 @@ import { cache } from 'react'
 
 const query = {
   include: {
+    subparticipations: {
+      include: {
+        person: true,
+      },
+    },
     task: {
       include: {
         project: true,

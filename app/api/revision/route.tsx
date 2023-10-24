@@ -28,7 +28,11 @@ export async function POST(request: NextRequest) {
         },
       })
 
-      return NextResponse.redirect(url(`home/projects/${task.projectId}?alert=task_revision_created`))
+      return NextResponse.redirect(
+        url(
+          `home/projects/${task.projectId}/tasks/${task.id}?alert=task_revision_created`
+        )
+      )
     }
 
     if (parsed.subtaskId != null) {
@@ -44,7 +48,11 @@ export async function POST(request: NextRequest) {
         },
       })
 
-      return NextResponse.redirect(url(`home/projects/${subtask.task.projectId}?alert=subtask_revision_created`))
+      return NextResponse.redirect(
+        url(
+          `home/projects/${subtask.task.projectId}/tasks/${subtask.task.id}?alert=subtask_revision_created`
+        )
+      )
     }
 
     return NextResponse.redirect(url('home/projects'))

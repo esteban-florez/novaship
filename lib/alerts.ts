@@ -42,7 +42,7 @@ export const alerts: AlertList = {
     message: 'La revisión de la tarea ha sido borrada.',
   },
   task_revision_updated: {
-    type: 'info',
+    type: 'success',
     message: 'La revisión de la tarea ha sido actualizada.',
   },
   subtask_created: {
@@ -62,7 +62,7 @@ export const alerts: AlertList = {
     message: 'La revisión de la subtarea ha sido borrada.',
   },
   subtask_revision_updated: {
-    type: 'info',
+    type: 'success',
     message: 'La revisión de la subtarea ha sido actualizada.',
   },
   subtask_updated: {

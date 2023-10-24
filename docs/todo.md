@@ -22,7 +22,15 @@
 - Crear invitacion y despues membership.
 - Revisar las dimensiones del logo en responsive.
 - Logs middleware y model.
-- Middleware para notificaciones
+- Middleware para notificaciones.
+- Loading para pages/id.
+
+# WIP
+
+- Projects Files.
+  - Reviseñar la interfaz de /projects/id en base a los ejemplos de ws
+  ("My Tasks" el que muestra To do | In Progress | Done)
+  - ¿Deberia dejar las revisiones como notas y que se puedan borrar solamente? No le encuentro mucho sentido a que se puedan editar.
 
 # Gráficas - (pendiente)
 

@@ -6,8 +6,8 @@ import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { deleteSubtask, getMySubtask } from '@/lib/data-fetching/subtask'
+import collect from '@/lib/utils/collection'
 
-// TODO -> alert pending
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
@@ -20,14 +20,42 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       notFound()
     }
 
-    await prisma.subtask.update({
-      where: {
-        id: subtask.id,
-      },
-      data: {
-        ...parsed,
-      },
-    })
+    const { members, ...rest } = parsed
+
+    if (members != null) {
+      const subtasksSubparticipations = subtask.subparticipations.map(subparticipation => subparticipation.personId)
+      const newSubparticipations = collect(members).deleteDuplicatesFrom(subtasksSubparticipations)
+
+      await prisma.subtask.update({
+        where: {
+          id: subtask.id,
+        },
+        data: {
+          ...rest,
+          subparticipations: {
+            deleteMany: {
+              personId: { notIn: members },
+            },
+            createMany: {
+              data: newSubparticipations.map(member => {
+                return {
+                  personId: member,
+                }
+              }),
+            },
+          },
+        },
+      })
+    } else {
+      await prisma.subtask.update({
+        where: {
+          id: subtask.id,
+        },
+        data: {
+          ...rest,
+        },
+      })
+    }
 
     return NextResponse.redirect(url(`/home/projects/${subtask.task.projectId}/tasks/${subtask.taskId}?alert=subtask_updated`))
   } catch (error) {
@@ -49,7 +77,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       notFound()
     }
 
-    return NextResponse.redirect(url(`/home/projects/${subtask?.task.projectId}/?alert=subtask_deleted`))
+    return NextResponse.redirect(url(`/home/projects/${subtask?.task.projectId}/tasks/${subtask.task.id}?alert=subtask_deleted`))
   } catch (error) {
     return handleError(error)
   }
