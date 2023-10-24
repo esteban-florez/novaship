@@ -1,14 +1,17 @@
+import { auth } from '@/lib/auth/pages'
+import { getInternship } from '@/lib/data-fetching/internships'
+import { getInternshipCompany, getInternshipStage } from '@/lib/utils/tables'
+import { notFound } from 'next/navigation'
 import InternshipActions from '@/components/internships/InternshipActions'
 import InternshipData from './InternshipData'
 import PageTitle from '@/components/PageTitle'
 import Recruitments from './Recruitments'
 import PersonData from './PersonData'
-import { auth } from '@/lib/auth/pages'
-import { getInternship } from '@/lib/data-fetching/internships'
-import { getInternshipCompany, getInternshipStage } from '@/lib/utils/tables'
-import { notFound } from 'next/navigation'
 import InstituteCard from './InstituteCard'
 import InternshipStage from './InternshipStage'
+import UserCard from './UserCard'
+import InternshipProgress from '@/components/internships/InternshipProgress'
+import CompletedHoursText from './CompletedHoursText'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -48,12 +51,6 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
   const { person, institute, grade, recruitments } = internship
   const stage = getInternshipStage(internship)
 
-  const PRE_COMPANY_STAGES = [
-    'PENDING', 'REJECTED', 'ACCEPTED',
-  ]
-
-  const inPreCompanyStage = PRE_COMPANY_STAGES.includes(stage)
-
   return (
     <>
       <PageTitle
@@ -78,13 +75,12 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                   internship={internship}
                   stage={stage}
                   userType={type}
-                  details={false}
                 />
               </>
               )
             : (
               <>
-                <h3 className="text-3xl font-bold text-primary tracking-tighter">
+                <h3 className="text-3xl font-bold text-primary tracking-tighter -mb-2">
                   {grade.title}
                 </h3>
                 <InternshipData internship={internship} />
@@ -94,7 +90,6 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                   internship={internship}
                   stage={stage}
                   userType={type}
-                  details={false}
                 />
                 <div className="divider divider-vertical" />
                 <InstituteCard institute={institute} />
@@ -104,7 +99,7 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
           <InternshipStage stage={stage} />
         </div>
         <div className="bg-white p-4 rounded-lg shadow lg:w-1/2">
-          {inPreCompanyStage
+          {company === null
             ? (
               <Recruitments recruitments={recruitments} stage={stage} />
               )
@@ -113,6 +108,25 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                 <h3 className="font-bold tracking-tighter text-2xl">
                   Empresa de la pasantía
                 </h3>
+                <div className="bg-neutral-100 p-4 pt-2 rounded-lg mt-2">
+                  <UserCard
+                    href={`/home/companies/${company.id}`}
+                    subtitle={company.location.title}
+                    user={company}
+                  />
+                  <p className="mt-2">{company.description}</p>
+                </div>
+                <div className="divider divider-vertical" />
+                <h3 className="font-bold tracking-tighter text-2xl">
+                  Horas completadas
+                </h3>
+                <CompletedHoursText userType={type} />
+                <div className="bg-neutral-100 p-4 rounded-lg mt-2">
+                  <InternshipProgress
+                    internship={internship}
+                    stage={stage}
+                  />
+                </div>
               </>
               )}
         </div>

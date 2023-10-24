@@ -1,6 +1,6 @@
 import { number, object } from 'zod'
-import messages from '../messages'
-import { defaults } from './defaults'
+import messages from '../../messages'
+import { defaults } from '../defaults'
 
 export const schema = object({
   hours: number(messages.number)

@@ -24,7 +24,7 @@ export default function Recruitments({ stage, recruitments }: Props) {
         ? (
           <div className="pt-4">
             <EmptyContent title={isAccepted ? '¡No disponible aún!' : undefined}>
-              {isAccepted ? 'El estudiante debe aceptar la solicitud de pasantía para poder postular a empresas...' : ''}
+              {isAccepted ? 'El estudiante debe aceptar la solicitud de pasantía para poder postular a empresas...' : 'Aún no existen postulaciones o solicitudes.'}
             </EmptyContent>
           </div>
           )

@@ -19,5 +19,5 @@ export const STAGE_ALERTS = {
   REJECTED: 'alert-error',
   ACCEPTED: 'alert-warning',
   ACTIVE: 'alert-success',
-  COMPLETED: 'Las horas totales de la pasantía fueron completadas.',
+  COMPLETED: 'alert-primary',
 }

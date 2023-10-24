@@ -22,8 +22,7 @@ interface UseSubmitOptions<Fields> {
 // TODO -> quizás esto está demasiado grande, maneja muchas cosas. Quizás sea más conveniente dividrlo en dos: componente <Form> que tenga el envío de la petición y muestre los resultados, etc. Y el hook useForm normalito que le pase las cosas al componente Form
 export default function useSubmit<Fields extends FieldValues>(options?: UseSubmitOptions<Fields>) {
   const {
-    method, append, schema, defaultValues,
-    asFormData = false, onSuccess, onError,
+    method, append, schema, asFormData = false, onSuccess, onError,
   } = options ?? {}
   const [showAlert, setShowAlert] = useState(true)
   const [showErrors, setShowErrors] = useState(true)
@@ -33,7 +32,6 @@ export default function useSubmit<Fields extends FieldValues>(options?: UseSubmi
   const useFormReturn = useForm<Fields>({
     mode: 'onTouched',
     resolver: zodResolver(schema ?? any()),
-    defaultValues,
   })
 
   const send = async (values: Fields, event: React.BaseSyntheticEvent | undefined) => {
@@ -111,5 +109,5 @@ export default function useSubmit<Fields extends FieldValues>(options?: UseSubmi
     : null
 
   const handleSubmit = useFormReturn.handleSubmit(send)
-  return { ...useFormReturn, handleSubmit, alert, result, serverErrors }
+  return { ...useFormReturn, handleSubmit, alert, loading: result === 'loading', serverErrors }
 }

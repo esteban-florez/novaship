@@ -5,7 +5,11 @@ import { cache } from 'react'
 const include = {
   categories: true,
   grade: true,
-  person: true,
+  person: {
+    include: {
+      location: true,
+    },
+  },
   institute: {
     include: {
       location: true,
@@ -15,7 +19,11 @@ const include = {
     include: {
       vacant: {
         include: {
-          company: true,
+          company: {
+            include: {
+              location: true,
+            },
+          },
         },
       },
     },
