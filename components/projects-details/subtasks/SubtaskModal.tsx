@@ -106,6 +106,7 @@ export default function SubtaskModal({
               value={subtask?.title}
               register={register}
               errors={errors}
+              maxlength={40}
             />
             <Textarea
               name="description"
@@ -114,6 +115,7 @@ export default function SubtaskModal({
               value={subtask?.description}
               register={register}
               errors={errors}
+              maxlength={255}
             />
             {method === 'PUT' && (
               <Select

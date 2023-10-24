@@ -56,7 +56,14 @@ export default function BasicData({ userType, locations }: Props) {
       <section className="mx-auto w-full pt-4">
         <div className="grid grid-cols-2 gap-x-4">
           <div className="col-span-2 md:col-span-1">
-            <Input label={labels[userType]} name="name" register={register} errors={errors} placeholder={placeholders[userType]} />
+            <Input
+              name="name"
+              label={labels[userType]}
+              register={register}
+              errors={errors}
+              maxlength={100}
+              placeholder={placeholders[userType]}
+            />
           </div>
           <div className="col-span-2 md:col-span-1">
             {isPerson
@@ -68,10 +75,25 @@ export default function BasicData({ userType, locations }: Props) {
                 )}
           </div>
           <div className="col-span-2 md:col-span-1">
-            <Input label="Correo electrónico:" name="email" register={register} errors={errors} placeholder="Ej. correo@ejemplo.com" />
+            <Input
+              name="email"
+              label="Correo electrónico:"
+              register={register}
+              errors={errors}
+              maxlength={40}
+              placeholder="Ej. correo@ejemplo.com"
+            />
           </div>
           <div className="col-span-2 md:col-span-1">
-            <Input label="Ingresa tu contraseña:" name="password" register={register} errors={errors} type="password" placeholder="Ingresa tu contraseña..." />
+            <Input
+              label="Ingresa tu contraseña:"
+              name="password"
+              type="password"
+              register={register}
+              errors={errors}
+              maxlength={20}
+              placeholder="Ingresa tu contraseña..."
+            />
           </div>
           {isPerson &&
             (
@@ -91,7 +113,16 @@ export default function BasicData({ userType, locations }: Props) {
             <Select name="locationId" register={register} errors={errors} label="Dirección:" options={{ type: 'rows', data: locations }} />
           </div>
           <div className="col-span-2">
-            <Textarea height={2} label="Sobre ti:" name="description" register={register} errors={errors} placeholder="Ingresa una breve descripción para tu perfil..." config={{ required: false }} />
+            <Textarea
+              height={2}
+              label="Sobre ti:"
+              name="description"
+              register={register}
+              errors={errors}
+              maxlength={255}
+              placeholder="Ingresa una breve descripción para tu perfil..."
+              config={{ required: false }}
+            />
           </div>
         </div>
         <div className="mb-4 flex justify-between">

@@ -62,6 +62,7 @@ export default function TaskForm({ action, method, projectId, person, task, memb
             value={task?.title}
             register={register}
             errors={errors}
+            maxlength={40}
           />
           <Textarea
             name="description"
@@ -70,6 +71,7 @@ export default function TaskForm({ action, method, projectId, person, task, memb
             value={task?.description}
             register={register}
             errors={errors}
+            maxlength={255}
           />
         </FormSection>
         {memberships != null &&

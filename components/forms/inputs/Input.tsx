@@ -8,13 +8,14 @@ import InputError from '../InputError'
 type Props = React.PropsWithChildren<{
   onInput?: (event: OnInputEvent) => void
   placeholder: string
+  maxlength?: number
   innerIcon?: React.ReactElement
   type?: HTMLInputTypeAttribute
   step?: string
 } & SharedInputProps>
 
 export default function Input({
-  name, placeholder, label, register, step, config = {}, errors = {},
+  name, placeholder, label, register, step, config = {}, errors = {}, maxlength,
   type = 'text', value = '', className = '', labelClassName = '', children, onInput,
 }: Props) {
   const { errorMessage, hasError, registerProps } = useInput({
@@ -26,7 +27,7 @@ export default function Input({
       {label !== undefined && <CustomLabel id={name} label={label} className={labelClassName} />}
       <input
         onInput={onInput} id={name} name={name} type={type} step={step}
-        placeholder={placeholder} {...registerProps}
+        placeholder={placeholder} {...registerProps} maxLength={maxlength}
         className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-100 transition-all focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', className)} defaultValue={value}
       />
       {children}

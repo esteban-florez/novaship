@@ -46,6 +46,7 @@ export default function RevisionForm({ method, action, revision, taskId, subtask
               value={revision?.content}
               register={register}
               errors={errors}
+              maxlength={255}
             />
           </FormSection>
           <FormButtons label={method === 'PUT' ? 'Actualizar' : 'Registrar'} />

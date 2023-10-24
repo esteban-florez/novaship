@@ -55,6 +55,7 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
               label="Título de la oferta"
               register={register}
               errors={errors}
+              maxlength={50}
               value={offer?.title ?? undefined}
             />
             <Textarea
@@ -64,6 +65,7 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
               placeholder="Ej. Se busca Desarrollador Web Front-End con años de experiencia."
               register={register}
               errors={errors}
+              maxlength={255}
               value={offer?.description ?? undefined}
             />
             <Select
@@ -143,24 +145,24 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
               }}
             />
             <Input
+              type="number"
               name="hours"
               placeholder="Ej: 48"
               label="Horas"
               register={register}
               errors={errors}
-              type="number"
               config={{
                 valueAsNumber: true,
                 value: offer?.hours ?? undefined,
               }}
             />
             <Input
+              type="number"
               name="salary"
               placeholder="Ej. 25"
               label="Salario por hora ($)"
               register={register}
               errors={errors}
-              type="number"
               config={{
                 valueAsNumber: true,
                 value: offer?.salary ?? undefined,
@@ -169,12 +171,12 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
           </FormSection>
           <FormSection title="Limites de la oferta" description="Decide el número máximo de aspirantes que pueden postularse a la oferta, así como su fecha de expiración.">
             <Input
+              type="number"
               name="limit"
               placeholder="Ej: 10"
               label="Límite de postulantes"
               register={register}
               errors={errors}
-              type="number"
               config={{
                 valueAsNumber: true,
                 value: offer?.limit ?? undefined,

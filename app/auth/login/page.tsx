@@ -45,13 +45,13 @@ export default function LoginPage({ searchParams }: SearchParamsProps) {
           </h2>
           <p className="text-center text-base">El primer paso hacia tu grandeza comienza aquí</p>
           <LogInForm />
-          {/* <div className="divider divider-vertical my-2" />
+          <div className="divider divider-vertical mt-5" />
           <Link
             href="/auth/login"
             className="text-center underline"
           >
             Olvidé mi contraseña
-          </Link> */}
+          </Link>
         </section>
         <section className="col-span-7 flex flex-col justify-center rounded-b-2xl rounded-t-none bg-white/10 p-6 shadow-lg backdrop-blur-sm md:order-2 md:col-span-2 md:w-5/6 md:rounded-2xl lg:w-9/12">
           <div className="flex flex-row items-center gap-2 md:flex-col md:items-end">

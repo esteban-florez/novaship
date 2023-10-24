@@ -33,6 +33,7 @@ export default function LogInForm() {
         placeholder="correo@ejemplo.com"
         register={register}
         errors={errors}
+        maxlength={40}
       />
       <Input
         type="password"
@@ -41,9 +42,10 @@ export default function LogInForm() {
         placeholder="Ingresa tu contraseña..."
         register={register}
         errors={errors}
+        maxlength={20}
       />
       <div className="flex flex-col gap-2">
-        <button type="submit" className="btn-primary btn mt-6 w-full md:w-auto">
+        <button type="submit" className="btn-primary btn btn-md mt-4 w-full md:w-auto">
           Iniciar sesión
         </button>
       </div>

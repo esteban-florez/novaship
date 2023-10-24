@@ -98,6 +98,7 @@ export default function TaskModal({
               value={task?.title}
               register={register}
               errors={errors}
+              maxlength={40}
             />
             <Textarea
               name="description"
@@ -106,6 +107,7 @@ export default function TaskModal({
               value={task?.description}
               register={register}
               errors={errors}
+              maxlength={255}
             />
           </FormSection>
           {memberships != null && (

@@ -32,6 +32,7 @@ export default function CreateTeamForm({ persons, categories }: Props) {
           label="Nombre del equipo"
           register={register}
           errors={errors}
+          maxlength={40}
         />
         <Textarea
           name="description"
@@ -40,6 +41,7 @@ export default function CreateTeamForm({ persons, categories }: Props) {
           placeholder="Ej. Somos un equipo encargado del desarrollo de aplicaciones web con tecnologías de vanguardia."
           register={register}
           errors={errors}
+          maxlength={255}
         />
         <SelectMultiple
           name="categories"

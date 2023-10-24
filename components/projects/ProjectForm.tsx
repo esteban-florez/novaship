@@ -81,6 +81,7 @@ export default function ProjectForm({
               value={project?.title}
               register={register}
               errors={errors}
+              maxlength={40}
             />
             <Textarea
               name="description"
@@ -89,6 +90,7 @@ export default function ProjectForm({
               value={project?.description}
               register={register}
               errors={errors}
+              maxlength={255}
             />
             <Select
               name="visibility"

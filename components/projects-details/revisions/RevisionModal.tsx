@@ -70,6 +70,7 @@ export default function RevisionModal({
               value={revision?.content}
               register={register}
               errors={errors}
+              maxlength={255}
             />
           </FormSection>
           <div className="flex justify-between -mt-4 mb-4 px-4 gap-4">
