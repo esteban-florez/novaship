@@ -35,7 +35,7 @@ export default async function InternshipList({
     <>
       {internships.length > 0
         ? (
-          <section className="columns-1 md:columns-2 lg:columns-3 gap-3 p-4">
+          <section className="columns-1 md:columns-2 lg:columns-3 gap-3 space-y-2 p-4">
             {internships.map(internship => (
               <Component
                 key={internship.id}

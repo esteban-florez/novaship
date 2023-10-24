@@ -1,5 +1,6 @@
 # To-Do
 
+- Bug de overflow en mobile, espacio en blanco a la derecha.
 - Validación de todos los campos únicos.
 - Recuperación de contraseña.
 - Guiar al usuario por la aplicación.

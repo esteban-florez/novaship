@@ -43,6 +43,7 @@ export default function InternshipForm({ categories, grades, personId, internshi
       <Input
         name="hours"
         label="Duración (horas)"
+        type="number"
         value={String(hours)}
         config={{ valueAsNumber: true }}
         register={register}

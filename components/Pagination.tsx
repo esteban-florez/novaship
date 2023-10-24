@@ -17,7 +17,7 @@ export default function Pagination({ pageNumber, nextPage }: Props) {
 
   if (nextPage || pageNumber > 1) {
     return (
-      <div className="join mb-10 w-full justify-center">
+      <div className="join w-full justify-center">
         <div className="card flex-row rounded-lg border border-solid border-zinc-300 shadow-md">
           {pageNumber === 1 && (
             <button

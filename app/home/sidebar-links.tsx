@@ -7,10 +7,10 @@ import {
 } from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
-  // const institute = user.type === 'INSTITUTE'
+  const institute = user.type === 'INSTITUTE'
   const admin = user.type === 'ADMIN'
   const person = user.type === 'PERSON'
-  // const company = user.type === 'COMPANY'
+  const company = user.type === 'COMPANY'
 
   const links: SidebarLinkWithSubmenu[] = [
     {
@@ -27,25 +27,25 @@ export function sidebarLinks(user: UserWithType) {
           href: `/home/institutes/${user.id}/internships`,
           title: 'Mis pasantías',
           icon: <StarIcon className="h-6 w-6" />,
-          // visible: institute,
+          visible: institute,
         },
         {
           href: `/home/persons/${user.id}/internships`,
           title: 'Mis pasantías',
           icon: <StarIcon className="h-6 w-6" />,
-          // visible: person,
+          visible: person,
         },
         {
           href: `/home/companies/${user.id}/internships`,
           title: 'Mis pasantías',
           icon: <StarIcon className="h-6 w-6" />,
-          // visible: company,
+          visible: company,
         },
         {
           href: '/home/internships/select',
           title: 'Inscribir pasante',
           icon: <PlusIcon className="h-6 w-6" />,
-          // visible: institute,
+          visible: institute,
         },
       ],
     },
@@ -63,13 +63,13 @@ export function sidebarLinks(user: UserWithType) {
           href: '/home/offers/create',
           title: 'Crear ofertas',
           icon: <PlusIcon className="h-6 w-6" />,
-          // visible: company,
+          visible: company,
         },
         {
           href: '/home/offers?filter=personal',
           title: 'Mis ofertas',
           icon: <StarIcon className="h-6 w-6" />,
-          // visible: company,
+          visible: company,
         },
         {
           href: '/home/offers?filter=applied',

@@ -23,21 +23,23 @@ export default async function MainLayout({
   }
 
   return (
-    <div className="flex">
+    <div className="flex min-h-full relative bg-base-200">
       <Aside links={links} />
       <div className="relative w-full flex-col sm:static">
         <Navbar />
-        <main className="bg-base-200">{children}</main>
-        <footer className="footer text-center footer-center fixed bottom-0 p-2 border-t">
-          <div className="flex flex-col sm:flex-row sm:-ms-[17.8rem]">
-            <img
-              src="/logo.png"
-              alt=""
-              className="sm:order-0 w-8"
-            />
-            <p>Copyright © 2023 - Todos los derechos reservados | Novaship</p>
-          </div>
-        </footer>
+        <main className="pb-32 sm:pb-20">
+          {children}
+          <footer className="footer text-center footer-center bottom-0 p-2 border-t bg-white absolute">
+            <div className="flex flex-col sm:flex-row sm:-ms-[17.8rem]">
+              <img
+                src="/logo.png"
+                alt=""
+                className="sm:order-0 w-8"
+              />
+              <p>Copyright © 2023 - Todos los derechos reservados | Novaship</p>
+            </div>
+          </footer>
+        </main>
       </div>
     </div>
   )
