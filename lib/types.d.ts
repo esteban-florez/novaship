@@ -210,3 +210,11 @@ type UserWithType =
   | (Company & { type: 'COMPANY' })
   | (Institute & { type: 'INSTITUTE' })
   | (Admin & { type: 'ADMIN' })
+
+interface NotificationData {
+  title: string
+  content: string
+  href?: string
+}
+
+type NotificationsRecord = Record<string, undefined | ((data: Rec) => NotificationData)>
