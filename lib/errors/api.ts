@@ -44,6 +44,9 @@ export function handleError(error: unknown, data: Record<string, unknown> = {}) 
     .some(prismaError => error instanceof prismaError)
 
   if (isPrismaError) {
+    // TODO -> error de campos únicos, dar respuesta para el front-end.
+    // P2002
+    // "Unique constraint failed on the {constraint}"
     console.log('Route Handler Error (verify schema validation and data sending): ', error)
 
     return json(500, {

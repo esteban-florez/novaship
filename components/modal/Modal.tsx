@@ -1,5 +1,5 @@
 type Props = React.PropsWithChildren<{
-  id: string
+  id?: string
   icon?: React.ReactElement
   title?: string
   className?: string
@@ -17,13 +17,15 @@ export default function Modal({
 }: Props) {
   return (
     <>
-      <label
-        htmlFor={id}
-        className={className}
-      >
-        {icon}
-        {title}
-      </label>
+      {!forceOpen && (
+        <label
+          htmlFor={id}
+          className={className}
+        >
+          {icon}
+          {title}
+        </label>
+      )}
       {forceOpen
         ? (
           <input

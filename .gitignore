@@ -45,5 +45,4 @@ wiwd.md
 public/usercontent
 
 # admins
-prisma/data/admins.json
-.mailing
+.react-email

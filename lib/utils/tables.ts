@@ -1,4 +1,4 @@
-import { type Visibility, type Team, type Person, type Leader, type Company, type Membership } from '@prisma/client'
+import { type Visibility, type Team, type Person, type Leader, type Company, type Membership, type Resets, type AuthUser, type Admin, type Institute } from '@prisma/client'
 import { DBError } from '../errors/reference'
 import { type UserWithType, type ProjectsFull, type InternshipWithRelations, type MembershipsFull } from '../types'
 
@@ -100,4 +100,22 @@ export function getInternshipCompany(internship: InternshipWithRelations) {
   if (accepted === undefined) return null
 
   return accepted.vacant.company
+}
+
+interface ResetWithRelations extends Resets {
+  authUser: AuthUser & {
+    person: Person | null
+    company: Company | null
+    institute: Institute | null
+    admin: Admin | null
+  }
+}
+
+export function getResetEmail(reset: ResetWithRelations) {
+  const { person, company, admin, institute } = reset.authUser
+  const email = person?.email ?? company?.email ?? admin?.email ?? institute?.email
+  if (email === undefined) {
+    throw new Error('error: WATAFAAAK')
+  }
+  return email
 }

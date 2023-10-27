@@ -2,7 +2,6 @@ import VerifyButton from '@/components/admin/VerifyButton'
 import Modal from '@/components/modal/Modal'
 import { userTypes } from '@/lib/translations'
 import prisma from '@/prisma/client'
-import { DocumentIcon } from '@heroicons/react/24/outline'
 import { type UserType } from '@prisma/client'
 import Link from 'next/link'
 
@@ -67,13 +66,7 @@ export default async function VerificationsPage(
         </table>
       </div>
       {selectedUser !== undefined && (
-        <Modal
-          id="rif-modal"
-          className="p-1"
-          icon={<DocumentIcon className="h-6 w-6" />}
-          title="RIF"
-          forceOpen
-        >
+        <Modal forceOpen>
           <div className="-mt-4 flex flex-col">
             <h2 className="text-center text-lg font-semibold">
               Detalles del usuario
