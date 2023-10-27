@@ -442,6 +442,7 @@ model Skill {
 // ----------------------------------------------------------------------
 model AuthUser {
   id            String         @id @default(cuid())
+  failed        Int            @default(0)
   type          UserType
   person        Person?
   company       Company?
