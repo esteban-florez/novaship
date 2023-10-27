@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
 import { AuthenticationError } from '@/lib/errors/reference'
 import { sidebarLinks } from './sidebar-links'
+import Footer from '@/components/layout/Footer'
 
 export default async function MainLayout({
   children,
@@ -27,19 +28,8 @@ export default async function MainLayout({
       <Aside links={links} />
       <div className="relative w-full flex-col sm:static">
         <Navbar />
-        <main className="pb-32 sm:pb-20">
-          {children}
-          <footer className="footer text-center footer-center bottom-0 p-2 border-t bg-white absolute">
-            <div className="flex flex-col sm:flex-row sm:-ms-[17.8rem]">
-              <img
-                src="/logo.png"
-                alt=""
-                className="sm:order-0 w-8"
-              />
-              <p>Copyright © 2023 - Todos los derechos reservados | Novaship</p>
-            </div>
-          </footer>
-        </main>
+        <main className="pb-32 sm:pb-20">{children}</main>
+        <Footer />
       </div>
     </div>
   )

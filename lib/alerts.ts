@@ -25,6 +25,10 @@ export const alerts: AlertList = {
     type: 'info',
     message: 'No eres miembro del proyecto seleccionado.',
   },
+  task_created: {
+    type: 'success',
+    message: 'La tarea ha sido registrada con éxito.',
+  },
   task_updated: {
     type: 'success',
     message: 'La tarea ha sido actualizada con éxito.',

@@ -51,6 +51,15 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    await prisma.task.update({
+      where: {
+        id: parsed.taskId,
+      },
+      data: {
+        status: null,
+      },
+    })
+
     return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks/${task.id}?alert=subtask_created`))
   } catch (error) {
     handleError(error, data)

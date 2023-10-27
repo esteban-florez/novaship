@@ -1,3 +1,4 @@
+// TODO -> buscar otra forma de mostrar las graficas de tasks.
 // DEV -> solucion temporal para errores
 interface countElementsByDateProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
