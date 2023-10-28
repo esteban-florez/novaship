@@ -41,7 +41,7 @@ export default function PageTitle({
   // }
 
   return (
-    <section className="flex flex-col justify-between gap-2 bg-white px-4 py-3 shadow-lg md:flex-row md:items-center md:gap-0">
+    <section className="flex flex-col justify-between gap-2 bg-white px-4 py-3 shadow md:flex-row md:items-center md:gap-0">
       <div>
         <Breadcrumbs breadcrumbs={breadcrumbs} />
         {title != null && (

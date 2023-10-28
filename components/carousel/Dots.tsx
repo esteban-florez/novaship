@@ -14,7 +14,7 @@ export default function Dots({ current, length }: Props) {
           className={clsx({
             'h-4 w-4 rounded-full': true,
             'bg-white/60': current !== index,
-            'w-6 border border-neutral-400 bg-white': current === index,
+            'w-6 bg-white': current === index,
           })}
         />
       ))}

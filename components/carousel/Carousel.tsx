@@ -29,7 +29,7 @@ export default function Carousel({ items }: Props) {
           className="flex w-full grow-0 select-none flex-col"
         >
           <img src="/card.webp" alt="Imagen de fondo carrusel" className="absolute right-0 top-0 h-full w-full object-cover" />
-          <div className="relative z-10 h-full w-full px-4 pt-6 backdrop-blur-sm backdrop-brightness-50 sm:px-0">
+          <div className="relative z-10 h-72 w-full px-4 backdrop-blur-sm backdrop-brightness-50 sm:px-0">
             {'company' in item &&
               <Content
                 destination="offers"
@@ -47,7 +47,7 @@ export default function Carousel({ items }: Props) {
                 description={item.description}
                 link={item.link}
               />}
-            <div className="my-4 flex w-full flex-row items-center justify-center gap-4">
+            <div className="my-2 absolute bottom-0 flex w-full flex-row items-center justify-center gap-4">
               <div className="flex rounded-lg">
                 <Btn direction="left" onClick={() => { setCurrentSlide(previousSlide) }} />
                 <Dots length={items.length} current={currentSlide} />
