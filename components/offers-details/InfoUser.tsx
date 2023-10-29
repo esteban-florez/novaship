@@ -8,14 +8,21 @@ interface Props {
   verification?: boolean
 }
 
-export default function InfoUser({ owner, location, description, verification = true }: Props) {
+export default function InfoUser({
+  owner,
+  location,
+  description,
+  verification = true,
+}: Props) {
   return (
     <>
       <div className="mb-2 flex items-center justify-center gap-2">
-        <AvatarIcon className="h-14 w-14 bg-black text-white" />
+        <AvatarIcon className="h-10 w-10 bg-black text-white" />
         <div className="mb-2 flex flex-col">
           <p className="text-lg font-semibold">{owner}</p>
-          <p className="-my-1 text-center text-sm">{location}</p>
+          <small className="-my-1 font-semibold text-neutral-600">
+            {location}
+          </small>
         </div>
       </div>
       <p className="mb-3 line-clamp-3 text-base">{description}</p>

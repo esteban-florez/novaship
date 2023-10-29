@@ -10,6 +10,8 @@ type Props = React.PropsWithChildren<{
   description: string
   companyName: string
   location: string
+  limit: number
+  expiresAt: number
 }>
 
 export default function OfferItem({
@@ -19,6 +21,8 @@ export default function OfferItem({
   description,
   companyName,
   location,
+  limit,
+  expiresAt,
 }: Props) {
   return (
     <section className="mb-4 break-inside-avoid">
@@ -30,6 +34,8 @@ export default function OfferItem({
           description={description}
           owner={companyName}
           location={location}
+          offerLimit={limit}
+          expiresAt={expiresAt}
         />
       </div>
     </section>

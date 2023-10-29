@@ -9,7 +9,13 @@ import { type Prisma } from '@prisma/client'
 import Pagination from '@/components/Pagination'
 import PageTitle from '@/components/PageTitle'
 import Link from 'next/link'
-import { BookmarkIcon, BriefcaseIcon, LightBulbIcon, ListBulletIcon, PlusIcon } from '@heroicons/react/24/outline'
+import {
+  BookmarkIcon,
+  BriefcaseIcon,
+  LightBulbIcon,
+  ListBulletIcon,
+  PlusIcon,
+} from '@heroicons/react/24/outline'
 import Carousel from '@/components/carousel/Carousel'
 import clsx from 'clsx'
 import { type OffersFull, type OffersTab } from '@/lib/types'
@@ -25,6 +31,8 @@ interface FilterQueries {
   suggested: Prisma.OfferWhereInput
 }
 
+// TODO -> omitir ofertas vencidas o sin cupos (ofertas sin cupos se pueden ver igualmente solo si apliqué).
+// ¿Podría igualmente ver una oferta aplicada aunque se haya vencido?
 export default async function OffersPage({ searchParams }: SearchParamsProps) {
   const { id, type } = await auth.user()
   const { jobs, categories, skills } = await getPersonRelatedIds({ id })
@@ -61,17 +69,23 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
       hiring: { some: { personId: id } },
     },
     all: {
-      AND: [
-        { companyId: { not: id } },
-        { expiresAt: { gte: new Date() } },
-      ],
+      AND: [{ companyId: { not: id } }, { expiresAt: { gte: new Date() } }],
     },
   }
-  const totalRecords = await prisma.offer.count({ where: FILTER_QUERIES[filter as keyof FilterQueries] })
-  const { nextPage, skip, take } = getPaginationProps({ pageNumber, totalRecords })
+  const totalRecords = await prisma.offer.count({
+    where: FILTER_QUERIES[filter as keyof FilterQueries],
+  })
+  const { nextPage, skip, take } = getPaginationProps({
+    pageNumber,
+    totalRecords,
+  })
 
   let offers: OffersFull[] = []
-  const carouselOffers = await getOffers({ where: { companyId: { not: id } }, skip: 0, take: 5 })
+  const carouselOffers = await getOffers({
+    where: { companyId: { not: id } },
+    skip: 0,
+    take: 5,
+  })
 
   if (filter === 'suggested') {
     offers = await getOffers({ where: FILTER_QUERIES.suggested, take, skip })
@@ -82,7 +96,11 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
   }
 
   if (filter === 'applied') {
-    offers = await getOffers({ where: FILTER_QUERIES.applied, skip: pageNumber === 1 ? 5 : skip, take })
+    offers = await getOffers({
+      where: FILTER_QUERIES.applied,
+      skip: pageNumber === 1 ? 5 : skip,
+      take,
+    })
   }
 
   if (filter === 'all') {
@@ -96,31 +114,36 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
     applied: 'Ofertas aplicadas',
   }
 
-  const links = [{
-    title: 'all',
-    content: 'Todas',
-    icon: <ListBulletIcon className="h-5 w-5" />,
-    query: 'all',
-    condition: true,
-  }, {
-    title: 'personal',
-    content: 'Mis ofertas',
-    icon: <BriefcaseIcon className="h-5 w-5" />,
-    query: 'personal',
-    condition: type === 'COMPANY',
-  }, {
-    title: 'applied',
-    content: 'Ofertas aplicadas',
-    icon: <BookmarkIcon className="h-5 w-5" />,
-    query: 'applied',
-    condition: type === 'PERSON',
-  }, {
-    title: 'suggested',
-    content: 'Ofertas sugeridas',
-    icon: <LightBulbIcon className="h-5 w-5" />,
-    query: 'suggested',
-    condition: type === 'PERSON',
-  }]
+  const links = [
+    {
+      title: 'all',
+      content: 'Todas',
+      icon: <ListBulletIcon className="h-5 w-5" />,
+      query: 'all',
+      condition: true,
+    },
+    {
+      title: 'personal',
+      content: 'Mis ofertas',
+      icon: <BriefcaseIcon className="h-5 w-5" />,
+      query: 'personal',
+      condition: type === 'COMPANY',
+    },
+    {
+      title: 'applied',
+      content: 'Ofertas aplicadas',
+      icon: <BookmarkIcon className="h-5 w-5" />,
+      query: 'applied',
+      condition: type === 'PERSON',
+    },
+    {
+      title: 'suggested',
+      content: 'Ofertas sugeridas',
+      icon: <LightBulbIcon className="h-5 w-5" />,
+      query: 'suggested',
+      condition: type === 'PERSON',
+    },
+  ]
 
   return (
     <>
@@ -128,16 +151,22 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
         title="Ofertas laborales"
         subtitle="Encuentra ofertas que se adapten a tus habilidades y experiencias."
       >
-        {type === 'COMPANY' &&
+        {type === 'COMPANY' && (
           <Link href="/home/offers/create">
             <button className="btn-primary btn hover:border-primary hover:bg-white hover:text-neutral-600">
               <PlusIcon className="h-6 w-6" />
               Agregar
             </button>
-          </Link>}
+          </Link>
+        )}
       </PageTitle>
       <Carousel items={carouselOffers} />
-      <PageContent dropdownLabel={`Categorías - ${OFFERS_TAB_TRANSLATION[filter as OffersTab]}`} offers={offers}>
+      <PageContent
+        dropdownLabel={`Categorías - ${
+          OFFERS_TAB_TRANSLATION[filter as OffersTab]
+        }`}
+        offers={offers}
+      >
         {links.map((link) => {
           if (link.condition) {
             return (
@@ -147,7 +176,12 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
                   pathname: '/home/offers',
                   query: { filter: link.query },
                 }}
-                className={clsx('btn', link.title === filter ? 'btn-primary hover:btn-ghost' : 'hover:btn-primary')}
+                className={clsx(
+                  'btn',
+                  link.title === filter
+                    ? 'btn-primary hover:btn-ghost'
+                    : 'hover:btn-primary'
+                )}
               >
                 {link.icon}
                 {link.content}

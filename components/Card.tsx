@@ -15,17 +15,56 @@ interface Props {
   location?: string
   members?: ProjectMembership[]
   link?: string
+  offerLimit?: number
+  expiresAt?: number
 }
 
 const stackOrder = ['z-40', 'z-30', 'z-20']
 
 // TODO -> mover el boton a bajo (flex-col) para las ofertas
-export default function Card({ title, categories, description, owner, location, members, link = '' }: Props) {
+export default function Card({
+  title,
+  categories,
+  description,
+  owner,
+  location,
+  members,
+  link = '',
+  offerLimit,
+  expiresAt,
+}: Props) {
+  const expiresAtDate =
+    expiresAt != null && expiresAt > 0
+      ? `Expira en ${expiresAt} días`
+      : 'La oferta expiró'
+  const quotasLimit =
+    offerLimit != null && offerLimit > 0
+      ? `Quedan ${offerLimit} cupos`
+      : 'No hay cupos.'
+
   return (
     <>
       <div className="relative">
-        <img src="/card.webp" alt="Imagen de fondo carrusel" className="h-28 w-full rounded-t-xl object-cover" />
-        <img src="/onda-horizontal.webp" alt="Onda-horizontal" className="absolute bottom-0 w-full" />
+        <div className="absolute rounded-br-lg rounded-tl-lg bg-white/80 px-4 py-2 shadow-lg">
+          <p className="text-sm text-neutral-600 font-semibold">
+            {expiresAtDate}
+          </p>
+        </div>
+        <div className="absolute right-0 rounded-bl-lg rounded-tr-lg bg-white/80 px-4 py-2 shadow-lg">
+          <p className="text-sm text-neutral-600 font-semibold">
+            {quotasLimit}
+          </p>
+        </div>
+        <img
+          src="/card.webp"
+          alt="Imagen de fondo carrusel"
+          className="h-28 w-full rounded-t-xl object-cover"
+        />
+        <img
+          src="/onda-horizontal.webp"
+          alt="Onda-horizontal"
+          className="absolute bottom-0 w-full"
+        />
       </div>
       <div className="card card-compact bg-base-100 shadow-lg">
         <div className="flex flex-col gap-3 rounded-t-xl p-4 pt-1">
@@ -33,41 +72,49 @@ export default function Card({ title, categories, description, owner, location, 
           <h3 className="line-clamp-1 text-lg font-bold sm:text-xl lg:line-clamp-2">
             {title}
           </h3>
-          {(categories !== undefined && categories?.length > 0) && (
+          {categories !== undefined && categories?.length > 0 && (
             <InlineList items={categories.map(({ title }) => title)} />
           )}
           <p className="line-clamp-2 text-sm lg:line-clamp-3">{description}</p>
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-1">
-            {members != null &&
+            {members != null && (
               <div className="flex shrink-0 flex-row items-center justify-start -space-x-3">
                 {members.map((member, i) => {
                   if (i <= 2) {
                     return (
                       <AvatarIcon
                         key={member.id}
-                        className={clsx('h-10 w-10 border-2 border-white bg-black text-white', stackOrder[i], i > 0 && 'ms-1')}
+                        className={clsx(
+                          'h-10 w-10 border-2 border-white bg-black text-white',
+                          stackOrder[i],
+                          i > 0 && 'ms-1'
+                        )}
                       />
                     )
                   }
                   return null
                 })}
-                {members.length > 3 &&
-                  <div className={clsx(
-                    'z-10 flex h-10 w-10 items-center justify-center text-sm font-bold',
-                    members.length > 9 ? 'ps-2' : ''
-                  )}
+                {members.length > 3 && (
+                  <div
+                    className={clsx(
+                      'z-10 flex h-10 w-10 items-center justify-center text-sm font-bold',
+                      members.length > 9 ? 'ps-2' : ''
+                    )}
                   >
                     +{members.length - 3}
-                  </div>}
-              </div>}
-            {owner !== undefined &&
+                  </div>
+                )}
+              </div>
+            )}
+            {owner !== undefined && (
               <div className="flex items-center gap-2">
                 <AvatarIcon className="bg-black text-white" />
                 <div className="flex flex-col">
                   <h5 className="text-sm font-bold">{owner}</h5>
                   <small className="-mt-1 text-xs">{location}</small>
                 </div>
-              </div>}
+              </div>
+            )}
             <Link href={link}>
               <button className="btn btn-secondary hover:bg-white hover:text-neutral-600">
                 Ver más
