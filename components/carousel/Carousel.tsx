@@ -66,7 +66,9 @@ export default function Carousel({ items }: Props) {
                 <Dots
                   length={items.length}
                   current={currentSlide}
-                  onClick={(index) => { setCurrentSlide(index) }}
+                  onClick={(index) => {
+                    setCurrentSlide(index)
+                  }}
                 />
                 <Btn
                   direction="right"

@@ -12,7 +12,9 @@ export default function Dots({ current, length, onClick }: Props) {
       {new Array(length).fill(null).map((_, index) => (
         <li
           key={index}
-          onClick={() => { onClick(index) }}
+          onClick={() => {
+            onClick(index)
+          }}
           className={clsx({
             'h-4 w-4 rounded-full cursor-pointer hover:bg-white': true,
             'bg-white/60': current !== index,
