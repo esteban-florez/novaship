@@ -33,10 +33,19 @@ export default function Card({
   offerLimit,
   expiresAt,
 }: Props) {
-  const expiresAtDate =
-    expiresAt != null && expiresAt > 0
-      ? `Expira en ${expiresAt} días`
-      : 'La oferta expiró'
+  const expiresAtMessage = () => {
+    if (expiresAt != null) {
+      if (expiresAt > 0) {
+        return `Expira en ${expiresAt} ${expiresAt > 1 ? 'días' : 'día'}`
+      }
+
+      if (expiresAt === 0) {
+        return 'Expira pronto'
+      }
+    }
+
+    return 'La oferta expiró'
+  }
   const quotasLimit =
     offerLimit != null && offerLimit > 0
       ? `Quedan ${offerLimit} cupos`
@@ -45,16 +54,20 @@ export default function Card({
   return (
     <>
       <div className="relative">
-        <div className="absolute rounded-br-lg rounded-tl-lg bg-white/80 px-4 py-2 shadow-lg">
-          <p className="text-sm text-neutral-600 font-semibold">
-            {expiresAtDate}
-          </p>
-        </div>
-        <div className="absolute right-0 rounded-bl-lg rounded-tr-lg bg-white/80 px-4 py-2 shadow-lg">
-          <p className="text-sm text-neutral-600 font-semibold">
-            {quotasLimit}
-          </p>
-        </div>
+        {expiresAt != null && (
+          <div className="absolute rounded-br-lg rounded-tl-lg bg-white/80 px-4 py-2 shadow-lg">
+            <p className="text-sm text-neutral-600 font-semibold">
+              {expiresAtMessage()}
+            </p>
+          </div>
+        )}
+        {offerLimit != null && (
+          <div className="absolute right-0 rounded-bl-lg rounded-tr-lg bg-white/80 px-4 py-2 shadow-lg">
+            <p className="text-sm text-neutral-600 font-semibold">
+              {quotasLimit}
+            </p>
+          </div>
+        )}
         <img
           src="/card.webp"
           alt="Imagen de fondo carrusel"
@@ -73,10 +86,16 @@ export default function Card({
             {title}
           </h3>
           {categories !== undefined && categories?.length > 0 && (
-            <InlineList items={categories.map(({ title }) => title)} />
+            <InlineList
+              items={categories.map(({ title }) => title)}
+              hideList
+            />
           )}
-          <p className="line-clamp-2 text-sm lg:line-clamp-3">{description}</p>
-          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-1">
+          <p className="line-clamp-2 text-neutral-600 text-sm lg:line-clamp-3">
+            {description}
+          </p>
+          {/* TODO -> actualizar */}
+          <div className="flex flex-col gap-3">
             {members != null && (
               <div className="flex shrink-0 flex-row items-center justify-start -space-x-3">
                 {members.map((member, i) => {
@@ -116,7 +135,7 @@ export default function Card({
               </div>
             )}
             <Link href={link}>
-              <button className="btn btn-secondary hover:bg-white hover:text-neutral-600">
+              <button className="btn btn-block btn-secondary hover:bg-white hover:text-neutral-600">
                 Ver más
               </button>
             </Link>

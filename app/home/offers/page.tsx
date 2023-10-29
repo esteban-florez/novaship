@@ -42,6 +42,12 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
   const pageNumber = +(searchParams.page ?? 1)
   const FILTER_QUERIES: FilterQueries = {
     suggested: {
+      expiresAt: {
+        lt: new Date(),
+      },
+      limit: {
+        gt: 0,
+      },
       OR: [
         {
           categories: {

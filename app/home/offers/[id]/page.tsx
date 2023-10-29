@@ -10,12 +10,11 @@ import { modes } from '@/lib/translations'
 import collect from '@/lib/utils/collection'
 import { getExpiresAtDate } from '@/lib/utils/date'
 import prisma from '@/prisma/client'
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid'
 import {
   BanknotesIcon,
-  CheckIcon,
   ClockIcon,
   HomeModernIcon,
-  XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -139,10 +138,10 @@ export default async function OfferPage({ params: { id } }: PageContext) {
                   >
                     {userSkills?.includes(skill.id)
                       ? (
-                        <CheckIcon className="h-5 w-5 text-primary" />
+                        <CheckCircleIcon className="h-6 w-6 text-primary" />
                         )
                       : (
-                        <XMarkIcon className="h-5 w-5 text-neutral-600" />
+                        <XCircleIcon className="h-6 w-6 text-neutral-600" />
                         )}
 
                     <li className="text-base md:text-lg">{skill.title}</li>
