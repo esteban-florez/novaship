@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         },
       })
 
-      return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks/${task.id}`))
+      return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks/${task.id}?alert=task_created`))
     }
 
     const task = await prisma.task.create({
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks/${task.id}`))
+    return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks/${task.id}?alert=task_created`))
   } catch (error) {
     handleError(error, data)
   }

@@ -2,7 +2,6 @@
 
 - Bug de overflow en mobile, espacio en blanco a la derecha.
 - Validación de todos los campos únicos.
-- Recuperación de contraseña.
 - Guiar al usuario por la aplicación.
 - Banner recordatorio de completar perfil.
 - Componente Ads y ubicarlos en el layout.
@@ -16,22 +15,18 @@
 - Signup con Google.
 - Mecanismo para destacar ofertas y equipo mediante suscripción.
 - Mantener los filtros al usar la api.
-- Hacer helpers (getTeamLeader, isMemberFromTeam).
 - Validación: no puede aplicarse a un proyecto que sea personal.
 - Hacer un nuevo componente modal.
-- Pasar subtareas y revisiones a modales.
 - Crear invitacion y despues membership.
 - Revisar las dimensiones del logo en responsive.
 - Logs middleware y model.
 - Middleware para notificaciones.
 - Loading para pages/id.
+- Projects files.
 
-# WIP
+# Future
 
-- Projects Files.
-  - Reviseñar la interfaz de /projects/id en base a los ejemplos de ws
-  ("My Tasks" el que muestra To do | In Progress | Done)
-  - ¿Deberia dejar las revisiones como notas y que se puedan borrar solamente? No le encuentro mucho sentido a que se puedan editar.
+- Rediseñar projects/id, projects/id/tasks
 
 # Gráficas - (pendiente)
 

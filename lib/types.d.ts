@@ -50,17 +50,6 @@ type SelectableSkill = Selectable<OptionSkill>
 type SelectablePerson = Selectable<OptionPerson>
 type SelectableOption = OptionCategory | OptionSkill | OptionPerson
 
-type Colors =
-  | 'PRIMARY'
-  | 'SECONDARY'
-  | 'ACCENT'
-  | 'CANCEL'
-  | 'EMPTY'
-  | 'ERROR'
-  | 'WHITE'
-  | 'NEUTRAL'
-type Styles = 'DEFAULT' | 'OUTLINE' | 'ICON' | 'TAB' | 'DISABLED'
-
 // ----------------------------------------------------------------------
 // --------------------------- Internships ------------------------------
 // ----------------------------------------------------------------------

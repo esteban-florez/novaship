@@ -15,6 +15,7 @@ import Participations from '@/components/projects-details/tasks/Participations'
 import Revisions from '@/components/projects-details/tasks/Revisions'
 import Subtasks from '@/components/projects-details/tasks/Subtasks'
 import { getProject } from '@/lib/data-fetching/project'
+import getTaskStatus from '@/lib/utils/tasks'
 
 export const metadata: Metadata = {
   title: 'Detalles de tarea',
@@ -42,6 +43,7 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
     notFound()
   }
 
+  const status = getTaskStatus({ task })
   const project = await getProject({ id })
   const person = await prisma.person.findUnique({
     where: { id: task.personId },
@@ -58,11 +60,12 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
   return (
     <FormLayout>
       <div className="sm:px-4 sm:py-2">
-        <div>
+        <div className="flex flex-col">
           <h2 className="-mb-2 text-xl font-semibold">{task.title}</h2>
           <small className="font-semibold text-neutral-600">
             Encargado - {person?.name}
           </small>
+          <span className="font-semibold text-neutral-600">{status}</span>
           <p className="mb-2 text-neutral-600">{task.description}</p>
         </div>
         {project?.team != null && (

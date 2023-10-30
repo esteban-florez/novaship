@@ -12,7 +12,7 @@ type Props = React.PropsWithChildren<{
 
 export default function SignupRadio({ name, value, label, children, icon, active = false, className = '', onInput }: Props) {
   return (
-    <label className={clsx('label mb-2 cursor-pointer rounded-lg border border-gray-400 p-4 transition-all', active && 'border-transparent ring-4 ring-primary', className)}>
+    <label className={clsx('label mb-2 cursor-pointer rounded-lg border border-gray-400 p-4 transition-all', active && 'border-transparent ring-2 ring-primary', className)}>
       <div className="flex flex-row items-center gap-3">
         <div className="rounded-full bg-primary p-2">
           {icon}

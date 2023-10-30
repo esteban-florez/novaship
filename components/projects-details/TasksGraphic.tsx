@@ -7,11 +7,12 @@ interface Props {
   tasks: Task[]
 }
 
+// TODO -> buscar otra manear de mostrar la data
 export default function TasksGraphic({ tasks }: Props) {
   const tasksGrouped = collect(tasks).groupBy('status')
 
   const pendingData = structureDataForGraphic({
-    arr: tasksGrouped[TaskStatus.PENDING] ?? [],
+    arr: (tasksGrouped[TaskStatus.PENDING], tasksGrouped.null) ?? [],
     param: 'createdAt',
   })
   const progressData = structureDataForGraphic({

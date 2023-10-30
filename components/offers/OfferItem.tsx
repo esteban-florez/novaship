@@ -10,6 +10,8 @@ type Props = React.PropsWithChildren<{
   description: string
   companyName: string
   location: string
+  limit: number
+  expiresAt: number
 }>
 
 export default function OfferItem({
@@ -19,9 +21,11 @@ export default function OfferItem({
   description,
   companyName,
   location,
+  limit,
+  expiresAt,
 }: Props) {
   return (
-    <section className="mb-4 break-inside-avoid">
+    <section className="max-w-xs mb-4 break-inside-avoid">
       <div className="rounded-xl border border-solid border-zinc-300 bg-white shadow">
         <Card
           link={`/home/offers/${id}`}
@@ -30,6 +34,8 @@ export default function OfferItem({
           description={description}
           owner={companyName}
           location={location}
+          offerLimit={limit}
+          expiresAt={expiresAt}
         />
       </div>
     </section>

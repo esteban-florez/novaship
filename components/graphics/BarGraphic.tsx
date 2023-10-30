@@ -29,7 +29,6 @@ interface Props {
     datasets: Array<{
       label: string
       data: number[]
-      // backgroundColor: string
     }>
   }
 }

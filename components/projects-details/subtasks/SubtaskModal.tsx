@@ -1,6 +1,6 @@
 'use client'
 
-import { schema } from '@/lib/validation/schemas/task'
+import { schema } from '@/lib/validation/schemas/subtask'
 import Modal from '@/components/modal/Modal'
 import useSubmit from '@/lib/hooks/useSubmit'
 import {

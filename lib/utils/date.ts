@@ -1,3 +1,17 @@
+import { getExpirationDiff } from '../validation/expiration-dates'
+
+export function getExpiresAtDate(date: Date | null) {
+  const today = new Date()
+
+  if (date != null) {
+    const difference = getExpirationDiff(date ?? new Date(), today)
+    return difference
+  }
+
+  return today.getDate()
+}
+
+// TODO -> buscar otra forma de mostrar las graficas de tasks.
 // DEV -> solucion temporal para errores
 interface countElementsByDateProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

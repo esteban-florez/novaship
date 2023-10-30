@@ -39,7 +39,6 @@ export default function SubtaskItem({
   person,
   memberships,
 }: Props) {
-  console.log(subtask.subparticipations)
   const participations = subtask.subparticipations.map((subparticipation) => {
     return {
       id: subparticipation.id,
