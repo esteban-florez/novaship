@@ -124,7 +124,7 @@ model Leader {
 
 model Invitation {
   id         String      @id @unique @default(cuid())
-  status     Status
+  status     Status      @default(PENDING)
   membership Membership?
   team       Team        @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   teamId     String

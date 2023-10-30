@@ -1,10 +1,11 @@
 import ProfileDropdown from '@/components/layout/ProfileDropdown'
 import { format } from '@/lib/utils/date'
 import Link from 'next/link'
-// import NotificationDropdown from './NotificationDropdown'
+import NotificationDropdown from './NotificationDropdown'
 
-// TODO -> ¿Como se manejarán las notificaciones?
+// ¿Como se manejarán las notificaciones?
 // con volante, como un CARRO BRUUUUMMMMMMMMM
+// nah mentira, con Server Sent Events B)
 export default function Navbar() {
   const date = format(new Date(), true)
 
@@ -22,10 +23,11 @@ export default function Navbar() {
         <div className="mx-auto flex flex-col items-center px-5 sm:mx-0 ">
           <p>{date}</p>
         </div>
+        <NotificationDropdown />
+        <span className="mx-1" />
         <div className="absolute right-2 top-0 sm:static">
           <ProfileDropdown />
         </div>
-        {/* <NotificationDropdown /> */}
       </div>
     </nav>
   )

@@ -1,9 +1,13 @@
 import prisma from '@/prisma/client'
 import { templates } from './templates'
 
-export async function getNotifications(authUserId: string) {
+export async function getNotifications(authUserId: string, all = true) {
   const rawNotifications = await prisma.notification.findMany({
     where: { authUserId },
+    take: all ? undefined : 5,
+    orderBy: {
+      createdAt: 'asc',
+    },
   })
 
   return rawNotifications.map(notification => {
