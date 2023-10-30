@@ -14,13 +14,13 @@ export default function Navbar() {
       <div className="w-full sm:navbar-start">
         <Link
           href="/home"
-          className="mx-auto text-3xl font-bold text-primary sm:mx-0 sm:p-2"
+          className="-mb-1.5 mx-auto text-3xl font-bold text-primary sm:-mb-0 sm:mx-0 sm:p-2"
         >
           Novaship
         </Link>
       </div>
       <div className="w-full text-sm sm:navbar-end sm:text-base">
-        <div className="mx-auto flex flex-col items-center px-5 sm:mx-0 ">
+        <div className="mx-auto flex flex-col items-center px-5 sm:mx-0">
           <p>{date}</p>
         </div>
         <NotificationDropdown />

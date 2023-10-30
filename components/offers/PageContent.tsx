@@ -14,7 +14,7 @@ export default function PageContent({ offers, dropdownLabel, children }: Props) 
   const [search, setSearch] = useState('')
 
   return (
-    <>
+    <div>
       <PageNav dropdownLabel={dropdownLabel} search={search} onSearch={setSearch}>
         {children}
       </PageNav>
@@ -22,6 +22,6 @@ export default function PageContent({ offers, dropdownLabel, children }: Props) 
         search={search}
         offers={offers}
       />
-    </>
+    </div>
   )
 }

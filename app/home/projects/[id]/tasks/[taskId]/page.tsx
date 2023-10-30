@@ -58,7 +58,7 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
   })
 
   return (
-    <FormLayout>
+    <FormLayout title="Información de la tarea" require>
       <div className="sm:px-4 sm:py-2">
         <div className="flex flex-col">
           <h2 className="-mb-2 text-xl font-semibold">{task.title}</h2>

@@ -1,14 +1,14 @@
 'use client'
 
 import FormButtons from '../forms/FormButtons'
-// import FormSection from '../forms/FormSection'
+import FormSection from '../forms/FormSection'
 import Input from '../forms/inputs/Input'
 import Select from '../forms/inputs/Select'
 import Textarea from '../forms/inputs/Textarea'
 import { schema } from '@/lib/validation/schemas/project'
 import useSubmit from '@/lib/hooks/useSubmit'
-import { type UserType, Visibility } from '@prisma/client'
-import { visibilities } from '@/lib/translations'
+import { type UserType } from '@prisma/client'
+// import { visibilities } from '@/lib/translations'
 import FormLayout from '../forms/FormLayout'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
 import {
@@ -70,8 +70,11 @@ export default function ProjectForm({
         >
           {serverErrors}
           {alert}
-          <section className="grid grid-cols-2 gap-x-3 px-4">
-            <div className="md:col-span-1 col-span-2">
+          <section className="flex flex-col w-full gap-x-3 p-4">
+            <FormSection
+              title="Detalles"
+              description="Asigne un título, descripción y categorias que expliquen de que trata el proyecto para tener una mejor idea del mismo."
+            >
               <Input
                 name="title"
                 label="Título"
@@ -81,34 +84,6 @@ export default function ProjectForm({
                 errors={errors}
                 maxlength={40}
               />
-            </div>
-            <div className="md:col-span-1 col-span-2">
-              <Select
-                name="visibility"
-                defaultValue={project?.visibility ?? undefined}
-                register={register}
-                errors={errors}
-                label="Visibilidad"
-                options={{
-                  type: 'enum',
-                  data: Visibility,
-                  translation: visibilities,
-                }}
-              />
-            </div>
-            <div className="col-span-2">
-              <Textarea
-                name="description"
-                label="Descripción"
-                placeholder="Ej: Página web de carácter administrativo para la empresa..."
-                value={project?.description}
-                register={register}
-                errors={errors}
-                maxlength={255}
-              />
-            </div>
-            <div className="col-span-2">
-              <div className="border-t-2 border-secondary/50 my-3" />
               <SelectMultiple
                 name="categories"
                 label="Campos"
@@ -122,32 +97,42 @@ export default function ProjectForm({
                   data: categories,
                 }}
               />
-            </div>
-            <div className="mb-4 col-span-2">
-              <div className="border-t-2 border-secondary/50 my-4" />
-              <span className="label-text text-base font-semibold">Equipo de trabajo</span>
+              <Textarea
+                name="description"
+                label="Descripción"
+                placeholder="Ej: Página web de carácter administrativo para la empresa..."
+                value={project?.description}
+                register={register}
+                errors={errors}
+                maxlength={255}
+              />
+            </FormSection>
+            <FormSection
+              title="Equipos de trabajo"
+              description="Seleccione como desea trabajar en este proyecto."
+            >
               {!(userType === 'COMPANY' || initialTeamwork === 'group') && (
-                <div className="mt-2 flex w-full flex-col justify-between gap-3 sm:flex-row">
-                  <SignupRadio
-                    name="teamwork"
-                    value="group"
-                    label="En equipo"
-                    className="w-full"
-                    icon={<UserGroupIcon className="h-8 w-8 text-white" />}
-                    active={teamwork === 'group'}
-                    onInput={() => {
-                      setTeamwork('group')
-                    }}
-                  />
+                <div className="mt-4 flex w-full flex-col justify-between gap-3 sm:flex-row">
                   <SignupRadio
                     name="teamwork"
                     value="single"
                     label="Individual"
                     className="w-full"
-                    icon={<UserIcon className="h-8 w-8 text-white" />}
+                    icon={<UserIcon className="h-10 w-10 text-white" />}
                     active={teamwork === 'single'}
                     onInput={() => {
                       setTeamwork('single')
+                    }}
+                  />
+                  <SignupRadio
+                    name="teamwork"
+                    value="group"
+                    label="En equipo"
+                    className="w-full"
+                    icon={<UserGroupIcon className="h-10 w-10 text-white" />}
+                    active={teamwork === 'group'}
+                    onInput={() => {
+                      setTeamwork('group')
                     }}
                   />
                 </div>
@@ -172,7 +157,7 @@ export default function ProjectForm({
                   )}
                 </>
               )}
-            </div>
+            </FormSection>
           </section>
           <FormButtons
             label={method === 'PUT' ? 'Actualizar' : 'Registrar'}

@@ -35,7 +35,7 @@ export default function Carousel({ items }: Props) {
             alt="Imagen de fondo carrusel"
             className="absolute right-0 top-0 h-full w-full object-cover"
           />
-          <div className="relative z-10 h-full w-full px-4 pt-6 backdrop-blur-sm backdrop-brightness-50 sm:px-0">
+          <div className="h-72 backdrop-blur-sm backdrop-brightness-50">
             {'company' in item && (
               <Content
                 destination="offers"
@@ -55,7 +55,7 @@ export default function Carousel({ items }: Props) {
                 link={item.link}
               />
             )}
-            <div className="my-4 flex w-full flex-row items-center justify-center gap-4">
+            <div className="my-4 absolute w-full flex items-center justify-center bottom-0 gap-4">
               <div className="flex rounded-lg">
                 <Btn
                   direction="left"

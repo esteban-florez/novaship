@@ -50,7 +50,7 @@ export default function TaskForm({ action, method, projectId, person, task, memb
   })
 
   return (
-    <FormLayout>
+    <FormLayout title="Información de la tarea" require>
       <form method="POST" action={action} onSubmit={handleSubmit}>
         {serverErrors}
         {alert}

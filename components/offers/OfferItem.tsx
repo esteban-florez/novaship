@@ -25,7 +25,7 @@ export default function OfferItem({
   expiresAt,
 }: Props) {
   return (
-    <section className="max-w-xs mb-4 break-inside-avoid">
+    <section className="max-w-max md:max-w-xs mb-4 break-inside-avoid">
       <div className="rounded-xl border border-solid border-zinc-300 bg-white shadow">
         <Card
           link={`/home/offers/${id}`}
