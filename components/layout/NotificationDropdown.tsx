@@ -14,16 +14,16 @@ export default async function NotificationDropdown() {
       <label tabIndex={0} className="btn-ghost btn-circle btn">
         <div className="indicator">
           <BellIcon className="h-6 w-6" />
-          <span className="badge badge-xs indicator-item right-1 top-3 border bg-success" />
         </div>
       </label>
       <NotificationDropdownMenu>
         {notifications.length > 0
-          ? notifications.map(notification => (
+          ? notifications.map(({ display, id, createdAt }) => (
             <Notification
-              {...notification.display}
-              key={notification.id}
-              date={notification.createdAt}
+              {...display}
+              key={id}
+              id={id}
+              date={createdAt}
             />
           ))
           : (

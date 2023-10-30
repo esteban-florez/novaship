@@ -1,5 +1,6 @@
 import { auth } from '@/lib/auth/api'
 import { handleError } from '@/lib/errors/api'
+import { notify } from '@/lib/notifications/notify'
 import { defaults } from '@/lib/validation/schemas/defaults'
 import { schema } from '@/lib/validation/schemas/internships/create'
 import prisma from '@/prisma/client'
@@ -9,7 +10,7 @@ import { type NextRequest } from 'next/server'
 export async function POST(request: NextRequest) {
   let data
   try {
-    const { id, type } = await auth.user(request)
+    const { id, type, name } = await auth.user(request)
     if (type !== 'INSTITUTE') {
       notFound()
     }
@@ -20,9 +21,7 @@ export async function POST(request: NextRequest) {
       .extend({ personId: defaults.id })
       .parse(data)
 
-    const { categories } = parsed
-
-    console.log(categories[0])
+    const { categories, personId } = parsed
 
     const { id: internshipId } = await prisma.internship.create({
       data: {
@@ -33,6 +32,13 @@ export async function POST(request: NextRequest) {
           connect: categories.map(id => ({ id })),
         },
       },
+    })
+
+    const { authUserId } = await prisma.person.findUniqueOrThrow({ where: { id: personId } })
+
+    await notify('internship-created', authUserId, {
+      institute: name,
+      internshipId,
     })
 
     return redirect(`/home/internships/${internshipId}?alert=internship_created`)

@@ -4,7 +4,7 @@ import { templates } from './templates'
 export async function getNotifications(authUserId: string, all = true) {
   const rawNotifications = await prisma.notification.findMany({
     where: { authUserId },
-    take: all ? undefined : 5,
+    take: all ? undefined : 3,
     orderBy: {
       createdAt: 'asc',
     },

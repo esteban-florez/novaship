@@ -1,12 +1,6 @@
 import prisma from '@/prisma/client'
 
-interface NotifyParams {
-  receiver: string | string[]
-  type: string
-  data: Rec
-}
-
-export async function notify({ data, receiver, type }: NotifyParams) {
+export async function notify(type: string, receiver: string | string[], data: Rec) {
   if (Array.isArray(receiver)) {
     const notifications = receiver.map(authUserId => ({ type, data, authUserId }))
     await prisma.notification.createMany({ data: notifications })
