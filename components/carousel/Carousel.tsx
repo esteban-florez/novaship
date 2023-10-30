@@ -7,7 +7,9 @@ import Content from './Content'
 import Dots from './Dots'
 
 interface Props {
-  items: OffersFull[] | Array<{
+  items:
+  | OffersFull[]
+  | Array<{
     title: string
     description: string
     link: string
@@ -28,9 +30,13 @@ export default function Carousel({ items }: Props) {
           key={item.title}
           className="flex w-full grow-0 select-none flex-col"
         >
-          <img src="/card.webp" alt="Imagen de fondo carrusel" className="absolute right-0 top-0 h-full w-full object-cover" />
-          <div className="relative z-10 h-72 w-full px-4 backdrop-blur-sm backdrop-brightness-50 sm:px-0">
-            {'company' in item &&
+          <img
+            src="/card.webp"
+            alt="Imagen de fondo carrusel"
+            className="absolute right-0 top-0 h-full w-full object-cover"
+          />
+          <div className="relative z-10 h-full w-full px-4 pt-6 backdrop-blur-sm backdrop-brightness-50 sm:px-0">
+            {'company' in item && (
               <Content
                 destination="offers"
                 id={item.id}
@@ -39,19 +45,37 @@ export default function Carousel({ items }: Props) {
                 description={item.description}
                 owner={item.company.name}
                 location={item.location.title}
-              />}
-            {'link' in item &&
+              />
+            )}
+            {'link' in item && (
               <Content
                 destination="home"
                 title={item.title}
                 description={item.description}
                 link={item.link}
-              />}
-            <div className="my-2 absolute bottom-0 flex w-full flex-row items-center justify-center gap-4">
+              />
+            )}
+            <div className="my-4 flex w-full flex-row items-center justify-center gap-4">
               <div className="flex rounded-lg">
-                <Btn direction="left" onClick={() => { setCurrentSlide(previousSlide) }} />
-                <Dots length={items.length} current={currentSlide} />
-                <Btn direction="right" onClick={() => { setCurrentSlide(nextSlide) }} />
+                <Btn
+                  direction="left"
+                  onClick={() => {
+                    setCurrentSlide(previousSlide)
+                  }}
+                />
+                <Dots
+                  length={items.length}
+                  current={currentSlide}
+                  onClick={(index) => {
+                    setCurrentSlide(index)
+                  }}
+                />
+                <Btn
+                  direction="right"
+                  onClick={() => {
+                    setCurrentSlide(nextSlide)
+                  }}
+                />
               </div>
             </div>
           </div>
