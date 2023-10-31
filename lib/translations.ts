@@ -27,6 +27,7 @@ export const routes: Rec = {
   institutes: 'Instituciones',
   persons: 'Personas',
   companies: 'Empresas',
+  notifications: 'Notificaciones',
 }
 
 export const userTypes = {

@@ -10,24 +10,19 @@ export default function Navbar() {
   const date = format(new Date(), true)
 
   return (
-    <nav className="max-h-4 navbar relative flex-col border-b bg-white shadow-md sm:flex-row">
-      <div className="w-full sm:navbar-start">
+    <nav className="max-h-4 navbar relative border-b bg-white shadow-md">
+      <div className="w-full">
         <Link
           href="/home"
-          className="-mb-1.5 mx-auto text-3xl font-bold text-primary sm:-mb-0 sm:mx-0 sm:p-2"
+          className="-mb-1.5 mx-auto text-3xl font-bold text-primary ml-8 pb-2 sm:ml-0 sm:-mb-0 sm:mx-0 sm:p-2"
         >
           Novaship
         </Link>
       </div>
-      <div className="w-full text-sm sm:navbar-end sm:text-base">
-        <div className="mx-auto flex flex-col items-center px-5 sm:mx-0">
-          <p>{date}</p>
-        </div>
+      <div className="w-full text-sm navbar-end sm:text-base flex items-center">
+        <p className="hidden sm:inline sm:mr-2">{date}</p>
         <NotificationDropdown />
-        <span className="mx-1" />
-        <div className="absolute right-2 top-0 sm:static">
-          <ProfileDropdown />
-        </div>
+        <ProfileDropdown />
       </div>
     </nav>
   )

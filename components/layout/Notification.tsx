@@ -11,14 +11,14 @@ type Props = React.PropsWithChildren<{
 
 export default function Notification({ title, content, href, date }: Props) {
   return (
-    <Link href={href} className="flex flex-col pb-2 w-80 max-w-xs gap-1 py-1 pe-6 ps-4 last:mb-2 last:pt-1 hover:bg-base-200 cursor-pointer">
+    <Link href={href} className="flex flex-col pb-2 w-80 max-w-xs py-1 pe-6 ps-4 last:mb-2 last:pt-1 hover:bg-base-200 cursor-pointer">
       <h4 className="font-bold text-primary">
         {title}
       </h4>
       <p className="line-clamp-2 text-sm leading-tight font-semibold normal-case">
         {content}
       </p>
-      <small className="ml-auto">{diffForHumans(date)}</small>
+      <small>{diffForHumans(date)}</small>
     </Link>
   )
 }
