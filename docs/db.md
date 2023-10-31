@@ -361,5 +361,5 @@ Parte interesada de una solicitud de pasantía o de contratación por oferta (ve
 ## Gender
 Sexo de una persona (ver [Person](#person)).
 
-- **MALE**: Hombre.
-- **FEMALE**: Mujer.
+- **MALE**: Masculino.
+- **FEMALE**: Femenino.

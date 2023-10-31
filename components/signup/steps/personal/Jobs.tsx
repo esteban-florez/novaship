@@ -27,7 +27,7 @@ export default function Jobs() {
   return (
     <div className="max-w-xl">
       <h2 className="text-center text-xl font-bold md:text-3xl">
-        ¿Estás en <span className="text-secondary">busca</span> de <span className="text-primary">empleo</span>?
+        ¿Estás en <span className="text-primary">busca</span> de <span className="text-secondary">empleo</span>?
       </h2>
       <p>
         Selecciona si estás en busca de empleo, y en cuáles puestos de trabajo estás interesado.

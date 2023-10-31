@@ -94,8 +94,8 @@ export const statuses = {
 } as const
 
 export const genders = {
-  MALE: 'Hombre',
-  FEMALE: 'Mujer',
+  MALE: 'Masculino',
+  FEMALE: 'Femenino',
 }
 
 export const stages = {

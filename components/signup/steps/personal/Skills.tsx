@@ -16,7 +16,7 @@ export default function Skills() {
   return (
     <>
       <h2 className="text-center text-xl font-bold md:text-3xl">
-        Selecciona tus <span className="text-secondary">conocimientos</span> y <span className="text-primary">habilidades</span>
+        Selecciona tus <span className="text-primary">conocimientos</span> y <span className="text-secondary">habilidades</span>
       </h2>
       <p>
         Incluye todas las habilidades que poseas para que tus talentos puedan ser vistos por las empresas.
