@@ -47,7 +47,11 @@ export default async function NotificationsPage({ searchParams }: SearchParamsPr
           </section>
           )
         : (
-          <EmptyContent />
+          <div className="pt-20">
+            <EmptyContent
+              title="No tienes notificaciones."
+            />
+          </div>
           )}
       <Pagination nextPage={nextPage} pageNumber={pageNumber} />
     </>

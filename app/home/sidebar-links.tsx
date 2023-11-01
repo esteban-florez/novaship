@@ -47,6 +47,12 @@ export function sidebarLinks(user: UserWithType) {
           icon: <PlusIcon className="h-6 w-6" />,
           visible: institute,
         },
+        {
+          href: '/home/internships/recruit',
+          title: 'Reclutar pasante',
+          icon: <PlusIcon className="h-6 w-6" />,
+          visible: company,
+        },
       ],
     },
     {

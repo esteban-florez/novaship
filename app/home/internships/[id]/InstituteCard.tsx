@@ -1,4 +1,4 @@
-import UserCard from './UserCard'
+import UserCard from '../../../../components/internships/UserCard'
 
 type Props = React.PropsWithChildren<{
   institute: {

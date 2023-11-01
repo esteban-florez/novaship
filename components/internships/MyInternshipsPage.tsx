@@ -46,7 +46,6 @@ export default async function MyInternshipsPage({
         component={InternshipCard}
         where={where}
         searchParams={searchParams}
-        userType={type}
         emptyButton={type === 'INSTITUTE'
           ? {
               url: '/home/internships/select',

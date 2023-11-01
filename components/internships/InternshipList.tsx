@@ -5,12 +5,11 @@ import prisma from '@/prisma/client'
 import Pagination from '../Pagination'
 import EmptyContent from '../EmptyContent'
 import { type InternshipWithRelations } from '@/lib/types'
-import { type UserType, type Prisma } from '@prisma/client'
+import { type Prisma } from '@prisma/client'
 
 type Props = React.PropsWithChildren<{
   where: Prisma.InternshipWhereInput
   searchParams: Record<string, string | string[] | undefined>
-  userType: UserType
   component: React.FC<{
     internship: InternshipWithRelations
   }>
@@ -35,7 +34,7 @@ export default async function InternshipList({
     <>
       {internships.length > 0
         ? (
-          <section className="columns-1 md:columns-2 lg:columns-3 gap-3 space-y-2 p-4">
+          <section className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4 p-4">
             {internships.map(internship => (
               <Component
                 key={internship.id}
@@ -45,9 +44,11 @@ export default async function InternshipList({
           </section>
           )
         : (
-          <EmptyContent
-            button={emptyButton}
-          />
+          <div className="pt-10">
+            <EmptyContent
+              button={emptyButton}
+            />
+          </div>
           )}
       {internships.length > 0 && (
         <Pagination

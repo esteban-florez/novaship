@@ -8,6 +8,7 @@
 - Actualización de campos individuales en el perfil. 
 - Actualizar la versión de Next.js.
 - Mostrar contenido al hacer scroll.
+- Higher order components.
 
 ## Reseñas a personas contratadas
 Las empresas podrán escribir reseñas en los perfiles de los usuarios que hayan contratado.

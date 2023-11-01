@@ -9,7 +9,7 @@ import Recruitments from './Recruitments'
 import PersonData from './PersonData'
 import InstituteCard from './InstituteCard'
 import InternshipStage from './InternshipStage'
-import UserCard from './UserCard'
+import UserCard from '../../../../components/internships/UserCard'
 import InternshipProgress from '@/components/internships/InternshipProgress'
 import CompletedHoursText from './CompletedHoursText'
 

@@ -64,7 +64,9 @@ type InternshipWithRelations = Internship & {
   }>
   categories: Category[]
   institute: Institute
-  person: Person
+  person: Person & {
+    location: Location
+  }
   grade: Grade
 }
 

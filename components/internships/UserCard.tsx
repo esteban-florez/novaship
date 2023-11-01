@@ -18,7 +18,7 @@ export default function UserCard({ user, href, subtitle }: Props) {
         <Link href={href} className="text-xl font-bold tracking-tight underline text-secondary">
           {user.name}
         </Link>
-        <p className="font-semibold tracking-tight">
+        <p className="font-semibold tracking-tight line-clamp-1">
           {subtitle}
         </p>
       </div>

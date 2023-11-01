@@ -36,11 +36,13 @@ export default async function NotificationDropdown() {
               />
             </div>
             )}
-        <Link href="/home/notifications">
-          <button className="w-full rounded-b-lg border-t border-base-300 py-4 text-center hover:bg-base-300">
-            <span className="font-bold text-primary">Todas las notificaciones</span>
-          </button>
-        </Link>
+        {notifications.length > 0 && (
+          <Link href="/home/notifications">
+            <button className="w-full rounded-b-lg border-t border-base-300 py-4 text-center hover:bg-base-300">
+              <span className="font-bold text-primary">Todas las notificaciones</span>
+            </button>
+          </Link>
+        )}
       </div>
     </div>
   )
