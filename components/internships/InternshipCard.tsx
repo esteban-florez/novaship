@@ -5,6 +5,7 @@ import { getInternshipStage } from '@/lib/utils/tables'
 import { stages } from '@/lib/translations'
 import Link from 'next/link'
 import IconData from '../IconData'
+import { ci } from '@/lib/utils/text'
 
 type Props = React.PropsWithChildren<{
   internship: InternshipWithRelations
@@ -19,7 +20,7 @@ export default function InternshipCard({ internship }: Props) {
     {
       Icon: IdentificationIcon,
       label: 'Nro de cédula:',
-      value: `V-${person.ci}`,
+      value: ci(person.ci),
     },
     {
       Icon: AcademicCapIcon,

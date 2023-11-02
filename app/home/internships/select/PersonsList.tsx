@@ -1,4 +1,5 @@
 import AvatarIcon from '@/components/AvatarIcon'
+import { ci } from '@/lib/utils/text'
 import { type Person } from '@prisma/client'
 import Link from 'next/link'
 
@@ -14,7 +15,7 @@ export default function PersonsList({ persons }: Props) {
           <AvatarIcon image={person.image} className="h-12 w-12" />
           <div>
             <h3 className="mb-0 text-xl font-bold">{person.name}</h3>
-            <p>CI: {person.ci}</p>
+            <p>CI: {ci(person.ci)}</p>
           </div>
         </div>
         <div className="flex gap-2">

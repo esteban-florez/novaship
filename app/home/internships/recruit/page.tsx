@@ -13,7 +13,7 @@ export const metadata = {
 }
 
 export default async function RecruitPage({ searchParams }: SearchParamsProps) {
-  const { type } = await auth.user()
+  const { id, type } = await auth.user()
   if (type !== 'COMPANY') notFound()
 
   const grades = await prisma.grade.findMany({
@@ -25,11 +25,24 @@ export default async function RecruitPage({ searchParams }: SearchParamsProps) {
 
   const where: Prisma.InternshipWhereInput = {
     status: 'ACCEPTED',
-    recruitments: {
-      none: {
-        status: 'ACCEPTED',
+    AND: [
+      {
+        recruitments: {
+          none: {
+            status: 'ACCEPTED',
+          },
+        },
       },
-    },
+      {
+        recruitments: {
+          none: {
+            vacant: {
+              companyId: id,
+            },
+          },
+        },
+      },
+    ],
     person: {
       name: {
         contains: search,
