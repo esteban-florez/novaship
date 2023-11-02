@@ -5,7 +5,7 @@ import useInput from '@/lib/hooks/useInput'
 import InputError from '../InputError'
 
 type Props = React.PropsWithChildren<{
-  onInput?: (event: OnInputEvent) => void
+  onInput?: React.FormEventHandler<HTMLTextAreaElement>
   placeholder: string
   height?: number
   maxlength: number

@@ -12,10 +12,11 @@ type Props = React.PropsWithChildren<{
   innerIcon?: React.ReactElement
   type?: HTMLInputTypeAttribute
   step?: string
+  val?: string
 } & SharedInputProps>
 
 export default function Input({
-  name, placeholder, label, register, step, config = {}, errors = {}, maxlength,
+  name, placeholder, label, register, step, config = {}, errors = {}, maxlength, val,
   type = 'text', value = '', className = '', labelClassName = '', children, onInput,
 }: Props) {
   const { errorMessage, hasError, registerProps } = useInput({
@@ -28,7 +29,7 @@ export default function Input({
       <input
         onInput={onInput} id={name} name={name} type={type} step={step}
         placeholder={placeholder} {...registerProps} maxLength={maxlength}
-        className={clsx('input input-md mb-3 w-full border-neutral-300 bg-base-100 transition-all focus:outline-none focus:ring-2 focus:ring-primary', hasError && 'border-error focus:ring-error', className)} defaultValue={value}
+        className={clsx('input input-md w-full border-neutral-300 bg-base-100 transition-all focus:outline-none focus:ring-2 focus:ring-primary mb-3', hasError && 'border-error focus:ring-error', className)} defaultValue={value} value={val}
       />
       {children}
       <InputError message={errorMessage} />
