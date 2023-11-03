@@ -23,6 +23,10 @@ const modalsData: Record<string, { title: string, message: string } | undefined>
     title: '¡Has actualizado tu contraseña!',
     message: 'Ahora puedes iniciar sesión usando tu nueva contraseña.',
   },
+  blocked: {
+    title: 'Tu cuenta ha sido bloqueada...',
+    message: 'Has ingresado incorrectamente tu contraseña demasiadas veces. Te hemos enviado un enlace a tu correo para que puedas restaurar tu contraseña.',
+  },
 }
 
 type Props = SearchParamsProps & React.PropsWithChildren<{

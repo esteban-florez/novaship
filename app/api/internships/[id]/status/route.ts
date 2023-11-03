@@ -37,7 +37,7 @@ export async function PATCH(
     }
 
     return NextResponse.redirect(url(
-      `home/internships/${id}alert=internship_accepted`
+      `home/internships/${id}?alert=internship_accepted`
     ))
   } catch (error) {
     return handleError(error)

@@ -48,6 +48,7 @@ module.exports = {
         light: {
           ...themes["[data-theme=light]"],
           primary: "#a55eea",
+          "primary-lighter": "#bf8ef1",
           "primary-content": "#ffffff",
           secondary: "#45aaf2",
           "secondary-content": "#ffffff",

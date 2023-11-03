@@ -11,7 +11,7 @@ export const schema = object({
   categories: array(string(messages.string), messages.array)
     .nonempty(messages.nonempty)
     .max(5, messages.maxArray(5)),
-  memberships: array(string(messages.string), messages.array)
+  membersIds: array(string(messages.string), messages.array)
     .nonempty(messages.nonempty)
     .max(20, messages.maxArray(20)),
 })

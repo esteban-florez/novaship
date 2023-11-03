@@ -53,3 +53,52 @@ export function format(date: Date, weekday = false) {
     weekday: weekday ? 'short' : undefined,
   })
 }
+
+export function diffForHumans(date: Date) {
+  const intl = new Intl.RelativeTimeFormat('es-VE')
+  const diffInMs = Date.now() - Number(date)
+  const diffInMins = Math.ceil(diffInMs / 1000 / 60)
+
+  let value = 1
+  let unit: Intl.RelativeTimeFormatUnit = 'minute'
+
+  if (diffInMins >= 60) {
+    value = diffInMins / 60
+    unit = 'hour'
+  }
+
+  if (diffInMins >= 24 * 60) {
+    value = diffInMins / 24 / 60
+    unit = 'day'
+  }
+
+  if (diffInMins >= 60 * 24 * 30) {
+    value = diffInMins / 60 / 24 / 30
+    unit = 'month'
+  }
+
+  if (diffInMins >= 60 * 24 * 30 * 12) {
+    value = diffInMins / 60 / 24 / 30 / 12
+    unit = 'year'
+  }
+
+  value = Math.round(value)
+
+  if (value > 1) {
+    unit = unit + 's' as Intl.RelativeTimeFormatUnit
+  }
+
+  return intl.format(-value, unit)
+}
+
+export function age(birthDate: Date) {
+  const today = new Date()
+  const age = today.getFullYear() - birthDate.getFullYear()
+  const month = today.getMonth() - birthDate.getMonth()
+
+  if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+    return age - 1
+  }
+
+  return age
+}

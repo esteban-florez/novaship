@@ -64,7 +64,9 @@ type InternshipWithRelations = Internship & {
   }>
   categories: Category[]
   institute: Institute
-  person: Person
+  person: Person & {
+    location: Location
+  }
   grade: Grade
 }
 
@@ -203,7 +205,7 @@ type UserWithType =
 interface NotificationData {
   title: string
   content: string
-  href?: string
+  href: string
 }
 
 type NotificationsRecord = Record<string, undefined | ((data: Rec) => NotificationData)>

@@ -9,12 +9,11 @@ import numbers from '@/lib/utils/number'
 export default async function recruitment() {
   const internships = await prisma.internship.findMany({
     where: { status: 'ACCEPTED' },
-    select: { id: true },
+    select: { id: true, hours: true },
   })
 
   const vacants = collect(await prisma.vacant.findMany({ select: { id: true } }))
   const interested = types(Interested)
-  const hoursRange = numbers(10, 45)
   const statuses = collect(['PENDING', 'REJECTED'] as const)
   const recruitmentsRange = numbers(0, 5)
   const isAcceptedProbability = numbers(1, 5)
@@ -33,7 +32,7 @@ export default async function recruitment() {
 
       if (isAccepted) {
         oneWasAccepted = true
-        const completed = hoursRange.random()
+        const completed = numbers(0, internship.hours).random()
         internshipsToUpdate[internship.id] = completed
       }
 

@@ -63,14 +63,14 @@ export default function Aside({ links }: Props) {
       >
         <button
           className={clsx(
-            'btn-ghost btn mx-auto -mt-2 sm:ms-0 sm:mt-0',
+            'btn-ghost btn mx-auto sm:ms-0 sm:mt-0',
             !active && '-ms-10'
           )}
           onClick={() => {
             setActive(!active)
           }}
         >
-          <Bars3Icon className="h-7 w-7 text-black" />
+          <Bars3Icon className="h-6 w-6 sm:h-7 sm:w-7 text-black" />
         </button>
         <img
           src="/logo.ico"

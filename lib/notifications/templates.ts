@@ -1,6 +1,12 @@
 import { type NotificationsRecord } from '../types'
 
 export const templates: NotificationsRecord = {
+  'internship-created': ({ internshipId, institute }) => ({
+    title: 'Nueva solicitud de pasantía.',
+    content: `La institución "${institute}" te ha enviado una solicitud de pasantía.`,
+    href: `/home/internships/${internshipId}`,
+  }),
+
   'internship-accepted': ({ grade, internshipId, student }) => ({
     title: 'Tu solicitud de pasantía ha sido aceptada.',
     content: `${student} ha aceptado tu solicitud de pasantía para la carrera de ${grade}.`,

@@ -68,3 +68,7 @@
 .device-height {
   height: 100dvh;
 }
+
+.underline {
+  @apply transition-colors hover:brightness-75;
+}

@@ -1,19 +1,24 @@
-import AvatarIcon from '../AvatarIcon'
+import { diffForHumans } from '@/lib/utils/date'
+import Link from 'next/link'
 
-interface Props {
-  username: string
-  time: number
-  children: React.ReactNode
-}
+type Props = React.PropsWithChildren<{
+  id: string
+  title: string
+  content: React.ReactNode
+  href: string
+  date: Date
+}>
 
-export default function Notification({ time, children }: Props) {
+export default function Notification({ title, content, href, date }: Props) {
   return (
-    <li className="flex w-80 max-w-xs cursor-pointer items-center gap-2 py-1 pe-6 ps-4 last:mb-2 last:pt-1 odd:pb-2 even:pb-2 hover:bg-base-300">
-      <AvatarIcon />
-      <div className="flex flex-col text-start">
-        <p className="line-clamp-2 text-sm font-semibold normal-case">{children}.</p>
-        <small className="text-sm normal-case">Hace {time} minutos.</small>
-      </div>
-    </li>
+    <Link href={href} className="flex flex-col pb-2 w-80 max-w-xs py-1 pe-6 ps-4 last:mb-2 last:pt-1 hover:bg-base-200 cursor-pointer">
+      <h4 className="font-bold text-primary">
+        {title}
+      </h4>
+      <p className="line-clamp-2 text-sm leading-tight font-semibold normal-case">
+        {content}
+      </p>
+      <small>{diffForHumans(date)}</small>
+    </Link>
   )
 }

@@ -21,7 +21,6 @@ export default async function MyInternshipsPage({
       <InternshipList
         component={InternshipCard}
         searchParams={searchParams}
-        userType={type}
         where={{
           NOT: {
             status: 'REJECTED',

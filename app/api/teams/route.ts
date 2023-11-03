@@ -15,23 +15,26 @@ export async function POST(request: NextRequest) {
       notFound()
     }
 
+    const ids = {
+      personId: type === 'PERSON' ? id : null,
+      companyId: type === 'COMPANY' ? id : null,
+    }
+
     data = await request.json()
     const parsed = schema.parse(data)
 
-    const memberships = [{
-      personId: type === 'PERSON' ? id : null,
-      companyId: type === 'COMPANY' ? id : null,
-      isLeader: true,
-    }, ...parsed.memberships.map(id => ({ personId: id }))]
+    const invitations = parsed.membersIds.map(personId => ({ personId }))
 
     const { id: teamId } = await prisma.team.create({
       data: {
         ...parsed,
-        memberships: {
+        invitations: {
           createMany: {
-            // @ts-expect-error Outdated code
-            data: memberships,
+            data: invitations,
           },
+        },
+        leader: {
+          create: ids,
         },
         categories: {
           connect: parsed.categories.map(id => ({ id })),

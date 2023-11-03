@@ -58,7 +58,7 @@ export default function CreateTeamForm({ persons, categories }: Props) {
       <FormSection title="Miembros del equipo" description="Desde aquí puedes buscar mediante el correo eléctronico a las personas que quieras invitar a formar parte del equipo..">
         {/* TODO -> crear hacer mejores estilos para este select, hacer que las opciones muestren email, imagen y nombre. E igualmente la lista de seleccionados debe ser un collapse. */}
         <SelectMultiple
-          name="memberships"
+          name="membersIds"
           label="Selecciona los miembros del equipo"
           control={control}
           itemsName="Personas"

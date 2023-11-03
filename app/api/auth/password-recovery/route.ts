@@ -7,6 +7,7 @@ import { getReset } from '@/lib/data-fetching/resets'
 import { notFound } from 'next/navigation'
 import lucia from '@/lib/auth/lucia'
 import { getResetEmail } from '@/lib/utils/tables'
+import prisma from '@/prisma/client'
 
 export async function POST(request: NextRequest) {
   let data
@@ -36,6 +37,20 @@ export async function POST(request: NextRequest) {
     const email = getResetEmail(reset)
 
     await lucia.updateKeyPassword('email', email, password)
+
+    const { authUserId } = await prisma.resets.update({
+      where: { id: resetId },
+      data: {
+        usedAt: new Date(),
+      },
+    })
+
+    await prisma.authUser.update({
+      where: { id: authUserId },
+      data: {
+        failed: 0,
+      },
+    })
 
     return NextResponse.redirect(url('/auth/login?modal=changedpass'))
   } catch (error) {

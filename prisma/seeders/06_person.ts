@@ -15,12 +15,18 @@ export default async function person() {
   const names = collect(persons.names)
   const surnames = collect(persons.surnames)
   const descriptions = collect(persons.descriptions)
+  const minimumBirth = new Date()
+  minimumBirth.setFullYear(minimumBirth.getFullYear() - 18)
+  const olderRange = numbers(0, 10)
 
   for (let i = 0; i < seederQueries.persons; i++) {
     const name = names.random().first()
     const surname = surnames.random().first()
     const fullname = `${name} ${surname}`
     const email = `u${i}@user.dev`
+    const olderBy = olderRange.random()
+    const birth = new Date(minimumBirth)
+    birth.setFullYear(birth.getFullYear() - olderBy)
 
     const authUser = await lucia.createUser({
       primaryKey: {
@@ -38,7 +44,7 @@ export default async function person() {
         phone: numbers().phone(),
         description: descriptions.random().first(),
         ci: numbers().ci(),
-        birth: new Date(),
+        birth,
         employable: numbers(1, 2).random() === 1,
         gender: types(Gender).random(),
         grades: {

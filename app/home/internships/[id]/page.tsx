@@ -9,9 +9,11 @@ import Recruitments from './Recruitments'
 import PersonData from './PersonData'
 import InstituteCard from './InstituteCard'
 import InternshipStage from './InternshipStage'
-import UserCard from './UserCard'
+import UserCard from '../../../../components/internships/UserCard'
 import InternshipProgress from '@/components/internships/InternshipProgress'
 import CompletedHoursText from './CompletedHoursText'
+import TwoColumnsLayout from '@/components/TwoColumnsLayout'
+import Column from '@/components/Column'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -58,8 +60,8 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
         subtitle="Aquí puedes ver todos los datos de la pasantía."
         breadcrumbs={`${person.name} - ${grade.title}`}
       />
-      <section className="flex flex-col lg:flex-row p-4 gap-2">
-        <div className="bg-white p-4 rounded-lg shadow lg:w-1/2">
+      <TwoColumnsLayout>
+        <Column>
           {type !== 'PERSON'
             ? (
               <>
@@ -97,8 +99,8 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
               )}
           <div className="divider divider-vertical" />
           <InternshipStage stage={stage} />
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow lg:w-1/2">
+        </Column>
+        <Column>
           {company === null
             ? (
               <Recruitments recruitments={recruitments} stage={stage} />
@@ -129,8 +131,8 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                 </div>
               </>
               )}
-        </div>
-      </section>
+        </Column>
+      </TwoColumnsLayout>
     </>
   )
 }

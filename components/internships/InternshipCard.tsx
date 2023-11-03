@@ -4,6 +4,8 @@ import { AcademicCapIcon, IdentificationIcon, InformationCircleIcon, ListBulletI
 import { getInternshipStage } from '@/lib/utils/tables'
 import { stages } from '@/lib/translations'
 import Link from 'next/link'
+import IconData from '../IconData'
+import { ci } from '@/lib/utils/text'
 
 type Props = React.PropsWithChildren<{
   internship: InternshipWithRelations
@@ -18,7 +20,7 @@ export default function InternshipCard({ internship }: Props) {
     {
       Icon: IdentificationIcon,
       label: 'Nro de cédula:',
-      value: `V-${person.ci}`,
+      value: ci(person.ci),
     },
     {
       Icon: AcademicCapIcon,
@@ -48,11 +50,7 @@ export default function InternshipCard({ internship }: Props) {
         </div>
         <ul className="space-y-1 py-4">
           {data.map(({ Icon, value, label }) => (
-            <li key={value} className="flex gap-1 items-center">
-              <Icon className="h-8 w-8 bg-primary text-white stroke-2 rounded-full p-1" />
-              {label}
-              <span className="font-semibold">{value}</span>
-            </li>
+            <IconData key={label} icon={Icon} label={label} data={value} />
           ))}
         </ul>
         <Link
