@@ -2,9 +2,10 @@ import IconData from '@/components/IconData'
 import UserCard from '@/components/internships/UserCard'
 import { type InternshipWithRelations } from '@/lib/types'
 import prisma from '@/prisma/client'
-import { AcademicCapIcon, ListBulletIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
+import { AcademicCapIcon, ListBulletIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import Skills from './Skills'
+import RecruitButton from './RecruitButtont'
 
 type Props = React.PropsWithChildren<{
   internship: InternshipWithRelations
@@ -37,10 +38,7 @@ export default async function RecruitableCard({ internship }: Props) {
           icon={AcademicCapIcon}
         />
         <Skills skills={skills} />
-        <button className="btn btn-primary mt-2">
-          <PaperAirplaneIcon className="h-5 w-5" />
-          Enviar solicitud
-        </button>
+        <RecruitButton internshipId={internship.id} />
         <Link
           className="btn btn-secondary"
           href={`/home/internships/recruit/${internship.id}`}

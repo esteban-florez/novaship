@@ -7,7 +7,7 @@ import { getInternship } from '@/lib/data-fetching/internships'
 import { notFound } from 'next/navigation'
 import SkillList from './SkillList'
 import prisma from '@/prisma/client'
-import { AcademicCapIcon, CalendarDaysIcon, ClockIcon, EnvelopeIcon, IdentificationIcon, InformationCircleIcon, ListBulletIcon, PhoneIcon, PlusIcon, UserCircleIcon } from '@heroicons/react/24/outline'
+import { AcademicCapIcon, CalendarDaysIcon, ClockIcon, EnvelopeIcon, IdentificationIcon, InformationCircleIcon, ListBulletIcon, PhoneIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import IconData from '@/components/IconData'
 import { age } from '@/lib/utils/date'
@@ -15,6 +15,8 @@ import { genders } from '@/lib/translations'
 import { ci, phone } from '@/lib/utils/text'
 import Container from './Container'
 import AvatarIcon from '@/components/AvatarIcon'
+import RecruitButton from '../RecruitButtont'
+import { canCreateRecruitment } from '@/lib/auth/permissions'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -33,17 +35,12 @@ export async function generateMetadata({ params: { id } }: PageContext) {
 export default async function RecruitDetailsPage({ params: { id } }: PageContext) {
   const { id: userId, type } = await auth.user()
   const internship = await getInternship(id)
-  const { recruitments } = internship ?? {}
-
-  const notRecruitable = recruitments?.some(recruitment => {
-    const hasRecruitment = recruitment.vacant.companyId === userId
-    const alreadyRecruited = recruitment.status === 'ACCEPTED'
-    return hasRecruitment || alreadyRecruited
-  }) ?? true
 
   if (type !== 'COMPANY' || internship === null ||
-    internship.status !== 'ACCEPTED' || notRecruitable
-  ) notFound()
+    !canCreateRecruitment(userId, internship)
+  ) {
+    notFound()
+  }
 
   const { person, grade, hours, institute } = internship
 
@@ -74,10 +71,7 @@ export default async function RecruitDetailsPage({ params: { id } }: PageContext
           <p className="font-bold mb-2">Habilidades:</p>
           <SkillList skills={skills} />
           <div className="flex gap-2 mt-4">
-            <button className="btn btn-primary">
-              <PlusIcon className="w-5 h-5" />
-              Enviar solicitud
-            </button>
+            <RecruitButton internshipId={internship.id} />
             <Link href={`/home/persons/${person.id}`} className="btn btn-secondary">
               <ListBulletIcon className="w-5 h-5" />
               Ver perfil
