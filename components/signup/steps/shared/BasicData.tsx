@@ -18,7 +18,7 @@ const labels = {
 }
 
 const placeholders = {
-  PERSON: 'Ej. Myriam Yaqueno',
+  PERSON: 'Ej. Pedro Blanco',
   COMPANY: 'Ej. Phasebuck S.A.',
   INSTITUTE: 'Ej. Colegio Luis Blanco',
 }

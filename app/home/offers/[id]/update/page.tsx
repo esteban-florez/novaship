@@ -1,4 +1,4 @@
-import OfferForm from '@/components/offers-create/OfferForm'
+import OfferForm from '@/components/offers/OfferForm'
 import { auth } from '@/lib/auth/pages'
 import { getMyOffer } from '@/lib/data-fetching/offer'
 import prisma from '@/prisma/client'

@@ -40,7 +40,7 @@ export default function CategoriesSelect({ searchText }: Props) {
       <SelectedItems
         items={selectedCategories} itemsName="Áreas" onRemove={handleCategoryInput}
       />
-      <div className="grid h-60 grid-cols-2 gap-x-3 gap-y-2 overflow-y-auto overscroll-auto p-4 shadow-inner">
+      <div className="grid h-60 grid-cols-2 gap-x-3 gap-y-2 scrollbar p-4 shadow-inner">
         {filteredCategories.length !== 0
           ? filteredCategories.map(category => {
             return (

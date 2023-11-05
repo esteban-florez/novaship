@@ -103,7 +103,10 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
               }}
             />
           </FormSection>
-          <FormSection title="Destrezas requeridas" description="Selecciona las habilidades necesarias para desempeñar el trabajo. Selecciona también las categorías">
+          <FormSection
+            title="Destrezas requeridas"
+            description="Selecciona las habilidades necesarias para desempeñar el trabajo. Selecciona también las categorías"
+          >
             <SelectMultiple
               name="categories"
               label="Categorías laborales"

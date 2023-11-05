@@ -20,6 +20,7 @@ import PageTitle from '../PageTitle'
 import SignupRadio from '../signup/SignupRadio'
 import { useState } from 'react'
 import { UserIcon, UserGroupIcon } from '@heroicons/react/24/outline'
+import ImageInput from '../forms/inputs/ImageInput'
 
 interface Props extends FormProps {
   categories: OptionCategory[]
@@ -71,6 +72,12 @@ export default function ProjectForm({
           {serverErrors}
           {alert}
           <section className="flex flex-col w-full gap-x-3 p-4">
+            <FormSection
+              title="Imagen del proyecto"
+              description="Sube una foto que represente la esencia de tu proyecto"
+            >
+              <ImageInput name="Ola" rounded />
+            </FormSection>
             <FormSection
               title="Detalles"
               description="Asigne un título, descripción y categorias que expliquen de que trata el proyecto para tener una mejor idea del mismo."
