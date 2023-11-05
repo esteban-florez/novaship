@@ -1,6 +1,6 @@
-import { type Visibility, type Team, type Person, type Leader, type Company, type Membership, type Resets, type AuthUser, type Admin, type Institute } from '@prisma/client'
+import { type Visibility, type Team, type Person, type Leader, type Company, type Membership, type Resets, type AuthUser, type Admin, type Institute, type Status, type Interested } from '@prisma/client'
 import { DBError } from '../errors/reference'
-import { type UserWithType, type ProjectsFull, type InternshipWithRelations, type MembershipsFull } from '../types'
+import { type UserWithType, type ProjectsFull, type InternshipWithRelations, type MembershipsFull, type HiringWithPersonSkills } from '../types'
 
 type TeamWithRelations = Team & {
   leader: Leader & {
@@ -18,6 +18,18 @@ type TeamWithMembers = (Team & {
     person: Person | null
   }>
 }) | null
+
+export function getHiringData(hirings: HiringWithPersonSkills[], id: string) {
+  const status = getHiringStatusFromId(hirings, id)
+  const hasApplied = hirings.some((hiring) => hiring.personId === id)
+  const interested: Interested = hirings.find((hiring) => hiring.personId === id)?.interested
+  const hiringId = hirings.find(hiring => hiring.personId === id)?.id ?? ''
+  return { status, hasApplied, interested, hiringId }
+}
+
+export function getHiringStatusFromId(hirings: HiringWithPersonSkills[], id: string): Status {
+  return hirings.find((hiring) => hiring.personId === id)?.status ?? 'PENDING'
+}
 
 export function belongsToTeam(team: TeamWithMembers, userId: string): boolean {
   if (team !== null) {

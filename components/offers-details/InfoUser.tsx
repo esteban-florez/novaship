@@ -30,7 +30,7 @@ export default function InfoUser({
         <div className="mb-4 flex flex-col gap-1">
           <div className="flex items-center gap-2">
             <CheckBadgeIcon className="h-6 w-6 text-secondary" />
-            <p className="text-sm">Empresa verificada</p>
+            <p className="text-sm font-bold">Empresa verificada</p>
           </div>
         </div>
       )}

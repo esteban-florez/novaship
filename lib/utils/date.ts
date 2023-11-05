@@ -4,7 +4,7 @@ export function getExpiresAtDate(date: Date | null) {
   const today = new Date()
 
   if (date != null) {
-    const difference = getExpirationDiff(date ?? new Date(), today)
+    const difference = getExpirationDiff(today, date ?? new Date())
     return difference
   }
 

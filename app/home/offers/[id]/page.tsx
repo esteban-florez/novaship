@@ -1,60 +1,134 @@
-import Collapse from '@/components/Collapse'
 import PageTitle from '@/components/PageTitle'
 import Atributtes from '@/components/offers-details/Atributtes'
-import AvatarInfo from '@/components/offers-details/AvatarInfo'
 import Details from '@/components/offers-details/Details'
 import InfoUser from '@/components/offers-details/InfoUser'
 import { auth } from '@/lib/auth/pages'
 import { getOffer } from '@/lib/data-fetching/offer'
-import { modes } from '@/lib/translations'
+import { type Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import Hiring from '@/components/offers-details/HiringCard'
+import Dropdown from '@/components/dropdown/Dropdown'
+import Link from 'next/link'
+import clsx from 'clsx'
+import { getPersonSkillsIds, getSuggestedUsers } from '@/lib/data-fetching/user'
 import collect from '@/lib/utils/collection'
-import { getExpiresAtDate } from '@/lib/utils/date'
-import prisma from '@/prisma/client'
-import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid'
+import { getHiringData } from '@/lib/utils/tables'
+import Skills from '@/components/offers-details/Skills'
+import { OFFER_ID_FILTERS_TAB } from '@/lib/utils/tabs'
+import { offerIdLinks } from '@/components/dropdown/Links'
+import { modes, schedules } from '@/lib/translations'
 import {
   BanknotesIcon,
+  CalendarIcon,
   ClockIcon,
   HomeModernIcon,
 } from '@heroicons/react/24/outline'
-import { type Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import EmptyContent from '@/components/EmptyContent'
 
 export const metadata: Metadata = {
   title: 'Ver oferta',
 }
 
-export default async function OfferPage({ params: { id } }: PageContext) {
+export default async function OfferPage({
+  params: { id },
+  searchParams,
+}: SearchParamsWithIdProps) {
   const { id: userId } = await auth.user()
-  const user = await prisma.person.findFirst({
-    where: { id: userId },
-    select: {
-      skills: {
-        select: {
-          id: true,
-        },
-      },
-    },
-  })
   const offer = await getOffer({ id })
 
   if (offer === null) {
     notFound()
   }
 
-  const expiresAt = getExpiresAtDate(offer?.expiresAt)
-
+  const links = offerIdLinks
+  const filter = searchParams.filter ?? 'pending'
   const isOwner = offer.companyId === userId
-  const userHasApplied = offer.hiring.some(
-    (hiring) => hiring.personId === userId
+  const offerCategories = collect(offer.categories).titles()
+  const { status, hasApplied, interested, hiringId } = getHiringData(
+    offer.hiring,
+    userId
   )
-  const offerCategories = offer.categories.map((category) => {
-    return category.title
-  })
-  const userHiringStatus = offer.hiring.find(
-    (hiring) => hiring.personId === userId
-  )?.status
+  const userSkills = await getPersonSkillsIds({ id: userId })
+  const skills = collect(offer.skills).ids()
+  const suggestedUsers = await getSuggestedUsers({ offerId: id, skills })
+  const offerData = { id, skills: offer.skills }
 
-  const userSkills = collect(user?.skills ?? []).ids()
+  const tabCount = () => {
+    if (filter === 'accepted') {
+      return offer.hiring.filter((hiring) => hiring.status === 'ACCEPTED')
+        .length
+    }
+
+    if (filter === 'suggested') {
+      return suggestedUsers.length
+    }
+
+    return offer.hiring.filter((hiring) => hiring.status === 'PENDING').length
+  }
+
+  const hiringContent = () => {
+    if (filter === 'suggested') {
+      if (suggestedUsers.length === 0) {
+        return (
+          <div className="grid grid-cols-1 gap-4">
+            <EmptyContent title="No hay postulaciones" />
+          </div>
+        )
+      }
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {suggestedUsers.map((user) => {
+            return (
+              <Hiring
+                key={user.id}
+                offer={offerData}
+                person={user}
+                readOnly={offer.limit === 0}
+              />
+            )
+          })}
+        </div>
+      )
+    }
+
+    if (filter === 'accepted' || filter === 'pending') {
+      if (
+        !offer.hiring.some(
+          (hiring) => hiring.status.toLocaleLowerCase() === filter
+        )
+      ) {
+        return (
+          <div className="grid grid-cols-1 gap-4">
+            <EmptyContent title="No hay postulaciones" />
+          </div>
+        )
+      }
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {offer.hiring.map((hiring) => {
+            if (hiring.status.toLocaleLowerCase() === filter) {
+              return (
+                <Hiring
+                  key={hiring.id}
+                  offer={offerData}
+                  hiring={hiring}
+                  readOnly={offer.limit === 0}
+                />
+              )
+            }
+
+            return null
+          })}
+        </div>
+      )
+    }
+
+    return (
+      <div className="grid grid-cols-1 gap-4">
+        <EmptyContent title="No hay postulaciones" />
+      </div>
+    )
+  }
 
   const atributtes = [
     {
@@ -72,6 +146,11 @@ export default async function OfferPage({ params: { id } }: PageContext) {
       content: offer.hours,
       icon: <ClockIcon />,
     },
+    {
+      title: 'Horario',
+      content: schedules[offer.schedule],
+      icon: <CalendarIcon />,
+    },
   ]
 
   return (
@@ -86,32 +165,20 @@ export default async function OfferPage({ params: { id } }: PageContext) {
             id={offer.id}
             isOwner={isOwner}
             title={offer.title}
-            expiresAt={expiresAt}
+            expiresAt={offer.expiresAt}
             description={offer.description}
             categories={offerCategories}
-            userHasApplied={userHasApplied}
-            hiringStatus={userHiringStatus ?? 'PENDING'}
+            userHasApplied={hasApplied}
+            hiringStatus={status}
+            location={offer.location.title}
+            limit={offer.limit}
+            job={offer.job.title}
+            interested={interested}
+            hiringId={hiringId}
           />
-          <div className="mt-4 block lg:hidden">
-            {/* TODO -> borrar usuario duplicado */}
-            <Collapse
-              title={
-                <AvatarInfo
-                  owner={offer.company.name}
-                  location={offer.location.title}
-                />
-              }
-              bg="bg-white"
-            >
-              <InfoUser
-                owner={offer.company.name}
-                location={offer.location.title}
-                description={offer.company.description}
-              />
-            </Collapse>
-          </div>
         </div>
         <div className="col-span-7 lg:col-span-5">
+          {/* TODO -> mejorar */}
           <div className="card flex-col sm:flex-row items-center rounded-xl bg-white shadow-lg">
             {atributtes.map((atr) => {
               return (
@@ -129,29 +196,15 @@ export default async function OfferPage({ params: { id } }: PageContext) {
             <h6 className="text-lg font-bold md:text-2xl">
               Habilidades requeridas
             </h6>
-            <ul className="mt-2 flex flex-col">
-              {offer.skills.map((skill) => {
-                return (
-                  <div
-                    className="flex items-center gap-1.5"
-                    key={skill.id}
-                  >
-                    {userSkills?.includes(skill.id)
-                      ? (
-                        <CheckCircleIcon className="h-6 w-6 text-primary" />
-                        )
-                      : (
-                        <XCircleIcon className="h-6 w-6 text-neutral-600" />
-                        )}
-
-                    <li className="text-base md:text-lg">{skill.title}</li>
-                  </div>
-                )
-              })}
-            </ul>
+            <Skills
+              companyId={offer.companyId}
+              userId={userId}
+              skills={offer.skills}
+              userSkills={userSkills}
+            />
           </div>
         </div>
-        <div className="sticky hidden lg:col-span-2 lg:block">
+        <div className="sticky col-span-7 sm:col-span-2">
           <div className="card bg-white p-4 shadow-md lg:self-start">
             <InfoUser
               owner={offer.company.name}
@@ -160,6 +213,44 @@ export default async function OfferPage({ params: { id } }: PageContext) {
             />
           </div>
         </div>
+        {userId === offer.companyId && (
+          <div className="col-span-7">
+            <div className="card p-4 gap-4 bg-white shadow-lg">
+              <div className="flex flex-col sm:flex-row justify-between items-center">
+                <h4 className="font-bold mb-2 text-xl">Postulaciones</h4>
+                <Dropdown
+                  label={`Filtro - ${
+                    OFFER_ID_FILTERS_TAB[
+                      filter as keyof typeof OFFER_ID_FILTERS_TAB
+                    ]
+                  } (${tabCount()})`}
+                >
+                  {links.map((link) => {
+                    return (
+                      <Link
+                        key={link.title}
+                        href={{
+                          pathname: `/home/offers/${id}`,
+                          query: { filter: link.query },
+                        }}
+                        className={clsx(
+                          'btn',
+                          link.query === filter
+                            ? 'btn-primary hover:btn-ghost'
+                            : 'hover:btn-primary'
+                        )}
+                      >
+                        {link.icon}
+                        {link.title}
+                      </Link>
+                    )
+                  })}
+                </Dropdown>
+              </div>
+              {hiringContent()}
+            </div>
+          </div>
+        )}
       </section>
     </>
   )

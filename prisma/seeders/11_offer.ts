@@ -28,6 +28,7 @@ export default async function offer() {
         description,
         limit: numbers(10, 50).random(),
         mode: types(Mode).random(),
+        hours: numbers(10, 50).random(),
         salary: numbers(80, 520).random(),
         schedule: types(Schedule).random(),
         jobId: collect(jobs).random().first().id,

@@ -1,21 +1,32 @@
 'use client'
 
-import { PencilIcon } from '@heroicons/react/24/outline'
-import { schema } from '@/lib/validation/schemas/hiring'
+import {
+  BriefcaseIcon,
+  HashtagIcon,
+  MapPinIcon,
+  PencilIcon,
+  PencilSquareIcon,
+} from '@heroicons/react/24/outline'
 import DeleteModal from '../projects/DeleteModal'
 import useSubmit from '@/lib/hooks/useSubmit'
-import Input from '../forms/inputs/Input'
-import { type Status } from '@prisma/client'
+import { type Interested, type Status } from '@prisma/client'
 import Link from 'next/link'
+import { getExpiresAtDate } from '@/lib/utils/date'
+import { useState } from 'react'
 interface Props {
   id: string
   isOwner: boolean
   title: string
-  expiresAt: number
+  expiresAt: Date | null
   description: string
   categories: string[]
   userHasApplied: boolean
   hiringStatus: Status
+  location: string
+  limit: number
+  job: string
+  interested: Interested
+  hiringId: string
 }
 
 export default function Details({
@@ -27,17 +38,30 @@ export default function Details({
   categories,
   userHasApplied,
   hiringStatus,
+  location,
+  limit,
+  job,
+  interested,
+  hiringId,
 }: Props) {
+  const [status, setStatus] = useState<Status>('ACCEPTED')
+  const expires = getExpiresAtDate(expiresAt)
   const expiresAtDate =
-    expiresAt > 0 ? `Expira en ${expiresAt} días` : 'La oferta expiró'
+    expires > 0
+      ? `Expira en ${expires} ${expires > 1 ? 'días' : 'día'}`
+      : 'La oferta expiró'
   const statusMessages = {
     PENDING: '¡Su postulación se encuentra en espera!',
     REJECTED: '¡Su postulación ha sido rechazada!',
     ACCEPTED: '¡Su postulación ha sido aceptada!',
   }
 
-  const { handleSubmit, alert, serverErrors, register } = useSubmit({
-    schema,
+  const { handleSubmit, alert, serverErrors } = useSubmit({
+    method: interested === 'COMPANY' ? 'PUT' : 'POST',
+    append: {
+      offerId: id,
+      status,
+    },
   })
 
   return (
@@ -67,7 +91,7 @@ export default function Details({
         </div>
         <div className="flex w-full flex-col rounded-t-none p-4 xl:rounded-l-none">
           <h3 className="w-5/6 text-xl font-bold sm:text-2xl">{title}</h3>
-          <div className="flex flex-wrap gap-1 text-base font-semibold text-neutral-600">
+          <div className="mb-2 flex flex-wrap gap-1 text-base font-semibold text-neutral-600">
             {categories.map((category) => {
               return (
                 <span
@@ -79,11 +103,47 @@ export default function Details({
               )
             })}
           </div>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <small className="flex gap-1 items-center">
+              <MapPinIcon className="w-5 h-5 text-primary" />
+              <span className="font-bold">{location}</span>
+            </small>
+            <small className="flex gap-1 items-center">
+              <HashtagIcon className="h-5 w-5 text-primary" />
+              Cupos disponibles <span className="font-bold">{limit}</span>
+            </small>
+            <small className="flex gap-1 items-center">
+              <BriefcaseIcon className="h-5 w-5 text-primary" />
+              <span className="font-bold">{job}</span>
+            </small>
+          </div>
           <p className="line-clamp-6 py-3">{description}</p>
           <div className="mx-auto flex w-full flex-col justify-between gap-3 sm:mx-0 sm:w-auto sm:flex-row sm:gap-1 sm:text-sm lg:gap-2">
             <div className="flex flex-col gap-3 sm:flex-row">
               <div className="flex flex-col gap-3 sm:flex-row">
-                {userHasApplied && (
+                {interested === 'COMPANY' && (
+                  <div className="flex flex-col gap-4">
+                    <p className="font-bold text-neutral-600">
+                      ¿Deseas aceptar la oferta de trabajo?
+                    </p>
+                    <form
+                      action={`/api/hiring/${hiringId}`}
+                      method="POST"
+                      onSubmit={handleSubmit}
+                    >
+                      <div className="flex flex-col sm:flex-row gap-4">
+                        <button className="btn btn-primary">Aceptar</button>
+                        <button
+                          onClick={() => { setStatus('REJECTED') }}
+                          className="btn btn-error"
+                        >
+                          Rechazar
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+                {interested === 'PERSON' && userHasApplied && (
                   <span className="mx-auto font-semibold text-neutral-600 sm:mx-0 sm:me-4">
                     {statusMessages[hiringStatus]}
                   </span>
@@ -94,25 +154,17 @@ export default function Details({
                     method="POST"
                     onSubmit={handleSubmit}
                   >
-                    <Input
-                      name="offerId"
-                      placeholder=""
-                      value={id}
-                      className="hidden"
-                      register={register}
-                    />
-                    {/* TEMPORAL DISABLED */}
-                    {/* <button className="btn btn-primary">
-                        <PencilIcon className="h-4 w-4" />
-                        ¡Aplicar!
-                      </button> */}
+                    <button className="btn btn-block md:btn-wide btn-primary">
+                      <PencilSquareIcon className="h-4 w-4" />
+                      ¡Aplicar!
+                    </button>
                   </form>
                 )}
 
                 {isOwner && (
                   <>
                     <Link href={`/home/offers/${id}/update`}>
-                      <button className="btn btn-primary">
+                      <button className="btn btn-block sm:btn-md btn-primary">
                         <PencilIcon className="h-4 w-4" />
                         Actualizar
                       </button>

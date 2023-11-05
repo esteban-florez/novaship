@@ -44,6 +44,11 @@ export const getOffer = cache(async ({ id }: { id: string }) => {
       id,
     },
     include: {
+      job: {
+        select: {
+          title: true,
+        },
+      },
       skills: {
         select: {
           id: true,
@@ -66,9 +71,16 @@ export const getOffer = cache(async ({ id }: { id: string }) => {
           id: true,
           personId: true,
           status: true,
+          interested: true,
           person: {
             select: {
               name: true,
+              skills: {
+                select: {
+                  id: true,
+                  title: true,
+                },
+              },
             },
           },
         },

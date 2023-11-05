@@ -14,6 +14,8 @@ type SelectOptionsArray = Array<{ value: string, label: string }>
 
 interface SearchParamsProps { searchParams: Record<string, string | string[] | undefined> }
 
+type SearchParamsWithIdProps = SearchParamsProps & PageContext
+
 interface FormProps {
   method: 'POST' | 'PUT'
   action: string
