@@ -113,6 +113,14 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'La pasantía fué eliminada con éxito.',
   },
+  vacant_created: {
+    type: 'success',
+    message: 'El cupo se ha publicado con éxito.',
+  },
+  recruitment_created: {
+    type: 'success',
+    message: 'La solicitud fué enviada al estudiante con éxito.',
+  },
   bad_creds: {
     type: 'error',
     message: 'Credenciales inválidas.',

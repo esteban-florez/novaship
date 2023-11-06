@@ -44,6 +44,9 @@ export const defaults = {
   date: date(dateOptions),
   id: idSchema,
   ids: array(idSchema, messages.array),
+  description: string(messages.string)
+    .min(15, messages.min(15))
+    .max(255, messages.max(255)),
   client: {
     image: preprocess(extractFile, clientImageSchema.nullable()),
     requiredImage: preprocess(extractFile, clientImageSchema),

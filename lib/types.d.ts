@@ -70,6 +70,15 @@ type InternshipWithRelations = Internship & {
   grade: Grade
 }
 
+type VacantWithRelations = Vacant & {
+  categories: Category[]
+  grades: Grade[]
+  skills: Skill[]
+  company: Company
+  location: Location
+  job: Job
+}
+
 // ----------------------------------------------------------------------
 // ------------------------------ Teams ---------------------------------
 // ----------------------------------------------------------------------

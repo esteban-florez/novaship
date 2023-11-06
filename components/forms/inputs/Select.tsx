@@ -29,7 +29,7 @@ export default function Select({
       <select
         id={name} name={name} onInput={onInput} value={value}
         defaultValue={defaultValue} {...registerProps}
-        className={clsx('select select-md w-full border-neutral-300 bg-base-100 transition-all focus:outline-none focus:ring-2 focus:ring-primary', className)}
+        className={clsx('select select-md w-full border-neutral-300 bg-base-100 transition-all focus:outline-none focus:ring-2 focus:ring-primary mb-3', className)}
       >
         {!noDefault && <option value="" disabled>Seleccionar...</option>}
         {children}

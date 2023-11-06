@@ -64,7 +64,7 @@ export default function FilterBar({ grades }: Props) {
           onInput={handleSearch}
         />
       </div>
-      <div className="mb-3 flex items-center gap-2">
+      <div className="flex items-center gap-2">
         <div>
           <p className="font-semibold text-sm">Filtrar por carrera: </p>
           <Select

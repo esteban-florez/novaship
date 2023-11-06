@@ -8,6 +8,7 @@ type Props = React.PropsWithChildren<{
   menuOnTop: boolean
   disabled: boolean
   addOption: (optionValue: string) => void
+  blur: () => void
 }>
 
 declare global {
@@ -17,7 +18,9 @@ declare global {
 
 globalThis.canRun = true
 
-export default function SelectMultipleMenu({ options, menuOnTop, addOption, disabled }: Props) {
+export default function SelectMultipleMenu({
+  options, menuOnTop, addOption, disabled, blur,
+}: Props) {
   const [hidden, setHidden] = useState(true)
   const [search, setSearch] = useState('')
   const [hovered, setHovered] = useState<number | null>(null)
@@ -113,6 +116,7 @@ export default function SelectMultipleMenu({ options, menuOnTop, addOption, disa
         onKeyDown={handleKeyDown}
         onFocus={() => { setHidden(false) }}
         placeholder={disabled ? 'Seleccionaste el máximo de opciones' : 'Seleccionar...'}
+        onBlur={blur}
         value={search}
         type="text"
         disabled={disabled}

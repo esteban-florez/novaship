@@ -70,6 +70,7 @@ export default function SelectMultiple({
         menuOnTop={menuOnTop}
         addOption={addOption}
         disabled={selected.length >= limit || disabled}
+        blur={field.onBlur}
       />
       <InputError message={error?.message} />
       {selected.length > 0 && (

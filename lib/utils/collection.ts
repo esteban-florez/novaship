@@ -129,6 +129,6 @@ class Collection<T> {
   }
 }
 
-export default function collect<T>(array: T[]) {
-  return new Collection(array)
+export default function collect<T>(array?: T[] | null) {
+  return new Collection(array ?? [])
 }

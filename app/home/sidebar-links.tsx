@@ -3,7 +3,7 @@ import {
   HomeIcon, BriefcaseIcon, AcademicCapIcon,
   ClipboardDocumentListIcon, UserGroupIcon,
   GlobeAltIcon, StarIcon, ShieldCheckIcon,
-  CheckBadgeIcon, PlusIcon,
+  CheckBadgeIcon, PlusIcon, TicketIcon,
 } from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
@@ -24,6 +24,12 @@ export function sidebarLinks(user: UserWithType) {
       icon: <AcademicCapIcon className="h-6 w-6" />,
       submenu: [
         {
+          href: '/home/internships/select',
+          title: 'Inscribir pasante',
+          icon: <PlusIcon className="h-6 w-6" />,
+          visible: institute,
+        },
+        {
           href: `/home/institutes/${user.id}/internships`,
           title: 'Mis pasantías',
           icon: <StarIcon className="h-6 w-6" />,
@@ -36,16 +42,16 @@ export function sidebarLinks(user: UserWithType) {
           visible: person,
         },
         {
+          href: '/home/internships/vacants/create',
+          title: 'Publicar cupo',
+          icon: <TicketIcon className="h-6 w-6" />,
+          visible: company,
+        },
+        {
           href: `/home/companies/${user.id}/internships`,
           title: 'Mis pasantías',
           icon: <StarIcon className="h-6 w-6" />,
           visible: company,
-        },
-        {
-          href: '/home/internships/select',
-          title: 'Inscribir pasante',
-          icon: <PlusIcon className="h-6 w-6" />,
-          visible: institute,
         },
         {
           href: '/home/internships/recruit',
