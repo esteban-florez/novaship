@@ -25,7 +25,7 @@ export default function SelectedItems({ items, onRemove, itemsName }: Props) {
         <span className="text-neutral-400">Ningun elemento seleccionado.</span>
       )}
       {items.map(item => (
-        <span key={item.id} className="badge badge-secondary badge-lg justify-between gap-1 text-sm font-semibold">
+        <span key={item.id} className="badge badge-primary badge-lg justify-between gap-1 text-sm font-semibold">
           {item.title}
           <button type="button" onClick={() => { onRemove(item.id) }}>
             <XMarkIcon className="-mr-2 h-4 w-4" />

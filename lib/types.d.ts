@@ -76,6 +76,7 @@ type VacantWithRelations = Vacant & {
   skills: Skill[]
   company: Company
   location: Location
+  recruitments: Recruitment[]
   job: Job
 }
 

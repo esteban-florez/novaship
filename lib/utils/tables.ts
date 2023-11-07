@@ -1,6 +1,6 @@
 import { type Visibility, type Team, type Person, type Leader, type Company, type Membership, type Resets, type AuthUser, type Admin, type Institute, type Status, type Interested } from '@prisma/client'
 import { DBError } from '../errors/reference'
-import { type UserWithType, type ProjectsFull, type InternshipWithRelations, type MembershipsFull, type HiringWithPersonSkills } from '../types'
+import { type UserWithType, type ProjectsFull, type InternshipWithRelations, type MembershipsFull, type VacantWithRelations, type HiringWithPersonSkills } from '../types'
 
 type TeamWithRelations = Team & {
   leader: Leader & {
@@ -130,4 +130,26 @@ export function getResetEmail(reset: ResetWithRelations) {
     throw new Error('error: WATAFAAAK')
   }
   return email
+}
+
+type DateAndDuration = Pick<VacantWithRelations, 'createdAt' | 'duration'>
+type Limitable = Pick<VacantWithRelations, '_count' | 'limit'>
+type WithRecruitments = Pick<VacantWithRelations, 'recruitments'>
+
+export function vacantIsFull(vacant: Limitable) {
+  return vacant._count.recruitments >= vacant.limit
+}
+
+export function vacantIsExpired(vacant: DateAndDuration) {
+  return Date.now() >= getVacantExpiration(vacant).getMilliseconds()
+}
+
+export function getVacantExpiration(vacant: DateAndDuration) {
+  const createdAt = Number(vacant.createdAt)
+  const duration = vacant.duration * 24 * 60 * 60 * 1000
+  return new Date(createdAt + duration)
+}
+
+export function getAcceptedRecruitments(vacant: WithRecruitments) {
+  return vacant.recruitments.filter(({ status }) => status === 'ACCEPTED')
 }

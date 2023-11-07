@@ -23,7 +23,7 @@ export default async function TeamProjectsPage({ params: { id } }: PageContext) 
       />
       {projects.length > 0
         ? (
-          <section className="grid gap-3 p-4 lg:grid-cols-2">
+          <section className="grid gap-4 p-4 lg:grid-cols-2">
             {projects.map(project => (
               <div key={project.id}>
                 <Card

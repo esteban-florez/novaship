@@ -6,6 +6,7 @@ import Pagination from '../Pagination'
 import EmptyContent from '../EmptyContent'
 import { type InternshipWithRelations } from '@/lib/types'
 import { type Prisma } from '@prisma/client'
+import ThreeGrid from '../ThreeGrid'
 
 type Props = React.PropsWithChildren<{
   where: Prisma.InternshipWhereInput
@@ -34,14 +35,14 @@ export default async function InternshipList({
     <>
       {internships.length > 0
         ? (
-          <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+          <ThreeGrid>
             {internships.map(internship => (
               <Component
                 key={internship.id}
                 internship={internship}
               />
             ))}
-          </section>
+          </ThreeGrid>
           )
         : (
           <div className="pt-10">

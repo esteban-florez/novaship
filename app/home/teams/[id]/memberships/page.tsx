@@ -8,6 +8,7 @@ import EmptyContent from '@/components/EmptyContent'
 import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import prisma from '@/prisma/client'
+import ThreeGrid from '@/components/ThreeGrid'
 
 export const metadata: Metadata = {
   title: 'Miembros del equipo',
@@ -34,7 +35,7 @@ export default async function TeamMembershipsPage({ params: { id } }: PageContex
         title="Miembros del equipo"
         team={team}
       />
-      <section className="grid grid-cols-1 gap-3 p-4 md:grid-cols-2 lg:grid-cols-3">
+      <ThreeGrid>
         {memberships.length > 0
           ? (
             <>
@@ -76,7 +77,7 @@ export default async function TeamMembershipsPage({ params: { id } }: PageContex
               Este equipo no ha creado ningún proyecto aún.
             </EmptyContent>
             )}
-      </section>
+      </ThreeGrid>
     </>
   )
 }
