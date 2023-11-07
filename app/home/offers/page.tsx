@@ -31,19 +31,18 @@ interface FilterQueries {
   suggested: Prisma.OfferWhereInput
 }
 
-// TODO -> omitir ofertas vencidas o sin cupos (ofertas sin cupos se pueden ver igualmente solo si apliqué).
-// ¿Podría igualmente ver una oferta aplicada aunque se haya vencido?
 export default async function OffersPage({ searchParams }: SearchParamsProps) {
   const { id, type } = await auth.user()
   const { jobs, categories, skills } = await getPersonRelatedIds({ id })
 
   // DRY Pagination
-  const filter = type === 'COMPANY' ? 'all' : searchParams.filter ?? 'suggested'
+  const filter =
+    type === 'COMPANY' ? 'personal' : searchParams.filter ?? 'suggested'
   const pageNumber = +(searchParams.page ?? 1)
   const FILTER_QUERIES: FilterQueries = {
     suggested: {
       expiresAt: {
-        lt: new Date(),
+        gt: new Date(),
       },
       limit: {
         gt: 0,
@@ -71,9 +70,7 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
       ],
     },
     personal: { companyId: id },
-    applied: {
-      hiring: { some: { personId: id } },
-    },
+    applied: { hiring: { some: { personId: id } } },
     all: {
       AND: [{ companyId: { not: id } }, { expiresAt: { gte: new Date() } }],
     },
@@ -104,7 +101,7 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
   if (filter === 'applied') {
     offers = await getOffers({
       where: FILTER_QUERIES.applied,
-      skip: pageNumber === 1 ? 5 : skip,
+      skip,
       take,
     })
   }

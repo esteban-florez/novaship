@@ -12,8 +12,8 @@ export default function CategoryOption({ handleCategoryInput, category: { id, ti
       type="button"
       onClick={() => { handleCategoryInput(id) }}
       className={clsx(
-        'rounded-lg border-2 border-primary p-4 transition-colors',
-        selected && 'bg-primary text-white'
+        'rounded-lg border-2 border-neutral-300 p-4 transition-colors hover:border-primary',
+        selected && 'border-2 border-primary'
       )}
     >
       <span className="mx-auto text-lg font-semibold">

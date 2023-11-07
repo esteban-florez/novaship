@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import InlineList from './InlineList'
 import { type ProjectMembership } from '@/lib/types'
 import Link from 'next/link'
-import { FireIcon } from '@heroicons/react/24/outline'
+import { FireIcon, HashtagIcon } from '@heroicons/react/24/outline'
 
 interface Props {
   title: string
@@ -22,7 +22,6 @@ interface Props {
 
 const stackOrder = ['z-40', 'z-30', 'z-20']
 
-// TODO -> mover el boton a bajo (flex-col) para las ofertas
 export default function Card({
   title,
   categories,
@@ -55,20 +54,6 @@ export default function Card({
   return (
     <div>
       <div className="relative">
-        {/* {expiresAt != null && (
-          <div className="absolute rounded-br-lg rounded-tl-lg bg-white/80 px-4 py-2 shadow-lg">
-            <p className="text-sm text-neutral-600 font-semibold">
-              {expiresAtMessage()}
-            </p>
-          </div>
-        )} */}
-        {offerLimit != null && (
-          <div className="absolute right-0 rounded-bl-lg rounded-tr-lg bg-white/80 px-4 py-2 shadow-lg">
-            <p className="text-sm text-neutral-600 font-semibold">
-              {quotasLimit}
-            </p>
-          </div>
-        )}
         <img
           src="/card.webp"
           alt="Imagen de fondo carrusel"
@@ -84,12 +69,20 @@ export default function Card({
         <div className="flex flex-col gap-3 p-4 pt-1">
           {/* Ofertas */}
           <div className="border-b border-neutral-400 pb-2">
-            {expiresAt != null && (
-              <div className="flex items-center gap-1">
-                <FireIcon className="h-4 w-4" />
-                <p className="text-xs text-neutral-600 font-semibold">
-                  {expiresAtMessage()}
-                </p>
+            {(expiresAt != null || offerLimit != null) && (
+              <div className="flex justify-between items-center gap-1 text-xs text-neutral-600 font-semibold">
+                {expiresAt != null && (
+                  <div className="inline-flex">
+                    <FireIcon className="h-4 w-4" />
+                    <p>{expiresAtMessage()}</p>
+                  </div>
+                )}
+                {offerLimit != null && (
+                  <div className="inline-flex">
+                    <HashtagIcon className="h-4 w-4" />
+                    <p>{quotasLimit}</p>
+                  </div>
+                )}
               </div>
             )}
             <h3 className="line-clamp-1 text-lg font-bold sm:text-xl">
@@ -142,7 +135,8 @@ export default function Card({
                     Ver más
                   </button>
                 </Link>
-              </div>)
+              </div>
+              )
             : (
               <div className="flex flex-col gap-3">
                 {owner !== undefined && (
@@ -159,7 +153,8 @@ export default function Card({
                     Ver más
                   </button>
                 </Link>
-              </div>)}
+              </div>
+              )}
         </div>
       </div>
     </div>

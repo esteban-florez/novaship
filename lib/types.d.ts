@@ -115,6 +115,20 @@ interface OffersFull extends Offer {
   hiring: Hiring[]
 }
 
+interface HiringWithPersonSkills {
+  id: string
+  personId: string
+  status: Status
+  interested: Interested
+  person: {
+    name: string
+    skills: Array<{
+      id: string
+      title: string
+    }>
+  }
+}
+
 // ----------------------------------------------------------------------
 // --------------------------- Memberships ---------------------------------
 // ----------------------------------------------------------------------

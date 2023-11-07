@@ -1,5 +1,5 @@
 import PageTitle from '@/components/PageTitle'
-import OfferForm from '@/components/offers-create/OfferForm'
+import OfferForm from '@/components/offers/OfferForm'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 

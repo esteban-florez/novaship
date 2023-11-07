@@ -85,6 +85,22 @@ export const alerts: AlertList = {
     type: 'warning',
     message: 'La oferta ha sido borrada.',
   },
+  offer_applied: {
+    type: 'success',
+    message: 'Tu solicitud ha sido enviada con éxito.',
+  },
+  hiring_success: {
+    type: 'success',
+    message: 'La postulación ha sido aceptada con éxito.',
+  },
+  hiring_rejected: {
+    type: 'warning',
+    message: 'La postulación ha sido rechazada.',
+  },
+  offer_user_postulation: {
+    type: 'success',
+    message: 'La postulación ha sido enviada con éxito.',
+  },
   team_created: {
     type: 'success',
     message: 'El equipo de trabajo fue registrado con éxito.',

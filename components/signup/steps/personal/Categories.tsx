@@ -16,18 +16,17 @@ export default function Categories() {
   return (
     <>
       <h2 className="text-center text-xl font-bold md:text-3xl">
-        ¡Elige las <span className="text-primary">categorías</span> que sea relevantes para ti!
+        ¡Elige las <span className="text-primary">categorías</span> que sean <span className="text-secondary">relevantes</span> para ti!
       </h2>
       <p>
         Para ofrecer una mejor experiencia necesitamos conocer las categorías laborales en las que te desempeñas.
       </p>
       <div className="mx-auto w-full pt-4">
-        <div className="flex items-center justify-between rounded-lg bg-primary px-4 py-2 shadow-md">
-          <p className="font-semibold text-white">Puedes seleccionar un máximo de 5 categorías:</p>
+        <div className="flex justify-end">
           <SearchInput searchText={searchText} setSearchText={setSearchText} />
         </div>
         <CategoriesSelect searchText={searchText} />
-        <div className="mt-4 flex justify-between">
+        <div className="mt-2 flex justify-between">
           <button onClick={goBack} type="button" className="btn-neutral btn">
             Volver
           </button>

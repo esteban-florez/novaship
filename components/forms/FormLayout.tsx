@@ -9,7 +9,7 @@ export default function FormLayout({ children, title, require }: Props) {
       <div className="card w-full bg-white border border-neutral-300 rounded-b-none rounded-t-lg px-6 py-4">
         <h1 className="text-3xl font-bold">{title}</h1>
         {require &&
-          <h1 className="text-base text-black/80 font-semibold -mt-1.5">
+          <h1 className="text-base text-neutral/80 font-semibold -mt-1.5">
             Todos los campos con * son obligatorios
           </h1>}
       </div>

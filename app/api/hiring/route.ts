@@ -5,86 +5,61 @@ import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/api'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
+import { notify } from '@/lib/notifications/notify'
 
-// TODO -> revisar redirect alerts.
 export async function POST(request: NextRequest) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const activeUser = await auth.user(request)
+    const { id: userId, name, type } = await auth.user(request)
 
-    if (activeUser.type === 'PERSON') {
-      const user = await prisma.person.findFirst({
-        where: {
-          id: activeUser.id,
-        },
-        include: {
-          categories: {
-            select: {
-              id: true,
-            },
-          },
-          skills: {
-            select: {
-              id: true,
-            },
-          },
-          jobs: {
-            select: {
-              id: true,
-            },
-          },
-        },
-      })
-
-      if (user === null) {
-        return NextResponse.redirect(url('/home/offers'))
-      }
-
-      const offer = await prisma.offer.findFirst({
-        where: {
-          id: parsed.offerId,
-          OR: [
-            {
-              categories: {
-                some: {
-                  id: {
-                    in: user.categories.map(category => category.id),
-                  },
-                },
-              },
-            },
-            {
-              skills: {
-                some: {
-                  id: {
-                    in: user.skills.map(skill => skill.id),
-                  },
-                },
-              },
-            },
-            { jobId: { in: user.jobs.map(job => job.id) } },
-          ],
-        },
-      })
-
-      if (offer === null) {
-        notFound()
-      }
-
-      const hiring = await prisma.hiring.create({
+    if (type === 'PERSON' && parsed.offerId != null) {
+      await prisma.hiring.create({
         data: {
           interested: 'PERSON',
-          personId: activeUser.id,
+          personId: userId,
           offerId: parsed.offerId,
         },
       })
 
-      return NextResponse.json(hiring)
+      return NextResponse.redirect(url(`/home/offers/${parsed.offerId}?alert=offer_applied`))
     }
 
-    return NextResponse.redirect(url('/home/offers'))
+    if (type === 'COMPANY' && parsed.offerId != null && parsed.userId != null) {
+      const offer = await prisma.offer.findFirstOrThrow({
+        where: { id: parsed.offerId },
+        select: {
+          title: true,
+        },
+      })
+
+      const authUser = await prisma.authUser.findFirstOrThrow({
+        where: {
+          person: {
+            id: parsed.userId,
+          },
+        },
+      })
+
+      await prisma.hiring.create({
+        data: {
+          interested: 'COMPANY',
+          personId: parsed.userId,
+          offerId: parsed.offerId,
+        },
+      })
+
+      await notify('hiring-created', authUser.id, {
+        company: name,
+        title: offer.title,
+        offerId: parsed.offerId,
+      })
+
+      return NextResponse.redirect(url(`/home/offers/${parsed.offerId}?alert=offer_user_postulation`))
+    }
+
+    notFound()
   } catch (error) {
     handleError(error, data)
   }

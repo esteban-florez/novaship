@@ -18,4 +18,22 @@ export const templates: NotificationsRecord = {
     content: `${student} ha aceptado rechazado de pasantía para la carrera de ${grade}.`,
     href: `/home/companies/${companyId}/recrutiments`,
   }),
+
+  'hiring-created': ({ company, title, offerId }) => ({
+    title: 'Nueva solicitud de trabajo.',
+    content: `La empresa ${company} te ha enviado una invitación para la oferta ${title}`,
+    href: `/home/offers/${offerId}`,
+  }),
+
+  'hiring-accepted': ({ user, title, offerId }) => ({
+    title: 'Tu solicitud de oferta ha sido aceptada.',
+    content: `${user} ha aceptado tu postulación para la oferta ${title}.`,
+    href: `/home/offers/${offerId}`,
+  }),
+
+  'hiring-declined': ({ user, title, offerId }) => ({
+    title: 'Tu solicitud de oferta ha sido rechazada.',
+    content: `${user} ha rechazado tu postulación para la oferta ${title}.`,
+    href: `/home/offers/${offerId}`,
+  }),
 }

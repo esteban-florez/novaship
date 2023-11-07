@@ -23,11 +23,13 @@ export default async function TeamPage({ params: { id } }: PageContext) {
 
   const { categories, memberships, projects } = team
   // TODO -> algoritmo de proyecto destacado
-  const publicProjects = projects.filter(project => project.visibility === 'PUBLIC')
+  const publicProjects = projects.filter(
+    (project) => project.visibility === 'PUBLIC'
+  )
   const featuredProject = publicProjects[0]
 
   // TODO -> getTeamLeader function update
-  const leaderMembership = (team.leader.company ?? team.leader.person)
+  const leaderMembership = team.leader.company ?? team.leader.person
 
   if (leaderMembership === null) {
     notFound()
@@ -59,8 +61,12 @@ export default async function TeamPage({ params: { id } }: PageContext) {
           </div>
           <div className="block lg:hidden">
             <Collapse
-              title={<AvatarInfo owner={leaderMembership.name} location={location.title} />}
-              bg="bg-white"
+              title={
+                <AvatarInfo
+                  owner={leaderMembership.name}
+                  location={location.title}
+                />
+              }
             >
               <InfoUser
                 verification={false}
@@ -76,7 +82,10 @@ export default async function TeamPage({ params: { id } }: PageContext) {
                 Proyectos ({publicProjects.length})
               </h2>
               {projects.length > 0 && (
-                <Link href={`/home/teams/${team.id}/projects`} className="text-sm font-semibold text-primary underline transition-all">
+                <Link
+                  href={`/home/teams/${team.id}/projects`}
+                  className="text-sm font-semibold text-primary underline transition-all"
+                >
                   Ver todos
                 </Link>
               )}
@@ -84,24 +93,39 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             {featuredProject !== undefined
               ? (
                 <div className="rounded-lg border border-l-4 border-neutral-300 border-l-primary p-3 shadow-md">
-                  <h3 className="text-lg font-semibold">{featuredProject.title}</h3>
-                  <p className="line-clamp-2 text-sm">{featuredProject.description}</p>
-                  <Link className="btn-primary btn-sm btn mt-2" href={`/home/projects/${featuredProject.id}`}>
+                  <h3 className="text-lg font-semibold">
+                    {featuredProject.title}
+                  </h3>
+                  <p className="line-clamp-2 text-sm">
+                    {featuredProject.description}
+                  </p>
+                  <Link
+                    className="btn-primary btn-sm btn mt-2"
+                    href={`/home/projects/${featuredProject.id}`}
+                  >
                     Ver detalles
                   </Link>
                 </div>
                 )
               : (
                 <div className="flex h-full flex-col items-center justify-center pt-4">
-                  <img className="w-48" src="/empty.webp" alt="Ilustración, dos personas sostienen una caja vacía." />
-                  <p className="mt-4 text-xl font-semibold text-neutral-500">¡Nada que mostrar!</p>
+                  <img
+                    className="w-48"
+                    src="/empty.webp"
+                    alt="Ilustración, dos personas sostienen una caja vacía."
+                  />
+                  <p className="mt-4 text-xl font-semibold text-neutral-500">
+                    ¡Nada que mostrar!
+                  </p>
                 </div>
                 )}
           </div>
         </div>
         <div className="flex w-full flex-col gap-3 lg:w-1/3">
           <div className="hidden rounded-md bg-white p-4 shadow-md lg:block">
-            <p className="mb-3 border-0 border-b-2 border-secondary text-center text-xl font-bold uppercase text-secondary">Lider del equipo</p>
+            <p className="mb-3 border-0 border-b-2 border-secondary text-center text-xl font-bold uppercase text-secondary">
+              Lider del equipo
+            </p>
             <InfoUser
               verification={false}
               owner={leaderMembership.name}
@@ -114,22 +138,35 @@ export default async function TeamPage({ params: { id } }: PageContext) {
               <h2 className="pl-2 text-lg font-semibold">
                 Miembros ({memberships.length})
               </h2>
-              <Link href={`/home/teams/${team.id}/memberships`} className="text-sm font-semibold text-primary underline transition-all">
+              <Link
+                href={`/home/teams/${team.id}/memberships`}
+                className="text-sm font-semibold text-primary underline transition-all"
+              >
                 Ver todos
               </Link>
             </div>
             <ul className="flex flex-col gap-2">
-              {memberships.slice(0, 4).map(membership => {
+              {memberships.slice(0, 4).map((membership) => {
                 const member = getMember(membership) as Person & {
                   grades: Grade[]
                 }
 
                 return (
-                  <Link href={`/home/users/${member.id}`} className="group flex items-center gap-1 rounded-lg border-2 border-neutral-300 p-2 transition-colors hover:border-primary" key={member.id}>
+                  <Link
+                    href={`/home/users/${member.id}`}
+                    className="group flex items-center gap-1 rounded-lg border-2 border-neutral-300 p-2 transition-colors hover:border-primary"
+                    key={member.id}
+                  >
                     <AvatarIcon image={member.image} />
                     <div className="flex flex-col">
-                      <p className="font-semibold transition-colors group-hover:text-primary">{member.name}</p>
-                      {member.grades.length > 0 && <span className="-mt-1 text-sm">{member.grades[0].title}</span>}
+                      <p className="font-semibold transition-colors group-hover:text-primary">
+                        {member.name}
+                      </p>
+                      {member.grades.length > 0 && (
+                        <span className="-mt-1 text-sm">
+                          {member.grades[0].title}
+                        </span>
+                      )}
                     </div>
                   </Link>
                 )
