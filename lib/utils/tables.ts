@@ -133,15 +133,16 @@ export function getResetEmail(reset: ResetWithRelations) {
 }
 
 type DateAndDuration = Pick<VacantWithRelations, 'createdAt' | 'duration'>
-type Limitable = Pick<VacantWithRelations, '_count' | 'limit'>
+type Limitable = Pick<VacantWithRelations, 'recruitments' | 'limit'>
 type WithRecruitments = Pick<VacantWithRelations, 'recruitments'>
 
 export function vacantIsFull(vacant: Limitable) {
-  return vacant._count.recruitments >= vacant.limit
+  const { length } = getAcceptedRecruitments(vacant)
+  return length >= vacant.limit
 }
 
 export function vacantIsExpired(vacant: DateAndDuration) {
-  return Date.now() >= getVacantExpiration(vacant).getMilliseconds()
+  return Date.now() >= Number(getVacantExpiration(vacant))
 }
 
 export function getVacantExpiration(vacant: DateAndDuration) {

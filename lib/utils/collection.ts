@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GroupedData = Record<string, any[]>
 
 class Collection<T> {

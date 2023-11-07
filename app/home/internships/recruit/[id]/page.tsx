@@ -5,7 +5,6 @@ import UserCard from '@/components/internships/UserCard'
 import { auth } from '@/lib/auth/pages'
 import { getInternship } from '@/lib/data-fetching/internships'
 import { notFound } from 'next/navigation'
-import SkillList from './SkillList'
 import prisma from '@/prisma/client'
 import { AcademicCapIcon, CalendarDaysIcon, ClockIcon, EnvelopeIcon, IdentificationIcon, InformationCircleIcon, ListBulletIcon, PhoneIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
@@ -13,10 +12,11 @@ import IconData from '@/components/IconData'
 import { age } from '@/lib/utils/date'
 import { genders } from '@/lib/translations'
 import { ci, phone } from '@/lib/utils/text'
-import Container from './Container'
+import Container from '@/components/Container'
 import AvatarIcon from '@/components/AvatarIcon'
 import RecruitButton from '../RecruitButtont'
 import { canCreateRecruitment } from '@/lib/auth/permissions'
+import BadgeList from '@/components/BadgeList'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -69,7 +69,7 @@ export default async function RecruitDetailsPage({ params: { id } }: PageContext
           />
           <p className="py-2">{person.description}</p>
           <p className="font-bold mb-2">Habilidades:</p>
-          <SkillList skills={skills} />
+          <BadgeList items={skills} />
           <div className="flex gap-2 mt-4">
             <RecruitButton internshipId={internship.id} />
             <Link href={`/home/persons/${person.id}`} className="btn btn-secondary">

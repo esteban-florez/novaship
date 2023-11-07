@@ -9,9 +9,6 @@ export default function Container({ title, children }: Props) {
         {title}
       </h3>
       <div className="p-4 rounded-lg border-neutral-300 border shadow-inner">
-        {/* <span className="font-semibold text-lg mb-4">
-          {title}
-        </span> */}
         {children}
       </div>
     </>

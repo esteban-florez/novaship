@@ -53,7 +53,7 @@ export default function TestForm({ locations }: Props) {
         />
       </div>
       <div className="form-control">
-        <Textarea register={register} errors={errors} name="description" label="Descripción" placeholder="You're crazy man!" />
+        <Textarea maxlength={255} register={register} errors={errors} name="description" label="Descripción" placeholder="You're crazy man!" />
       </div>
       <div className="form-control">
         <Select

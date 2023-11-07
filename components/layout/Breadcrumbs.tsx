@@ -51,12 +51,12 @@ export default function Breadcrumbs({ breadcrumbs = '' }: Props) {
             >
               {segment === currentSegment
                 ? (
-                  <span className="text-primary">{getLinkName(segment)}</span>
+                  <span className="text-primary max-w-[25ch] overflow-hidden overflow-ellipsis">{getLinkName(segment)}</span>
                   )
                 : (
                   <Link
                     href={getStructuredLink(segment)}
-                    className="hover:text-secondary hover:underline"
+                    className="hover:text-secondary hover:underline max-w-[25ch] overflow-hidden overflow-ellipsis"
                   >
                     {getLinkName(segment)}
                   </Link>

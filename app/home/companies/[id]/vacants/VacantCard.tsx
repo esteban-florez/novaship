@@ -10,7 +10,7 @@ type Props = React.PropsWithChildren<{
 }>
 
 export default function VacantCard({ vacant }: Props) {
-  const { description, job, limit, id } = vacant
+  const { description, job, limit, id, companyId } = vacant
 
   const expiresAt = getVacantExpiration(vacant)
   const accepted = getAcceptedRecruitments(vacant).length
@@ -37,7 +37,7 @@ export default function VacantCard({ vacant }: Props) {
         <div className="card-actions mt-2">
           <Link
             className="btn btn-secondary"
-            href={`/home/vacants/${id}`}
+            href={`/home/companies/${companyId}/vacants/${id}`}
           >
             <ListBulletIcon className="h-5 w-5" />
             Detalles

@@ -4,6 +4,7 @@
 
 .btn:not(.btn-square) {
   @apply normal-case px-6 py-2.5 h-auto min-h-fit rounded-md;
+  /* color: #e2cef3; */
 }
 
 .btn-success,
