@@ -1,17 +1,22 @@
 type Props = React.PropsWithChildren<{
   title: string
-  require: boolean
+  all?: boolean
 }>
 
-export default function FormLayout({ children, title, require }: Props) {
+export default function FormLayout({ children, title, all = false }: Props) {
   return (
     <section className="mt-2 sm:mx-auto sm:mt-0 sm:px-20 sm:py-10">
       <div className="card w-full bg-white border border-neutral-300 rounded-b-none rounded-t-lg px-6 py-4">
         <h1 className="text-3xl font-bold">{title}</h1>
-        {require &&
-          <h1 className="text-base text-neutral/80 font-semibold -mt-1.5">
-            Todos los campos con * son obligatorios
-          </h1>}
+        <p className="font-semibold -mt-1.5">
+          Todos los campos{' '}
+          {!all && (
+            <span>
+              con <b className="text-error">*</b>{' '}
+            </span>
+          )}
+          son obligatorios
+        </p>
       </div>
       <div className="card w-full rounded-b-lg rounded-t-none border-y border-neutral-300 bg-base-100 p-6 pt-0 shadow-xl sm:border">
         {children}

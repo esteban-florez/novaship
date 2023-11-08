@@ -63,7 +63,7 @@ export default function ProjectForm({
         subtitle="Rellena los datos para crear un nuevo proyecto o actualizar uno existente."
         breadcrumbs={project?.title}
       />
-      <FormLayout title="Información de proyecto" require>
+      <FormLayout title="Información de proyecto">
         <form
           onSubmit={handleSubmit}
           method="POST"

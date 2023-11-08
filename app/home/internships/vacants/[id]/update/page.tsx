@@ -3,16 +3,18 @@ import FormLayout from '@/components/forms/FormLayout'
 import VacantForm from '@/components/vacants/VacantForm'
 import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/pages'
+import { getVacant } from '@/lib/data-fetching/vacants'
 import { notFound } from 'next/navigation'
 
 export const metadata = {
-  title: 'Publicar cupos',
+  title: 'Editar cupo',
 }
 
-export default async function CreateVacantPage() {
-  const { type } = await auth.user()
+export default async function UpdateVacantPage({ params: { id } }: PageContext) {
+  const { id: userId } = await auth.user()
+  const vacant = await getVacant(id)
 
-  if (type !== 'COMPANY') {
+  if (vacant === null || vacant.company.id !== userId) {
     notFound()
   }
 
@@ -20,7 +22,6 @@ export default async function CreateVacantPage() {
   const locations = await prisma.location.findMany()
   const skills = await prisma.skill.findMany()
   const grades = await prisma.grade.findMany()
-  const jobs = await prisma.job.findMany()
 
   return (
     <>
@@ -34,7 +35,7 @@ export default async function CreateVacantPage() {
           locations={locations}
           grades={grades}
           skills={skills}
-          jobs={jobs}
+          vacant={vacant}
         />
       </FormLayout>
     </>

@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { schema } from '@/lib/validation/schemas/vacant'
+import { schema } from '@/lib/validation/schemas/vacants/create'
 import { handleError } from '@/lib/errors/api'
 import { url } from '@/lib/utils/url'
 import prisma from '@/prisma/client'

@@ -133,6 +133,10 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'El cupo se ha publicado con éxito.',
   },
+  vacant_updated: {
+    type: 'success',
+    message: 'El cupo se ha actualizado con éxito.',
+  },
   recruitment_created: {
     type: 'success',
     message: 'La solicitud fué enviada al estudiante con éxito.',

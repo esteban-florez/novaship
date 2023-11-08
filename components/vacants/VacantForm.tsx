@@ -11,15 +11,16 @@ import { DURATIONS } from '@/lib/shared/durations'
 import { durations as translation } from '@/lib/translations'
 import { type VacantWithRelations } from '@/lib/types'
 import collect from '@/lib/utils/collection'
-import { schema } from '@/lib/validation/schemas/vacant'
+import { schema as update } from '@/lib/validation/schemas/vacants/update'
+import { schema as create } from '@/lib/validation/schemas/vacants/create'
 import { type Skill, type Category, type Grade, type Job, type Location } from '@prisma/client'
 
 type Props = React.PropsWithChildren<{
   categories: Category[]
   grades: Grade[]
   skills: Skill[]
-  jobs: Job[]
   locations: Location[]
+  jobs?: Job[]
   vacant?: VacantWithRelations
 }>
 
@@ -31,16 +32,14 @@ export default function VacantForm({
     register, formState: { errors }, loading,
     control, alert, serverErrors, handleSubmit,
   } = useSubmit({
-    schema,
-    method: isCreate ? 'POST' : 'PUT',
+    schema: isCreate ? create : update,
+    method: isCreate ? 'POST' : 'PATCH',
   })
 
   const durations = DURATIONS.map((duration) => ({
     id: duration,
     title: translation[duration],
   }))
-
-  console.log(durations)
 
   const action = isCreate
     ? '/api/vacants'
@@ -51,14 +50,15 @@ export default function VacantForm({
       {alert}
       {serverErrors}
       <FormSection title="Datos básicos" description="Escribe una descripción, y selecciona el puesto de trabajo, las carreras relacionadas y habilidades requeridas.">
-        <Select
-          name="jobId"
-          label="Puesto de trabajo"
-          defaultValue={vacant?.jobId}
-          register={register}
-          errors={errors}
-          options={{ type: 'rows', data: jobs }}
-        />
+        {isCreate && jobs !== undefined && (
+          <Select
+            name="jobId"
+            label="Puesto de trabajo"
+            register={register}
+            errors={errors}
+            options={{ type: 'rows', data: jobs }}
+          />
+        )}
         <Textarea
           name="description"
           label="Descripción del cupo"
@@ -104,17 +104,18 @@ export default function VacantForm({
           max={20}
           min={1}
         />
-        <Select
-          name="duration"
-          label="Duración"
-          defaultValue={String(vacant?.duration)}
-          register={register}
-          errors={errors}
-          options={{
-            type: 'rows',
-            data: durations,
-          }}
-        />
+        {isCreate && (
+          <Select
+            name="duration"
+            label="Duración"
+            register={register}
+            errors={errors}
+            options={{
+              type: 'rows',
+              data: durations,
+            }}
+          />
+        )}
       </FormSection>
       <FormSection title="Datos adicionales" description="Selecciona la ubicación para este cupo, y las categorías relacionadas.">
         <Select

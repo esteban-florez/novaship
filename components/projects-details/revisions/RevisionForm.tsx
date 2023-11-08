@@ -34,7 +34,7 @@ export default function RevisionForm({ method, action, revision, taskId, subtask
         title="Registrar nueva revisión"
         subtitle="Indique como se llevó a cabo la tarea o subtarea."
       />
-      <FormLayout title="Revisión" require>
+      <FormLayout title="Revisión">
         <form onSubmit={handleSubmit} method="POST" action={action}>
           {serverErrors}
           {alert}
