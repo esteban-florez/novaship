@@ -30,7 +30,9 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.redirect(url(`/home/vacants/${id}?alert=vacant_created`))
+    return NextResponse.redirect(
+      url(`home/companies/${userId}/vacants/${id}?alert=vacant_created`)
+    )
   } catch (error) {
     return handleError(error, data)
   }

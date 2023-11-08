@@ -68,7 +68,7 @@ export default async function VacantDetailsPage({ params: { vacantId } }: Contex
             {location.title}
           </p>
           <p className="py-3">{description}</p>
-          <div className="flex justify-between p-4">
+          <div className="flex justify-between gap-3 p-3">
             <IconData
               label="Fecha de publicación"
               data={format(createdAt)}

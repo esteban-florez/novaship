@@ -34,7 +34,7 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
     })
 
     return NextResponse.redirect(
-      url(`home/internships/vacants/${id}?alert=vacant_updated`)
+      url(`home/companies/${userId}/vacants/${id}?alert=vacant_updated`)
     )
   } catch (error) {
     return handleError(error, data)

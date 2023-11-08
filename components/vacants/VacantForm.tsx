@@ -90,7 +90,7 @@ export default function VacantForm({
           }}
         />
       </FormSection>
-      <FormSection title="Configuración del cupo" description="Ingresa el límite de pasantes para este cupo, y la duración del mismo.">
+      <FormSection title="Configuración del cupo" description="Ingresa el límite de pasantes para este cupo, y la fecha de expiración del mismo.">
         <Input
           name="limit"
           label="Límite de pasantes (máx. 20)"
@@ -107,7 +107,7 @@ export default function VacantForm({
         {isCreate && (
           <Select
             name="duration"
-            label="Duración"
+            label="Fecha de expiración"
             register={register}
             errors={errors}
             options={{

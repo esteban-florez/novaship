@@ -10,6 +10,8 @@ import ThreeGrid from '@/components/ThreeGrid'
 import EmptyContent from '@/components/EmptyContent'
 import VacantCard from './VacantCard'
 import { getVacants } from '@/lib/data-fetching/vacants'
+import { PlusIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
 
 export const metadata = {
   title: 'Reclutar pasantes',
@@ -36,7 +38,12 @@ export default async function VacantsPage({
         title="Cupos publicados"
         subtitle="Aquí puedes ver todos los cupos para pasantes que has publicado."
         breadcrumbs={name}
-      />
+      >
+        <Link href="/home/internships/vacants/create" className="btn btn-primary">
+          <PlusIcon className="h-5 w-5" />
+          Añadir cupo
+        </Link>
+      </PageTitle>
       {vacants.length > 0
         ? (
           <ThreeGrid>
