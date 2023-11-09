@@ -13,6 +13,12 @@ export const templates: NotificationsRecord = {
     href: `/home/internships/${internshipId}`,
   }),
 
+  'internship-rejected': ({ grade, internshipId, student }) => ({
+    title: 'Tu solicitud de pasantía ha sido rechazada.',
+    content: `${student} ha rechazado tu solicitud de pasantía para la carrera de ${grade}.`,
+    href: `/home/internships/${internshipId}`,
+  }),
+
   'recruitment-rejected': ({ grade, companyId, student }) => ({
     title: 'Tu solicitud de pasantía ha sido rechazada.',
     content: `${student} ha aceptado rechazado de pasantía para la carrera de ${grade}.`,

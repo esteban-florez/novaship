@@ -12,7 +12,6 @@ import Collapse from '@/components/Collapse'
 import AvatarInfo from '@/components/offers-details/AvatarInfo'
 import PageTitle from '@/components/PageTitle'
 import { notFound } from 'next/navigation'
-import GoBackBtn from '@/components/GoBackBtn'
 
 export const metadata: Metadata = {
   title: 'Equipo de trabajo',
@@ -52,7 +51,6 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             <InlineList items={categories.map(({ title }) => title)} />
             <p className="mt-3 line-clamp-2">{team.description}</p>
             <div className="mt-4 flex flex-col justify-between gap-2 md:flex-row">
-              <GoBackBtn label="Volver al listado" />
               <button className="btn-primary btn">
                 <BriefcaseIcon className="h-5 w-5" />
                 Contratar equipo

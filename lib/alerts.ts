@@ -117,6 +117,10 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'La pasantía fué creada con éxito.',
   },
+  internship_updated: {
+    type: 'success',
+    message: 'La pasantía fué actualizada con éxito.',
+  },
   internship_accepted: {
     type: 'success',
     message: 'Aceptaste la solicitud de pasantía con éxito.',

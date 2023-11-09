@@ -43,7 +43,7 @@ export function sidebarLinks(user: UserWithType) {
         },
         {
           href: `/home/companies/${user.id}/internships`,
-          title: 'Mis pasantías',
+          title: 'Mis pasantes',
           icon: <StarIcon className="h-6 w-6" />,
           visible: company,
         },

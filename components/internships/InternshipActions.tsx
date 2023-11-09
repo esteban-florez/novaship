@@ -2,7 +2,6 @@ import { BookmarkSquareIcon, MagnifyingGlassIcon, PencilIcon } from '@heroicons/
 import { type UserType } from '@prisma/client'
 import Link from 'next/link'
 import DeleteModal from '../projects/DeleteModal'
-import GoBackBtn from '../GoBackBtn'
 import clsx from 'clsx'
 import UpdateStatus from './actions/UpdateStatus'
 import UpdateHours from '@/components/internships/actions/UpdateHours'
@@ -22,7 +21,6 @@ export default function InternshipActions({
 }: Props) {
   return (
     <div className={clsx('flex flex-col gap-2', className)}>
-      <GoBackBtn label="Volver" />
       {userType === 'INSTITUTE' && stage === 'PENDING' && (
         <Link
           className="btn btn-warning"
