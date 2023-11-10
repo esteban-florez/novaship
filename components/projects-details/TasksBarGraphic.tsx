@@ -8,7 +8,7 @@ interface Props {
 }
 
 // TODO -> buscar otra manear de mostrar la data
-export default function TasksGraphic({ tasks }: Props) {
+export default function TasksBarGraphic({ tasks }: Props) {
   const tasksGrouped = collect(tasks).groupBy('status')
 
   const pendingData = structureDataForGraphic({

@@ -21,6 +21,7 @@ type Props = React.PropsWithChildren<
 } & SharedInputProps
 >
 
+// TODO -> max length para numbers
 export default function Input({
   name,
   placeholder,

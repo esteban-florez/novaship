@@ -5,7 +5,7 @@ import prisma from '@/prisma/client'
 import { type NextRequest, NextResponse } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
-import numbers from '@/lib/utils/number'
+import { randomCode } from '@/lib/utils/code'
 
 export async function POST(request: NextRequest) {
   let data
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
       notFound()
     }
 
-    const code = `PR-${numbers(100_000, 999_999).random()}`
+    const code = randomCode('project')
     const parsedWithCode = { ...parsed, code }
 
     // const projectImagePath = parsed.image !== undefined

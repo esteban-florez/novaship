@@ -10,7 +10,6 @@
 - ExpiresAt handler.
 - Mostrar errores de validación del Servidor con modal.
 - Llevarte a donde cometiste el error en signup.
-- Arreglar <Input> checkbox y radio.
 - Añadir backups.
 - Signup con Google.
 - Mecanismo para destacar ofertas y equipo mediante suscripción.
@@ -23,14 +22,12 @@
 - Middleware para notificaciones.
 - Loading para pages/id.
 - Projects files.
+- Refactor card.
+- Project image
 
 # Future
 
 - Rediseñar projects/id, projects/id/tasks
-
-# Gráficas - (pendiente)
-
-- Documentacion | https://www.chartjs.org/docs/latest/ | https://react-chartjs-2.js.org/
 
 # Plugins
 

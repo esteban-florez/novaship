@@ -15,7 +15,7 @@ import Participations from '@/components/projects-details/tasks/Participations'
 import Revisions from '@/components/projects-details/tasks/Revisions'
 import Subtasks from '@/components/projects-details/tasks/Subtasks'
 import { getProject } from '@/lib/data-fetching/project'
-import getTaskStatus from '@/lib/utils/tasks'
+import { getTaskStatus } from '@/lib/utils/tasks'
 
 export const metadata: Metadata = {
   title: 'Detalles de tarea',

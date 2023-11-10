@@ -2,7 +2,7 @@ import data from '@/prisma/data/teams.json'
 import prisma from '../client'
 import collect from '@/lib/utils/collection'
 import coinflip from '@/lib/utils/coinflip'
-import numbers from '@/lib/utils/number'
+import { randomCode } from '@/lib/utils/code'
 
 const teams = data
 
@@ -14,7 +14,7 @@ export default async function team() {
 
   for (let i = 0; i < MAX; i++) {
     const rnd = coinflip()
-    const code = `EQ-${numbers(100_000, 999_999).random()}`
+    const code = randomCode('team')
 
     const { id: leaderId } = await prisma.leader.create({
       data: {
