@@ -18,6 +18,7 @@ interface Props {
   link?: string
   offerLimit?: number
   expiresAt?: number
+  code?: string
 }
 
 const stackOrder = ['z-40', 'z-30', 'z-20']
@@ -32,6 +33,7 @@ export default function Card({
   link = '',
   offerLimit,
   expiresAt,
+  code,
 }: Props) {
   const expiresAtMessage = () => {
     if (expiresAt != null) {
@@ -88,6 +90,9 @@ export default function Card({
             <h3 className="line-clamp-1 text-lg font-bold sm:text-xl">
               {title}
             </h3>
+            {code != null && (
+              <small className="font-semibold text-neutral-600">({code})</small>
+            )}
             {categories !== undefined && categories?.length > 0 && (
               <InlineList
                 items={categories.map(({ title }) => title)}

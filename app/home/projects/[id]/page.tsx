@@ -19,7 +19,9 @@ export const metadata: Metadata = {
 
 export default async function ProjectPage({ params: { id } }: PageContext) {
   const { id: userId, type } = await auth.user()
-  const user = await prisma.person.findFirst({ where: { id: userId } })
+  const user =
+    (await prisma.person.findFirst({ where: { id: userId } })) ??
+    (await prisma.company.findFirst({ where: { id: userId } }))
 
   if (id === null || user == null) {
     notFound()
@@ -30,7 +32,7 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
     notFound()
   }
 
-  const projectCategories = project.categories.map((category) => category.title)
+  const categories = project.categories.map((category) => category.title)
   const leader = getProjectLeader(project)
   const isOwner = leader.id === userId
   const isMember = belongsToTeam(project.team, userId)
@@ -49,7 +51,7 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
               isOwner={isOwner}
               isMember={isMember}
               title={project.title}
-              categories={projectCategories}
+              categories={categories}
               description={project.description}
             />
           </div>
@@ -86,7 +88,7 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
           {project.personId !== userId && (
             <div className="col-span-7 lg:col-span-2 lg:col-start-6">
               <TeamGroup
-                person={user}
+                user={user}
                 team={project.team}
               />
             </div>

@@ -73,3 +73,7 @@
 .underline {
   @apply transition-colors hover:brightness-75;
 }
+
+.label {
+  @apply justify-normal;
+}

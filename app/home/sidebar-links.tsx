@@ -1,9 +1,16 @@
 import { type UserWithType } from '@/lib/types'
 import {
-  HomeIcon, BriefcaseIcon, AcademicCapIcon,
-  ClipboardDocumentListIcon, UserGroupIcon,
-  GlobeAltIcon, StarIcon, ShieldCheckIcon,
-  CheckBadgeIcon, PlusIcon, TicketIcon,
+  HomeIcon,
+  BriefcaseIcon,
+  AcademicCapIcon,
+  ClipboardDocumentListIcon,
+  UserGroupIcon,
+  GlobeAltIcon,
+  StarIcon,
+  ShieldCheckIcon,
+  CheckBadgeIcon,
+  PlusIcon,
+  TicketIcon,
 } from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
@@ -68,12 +75,16 @@ export function sidebarLinks(user: UserWithType) {
       ],
     },
     {
-      href: person ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
+      href: person
+        ? '/home/offers?filter=suggested'
+        : '/home/offers?filter=all',
       title: 'Ofertas',
       icon: <BriefcaseIcon className="h-6 w-6" />,
       submenu: [
         {
-          href: person ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
+          href: person
+            ? '/home/offers?filter=suggested'
+            : '/home/offers?filter=all',
           title: 'Lista de ofertas',
           icon: <GlobeAltIcon className="h-6 w-6" />,
         },
@@ -102,7 +113,9 @@ export function sidebarLinks(user: UserWithType) {
       icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
       submenu: [
         {
-          href: '/home/projects?filter=suggested',
+          href: company
+            ? '/home/projects?filter=all'
+            : '/home/projects?filter=suggested',
           title: 'Lista de proyectos',
           icon: <GlobeAltIcon className="h-6 w-6" />,
         },

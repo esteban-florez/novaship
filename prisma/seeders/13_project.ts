@@ -4,6 +4,7 @@ import types from '@/lib/utils/types'
 import { Visibility } from '@prisma/client'
 import collect from '@/lib/utils/collection'
 import coinflip from '@/lib/utils/coinflip'
+import numbers from '@/lib/utils/number'
 
 export default async function project() {
   const MAX = data.titles.length
@@ -13,6 +14,7 @@ export default async function project() {
 
   for (let i = 0; i < MAX; i++) {
     const rnd = coinflip()
+    const code = `PR-${numbers(100_000, 999_999).random()}`
 
     await prisma.project.create({
       data: {
@@ -21,6 +23,7 @@ export default async function project() {
         visibility: types(Visibility).random(),
         teamId: rnd ? teams.random().first().id : null,
         personId: !rnd ? persons.random().first().id : null,
+        code,
         categories: {
           connect: collect(categories).random(5).all(),
         },
