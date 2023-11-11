@@ -8,7 +8,7 @@ export default function FormLayout({ children, title, all = false }: Props) {
     <section className="mt-2 sm:mx-auto sm:mt-0 sm:px-20 sm:py-10">
       <div className="card w-full bg-white border border-neutral-300 rounded-b-none rounded-t-lg px-6 py-4">
         <h1 className="text-3xl font-bold">{title}</h1>
-        <p className="font-semibold -mt-1.5">
+        <p className="font-semibold text-neutral-600 -mt-1.5">
           Todos los campos{' '}
           {!all && (
             <span>

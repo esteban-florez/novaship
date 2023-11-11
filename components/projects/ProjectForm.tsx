@@ -7,8 +7,7 @@ import Select from '../forms/inputs/Select'
 import Textarea from '../forms/inputs/Textarea'
 import { schema } from '@/lib/validation/schemas/project'
 import useSubmit from '@/lib/hooks/useSubmit'
-import { type UserType } from '@prisma/client'
-// import { visibilities } from '@/lib/translations'
+import { Visibility, type UserType } from '@prisma/client'
 import FormLayout from '../forms/FormLayout'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
 import {
@@ -21,6 +20,7 @@ import SignupRadio from '../signup/SignupRadio'
 import { useState } from 'react'
 import { UserIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import ImageInput from '../forms/inputs/ImageInput'
+import { visibilities } from '@/lib/translations'
 
 interface Props extends FormProps {
   categories: OptionCategory[]
@@ -73,12 +73,6 @@ export default function ProjectForm({
           {alert}
           <section className="flex flex-col w-full gap-x-3 p-4">
             <FormSection
-              title="Imagen del proyecto"
-              description="Sube una foto que represente la esencia de tu proyecto"
-            >
-              <ImageInput name="Ola" rounded />
-            </FormSection>
-            <FormSection
               title="Detalles"
               description="Asigne un título, descripción y categorias que expliquen de que trata el proyecto para tener una mejor idea del mismo."
             >
@@ -93,8 +87,8 @@ export default function ProjectForm({
               />
               <SelectMultiple
                 name="categories"
-                label="Campos"
-                itemsName="Campos"
+                label="Áreas de conocimiento"
+                itemsName="Áreas de conocimiento"
                 control={control}
                 defaultValue={projectCategories}
                 limit={5}
@@ -112,6 +106,18 @@ export default function ProjectForm({
                 register={register}
                 errors={errors}
                 maxlength={255}
+              />
+              <Select
+                name="visibility"
+                label="Visibilidad"
+                register={register}
+                errors={errors}
+                defaultValue={project?.visibility ?? undefined}
+                options={{
+                  translation: visibilities,
+                  data: Visibility,
+                  type: 'enum',
+                }}
               />
             </FormSection>
             <FormSection
@@ -164,6 +170,18 @@ export default function ProjectForm({
                   )}
                 </>
               )}
+            </FormSection>
+            <FormSection
+              title="Imagen del proyecto"
+              description="Sube una foto que represente la esencia de tu proyecto"
+            >
+              <ImageInput
+                name="image"
+                register={register}
+                errors={errors}
+                label="Subir imagen de proyecto"
+                rounded
+              />
             </FormSection>
           </section>
           <FormButtons

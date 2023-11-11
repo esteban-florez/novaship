@@ -1,5 +1,6 @@
 import { auth } from '@/lib/auth/api'
 import { handleError } from '@/lib/errors/api'
+import { randomCode } from '@/lib/utils/code'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/team'
 import prisma from '@/prisma/client'
@@ -22,12 +23,13 @@ export async function POST(request: NextRequest) {
 
     data = await request.json()
     const parsed = schema.parse(data)
-
+    const code = randomCode('team')
+    const parsedWithCode = { ...parsed, code }
     const invitations = parsed.membersIds.map(personId => ({ personId }))
 
     const { id: teamId } = await prisma.team.create({
       data: {
-        ...parsed,
+        ...parsedWithCode,
         invitations: {
           createMany: {
             data: invitations,

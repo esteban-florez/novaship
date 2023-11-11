@@ -26,10 +26,17 @@ const placeholders = {
 export default function BasicData({ userType, locations }: Props) {
   const isPerson = userType === 'PERSON'
 
-  const { goNext, goBack, register, errors, trigger, clearErrors } = useContext(SignUpContext)
+  const { goNext, goBack, register, errors, trigger, clearErrors } =
+    useContext(SignUpContext)
 
   async function handleNext() {
-    const fieldsToValidate = ['name', 'email', 'password', 'phone', 'description']
+    const fieldsToValidate = [
+      'name',
+      'email',
+      'password',
+      'phone',
+      'description',
+    ]
 
     if (isPerson) {
       fieldsToValidate.push('ci', 'birth', 'gender')
@@ -48,10 +55,12 @@ export default function BasicData({ userType, locations }: Props) {
   return (
     <>
       <h2 className="text-center text-xl font-bold md:text-3xl">
-        ¡Estamos <span className="text-primary">interesados</span> en saber más sobre <span className="text-secondary">ti</span>!
+        ¡Estamos <span className="text-primary">interesados</span> en saber más
+        sobre <span className="text-secondary">ti</span>!
       </h2>
       <p>
-        Ingresa los datos básicos para personalizar tu experiencia en la aplicación.
+        Ingresa los datos básicos para personalizar tu experiencia en la
+        aplicación.
       </p>
       <section className="mx-auto w-full pt-4">
         <div className="grid grid-cols-2 gap-x-4">
@@ -61,17 +70,31 @@ export default function BasicData({ userType, locations }: Props) {
               label={labels[userType]}
               register={register}
               errors={errors}
-              maxlength={100}
+              maxlength={60}
               placeholder={placeholders[userType]}
             />
           </div>
           <div className="col-span-2 md:col-span-1">
             {isPerson
               ? (
-                <Input label="Cédula de identidad:" type="number" name="ci" register={register} errors={errors} placeholder="Ej. 12345678" />
+                <Input
+                  label="Cédula de identidad:"
+                  type="number"
+                  name="ci"
+                  register={register}
+                  errors={errors}
+                  placeholder="Ej. 12345678"
+                />
                 )
               : (
-                <Input label="RIF:" name="rif" type="number" register={register} errors={errors} placeholder="Ej. 1234567890" />
+                <Input
+                  label="RIF:"
+                  name="rif"
+                  type="number"
+                  register={register}
+                  errors={errors}
+                  placeholder="Ej. 1234567890"
+                />
                 )}
           </div>
           <div className="col-span-2 md:col-span-1">
@@ -95,22 +118,48 @@ export default function BasicData({ userType, locations }: Props) {
               placeholder="Ingresa tu contraseña..."
             />
           </div>
-          {isPerson &&
-            (
-              <div className="col-span-2 md:col-span-1">
-                <Input type="date" label="Fecha de nacimiento:" name="birth" register={register} errors={errors} placeholder="Fecha de nacimiento" />
-              </div>
-            )}
           {isPerson && (
             <div className="col-span-2 md:col-span-1">
-              <Select name="gender" register={register} errors={errors} label="Sexo:" options={{ type: 'enum', data: Gender, translation: genders }} />
+              <Input
+                type="date"
+                label="Fecha de nacimiento:"
+                name="birth"
+                register={register}
+                errors={errors}
+                placeholder="Fecha de nacimiento"
+              />
+            </div>
+          )}
+          {isPerson && (
+            <div className="col-span-2 md:col-span-1">
+              <Select
+                name="gender"
+                register={register}
+                errors={errors}
+                label="Sexo:"
+                options={{ type: 'enum', data: Gender, translation: genders }}
+              />
             </div>
           )}
           <div className="col-span-2 md:col-span-1">
-            <Input label="Teléfono:" type="number" name="phone" register={register} errors={errors} placeholder="Ej. 04121234567" />
+            <Input
+              label="Teléfono:"
+              type="number"
+              name="phone"
+              register={register}
+              errors={errors}
+              placeholder="Ej. 04121234567"
+              maxlength={11}
+            />
           </div>
           <div className="col-span-2 md:col-span-1">
-            <Select name="locationId" register={register} errors={errors} label="Dirección:" options={{ type: 'rows', data: locations }} />
+            <Select
+              name="locationId"
+              register={register}
+              errors={errors}
+              label="Dirección:"
+              options={{ type: 'rows', data: locations }}
+            />
           </div>
           <div className="col-span-2">
             <Textarea
@@ -126,10 +175,18 @@ export default function BasicData({ userType, locations }: Props) {
           </div>
         </div>
         <div className="mb-4 flex justify-between">
-          <button onClick={goBack} type="button" className="btn-neutral btn mt-4">
+          <button
+            onClick={goBack}
+            type="button"
+            className="btn-neutral btn mt-4"
+          >
             Volver
           </button>
-          <button onClick={handleNext} type="button" className="btn-primary btn mt-4">
+          <button
+            onClick={handleNext}
+            type="button"
+            className="btn-primary btn mt-4"
+          >
             Siguiente
           </button>
         </div>

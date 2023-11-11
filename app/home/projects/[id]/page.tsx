@@ -10,8 +10,11 @@ import clsx from 'clsx'
 import TaskModal from '@/components/projects-details/tasks/TaskModal'
 import PageTitle from '@/components/PageTitle'
 import { getTasks } from '@/lib/data-fetching/task'
-import TasksGraphic from '@/components/projects-details/TasksGraphic'
 import { belongsToTeam, getProjectLeader } from '@/lib/utils/tables'
+import PieGraphic from '@/components/graphics/PieGraphic'
+import { type ChartData } from 'chart.js'
+import TasksBarGraphic from '@/components/projects-details/TasksBarGraphic'
+import { getStatuses } from '@/lib/utils/tasks'
 
 export const metadata: Metadata = {
   title: 'Detalles de proyecto',
@@ -19,7 +22,9 @@ export const metadata: Metadata = {
 
 export default async function ProjectPage({ params: { id } }: PageContext) {
   const { id: userId, type } = await auth.user()
-  const user = await prisma.person.findFirst({ where: { id: userId } })
+  const user =
+    (await prisma.person.findFirst({ where: { id: userId } })) ??
+    (await prisma.company.findFirst({ where: { id: userId } }))
 
   if (id === null || user == null) {
     notFound()
@@ -30,12 +35,24 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
     notFound()
   }
 
-  const projectCategories = project.categories.map((category) => category.title)
+  const categories = project.categories.map((category) => category.title)
   const leader = getProjectLeader(project)
   const isOwner = leader.id === userId
   const isMember = belongsToTeam(project.team, userId)
 
   const tasks = await getTasks({ where: { projectId: id } })
+  const { done, pending, review, progress } = getStatuses(
+    tasks.map((task) => task.status ?? 'PENDING')
+  )
+  const data: ChartData<'pie'> = {
+    labels: ['Terminada', 'Por empezar', 'En revisión', 'En progreso'],
+    datasets: [
+      {
+        label: 'Porcentaje',
+        data: [done, pending, review, progress],
+      },
+    ],
+  }
 
   return (
     <>
@@ -49,12 +66,22 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
               isOwner={isOwner}
               isMember={isMember}
               title={project.title}
-              categories={projectCategories}
+              categories={categories}
               description={project.description}
             />
           </div>
-          <div className="col-span-full min-h-[320px] rounded-lg card bg-white sm:p-4 shadow-lg">
-            <TasksGraphic tasks={tasks} />
+          <div className="col-span-7 gap-4">
+            <div className="flex flex-col sm:flex-row justify-between gap-4">
+              <div className="w-full rounded-lg card bg-white shadow-lg">
+                <PieGraphic
+                  title="Progreso de tareas"
+                  data={data}
+                />
+              </div>
+              <div className="w-full rounded-lg card bg-white shadow-lg">
+                <TasksBarGraphic tasks={tasks} />
+              </div>
+            </div>
           </div>
           {(isOwner || isMember) && (
             <div
@@ -86,7 +113,7 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
           {project.personId !== userId && (
             <div className="col-span-7 lg:col-span-2 lg:col-start-6">
               <TeamGroup
-                person={user}
+                user={user}
                 team={project.team}
               />
             </div>

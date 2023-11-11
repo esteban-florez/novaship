@@ -1,6 +1,10 @@
 import CustomLabel from '../CustomLabel'
 import InputError from '../../InputError'
-import { type Control, useController, type RegisterOptions } from 'react-hook-form'
+import {
+  type Control,
+  useController,
+  type RegisterOptions,
+} from 'react-hook-form'
 import SelectMultipleMenu from './SelectMultipleMenu'
 import SelectedItems from '../SelectedItems'
 import getSelectOptions from '@/lib/shared/getSelectOptions'
@@ -15,21 +19,42 @@ type Props = React.PropsWithChildren<{
   limit?: number
   menuOnTop?: boolean
   defaultValue?: string[]
-  config?: Omit<RegisterOptions, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
+  isOptional?: boolean
+  config?: Omit<
+  RegisterOptions,
+  'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >
 }>
 
 export default function SelectMultiple({
-  name: initialName, options: optionsData, label, itemsName, control, disabled = false,
-  menuOnTop = false, defaultValue = [], config = {}, limit = Infinity,
+  name: initialName,
+  options: optionsData,
+  label,
+  itemsName,
+  control,
+  disabled = false,
+  menuOnTop = false,
+  defaultValue = [],
+  config = {},
+  limit = Infinity,
 }: Props) {
   config.required ??= true
-  const { field, fieldState: { error } } = useController({
-    name: initialName, control, defaultValue, rules: config,
+  const {
+    field,
+    fieldState: { error },
+  } = useController({
+    name: initialName,
+    control,
+    defaultValue,
+    rules: config,
   })
   const fieldValue = field.value as string[]
   const options = getSelectOptions(optionsData) as SelectOptionsArray
 
-  const initialValue: { selected: SelectOptionsArray, available: SelectOptionsArray } = {
+  const initialValue: {
+    selected: SelectOptionsArray
+    available: SelectOptionsArray
+  } = {
     selected: [],
     available: [],
   }
@@ -46,7 +71,7 @@ export default function SelectMultiple({
     return previous
   }, initialValue)
 
-  const selectedItems = selected.map(option => ({
+  const selectedItems = selected.map((option) => ({
     id: option.value,
     title: option.label,
   }))
@@ -58,13 +83,16 @@ export default function SelectMultiple({
   }
 
   function removeOption(optionValue: string) {
-    const newValues = fieldValue.filter(value => value !== optionValue)
+    const newValues = fieldValue.filter((value) => value !== optionValue)
     field.onChange(newValues)
   }
 
   return (
     <>
-      <CustomLabel id={field.name} label={label} />
+      <CustomLabel
+        id={field.name}
+        label={label}
+      />
       <SelectMultipleMenu
         options={available}
         menuOnTop={menuOnTop}
@@ -81,9 +109,20 @@ export default function SelectMultiple({
           onRemove={removeOption}
         />
       )}
-      <select id={field.name} {...field} hidden multiple disabled={disabled}>
+      <select
+        id={field.name}
+        {...field}
+        hidden
+        multiple
+        disabled={disabled}
+      >
         {options?.map(({ value, label }) => (
-          <option key={value} value={value}>{label}</option>
+          <option
+            key={value}
+            value={value}
+          >
+            {label}
+          </option>
         ))}
       </select>
     </>

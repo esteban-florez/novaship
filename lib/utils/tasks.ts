@@ -17,7 +17,7 @@ interface Props {
   }
 }
 
-export default function getTaskStatus({ task }: Props) {
+export function getTaskStatus({ task }: Props) {
   const taskStatus = task.status
   const subtasks = task.subtasks
   const subtasksGroupped = collect(subtasks).groupBy('status')
@@ -42,4 +42,19 @@ export default function getTaskStatus({ task }: Props) {
   }
 
   return taskStatuses.PENDING
+}
+
+export function getStatuses(statuses: TaskStatus[]) {
+  const filtered = statuses.reduce<Record<string, number>>((value, acc) => {
+    return {
+      [acc]: (value[acc] ?? 0) + 1,
+    }
+  }, {})
+
+  const done = filtered[TaskStatus.DONE] ?? 0
+  const pending = filtered[TaskStatus.PENDING] ?? 0
+  const review = filtered[TaskStatus.REVIEW] ?? 0
+  const progress = filtered[TaskStatus.PROGRESS] ?? 0
+
+  return { done, pending, progress, review }
 }
