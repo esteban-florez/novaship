@@ -143,7 +143,7 @@ export const alerts: AlertList = {
   },
   recruitment_created: {
     type: 'success',
-    message: 'La solicitud fué enviada al estudiante con éxito.',
+    message: 'La solicitud fué enviada con éxito.',
   },
   bad_creds: {
     type: 'error',

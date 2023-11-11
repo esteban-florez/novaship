@@ -10,11 +10,11 @@ interface InternshipPartial {
   }>
 }
 
-export function canCreateRecruitment(userId: string, internship: InternshipPartial) {
+export function canCreateRecruitment(companyId: string, internship: InternshipPartial) {
   const { recruitments } = internship
 
   const isRecruitable = !recruitments.some(recruitment => {
-    const hasRecruitment = recruitment.vacant.companyId === userId
+    const hasRecruitment = recruitment.vacant.companyId === companyId
     const alreadyRecruited = recruitment.status === 'ACCEPTED'
     return hasRecruitment || alreadyRecruited
   })

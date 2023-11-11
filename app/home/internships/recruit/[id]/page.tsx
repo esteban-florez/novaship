@@ -14,9 +14,10 @@ import { genders } from '@/lib/translations'
 import { ci, phone } from '@/lib/utils/text'
 import Container from '@/components/Container'
 import AvatarIcon from '@/components/AvatarIcon'
-import RecruitButton from '../RecruitButtont'
+import RecruitButton from '../RecruitButton'
 import { canCreateRecruitment } from '@/lib/auth/permissions'
 import BadgeList from '@/components/BadgeList'
+import { vacantIsExpired, vacantIsFull } from '@/lib/utils/tables'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -54,6 +55,20 @@ export default async function RecruitDetailsPage({ params: { id } }: PageContext
     },
   })
 
+  const allVacants = await prisma.vacant.findMany({
+    where: {
+      companyId: userId,
+    },
+    include: {
+      job: true,
+      recruitments: true,
+    },
+  })
+
+  const vacants = allVacants.filter(vacant => {
+    return !vacantIsExpired(vacant) && !vacantIsFull(vacant)
+  })
+
   return (
     <>
       <PageTitle
@@ -71,7 +86,10 @@ export default async function RecruitDetailsPage({ params: { id } }: PageContext
           <p className="font-bold mb-2">Habilidades:</p>
           <BadgeList items={skills} />
           <div className="flex gap-2 mt-4">
-            <RecruitButton internshipId={internship.id} />
+            <RecruitButton
+              vacants={vacants}
+              internshipId={internship.id}
+            />
             <Link href={`/home/persons/${person.id}`} className="btn btn-secondary">
               <ListBulletIcon className="w-5 h-5" />
               Ver perfil

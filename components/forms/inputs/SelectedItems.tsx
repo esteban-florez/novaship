@@ -7,16 +7,17 @@ type Props = React.PropsWithChildren<{
   }>
   onRemove: (id: string) => void
   itemsName: string
+  limit: number
 }>
 
-export default function SelectedItems({ items, onRemove, itemsName }: Props) {
+export default function SelectedItems({ items, onRemove, itemsName, limit }: Props) {
   return (
     <div className="my-2 flex w-full flex-wrap items-center gap-x-1 gap-y-2 text-sm">
       <div className="flex items-center gap-1">
         <p>{itemsName} seleccionados(as):</p>
         <div
           className="tooltip"
-          data-tip="Puedes seleccionar un máximo de 5 categorias"
+          data-tip={`Puedes seleccionar un máximo de ${limit} ${itemsName}`}
         >
           <InformationCircleIcon className="h-6 w-6 hover:text-primary" />
         </div>

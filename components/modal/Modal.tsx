@@ -46,7 +46,7 @@ export default function Modal({
           />
           )}
       <div className="modal p-0">
-        <div className="modal-box p-0">
+        <div className="modal-box p-0 scrollbar">
           <article className="p-4">{children}</article>
         </div>
       </div>

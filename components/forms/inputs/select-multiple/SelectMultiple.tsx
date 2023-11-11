@@ -76,6 +76,7 @@ export default function SelectMultiple({
       {selected.length > 0 && (
         <SelectedItems
           items={selectedItems}
+          limit={limit}
           itemsName={itemsName}
           onRemove={removeOption}
         />

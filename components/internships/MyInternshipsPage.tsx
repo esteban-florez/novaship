@@ -52,6 +52,7 @@ export default async function MyInternshipsPage({
     recruitments: type === 'COMPANY'
       ? {
           some: {
+            status: 'ACCEPTED',
             vacant: {
               companyId: userId,
             },
