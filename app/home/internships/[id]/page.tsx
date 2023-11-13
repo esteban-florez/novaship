@@ -110,7 +110,7 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                 <h3 className="font-bold tracking-tighter text-2xl">
                   Empresa de la pasantía
                 </h3>
-                <div className="bg-neutral-100 p-4 pt-2 rounded-lg mt-2">
+                <div className="bg-neutral-100 p-4 pt-2 rounded-lg mt-4">
                   <UserCard
                     href={`/home/companies/${company.id}`}
                     subtitle={company.location.title}

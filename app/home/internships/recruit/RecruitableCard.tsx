@@ -26,6 +26,7 @@ export default async function RecruitableCard({ internship }: Props) {
   return (
     <div className="card break-inside-avoid bg-white border-l-4 border-primary shadow-md">
       <div className="card-body">
+        <div className="mt-2" />
         <UserCard
           href={`/home/persons/${person.id}`}
           user={person}

@@ -77,6 +77,7 @@ export default async function RecruitDetailsPage({ params: { id } }: PageContext
       />
       <TwoColumnsLayout>
         <Column>
+          <div className="mt-2" />
           <UserCard
             user={person}
             subtitle={person.location.title}
