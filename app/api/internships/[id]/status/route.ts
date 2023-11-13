@@ -1,6 +1,6 @@
 import { auth } from '@/lib/auth/api'
 import { handleError } from '@/lib/errors/api'
-import { schema } from '@/lib/validation/schemas/internships/status'
+import { schema } from '@/lib/validation/schemas/status'
 import prisma from '@/prisma/client'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'

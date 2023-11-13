@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
       await notify('company-recruitment-created', authUserId, notification)
 
       return NextResponse.redirect(
-        url('TODO -> link a solicitudes?alert=recruitment_created')
+        url('home/internships/recruitments?alert=recruitment_created')
       )
     }
 
@@ -93,7 +93,6 @@ export async function POST(request: NextRequest) {
     const notification = {
       job: job.title,
       student: person.name,
-      vacantId: vacant.id,
     }
 
     await notify('person-recruitment-created', authUserId, notification)

@@ -11,7 +11,7 @@ import PersonsList from './PersonsList'
 import { param } from '@/lib/utils/search-params'
 
 export default async function SelectInternPage({ searchParams }: SearchParamsProps) {
-  const { id, type } = await auth.user()
+  const { type } = await auth.user()
   if (type !== 'INSTITUTE') {
     notFound()
   }
@@ -23,11 +23,6 @@ export default async function SelectInternPage({ searchParams }: SearchParamsPro
   const where = {
     ci: {
       contains: searchedCI,
-    },
-    internships: {
-      every: {
-        instituteId: { not: id },
-      },
     },
   }
 

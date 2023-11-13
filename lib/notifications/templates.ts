@@ -2,39 +2,45 @@ import { type NotificationsRecord } from '../types'
 
 export const templates: NotificationsRecord = {
   'internship-created': ({ internshipId, institute }) => ({
-    title: 'Nueva solicitud de pasantía.',
-    content: `La institución "${institute}" te ha enviado una solicitud de pasantía.`,
+    title: 'Has sido registrado como pasante.',
+    content: `La institución "${institute}" te ha registrado como pasante.`,
     href: `/home/internships/${internshipId}`,
   }),
 
   'internship-accepted': ({ grade, internshipId, student }) => ({
-    title: 'Tu solicitud de pasantía ha sido aceptada.',
-    content: `${student} ha aceptado tu solicitud de pasantía para la carrera de ${grade}.`,
+    title: 'Registro de pasante ha sido aceptado.',
+    content: `${student} ha aceptado tu registro de pasante para la carrera de ${grade}.`,
     href: `/home/internships/${internshipId}`,
   }),
 
   'internship-rejected': ({ grade, internshipId, student }) => ({
-    title: 'Tu solicitud de pasantía ha sido rechazada.',
-    content: `${student} ha rechazado tu solicitud de pasantía para la carrera de ${grade}.`,
+    title: 'Registro de pasante ha sido rechazado.',
+    content: `${student} ha rechazado tu registro de pasante para la carrera de ${grade}.`,
     href: `/home/internships/${internshipId}`,
   }),
 
   'company-recruitment-created': ({ grade, internshipId, company }) => ({
-    title: 'Una empresa te ha ofrecido un cupo para pasantía.',
-    content: `La empresa "${company}" te ha ofrecido un cupo para realizar tu pasantía para la carrera de ${grade}.`,
+    title: 'Solicitud de pasantía recibida.',
+    content: `La empresa "${company}" te ha enviado una solicitud de pasantía para la carrera de ${grade}.`,
     href: `/home/internships/${internshipId}`,
   }),
 
-  'person-recruitment-created': ({ job, vacantId, student }) => ({
-    title: 'Nueva solicitud de pasantía.',
+  'person-recruitment-created': ({ job, student }) => ({
+    title: 'Solicitud de pasantía recibida.',
     content: `El estudiante "${student}" te ha enviado una solicitud de pasantía para el cupo de ${job} que publicaste.`,
-    href: 'TODO -> link a las postulaciones del cupo',
+    href: '/home/internships/recruitments',
   }),
 
-  'recruitment-rejected': ({ grade, companyId, student }) => ({
-    title: 'Tu solicitud de pasantía ha sido rechazada.',
-    content: `${student} ha aceptado rechazado de pasantía para la carrera de ${grade}.`,
-    href: `/home/companies/${companyId}/recrutiments`,
+  'recruitment-accepted': ({ grade, name }) => ({
+    title: 'Solicitud de pasantía aceptada.',
+    content: `${name} ha aceptado tu solictud de pasantía para la carrera de ${grade}.`,
+    href: '/home/internships/recruitments',
+  }),
+
+  'recruitment-rejected': ({ grade, name }) => ({
+    title: 'Solicitud de pasantía rechazada.',
+    content: `${name} ha rechazado tu solictud de pasantía para la carrera de ${grade}.`,
+    href: '/home/internships/recruitments',
   }),
 
   'hiring-created': ({ company, title, offerId }) => ({

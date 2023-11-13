@@ -11,6 +11,7 @@ import {
   CheckBadgeIcon,
   PlusIcon,
   TicketIcon,
+  InboxStackIcon,
 } from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
@@ -59,6 +60,12 @@ export function sidebarLinks(user: UserWithType) {
           title: 'Reclutar pasante',
           icon: <PlusIcon className="h-6 w-6" />,
           visible: company,
+        },
+        {
+          href: '/home/internships/recruitments',
+          title: 'Solicitudes',
+          icon: <InboxStackIcon className="h-6 w-6" />,
+          visible: user.type !== 'ADMIN',
         },
         {
           href: `/home/companies/${user.id}/vacants`,

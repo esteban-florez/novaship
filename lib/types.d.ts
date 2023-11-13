@@ -80,6 +80,17 @@ type VacantWithRelations = Vacant & {
   job: Job
 }
 
+type RecruitmentWithRelations = Recruitment & {
+  vacant: Vacant & {
+    company: Company
+    job: Job
+  }
+  internship: Internship & {
+    person: Person
+    grade: Grade
+  }
+}
+
 // ----------------------------------------------------------------------
 // ------------------------------ Teams ---------------------------------
 // ----------------------------------------------------------------------
