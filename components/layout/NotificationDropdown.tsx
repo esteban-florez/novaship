@@ -14,6 +14,9 @@ export default async function NotificationDropdown() {
       <label tabIndex={0} className="btn-ghost btn-circle btn">
         <div className="indicator">
           <BellIcon className="h-6 w-6" />
+          {notifications.length > 0 && (
+            <span className="badge badge-xs indicator-item right-1 top-3 border bg-error" />
+          )}
         </div>
       </label>
       <div className="dropdown-content z-10 rounded-lg border border-neutral-300 bg-white shadow-md max-w-[300px] lg:max-w-none">

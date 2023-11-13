@@ -99,6 +99,7 @@ model Team {
   name          String
   description   String       @db.Text
   featuredUntil DateTime?
+  code          String       @unique
   leader        Leader       @relation(fields: [leaderId], references: [id])
   leaderId      String       @unique
   projects      Project[]
@@ -158,6 +159,7 @@ model Project {
   image       String?
   preview     String?    @unique
   visibility  Visibility
+  code        String     @unique
   person      Person?    @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   personId    String?
   team        Team?      @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -258,7 +260,6 @@ model Offer {
   schedule      Schedule
   salary        Float
   limit         Int
-  hidden        Boolean    @default(false)
   company       Company    @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   companyId     String
   location      Location   @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -311,9 +312,9 @@ model Internship {
 
 model Vacant {
   id           String        @id @default(cuid())
-  title        String
+  description  String        @db.Text
   limit        Int
-  hidden       Boolean       @default(false)
+  duration     Int
   job          Job           @relation(fields: [jobId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   jobId        String
   company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -324,7 +325,6 @@ model Vacant {
   categories   Category[]
   grades       Grade[]
   skills       Skill[]
-  expiresAt    DateTime?
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   // deletedAt    DateTime?

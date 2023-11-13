@@ -2,6 +2,7 @@ import { array, nativeEnum, number, object, string, type z } from 'zod'
 import messages from '../messages'
 import { Mode, Schedule } from '@prisma/client'
 import { dates } from '../expiration-dates'
+import { defaults } from './defaults'
 
 export type Fields = z.infer<typeof schema>
 
@@ -9,9 +10,7 @@ export const schema = object({
   title: string(messages.string)
     .min(5, messages.min(5))
     .max(50, messages.max(50)),
-  description: string(messages.string)
-    .min(15, messages.min(15))
-    .max(255, messages.max(255)),
+  description: defaults.description,
   hours: number(messages.number)
     .min(1, messages.minNumber(1))
     .max(60, messages.maxNumber(60))

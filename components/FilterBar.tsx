@@ -2,15 +2,22 @@
 
 import Input from '@/components/forms/inputs/Input'
 import Select from '@/components/forms/inputs/Select'
-import { type Grade } from '@prisma/client'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 type Props = React.PropsWithChildren<{
-  grades: Array<Pick<Grade, 'id' | 'title'>>
+  searchLabel?: string
+  filterLabel: string
+  filterOptions: Array<{
+    id: string
+    title: string
+  } | {
+    id: string
+    name: string
+  }>
 }>
 
-export default function FilterBar({ grades }: Props) {
+export default function FilterBar({ filterLabel, filterOptions, searchLabel }: Props) {
   const [filter, setFilter] = useState('')
   const router = useRouter()
   const pathname = usePathname()
@@ -23,6 +30,10 @@ export default function FilterBar({ grades }: Props) {
       newParams.delete(key)
     } else {
       newParams.set(key, value)
+    }
+
+    if (newParams.has('page')) {
+      newParams.set('page', '1')
     }
 
     const { href } = new URL(
@@ -39,7 +50,7 @@ export default function FilterBar({ grades }: Props) {
     updateParams('search', value)
   }
 
-  function handleGradeSelect(event: SelectOnInputEvent) {
+  function handleFilterSelect(event: SelectOnInputEvent) {
     const option = event.target.selectedOptions.item(0)
 
     if (option === null) {
@@ -49,30 +60,37 @@ export default function FilterBar({ grades }: Props) {
 
     const { value } = option
     setFilter(value)
-    updateParams('grade', value)
+    updateParams('filtered', value)
+  }
+
+  function handleFilterReset() {
+    setFilter('')
+    updateParams('filtered', '')
   }
 
   return (
     <section className="mt-1 bg-white gap-2 flex items-center pt-2 px-4 justify-between shadow-md flex-wrap">
-      <div>
-        <p className="font-semibold text-sm">Buscar pasantes por nombre: </p>
-        <Input
-          type="search"
-          className="max-w-xs"
-          name="search"
-          placeholder="Buscar pasantes..."
-          onInput={handleSearch}
-        />
-      </div>
-      <div className="mb-3 flex items-center gap-2">
+      {searchLabel !== undefined && (
         <div>
-          <p className="font-semibold text-sm">Filtrar por carrera: </p>
+          <p className="font-semibold text-sm">Buscar por {searchLabel}: </p>
+          <Input
+            type="search"
+            className="max-w-xs"
+            name="search"
+            placeholder="Buscar..."
+            onInput={handleSearch}
+          />
+        </div>
+      )}
+      <div className="flex items-center gap-2">
+        <div>
+          <p className="font-semibold text-sm">Filtrar por {filterLabel}: </p>
           <Select
-            name="filter.grade"
-            onInput={handleGradeSelect}
+            name="filtered"
+            onInput={handleFilterSelect}
             options={{
               type: 'rows',
-              data: grades,
+              data: filterOptions,
             }}
             value={filter}
             noDefault
@@ -84,9 +102,9 @@ export default function FilterBar({ grades }: Props) {
           <button
             className="btn btn-error mt-5"
             type="button"
-            onClick={() => { setFilter(''); updateParams('grade', '') }}
+            onClick={handleFilterReset}
           >
-            Quitar filtros
+            Eliminar filtros
           </button>
         )}
       </div>

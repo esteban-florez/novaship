@@ -28,7 +28,7 @@ export default function SubmitAlert({ result, close }: Props) {
   }
 
   const alert: AlertData = {
-    message: 'Enviando datos...',
+    message: 'Cargando...',
     type: 'loading',
   }
 

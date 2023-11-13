@@ -44,7 +44,7 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
 
   return (
     <>
-      <FormLayout title="Información de la oferta" require>
+      <FormLayout title="Información de la oferta">
         {alert}
         {serverErrors}
         <form method="POST" action={action} onSubmit={handleSubmit}>

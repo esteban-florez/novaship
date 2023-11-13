@@ -1,9 +1,16 @@
 import { type UserWithType } from '@/lib/types'
 import {
-  HomeIcon, BriefcaseIcon, AcademicCapIcon,
-  ClipboardDocumentListIcon, UserGroupIcon,
-  GlobeAltIcon, StarIcon, ShieldCheckIcon,
-  CheckBadgeIcon, PlusIcon,
+  HomeIcon,
+  BriefcaseIcon,
+  AcademicCapIcon,
+  ClipboardDocumentListIcon,
+  UserGroupIcon,
+  GlobeAltIcon,
+  StarIcon,
+  ShieldCheckIcon,
+  CheckBadgeIcon,
+  PlusIcon,
+  TicketIcon,
 } from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
@@ -24,6 +31,12 @@ export function sidebarLinks(user: UserWithType) {
       icon: <AcademicCapIcon className="h-6 w-6" />,
       submenu: [
         {
+          href: '/home/internships/select',
+          title: 'Inscribir pasante',
+          icon: <PlusIcon className="h-6 w-6" />,
+          visible: institute,
+        },
+        {
           href: `/home/institutes/${user.id}/internships`,
           title: 'Mis pasantías',
           icon: <StarIcon className="h-6 w-6" />,
@@ -37,15 +50,9 @@ export function sidebarLinks(user: UserWithType) {
         },
         {
           href: `/home/companies/${user.id}/internships`,
-          title: 'Mis pasantías',
+          title: 'Mis pasantes',
           icon: <StarIcon className="h-6 w-6" />,
           visible: company,
-        },
-        {
-          href: '/home/internships/select',
-          title: 'Inscribir pasante',
-          icon: <PlusIcon className="h-6 w-6" />,
-          visible: institute,
         },
         {
           href: '/home/internships/recruit',
@@ -53,15 +60,31 @@ export function sidebarLinks(user: UserWithType) {
           icon: <PlusIcon className="h-6 w-6" />,
           visible: company,
         },
+        {
+          href: `/home/companies/${user.id}/vacants`,
+          title: 'Cupos publicados',
+          icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
+          visible: company,
+        },
+        {
+          href: '/home/internships/vacants/create',
+          title: 'Publicar cupo',
+          icon: <TicketIcon className="h-6 w-6" />,
+          visible: company,
+        },
       ],
     },
     {
-      href: person ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
+      href: person
+        ? '/home/offers?filter=suggested'
+        : '/home/offers?filter=all',
       title: 'Ofertas',
       icon: <BriefcaseIcon className="h-6 w-6" />,
       submenu: [
         {
-          href: person ? '/home/offers?filter=suggested' : '/home/offers?filter=all',
+          href: person
+            ? '/home/offers?filter=suggested'
+            : '/home/offers?filter=all',
           title: 'Lista de ofertas',
           icon: <GlobeAltIcon className="h-6 w-6" />,
         },
@@ -90,7 +113,9 @@ export function sidebarLinks(user: UserWithType) {
       icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
       submenu: [
         {
-          href: '/home/projects?filter=suggested',
+          href: company
+            ? '/home/projects?filter=all'
+            : '/home/projects?filter=suggested',
           title: 'Lista de proyectos',
           icon: <GlobeAltIcon className="h-6 w-6" />,
         },

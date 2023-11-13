@@ -17,6 +17,7 @@ export default function InstituteCard({ institute }: Props) {
       <h3 className="font-bold tracking-tighter text-2xl">
         Universidad de la pasantía
       </h3>
+      <div className="mt-2" />
       <UserCard
         href={`/home/institutes/${institute.id}`}
         user={institute}

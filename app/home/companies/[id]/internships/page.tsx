@@ -1,7 +1,7 @@
 import MyInternshipsPage from '@/components/internships/MyInternshipsPage'
 
 export const metadata = {
-  title: 'Mis pasantías',
+  title: 'Mis pasantes',
 }
 
 export default MyInternshipsPage

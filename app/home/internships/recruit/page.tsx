@@ -4,8 +4,8 @@ import { notFound } from 'next/navigation'
 import InternshipList from '@/components/internships/InternshipList'
 import { type Prisma } from '@prisma/client'
 import RecruitableCard from './RecruitableCard'
-import FilterBar from './FilterBar'
-import { param } from '@/lib/utils/search-params'
+import FilterBar from '@/components/FilterBar'
+import { getSearchAndFilter } from '@/lib/utils/search-params'
 import prisma from '@/prisma/client'
 
 export const metadata = {
@@ -20,8 +20,7 @@ export default async function RecruitPage({ searchParams }: SearchParamsProps) {
     select: { id: true, title: true },
   })
 
-  const search = param(searchParams.search)
-  const grade = param(searchParams.grade)
+  const { search, filter } = getSearchAndFilter(searchParams)
 
   const where: Prisma.InternshipWhereInput = {
     status: 'ACCEPTED',
@@ -49,7 +48,7 @@ export default async function RecruitPage({ searchParams }: SearchParamsProps) {
         mode: 'insensitive',
       },
     },
-    gradeId: grade,
+    gradeId: filter,
   }
 
   return (
@@ -58,7 +57,11 @@ export default async function RecruitPage({ searchParams }: SearchParamsProps) {
         title="Reclutar pasantes"
         subtitle="Aquí puedes ver los pasantes disponibles, y enviarles solicitud de reclutamiento."
       />
-      <FilterBar grades={grades} />
+      <FilterBar
+        filterOptions={grades}
+        filterLabel="carrera"
+        searchLabel="nombre"
+      />
       <InternshipList
         component={RecruitableCard}
         where={where}

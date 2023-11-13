@@ -15,7 +15,7 @@ import Participations from '@/components/projects-details/tasks/Participations'
 import Revisions from '@/components/projects-details/tasks/Revisions'
 import Subtasks from '@/components/projects-details/tasks/Subtasks'
 import { getProject } from '@/lib/data-fetching/project'
-import getTaskStatus from '@/lib/utils/tasks'
+import { getTaskStatus } from '@/lib/utils/tasks'
 
 export const metadata: Metadata = {
   title: 'Detalles de tarea',
@@ -58,7 +58,7 @@ export default async function TaskPage({ params: { id, taskId } }: Context) {
   })
 
   return (
-    <FormLayout title="Información de la tarea" require>
+    <FormLayout title="Información de la tarea">
       <div className="sm:px-4 sm:py-2">
         <div className="flex flex-col">
           <h2 className="-mb-2 text-xl font-semibold">{task.title}</h2>

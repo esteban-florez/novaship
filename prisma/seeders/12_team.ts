@@ -2,6 +2,7 @@ import data from '@/prisma/data/teams.json'
 import prisma from '../client'
 import collect from '@/lib/utils/collection'
 import coinflip from '@/lib/utils/coinflip'
+import { randomCode } from '@/lib/utils/code'
 
 const teams = data
 
@@ -13,6 +14,7 @@ export default async function team() {
 
   for (let i = 0; i < MAX; i++) {
     const rnd = coinflip()
+    const code = randomCode('team')
 
     const { id: leaderId } = await prisma.leader.create({
       data: {
@@ -25,6 +27,7 @@ export default async function team() {
       data: {
         name: teams.names[i],
         description: teams.descriptions[i],
+        code,
         categories: {
           connect: collect(categories).random(5).all(),
         },

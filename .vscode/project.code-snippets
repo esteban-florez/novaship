@@ -6,18 +6,13 @@
   },
   "Icon classname": {
     "prefix": "ic",
-    "body": "className=\"h-6 w-6$0\"",
+    "body": "className=\"h-5 w-5$0\" ",
     "description": "Icon default className"
   },
   "Register prop for fields": {
     "prefix": "rp",
     "body": "name=\"$0\" register={register} errors={errors}",
     "description": "Register prop for fields"
-  },
-  "Declare Fields type for Zod schema": {
-    "prefix": "df",
-    "body": "export type Fields = z.infer<typeof schema>",
-    "description": "Declare Fields type for Zod schema"
   },
   "Route Handler Template": {
     "prefix": "rh",
@@ -38,11 +33,11 @@
   },
   "Use Submit hook": {
     "prefix": "us",
-    "body": "const {\n\tregister, formState: { errors },\n\talert, serverErrors, handleSubmit,\n} = useSubmit<Fields>({ schema })\n"
+    "body": "const {\n\tregister, formState: { errors },\n\talert, serverErrors, handleSubmit,\n} = useSubmit({ schema })\n"
   },
   "Import schema": {
     "prefix": "is",
-    "body": "import { schema, type Fields } from '@/lib/validation/schemas/$0'"
+    "body": "import { schema } from '@/lib/validation/schemas/$0'"
   },
   "register and errors": {
     "prefix": "r",

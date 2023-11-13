@@ -29,6 +29,7 @@ export const routes: Rec = {
   companies: 'Empresas',
   notifications: 'Notificaciones',
   recruit: 'Reclutar pasantes',
+  vacants: 'Cupos',
 }
 
 export const userTypes = {
@@ -107,3 +108,12 @@ export const stages = {
   ACTIVE: 'En curso',
   COMPLETED: 'Completada',
 } as const
+
+export const durations: Rec = {
+  7: 'Una semana',
+  14: 'Dos semanas',
+  30: 'Un mes',
+  90: 'Tres meses',
+  180: 'Seis meses',
+  365: 'Un año',
+}

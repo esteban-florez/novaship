@@ -1,12 +1,11 @@
 import { object, string, type z } from 'zod'
 import messages from '../messages'
+import { defaults } from './defaults'
 
 export type Fields = z.infer<typeof schema>
 
 export const schema = object({
-  content: string(messages.string)
-    .min(15, messages.min(15))
-    .max(255, messages.max(255)),
+  content: defaults.description,
   taskId: string(messages.string)
     .cuid(messages.cuid)
     .optional(),

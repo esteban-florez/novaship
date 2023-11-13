@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-.btn:not(.btn-square) {
-  @apply normal-case px-6 py-2.5 h-auto min-h-fit rounded-md;
+.btn {
+  @apply normal-case;
+}
+
+.btn:not(.btn-square, .btn-sm) {
+  @apply px-6 py-2.5 h-auto min-h-fit rounded-md;
 }
 
 .btn-success,
@@ -71,4 +75,8 @@
 
 .underline {
   @apply transition-colors hover:brightness-75;
+}
+
+.label {
+  @apply justify-normal;
 }

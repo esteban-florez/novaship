@@ -22,7 +22,7 @@ export default async function CreateTeamPage() {
   return (
     <>
       <PageTitle title="Registrar nuevo equipo" subtitle="Rellena los datos para crear un nuevo equipo, e invita a los demás usuarios a formar parte de él." />
-      <FormLayout title="Información del equipo" require>
+      <FormLayout title="Información del equipo">
         <CreateTeamForm
           persons={persons}
           categories={categories}
