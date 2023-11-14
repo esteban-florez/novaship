@@ -195,7 +195,6 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
         })}
       </PageContent>
       <Pagination
-        pageNumber={pageNumber}
         nextPage={nextPage}
       />
     </>

@@ -3,14 +3,14 @@
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 interface Props {
-  pageNumber: number
   nextPage: boolean
 }
 
-export default function Pagination({ pageNumber, nextPage }: Props) {
+export default function Pagination({ nextPage }: Props) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const search = searchParams.get('filter')
+  const pageNumber = Number(searchParams.get('page') ?? 1)
   const filterQuery = search === '' ? 'all' : search
   const prevNumber = pageNumber > 1 ? pageNumber - 1 : 0
   const nextNumber = pageNumber + 1

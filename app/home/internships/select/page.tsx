@@ -16,9 +16,8 @@ export default async function SelectInternPage({ searchParams }: SearchParamsPro
     notFound()
   }
 
-  const { search, page } = searchParams
+  const { search } = searchParams
   const searchedCI = param(search)
-  const pageNumber = Number(param(page) ?? 1)
 
   const where = {
     ci: {
@@ -29,7 +28,7 @@ export default async function SelectInternPage({ searchParams }: SearchParamsPro
   const totalRecords = await prisma.person.count({ where })
 
   const { nextPage, skip, take } = getPaginationProps({
-    totalRecords, pageNumber, pageSize: 10,
+    totalRecords, searchParams, pageSize: 10,
   })
 
   const persons = await prisma.person.findMany({
@@ -69,7 +68,6 @@ export default async function SelectInternPage({ searchParams }: SearchParamsPro
         </div>
         <Pagination
           nextPage={nextPage}
-          pageNumber={pageNumber}
         />
       </section>
     </>
