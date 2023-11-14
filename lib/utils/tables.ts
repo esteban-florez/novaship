@@ -82,24 +82,18 @@ export function getPublicProjects<T>(projects: Array<T & {
   return projects.filter(project => project.visibility === 'PUBLIC')
 }
 
-export function getInternshipStage(internship: InternshipWithRelations) {
+export function getInternshipStage(internship: InternshipWithRelations): Stage {
   const { status, completed, hours } = internship
 
-  let stage: Stage = status
-
-  if (status === 'ACCEPTED') {
-    if (completed >= hours) {
-      stage = 'COMPLETED'
-    }
-
-    const recruitment = getAcceptedRecruitment(internship)
-
-    if (recruitment !== undefined) {
-      stage = 'ACTIVE'
-    }
+  if (status !== 'ACCEPTED') {
+    return status
   }
 
-  return stage
+  if (completed >= hours) {
+    return 'COMPLETED'
+  }
+
+  return 'ACTIVE'
 }
 
 export function getAcceptedRecruitment(internship: InternshipWithRelations) {

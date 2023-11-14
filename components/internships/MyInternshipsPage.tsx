@@ -24,7 +24,7 @@ export default async function MyInternshipsPage({
   const isInstitute = type === 'INSTITUTE'
 
   const addAction = {
-    url: `/home/internships/${isInstitute ? 'create' : 'recruit'}`,
+    url: `/home/internships/${isInstitute ? 'select' : 'recruit'}`,
     text: `${isInstitute ? 'Añadir' : 'Reclutar'} pasante`,
   }
 

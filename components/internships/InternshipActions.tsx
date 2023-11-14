@@ -42,7 +42,7 @@ export default function InternshipActions({
       {['PERSON', 'INSTITUTE'].includes(userType) && stage === 'ACCEPTED' && (
         <button className="btn btn-primary">
           <MagnifyingGlassIcon className="h-5 w-5" />
-          Buscar empresa
+          Buscar cupos
         </button>
       )}
       {userType === 'INSTITUTE' && ['PENDING', 'REJECTED'].includes(stage) && (
