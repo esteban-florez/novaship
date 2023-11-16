@@ -9,6 +9,7 @@ export default async function institute() {
   const locations = collect(await prisma.location.findMany({ select: { id: true } }))
   const positionRange = numbers(institutes.names.length - 1)
   const unverifiedProbability = numbers(1, 8)
+  const images = collect(['1.jpg', '2.jpg'])
 
   for (let i = 0; i < seederQueries.institute; i++) {
     const position = positionRange.random()
@@ -30,6 +31,7 @@ export default async function institute() {
         name,
         description,
         email,
+        image: '/institute' + images.random().first(),
         phone: numbers().phone(),
         rif: numbers().rif(),
         certification: '/rif.png',

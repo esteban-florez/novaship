@@ -21,6 +21,7 @@ export default function PersonCard({ person, page }: Props) {
         Estudiante {text[page]}
       </h3>
       <InfoUser
+        image={person.image}
         owner={person.name}
         description={person.description}
         location={person.location.title}
