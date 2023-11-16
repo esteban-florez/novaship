@@ -115,6 +115,16 @@ interface TeamsFull extends Team {
   >
 }
 
+type InvitationData = {
+  id: string
+  status: Status
+  updatedAt: Date,
+  team: {
+    id: string
+    name: string
+  }
+}
+
 // ----------------------------------------------------------------------
 // --------------------------- Offers ---------------------------------
 // ----------------------------------------------------------------------
@@ -215,6 +225,7 @@ type ProjectDetailsTab = 'Files' | 'Tasks'
 type OffersTab = 'all' | 'personal' | 'applied' | 'suggested'
 type TeamsTab = 'all' | 'personal'
 type ProjectsTab = 'all' | 'suggested' | 'personal'
+type InvitationsTab = 'pending' | 'accepted' | 'rejected'
 
 // ----------------------------------------------------------------------
 // --------------------------- API ---------------------------------
