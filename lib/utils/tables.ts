@@ -93,7 +93,13 @@ export function getInternshipStage(internship: InternshipWithRelations): Stage {
     return 'COMPLETED'
   }
 
-  return 'ACTIVE'
+  const recruitment = getAcceptedRecruitment(internship)
+
+  if (recruitment !== undefined) {
+    return 'ACTIVE'
+  }
+
+  return 'ACCEPTED'
 }
 
 export function getAcceptedRecruitment(internship: InternshipWithRelations) {
@@ -147,4 +153,10 @@ export function getVacantExpiration(vacant: DateAndDuration) {
 
 export function getAcceptedRecruitments(vacant: WithRecruitments) {
   return vacant.recruitments.filter(({ status }) => status === 'ACCEPTED')
+}
+
+export function validVacants(vacants: VacantWithRelations[]) {
+  return vacants.filter(vacant => {
+    return !vacantIsExpired(vacant) && !vacantIsFull(vacant)
+  })
 }

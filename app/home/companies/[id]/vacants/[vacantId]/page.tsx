@@ -4,14 +4,11 @@ import PageTitle from '@/components/PageTitle'
 import TwoColumnsLayout from '@/components/TwoColumnsLayout'
 import Column from '@/components/Column'
 import { getVacant } from '@/lib/data-fetching/vacants'
-import { getVacantExpiration } from '@/lib/utils/tables'
-import Container from '@/components/Container'
 import Link from 'next/link'
-import { CalendarIcon, ClockIcon, MagnifyingGlassIcon, PencilIcon } from '@heroicons/react/24/outline'
-import BadgeList from '@/components/BadgeList'
-import { format } from '@/lib/utils/date'
+import { MagnifyingGlassIcon, PencilIcon } from '@heroicons/react/24/outline'
 import VacantStatus from './VacantStatus'
-import IconData from '@/components/IconData'
+import BasicData from '@/components/vacants-details/BasicData'
+import SkillsGrades from '@/components/vacants-details/SkillsGrades'
 
 export async function generateMetadata({ params: { vacantId } }: Context) {
   const vacant = await getVacant(vacantId)
@@ -41,45 +38,22 @@ export default async function VacantDetailsPage({ params: { vacantId } }: Contex
     notFound()
   }
 
-  const {
-    company, description, createdAt,
-    grades, job, location, skills,
-  } = vacant
+  const { company, job } = vacant
 
   if (company.id !== userId) {
     notFound()
   }
 
-  const expiresAt = getVacantExpiration(vacant)
-
   return (
     <>
       <PageTitle
         title="Detalle del cupo"
-        subtitle="Aquí puedes ver todos los datos del cupo, y puedes realizar la postulación al mismo."
+        subtitle="Aquí puedes ver todos los datos del cupo, así como editarlo."
         breadcrumbs={`${job.title} - ${company.name}`}
       />
       <TwoColumnsLayout>
         <Column>
-          <h2 className="text-primary font-bold tracking-tighter text-2xl leading-tight">
-            {job.title}
-          </h2>
-          <p className="-mt-2 text-neutral-600 font-semibold text-lg line-clamp-1">
-            {location.title}
-          </p>
-          <p className="py-3">{description}</p>
-          <div className="flex justify-between gap-3 p-3">
-            <IconData
-              label="Fecha de publicación"
-              data={format(createdAt)}
-              icon={CalendarIcon}
-            />
-            <IconData
-              label="Fecha de expiración"
-              data={format(expiresAt)}
-              icon={ClockIcon}
-            />
-          </div>
+          <BasicData vacant={vacant} />
           <div className="mt-3 flex flex-col lg:flex-row gap-2">
             <Link
               className="btn btn-warning"
@@ -98,17 +72,8 @@ export default async function VacantDetailsPage({ params: { vacantId } }: Contex
           </div>
         </Column>
         <Column>
-          <p className="font-bold mb-2">
-            Estado del cupo
-          </p>
           <VacantStatus vacant={vacant} />
-          <Container title="Carreras relacionadas">
-            <BadgeList items={grades} />
-          </Container>
-          <div className="mt-4" />
-          <Container title="Habilidades requeridas">
-            <BadgeList items={skills} />
-          </Container>
+          <SkillsGrades vacant={vacant} />
         </Column>
       </TwoColumnsLayout>
     </>
