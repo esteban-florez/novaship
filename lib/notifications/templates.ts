@@ -60,4 +60,22 @@ export const templates: NotificationsRecord = {
     content: `${user} ha rechazado tu postulación para la oferta ${title}.`,
     href: `/home/offers/${offerId}`,
   }),
+
+  'invitation-sent': ({ user, team }) => ({
+    title: 'Te han enviado una solicitud.',
+    content: `${user} te ha invitado a formar parte de su grupo ${team}.`,
+    href: '/home/invitations',
+  }),
+
+  'invitation-accepted': ({ user, team, teamId }) => ({
+    title: 'La solicitud ha sido aceptada.',
+    content: `${user} ha aceptado tu solicitud para unirse al grupo oferta ${team}.`,
+    href: `/home/teams/${teamId}`,
+  }),
+
+  'invitation-rejected': ({ user, team, teamId }) => ({
+    title: 'La solicitud ha sido rechazada.',
+    content: `${user} ha rechazado tu solicitud para unirse al grupo oferta ${team}.`,
+    href: `/home/teams/${teamId}`,
+  }),
 }

@@ -21,10 +21,7 @@ export default function Projects({ search, projects }: Props) {
   }
 
   return (
-    <section
-      className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg p-4 pt-1
-      md:columns-2 lg:columns-3 xl:rounded-tl-none"
-    >
+    <section className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg p-4 pt-1 md:columns-2 lg:columns-3 xl:rounded-tl-none">
       {projects.map((project) => {
         if (
           search === '' ||

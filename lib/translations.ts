@@ -32,6 +32,7 @@ export const routes: Rec = {
   vacants: 'Cupos',
   recruitments: 'Solicitudes',
   apply: 'Buscar cupos',
+  invitations: 'Invitaciones',
 }
 
 export const userTypes = {

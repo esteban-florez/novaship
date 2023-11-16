@@ -105,6 +105,14 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'El equipo de trabajo fue registrado con éxito.',
   },
+  invitation_accepted: {
+    type: 'success',
+    message: 'La invitación fue aceptada con éxito.',
+  },
+  invitation_rejected: {
+    type: 'warning',
+    message: 'La invitación fue rechazada con éxito.',
+  },
   verified_user: {
     type: 'success',
     message: 'El usuario fué confirmado con éxito.',
