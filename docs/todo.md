@@ -16,7 +16,6 @@
 - Mantener los filtros al usar la api.
 - Validación: no puede aplicarse a un proyecto que sea personal.
 - Hacer un nuevo componente modal.
-- Crear invitacion y despues membership.
 - Revisar las dimensiones del logo en responsive.
 - Logs middleware y model.
 - Middleware para notificaciones.
@@ -28,6 +27,13 @@
 # Future
 
 - Rediseñar projects/id, projects/id/tasks
+- Reemplazar react-chartjs-2 por recharts o tremor
+
+# Graficas
+
+- Admin
+  - Migrar minicards a tabla (?)
+  - Mostrar grafico de barras (registro por meses) del card seleccionado, como modal o pagina independiente (?)
 
 # Plugins
 

@@ -1,12 +1,17 @@
 'use client'
 
-import { Chart, type ChartData, type ChartOptions, registerables } from 'chart.js'
+import {
+  Chart,
+  type ChartData,
+  type ChartOptions,
+  registerables,
+} from 'chart.js'
 import { Line } from 'react-chartjs-2'
 
 Chart.register(...registerables)
 
 interface Props {
-  title: string
+  title?: string
   data: ChartData<'line'>
 }
 
@@ -20,7 +25,7 @@ export default function LineGraphic({ title, data }: Props) {
       },
       title: {
         text: title,
-        display: true,
+        display: title != null,
         color: '#a55eea',
         font: {
           size: 18,

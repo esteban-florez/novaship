@@ -2,6 +2,7 @@ import { type QuickAccessProps } from '@/lib/types'
 import {
   AcademicCapIcon,
   BriefcaseIcon,
+  CheckBadgeIcon,
   ClipboardDocumentListIcon,
   EnvelopeIcon,
   UserGroupIcon,
@@ -14,9 +15,9 @@ interface Props {
 }
 
 export default function getQuickAccessItems({ userId, type }: Props) {
-  let quickAccessItems: QuickAccessProps = []
+  let items: QuickAccessProps = []
   if (type === 'PERSON') {
-    quickAccessItems = [
+    items = [
       {
         title: 'Mis pasantías',
         href: `/home/persons/${userId}/internships`,
@@ -45,5 +46,15 @@ export default function getQuickAccessItems({ userId, type }: Props) {
     ]
   }
 
-  return quickAccessItems
+  if (type === 'ADMIN') {
+    items = [
+      {
+        title: 'Verificaciones',
+        href: '/home/admin/verifications',
+        icon: <CheckBadgeIcon className="h-4 w-4" />,
+      },
+    ]
+  }
+
+  return items
 }

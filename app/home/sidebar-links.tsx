@@ -112,6 +112,7 @@ export function sidebarLinks(user: UserWithType) {
           href: '/home/offers?filter=applied',
           title: 'Postulaciones',
           icon: <StarIcon className="h-6 w-6" />,
+          visible: person,
         },
       ],
     },

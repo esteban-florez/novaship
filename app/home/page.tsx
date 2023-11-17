@@ -1,7 +1,9 @@
 import EmptyContent from '@/components/EmptyContent'
 import BarGraphic from '@/components/graphics/BarGraphic'
 import PieGraphic from '@/components/graphics/PieGraphic'
+import GrowthIcon from '@/components/home/GrowthIcon'
 import HomeCarousel from '@/components/home/HomeCarousel'
+import MiniCard from '@/components/home/MiniCard'
 import QuickAccess from '@/components/home/QuickAccess'
 import Notification from '@/components/layout/Notification'
 import { auth } from '@/lib/auth/pages'
@@ -9,7 +11,9 @@ import { getPersonRelatedIds } from '@/lib/data-fetching/user'
 import { getNotifications } from '@/lib/notifications/get'
 import getQuickAccessItems from '@/lib/quickAcessItems'
 import { getAllMonths } from '@/lib/utils/date'
+import { growthComparedLastMonth } from '@/lib/utils/graph'
 import prisma from '@/prisma/client'
+import { ClockIcon } from '@heroicons/react/24/outline'
 import { type Prisma } from '@prisma/client'
 import { type ChartData } from 'chart.js'
 import { type Metadata } from 'next'
@@ -124,10 +128,10 @@ export default async function HomePage() {
           return acc
         },
         {
-          tasksPending: 0.1,
-          tasksProgress: 0.1,
-          tasksRevision: 0.1,
-          tasksDone: 0.1,
+          tasksPending: 0,
+          tasksProgress: 0,
+          tasksRevision: 0,
+          tasksDone: 0,
         }
       )
 
@@ -170,10 +174,10 @@ export default async function HomePage() {
       <>
         <HomeCarousel />
         <QuickAccess items={quickAccessItems} />
-        <section className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 shadow-lg">
-          <h5 className="-mb-1 col-span-full text-lg font-bold">
+        <section className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <h3 className="col-span-full text-lg font-bold">
             Últimas notificaciones
-          </h5>
+          </h3>
           {notifications.length > 0
             ? (
                 notifications.map(({ display, id, createdAt }) => (
@@ -196,10 +200,10 @@ export default async function HomePage() {
               </div>
               )}
         </section>
-        <section className="mt-2 p-4 gap-4 grid grid-cols-1 sm:grid-cols-2">
-          <h5 className="mb-3 col-span-full text-lg font-bold">
+        <section className="p-4 gap-4 grid grid-cols-1 sm:grid-cols-2">
+          <h3 className="mb-1 col-span-full text-lg font-bold">
             Tus estadísticas
-          </h5>
+          </h3>
           <div className="max-h-96 col-span-1 items-center card bg-white">
             <PieGraphic
               title="Ofertas laborales"
@@ -218,6 +222,122 @@ export default async function HomePage() {
               data={internshipsData}
             />
           </div>
+        </section>
+      </>
+    )
+  }
+
+  if (type === 'ADMIN') {
+    const query = { where: { verifiedAt: null } }
+    const institutes = await prisma.institute.count({ ...query })
+    const companies = await prisma.company.count({ ...query })
+    const verificationsPending = institutes + companies
+
+    const totalPersons = await prisma.person.count()
+    const personCountByMonth = await prisma.person.groupBy({
+      by: ['createdAt'],
+      _count: true,
+      orderBy: {
+        createdAt: 'asc',
+      },
+    })
+
+    const totalInstitutes = await prisma.institute.count()
+    const instituteCountByMonth = await prisma.institute.groupBy({
+      by: ['createdAt'],
+      _count: true,
+      orderBy: {
+        createdAt: 'asc',
+      },
+    })
+
+    const totalCompanies = await prisma.company.count()
+    const companyCountByMonth = await prisma.company.groupBy({
+      by: ['createdAt'],
+      _count: true,
+      orderBy: {
+        createdAt: 'asc',
+      },
+    })
+
+    const totalOffers = await prisma.offer.count()
+    const offerCountByMonth = await prisma.offer.groupBy({
+      by: ['createdAt'],
+      _count: true,
+      orderBy: {
+        createdAt: 'asc',
+      },
+    })
+
+    const totalProjects = await prisma.project.count()
+    const projectCountByMonth = await prisma.project.groupBy({
+      by: ['createdAt'],
+      _count: true,
+      orderBy: {
+        createdAt: 'asc',
+      },
+    })
+
+    const totalTeams = await prisma.team.count()
+    const teamCountByMonth = await prisma.team.groupBy({
+      by: ['createdAt'],
+      _count: true,
+      orderBy: {
+        createdAt: 'asc',
+      },
+    })
+
+    const cards = [
+      'Usuarios',
+      'Instituciones',
+      'Compañías',
+      'Ofertas',
+      'Proyectos',
+      'Equipos',
+    ]
+    const result = growthComparedLastMonth(
+      [
+        personCountByMonth,
+        instituteCountByMonth,
+        companyCountByMonth,
+        offerCountByMonth,
+        projectCountByMonth,
+        teamCountByMonth,
+      ],
+      [
+        totalPersons,
+        totalInstitutes,
+        totalCompanies,
+        totalOffers,
+        totalProjects,
+        totalTeams,
+      ]
+    )
+
+    return (
+      <>
+        <HomeCarousel />
+        <QuickAccess items={quickAccessItems} />
+        <section className="p-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <h3 className="col-span-full text-lg font-bold">Estadísticas</h3>
+          {result.map((graph, i) => {
+            return (
+              <MiniCard
+                key={i}
+                title={cards[i]}
+                count={graph.total}
+                percentage={graph.percentage}
+              >
+                <GrowthIcon comparision={graph.comparision} />
+              </MiniCard>
+            )
+          })}
+          <MiniCard
+            title="Verificaciones pendientes"
+            count={verificationsPending}
+          >
+            <ClockIcon className="w-12 h-12" />
+          </MiniCard>
         </section>
       </>
     )
