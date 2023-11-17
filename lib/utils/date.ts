@@ -1,5 +1,26 @@
 import { getExpirationDiff } from '../validation/expiration-dates'
 
+export function getAllMonths(format?: 'short' | 'long') {
+  const months = [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ]
+
+  if (format === 'short') return months.map(month => month.slice(0, 3))
+
+  return months
+}
+
 export function getExpiresAtDate(date: Date | null) {
   const today = new Date()
 

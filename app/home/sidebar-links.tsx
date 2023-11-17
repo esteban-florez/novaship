@@ -12,6 +12,7 @@ import {
   PlusIcon,
   TicketIcon,
   InboxStackIcon,
+  EnvelopeIcon,
 } from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
@@ -147,6 +148,11 @@ export function sidebarLinks(user: UserWithType) {
           href: '/home/teams?filter=all',
           title: 'Lista de equipos',
           icon: <GlobeAltIcon className="h-6 w-6" />,
+        },
+        {
+          href: '/home/invitations',
+          title: 'Invitaciones',
+          icon: <EnvelopeIcon className="h-6 w-6" />,
         },
         {
           href: '/home/teams/create',

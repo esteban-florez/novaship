@@ -51,6 +51,15 @@ type SelectablePerson = Selectable<OptionPerson>
 type SelectableOption = OptionCategory | OptionSkill | OptionPerson
 
 // ----------------------------------------------------------------------
+// --------------------------- Home ------------------------------
+// ----------------------------------------------------------------------
+type QuickAccessProps = Array<{
+  icon: React.ReactElement
+  title: string
+  href: string
+}>
+
+// ----------------------------------------------------------------------
 // --------------------------- Internships ------------------------------
 // ----------------------------------------------------------------------
 
@@ -115,10 +124,10 @@ interface TeamsFull extends Team {
   >
 }
 
-type InvitationData = {
+interface InvitationData {
   id: string
   status: Status
-  updatedAt: Date,
+  updatedAt: Date
   team: {
     id: string
     name: string
