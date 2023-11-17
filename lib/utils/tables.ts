@@ -83,7 +83,8 @@ export function getPublicProjects<T>(projects: Array<T & {
 }
 
 export function getInternshipStage(internship: InternshipWithRelations): Stage {
-  const { status, completed, hours } = internship
+  const { status, hours } = internship
+  const completed = getCompletedHours(internship)
 
   if (status !== 'ACCEPTED') {
     return status
@@ -159,4 +160,16 @@ export function validVacants(vacants: VacantWithRelations[]) {
   return vacants.filter(vacant => {
     return !vacantIsExpired(vacant) && !vacantIsFull(vacant)
   })
+}
+
+export function getCompletedHours(internship: InternshipWithRelations) {
+  const recruitment = internship.recruitments
+    .find(recruitment => recruitment.status === 'ACCEPTED')
+
+  if (recruitment === undefined) {
+    return 0
+  }
+
+  return recruitment.progresses
+    .reduce((sum, progress) => sum + progress.hours, 0)
 }

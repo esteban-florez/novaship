@@ -145,10 +145,7 @@ export default async function InvitationsPage({
           )
         })}
       </PageContent>
-      <Pagination
-        pageNumber={pageNumber}
-        nextPage={nextPage}
-      />
+      <Pagination nextPage={nextPage} />
     </>
   )
 }

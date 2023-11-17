@@ -28,7 +28,6 @@ export async function POST(request: NextRequest) {
         ...parsed,
         hours: Number(hours),
         instituteId: id,
-        completed: 0,
         categories: {
           connect: categories.map(id => ({ id })),
         },

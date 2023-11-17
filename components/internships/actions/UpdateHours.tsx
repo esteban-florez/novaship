@@ -22,7 +22,7 @@ export default function UpdateHours({ internship }: Props) {
     schema: schema(internship.hours),
     method: 'PATCH',
   })
-
+  // EU -> cambiar esta actualización de progreso
   return (
     <Modal
       id="updateHoursModal"

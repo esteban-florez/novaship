@@ -17,7 +17,6 @@ export default async function recruitment() {
   const statuses = collect(['PENDING', 'REJECTED'] as const)
   const recruitmentsRange = numbers(0, 5)
   const isAcceptedProbability = numbers(1, 5)
-  const internshipsToUpdate: Record<string, number> = {}
 
   const recruitments = internships.flatMap(internship => {
     const recruitments = []
@@ -32,8 +31,6 @@ export default async function recruitment() {
 
       if (isAccepted) {
         oneWasAccepted = true
-        const completed = numbers(0, internship.hours).random()
-        internshipsToUpdate[internship.id] = completed
       }
 
       recruitments.push({
@@ -53,14 +50,6 @@ export default async function recruitment() {
           : 'REJECTED' as Status,
       }))
   })
-
-  Object.entries(internshipsToUpdate)
-    .forEach(async ([id, completed]) => {
-      await prisma.internship.update({
-        where: { id },
-        data: { completed },
-      })
-    })
 
   await prisma.recruitment.createMany({ data: recruitments })
 }

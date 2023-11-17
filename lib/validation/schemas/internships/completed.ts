@@ -1,6 +1,6 @@
 import { number, object } from 'zod'
 import messages from '../../messages'
-
+// EU
 export const schema = (maxHours: number) => object({
   completed: number(messages.number)
     .min(0, messages.minNumber(0))

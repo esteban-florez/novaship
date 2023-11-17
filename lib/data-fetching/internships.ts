@@ -17,6 +17,7 @@ const include = {
   },
   recruitments: {
     include: {
+      progresses: true,
       vacant: {
         include: {
           company: {
