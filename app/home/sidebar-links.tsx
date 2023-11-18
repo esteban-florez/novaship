@@ -154,6 +154,7 @@ export function sidebarLinks(user: UserWithType) {
           href: '/home/invitations',
           title: 'Invitaciones',
           icon: <EnvelopeIcon className="h-6 w-6" />,
+          visible: person,
         },
         {
           href: '/home/teams/create',

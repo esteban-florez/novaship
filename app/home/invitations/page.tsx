@@ -1,19 +1,20 @@
-import PageTitle from "@/components/PageTitle"
-import Pagination from "@/components/Pagination"
-import PageContent from "@/components/invitations/PageContent"
-import { auth } from "@/lib/auth/pages"
-import { getInvitations } from "@/lib/data-fetching/invitation"
-import { InvitationData, InvitationsTab } from "@/lib/types"
-import getPaginationProps from "@/lib/utils/pagination"
-import prisma from "@/prisma/client"
-import { CheckIcon, ClockIcon, XMarkIcon } from "@heroicons/react/24/outline"
-import { Prisma } from "@prisma/client"
-import clsx from "clsx"
-import { Metadata } from "next"
-import Link from "next/link"
+import PageTitle from '@/components/PageTitle'
+import Pagination from '@/components/Pagination'
+import PageContent from '@/components/invitations/PageContent'
+import { auth } from '@/lib/auth/pages'
+import { getInvitations } from '@/lib/data-fetching/invitation'
+import { type InvitationData, type InvitationsTab } from '@/lib/types'
+import getPaginationProps from '@/lib/utils/pagination'
+import prisma from '@/prisma/client'
+import { CheckIcon, ClockIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { type Prisma } from '@prisma/client'
+import clsx from 'clsx'
+import { type Metadata } from 'next'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
-  title: "Invitaciones",
+  title: 'Invitaciones',
 }
 
 interface FilterQueries {
@@ -25,23 +26,27 @@ interface FilterQueries {
 export default async function InvitationsPage({
   searchParams,
 }: SearchParamsProps) {
-  const filter = searchParams.filter ?? "pending"
+  const filter = searchParams.filter ?? 'pending'
   const pageNumber = +(searchParams.page ?? 1)
 
-  const { id: userId } = await auth.user()
+  const { id: userId, type } = await auth.user()
+
+  if (type !== 'PERSON') {
+    notFound()
+  }
 
   const FILTER_QUERIES: FilterQueries = {
     pending: {
       personId: userId,
-      status: "PENDING",
+      status: 'PENDING',
     },
     accepted: {
       personId: userId,
-      status: "ACCEPTED",
+      status: 'ACCEPTED',
     },
     rejected: {
       personId: userId,
-      status: "REJECTED",
+      status: 'REJECTED',
     },
   }
   const totalRecords = await prisma.invitation.count({
@@ -53,18 +58,18 @@ export default async function InvitationsPage({
   })
 
   const pendingCount = await prisma.invitation.count({
-    where: { personId: userId, status: "PENDING" },
+    where: { personId: userId, status: 'PENDING' },
   })
   const acceptedCount = await prisma.invitation.count({
-    where: { personId: userId, status: "ACCEPTED" },
+    where: { personId: userId, status: 'ACCEPTED' },
   })
   const rejectedCount = await prisma.invitation.count({
-    where: { personId: userId, status: "REJECTED" },
+    where: { personId: userId, status: 'REJECTED' },
   })
 
   let invitations: InvitationData[] = []
 
-  if (filter === "pending") {
+  if (filter === 'pending') {
     invitations = await getInvitations({
       where: FILTER_QUERIES.pending,
       take,
@@ -72,7 +77,7 @@ export default async function InvitationsPage({
     })
   }
 
-  if (filter === "rejected") {
+  if (filter === 'rejected') {
     invitations = await getInvitations({
       where: FILTER_QUERIES.rejected,
       take,
@@ -80,7 +85,7 @@ export default async function InvitationsPage({
     })
   }
 
-  if (filter === "accepted") {
+  if (filter === 'accepted') {
     invitations = await getInvitations({
       where: FILTER_QUERIES.accepted,
       take,
@@ -89,28 +94,28 @@ export default async function InvitationsPage({
   }
 
   const INVITATIONS_TAB_TRANSLATION = {
-    pending: "Pendientes",
-    accepted: "Aceptadas",
-    rejected: "Rechazadas",
+    pending: 'Pendientes',
+    accepted: 'Aceptadas',
+    rejected: 'Rechazadas',
   }
   const links = [
     {
-      title: "pending",
+      title: 'pending',
       content: `Pendientes (${pendingCount})`,
       icon: <ClockIcon className="h-5 w-5" />,
-      query: "pending",
+      query: 'pending',
     },
     {
-      title: "accepted",
+      title: 'accepted',
       content: `Aceptadas (${acceptedCount})`,
       icon: <CheckIcon className="h-5 w-5" />,
-      query: "accepted",
+      query: 'accepted',
     },
     {
-      title: "rejected",
+      title: 'rejected',
       content: `Rechazadas (${rejectedCount})`,
       icon: <XMarkIcon className="h-5 w-5" />,
-      query: "rejected",
+      query: 'rejected',
     },
   ]
 
@@ -122,21 +127,21 @@ export default async function InvitationsPage({
           INVITATIONS_TAB_TRANSLATION[filter as InvitationsTab]
         }`}
         invitations={invitations}
-        type={filter === "pending" ? "invitation" : "data"}
+        type={filter === 'pending' ? 'invitation' : 'data'}
       >
         {links.map((link) => {
           return (
             <Link
               key={link.title}
               href={{
-                pathname: "/home/invitations",
+                pathname: '/home/invitations',
                 query: { filter: link.query },
               }}
               className={clsx(
-                "btn",
+                'btn',
                 link.title === filter
-                  ? "btn-primary hover:btn-ghost"
-                  : "hover:btn-primary"
+                  ? 'btn-primary hover:btn-ghost'
+                  : 'hover:btn-primary'
               )}
             >
               {link.icon}

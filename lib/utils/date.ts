@@ -75,6 +75,20 @@ export function format(date: Date, weekday = false) {
   })
 }
 
+export function daysLeft(date: Date) {
+  const currentDay = new Date().getDate()
+  const paramDay = date.getDate()
+  const days =
+    currentDay > paramDay ? currentDay - paramDay : paramDay - currentDay
+  const plural = days > 1 ? 's' : ''
+
+  const message =
+    days === 0
+      ? 'Unos minutos restantes'
+      : `${days} día${plural} restante${plural}`
+  return message
+}
+
 export function diffForHumans(date: Date) {
   const intl = new Intl.RelativeTimeFormat('es-VE')
   const diffInMs = Date.now() - Number(date)
