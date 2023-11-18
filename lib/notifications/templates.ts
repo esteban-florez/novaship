@@ -43,6 +43,18 @@ export const templates: NotificationsRecord = {
     href: '/home/internships/recruitments',
   }),
 
+  'progress-updated': ({ grade, company, internshipId }) => ({
+    title: 'Progreso de pasantía.',
+    content: `${company} ha actualizado el progreso de la pasantía para la carrera de ${grade}.`,
+    href: `/home/internships/${internshipId}`,
+  }),
+
+  'internship-completed': ({ grade, internshipId }) => ({
+    title: 'Pasantía completada.',
+    content: `Se han completado las horas de la pasantía para la carrera de ${grade}.`,
+    href: `/home/internships/${internshipId}`,
+  }),
+
   'hiring-created': ({ company, title, offerId }) => ({
     title: 'Nueva solicitud de trabajo.',
     content: `La empresa ${company} te ha enviado una invitación para la oferta ${title}`,

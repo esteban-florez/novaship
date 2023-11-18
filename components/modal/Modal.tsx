@@ -4,6 +4,7 @@ type Props = React.PropsWithChildren<{
   title?: string
   className?: string
   forceOpen?: boolean
+  labelRef?: React.MutableRefObject<HTMLInputElement | null>
 }>
 
 // TEMPORAL -> cambiar los modales por este nuevo
@@ -13,6 +14,7 @@ export default function Modal({
   title,
   className,
   children,
+  labelRef,
   forceOpen = false,
 }: Props) {
   return (
@@ -43,6 +45,7 @@ export default function Modal({
             id={id}
             className="modal-toggle"
             key="normal"
+            ref={labelRef}
           />
           )}
       <div className="modal p-0">

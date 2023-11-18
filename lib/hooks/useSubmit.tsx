@@ -17,12 +17,13 @@ interface UseSubmitOptions<Fields> {
   method?: HTTP_METHOD
   onSuccess?: () => void | Promise<void>
   onError?: () => void | Promise<void>
+  onSuccessRedirect?: () => void | Promise<void>
 }
 
 // TODO -> quizás esto está demasiado grande, maneja muchas cosas. Quizás sea más conveniente dividrlo en dos: componente <Form> que tenga el envío de la petición y muestre los resultados, etc. Y el hook useForm normalito que le pase las cosas al componente Form
 export default function useSubmit<Fields extends FieldValues>(options?: UseSubmitOptions<Fields>) {
   const {
-    method, append, schema, asFormData = false, onSuccess, onError,
+    method, append, schema, asFormData = false, onSuccess, onError, onSuccessRedirect,
   } = options ?? {}
   const [showAlert, setShowAlert] = useState(true)
   const [showErrors, setShowErrors] = useState(true)
@@ -67,6 +68,9 @@ export default function useSubmit<Fields extends FieldValues>(options?: UseSubmi
         router.push(response.url)
         router.refresh()
         setResult(null)
+        if (onSuccessRedirect !== undefined) {
+          void onSuccessRedirect()
+        }
         return
       }
 

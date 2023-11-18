@@ -1,17 +1,16 @@
-import { BookmarkSquareIcon, MagnifyingGlassIcon, PencilIcon } from '@heroicons/react/24/outline'
+import { BookmarkSquareIcon, ListBulletIcon, MagnifyingGlassIcon, PencilIcon } from '@heroicons/react/24/outline'
 import { type UserType } from '@prisma/client'
 import Link from 'next/link'
 import DeleteModal from '../projects/DeleteModal'
 import clsx from 'clsx'
 import UpdateStatus from './actions/UpdateStatus'
-import UpdateHours from '@/components/internships/actions/UpdateHours'
+import UpdateProgress from '@/components/internships/actions/UpdateProgress'
+import { getAcceptedRecruitment, getCompletedHours } from '@/lib/utils/tables'
+import { type InternshipWithRelations } from '@/lib/types'
 
 type Props = React.PropsWithChildren<{
   userType: UserType
-  internship: {
-    id: string
-    hours: number
-  }
+  internship: InternshipWithRelations
   stage: Stage
   className?: string
 }>
@@ -21,6 +20,7 @@ export default function InternshipActions({
 }: Props) {
   const pending = stage === 'PENDING'
   const accepted = stage === 'ACCEPTED'
+  const active = stage === 'ACTIVE'
 
   const isPerson = userType === 'PERSON'
   const isInstitute = userType === 'INSTITUTE'
@@ -31,9 +31,13 @@ export default function InternshipActions({
   const apply = (isPerson || isInstitute) && accepted
   const _delete = isInstitute && (pending || stage === 'REJECTED')
   const recruit = isCompany && accepted
-  const progress = isCompany && stage === 'ACTIVE'
+  const progress = isCompany && active
+  const history = active
 
-  const conditions = [update, updateStatus, apply, _delete, recruit, progress]
+  const conditions = [update, updateStatus, apply, _delete, recruit, progress, history]
+
+  const maxHours = internship.hours - getCompletedHours(internship)
+  const recruitment = getAcceptedRecruitment(internship)
 
   return (
     <>
@@ -80,8 +84,20 @@ export default function InternshipActions({
             Reclutar pasante
           </button>
         )}
-        {progress && (
-          <UpdateHours internship={internship} />
+        {active && (
+          <Link
+            className="btn btn-secondary"
+            href={`/home/internships/${internship.id}/progress`}
+          >
+            <ListBulletIcon className="h-5 w-5" />
+            Historial de progreso
+          </Link>
+        )}
+        {progress && recruitment !== undefined && (
+          <UpdateProgress
+            maxHours={maxHours}
+            recruitmentId={recruitment.id}
+          />
         )}
       </div>
     </>

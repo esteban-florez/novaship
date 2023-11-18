@@ -53,7 +53,7 @@ export default function Select({
         name={name}
         onInput={onInput}
         value={value}
-        defaultValue={defaultValue}
+        defaultValue={value !== undefined ? defaultValue : undefined}
         {...registerProps}
         className={clsx(
           'select select-md w-full border-neutral-300 bg-base-100 transition-all focus:outline-none focus:ring-2 focus:ring-primary mb-3',

@@ -5,6 +5,46 @@ import prisma from '@/prisma/client'
 import { url } from '@/lib/utils/url'
 import { NextResponse, type NextRequest } from 'next/server'
 import { notify } from '@/lib/notifications/notify'
+import { type Company, type Grade, type Vacant } from '@prisma/client'
+
+// DRY -> mucha repetición de código aquí
+async function checkVacantLimit(vacant: Vacant & {
+  _count: {
+    recruitments: number
+  }
+  company: Company
+}, updatedId: string, grade: Grade) {
+  if (vacant.limit > vacant._count.recruitments) return
+  const where = {
+    vacantId: vacant.id,
+    id: {
+      not: updatedId,
+    },
+  }
+
+  const recruitments = await prisma.recruitment.findMany({
+    where,
+    include: {
+      internship: {
+        include: {
+          grade: true,
+          person: true,
+        },
+      },
+    },
+  })
+
+  await prisma.recruitment.updateMany({
+    where, data: { status: 'REJECTED' },
+  })
+
+  recruitments.forEach(async ({ internship: { person } }) => {
+    await notify('recruitment-rejected', person.authUserId, {
+      name: vacant.companyId,
+      grade: grade.title,
+    })
+  })
+}
 
 export async function PATCH(
   request: NextRequest, { params: { id } }: PageContext
@@ -27,6 +67,15 @@ export async function PATCH(
         },
         vacant: {
           include: {
+            _count: {
+              select: {
+                recruitments: {
+                  where: {
+                    status: 'ACCEPTED',
+                  },
+                },
+              },
+            },
             company: true,
           },
         },
@@ -53,7 +102,8 @@ export async function PATCH(
       )
     }
 
-    // TODO -> verificar si la vacante llego al límite, y rechazar las demás, y enviar notificación de vacante llena
+    await checkVacantLimit(vacant, id, grade)
+
     const where = {
       id: { not: id },
       internshipId: internship.id,
