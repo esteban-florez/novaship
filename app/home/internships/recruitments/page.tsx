@@ -3,7 +3,7 @@ import Pagination from '@/components/Pagination'
 import { auth } from '@/lib/auth/pages'
 import { getRecruitments } from '@/lib/data-fetching/recruitments'
 import getPaginationProps from '@/lib/utils/pagination'
-import { getSearchAndFilter, param } from '@/lib/utils/search-params'
+import { getSearchAndFilter } from '@/lib/utils/search-params'
 import prisma from '@/prisma/client'
 import { type UserType, type Prisma, type Interested } from '@prisma/client'
 import { notFound } from 'next/navigation'
@@ -53,10 +53,8 @@ export default async function RecruitmentsPage({ searchParams }: SearchParamsPro
 
   const totalRecords = await prisma.recruitment.count({ where })
 
-  const pageNumber = Number(param(searchParams.page) ?? 1)
-
   const { nextPage, skip, take } = getPaginationProps({
-    totalRecords, pageNumber, pageSize: 10,
+    totalRecords, searchParams, pageSize: 10,
   })
 
   const recruitments = await getRecruitments({ where, skip, take })
@@ -74,7 +72,7 @@ export default async function RecruitmentsPage({ searchParams }: SearchParamsPro
       />
       <FilterBar searchLabel="nombre" filterLabel="tipo" filterOptions={options} />
       <RecruitmentsTable recruitments={recruitments} />
-      <Pagination nextPage={nextPage} pageNumber={pageNumber} />
+      <Pagination nextPage={nextPage} />
     </>
   )
 }

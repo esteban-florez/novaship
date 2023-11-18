@@ -34,6 +34,7 @@ export default function LogInForm() {
         register={register}
         errors={errors}
         maxlength={40}
+        isOptional
       />
       <Input
         type="password"
@@ -43,6 +44,7 @@ export default function LogInForm() {
         register={register}
         errors={errors}
         maxlength={20}
+        isOptional
       />
       <div className="flex flex-col gap-2">
         <button type="submit" className="btn-primary btn btn-md mt-4 w-full md:w-auto">

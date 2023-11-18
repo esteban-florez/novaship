@@ -48,7 +48,11 @@ export async function POST(request: NextRequest) {
     const { id, type, name } = await auth.user(request)
     data = await request.json()
 
-    if (type === 'ADMIN' || type === 'INSTITUTE') notFound()
+    if (type === 'ADMIN') notFound()
+
+    const redirect = NextResponse.redirect(
+      url('home/internships/recruitments?alert=recruitment_created')
+    )
 
     if (type === 'COMPANY') {
       const parsed = byCompany.parse(data)
@@ -67,9 +71,7 @@ export async function POST(request: NextRequest) {
 
       await notify('company-recruitment-created', authUserId, notification)
 
-      return NextResponse.redirect(
-        url('home/internships/recruitments?alert=recruitment_created')
-      )
+      return redirect
     }
 
     const parsed = byPerson.parse(data)
@@ -82,7 +84,9 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    if (vacant === null) notFound()
+    if (vacant === null) {
+      notFound()
+    }
 
     const { companyId, company } = vacant
     const { authUserId } = company
@@ -97,9 +101,7 @@ export async function POST(request: NextRequest) {
 
     await notify('person-recruitment-created', authUserId, notification)
 
-    return NextResponse.redirect(
-      url(`home/internships/${internshipId}?alert=recruitment_created`)
-    )
+    return redirect
   } catch (error) {
     return handleError(error, data)
   }

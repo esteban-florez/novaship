@@ -196,7 +196,6 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
         })}
       </PageContent>
       <Pagination
-        pageNumber={pageNumber}
         nextPage={nextPage}
       />
     </>

@@ -30,6 +30,7 @@ import {
   type Recruitment,
   type Grade,
   type Internship,
+  type Progress,
 } from '@prisma/client'
 import { type days } from './translations'
 
@@ -70,6 +71,7 @@ type InternshipWithRelations = Internship & {
         location: Location
       }
     }
+    progresses: Progress[]
   }>
   categories: Category[]
   institute: Institute
@@ -98,6 +100,7 @@ type RecruitmentWithRelations = Recruitment & {
     person: Person
     grade: Grade
   }
+  progresses: Progress[]
 }
 
 // ----------------------------------------------------------------------

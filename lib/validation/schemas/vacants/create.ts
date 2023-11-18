@@ -7,6 +7,6 @@ import messages from '../../messages'
 export const schema = base.merge(
   object({
     jobId: defaults.id,
-    duration: zenum(DURATIONS as [string, ...string[]], messages.enum),
+    duration: zenum(DURATIONS, messages.enum),
   })
 )

@@ -1,9 +1,9 @@
-import { BellIcon } from "@heroicons/react/24/outline"
-import { getNotifications } from "@/lib/notifications/get"
-import { auth } from "@/lib/auth/pages"
-import Notification from "./Notification"
-import EmptyContent from "../EmptyContent"
-import Link from "next/link"
+import { BellIcon } from '@heroicons/react/24/outline'
+import { getNotifications } from '@/lib/notifications/get'
+import { auth } from '@/lib/auth/pages'
+import Notification from './Notification'
+import EmptyContent from '../EmptyContent'
+import Link from 'next/link'
 
 export default async function NotificationDropdown() {
   const { authUserId } = await auth.user()
@@ -28,20 +28,22 @@ export default async function NotificationDropdown() {
             Notificaciones
           </h3>
         </div>
-        {notifications.length > 0 ? (
-          notifications.map(({ display, id, createdAt }) => (
-            <Notification
-              {...display}
-              key={id}
-              id={id}
-              date={createdAt}
-            />
-          ))
-        ) : (
-          <div className="px-20 pb-4">
-            <EmptyContent title="No tienes notificaciones." />
-          </div>
-        )}
+        {notifications.length > 0
+          ? (
+              notifications.map(({ display, id, createdAt }) => (
+                <Notification
+                  {...display}
+                  key={id}
+                  id={id}
+                  date={createdAt}
+                />
+              ))
+            )
+          : (
+            <div className="px-20 pb-4">
+              <EmptyContent title="No tienes notificaciones." />
+            </div>
+            )}
         {notifications.length > 0 && (
           <Link href="/home/notifications">
             <button className="w-full rounded-b-lg border-t border-base-300 py-4 text-center hover:bg-base-300">

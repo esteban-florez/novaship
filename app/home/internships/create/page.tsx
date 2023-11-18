@@ -17,7 +17,7 @@ export default async function CreateInternshipPage({ searchParams }: SearchParam
     notFound()
   }
 
-  const personId = param(searchParams.person)
+  const personId = param(searchParams.person) ?? 'myriam es mensa'
   const person = await prisma.person.findUnique({
     where: { id: personId },
     include: {

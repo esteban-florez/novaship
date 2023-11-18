@@ -5,11 +5,10 @@ import { notFound } from 'next/navigation'
 import InternshipActions from '@/components/internships/InternshipActions'
 import InternshipData from './InternshipData'
 import PageTitle from '@/components/PageTitle'
-import Recruitments from './Recruitments'
 import PersonData from './PersonData'
 import InstituteCard from './InstituteCard'
 import InternshipStage from './InternshipStage'
-import UserCard from '../../../../components/internships/UserCard'
+import UserCard from '@/components/internships/UserCard'
 import InternshipProgress from '@/components/internships/InternshipProgress'
 import CompletedHoursText from './CompletedHoursText'
 import TwoColumnsLayout from '@/components/TwoColumnsLayout'
@@ -50,7 +49,7 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
     notFound()
   }
 
-  const { person, institute, grade, recruitments } = internship
+  const { person, institute, grade } = internship
   const stage = getInternshipStage(internship)
 
   return (
@@ -71,7 +70,6 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                   internship={internship}
                   institute={institute}
                 />
-                <div className="mt-4" />
                 <InternshipActions
                   className="lg:flex-row"
                   internship={internship}
@@ -86,7 +84,6 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                   {grade.title}
                 </h3>
                 <InternshipData internship={internship} />
-                <div className="mt-4" />
                 <InternshipActions
                   className="lg:flex-row"
                   internship={internship}
@@ -103,7 +100,7 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
         <Column>
           {company === null
             ? (
-              <Recruitments recruitments={recruitments} stage={stage} />
+              <p>aqui van estadísticas supongo</p>
               )
             : (
               <>

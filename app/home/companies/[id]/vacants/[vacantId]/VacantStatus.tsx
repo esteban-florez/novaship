@@ -18,11 +18,16 @@ export default function VacantStatus({ vacant }: Props) {
   } as const
 
   return (
-    <div className="alert mb-2">
-      <InformationCircleIcon className="h-5 w-5" />
-      <p>
-        {isExpired ? texts.expired : isFull ? texts.full : texts.available}
+    <>
+      <p className="font-bold mb-2">
+        Estado del cupo
       </p>
-    </div>
+      <div className="alert mb-2">
+        <InformationCircleIcon className="h-5 w-5" />
+        <p>
+          {isExpired ? texts.expired : isFull ? texts.full : texts.available}
+        </p>
+      </div>
+    </>
   )
 }

@@ -2,16 +2,18 @@ import PageTitle from '@/components/PageTitle'
 import { auth } from '@/lib/auth/pages'
 import { notFound } from 'next/navigation'
 // import FilterBar from './FilterBar'
-import { param } from '@/lib/utils/search-params'
+import { getSearchAndFilter } from '@/lib/utils/search-params'
 import prisma from '@/prisma/client'
 import getPaginationProps from '@/lib/utils/pagination'
 import Pagination from '@/components/Pagination'
 import ThreeGrid from '@/components/ThreeGrid'
 import EmptyContent from '@/components/EmptyContent'
-import VacantCard from './VacantCard'
+import VacantCard from '@/components/vacants/VacantCard'
 import { getVacants } from '@/lib/data-fetching/vacants'
 import { PlusIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import FilterBar from '@/components/FilterBar'
+import { type Prisma } from '@prisma/client'
 
 export const metadata = {
   title: 'Reclutar pasantes',
@@ -24,13 +26,23 @@ export default async function VacantsPage({
   const { id: userId, type, name } = await auth.user()
   if (type !== 'COMPANY' || userId !== id) notFound()
 
-  const where = { companyId: id }
-  const pageNumber = +(param(searchParams.page) ?? 1)
+  const { filter } = getSearchAndFilter(searchParams)
+
+  const where: Prisma.VacantWhereInput = {
+    companyId: id,
+    skills: {
+      some: {
+        id: filter,
+      },
+    },
+  }
+
   const totalRecords = await prisma.vacant.count({ where })
 
-  const { nextPage, skip, take } = getPaginationProps({ totalRecords, pageNumber })
+  const { nextPage, skip, take } = getPaginationProps({ totalRecords, searchParams })
 
   const vacants = await getVacants({ where, skip, take })
+  const skills = await prisma.skill.findMany()
 
   return (
     <>
@@ -44,6 +56,7 @@ export default async function VacantsPage({
           Añadir cupo
         </Link>
       </PageTitle>
+      <FilterBar filterLabel="habilidades" filterOptions={skills} />
       {vacants.length > 0
         ? (
           <ThreeGrid>
@@ -63,7 +76,6 @@ export default async function VacantsPage({
           )}
       <Pagination
         nextPage={nextPage}
-        pageNumber={pageNumber}
       />
     </>
   )

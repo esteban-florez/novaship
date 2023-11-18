@@ -134,7 +134,6 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
         })}
       </PageContent>
       <Pagination
-        pageNumber={pageNumber}
         nextPage={nextPage}
       />
     </>

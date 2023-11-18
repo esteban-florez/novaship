@@ -89,6 +89,7 @@ export const getOffer = cache(async ({ id }: { id: string }) => {
         select: {
           name: true,
           description: true,
+          image: true,
         },
       },
     },

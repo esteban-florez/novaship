@@ -1,20 +1,20 @@
-"use client"
+'use client'
 
-import useSubmit from "@/lib/hooks/useSubmit"
-import { InvitationData } from "@/lib/types"
-import { format } from "@/lib/utils/date"
-import { Status } from "@prisma/client"
-import Link from "next/link"
-import { useState } from "react"
+import useSubmit from '@/lib/hooks/useSubmit'
+import { type InvitationData } from '@/lib/types'
+import { format } from '@/lib/utils/date'
+import { type Status } from '@prisma/client'
+import Link from 'next/link'
+import { useState } from 'react'
 
-type Props = {
+interface Props {
   invitation: InvitationData
 }
 
 export default function InvitationCard({ invitation }: Props) {
-  const [status, setStatus] = useState<Status>("PENDING")
+  const [status, setStatus] = useState<Status>('PENDING')
   const { handleSubmit, serverErrors } = useSubmit({
-    method: "PUT",
+    method: 'PUT',
     append: {
       status,
     },
@@ -26,7 +26,7 @@ export default function InvitationCard({ invitation }: Props) {
       <div className="card card-compact bg-base-100 rounded-lg shadow-lg">
         <div className="p-4">
           <p>
-            Te han invitado a unirte al grupo{" "}
+            Te han invitado a unirte al grupo{' '}
             <span className="font-semibold">{invitation.team.name}</span>
           </p>
           <div className="mt-1 mb-3 flex flex-col justify-between items-center">
@@ -48,13 +48,13 @@ export default function InvitationCard({ invitation }: Props) {
           >
             <button
               className="btn btn-primary"
-              onClick={() => setStatus("ACCEPTED")}
+              onClick={() => { setStatus('ACCEPTED') }}
             >
               Aceptar
             </button>
             <button
               className="btn btn-ghost btn-outline hover:btn-error"
-              onClick={() => setStatus("REJECTED")}
+              onClick={() => { setStatus('REJECTED') }}
             >
               Rechazar
             </button>

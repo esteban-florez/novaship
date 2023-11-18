@@ -67,6 +67,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
               }
             >
               <InfoUser
+                image={leaderMembership.image}
                 verification={false}
                 owner={leaderMembership.name}
                 description={leaderMembership.description}
@@ -126,6 +127,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             </p>
             <InfoUser
               verification={false}
+              image={leaderMembership.image}
               owner={leaderMembership.name}
               description={leaderMembership.description}
               location={location.title}

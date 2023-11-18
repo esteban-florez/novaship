@@ -155,11 +155,11 @@ export const alerts: AlertList = {
   },
   recruitment_accepted: {
     type: 'success',
-    message: 'Has aceptado la solicitud de pasantía fué enviada con éxito.',
+    message: 'Has aceptado la solicitud de pasantía con éxito.',
   },
   recruitment_rejected: {
     type: 'success',
-    message: 'Has rechazado la solicitud de pasantía fué enviada con éxito.',
+    message: 'Has rechazado la solicitud de pasantía con éxito.',
   },
   bad_creds: {
     type: 'error',

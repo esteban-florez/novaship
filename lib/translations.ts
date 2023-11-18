@@ -31,7 +31,8 @@ export const routes: Rec = {
   recruit: 'Reclutar pasantes',
   vacants: 'Cupos',
   recruitments: 'Solicitudes',
-  invitations: 'Invitaciones'
+  apply: 'Buscar cupos',
+  invitations: 'Invitaciones',
 }
 
 export const userTypes = {
@@ -106,7 +107,7 @@ export const genders = {
 export const stages = {
   PENDING: 'Por confirmar',
   REJECTED: 'Rechazada',
-  ACCEPTED: 'En busca de empresa',
+  ACCEPTED: 'En busca de cupo',
   ACTIVE: 'En curso',
   COMPLETED: 'Completada',
 } as const

@@ -46,6 +46,7 @@ export default async function TeamMembershipsPage({ params: { id } }: PageContex
                   </p>
                 </div>
                 <InfoUser
+                  image={leader.image}
                   verification={false}
                   owner={leader.name}
                   description={leader.description}
@@ -61,6 +62,7 @@ export default async function TeamMembershipsPage({ params: { id } }: PageContex
                     return (
                       <div key={membership.id} className={clsx('card card-body bg-white shadow')}>
                         <InfoUser
+                          image={member.image}
                           verification={false}
                           owner={member.name}
                           description={member.description}

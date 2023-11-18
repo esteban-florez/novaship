@@ -22,12 +22,13 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     const data = await request.json()
     const parsed = schema.parse(data)
-    const { categories } = parsed
+    const { categories, hours } = parsed
 
     await prisma.internship.update({
       ...query,
       data: {
         ...parsed,
+        hours: Number(hours),
         categories: {
           set: categories.map(id => ({ id })),
         },

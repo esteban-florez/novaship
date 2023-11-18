@@ -19,47 +19,71 @@ type Props = React.PropsWithChildren<{
 export default function InternshipActions({
   internship, userType, stage, className = '',
 }: Props) {
+  const pending = stage === 'PENDING'
+  const accepted = stage === 'ACCEPTED'
+
+  const isPerson = userType === 'PERSON'
+  const isInstitute = userType === 'INSTITUTE'
+  const isCompany = userType === 'COMPANY'
+
+  const update = isInstitute && pending
+  const updateStatus = isPerson && pending
+  const apply = (isPerson || isInstitute) && accepted
+  const _delete = isInstitute && (pending || stage === 'REJECTED')
+  const recruit = isCompany && accepted
+  const progress = isCompany && stage === 'ACTIVE'
+
+  const conditions = [update, updateStatus, apply, _delete, recruit, progress]
+
   return (
-    <div className={clsx('flex flex-col gap-2', className)}>
-      {userType === 'INSTITUTE' && stage === 'PENDING' && (
-        <Link
-          className="btn btn-warning"
-          href={`/home/internships/${internship.id}/update`}
-        >
-          <PencilIcon className="w-5 h-5" />
-          Actualizar
-        </Link>
+    <>
+      {conditions.some(condition => condition) && (
+        <div className="mt-4" />
       )}
-      {userType === 'PERSON' && stage === 'PENDING' && (
-        (['accept', 'reject'] as const).map(action => (
-          <UpdateStatus
-            key={action}
-            action={action}
-            internshipId={internship.id}
+      <div className={clsx('flex flex-col gap-2', className)}>
+        {update && (
+          <Link
+            className="btn btn-warning"
+            href={`/home/internships/${internship.id}/update`}
+          >
+            <PencilIcon className="w-5 h-5" />
+            Actualizar
+          </Link>
+        )}
+        {updateStatus && (
+          (['accept', 'reject'] as const).map(action => (
+            <UpdateStatus
+              key={action}
+              action={action}
+              internshipId={internship.id}
+            />
+          ))
+        )}
+        {apply && (
+          <Link
+            href={`/home/internships/${internship.id}/apply`}
+            className="btn btn-primary"
+          >
+            <MagnifyingGlassIcon className="h-5 w-5" />
+            Buscar cupos
+          </Link>
+        )}
+        {_delete && (
+          <DeleteModal
+            action={`/api/internships/${internship.id}`}
+            showLabel
           />
-        ))
-      )}
-      {['PERSON', 'INSTITUTE'].includes(userType) && stage === 'ACCEPTED' && (
-        <button className="btn btn-primary">
-          <MagnifyingGlassIcon className="h-5 w-5" />
-          Buscar empresa
-        </button>
-      )}
-      {userType === 'INSTITUTE' && ['PENDING', 'REJECTED'].includes(stage) && (
-        <DeleteModal
-          action={`/api/internships/${internship.id}`}
-          showLabel
-        />
-      )}
-      {userType === 'COMPANY' && stage === 'ACCEPTED' && (
-        <button className="btn btn-primary">
-          <BookmarkSquareIcon className="h-5 w-5" />
-          Reclutar pasante
-        </button>
-      )}
-      {userType === 'COMPANY' && stage === 'ACTIVE' && (
-        <UpdateHours internship={internship} />
-      )}
-    </div>
+        )}
+        {recruit && (
+          <button className="btn btn-primary">
+            <BookmarkSquareIcon className="h-5 w-5" />
+            Reclutar pasante
+          </button>
+        )}
+        {progress && (
+          <UpdateHours internship={internship} />
+        )}
+      </div>
+    </>
   )
 }

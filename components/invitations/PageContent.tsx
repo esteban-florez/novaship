@@ -1,14 +1,14 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { InvitationData } from "@/lib/types"
-import PageNav from "../PageNav"
-import Invitations from "./Invitations"
+import { useState } from 'react'
+import { type InvitationData } from '@/lib/types'
+import PageNav from '../PageNav'
+import Invitations from './Invitations'
 
 type Props = React.PropsWithChildren<{
   invitations: InvitationData[]
   dropdownLabel: string
-  type: "data" | "invitation"
+  type: 'data' | 'invitation'
 }>
 
 export default function PageContent({
@@ -17,7 +17,7 @@ export default function PageContent({
   dropdownLabel,
   children,
 }: Props) {
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState('')
 
   return (
     <>

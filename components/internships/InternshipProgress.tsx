@@ -1,17 +1,17 @@
 import StageBadge from '@/app/home/internships/[id]/StageBadge'
 import { STAGE_COLORS, STAGE_PROGRESS } from '@/lib/shared/stage-colors'
+import { type InternshipWithRelations } from '@/lib/types'
+import { getCompletedHours } from '@/lib/utils/tables'
 import clsx from 'clsx'
 
 type Props = React.PropsWithChildren<{
   stage: Stage
-  internship: {
-    hours: number
-    completed: number
-  }
+  internship: InternshipWithRelations
 }>
 
 export default function InternshipProgress({ stage, internship }: Props) {
-  const { hours, completed } = internship
+  const { hours } = internship
+  const completed = getCompletedHours(internship)
   const real = completed !== 0
 
   return (
@@ -27,7 +27,7 @@ export default function InternshipProgress({ stage, internship }: Props) {
       <p className="font-semibold">
         Progreso:{' '}
         <span className={clsx('brightness-75 font-bold', STAGE_COLORS[stage])}>
-          {internship.completed}/{internship.hours} horas.
+          {completed}/{hours} horas.
         </span>
       </p>
     </div>

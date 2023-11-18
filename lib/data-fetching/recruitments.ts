@@ -15,6 +15,7 @@ const include = {
       grade: true,
     },
   },
+  progresses: true,
 }
 
 export const getRecruitments = cache(

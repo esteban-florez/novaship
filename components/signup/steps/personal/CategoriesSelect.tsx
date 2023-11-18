@@ -38,7 +38,7 @@ export default function CategoriesSelect({ searchText }: Props) {
   return (
     <div className="my-4">
       <SelectedItems
-        items={selectedCategories} itemsName="Áreas" onRemove={handleCategoryInput}
+        limit={5} items={selectedCategories} itemsName="Áreas" onRemove={handleCategoryInput}
       />
       <div className="grid h-60 grid-cols-2 gap-x-3 gap-y-2 scrollbar p-4 shadow-inner">
         {filteredCategories.length !== 0

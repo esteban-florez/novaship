@@ -4,6 +4,7 @@ import AvatarIcon from '../AvatarIcon'
 interface Props {
   owner: string
   location: string
+  image: string | null
   description?: string
   verification?: boolean
 }
@@ -11,13 +12,14 @@ interface Props {
 export default function InfoUser({
   owner,
   location,
+  image,
   description,
   verification = true,
 }: Props) {
   return (
     <>
       <div className="mb-2 flex items-center justify-center gap-2">
-        <AvatarIcon className="h-10 w-10 bg-black text-white" />
+        <AvatarIcon image={image} className="h-10 w-10 bg-black text-white" />
         <div className="mb-2 flex flex-col">
           <p className="text-lg font-semibold">{owner}</p>
           <small className="-my-1 font-semibold text-neutral-600">

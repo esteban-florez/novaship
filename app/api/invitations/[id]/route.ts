@@ -28,12 +28,12 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
             leader: {
               select: {
                 companyId: true,
-                personId: true
-              }
-            }
-          }
-        }
-      }
+                personId: true,
+              },
+            },
+          },
+        },
+      },
     })
 
     const authUser = await prisma.authUser.findFirstOrThrow({
@@ -41,19 +41,19 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
         OR: [
           {
             person: {
-              id: invitation.team.leader.personId ?? ''
-            }
+              id: invitation.team.leader.personId ?? '',
+            },
           },
           {
             company: {
-              id: invitation.team.leader.companyId ?? ''
-            }
-          }
-        ]
+              id: invitation.team.leader.companyId ?? '',
+            },
+          },
+        ],
       },
       select: {
-        id: true
-      }
+        id: true,
+      },
     })
 
     if (parsed.status === 'PENDING') {
@@ -63,8 +63,8 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
     await prisma.invitation.update({
       where: { id },
       data: {
-        ...parsed
-      }
+        ...parsed,
+      },
     })
 
     const notification = parsed.status === 'ACCEPTED'
@@ -77,7 +77,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
     await notify(notification, authUser.id, {
       user: name,
       team: invitation.team.name,
-      teamId: invitation.team.id
+      teamId: invitation.team.id,
     })
 
     if (parsed.status === 'ACCEPTED') {
@@ -85,13 +85,12 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
         data: {
           invitationId: id,
           personId: userId,
-          teamId: invitation.team.id
-        }
+          teamId: invitation.team.id,
+        },
       })
     }
-    
+
     return NextResponse.redirect(url(redirect))
-    
   } catch (error) {
     return handleError(error, data)
   }

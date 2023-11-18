@@ -56,15 +56,13 @@ export async function PATCH(
     const where = {
       id: { not: id },
       internshipId: internship.id,
-    }
-
-    const recruitments = await prisma.recruitment.findMany({
-      where: {
-        ...where,
-        status: {
-          not: 'REJECTED',
-        },
+      status: {
+        not: 'REJECTED',
       },
+    } as const
+
+    const rejectedRecruitments = await prisma.recruitment.findMany({
+      where,
       include: {
         vacant: {
           include: {
@@ -74,7 +72,11 @@ export async function PATCH(
       },
     })
 
-    const rejectedReceivers = recruitments
+    await prisma.recruitment.updateMany({
+      where, data: { status: 'REJECTED' },
+    })
+
+    const rejectedReceivers = rejectedRecruitments
       .map(({ vacant }) => vacant.company.authUserId)
 
     await notify('recruitment-accepted', receiver, notificationData)

@@ -207,6 +207,7 @@ export default async function OfferPage({
         <div className="sticky col-span-7 sm:col-span-2">
           <div className="card bg-white p-4 shadow-md lg:self-start">
             <InfoUser
+              image={offer.company.image}
               owner={offer.company.name}
               location={offer.location.title}
               description={offer.company.description}

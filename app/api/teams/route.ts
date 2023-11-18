@@ -50,13 +50,13 @@ export async function POST(request: NextRequest) {
       where: {
         person: {
           id: {
-            in: invitations.map(invitation => invitation.personId)
-          }
-        }
+            in: invitations.map(invitation => invitation.personId),
+          },
+        },
       },
       select: {
-        id: true
-      }
+        id: true,
+      },
     })
 
     for (const authUser of authUsers) {
@@ -65,7 +65,6 @@ export async function POST(request: NextRequest) {
         team: team.name,
       })
     }
-
 
     return NextResponse.redirect(url(`/home/teams/${team.id}?alert=team_created`))
   } catch (error) {

@@ -9,6 +9,7 @@ export default async function company() {
   const locations = collect(await prisma.location.findMany({ select: { id: true } }))
   const positionRange = numbers(companies.names.length - 1)
   const unverifiedProbability = numbers(1, 8)
+  const images = collect(['1.jpg', '2.png'])
 
   for (let i = 0; i < seederQueries.companies; i++) {
     const position = positionRange.random()
@@ -29,6 +30,7 @@ export default async function company() {
       data: {
         name,
         email,
+        image: '/company' + images.random().first(),
         rif: numbers().rif(),
         description,
         phone: numbers().phone(),
