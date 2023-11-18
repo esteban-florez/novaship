@@ -21,7 +21,7 @@ export default function InternshipProgress({ stage, internship }: Props) {
       </p>
       <progress
         className={clsx('progress w-full h-3', STAGE_PROGRESS[stage])}
-        value={real ? completed : 5}
+        value={real ? completed : 2}
         max={real ? hours : 100}
       />
       <p className="font-semibold">

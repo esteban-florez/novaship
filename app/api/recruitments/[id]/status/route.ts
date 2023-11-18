@@ -53,6 +53,7 @@ export async function PATCH(
       )
     }
 
+    // TODO -> verificar si la vacante llego al límite, y rechazar las demás, y enviar notificación de vacante llena
     const where = {
       id: { not: id },
       internshipId: internship.id,
