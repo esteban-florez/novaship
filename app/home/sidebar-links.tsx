@@ -88,6 +88,7 @@ export function sidebarLinks(user: UserWithType) {
         : '/home/offers?filter=all',
       title: 'Ofertas',
       icon: <BriefcaseIcon className="h-6 w-6" />,
+      visible: !institute,
       submenu: [
         {
           href: person
@@ -120,6 +121,7 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/projects?filter=suggested',
       title: 'Proyectos',
       icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
+      visible: !institute,
       submenu: [
         {
           href: company
@@ -144,6 +146,7 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/teams?filter=all',
       title: 'Equipos',
       icon: <UserGroupIcon className="h-6 w-6" />,
+      visible: !institute,
       submenu: [
         {
           href: '/home/teams?filter=all',

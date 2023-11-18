@@ -19,9 +19,6 @@ export default function PieGraphic({ title, data }: Props) {
   const options: ChartOptions<'pie'> = {
     responsive: true,
     maintainAspectRatio: true,
-    layout: {
-      padding: 18,
-    },
     plugins: {
       tooltip: {
         callbacks: {

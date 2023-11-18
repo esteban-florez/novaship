@@ -72,7 +72,7 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
           </div>
           <div className="col-span-7 gap-4">
             <div className="flex flex-col sm:flex-row justify-between gap-4">
-              <div className="w-full rounded-lg card bg-white shadow-lg">
+              <div className="pb-2 max-h-96 rounded-lg card bg-white shadow-lg">
                 <PieGraphic
                   title="Progreso de tareas"
                   data={data}
