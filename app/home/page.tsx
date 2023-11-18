@@ -1,5 +1,6 @@
 import EmptyContent from '@/components/EmptyContent'
 import BarGraphic from '@/components/graphics/BarGraphic'
+import NoData from '@/components/graphics/NoData'
 import PieGraphic from '@/components/graphics/PieGraphic'
 import GrowthIcon from '@/components/home/GrowthIcon'
 import HomeCarousel from '@/components/home/HomeCarousel'
@@ -7,22 +8,30 @@ import MiniCard from '@/components/home/MiniCard'
 import QuickAccess from '@/components/home/QuickAccess'
 import Notification from '@/components/layout/Notification'
 import { auth } from '@/lib/auth/pages'
+import { getInternships } from '@/lib/data-fetching/internships'
 import { getPersonRelatedIds } from '@/lib/data-fetching/user'
 import { getNotifications } from '@/lib/notifications/get'
 import getQuickAccessItems from '@/lib/quickAcessItems'
 import collect from '@/lib/utils/collection'
-import { daysLeft, diffForHumans, getAllMonths } from '@/lib/utils/date'
+import { daysLeft, getAllMonths } from '@/lib/utils/date'
 import { growthComparedLastMonth } from '@/lib/utils/graph'
-import { getCompletedHours } from '@/lib/utils/tables'
+import { getCompletedHours, getInternshipStage } from '@/lib/utils/tables'
+import { checkEmpty } from '@/lib/utils/verify'
 import prisma from '@/prisma/client'
 import {
+  AcademicCapIcon,
   ArrowTopRightOnSquareIcon,
+  CheckIcon,
   ClockIcon,
+  ListBulletIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { type Prisma } from '@prisma/client'
 import { type ChartData } from 'chart.js'
+import clsx from 'clsx'
 import { type Metadata } from 'next'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Inicio',
@@ -180,7 +189,6 @@ export default async function HomePage() {
       ],
     }
 
-    // TODO -> mostrar cuando no tiene valores
     const projectsData: ChartData<'pie'> = {
       labels: ['En progreso', 'Completadas', 'Revisión', 'Por empezar'],
       datasets: [
@@ -195,7 +203,7 @@ export default async function HomePage() {
       <>
         <HomeCarousel />
         <QuickAccess items={quickAccessItems} />
-        <section className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <section className="px-4 pt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <h3 className="col-span-full text-lg font-bold text-primary">
             Últimas notificaciones
           </h3>
@@ -204,7 +212,7 @@ export default async function HomePage() {
                 notifications.map(({ display, id, createdAt }) => (
                   <div
                     key={id}
-                    className="card card-compact bg-base-100 rounded-lg shadow-lg"
+                    className="pt-1.5 card card-compact bg-base-100 border border-zinc-300 rounded-lg shadow-lg"
                   >
                     <Notification
                       {...display}
@@ -216,32 +224,61 @@ export default async function HomePage() {
                 ))
               )
             : (
-              <div className="col-span-full">
+              <div className="col-span-full card bg-white border border-zinc-300 rounded-md shadow-md">
                 <EmptyContent title="No tienes notificaciones." />
               </div>
               )}
         </section>
         <section className="p-4 gap-4 grid grid-cols-1 sm:grid-cols-2">
-          <h3 className="mb-1 col-span-full text-lg font-bold text-primary">
+          <h3 className="col-span-full text-lg font-bold text-primary">
             Tus estadísticas
           </h3>
-          <div className="max-h-96 col-span-1 items-center card bg-white">
-            <PieGraphic
-              title="Ofertas laborales"
-              data={offersData}
-            />
+          <div className="pb-2 max-h-96 col-span-1 items-center card bg-white border border-zinc-300 rounded-md shadow-md">
+            {checkEmpty([applicableOffers, nonApplicableOffers])
+              ? (
+                <NoData title="Ofertas laborales">
+                  No hay ofertas registradas para mostrar este gráfico
+                </NoData>
+                )
+              : (
+                <PieGraphic
+                  title="Ofertas laborales"
+                  data={offersData}
+                />
+                )}
           </div>
-          <div className="max-h-96 col-span-1 items-center card bg-white">
-            <PieGraphic
-              title="Proyectos"
-              data={projectsData}
-            />
+          <div className="pb-2 max-h-96 col-span-1 items-center card bg-white border border-zinc-300 rounded-md shadow-md">
+            {checkEmpty([
+              tasksProgress,
+              tasksDone,
+              tasksRevision,
+              tasksPending,
+            ])
+              ? (
+                <NoData title="Proyectos">
+                  Forma parte de algún proyecto para mostrar este gráfico
+                </NoData>
+                )
+              : (
+                <PieGraphic
+                  title="Proyectos"
+                  data={projectsData}
+                />
+                )}
           </div>
-          <div className="h-96 col-span-full items-center card bg-white">
-            <BarGraphic
-              title="Pasantías"
-              data={internshipsData}
-            />
+          <div className="col-span-full h-96 card bg-white border border-zinc-300 rounded-md items-center">
+            {checkEmpty([hoursRequired, hoursCompleted])
+              ? (
+                <NoData title="Progreso de pasantías">
+                  No estas realizando ninguna pasantía para mostrar este gráfico
+                </NoData>
+                )
+              : (
+                <BarGraphic
+                  title="Progreso de pasantías"
+                  data={internshipsData}
+                />
+                )}
           </div>
         </section>
       </>
@@ -249,6 +286,7 @@ export default async function HomePage() {
   }
 
   if (type === 'ADMIN') {
+    const notifications = await getNotifications(authUserId, 3)
     const query = { where: { verifiedAt: null } }
     const institutes = await prisma.institute.count({ ...query })
     const companies = await prisma.company.count({ ...query })
@@ -339,7 +377,7 @@ export default async function HomePage() {
       <>
         <HomeCarousel />
         <QuickAccess items={quickAccessItems} />
-        <section className="p-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
+        <section className="px-4 pt-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
           <h3 className="col-span-full text-lg font-bold text-primary">
             Estadísticas
           </h3>
@@ -361,6 +399,32 @@ export default async function HomePage() {
           >
             <ClockIcon className="w-12 h-12" />
           </MiniCard>
+        </section>
+        <section className="px-4 pt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <h3 className="col-span-full text-lg font-bold text-primary">
+            Últimas notificaciones
+          </h3>
+          {notifications.length > 0
+            ? (
+                notifications.map(({ display, id, createdAt }) => (
+                  <div
+                    key={id}
+                    className="pt-1.5 card card-compact bg-base-100 border border-zinc-300 rounded-lg shadow-lg"
+                  >
+                    <Notification
+                      {...display}
+                      key={id}
+                      id={id}
+                      date={createdAt}
+                    />
+                  </div>
+                ))
+              )
+            : (
+              <div className="pb-2 col-span-full card bg-white border border-zinc-300 rounded-md shadow-md">
+                <EmptyContent title="No tienes notificaciones." />
+              </div>
+              )}
         </section>
       </>
     )
@@ -506,45 +570,40 @@ export default async function HomePage() {
       <>
         <HomeCarousel />
         <QuickAccess items={quickAccessItems} />
-        <section className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <section className="px-4 pt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <h3 className="col-span-full text-lg font-bold text-primary">
             Últimas notificaciones
           </h3>
           {notifications.length > 0
             ? (
-                notifications.map(({ id, createdAt, display }) => (
+                notifications.map(({ display, id, createdAt }) => (
                   <div
                     key={id}
-                    className="card card-compact p-0 bg-base-100 border border-zinc-300 rounded-md shadow-lg"
+                    className="pt-1.5 card card-compact bg-base-100 border border-zinc-300 rounded-lg shadow-lg"
                   >
-                    <Link
-                      href={display.href}
-                      className="flex flex-col p-4 w-80 max-w-xs hover:bg-base-200"
-                    >
-                      <p className="line-clamp-2 text-sm leading-tight font-semibold normal-case text-neutral-600">
-                        {display.content}
-                      </p>
-                      <small className="text-neutral-600 font-semibold">
-                        {diffForHumans(createdAt)}
-                      </small>
-                    </Link>
+                    <Notification
+                      {...display}
+                      key={id}
+                      id={id}
+                      date={createdAt}
+                    />
                   </div>
                 ))
               )
             : (
-              <div className="col-span-full">
+              <div className="h-full col-span-full card bg-white border border-zinc-300 rounded-md shadow-md">
                 <EmptyContent title="No tienes notificaciones." />
               </div>
               )}
         </section>
-        <section className="p-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="col-span-1">
-            <h3 className="text-lg font-bold text-primary">
+        <section className="px-4 pt-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <div className="col-span-full sm:col-span-2 gap-4">
+            <h3 className="mb-4 text-lg font-bold text-primary">
               Ofertas por vencer
             </h3>
             {expiringOffers.length > 0
               ? (
-                <article className="w-full card bg-white gap-2 border border-zinc-300 rounded-md divide-y">
+                <article className="w-full gap-2 divide-y card bg-white border border-zinc-300 rounded-md shadow-md">
                   {expiringOffers.map((offer) => {
                     return (
                       <div
@@ -576,34 +635,305 @@ export default async function HomePage() {
                 </article>
                 )
               : (
-                <div className="card bg-white border rounded-md col-span-full">
-                  <EmptyContent title="No hay ofertas próximas a vencer." />
+                <div className="h-full max-h-96 card bg-white border border-zinc-300 rounded-md shadow-md">
+                  <div className="my-auto pb-2 sm:pb-0 items-center">
+                    <EmptyContent title="No hay ofertas próximas a vencer." />
+                  </div>
                 </div>
                 )}
           </div>
-          <div className="col-span-1 sm:col-span-2">
-            <div className="max-h-96 items-center card rounded-md bg-white">
-              <PieGraphic
-                title="Ofertas"
-                data={offersData}
-              />
+          <div className="col-span-full sm:col-span-2">
+            <h3 className="mb-4 text-lg font-bold text-primary">
+              Estadísticas
+            </h3>
+            <div className="col-span-1 sm:col-span-2">
+              <div
+                className={clsx(
+                  'pb-2 max-h-96 items-center card border border-zinc-300 rounded-md bg-white',
+                  checkEmpty([users, totalUsers - users]) && 'h-96'
+                )}
+              >
+                {checkEmpty([users, totalUsers - users])
+                  ? (
+                    <NoData title="Postulantes">
+                      No hay ofertas registradas para mostrar
+                    </NoData>
+                    )
+                  : (
+                    <PieGraphic
+                      title="Postulantes"
+                      data={offersData}
+                    />
+                    )}
+              </div>
             </div>
           </div>
-          <div className="h-96 col-span-full items-center card rounded-md bg-white">
-            <BarGraphic
-              title="Postulantes"
-              data={hiringData}
-            />
+          <div className="col-span-full">
+            <div className="h-96 items-center card border border-zinc-300 rounded-md bg-white">
+              {checkEmpty(hiringUsers)
+                ? (
+                  <NoData title="Postulantes anuales">
+                    No hay registros de postulantes para mostrar
+                  </NoData>
+                  )
+                : (
+                  <BarGraphic
+                    title="Postulantes anuales"
+                    data={hiringData}
+                  />
+                  )}
+            </div>
           </div>
         </section>
       </>
     )
   }
 
-  return (
-    <>
-      <HomeCarousel />
-      <QuickAccess items={quickAccessItems} />
-    </>
-  )
+  if (type === 'INSTITUTE') {
+    const notifications = await getNotifications(authUserId, 3)
+    const users = await prisma.internship.count({
+      where: {
+        NOT: {
+          instituteId: userId,
+        },
+      },
+    })
+    const totalInternships = await prisma.internship.count({
+      where: { instituteId: userId },
+    })
+    const internshipCountByMonth = await prisma.internship.groupBy({
+      by: ['createdAt'],
+      _count: true,
+      where: { instituteId: userId },
+      orderBy: {
+        createdAt: 'asc',
+      },
+    })
+
+    const internships = await getInternships({ where: { instituteId: userId } })
+    const totalRecruitments = await prisma.recruitment.count({
+      where: { interested: 'PERSON' },
+    })
+    const recruitmentByMonth = await prisma.recruitment.findMany({
+      where: { interested: 'PERSON' },
+      select: {
+        status: true,
+        createdAt: true,
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+    })
+
+    const recruitmentCountByMonth = recruitmentByMonth.map((recruitment) => {
+      return {
+        ...recruitment,
+        _count: 1,
+      }
+    })
+
+    const result = growthComparedLastMonth(
+      [internshipCountByMonth, recruitmentCountByMonth],
+      [totalInternships, totalRecruitments]
+    )
+
+    const acceptedRecruitments = recruitmentByMonth.filter(
+      (recruitment) => recruitment.status === 'ACCEPTED'
+    )
+    const rejectedRecruitments = recruitmentByMonth.filter(
+      (recruitment) => recruitment.status === 'REJECTED'
+    )
+
+    const stages = internships.map((internship) => {
+      return getInternshipStage(internship)
+    })
+
+    const internshipsAccepted = stages.filter(
+      (stage) => stage === 'ACCEPTED'
+    ).length
+    const internshipsInProgress = stages.filter(
+      (stage) => stage === 'ACTIVE'
+    ).length
+    const internshipsCompleted = stages.filter(
+      (stage) => stage === 'COMPLETED'
+    ).length
+
+    const graphs = [
+      {
+        title: 'Pasantes',
+        count: result[0].total,
+        icon: <AcademicCapIcon className="w-12 h-12" />,
+      },
+      {
+        title: 'Solicitudes enviadas',
+        count: result[1].total,
+        icon: <ListBulletIcon className="w-12 h-12" />,
+      },
+      {
+        title: 'Solicitudes aprobadas',
+        count: acceptedRecruitments.length,
+        icon: <CheckIcon className="w-12 h-12" />,
+      },
+      {
+        title: 'Solicitudes rechazadas',
+        count: rejectedRecruitments.length,
+        icon: <XMarkIcon className="w-12 h-12" />,
+      },
+    ]
+
+    const internshipsCount: number[] = Array(12).fill(0)
+    const months = Array.from(Array(12).keys())
+
+    internships.forEach((internship) => {
+      const month = months[internship.createdAt.getMonth()]
+      internshipsCount[month] == null
+        ? (internshipsCount[month] = 1)
+        : (internshipsCount[month] += 1)
+    })
+
+    const monthlyInternshipsData: ChartData<'bar'> = {
+      labels: getAllMonths(),
+      datasets: [
+        {
+          label: 'Pasantes',
+          data: internshipsCount,
+        },
+      ],
+    }
+
+    const usersData: ChartData<'pie'> = {
+      labels: ['Internos', 'Otros'],
+      datasets: [
+        {
+          label: 'Progreso',
+          data: [totalInternships, users],
+        },
+      ],
+    }
+
+    const internshipsData: ChartData<'pie'> = {
+      labels: ['En busca de empresa', 'En progreso', 'Completadas'],
+      datasets: [
+        {
+          label: 'Progreso',
+          data: [
+            internshipsAccepted,
+            internshipsInProgress,
+            internshipsCompleted,
+          ],
+        },
+      ],
+    }
+
+    return (
+      <>
+        <QuickAccess items={quickAccessItems} />
+        <section className="px-4 pt-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <h3 className="col-span-full text-lg font-bold text-primary">
+            Estadísticas
+          </h3>
+          {graphs.map(({ title, count, icon }, i) => {
+            return (
+              <MiniCard
+                key={i}
+                title={title}
+                count={i < 2 ? result[i].total : count}
+                percentage={i < 2 ? result[i].percentage : undefined}
+              >
+                {i < 2
+                  ? (
+                    <GrowthIcon comparision={result[i].comparision} />
+                    )
+                  : (
+                      icon
+                    )}
+              </MiniCard>
+            )
+          })}
+        </section>
+        <section className="px-4 pt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <h3 className="col-span-full text-lg font-bold text-primary">
+            Últimas notificaciones
+          </h3>
+          {notifications.length > 0
+            ? (
+                notifications.map(({ display, id, createdAt }) => (
+                  <div
+                    key={id}
+                    className="pt-1.5 card card-compact bg-base-100 border border-zinc-300 rounded-lg shadow-lg"
+                  >
+                    <Notification
+                      {...display}
+                      key={id}
+                      id={id}
+                      date={createdAt}
+                    />
+                  </div>
+                ))
+              )
+            : (
+              <div className="col-span-full card bg-white border border-zinc-300 rounded-md shadow-md">
+                <EmptyContent title="No tienes notificaciones." />
+              </div>
+              )}
+        </section>
+        <section className="p-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <h3 className="col-span-full text-lg font-bold text-primary">
+            Estadísticas
+          </h3>
+          <div className="max-h-96 col-span-1 sm:col-span-2 items-center card bg-white border boder-zinc-300 rounded-md shadow-md">
+            {checkEmpty([
+              internshipsAccepted,
+              internshipsInProgress,
+              internshipsCompleted,
+            ])
+              ? (
+                <NoData title="Progreso de pasantías">
+                  No hay pasantías "En busca de empleo", "En progreso" o
+                  "Completadas" para mostrar
+                </NoData>
+                )
+              : (
+                <PieGraphic
+                  title="Progreso de pasantías"
+                  data={internshipsData}
+                />
+                )}
+          </div>
+          <div className="pb-2 max-h-96 col-span-1 sm:col-span-2 items-center card bg-white  border boder-zinc-300 rounded-md shadow-md">
+            {checkEmpty([totalInternships, users])
+              ? (
+                <NoData title="Pasantes">
+                  No hay registros de pasantes (suyos y otros) suficientes para
+                  mostrar este gráfico
+                </NoData>
+                )
+              : (
+                <PieGraphic
+                  title="Pasantes"
+                  data={usersData}
+                />
+                )}
+          </div>
+          <div className="h-96 col-span-full items-center card bg-white  border boder-zinc-300 rounded-md shadow-md">
+            {checkEmpty(internshipsCount)
+              ? (
+                <NoData title="Pasantías">
+                  No hay registros de pasantías suficientes para mostrar este
+                  gráfico
+                </NoData>
+                )
+              : (
+                <BarGraphic
+                  title="Pasantías"
+                  data={monthlyInternshipsData}
+                />
+                )}
+          </div>
+        </section>
+      </>
+    )
+  }
+
+  notFound()
 }

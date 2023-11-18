@@ -5,6 +5,8 @@ import {
   CheckBadgeIcon,
   ClipboardDocumentListIcon,
   EnvelopeIcon,
+  InboxStackIcon,
+  PlusIcon,
   TicketIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline'
@@ -83,6 +85,26 @@ export default function getQuickAccessItems({ userId, type }: Props) {
         title: 'Mis equipos',
         href: '/home/teams?filter=personal',
         icon: <UserGroupIcon className="h-4 w-4" />,
+      },
+    ]
+  }
+
+  if (type === 'INSTITUTE') {
+    items = [
+      {
+        title: 'Inscribir pasantes',
+        href: '/home/internships/select',
+        icon: <PlusIcon className="h-4 w-4" />,
+      },
+      {
+        title: 'Mis pasantes',
+        href: `/home/institutes/${userId}/internships`,
+        icon: <UserGroupIcon className="h-4 w-4" />,
+      },
+      {
+        title: 'Solicitudes',
+        href: '/home/internships/recruitments',
+        icon: <InboxStackIcon className="h-4 w-4" />,
       },
     ]
   }
