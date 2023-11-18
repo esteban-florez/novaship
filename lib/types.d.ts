@@ -64,6 +64,17 @@ type QuickAccessProps = Array<{
 // --------------------------- Internships ------------------------------
 // ----------------------------------------------------------------------
 
+interface InternshipSimple {
+  hours: number
+  recruitments: Array<{
+    status: Status
+    progresses: Array<{
+      hours: number
+    }>
+  }>
+  updatedAt: Date
+}
+
 type InternshipWithRelations = Internship & {
   recruitments: Array<Recruitment & {
     vacant: Vacant & {

@@ -13,6 +13,7 @@ import getQuickAccessItems from '@/lib/quickAcessItems'
 import collect from '@/lib/utils/collection'
 import { daysLeft, diffForHumans, getAllMonths } from '@/lib/utils/date'
 import { growthComparedLastMonth } from '@/lib/utils/graph'
+import { getCompletedHours } from '@/lib/utils/tables'
 import prisma from '@/prisma/client'
 import {
   ArrowTopRightOnSquareIcon,
@@ -27,6 +28,7 @@ export const metadata: Metadata = {
   title: 'Inicio',
 }
 
+// TODO -> mover a componentes
 export default async function HomePage() {
   const { id: userId, authUserId, type } = await auth.user()
   const quickAccessItems = getQuickAccessItems({ userId, type })
@@ -73,13 +75,27 @@ export default async function HomePage() {
       where: { ...baseQuery, NOT: { ...offerQuery } },
     })
 
-    const internships = await prisma.internship.groupBy({
-      by: ['updatedAt'],
-      _sum: {
-        hours: true,
-        completed: true,
+    const internships = await prisma.internship.findMany({
+      where: {
+        personId: userId,
+        status: {
+          not: 'REJECTED',
+        },
       },
-      where: { personId: userId },
+      select: {
+        hours: true,
+        recruitments: {
+          select: {
+            status: true,
+            progresses: {
+              select: {
+                hours: true,
+              },
+            },
+          },
+        },
+        updatedAt: true,
+      },
     })
 
     const hoursRequired: number[] = Array(12).fill(0)
@@ -89,11 +105,11 @@ export default async function HomePage() {
     internships.forEach((internship) => {
       const month = months[internship.updatedAt.getMonth()]
       hoursRequired[month] == null
-        ? (hoursRequired[month] = internship._sum?.hours ?? 0)
-        : (hoursRequired[month] += internship._sum?.hours ?? 0)
+        ? (hoursRequired[month] = internship.hours ?? 0)
+        : (hoursRequired[month] += internship.hours ?? 0)
       hoursCompleted[month] == null
-        ? (hoursCompleted[month] = internship._sum?.completed ?? 0)
-        : (hoursCompleted[month] += internship._sum?.completed ?? 0)
+        ? (hoursCompleted[month] = getCompletedHours(internship) ?? 0)
+        : (hoursCompleted[month] += getCompletedHours(internship) ?? 0)
     })
 
     const tasks = await prisma.task.groupBy({
