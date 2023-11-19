@@ -360,6 +360,9 @@ export default async function HomePage() {
             <StatisticsGraphSection
               noData={noDataGraphs[1]}
               valid={checkEmpty(hirings)}
+              options={{
+                height: 'h-96',
+              }}
             >
               <BarGraphic
                 title="Postulantes anuales"

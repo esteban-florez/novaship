@@ -22,11 +22,13 @@ export default function Invitations({ invitations, type, search }: Props) {
     )
   }
 
-  const filtered = invitations.filter(invitation => search === '' || includesValue(invitation.team.name, search))
+  const filtered = invitations.filter(
+    (invitation) => search === '' || includesValue(invitation.team.name, search)
+  )
 
   return (
     <section className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg p-4 pt-1 md:columns-2 lg:columns-3 xl:rounded-tl-none">
-      {filtered.map(invitation => (
+      {filtered.map((invitation) => (
         <div
           key={invitation.id}
           className="mb-4 break-inside-avoid-column"

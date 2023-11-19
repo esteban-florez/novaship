@@ -30,6 +30,8 @@ interface Props {
     person: Person
   }
   >
+  isMember: boolean
+  isOwner: boolean
 }
 
 export default function Tasks({
@@ -37,6 +39,8 @@ export default function Tasks({
   tasks,
   memberships,
   person,
+  isMember,
+  isOwner,
 }: Props) {
   return (
     <div className="flex w-full flex-col gap-3">
@@ -48,6 +52,8 @@ export default function Tasks({
             projectId={projectId}
             memberships={memberships}
             person={person}
+            isMember={isMember}
+            isOwner={isOwner}
           />
         )
       })}

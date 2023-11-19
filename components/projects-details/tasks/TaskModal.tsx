@@ -3,7 +3,12 @@
 import { schema } from '@/lib/validation/schemas/task'
 import Modal from '@/components/modal/Modal'
 import useSubmit from '@/lib/hooks/useSubmit'
-import { type Membership, type Participation, type Person, type Task } from '@prisma/client'
+import {
+  type Membership,
+  type Participation,
+  type Person,
+  type Task,
+} from '@prisma/client'
 import FormSection from '@/components/forms/FormSection'
 import Input from '@/components/forms/inputs/Input'
 import Textarea from '@/components/forms/inputs/Textarea'
@@ -62,6 +67,7 @@ export default function TaskModal({
     serverErrors,
     handleSubmit,
     control,
+    loading,
   } = useSubmit({
     schema,
     method,
@@ -145,7 +151,10 @@ export default function TaskModal({
               id={id}
               text="Cerrar"
             />
-            <button className="btn btn-primary">
+            <button
+              disabled={loading}
+              className="btn btn-primary"
+            >
               <PlusIcon className="h-4 w-4" />
               {method === 'PUT' ? 'Actualizar' : 'Registrar'}
             </button>

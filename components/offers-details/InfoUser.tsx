@@ -18,8 +18,11 @@ export default function InfoUser({
 }: Props) {
   return (
     <>
-      <div className="mb-2 flex items-center justify-center gap-2">
-        <AvatarIcon image={image} className="h-10 w-10 bg-black text-white" />
+      <div className="mb-2 flex items-center gap-2">
+        <AvatarIcon
+          image={image}
+          className="h-10 w-10 bg-black text-white"
+        />
         <div className="mb-2 flex flex-col">
           <p className="text-lg font-semibold">{owner}</p>
           <small className="-my-1 font-semibold text-neutral-600">

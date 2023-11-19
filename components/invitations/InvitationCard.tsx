@@ -48,13 +48,17 @@ export default function InvitationCard({ invitation }: Props) {
           >
             <button
               className="btn btn-primary"
-              onClick={() => { setStatus('ACCEPTED') }}
+              onClick={() => {
+                setStatus('ACCEPTED')
+              }}
             >
               Aceptar
             </button>
             <button
               className="btn btn-ghost btn-outline hover:btn-error"
-              onClick={() => { setStatus('REJECTED') }}
+              onClick={() => {
+                setStatus('REJECTED')
+              }}
             >
               Rechazar
             </button>

@@ -10,7 +10,7 @@ export default async function NotificationDropdown() {
   const notifications = await getNotifications(authUserId, 3)
 
   return (
-    <div className="dropdown-end dropdown z-20">
+    <div className="dropdown-end dropdown z-30">
       <label
         tabIndex={0}
         className="btn-ghost btn-circle btn"

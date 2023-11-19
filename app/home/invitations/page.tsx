@@ -23,6 +23,7 @@ interface FilterQueries {
   rejected: Prisma.InvitationWhereInput
 }
 
+// #FIX -> se pueden hacer múltiples postulaciones (duplicado)
 export default async function InvitationsPage({
   searchParams,
 }: SearchParamsProps) {

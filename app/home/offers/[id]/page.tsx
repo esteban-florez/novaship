@@ -29,6 +29,7 @@ export const metadata: Metadata = {
   title: 'Ver oferta',
 }
 
+// #FIX -> se pueden hacer múltiples postulaciones (duplicado)
 export default async function OfferPage({
   params: { id },
   searchParams,

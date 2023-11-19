@@ -12,11 +12,7 @@ export default function TeamsTitle({ title, team }: Props) {
   return (
     <PageTitle
       title={title}
-      subtitle={{
-        label: 'Equipo',
-        name: team.name,
-        url: `/home/teams/${team.id}`,
-      }}
+      subtitle="Aquí podrás ver toda la plantilla del equipo"
       breadcrumbs={team.name}
     >
       {/* <Link href={`/home/teams/${team.id}/contracts/create`} className="btn-primary btn">

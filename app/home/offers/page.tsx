@@ -47,6 +47,13 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
       limit: {
         gt: 0,
       },
+      NOT: {
+        hiring: {
+          some: {
+            personId: id,
+          },
+        },
+      },
       OR: [
         {
           categories: {
@@ -72,6 +79,13 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
     personal: { companyId: id },
     applied: { hiring: { some: { personId: id } } },
     all: {
+      NOT: {
+        hiring: {
+          some: {
+            personId: id,
+          },
+        },
+      },
       AND: [{ companyId: { not: id } }, { expiresAt: { gte: new Date() } }],
     },
   }
@@ -195,9 +209,7 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
           return null
         })}
       </PageContent>
-      <Pagination
-        nextPage={nextPage}
-      />
+      <Pagination nextPage={nextPage} />
     </>
   )
 }

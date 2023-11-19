@@ -51,6 +51,7 @@ export default function ProjectForm({
     register,
     formState: { errors },
     control,
+    loading,
   } = useSubmit({
     schema,
     method,
@@ -186,7 +187,7 @@ export default function ProjectForm({
           </section>
           <FormButtons
             label={method === 'PUT' ? 'Actualizar' : 'Registrar'}
-            disableSubmit={teamwork === null}
+            disableSubmit={teamwork === null || loading}
           />
         </form>
       </FormLayout>

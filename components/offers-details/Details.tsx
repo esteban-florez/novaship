@@ -56,7 +56,7 @@ export default function Details({
     ACCEPTED: '¡Su postulación ha sido aceptada!',
   }
 
-  const { handleSubmit, alert, serverErrors } = useSubmit({
+  const { handleSubmit, alert, serverErrors, loading } = useSubmit({
     method: interested === 'COMPANY' ? 'PUT' : 'POST',
     append: {
       offerId: id,
@@ -134,7 +134,9 @@ export default function Details({
                       <div className="flex flex-col sm:flex-row gap-4">
                         <button className="btn btn-primary">Aceptar</button>
                         <button
-                          onClick={() => { setStatus('REJECTED') }}
+                          onClick={() => {
+                            setStatus('REJECTED')
+                          }}
                           className="btn btn-error"
                         >
                           Rechazar
@@ -154,7 +156,10 @@ export default function Details({
                     method="POST"
                     onSubmit={handleSubmit}
                   >
-                    <button className="btn btn-block md:btn-wide btn-primary">
+                    <button
+                      disabled={loading}
+                      className="btn btn-block md:btn-wide btn-primary"
+                    >
                       <PencilSquareIcon className="h-4 w-4" />
                       ¡Aplicar!
                     </button>

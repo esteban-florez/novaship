@@ -5,19 +5,22 @@ import AvatarIcon from '@/components/AvatarIcon'
 import { getMember } from '@/lib/utils/tables'
 import Link from 'next/link'
 import { type Grade, type Person } from '@prisma/client'
-import { BriefcaseIcon } from '@heroicons/react/24/outline'
+// import { BriefcaseIcon } from "@heroicons/react/24/outline"
 import { getTeam } from '@/lib/data-fetching/teams'
 import InlineList from '@/components/InlineList'
 import Collapse from '@/components/Collapse'
 import AvatarInfo from '@/components/offers-details/AvatarInfo'
 import PageTitle from '@/components/PageTitle'
 import { notFound } from 'next/navigation'
+import { auth } from '@/lib/auth/pages'
+import clsx from 'clsx'
 
 export const metadata: Metadata = {
   title: 'Equipo de trabajo',
 }
 
 export default async function TeamPage({ params: { id } }: PageContext) {
+  const { id: userId } = await auth.user()
   const team = await getTeam(id)
 
   const { categories, memberships, projects } = team
@@ -42,6 +45,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
     <>
       <PageTitle
         title="Equipo de trabajo"
+        subtitle="Encuentra toda la información disponible del equipo seleccionado"
         breadcrumbs={team.name}
       />
       <section className="flex flex-wrap items-start gap-4 p-4 lg:flex-nowrap">
@@ -50,12 +54,12 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             <h1 className="mb-0 text-2xl font-bold">{team.name}</h1>
             <InlineList items={categories.map(({ title }) => title)} />
             <p className="mt-3 line-clamp-2">{team.description}</p>
-            <div className="mt-4 flex flex-col justify-between gap-2 md:flex-row">
+            {/* <div className="mt-4 flex flex-col justify-between gap-2 md:flex-row">
               <button className="btn-primary btn">
                 <BriefcaseIcon className="h-5 w-5" />
                 Contratar equipo
               </button>
-            </div>
+            </div> */}
           </div>
           <div className="block lg:hidden">
             <Collapse
@@ -154,13 +158,23 @@ export default async function TeamPage({ params: { id } }: PageContext) {
                 return (
                   <Link
                     href={`/home/users/${member.id}`}
-                    className="group flex items-center gap-1 rounded-lg border-2 border-neutral-300 p-2 transition-colors hover:border-primary"
+                    className={clsx(
+                      'group flex items-center gap-1 rounded-lg border-2 p-2 transition-colors',
+                      userId === member.id && 'border-primary',
+                      userId !== member.id &&
+                        'border-neutral-300 hover:border-primary'
+                    )}
                     key={member.id}
                   >
                     <AvatarIcon image={member.image} />
                     <div className="flex flex-col">
-                      <p className="font-semibold transition-colors group-hover:text-primary">
-                        {member.name}
+                      <p
+                        className={clsx(
+                          'font-semibold transition-colors group-hover:text-primary',
+                          userId === member.id && 'text-primary'
+                        )}
+                      >
+                        {userId === member.id ? 'Tú' : member.name}
                       </p>
                       {member.grades.length > 0 && (
                         <span className="-mt-1 text-sm">

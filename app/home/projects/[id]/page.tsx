@@ -40,6 +40,12 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
   const isOwner = leader.id === userId
   const isMember = belongsToTeam(project.team, userId)
 
+  const userData = {
+    id: userId,
+    isOwner,
+    isMember,
+  }
+
   const tasks = await getTasks({ where: { projectId: id } })
   const { done, pending, review, progress } = getStatuses(
     tasks.map((task) => task.status ?? 'PENDING')
@@ -63,8 +69,7 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
             <ProjectDetails
               id={project.id}
               isPrivate={project.visibility === 'PRIVATE'}
-              isOwner={isOwner}
-              isMember={isMember}
+              userData={userData}
               title={project.title}
               categories={categories}
               description={project.description}
@@ -83,14 +88,14 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
               </div>
             </div>
           </div>
-          {(isOwner || isMember) && (
-            <div
-              className={clsx(
-                'col-span-7',
-                project.personId !== userId && 'lg:col-span-5'
-              )}
-            >
-              <div className="card rounded-lg bg-white py-4 sm:p-5 shadow-lg">
+          <div
+            className={clsx(
+              'col-span-7',
+              project.personId !== userId && 'lg:col-span-5'
+            )}
+          >
+            <div className="card rounded-lg bg-white py-4 sm:p-5 shadow-lg">
+              {isOwner && (
                 <div className="px-4 sm:px-0 mb-4">
                   <TaskModal
                     action="/api/tasks"
@@ -101,15 +106,17 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
                     buttonLabel="Nueva tarea"
                   />
                 </div>
-                <Tasks
-                  projectId={project.id}
-                  memberships={project.team?.memberships}
-                  person={type === 'PERSON' ? user : undefined}
-                  tasks={project.tasks}
-                />
-              </div>
+              )}
+              <Tasks
+                projectId={project.id}
+                memberships={project.team?.memberships}
+                person={type === 'PERSON' ? user : undefined}
+                tasks={project.tasks}
+                isOwner={isOwner}
+                isMember={isMember}
+              />
             </div>
-          )}
+          </div>
           {project.personId !== userId && (
             <div className="col-span-7 lg:col-span-2 lg:col-start-6">
               <TeamGroup
