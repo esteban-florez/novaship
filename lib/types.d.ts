@@ -60,6 +60,14 @@ type QuickAccessProps = Array<{
   href: string
 }>
 
+interface NotificationProps {
+  id: string
+  title: string
+  content: React.ReactNode
+  href: string
+  date: Date
+}
+
 // ----------------------------------------------------------------------
 // --------------------------- Internships ------------------------------
 // ----------------------------------------------------------------------

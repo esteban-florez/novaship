@@ -7,10 +7,7 @@ interface Props {
 
 export default function QuickAccess({ items }: Props) {
   return (
-    <article className="mt-2 p-4 shadow-lg">
-      <section className="mb-2">
-        <h2 className="font-bold text-xl">Accesos rápidos</h2>
-      </section>
+    <article className="p-4 shadow-lg">
       <section className="flex flex-wrap gap-2">
         {items.map(({ icon, title, href }) => {
           return (
