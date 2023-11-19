@@ -14,7 +14,7 @@ const include = {
 
 export const getVacants = cache(
   async ({ where, skip, take }: QueryConfig<Prisma.VacantWhereInput>) => {
-    return await prisma.vacant.findMany({ where, skip, take, include })
+    return await prisma.vacant.findMany({ where, skip, take, include, orderBy: { createdAt: 'desc' } })
   }
 )
 

@@ -1,6 +1,6 @@
 import { type Visibility, type Team, type Person, type Leader, type Company, type Membership, type Resets, type AuthUser, type Admin, type Institute, type Status, type Interested } from '@prisma/client'
 import { DBError } from '../errors/reference'
-import { type UserWithType, type ProjectsFull, type InternshipWithRelations, type MembershipsFull, type VacantWithRelations, type HiringWithPersonSkills, type InternshipSimple } from '../types'
+import { type UserWithType, type ProjectsFull, type InternshipWithRelations, type MembershipsFull, type VacantWithRelations, type HiringWithPersonSkills } from '../types'
 
 type TeamWithRelations = Team & {
   leader: Leader & {
@@ -162,7 +162,19 @@ export function validVacants(vacants: VacantWithRelations[]) {
   })
 }
 
-export function getCompletedHours(internship: InternshipWithRelations | InternshipSimple) {
+interface WithProgress {
+  progresses: Array<{
+    hours: number
+  }>
+}
+
+interface WithHours {
+  recruitments: Array<WithProgress & {
+    status: Status
+  }>
+}
+
+export function getCompletedHours(internship: WithHours) {
   const recruitment = internship.recruitments
     .find(recruitment => recruitment.status === 'ACCEPTED')
 
@@ -170,6 +182,10 @@ export function getCompletedHours(internship: InternshipWithRelations | Internsh
     return 0
   }
 
+  return recruitmentCompletedHours(recruitment)
+}
+
+export function recruitmentCompletedHours(recruitment: WithProgress) {
   return recruitment.progresses
     .reduce((sum, progress) => sum + progress.hours, 0)
 }

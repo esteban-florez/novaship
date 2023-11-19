@@ -39,6 +39,9 @@ export const getInternships = cache(
       skip,
       take,
       include,
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
   }
 )

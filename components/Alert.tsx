@@ -38,6 +38,7 @@ export default function Alert({ children }: React.PropsWithChildren) {
   const resetParams = () => {
     if (alertParam !== null) {
       router.push(pathname)
+      router.refresh()
     }
   }
 
