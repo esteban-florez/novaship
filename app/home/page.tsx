@@ -51,9 +51,9 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const { id: userId, authUserId, type } = await auth.user()
   const quickAccessItems = getQuickAccessItems({ userId, type })
+  const notifications = await getNotifications(authUserId, 3)
 
   if (type === 'PERSON') {
-    const notifications = await getNotifications(authUserId, 3)
     const [applicableOffers, nonApplicableOffers] = await getOffers(userId)
     const [hoursRequired, hoursCompleted] = await getInternshipHours(userId)
     const [pending, progress, revision, done] = await getProjectsStatuses(
@@ -171,7 +171,6 @@ export default async function HomePage() {
   }
 
   if (type === 'ADMIN') {
-    const notifications = await getNotifications(authUserId, 3)
     const query = { where: { verifiedAt: null } }
     const institutes = await prisma.institute.count({ ...query })
     const companies = await prisma.company.count({ ...query })
@@ -293,7 +292,6 @@ export default async function HomePage() {
   }
 
   if (type === 'COMPANY') {
-    const notifications = await getNotifications(authUserId, 3)
     const expiringOffers = await getExpiringOffers(userId)
     const { users, totalUsers } = await getUsersCompatibles(userId)
     const hirings = await getHirings(userId)
@@ -376,7 +374,6 @@ export default async function HomePage() {
   }
 
   if (type === 'INSTITUTE') {
-    const notifications = await getNotifications(authUserId, 3)
     const otherInternships = await getOtherInternships(userId)
     const { total: tInternships, count: cInternships } =
       await getInternshipsCount(userId)

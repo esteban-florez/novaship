@@ -86,6 +86,15 @@ export default function ProjectForm({
                 errors={errors}
                 maxlength={40}
               />
+              <Textarea
+                name="description"
+                label="Descripción"
+                placeholder="Ej: Página web de carácter administrativo para la empresa..."
+                value={project?.description}
+                register={register}
+                errors={errors}
+                maxlength={255}
+              />
               <SelectMultiple
                 name="categories"
                 label="Áreas de conocimiento"
@@ -98,15 +107,6 @@ export default function ProjectForm({
                   type: 'rows',
                   data: categories,
                 }}
-              />
-              <Textarea
-                name="description"
-                label="Descripción"
-                placeholder="Ej: Página web de carácter administrativo para la empresa..."
-                value={project?.description}
-                register={register}
-                errors={errors}
-                maxlength={255}
               />
               <Select
                 name="visibility"

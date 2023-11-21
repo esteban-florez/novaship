@@ -13,7 +13,7 @@ interface Props {
 
 export default function InvitationCard({ invitation }: Props) {
   const [status, setStatus] = useState<Status>('PENDING')
-  const { handleSubmit, serverErrors } = useSubmit({
+  const { handleSubmit, serverErrors, alert, loading } = useSubmit({
     method: 'PUT',
     append: {
       status,
@@ -22,6 +22,7 @@ export default function InvitationCard({ invitation }: Props) {
 
   return (
     <>
+      {alert}
       {serverErrors}
       <div className="card card-compact bg-base-100 rounded-lg shadow-lg">
         <div className="p-4">
@@ -48,6 +49,7 @@ export default function InvitationCard({ invitation }: Props) {
           >
             <button
               className="btn btn-primary"
+              disabled={loading}
               onClick={() => {
                 setStatus('ACCEPTED')
               }}
@@ -56,6 +58,7 @@ export default function InvitationCard({ invitation }: Props) {
             </button>
             <button
               className="btn btn-ghost btn-outline hover:btn-error"
+              disabled={loading}
               onClick={() => {
                 setStatus('REJECTED')
               }}

@@ -7,10 +7,12 @@ import { getMyProject } from '@/lib/data-fetching/project'
 import { getMyTeams } from '@/lib/data-fetching/teams'
 
 export const metadata: Metadata = {
-  title: 'Actualizar Proyecto',
+  title: 'Actualizar proyecto',
 }
 
-export default async function UpdateProjectPage({ params: { id } }: PageContext) {
+export default async function UpdateProjectPage({
+  params: { id },
+}: PageContext) {
   const { id: userId, type } = await auth.user()
 
   if (id === null) {
@@ -22,7 +24,10 @@ export default async function UpdateProjectPage({ params: { id } }: PageContext)
     notFound()
   }
 
-  const categories = await prisma.category.findMany({ select: { id: true, title: true }, orderBy: { title: 'asc' } })
+  const categories = await prisma.category.findMany({
+    select: { id: true, title: true },
+    orderBy: { title: 'asc' },
+  })
   const teams = await getMyTeams({ userId })
 
   return (

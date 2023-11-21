@@ -105,6 +105,10 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'El equipo de trabajo fue registrado con éxito.',
   },
+  team_updated: {
+    type: 'success',
+    message: 'El equipo de trabajo ha sido actualizado con éxito.',
+  },
   invitation_accepted: {
     type: 'success',
     message: 'La invitación fue aceptada con éxito.',

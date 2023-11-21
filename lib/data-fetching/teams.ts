@@ -31,6 +31,20 @@ const query = {
   },
 }
 
+export const getMyTeam = cache(async ({ userId }: { userId: string }) => {
+  return await prisma.team.findFirst({
+    where: {
+      leader: {
+        OR: [
+          { personId: userId },
+          { companyId: userId },
+        ],
+      },
+    },
+    ...query,
+  })
+})
+
 // TODO -> añadir categorias.
 export const getMyTeams = cache(async ({ userId }: { userId: string }) => {
   return await prisma.team.findMany({

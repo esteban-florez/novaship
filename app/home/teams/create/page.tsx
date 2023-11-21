@@ -1,6 +1,6 @@
 import PageTitle from '@/components/PageTitle'
 import FormLayout from '@/components/forms/FormLayout'
-import CreateTeamForm from '@/components/teams-create/CreateTeamForm'
+import TeamForm from '@/components/teams/TeamForm'
 import { auth } from '@/lib/auth/pages'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
@@ -31,7 +31,9 @@ export default async function CreateTeamPage() {
         subtitle="Rellena los datos para crear un nuevo equipo, e invita a los demás usuarios a formar parte de él."
       />
       <FormLayout title="Información del equipo">
-        <CreateTeamForm
+        <TeamForm
+          action="/api/teams"
+          method="POST"
           persons={persons}
           categories={categories}
         />

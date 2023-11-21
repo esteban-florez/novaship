@@ -30,7 +30,6 @@
 - Pagina dashboard.
 - Perfil y perfiles.
 - Corregir tags #FIX.
-- Añadir teams/id/update.
 - Cambiar GoBackBtn por Links en forms.
 - Postulaciones en Projects/id.
 - Acciones de tareas como miembro.

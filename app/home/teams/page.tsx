@@ -8,7 +8,11 @@ import Pagination from '@/components/Pagination'
 import Link from 'next/link'
 import clsx from 'clsx'
 import PageTitle from '@/components/PageTitle'
-import { BriefcaseIcon, ListBulletIcon, PlusIcon } from '@heroicons/react/24/outline'
+import {
+  BriefcaseIcon,
+  ListBulletIcon,
+  PlusIcon,
+} from '@heroicons/react/24/outline'
 import { type TeamsFull, type TeamsTab } from '@/lib/types'
 import { type Prisma } from '@prisma/client'
 
@@ -24,6 +28,17 @@ interface FilterQueries {
 export default async function TeamsPage({ searchParams }: SearchParamsProps) {
   const { id } = await auth.user()
 
+  console.log(
+    await prisma.leader.findFirst({
+      where: {
+        personId: id,
+      },
+      select: {
+        team: true,
+      },
+    })
+  )
+
   // DRY Pagination
   const filter = searchParams.filter ?? 'all'
   const pageNumber = +(searchParams.page ?? 1)
@@ -33,10 +48,7 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
       OR: [
         {
           leader: {
-            OR: [
-              { personId: id },
-              { companyId: id },
-            ],
+            OR: [{ personId: id }, { companyId: id }],
           },
         },
         {
@@ -55,10 +67,7 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
       OR: [
         {
           leader: {
-            OR: [
-              { personId: { not: id } },
-              { companyId: { not: id } },
-            ],
+            OR: [{ personId: { not: id } }, { companyId: { not: id } }],
           },
         },
         {
@@ -74,8 +83,13 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
       ],
     },
   }
-  const totalRecords = await prisma.team.count({ where: FILTER_QUERIES[filter as keyof FilterQueries] })
-  const { nextPage, skip, take } = getPaginationProps({ pageNumber, totalRecords })
+  const totalRecords = await prisma.team.count({
+    where: FILTER_QUERIES[filter as keyof FilterQueries],
+  })
+  const { nextPage, skip, take } = getPaginationProps({
+    pageNumber,
+    totalRecords,
+  })
 
   let teams: TeamsFull[] = []
 
@@ -91,17 +105,20 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
     all: 'Todos',
     personal: 'Mis equipos',
   }
-  const links = [{
-    title: 'all',
-    content: 'Todos',
-    icon: <ListBulletIcon className="h-5 w-5" />,
-    query: 'all',
-  }, {
-    title: 'personal',
-    content: 'Mis Equipos',
-    icon: <BriefcaseIcon className="h-5 w-5" />,
-    query: 'personal',
-  }]
+  const links = [
+    {
+      title: 'all',
+      content: 'Todos',
+      icon: <ListBulletIcon className="h-5 w-5" />,
+      query: 'all',
+    },
+    {
+      title: 'personal',
+      content: 'Mis Equipos',
+      icon: <BriefcaseIcon className="h-5 w-5" />,
+      query: 'personal',
+    },
+  ]
 
   return (
     <>
@@ -116,7 +133,12 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
           </button>
         </Link>
       </PageTitle>
-      <PageContent dropdownLabel={`Categorías - ${TEAMS_TAB_TRANSLATION[filter as TeamsTab]}`} teams={teams}>
+      <PageContent
+        dropdownLabel={`Categorías - ${
+          TEAMS_TAB_TRANSLATION[filter as TeamsTab]
+        }`}
+        teams={teams}
+      >
         {links.map((link) => {
           return (
             <Link
@@ -125,7 +147,12 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
                 pathname: '/home/teams',
                 query: { filter: link.query },
               }}
-              className={clsx('btn', link.title === filter ? 'btn-primary hover:btn-ghost' : 'hover:btn-primary')}
+              className={clsx(
+                'btn',
+                link.title === filter
+                  ? 'btn-primary hover:btn-ghost'
+                  : 'hover:btn-primary'
+              )}
             >
               {link.icon}
               {link.content}
@@ -133,9 +160,7 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
           )
         })}
       </PageContent>
-      <Pagination
-        nextPage={nextPage}
-      />
+      <Pagination nextPage={nextPage} />
     </>
   )
 }

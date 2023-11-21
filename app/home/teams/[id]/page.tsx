@@ -14,6 +14,7 @@ import PageTitle from '@/components/PageTitle'
 import { notFound } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
 import clsx from 'clsx'
+import { PencilIcon } from '@heroicons/react/24/outline'
 
 export const metadata: Metadata = {
   title: 'Equipo de trabajo',
@@ -51,7 +52,18 @@ export default async function TeamPage({ params: { id } }: PageContext) {
       <section className="flex flex-wrap items-start gap-4 p-4 lg:flex-nowrap">
         <div className="flex w-full flex-col gap-3 lg:w-2/3">
           <div className="w-full rounded-md bg-white p-4 shadow-md">
-            <h1 className="mb-0 text-2xl font-bold">{team.name}</h1>
+            <div className="mb-1 flex flex-col sm:flex-row justify-between">
+              <h1 className="text-2xl font-bold">{team.name}</h1>
+              {leaderMembership.id === userId && (
+                <Link
+                  href={`/home/teams/${id}/update`}
+                  className="btn btn-primary"
+                >
+                  <PencilIcon className="w-4 h-4" />
+                  Actualizar
+                </Link>
+              )}
+            </div>
             <InlineList items={categories.map(({ title }) => title)} />
             <p className="mt-3 line-clamp-2">{team.description}</p>
             {/* <div className="mt-4 flex flex-col justify-between gap-2 md:flex-row">
@@ -132,7 +144,9 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             <InfoUser
               verification={false}
               image={leaderMembership.image}
-              owner={leaderMembership.name}
+              owner={
+                leaderMembership.id === userId ? 'Tú' : leaderMembership.name
+              }
               description={leaderMembership.description}
               location={location.title}
             />
