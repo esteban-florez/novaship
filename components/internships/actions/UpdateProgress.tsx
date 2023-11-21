@@ -6,7 +6,7 @@ import CloseModalButton from '@/components/modal/CloseModalButton'
 import Modal from '@/components/modal/Modal'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { schema } from '@/lib/validation/schemas/progress'
-import { CheckIcon, PencilIcon } from '@heroicons/react/24/outline'
+import { CheckIcon, PlusIcon } from '@heroicons/react/24/outline'
 import { useRef } from 'react'
 
 type Props = React.PropsWithChildren<{
@@ -14,7 +14,7 @@ type Props = React.PropsWithChildren<{
   recruitmentId: string
 }>
 
-export default function UpdateHours({ maxHours, recruitmentId }: Props) {
+export default function UpdateProgress({ maxHours, recruitmentId }: Props) {
   const ref = useRef<HTMLInputElement | null>(null)
 
   const {
@@ -33,9 +33,9 @@ export default function UpdateHours({ maxHours, recruitmentId }: Props) {
   return (
     <Modal
       id="updateHoursModal"
-      className="btn btn-warning"
-      icon={<PencilIcon className="w-5 h-5" />}
-      title="Actualizar progreso"
+      className="btn btn-primary"
+      icon={<PlusIcon className="w-5 h-5" />}
+      title="Registrar progreso"
       labelRef={ref}
     >
       <form method="POST" action={`/api/recruitments/${recruitmentId}/progress`} onSubmit={handleSubmit}>

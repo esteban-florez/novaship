@@ -189,3 +189,7 @@ export function recruitmentCompletedHours(recruitment: WithProgress) {
   return recruitment.progresses
     .reduce((sum, progress) => sum + progress.hours, 0)
 }
+
+export function getRemainingHours(internship: InternshipWithRelations) {
+  return internship.hours - getCompletedHours(internship)
+}

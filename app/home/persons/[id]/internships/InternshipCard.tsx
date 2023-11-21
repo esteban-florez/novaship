@@ -25,7 +25,7 @@ export default function InternshipCard({ internship }: Props) {
           internship={internship}
           stage={stage}
         />
-        <div className="divider divider-vertical my-2" />
+        <div className="mt-2" />
         <Link
           href={`/home/internships/${internship.id}`}
           className="btn btn-secondary"
