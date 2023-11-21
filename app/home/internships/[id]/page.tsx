@@ -29,6 +29,7 @@ export async function generateMetadata({ params: { id } }: PageContext) {
 }
 
 export default async function InternshipDetailsPage({ params: { id } }: PageContext) {
+  // DRY 1823
   const { id: userId, type } = await auth.user()
   const internship = await getInternship(id)
   if (internship === null) {

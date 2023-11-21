@@ -5,7 +5,7 @@ import DeleteModal from '../projects/DeleteModal'
 import clsx from 'clsx'
 import UpdateStatus from './actions/UpdateStatus'
 import UpdateProgress from '@/components/internships/actions/UpdateProgress'
-import { getAcceptedRecruitment, getCompletedHours } from '@/lib/utils/tables'
+import { getAcceptedRecruitment, getRemainingHours } from '@/lib/utils/tables'
 import { type InternshipWithRelations } from '@/lib/types'
 
 type Props = React.PropsWithChildren<{
@@ -31,12 +31,13 @@ export default function InternshipActions({
   const apply = (isPerson || isInstitute) && accepted
   const _delete = isInstitute && (pending || stage === 'REJECTED')
   const recruit = isCompany && accepted
-  const progress = isCompany && active
-  const history = active
+  const progress = isCompany && (active)
+  const history = active || stage === 'COMPLETED'
+  console.log(history)
 
   const conditions = [update, updateStatus, apply, _delete, recruit, progress, history]
 
-  const maxHours = internship.hours - getCompletedHours(internship)
+  const maxHours = getRemainingHours(internship)
   const recruitment = getAcceptedRecruitment(internship)
 
   return (
@@ -84,10 +85,10 @@ export default function InternshipActions({
             Reclutar pasante
           </button>
         )}
-        {active && (
+        {history && recruitment !== undefined && (
           <Link
             className="btn btn-secondary"
-            href={`/home/internships/${internship.id}/progress`}
+            href={`/home/internships/${recruitment.id}/progress`}
           >
             <ListBulletIcon className="h-5 w-5" />
             Historial de progreso
