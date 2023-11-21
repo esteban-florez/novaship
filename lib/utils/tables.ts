@@ -82,24 +82,25 @@ export function getPublicProjects<T>(projects: Array<T & {
   return projects.filter(project => project.visibility === 'PUBLIC')
 }
 
-export function getInternshipStage(internship: InternshipWithRelations) {
-  const { status, completed, hours } = internship
+export function getInternshipStage(internship: InternshipWithRelations): Stage {
+  const { status, hours } = internship
+  const completed = getCompletedHours(internship)
 
-  let stage: Stage = status
-
-  if (status === 'ACCEPTED') {
-    if (completed >= hours) {
-      stage = 'COMPLETED'
-    }
-
-    const recruitment = getAcceptedRecruitment(internship)
-
-    if (recruitment !== undefined) {
-      stage = 'ACTIVE'
-    }
+  if (status !== 'ACCEPTED') {
+    return status
   }
 
-  return stage
+  if (completed >= hours) {
+    return 'COMPLETED'
+  }
+
+  const recruitment = getAcceptedRecruitment(internship)
+
+  if (recruitment !== undefined) {
+    return 'ACTIVE'
+  }
+
+  return 'ACCEPTED'
 }
 
 export function getAcceptedRecruitment(internship: InternshipWithRelations) {
@@ -153,4 +154,42 @@ export function getVacantExpiration(vacant: DateAndDuration) {
 
 export function getAcceptedRecruitments(vacant: WithRecruitments) {
   return vacant.recruitments.filter(({ status }) => status === 'ACCEPTED')
+}
+
+export function validVacants(vacants: VacantWithRelations[]) {
+  return vacants.filter(vacant => {
+    return !vacantIsExpired(vacant) && !vacantIsFull(vacant)
+  })
+}
+
+interface WithProgress {
+  progresses: Array<{
+    hours: number
+  }>
+}
+
+interface WithHours {
+  recruitments: Array<WithProgress & {
+    status: Status
+  }>
+}
+
+export function getCompletedHours(internship: WithHours) {
+  const recruitment = internship.recruitments
+    .find(recruitment => recruitment.status === 'ACCEPTED')
+
+  if (recruitment === undefined) {
+    return 0
+  }
+
+  return recruitmentCompletedHours(recruitment)
+}
+
+export function recruitmentCompletedHours(recruitment: WithProgress) {
+  return recruitment.progresses
+    .reduce((sum, progress) => sum + progress.hours, 0)
+}
+
+export function getRemainingHours(internship: InternshipWithRelations) {
+  return internship.hours - getCompletedHours(internship)
 }

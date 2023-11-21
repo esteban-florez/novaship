@@ -33,9 +33,11 @@ const DEFAULT_TOASTS = {
   },
 }
 
-type Props = React.PropsWithChildren<AlertData & {
+type Props = React.PropsWithChildren<
+AlertData & {
   onClose: () => void
-}>
+}
+>
 
 // TODO -> nuevo diseño o verificar responsive
 // INFO -> si el message es muy largo no se ve bien
@@ -43,15 +45,17 @@ export default function Toast({ type, message, onClose }: Props) {
   const { style, icon } = DEFAULT_TOASTS[type]
 
   return (
-    <div className="toast-center sm:toast-end toast-bottom toast z-50">
+    <div className="toast-center sm:toast-end toast-bottom toast z-[9999]">
       <div className={clsx('alert p-4 shadow-lg inline-flex', style)}>
         {icon}
-        <p className={clsx({
-          'break-normal': true,
-          'text-sm': message.length > 35,
-          'text-base': message.length < 35,
-        })}
-        >{message}
+        <p
+          className={clsx({
+            'break-normal': true,
+            'text-sm': message.length > 35,
+            'text-base': message.length < 35,
+          })}
+        >
+          {message}
         </p>
         {type !== 'loading' && (
           <button onClick={onClose}>

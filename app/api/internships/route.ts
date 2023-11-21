@@ -21,13 +21,13 @@ export async function POST(request: NextRequest) {
       .extend({ personId: defaults.id })
       .parse(data)
 
-    const { categories, personId } = parsed
+    const { categories, personId, hours } = parsed
 
     const { id: internshipId } = await prisma.internship.create({
       data: {
         ...parsed,
+        hours: Number(hours),
         instituteId: id,
-        completed: 0,
         categories: {
           connect: categories.map(id => ({ id })),
         },

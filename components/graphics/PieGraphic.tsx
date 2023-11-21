@@ -1,16 +1,14 @@
 'use client'
 
 import {
-  Chart as ChartJS,
-  Title,
-  Legend,
-  ArcElement,
+  Chart,
+  registerables,
   type ChartOptions,
   type ChartData,
 } from 'chart.js'
 import { Pie } from 'react-chartjs-2'
 
-ChartJS.register(Title, Legend, ArcElement)
+Chart.register(...registerables)
 
 interface Props {
   title: string
@@ -20,22 +18,18 @@ interface Props {
 export default function PieGraphic({ title, data }: Props) {
   const options: ChartOptions<'pie'> = {
     responsive: true,
-    maintainAspectRatio: false,
-    layout: {
-      padding: 18,
-    },
+    maintainAspectRatio: true,
     plugins: {
       tooltip: {
         callbacks: {
           label(tooltipItem) {
             const dataset = data.datasets[tooltipItem.datasetIndex]
             const currentValue = dataset.data[tooltipItem.dataIndex]
-            let total = 0
-            for (let i = 0; i < data.datasets.length; i++) {
-              total += data.datasets[i].data[tooltipItem.dataIndex]
-            }
-            const percentage = ((currentValue / total) * 100).toFixed(0)
-            return `Progreso (${percentage}%)`
+            const total = dataset.data.reduce((acc, value) => (acc += value))
+            const percentage = ((currentValue * 100) / total).toFixed(0)
+            return ` ${
+              dataset.label ?? ''
+            } (${percentage}%) - Cantidad (${currentValue})`
           },
         },
       },

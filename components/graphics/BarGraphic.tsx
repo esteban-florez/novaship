@@ -9,6 +9,8 @@ import {
   Tooltip,
   Legend,
   Colors,
+  type ChartData,
+  type ChartOptions,
 } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 
@@ -24,17 +26,13 @@ ChartJS.register(
 
 interface Props {
   title: string
-  data: {
-    labels: string[]
-    datasets: Array<{
-      label: string
-      data: number[]
-    }>
-  }
+  data: ChartData<'bar'>
+  options?: ChartOptions<'bar'>
 }
 
-export default function BarGraphic({ title, data }: Props) {
-  const options = {
+export default function BarGraphic({ title, data, options }: Props) {
+  const defaultOptions = {
+    ...options,
     responsive: true,
     maintainAspectRatio: false,
     layout: {
@@ -79,7 +77,7 @@ export default function BarGraphic({ title, data }: Props) {
 
   return (
     <Bar
-      options={options}
+      options={defaultOptions}
       data={data}
     />
   )

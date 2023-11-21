@@ -69,6 +69,7 @@ export default function SubtaskModal({
     serverErrors,
     handleSubmit,
     control,
+    loading,
   } = useSubmit({
     schema,
     method,
@@ -156,7 +157,10 @@ export default function SubtaskModal({
               id={id}
               text="Cerrar"
             />
-            <button className="btn btn-primary">
+            <button
+              disabled={loading}
+              className="btn btn-primary"
+            >
               <PlusIcon className="h-4 w-4" />
               {method === 'PUT' ? 'Actualizar' : 'Registrar'}
             </button>

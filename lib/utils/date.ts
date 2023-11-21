@@ -1,5 +1,26 @@
 import { getExpirationDiff } from '../validation/expiration-dates'
 
+export function getAllMonths(format?: 'short' | 'long') {
+  const months = [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ]
+
+  if (format === 'short') return months.map(month => month.slice(0, 3))
+
+  return months
+}
+
 export function getExpiresAtDate(date: Date | null) {
   const today = new Date()
 
@@ -52,6 +73,20 @@ export function format(date: Date, weekday = false) {
     day: 'numeric',
     weekday: weekday ? 'short' : undefined,
   })
+}
+
+export function daysLeft(date: Date) {
+  const currentDay = new Date().getDate()
+  const paramDay = date.getDate()
+  const days =
+    currentDay > paramDay ? currentDay - paramDay : paramDay - currentDay
+  const plural = days > 1 ? 's' : ''
+
+  const message =
+    days === 0
+      ? 'Unos minutos restantes'
+      : `${days} día${plural} restante${plural}`
+  return message
 }
 
 export function diffForHumans(date: Date) {

@@ -45,6 +45,8 @@ interface Props {
     person: Person
   }
   >
+  isMember: boolean
+  isOwner: boolean
 }
 
 export default function TaskItem({
@@ -52,6 +54,8 @@ export default function TaskItem({
   task,
   person,
   memberships,
+  isMember,
+  isOwner,
 }: Props) {
   const subtasksCount = task.subtasks.length
   const subtasksDoneCount = task.subtasks.filter(
@@ -124,63 +128,65 @@ export default function TaskItem({
         <span className="my-1 flex gap-2 font-semibold text-neutral-600">
           {taskStatus()}
         </span>
-        <div className="my-2 join">
-          <div
-            className="tooltip"
-            data-tip="Añadir subtarea"
-          >
-            <SubtaskModal
-              method="POST"
-              action="/api/subtasks"
-              taskId={task.id}
-            />
-          </div>
-          <div
-            className="tooltip"
-            data-tip="Editar tarea"
-          >
-            <TaskModal
-              action={`/api/tasks/${task.id}`}
-              method="PUT"
-              projectId={projectId}
-              person={person}
-              task={task}
-              memberships={memberships}
-              icon={<PencilIcon className="h-4 w-4" />}
-            />
-          </div>
-          <div
-            className="tooltip"
-            data-tip="Ver tarea"
-          >
-            <Link
-              href={`/home/projects/${projectId}/tasks/${task.id}`}
-              className="btn-primary join-item btn hover:border-primary hover:bg-white hover:text-neutral-600"
+        {isOwner && (
+          <div className="my-2 join">
+            <div
+              className="tooltip"
+              data-tip="Añadir subtarea"
             >
-              <EyeIcon className="h-4 w-4" />
-            </Link>
+              <SubtaskModal
+                method="POST"
+                action="/api/subtasks"
+                taskId={task.id}
+              />
+            </div>
+            <div
+              className="tooltip"
+              data-tip="Editar tarea"
+            >
+              <TaskModal
+                action={`/api/tasks/${task.id}`}
+                method="PUT"
+                projectId={projectId}
+                person={person}
+                task={task}
+                memberships={memberships}
+                icon={<PencilIcon className="h-4 w-4" />}
+              />
+            </div>
+            <div
+              className="tooltip"
+              data-tip="Ver tarea"
+            >
+              <Link
+                href={`/home/projects/${projectId}/tasks/${task.id}`}
+                className="btn-primary join-item btn hover:border-primary hover:bg-white hover:text-neutral-600"
+              >
+                <EyeIcon className="h-4 w-4" />
+              </Link>
+            </div>
+            <div
+              className="tooltip"
+              data-tip="Borrar tarea"
+            >
+              <DeleteModal
+                title={task.title}
+                action={`/api/tasks/${task.id}`}
+              />
+            </div>
+            <div
+              className="tooltip"
+              data-tip="Añadir revisión"
+            >
+              <RevisionModal
+                action="/api/revision"
+                method="POST"
+                taskId={task.id}
+                icon={<ChatBubbleBottomCenterTextIcon className="h-4 w-4" />}
+              />
+            </div>
           </div>
-          <div
-            className="tooltip"
-            data-tip="Borrar tarea"
-          >
-            <DeleteModal
-              title={task.title}
-              action={`/api/tasks/${task.id}`}
-            />
-          </div>
-          <div
-            className="tooltip"
-            data-tip="Añadir revisión"
-          >
-            <RevisionModal
-              action="/api/revision"
-              method="POST"
-              taskId={task.id}
-              icon={<ChatBubbleBottomCenterTextIcon className="h-4 w-4" />}
-            />
-          </div>
-        </div>
+        )}
         <p className="mt-0 line-clamp-3 leading-tight sm:-mt-1">
           {task.description}
         </p>

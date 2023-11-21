@@ -1,14 +1,10 @@
-import { number, object } from 'zod'
+import { enum as zenum, object } from 'zod'
 import messages from '../../messages'
 import { defaults } from '../defaults'
+import { INTERNSHIPS_HOURS } from '@/lib/shared/durations'
 
 export const schema = object({
-  hours: number(messages.number)
-    .min(1, messages.minNumber(1))
-    .max(100, messages.maxNumber(100))
-    .step(1, {
-      message: 'Debe ser un número entero.',
-    }),
+  hours: zenum(INTERNSHIPS_HOURS, messages.enum),
   gradeId: defaults.id,
   categories: defaults.ids.nonempty(messages.nonempty),
 })

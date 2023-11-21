@@ -6,12 +6,14 @@ import { stages } from '@/lib/translations'
 import Link from 'next/link'
 import IconData from '../IconData'
 import { ci } from '@/lib/utils/text'
+import InternshipProgress from './InternshipProgress'
 
 type Props = React.PropsWithChildren<{
   internship: InternshipWithRelations
+  withProgressBar?: boolean
 }>
 
-export default function InternshipCard({ internship }: Props) {
+export default function InternshipCard({ internship, withProgressBar = false }: Props) {
   const { person, grade } = internship
   const isAccepted = internship.status !== 'ACCEPTED'
   const stage = getInternshipStage(internship)
@@ -48,11 +50,17 @@ export default function InternshipCard({ internship }: Props) {
             </p>
           </div>
         </div>
-        <ul className="space-y-1 py-4">
+        <ul className="space-y-1 py-3">
           {data.map(({ Icon, value, label }) => (
             <IconData key={label} icon={Icon} label={label} data={value} />
           ))}
         </ul>
+        {withProgressBar && (
+          <>
+            <InternshipProgress internship={internship} stage={stage} />
+            <div className="mt-2" />
+          </>
+        )}
         <Link
           href={`/home/internships/${internship.id}`}
           className="btn btn-secondary"

@@ -1,10 +1,10 @@
 'use client'
 
 import FormButtons from '@/components/forms/FormButtons'
-import Input from '@/components/forms/inputs/Input'
 import Select from '@/components/forms/inputs/Select'
 import SelectMultiple from '@/components/forms/inputs/select-multiple/SelectMultiple'
 import useSubmit from '@/lib/hooks/useSubmit'
+import { hoursOptions } from '@/lib/shared/durations'
 import { type InternshipWithRelations } from '@/lib/types'
 import collect from '@/lib/utils/collection'
 import { schema } from '@/lib/validation/schemas/internships/create'
@@ -40,15 +40,13 @@ export default function InternshipForm({ categories, grades, personId, internshi
     <form method="POST" action={action} onSubmit={handleSubmit}>
       {alert}
       {serverErrors}
-      <Input
+      <Select
         name="hours"
         label="Duración (horas)"
-        type="number"
-        value={String(hours)}
-        config={{ valueAsNumber: true }}
+        defaultValue={String(hours)}
         register={register}
         errors={errors}
-        placeholder="Ingresa las horas..."
+        options={{ type: 'rows', data: hoursOptions }}
       />
       <Select
         name="gradeId"

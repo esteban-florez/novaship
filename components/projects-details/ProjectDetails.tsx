@@ -1,6 +1,9 @@
+// "use client"
+
 import { PencilIcon } from '@heroicons/react/24/outline'
 import DeleteModal from '../projects/DeleteModal'
 import Link from 'next/link'
+// import useSubmit from '@/lib/hooks/useSubmit'
 
 interface Props {
   id: string
@@ -8,8 +11,11 @@ interface Props {
   description: string
   categories: string[]
   isPrivate: boolean
-  isOwner: boolean
-  isMember: boolean
+  userData: {
+    id: string
+    isOwner: boolean
+    isMember: boolean
+  }
 }
 
 export default function ProjectDetails({
@@ -18,9 +24,15 @@ export default function ProjectDetails({
   description,
   categories,
   isPrivate,
-  isOwner,
-  isMember,
+  userData,
 }: Props) {
+  // const canApply = !userData.isMember && !userData.isOwner
+  // const { alert, serverErrors, loading, handleSubmit } = useSubmit({
+  //   append: {
+  //     userId: userData.id
+  //   },
+  // })
+
   return (
     <div className="card sm:rounded-xl bg-white shadow-lg lg:flex-row">
       <div className="relative flex lg:basis-2/6">
@@ -61,13 +73,13 @@ export default function ProjectDetails({
         </div>
         <p className="line-clamp-6 py-3">{description}</p>
         <div className="mx-auto flex w-full flex-col sm:justify-end gap-3 sm:mx-0 sm:w-auto sm:flex-row sm:gap-1 sm:text-sm lg:gap-2">
-          {!isMember && !isOwner && (
+          {/* {canApply && (
             <button className="btn btn-block sm:btn-md btn-primary hover:bg-white hover:text-neutral hover:border-primary">
               <PencilIcon className="h-4 w-4" />
               ¡Aplicar!
             </button>
-          )}
-          {isOwner && (
+          )} */}
+          {userData.isOwner && (
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link href={`/home/projects/${id}/update`}>
                 <button className="btn btn-block sm:btn-md btn-primary hover:bg-white hover:text-neutral hover:border-primary">

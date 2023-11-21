@@ -30,6 +30,7 @@ import {
   type Recruitment,
   type Grade,
   type Internship,
+  type Progress,
 } from '@prisma/client'
 import { type days } from './translations'
 
@@ -51,8 +52,36 @@ type SelectablePerson = Selectable<OptionPerson>
 type SelectableOption = OptionCategory | OptionSkill | OptionPerson
 
 // ----------------------------------------------------------------------
+// --------------------------- Home ------------------------------
+// ----------------------------------------------------------------------
+type QuickAccessProps = Array<{
+  icon: React.ReactElement
+  title: string
+  href: string
+}>
+
+interface NotificationProps {
+  id: string
+  title: string
+  content: React.ReactNode
+  href: string
+  date: Date
+}
+
+// ----------------------------------------------------------------------
 // --------------------------- Internships ------------------------------
 // ----------------------------------------------------------------------
+
+interface InternshipSimple {
+  hours: number
+  recruitments: Array<{
+    status: Status
+    progresses: Array<{
+      hours: number
+    }>
+  }>
+  updatedAt: Date
+}
 
 type InternshipWithRelations = Internship & {
   recruitments: Array<Recruitment & {
@@ -61,6 +90,7 @@ type InternshipWithRelations = Internship & {
         location: Location
       }
     }
+    progresses: Progress[]
   }>
   categories: Category[]
   institute: Institute
@@ -78,6 +108,18 @@ type VacantWithRelations = Vacant & {
   location: Location
   recruitments: Recruitment[]
   job: Job
+}
+
+type RecruitmentWithRelations = Recruitment & {
+  vacant: Vacant & {
+    company: Company
+    job: Job
+  }
+  internship: Internship & {
+    person: Person
+    grade: Grade
+  }
+  progresses: Progress[]
 }
 
 // ----------------------------------------------------------------------
@@ -102,6 +144,16 @@ interface TeamsFull extends Team {
     }
   }
   >
+}
+
+interface InvitationData {
+  id: string
+  status: Status
+  updatedAt: Date
+  team: {
+    id: string
+    name: string
+  }
 }
 
 // ----------------------------------------------------------------------
@@ -204,6 +256,7 @@ type ProjectDetailsTab = 'Files' | 'Tasks'
 type OffersTab = 'all' | 'personal' | 'applied' | 'suggested'
 type TeamsTab = 'all' | 'personal'
 type ProjectsTab = 'all' | 'suggested' | 'personal'
+type InvitationsTab = 'pending' | 'accepted' | 'rejected'
 
 // ----------------------------------------------------------------------
 // --------------------------- API ---------------------------------

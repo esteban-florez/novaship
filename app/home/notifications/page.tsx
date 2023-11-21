@@ -5,7 +5,6 @@ import { auth } from '@/lib/auth/pages'
 import { getNotifications } from '@/lib/notifications/get'
 import { diffForHumans } from '@/lib/utils/date'
 import getPaginationProps from '@/lib/utils/pagination'
-import { param } from '@/lib/utils/search-params'
 import prisma from '@/prisma/client'
 import Link from 'next/link'
 
@@ -13,9 +12,8 @@ export default async function NotificationsPage({ searchParams }: SearchParamsPr
   const { authUserId } = await auth.user()
 
   const totalRecords = await prisma.notification.count({ where: { authUserId } })
-  const pageNumber = +(param(searchParams.page) ?? 1)
   const { nextPage, skip, take } = getPaginationProps({
-    totalRecords, pageNumber,
+    totalRecords, searchParams,
   })
 
   const notifs = await getNotifications(authUserId, take, skip)
@@ -53,7 +51,7 @@ export default async function NotificationsPage({ searchParams }: SearchParamsPr
             />
           </div>
           )}
-      <Pagination nextPage={nextPage} pageNumber={pageNumber} />
+      <Pagination nextPage={nextPage} />
     </>
   )
 }

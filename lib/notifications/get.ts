@@ -7,7 +7,7 @@ export async function getNotifications(authUserId: string, take?: number, skip?:
     take,
     skip,
     orderBy: {
-      createdAt: 'asc',
+      createdAt: 'desc',
     },
   })
 

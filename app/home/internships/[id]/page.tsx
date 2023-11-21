@@ -5,11 +5,10 @@ import { notFound } from 'next/navigation'
 import InternshipActions from '@/components/internships/InternshipActions'
 import InternshipData from './InternshipData'
 import PageTitle from '@/components/PageTitle'
-import Recruitments from './Recruitments'
 import PersonData from './PersonData'
 import InstituteCard from './InstituteCard'
 import InternshipStage from './InternshipStage'
-import UserCard from '../../../../components/internships/UserCard'
+import UserCard from '@/components/internships/UserCard'
 import InternshipProgress from '@/components/internships/InternshipProgress'
 import CompletedHoursText from './CompletedHoursText'
 import TwoColumnsLayout from '@/components/TwoColumnsLayout'
@@ -30,6 +29,7 @@ export async function generateMetadata({ params: { id } }: PageContext) {
 }
 
 export default async function InternshipDetailsPage({ params: { id } }: PageContext) {
+  // DRY 1823
   const { id: userId, type } = await auth.user()
   const internship = await getInternship(id)
   if (internship === null) {
@@ -50,7 +50,7 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
     notFound()
   }
 
-  const { person, institute, grade, recruitments } = internship
+  const { person, institute, grade } = internship
   const stage = getInternshipStage(internship)
 
   return (
@@ -71,7 +71,6 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                   internship={internship}
                   institute={institute}
                 />
-                <div className="mt-4" />
                 <InternshipActions
                   className="lg:flex-row"
                   internship={internship}
@@ -86,7 +85,6 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                   {grade.title}
                 </h3>
                 <InternshipData internship={internship} />
-                <div className="mt-4" />
                 <InternshipActions
                   className="lg:flex-row"
                   internship={internship}
@@ -103,21 +101,29 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
         <Column>
           {company === null
             ? (
-              <Recruitments recruitments={recruitments} stage={stage} />
+              <p>aqui van estadísticas supongo</p>
               )
             : (
               <>
-                <h3 className="font-bold tracking-tighter text-2xl">
-                  Empresa de la pasantía
-                </h3>
-                <div className="bg-neutral-100 p-4 pt-2 rounded-lg mt-4">
-                  <UserCard
-                    href={`/home/companies/${company.id}`}
-                    subtitle={company.location.title}
-                    user={company}
-                  />
-                  <p className="mt-2">{company.description}</p>
-                </div>
+                {type !== 'COMPANY'
+                  ? (
+                    <>
+                      <h3 className="font-bold tracking-tighter text-2xl">
+                        Empresa de la pasantía
+                      </h3>
+                      <div className="bg-neutral-100 p-4 pt-2 rounded-lg mt-4">
+                        <UserCard
+                          href={`/home/companies/${company.id}`}
+                          subtitle={company.location.title}
+                          user={company}
+                        />
+                        <p className="mt-2">{company.description}</p>
+                      </div>
+                    </>
+                    )
+                  : (
+                    <h3>una grafica menol</h3>
+                    )}
                 <div className="divider divider-vertical" />
                 <h3 className="font-bold tracking-tighter text-2xl">
                   Horas completadas

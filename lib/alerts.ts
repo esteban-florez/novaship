@@ -105,6 +105,14 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'El equipo de trabajo fue registrado con éxito.',
   },
+  invitation_accepted: {
+    type: 'success',
+    message: 'La invitación fue aceptada con éxito.',
+  },
+  invitation_rejected: {
+    type: 'warning',
+    message: 'La invitación fue rechazada con éxito.',
+  },
   verified_user: {
     type: 'success',
     message: 'El usuario fué confirmado con éxito.',
@@ -123,11 +131,11 @@ export const alerts: AlertList = {
   },
   internship_accepted: {
     type: 'success',
-    message: 'Aceptaste la solicitud de pasantía con éxito.',
+    message: 'Aceptaste el registro de pasante con éxito.',
   },
   internship_rejected: {
     type: 'success',
-    message: 'Rechazaste la solicitud de pasantía con éxito.',
+    message: 'Rechazaste el registro de pasante con éxito.',
   },
   internship_deleted: {
     type: 'success',
@@ -143,7 +151,19 @@ export const alerts: AlertList = {
   },
   recruitment_created: {
     type: 'success',
-    message: 'La solicitud fué enviada con éxito.',
+    message: 'La solicitud de pasantía fué enviada con éxito.',
+  },
+  recruitment_accepted: {
+    type: 'success',
+    message: 'Has aceptado la solicitud de pasantía con éxito.',
+  },
+  recruitment_rejected: {
+    type: 'success',
+    message: 'Has rechazado la solicitud de pasantía con éxito.',
+  },
+  progress_updated: {
+    type: 'success',
+    message: 'Has actualizado el progreso de la pasantía con éxito.',
   },
   bad_creds: {
     type: 'error',

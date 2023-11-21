@@ -13,11 +13,12 @@ import { age } from '@/lib/utils/date'
 import { genders } from '@/lib/translations'
 import { ci, phone } from '@/lib/utils/text'
 import Container from '@/components/Container'
-import AvatarIcon from '@/components/AvatarIcon'
 import RecruitButton from '../RecruitButton'
 import { canCreateRecruitment } from '@/lib/auth/permissions'
 import BadgeList from '@/components/BadgeList'
-import { vacantIsExpired, vacantIsFull } from '@/lib/utils/tables'
+import { validVacants } from '@/lib/utils/tables'
+import { getVacants } from '@/lib/data-fetching/vacants'
+import DarkUserCard from '@/components/DarkUserCard'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -55,19 +56,13 @@ export default async function RecruitDetailsPage({ params: { id } }: PageContext
     },
   })
 
-  const allVacants = await prisma.vacant.findMany({
+  const allVacants = await getVacants({
     where: {
       companyId: userId,
     },
-    include: {
-      job: true,
-      recruitments: true,
-    },
   })
 
-  const vacants = allVacants.filter(vacant => {
-    return !vacantIsExpired(vacant) && !vacantIsFull(vacant)
-  })
+  const vacants = validVacants(allVacants)
 
   return (
     <>
@@ -98,20 +93,7 @@ export default async function RecruitDetailsPage({ params: { id } }: PageContext
           </div>
           <div className="divider divider-vertical my-1" />
           <p className="font-bold mb-2">Institución:</p>
-          <div className="flex gap-2 items-center bg-neutral text-white p-2 rounded-lg shadow-md">
-            <AvatarIcon className="border-2 border-white" image={institute.image} />
-            <div>
-              <h3 className="font-semibold line-clamp-1">
-                {institute.name}
-              </h3>
-              <Link
-                className="underline -mt-1"
-                href={`/home/institutes/${institute.id}`}
-              >
-                Ver perfil
-              </Link>
-            </div>
-          </div>
+          <DarkUserCard type="INSTITUTE" user={institute} />
         </Column>
         <Column>
           <Container title="Datos personales:">

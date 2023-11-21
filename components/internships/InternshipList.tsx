@@ -53,7 +53,6 @@ export default async function InternshipList({
           )}
       {internships.length > 0 && (
         <Pagination
-          pageNumber={pageNumber}
           nextPage={nextPage}
         />
       )}

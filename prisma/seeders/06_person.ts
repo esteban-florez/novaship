@@ -19,6 +19,8 @@ export default async function person() {
   minimumBirth.setFullYear(minimumBirth.getFullYear() - 18)
   const olderRange = numbers(0, 10)
 
+  const images = collect(['1.jpeg', '2.webp', '3.webp'])
+
   for (let i = 0; i < seederQueries.persons; i++) {
     const name = names.random().first()
     const surname = surnames.random().first()
@@ -45,6 +47,7 @@ export default async function person() {
         description: descriptions.random().first(),
         ci: numbers().ci(),
         birth,
+        image: '/person' + images.random().first(),
         employable: numbers(1, 2).random() === 1,
         gender: types(Gender).random(),
         grades: {

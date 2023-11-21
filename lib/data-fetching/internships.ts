@@ -17,6 +17,7 @@ const include = {
   },
   recruitments: {
     include: {
+      progresses: true,
       vacant: {
         include: {
           company: {
@@ -38,6 +39,9 @@ export const getInternships = cache(
       skip,
       take,
       include,
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
   }
 )

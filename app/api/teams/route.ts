@@ -1,5 +1,6 @@
 import { auth } from '@/lib/auth/api'
 import { handleError } from '@/lib/errors/api'
+import { notify } from '@/lib/notifications/notify'
 import { randomCode } from '@/lib/utils/code'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/team'
@@ -10,7 +11,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function POST(request: NextRequest) {
   let data
   try {
-    const { id, type } = await auth.user(request)
+    const { id, name, type } = await auth.user(request)
 
     if (type === 'INSTITUTE') {
       notFound()
@@ -25,11 +26,12 @@ export async function POST(request: NextRequest) {
     const parsed = schema.parse(data)
     const code = randomCode('team')
     const parsedWithCode = { ...parsed, code }
-    const invitations = parsed.membersIds.map(personId => ({ personId }))
+    const { membersIds, ...rest } = parsedWithCode
+    const invitations = membersIds.map(personId => ({ personId }))
 
-    const { id: teamId } = await prisma.team.create({
+    const team = await prisma.team.create({
       data: {
-        ...parsedWithCode,
+        ...rest,
         invitations: {
           createMany: {
             data: invitations,
@@ -44,7 +46,27 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.redirect(url(`/home/teams/${teamId}?alert=team_created`))
+    const authUsers = await prisma.authUser.findMany({
+      where: {
+        person: {
+          id: {
+            in: invitations.map(invitation => invitation.personId),
+          },
+        },
+      },
+      select: {
+        id: true,
+      },
+    })
+
+    for (const authUser of authUsers) {
+      await notify('invitation-sent', authUser.id, {
+        user: name,
+        team: team.name,
+      })
+    }
+
+    return NextResponse.redirect(url(`/home/teams/${team.id}?alert=team_created`))
   } catch (error) {
     return handleError(error, data)
   }

@@ -17,15 +17,27 @@ type Props = React.PropsWithChildren<{
 
 export default function CreateTeamForm({ persons, categories }: Props) {
   const {
-    register, formState: { errors }, control,
-    alert, serverErrors, handleSubmit,
+    register,
+    formState: { errors },
+    control,
+    alert,
+    serverErrors,
+    handleSubmit,
+    loading,
   } = useSubmit({ schema })
 
   return (
-    <form method="POST" action="/api/teams" onSubmit={handleSubmit}>
+    <form
+      method="POST"
+      action="/api/teams"
+      onSubmit={handleSubmit}
+    >
       {alert}
       {serverErrors}
-      <FormSection title="Datos básicos" description="Ingresa aquí en nombre de tu equipo, una descripción de sus actividades, y las categorías laborales a las que pertenecen.">
+      <FormSection
+        title="Datos básicos"
+        description="Ingresa aquí en nombre de tu equipo, una descripción de sus actividades, y las categorías laborales a las que pertenecen."
+      >
         <Input
           name="name"
           placeholder="Ej. TeamDev"
@@ -55,7 +67,10 @@ export default function CreateTeamForm({ persons, categories }: Props) {
           }}
         />
       </FormSection>
-      <FormSection title="Miembros del equipo" description="Desde aquí puedes buscar mediante el correo eléctronico a las personas que quieras invitar a formar parte del equipo..">
+      <FormSection
+        title="Miembros del equipo"
+        description="Desde aquí puedes buscar mediante el correo eléctronico a las personas que quieras invitar a formar parte del equipo.."
+      >
         {/* TODO -> crear hacer mejores estilos para este select, hacer que las opciones muestren email, imagen y nombre. E igualmente la lista de seleccionados debe ser un collapse. */}
         <SelectMultiple
           name="membersIds"
@@ -71,7 +86,10 @@ export default function CreateTeamForm({ persons, categories }: Props) {
           }}
         />
       </FormSection>
-      <FormButtons />
+      <FormButtons
+        url="/home/teams"
+        disableSubmit={loading}
+      />
     </form>
   )
 }
