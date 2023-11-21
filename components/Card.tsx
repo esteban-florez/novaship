@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import InlineList from './InlineList'
 import { type ProjectMembership } from '@/lib/types'
 import Link from 'next/link'
-import { FireIcon, HashtagIcon } from '@heroicons/react/24/outline'
+import { FireIcon } from '@heroicons/react/24/outline'
 
 interface Props {
   title: string
@@ -80,10 +80,7 @@ export default function Card({
                   </div>
                 )}
                 {offerLimit != null && (
-                  <div className="inline-flex">
-                    <HashtagIcon className="h-4 w-4" />
-                    <p>{quotasLimit}</p>
-                  </div>
+                  <p>{quotasLimit}</p>
                 )}
               </div>
             )}
