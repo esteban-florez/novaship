@@ -16,15 +16,15 @@ export default function NotificationsSection({ notifications }: Props) {
           </h3>
           {notifications.length > 0
             ? (
-                notifications.map(({ id, ...rest }) => (
+                notifications.map(({ id, content, ...rest }) => (
                   <div
                     key={id}
                     className="card card-compact border hover:bg-base-200 border-zinc-300 rounded-lg shadow-lg"
                   >
                     <NotificationHome
+                      content={content as string}
                       {...rest}
                       key={id}
-                      id={id}
                     />
                   </div>
                 ))

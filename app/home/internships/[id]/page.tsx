@@ -101,7 +101,10 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
         <Column>
           {company === null
             ? (
-              <p>aqui van estadísticas supongo</p>
+              // #GRAPH 2 gráficas.
+              // 1 de Torta: Cupos disponibles para la pasantía vs Cupos no disponibles (vacants que tengan el grade de la internship)
+              // 2 de Torta: Solicitudes de la pasantía (enviadas vs recibidas)
+              <p>Aquí van dos gráficas</p>
               )
             : (
               <>
@@ -122,7 +125,9 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                     </>
                     )
                   : (
-                    <h3>una grafica menol</h3>
+                    // #GRAPH
+                    // 1. Gráfica de barras: Horas completadas por mes
+                    <h3>Aquí va una gráfica</h3>
                     )}
                 <div className="divider divider-vertical" />
                 <h3 className="font-bold tracking-tighter text-2xl">

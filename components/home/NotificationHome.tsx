@@ -1,4 +1,4 @@
-import { type Notification } from '@/lib/types'
+import { type NotificationData } from '@/lib/types'
 import { diffForHumans } from '@/lib/utils/date'
 import Link from 'next/link'
 
@@ -7,7 +7,7 @@ export default function NotificationHome({
   content,
   href,
   date,
-}: Notification) {
+}: NotificationData & { date: Date, content: string | React.ReactNode }) {
   return (
     <Link href={href}>
       <div className="flex flex-col px-4 py-2">

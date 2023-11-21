@@ -344,9 +344,6 @@ export default async function HomePage() {
             <StatisticsGraphSection
               noData={noDataGraphs[0]}
               valid={checkEmpty([users, totalUsers - users])}
-              options={{
-                title: true,
-              }}
             >
               <PieGraphic
                 title="Postulantes"
