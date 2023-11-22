@@ -112,6 +112,12 @@ export const stages = {
   COMPLETED: 'Completada',
 } as const
 
+export const progressStatuses = {
+  PENDING: 'Pendiente',
+  REJECTED: 'Cancelada',
+  ACCEPTED: 'Completada',
+} as const
+
 export const durations: Rec = {
   7: 'Una semana',
   14: 'Dos semanas',
@@ -119,4 +125,19 @@ export const durations: Rec = {
   90: 'Tres meses',
   180: 'Seis meses',
   365: 'Un año',
+}
+
+export const months: Rec = {
+  0: 'ENE',
+  1: 'FEB',
+  2: 'MAR',
+  3: 'ABR',
+  4: 'MAY',
+  5: 'JUN',
+  6: 'JUL',
+  7: 'AGO',
+  8: 'SEP',
+  9: 'OCT',
+  10: 'NOV',
+  11: 'DIC',
 }

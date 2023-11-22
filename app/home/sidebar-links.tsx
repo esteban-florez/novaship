@@ -7,12 +7,12 @@ import {
   UserGroupIcon,
   GlobeAltIcon,
   StarIcon,
-  ShieldCheckIcon,
   CheckBadgeIcon,
   PlusIcon,
   TicketIcon,
   InboxStackIcon,
   EnvelopeIcon,
+  ChartPieIcon,
 } from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
@@ -31,6 +31,7 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/internships',
       title: 'Pasantías',
       icon: <AcademicCapIcon className="h-6 w-6" />,
+      visible: !admin,
       submenu: [
         {
           href: '/home/internships/select',
@@ -88,7 +89,7 @@ export function sidebarLinks(user: UserWithType) {
         : '/home/offers?filter=all',
       title: 'Ofertas',
       icon: <BriefcaseIcon className="h-6 w-6" />,
-      visible: !institute,
+      visible: !institute && !admin,
       submenu: [
         {
           href: person
@@ -121,7 +122,7 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/projects?filter=suggested',
       title: 'Proyectos',
       icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
-      visible: !institute,
+      visible: !institute && !admin,
       submenu: [
         {
           href: company
@@ -146,7 +147,7 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/teams?filter=all',
       title: 'Equipos',
       icon: <UserGroupIcon className="h-6 w-6" />,
-      visible: !institute,
+      visible: !institute && !admin,
       submenu: [
         {
           href: '/home/teams?filter=all',
@@ -178,17 +179,16 @@ export function sidebarLinks(user: UserWithType) {
       ],
     },
     {
-      href: '/home/admin',
-      title: 'Administración',
-      icon: <ShieldCheckIcon className="h-6 w-6" />,
+      href: '/home/admin/verifications',
+      title: 'Verificaciones',
+      icon: <CheckBadgeIcon className="h-6 w-6" />,
       visible: admin,
-      submenu: [
-        {
-          href: '/home/admin/verifications',
-          title: 'Verificaciones',
-          icon: <CheckBadgeIcon className="h-6 w-6" />,
-        },
-      ],
+    },
+    {
+      href: '/home/admin/stats',
+      title: 'Estadísticas',
+      icon: <ChartPieIcon className="h-6 w-6" />,
+      visible: admin,
     },
   ]
 

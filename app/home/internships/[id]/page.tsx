@@ -13,6 +13,10 @@ import InternshipProgress from '@/components/internships/InternshipProgress'
 import CompletedHoursText from './CompletedHoursText'
 import TwoColumnsLayout from '@/components/TwoColumnsLayout'
 import Column from '@/components/Column'
+import { Suspense } from 'react'
+import AvailableVacantsChart from './AvailableVacantsChart'
+import RecruitmentsByInterestedChart from './RecruitmentsByInterestedChart'
+import HoursByMonthChart from './HoursByMonthChart'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -32,7 +36,7 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
   // DRY 1823
   const { id: userId, type } = await auth.user()
   const internship = await getInternship(id)
-  if (internship === null) {
+  if (internship === null || type === 'ADMIN') {
     notFound()
   }
 
@@ -50,8 +54,10 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
     notFound()
   }
 
-  const { person, institute, grade } = internship
+  const { person, institute, grade, recruitments } = internship
   const stage = getInternshipStage(internship)
+
+  const recruitment = recruitments.find(recruitment => recruitment.status === 'ACCEPTED')
 
   return (
     <>
@@ -101,10 +107,20 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
         <Column>
           {company === null
             ? (
-              // #GRAPH 2 gráficas.
-              // 1 de Torta: Cupos disponibles para la pasantía vs Cupos no disponibles (vacants que tengan el grade de la internship)
-              // 2 de Torta: Solicitudes de la pasantía (enviadas vs recibidas)
-              <p>Aquí van dos gráficas</p>
+              <>
+                {/* // #GRAPH 2 gráficas. */}
+                <Suspense fallback={<p>Loading skeleton de gráfica</p>}>
+                  {/* // 1 de Torta: Cupos disponibles para la pasantía vs Cupos no disponibles */}
+                  <AvailableVacantsChart internship={internship} />
+                </Suspense>
+                <Suspense fallback={<p>Loading state de gráfica</p>}>
+                  {/* // 2 de Torta: Solicitudes de la pasantía (enviadas vs recibidas) */}
+                  <RecruitmentsByInterestedChart
+                    recruitments={recruitments}
+                    userType={type}
+                  />
+                </Suspense>
+              </>
               )
             : (
               <>
@@ -125,9 +141,11 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                     </>
                     )
                   : (
-                    // #GRAPH
-                    // 1. Gráfica de barras: Horas completadas por mes
-                    <h3>Aquí va una gráfica</h3>
+                    <Suspense fallback={<p>Loading skeleton de gráfica</p>}>
+                      {/* // #GRAPH
+                        // 1. Gráfica de barras: Horas completadas por mes */}
+                      <HoursByMonthChart progresses={recruitment?.progresses} />
+                    </Suspense>
                     )}
                 <div className="divider divider-vertical" />
                 <h3 className="font-bold tracking-tighter text-2xl">

@@ -13,7 +13,8 @@ const include = {
 }
 
 export const getVacants = cache(
-  async ({ where, skip, take }: QueryConfig<Prisma.VacantWhereInput>) => {
+  async (config?: QueryConfig<Prisma.VacantWhereInput>) => {
+    const { where, skip, take } = config ?? {}
     return await prisma.vacant.findMany({ where, skip, take, include, orderBy: { createdAt: 'desc' } })
   }
 )

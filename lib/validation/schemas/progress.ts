@@ -4,7 +4,7 @@ import messages from '../messages'
 export const schema = (maxHours: number) => object({
   description: string(messages.string)
     .min(10, messages.min(10))
-    .max(50, messages.max(50)),
+    .max(255, messages.max(255)),
   hours: number(messages.number)
     .min(1, messages.minNumber(1))
     .max(maxHours, messages.maxNumber(maxHours))
