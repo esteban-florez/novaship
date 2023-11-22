@@ -1,8 +1,12 @@
 import collect from '@/lib/utils/collection'
 import prisma from '../client'
 import { connect } from '@/lib/utils/queries'
+import { DateTime } from 'luxon'
 
 export default async function custom() {
+  const now = DateTime.now()
+  const days15Ago = now.minus({ days: 15 }).toJSDate()
+  const inOneMonth = now.plus({ months: 1 }).toJSDate()
   // Location
   const maracay = await prisma.location.findFirstOrThrow({
     where: {
@@ -115,10 +119,12 @@ export default async function custom() {
         not: company.id,
       },
     },
-    take: 4,
+    take: 6,
   }))
 
   const recruitments = vacants.all().map((vacant, i) => ({
+    startsAt: now.plus({ days: 15 }).toJSDate(),
+    endsAt: now.plus({ months: 2 }).toJSDate(),
     interested: i % 2 === 0 ? 'PERSON' as const : 'COMPANY' as const,
     internshipId: informaticAcceptedInternship.id,
     vacantId: vacant.id,
@@ -172,6 +178,8 @@ export default async function custom() {
   })
 
   const systemRecruitments = vacants.all().map((vacant, i) => ({
+    startsAt: days15Ago,
+    endsAt: inOneMonth,
     interested: i % 2 === 0 ? 'PERSON' as const : 'COMPANY' as const,
     internshipId: systemsActiveInternship.id,
     vacantId: vacant.id,
@@ -184,6 +192,8 @@ export default async function custom() {
 
   const acceptedRecruitment = await prisma.recruitment.create({
     data: {
+      startsAt: days15Ago,
+      endsAt: inOneMonth,
       interested: 'PERSON' as const,
       internshipId: systemsActiveInternship.id,
       vacantId: systemsVacant.id,
@@ -193,13 +203,39 @@ export default async function custom() {
 
   const progresses = [
     {
+      title: 'Reparación de equipos',
+      description: 'Actividades de mantenimiento y reparación de computadores y laptops.',
       hours: 4,
-      description: 'El pasante realizó actividades de soporte técnico.',
+      startsAt: now.minus({ days: 13 }).toJSDate(),
+      endsAt: now.minus({ days: 13 }).toJSDate(),
+      status: 'ACCEPTED' as const,
       recruitmentId: acceptedRecruitment.id,
     },
     {
-      hours: 8,
-      description: 'El pasante realizó reparaciones a equipos.',
+      title: 'Respaldo de discos',
+      description: 'Respaldo de 20 discos duros SATA pertenecientes a los clientes.',
+      hours: 10,
+      startsAt: now.minus({ days: 10 }).toJSDate(),
+      endsAt: now.minus({ days: 7 }).toJSDate(),
+      status: 'ACCEPTED' as const,
+      recruitmentId: acceptedRecruitment.id,
+    },
+    {
+      title: 'Monitoreo de sistema',
+      description: 'Monitoreo de las actividades del sistema de redes de la empresa.',
+      hours: 2,
+      startsAt: now.minus({ days: 5 }).toJSDate(),
+      endsAt: now.minus({ days: 5 }).toJSDate(),
+      status: 'REJECTED' as const,
+      recruitmentId: acceptedRecruitment.id,
+    },
+    {
+      title: 'Revisión de equipos',
+      description: 'Revisión del estado de los equipos del laboratorio de la empresa.',
+      hours: 4,
+      startsAt: now.minus({ days: 1 }).toJSDate(),
+      endsAt: now.toJSDate(),
+      status: 'PENDING' as const,
       recruitmentId: acceptedRecruitment.id,
     },
   ]

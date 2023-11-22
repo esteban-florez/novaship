@@ -154,10 +154,10 @@ model Membership {
 // ----------------------------------------------------------------------
 model Project {
   id          String     @id @default(cuid())
-  title       String     @unique
+  title       String
   description String
   image       String?
-  preview     String?    @unique
+  preview     String?
   visibility  Visibility
   code        String     @unique
   person      Person?    @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -331,6 +331,8 @@ model Vacant {
 
 model Recruitment {
   id           String     @id @default(cuid())
+  startsAt     DateTime
+  endsAt       DateTime
   status       Status     @default(PENDING)
   interested   Interested
   internship   Internship @relation(fields: [internshipId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -346,7 +348,11 @@ model Recruitment {
 model Progress {
   id            String      @id @default(cuid())
   hours         Int
+  title         String
   description   String
+  status        Status      @default(PENDING)
+  startsAt      DateTime
+  endsAt        DateTime
   recruitment   Recruitment @relation(fields: [recruitmentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   recruitmentId String
   createdAt     DateTime    @default(now())
