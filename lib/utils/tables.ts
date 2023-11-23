@@ -165,6 +165,7 @@ export function validVacants(vacants: VacantWithRelations[]) {
 interface WithProgress {
   progresses: Array<{
     hours: number
+    status: Status
   }>
 }
 
@@ -187,6 +188,7 @@ export function getCompletedHours(internship: WithHours) {
 
 export function recruitmentCompletedHours(recruitment: WithProgress) {
   return recruitment.progresses
+    .filter(progress => progress.status === 'ACCEPTED')
     .reduce((sum, progress) => sum + progress.hours, 0)
 }
 

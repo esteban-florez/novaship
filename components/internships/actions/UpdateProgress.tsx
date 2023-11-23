@@ -8,6 +8,7 @@ import useSubmit from '@/lib/hooks/useSubmit'
 import { schema } from '@/lib/validation/schemas/progress'
 import { CheckIcon, PlusIcon } from '@heroicons/react/24/outline'
 import { useRef } from 'react'
+import DatesInputs from '../DatesInputs'
 
 type Props = React.PropsWithChildren<{
   maxHours: number
@@ -25,6 +26,8 @@ export default function UpdateProgress({ maxHours, recruitmentId }: Props) {
     onSuccessRedirect: closeModal,
   })
 
+  console.log(errors)
+
   function closeModal() {
     if (ref.current === null) return
     ref.current.click()
@@ -41,11 +44,13 @@ export default function UpdateProgress({ maxHours, recruitmentId }: Props) {
       <form method="POST" action={`/api/recruitments/${recruitmentId}/progress`} onSubmit={handleSubmit}>
         {serverErrors}
         {alert}
-        <h3 className="font-bold text-primary text-2xl">
-          Actualizar horas completadas
+        <h3 className="font-bold tracking-tighter text-2xl">
+          Actualizar progreso
         </h3>
-        <Input label="Horas completadas" name="hours" placeholder="Horas completadas" type="number" register={register} errors={errors} config={{ valueAsNumber: true }} step="1" />
+        <Input label="Título" name="title" placeholder="Ej. Reparación de equipos" register={register} errors={errors} />
         <Textarea label="Descripción" maxlength={50} name="description" placeholder="Ej. El pasante ha desarrollado actividades..." register={register} errors={errors} />
+        <Input label="Horas contempladas" name="hours" placeholder="Ej. 4" type="number" register={register} errors={errors} config={{ valueAsNumber: true }} step="1" />
+        <DatesInputs errors={errors} register={register} />
         <div className="flex gap-1">
           <CloseModalButton id="updateHoursModal" text="Cancelar" />
           <button className="btn btn-success" type="submit">

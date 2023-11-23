@@ -52,7 +52,7 @@ export default async function InternshipProgressPage({
     skip,
     take,
     orderBy: {
-      createdAt: 'desc',
+      startsAt: 'desc',
     },
   })
 
@@ -74,7 +74,7 @@ export default async function InternshipProgressPage({
       </PageTitle>
       <section className="flex p-4 gap-4">
         <div className="w-2/3">
-          <ProgressHistory progresses={progresses} />
+          <ProgressHistory progresses={progresses} isCompany={type === 'COMPANY'} />
         </div>
         <div className="w-1/3">
           {type !== 'PERSON'

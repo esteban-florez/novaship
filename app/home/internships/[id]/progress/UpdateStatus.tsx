@@ -5,21 +5,21 @@ import clsx from 'clsx'
 
 type Props = React.PropsWithChildren<{
   status: 'ACCEPTED' | 'REJECTED'
-  recruitmentId: string
+  progressId: string
 }>
 
 const statuses = {
   ACCEPTED: {
-    text: 'Aceptar',
+    text: 'Completar',
     color: 'btn-success',
   },
   REJECTED: {
-    text: 'Rechazar',
+    text: 'Cancelar',
     color: 'btn-error',
   },
 } as const
 
-export default function UpdateRecruitmentStatus({ status, recruitmentId }: Props) {
+export default function UpdateStatus({ status, progressId }: Props) {
   // DRY 2042
   const append = { status }
   const { alert, serverErrors, handleSubmit } = useSubmit({ method: 'PATCH', append })
@@ -27,7 +27,7 @@ export default function UpdateRecruitmentStatus({ status, recruitmentId }: Props
   return (
     <form
       method="POST"
-      action={`/api/recruitments/${recruitmentId}`}
+      action={`/api/progress/${progressId}`}
       onSubmit={handleSubmit}
     >
       {alert}

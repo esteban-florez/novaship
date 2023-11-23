@@ -240,6 +240,8 @@ export default async function custom() {
     },
   ]
 
+  progresses.reverse()
+
   await prisma.progress.createMany({
     data: progresses,
   })

@@ -73,7 +73,7 @@ export async function POST(request: NextRequest, { params: { id } }: PageContext
     }
 
     return NextResponse.redirect(
-      url(`home/internships/${internship.id}?alert=progress_updated`)
+      url(`home/internships/${recruitment.id}/progress?alert=progress_created`)
     )
   } catch (error) {
     return handleError(error, data)

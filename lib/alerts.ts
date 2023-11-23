@@ -165,9 +165,13 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'Has rechazado la solicitud de pasantía con éxito.',
   },
+  progress_created: {
+    type: 'success',
+    message: 'Has registrado la actividad de pasantía con éxito.',
+  },
   progress_updated: {
     type: 'success',
-    message: 'Has actualizado el progreso de la pasantía con éxito.',
+    message: 'Has actualizado el estado de la actividad con éxito.',
   },
   bad_creds: {
     type: 'error',

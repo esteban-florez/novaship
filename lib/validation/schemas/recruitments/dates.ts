@@ -13,8 +13,6 @@ export const datesRefine = (data: { startsAt: Date, endsAt: Date }, ctx: Refinem
 
   const diff = startsAtDt.diff(endsAtDt, 'days')
 
-  console.log(diff.days)
-
   if (diff.days >= 0) {
     ctx.addIssue({
       message: 'Debe ser posterior a la fecha de inicio.',
