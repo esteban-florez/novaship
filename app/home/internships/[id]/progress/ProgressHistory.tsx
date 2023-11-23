@@ -1,19 +1,21 @@
-import { type Progress as ProgressModel } from '@prisma/client'
-import Progress from './Progress'
+'use client'
 
-type Props = React.PropsWithChildren<{
-  progresses: ProgressModel[]
-  isCompany: boolean
-}>
+import { useContext } from 'react'
+import { PDFContext } from './PDFProvider'
 
-export default function ProgressHistory({ progresses, isCompany }: Props) {
+type Props = React.PropsWithChildren
+
+export default function ProgressHistory({ children }: Props) {
+  const { targetRef } = useContext(PDFContext)
+
   return (
-    <div className="bg-white px-8 py-4 rounded-lg shadow">
-      <ol className="relative border-s space-y-8">
-        {progresses.map(progress => (
-          <Progress key={progress.id} progress={progress} withActions={isCompany} />
-        ))}
-      </ol>
+    <div className="bg-white px-8 py-4 rounded-lg shadow" ref={targetRef}>
+      <div className="flex justify-between mb-4 items-center">
+        <h2 className="text-2xl font-bold tracking-tighter">
+          Actividades de la pasantía
+        </h2>
+      </div>
+      {children}
     </div>
   )
 }

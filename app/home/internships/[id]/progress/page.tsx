@@ -11,6 +11,9 @@ import { getRecruitment } from '@/lib/data-fetching/recruitments'
 import { getInternship } from '@/lib/data-fetching/internships'
 import getPaginationProps from '@/lib/utils/pagination'
 import Pagination from '@/components/Pagination'
+import Progress from './Progress'
+import { PDFProvider } from './PDFProvider'
+import DownloadButton from './DownloadButton'
 
 export const metadata = {
   title: 'Historial de progreso',
@@ -59,7 +62,7 @@ export default async function InternshipProgressPage({
   const maxHours = internship.hours - recruitmentCompletedHours(recruitment)
 
   return (
-    <>
+    <PDFProvider>
       <PageTitle
         title="Historial de progreso"
         subtitle="Aquí puedes ver el historial de actualizaciones de progreso de la pasantía."
@@ -71,10 +74,17 @@ export default async function InternshipProgressPage({
             maxHours={maxHours}
           />
         )}
+        <DownloadButton />
       </PageTitle>
       <section className="flex p-4 gap-4">
         <div className="w-2/3">
-          <ProgressHistory progresses={progresses} isCompany={type === 'COMPANY'} />
+          <ProgressHistory>
+            <ol className="relative border-s space-y-8">
+              {progresses.map(progress => (
+                <Progress key={progress.id} progress={progress} withActions={type === 'COMPANY'} />
+              ))}
+            </ol>
+          </ProgressHistory>
         </div>
         <div className="w-1/3">
           {type !== 'PERSON'
@@ -87,6 +97,6 @@ export default async function InternshipProgressPage({
         </div>
       </section>
       <Pagination nextPage={nextPage} />
-    </>
+    </PDFProvider>
   )
 }

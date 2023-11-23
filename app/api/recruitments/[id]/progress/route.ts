@@ -28,7 +28,7 @@ export async function POST(request: NextRequest, { params: { id } }: PageContext
       },
     })
 
-    if (recruitment === null || type !== 'COMPANY' || recruitment === null || recruitment.status !== 'ACCEPTED') {
+    if (recruitment === null || type !== 'COMPANY' || recruitment.status !== 'ACCEPTED') {
       notFound()
     }
 

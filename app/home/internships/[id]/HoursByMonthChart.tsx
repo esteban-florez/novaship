@@ -33,7 +33,6 @@ export default async function HoursByMonthChart({ progresses }: Props) {
   }
 
   completed.forEach((progress) => {
-    // TODO -> cambiar por endsAt
     const { endsAt, hours } = progress
 
     const key = getKey(endsAt)

@@ -13,6 +13,6 @@ const colors = {
 
 export default function StatusDot({ status }: Props) {
   return (
-    <div className={clsx('w-3 h-3 rounded-full', colors[status])} />
+    <span className={clsx('w-3 h-3 rounded-full', colors[status])} />
   )
 }
