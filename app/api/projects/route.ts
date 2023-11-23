@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
   try {
     let projectId
     data = await request.json()
-    console.log(data)
     const parsed = schema.parse(data)
     const { id, type } = await auth.user(request)
 

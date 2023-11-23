@@ -2,26 +2,35 @@ import NoData from '../graphics/NoData'
 import clsx from 'clsx'
 
 type Props = React.PropsWithChildren<{
-  noData: {
+  noData?: {
     title: string
     content: string
   }
-  valid: boolean
+  valid?: boolean
   options?: {
     title?: boolean
     center?: boolean
     height?: string
+    border?: boolean
+    shadow?: boolean
   }
 }>
 
+// TODO -> chequear props
 export default function StatisticsGraphSection({
   noData,
   valid,
-  options,
+  options = { border: true, shadow: true },
   children,
 }: Props) {
   return (
-    <div className="h-full p-4 card bg-white border border-zinc-300 rounded-none sm:rounded-md shadow-md">
+    <div
+      className={clsx(
+        'h-full p-4 card bg-white rounded-none sm:rounded-md',
+        options?.border != null && 'border border-zinc-300',
+        options?.shadow != null && 'shadow-md'
+      )}
+    >
       {options?.title != null && (
         <h3 className="mb-4 text-xl font-bold text-primary">Estadísticas</h3>
       )}
@@ -32,12 +41,12 @@ export default function StatisticsGraphSection({
           options?.center != null && 'mx-auto'
         )}
       >
-        {!valid
+        {valid != null && !valid
           ? (
             <>{children}</>
             )
           : (
-            <NoData title={noData.title}>{noData.content}</NoData>
+            <NoData title={noData?.title ?? ''}>{noData?.content ?? ''}</NoData>
             )}
       </div>
     </div>

@@ -6,6 +6,11 @@ import { auth } from '@/lib/auth/pages'
 import { notFound } from 'next/navigation'
 import prisma from '@/prisma/client'
 import { getSearchAndFilter } from '@/lib/utils/search-params'
+import { type Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Mis pasantías',
+}
 
 export default async function MyInternshipsPage({
   params: { id: personId },

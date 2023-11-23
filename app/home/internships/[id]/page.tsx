@@ -17,6 +17,9 @@ import { Suspense } from 'react'
 import AvailableVacantsChart from './AvailableVacantsChart'
 import RecruitmentsByInterestedChart from './RecruitmentsByInterestedChart'
 import HoursByMonthChart from './HoursByMonthChart'
+import BarGraphSkeleton from '@/components/loaders/BarGraphSkeleton'
+import SkeletonTest from '@/components/loaders/SkeletonTest'
+import PieGraphSkeleton from '@/components/loaders/PieGraphSkeleton'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -32,7 +35,9 @@ export async function generateMetadata({ params: { id } }: PageContext) {
   }
 }
 
-export default async function InternshipDetailsPage({ params: { id } }: PageContext) {
+export default async function InternshipDetailsPage({
+  params: { id },
+}: PageContext) {
   // DRY 1823
   const { id: userId, type } = await auth.user()
   const internship = await getInternship(id)
@@ -42,11 +47,7 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
 
   const company = getInternshipCompany(internship)
 
-  const ids = [
-    company?.id,
-    internship.personId,
-    internship.instituteId,
-  ]
+  const ids = [company?.id, internship.personId, internship.instituteId]
 
   const hiddenForPerson = type === 'PERSON' && internship.status === 'REJECTED'
 
@@ -57,7 +58,9 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
   const { person, institute, grade, recruitments } = internship
   const stage = getInternshipStage(internship)
 
-  const recruitment = recruitments.find(recruitment => recruitment.status === 'ACCEPTED')
+  const recruitment = recruitments.find(
+    (recruitment) => recruitment.status === 'ACCEPTED'
+  )
 
   return (
     <>
@@ -108,18 +111,29 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
           {company === null
             ? (
               <>
-                {/* // #GRAPH 2 gráficas. */}
-                <Suspense fallback={<p>Loading skeleton de gráfica</p>}>
-                  {/* // 1 de Torta: Cupos disponibles para la pasantía vs Cupos no disponibles */}
-                  <AvailableVacantsChart internship={internship} />
-                </Suspense>
-                <Suspense fallback={<p>Loading state de gráfica</p>}>
-                  {/* // 2 de Torta: Solicitudes de la pasantía (enviadas vs recibidas) */}
-                  <RecruitmentsByInterestedChart
-                    recruitments={recruitments}
-                    userType={type}
-                  />
-                </Suspense>
+                <div className="flex flex-col -space-x-2">
+                  <Suspense
+                    fallback={
+                      <SkeletonTest>
+                        <PieGraphSkeleton />
+                      </SkeletonTest>
+                  }
+                  >
+                    <AvailableVacantsChart internship={internship} />
+                  </Suspense>
+                  <Suspense
+                    fallback={
+                      <SkeletonTest>
+                        <PieGraphSkeleton />
+                      </SkeletonTest>
+                  }
+                  >
+                    <RecruitmentsByInterestedChart
+                      recruitments={recruitments}
+                      userType={type}
+                    />
+                  </Suspense>
+                </div>
               </>
               )
             : (
@@ -141,9 +155,13 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                     </>
                     )
                   : (
-                    <Suspense fallback={<p>Loading skeleton de gráfica</p>}>
-                      {/* // #GRAPH
-                        // 1. Gráfica de barras: Horas completadas por mes */}
+                    <Suspense
+                      fallback={
+                        <SkeletonTest>
+                          <BarGraphSkeleton />
+                        </SkeletonTest>
+                  }
+                    >
                       <HoursByMonthChart progresses={recruitment?.progresses} />
                     </Suspense>
                     )}
