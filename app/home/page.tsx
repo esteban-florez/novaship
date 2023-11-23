@@ -94,21 +94,12 @@ export default async function HomePage() {
       ],
     }
 
-    const noDataGraphs = [
-      {
-        title: 'Ofertas laborales',
-        content: 'No hay ofertas registradas para mostrar este gráfico',
-      },
-      {
-        title: 'Proyectos',
-        content: 'Forma parte de algún proyecto para mostrar este gráfico',
-      },
-      {
-        title: 'Progreso de pasantías',
-        content:
-          'No estas realizando ninguna pasantía para mostrar este gráfico',
-      },
-    ]
+    const showOffersGraph = !checkEmpty([applicableOffers, nonApplicableOffers])
+    const showProjectsGraph = !checkEmpty([progress, done, revision, pending])
+    const showInternshipsProgressGraph = !checkEmpty([
+      hoursRequired,
+      hoursCompleted,
+    ])
 
     return (
       <>
@@ -122,49 +113,48 @@ export default async function HomePage() {
           }))}
         />
         <section className="p-4 gap-4 grid grid-cols-1 sm:grid-cols-2">
-          <div className="col-span-1">
-            <StatisticsGraphSection
-              noData={noDataGraphs[0]}
-              valid={checkEmpty([applicableOffers, nonApplicableOffers])}
-              options={{
-                title: true,
-                center: true,
-              }}
-            >
-              <PieGraphic
-                title="Ofertas laborales"
-                data={offersData}
-              />
-            </StatisticsGraphSection>
-          </div>
-          <div className="col-span-1">
-            <StatisticsGraphSection
-              noData={noDataGraphs[1]}
-              valid={checkEmpty([progress, done, revision, pending])}
-              options={{
-                center: true,
-              }}
-            >
-              <PieGraphic
-                title="Proyectos"
-                data={projectsData}
-              />
-            </StatisticsGraphSection>
-          </div>
-          <div className="mt-4 h-96 col-span-full">
-            <StatisticsGraphSection
-              noData={noDataGraphs[2]}
-              valid={checkEmpty([hoursRequired, hoursCompleted])}
-              options={{
-                height: 'h-96',
-              }}
-            >
-              <BarGraphic
-                title="Progreso de pasantías"
-                data={internshipsData}
-              />
-            </StatisticsGraphSection>
-          </div>
+          {showOffersGraph && (
+            <div className="col-span-1">
+              <StatisticsGraphSection
+                options={{
+                  center: true,
+                }}
+              >
+                <PieGraphic
+                  title="Ofertas laborales"
+                  data={offersData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
+          {showProjectsGraph && (
+            <div className="col-span-1">
+              <StatisticsGraphSection
+                options={{
+                  center: true,
+                }}
+              >
+                <PieGraphic
+                  title="Proyectos"
+                  data={projectsData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
+          {showInternshipsProgressGraph && (
+            <div className="mt-4 h-96 col-span-full">
+              <StatisticsGraphSection
+                options={{
+                  height: 'h-96',
+                }}
+              >
+                <BarGraphic
+                  title="Progreso de pasantías"
+                  data={internshipsData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
         </section>
       </>
     )
@@ -316,16 +306,8 @@ export default async function HomePage() {
       ],
     }
 
-    const noDataGraphs = [
-      {
-        title: 'Postulantes',
-        content: 'No hay ofertas registradas para mostrar',
-      },
-      {
-        title: 'Postulantes anuales',
-        content: 'No hay registros de postulantes para mostrar',
-      },
-    ]
+    const showOffersGraph = !checkEmpty([users, totalUsers - users])
+    const showHiringsGraph = !checkEmpty(hirings)
 
     return (
       <>
@@ -340,31 +322,34 @@ export default async function HomePage() {
         />
         <section className="mt-4 sm:mt-0 sm:p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <ExpiringOffersSection offers={expiringOffers} />
-          <div className="col-span-1">
-            <StatisticsGraphSection
-              noData={noDataGraphs[0]}
-              valid={checkEmpty([users, totalUsers - users])}
-            >
-              <PieGraphic
-                title="Postulantes"
-                data={offersData}
-              />
-            </StatisticsGraphSection>
-          </div>
-          <div className="mt-4 h-96 col-span-full">
-            <StatisticsGraphSection
-              noData={noDataGraphs[1]}
-              valid={checkEmpty(hirings)}
-              options={{
-                height: 'h-96',
-              }}
-            >
-              <BarGraphic
-                title="Postulantes anuales"
-                data={hiringData}
-              />
-            </StatisticsGraphSection>
-          </div>
+          {showOffersGraph && (
+            <div className="col-span-1">
+              <StatisticsGraphSection
+                options={{
+                  center: true,
+                }}
+              >
+                <PieGraphic
+                  title="Postulantes"
+                  data={offersData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
+          {showHiringsGraph && (
+            <div className="mt-4 h-96 col-span-full">
+              <StatisticsGraphSection
+                options={{
+                  height: 'h-96',
+                }}
+              >
+                <BarGraphic
+                  title="Postulantes anuales"
+                  data={hiringData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
         </section>
       </>
     )
@@ -446,23 +431,13 @@ export default async function HomePage() {
       ],
     }
 
-    const noDataGraphs = [
-      {
-        title: 'Progreso de pasantías',
-        content:
-          'No hay pasantías "En busca de empleo", "En progreso" o "Completadas" para mostrar',
-      },
-      {
-        title: 'Pasantes',
-        content:
-          'No hay registros de pasantes (suyos y otros) suficientes para mostrar este gráfico',
-      },
-      {
-        title: 'Pasantes',
-        content:
-          'No hay registros de pasantías suficientes para mostrar este gráfico',
-      },
-    ]
+    const showInternshipsGraph = !checkEmpty([
+      tInternships,
+      inProgress,
+      completed,
+    ])
+    const showUsersGraph = !checkEmpty([tInternships, otherInternships])
+    const showMonthlyInternshipsGraph = !checkEmpty(monthlyInternships)
 
     return (
       <>
@@ -479,49 +454,48 @@ export default async function HomePage() {
           }))}
         />
         <section className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="col-span-1">
-            <StatisticsGraphSection
-              noData={noDataGraphs[0]}
-              valid={checkEmpty([tInternships, inProgress, completed])}
-              options={{
-                title: true,
-                center: true,
-              }}
-            >
-              <PieGraphic
-                title="Progreso de pasantías"
-                data={internshipsData}
-              />
-            </StatisticsGraphSection>
-          </div>
-          <div className="col-span-1">
-            <StatisticsGraphSection
-              noData={noDataGraphs[1]}
-              valid={checkEmpty([tInternships, otherInternships])}
-              options={{
-                center: true,
-              }}
-            >
-              <PieGraphic
-                title="Pasantes"
-                data={usersData}
-              />
-            </StatisticsGraphSection>
-          </div>
-          <div className="col-span-full">
-            <StatisticsGraphSection
-              noData={noDataGraphs[1]}
-              valid={checkEmpty(monthlyInternships)}
-              options={{
-                height: 'h-96',
-              }}
-            >
-              <BarGraphic
-                title="Pasantías"
-                data={monthlyInternshipsData}
-              />
-            </StatisticsGraphSection>
-          </div>
+          {showInternshipsGraph && (
+            <div className="col-span-1">
+              <StatisticsGraphSection
+                options={{
+                  center: true,
+                }}
+              >
+                <PieGraphic
+                  title="Progreso de pasantías"
+                  data={internshipsData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
+          {showUsersGraph && (
+            <div className="col-span-1">
+              <StatisticsGraphSection
+                options={{
+                  center: true,
+                }}
+              >
+                <PieGraphic
+                  title="Pasantes"
+                  data={usersData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
+          {showMonthlyInternshipsGraph && (
+            <div className="col-span-full">
+              <StatisticsGraphSection
+                options={{
+                  height: 'h-96',
+                }}
+              >
+                <BarGraphic
+                  title="Pasantías"
+                  data={monthlyInternshipsData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
         </section>
       </>
     )

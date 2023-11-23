@@ -33,6 +33,7 @@ export const routes: Rec = {
   recruitments: 'Solicitudes',
   apply: 'Buscar cupos',
   invitations: 'Invitaciones',
+  stats: 'Estadísticas',
 }
 
 export const userTypes = {

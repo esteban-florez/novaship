@@ -1,12 +1,17 @@
 import NotificationHome from './NotificationHome'
 import EmptyContent from '../EmptyContent'
 import { type NotificationProps } from '@/lib/types'
+import { checkEmpty } from '@/lib/utils/verify'
 
 interface Props {
   notifications: NotificationProps[]
 }
 
 export default function NotificationsSection({ notifications }: Props) {
+  if (checkEmpty(notifications)) {
+    return null
+  }
+
   return (
     <section className="mt-4 sm:p-4">
       <div className="p-4 card bg-white border border-zinc-300 rounded-none sm:rounded-md shadow-md">

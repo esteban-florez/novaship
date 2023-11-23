@@ -2,6 +2,7 @@ import { type QuickAccessProps } from '@/lib/types'
 import {
   AcademicCapIcon,
   BriefcaseIcon,
+  ChartPieIcon,
   CheckBadgeIcon,
   ClipboardDocumentListIcon,
   EnvelopeIcon,
@@ -55,6 +56,11 @@ export default function getQuickAccessItems({ userId, type }: Props) {
         title: 'Verificaciones',
         href: '/home/admin/verifications',
         icon: <CheckBadgeIcon className="h-4 w-4" />,
+      },
+      {
+        title: 'Estadísticas',
+        href: '/home/admin/stats',
+        icon: <ChartPieIcon className="h-4 w-4" />,
       },
     ]
   }

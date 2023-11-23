@@ -2,28 +2,15 @@ import { getCompletedHours } from '@/lib/utils/tables'
 import prisma from '@/prisma/client'
 import { type Prisma } from '@prisma/client'
 import { getPersonRelatedIds } from '../user'
+import { getInternships } from '../internships'
 
 export async function getInternshipHours(userId: string) {
-  const internships = await prisma.internship.findMany({
+  const internships = await getInternships({
     where: {
       personId: userId,
       status: {
         not: 'REJECTED',
       },
-    },
-    select: {
-      hours: true,
-      recruitments: {
-        select: {
-          status: true,
-          progresses: {
-            select: {
-              hours: true,
-            },
-          },
-        },
-      },
-      updatedAt: true,
     },
   })
 

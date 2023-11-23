@@ -12,6 +12,7 @@ type Props = React.PropsWithChildren<{
 
 // TODO -> solo mantener 1 submenu abierto
 // TODO -> arreglar la transicion de la imagen cuando el aside esta oculto
+// TODO -> corregir el link activo
 export default function Aside({ links }: Props) {
   const [active, setActive] = useState(true)
   const pathname = usePathname()

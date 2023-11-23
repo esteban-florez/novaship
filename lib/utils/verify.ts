@@ -1,3 +1,4 @@
+// TODO -> soporte de number
 export function checkEmpty<T extends T[]>(input: T | T[] | T[][], condition: 'all' | 'one' = 'all') {
   const flatten = (arr: Array<T | T[]>): T[] => {
     return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flatten(val)) : acc.concat(val as T), [])
