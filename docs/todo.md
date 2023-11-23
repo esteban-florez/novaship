@@ -22,7 +22,8 @@
 - Loading para pages/id.
 - Projects files.
 - Refactor card.
-- Project image
+- Project image.
+- PDF header, footer, styles, template en general.
 
 # Pending
 - Drawer.
@@ -44,7 +45,3 @@
 - Admin
   - Migrar minicards a tabla (?)
   - Mostrar grafico de barras (registro por meses) del card seleccionado, como modal o pagina independiente (?)
-
-# Plugins
-
-- PDF downloader.

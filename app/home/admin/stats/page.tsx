@@ -9,12 +9,15 @@ import { checkEmpty } from '@/lib/utils/verify'
 import prisma from '@/prisma/client'
 import { type ChartData } from 'chart.js'
 import { type Metadata } from 'next'
+import { PDFProvider } from './PDFProvider'
+import DownloadButton from './DownloadButton'
+import PageTitle from '@/components/PageTitle'
+import WrapperPDF from './WrapperPDF'
 
 export const metadata: Metadata = {
   title: 'Estadísticas',
 }
 
-// TODO -> pdf
 export default async function StatsPage() {
   const persons = await prisma.person.count()
   const companies = await prisma.company.count()
@@ -148,72 +151,81 @@ export default async function StatsPage() {
   const showInternshipsGraph = !checkEmpty([5, 9])
 
   return (
-    <>
-      <section className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {checkEmpty([showTasksGraph, showUsersGraph, showOffersGraph]) && (
-          <div className="col-span-2">
-            <EmptyContent title="No hay gráficas a mostrar." />
-          </div>
-        )}
-        {showTasksGraph && (
-          <div className="col-span-1">
-            <StatisticsGraphSection
-              options={{ height: 'h-60', shadow: true, center: true }}
-            >
-              <PieGraphic
-                title="Tareas de proyectos"
-                data={tasksData}
-              />
-            </StatisticsGraphSection>
-          </div>
-        )}
-        {showUsersGraph && (
-          <div className="col-span-1">
-            <StatisticsGraphSection
-              options={{ height: 'h-60', shadow: true, center: true }}
-            >
-              <PieGraphic
-                title="Usuarios registrados"
-                data={usersData}
-              />
-            </StatisticsGraphSection>
-          </div>
-        )}
-        {showOffersGraph && (
-          <div className="col-span-1">
-            <StatisticsGraphSection
-              options={{ height: 'h-60', shadow: true, center: true }}
-            >
-              <PieGraphic
-                title="Ofertas laborales"
-                data={offersData}
-              />
-            </StatisticsGraphSection>
-          </div>
-        )}
-      </section>
-      <section className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {showMembershipsGraph && (
-          <div className="col-span-1">
-            <StatisticsGraphSection options={{ height: 'h-96', shadow: true }}>
-              <BarGraphic
-                title="Miembros registrados"
-                data={membershipsData}
-              />
-            </StatisticsGraphSection>
-          </div>
-        )}
-        {showInternshipsGraph && (
-          <div className="col-span-1">
-            <StatisticsGraphSection options={{ height: 'h-96', shadow: true }}>
-              <BarGraphic
-                title="Horas de pasantías"
-                data={internshipsData}
-              />
-            </StatisticsGraphSection>
-          </div>
-        )}
-      </section>
-    </>
+    <PDFProvider>
+      <PageTitle title="Estadísticas">
+        <DownloadButton />
+      </PageTitle>
+      <WrapperPDF>
+        <section className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {checkEmpty([showTasksGraph, showUsersGraph, showOffersGraph]) && (
+            <div className="col-span-2">
+              <EmptyContent title="No hay gráficas a mostrar." />
+            </div>
+          )}
+          {showTasksGraph && (
+            <div className="col-span-1">
+              <StatisticsGraphSection
+                options={{ height: 'h-60', shadow: true, center: true }}
+              >
+                <PieGraphic
+                  title="Tareas de proyectos"
+                  data={tasksData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
+          {showUsersGraph && (
+            <div className="col-span-1">
+              <StatisticsGraphSection
+                options={{ height: 'h-60', shadow: true, center: true }}
+              >
+                <PieGraphic
+                  title="Usuarios registrados"
+                  data={usersData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
+          {showOffersGraph && (
+            <div className="col-span-1">
+              <StatisticsGraphSection
+                options={{ height: 'h-60', shadow: true, center: true }}
+              >
+                <PieGraphic
+                  title="Ofertas laborales"
+                  data={offersData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
+        </section>
+        <section className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {showMembershipsGraph && (
+            <div className="col-span-1">
+              <StatisticsGraphSection
+                options={{ height: 'h-96', shadow: true }}
+              >
+                <BarGraphic
+                  title="Miembros registrados"
+                  data={membershipsData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
+          {showInternshipsGraph && (
+            <div className="col-span-1">
+              <StatisticsGraphSection
+                options={{ height: 'h-96', shadow: true }}
+              >
+                <BarGraphic
+                  title="Horas de pasantías"
+                  data={internshipsData}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
+        </section>
+      </WrapperPDF>
+    </PDFProvider>
   )
 }
