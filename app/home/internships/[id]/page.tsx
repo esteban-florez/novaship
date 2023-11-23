@@ -76,6 +76,7 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                   grade={grade}
                   internship={internship}
                   institute={institute}
+                  recruitment={recruitment}
                 />
                 <InternshipActions
                   className="lg:flex-row"
@@ -90,7 +91,7 @@ export default async function InternshipDetailsPage({ params: { id } }: PageCont
                 <h3 className="text-3xl font-bold text-primary tracking-tighter -mb-2">
                   {grade.title}
                 </h3>
-                <InternshipData internship={internship} />
+                <InternshipData internship={internship} recruitment={recruitment} />
                 <InternshipActions
                   className="lg:flex-row"
                   internship={internship}

@@ -8,8 +8,8 @@ import { type Job, type Vacant } from '@prisma/client'
 import Select from '@/components/forms/inputs/Select'
 import EmptyContent from '@/components/EmptyContent'
 import Link from 'next/link'
-import { object } from 'zod'
-import { defaults } from '@/lib/validation/schemas/defaults'
+import DatesInputs from '@/components/internships/DatesInputs'
+import { schemaOmit as schema } from '@/lib/validation/schemas/recruitments/company'
 
 type Props = React.PropsWithChildren<{
   internshipId: string
@@ -18,10 +18,6 @@ type Props = React.PropsWithChildren<{
   }>
 }>
 
-export const schema = object({
-  vacantId: defaults.id,
-})
-
 export default function RecruitButton({ internshipId, vacants }: Props) {
   const append = { interested: 'COMPANY', internshipId }
   const id = `recruitModal${internshipId}`
@@ -29,6 +25,8 @@ export default function RecruitButton({ internshipId, vacants }: Props) {
     alert, serverErrors, handleSubmit,
     register, formState: { errors },
   } = useSubmit({ schema, append })
+
+  console.log(errors)
 
   const options = vacants.map(vacant => ({ id: vacant.id, title: vacant.job.title }))
 
@@ -58,6 +56,7 @@ export default function RecruitButton({ internshipId, vacants }: Props) {
                   data: options,
                 }}
               />
+              <DatesInputs errors={errors} register={register} />
             </div>
             <div className="p-2">
               <p className="font-semibold">

@@ -1,50 +1,12 @@
 import { auth } from '@/lib/auth/api'
 import { handleError } from '@/lib/errors/api'
-import { schema } from '@/lib/validation/schemas/status'
+import { schema as datesSchema } from '@/lib/validation/schemas/recruitments/dates'
+import { schema as statusSchema } from '@/lib/validation/schemas/status'
 import prisma from '@/prisma/client'
 import { url } from '@/lib/utils/url'
 import { NextResponse, type NextRequest } from 'next/server'
 import { notify } from '@/lib/notifications/notify'
 import { type Company, type Grade, type Vacant } from '@prisma/client'
-
-// DRY -> mucha repetición de código aquí
-async function checkVacantLimit(vacant: Vacant & {
-  _count: {
-    recruitments: number
-  }
-  company: Company
-}, updatedId: string, grade: Grade) {
-  if (vacant.limit > vacant._count.recruitments) return
-  const where = {
-    vacantId: vacant.id,
-    id: {
-      not: updatedId,
-    },
-  }
-
-  const recruitments = await prisma.recruitment.findMany({
-    where,
-    include: {
-      internship: {
-        include: {
-          grade: true,
-          person: true,
-        },
-      },
-    },
-  })
-
-  await prisma.recruitment.updateMany({
-    where, data: { status: 'REJECTED' },
-  })
-
-  recruitments.forEach(async ({ internship: { person } }) => {
-    await notify('recruitment-rejected', person.authUserId, {
-      name: vacant.companyId,
-      grade: grade.title,
-    })
-  })
-}
 
 export async function PATCH(
   request: NextRequest, { params: { id } }: PageContext
@@ -53,11 +15,19 @@ export async function PATCH(
     const { type } = await auth.user(request)
 
     const data = await request.json()
-    const parsed = schema.parse(data)
+    const { status } = statusSchema.parse(data)
+
+    let dates = {}
+    if (type === 'COMPANY' && status === 'ACCEPTED') {
+      dates = datesSchema.parse(data)
+    }
 
     const { internship, vacant } = await prisma.recruitment.update({
       where: { id },
-      data: parsed,
+      data: {
+        status,
+        ...dates,
+      },
       include: {
         internship: {
           include: {
@@ -94,7 +64,7 @@ export async function PATCH(
       ? person.authUserId
       : company.authUserId
 
-    if (parsed.status === 'REJECTED') {
+    if (status === 'REJECTED') {
       await notify('recruitment-rejected', receiver, notificationData)
 
       return NextResponse.redirect(
@@ -140,4 +110,43 @@ export async function PATCH(
   } catch (error) {
     return handleError(error)
   }
+}
+
+// DRY -> mucha repetición de código aquí
+async function checkVacantLimit(vacant: Vacant & {
+  _count: {
+    recruitments: number
+  }
+  company: Company
+}, updatedId: string, grade: Grade) {
+  if (vacant.limit > vacant._count.recruitments) return
+  const where = {
+    vacantId: vacant.id,
+    id: {
+      not: updatedId,
+    },
+  }
+
+  const recruitments = await prisma.recruitment.findMany({
+    where,
+    include: {
+      internship: {
+        include: {
+          grade: true,
+          person: true,
+        },
+      },
+    },
+  })
+
+  await prisma.recruitment.updateMany({
+    where, data: { status: 'REJECTED' },
+  })
+
+  recruitments.forEach(async ({ internship: { person } }) => {
+    await notify('recruitment-rejected', person.authUserId, {
+      name: vacant.companyId,
+      grade: grade.title,
+    })
+  })
 }

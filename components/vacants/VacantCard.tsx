@@ -36,7 +36,7 @@ export default function VacantCard({ vacant, withGrades = false, internshipId }:
         <p className="line-clamp-2">
           {description}
         </p>
-        <div className="flex gap-2 flex-col md:flex-row">
+        <div className="flex gap-2 flex-col">
           <IconData
             label="Cupos disponibles"
             data={`${accepted}/${limit} cupos`}

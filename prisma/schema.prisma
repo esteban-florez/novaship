@@ -331,8 +331,8 @@ model Vacant {
 
 model Recruitment {
   id           String     @id @default(cuid())
-  startsAt     DateTime
-  endsAt       DateTime
+  startsAt     DateTime?
+  endsAt       DateTime?
   status       Status     @default(PENDING)
   interested   Interested
   internship   Internship @relation(fields: [internshipId], references: [id], onDelete: Cascade, onUpdate: Cascade)

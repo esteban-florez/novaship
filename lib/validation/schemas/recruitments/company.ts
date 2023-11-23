@@ -1,7 +1,10 @@
 import { literal, object } from 'zod'
 import { base } from './shared'
+import { notRefined as dates, datesRefine } from './dates'
 
-export const schema = base.merge(
+const merged = base.merge(dates)
+
+const full = merged.merge(
   object({
     interested: literal('COMPANY', {
       invalid_type_error: 'Debe ser tipo empresa.',
@@ -9,3 +12,7 @@ export const schema = base.merge(
     }),
   })
 )
+
+export const schema = full.superRefine(datesRefine)
+
+export const schemaOmit = full.omit({ internshipId: true, interested: true }).superRefine(datesRefine)

@@ -26,7 +26,7 @@ export default function UpdateRecruitmentStatus({ status, recruitmentId }: Props
   return (
     <form
       method="POST"
-      action={`/api/recruitments/${recruitmentId}/status`}
+      action={`/api/recruitments/${recruitmentId}`}
       onSubmit={handleSubmit}
     >
       {alert}

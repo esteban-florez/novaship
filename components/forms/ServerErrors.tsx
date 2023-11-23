@@ -15,7 +15,7 @@ export default function ServerErrors({ errorRecord, close }: Props) {
   if (errorRecord === undefined) return null
 
   return (
-    <div className="alert alert-error relative block">
+    <div className="alert alert-error relative block text-white font-semibold">
       <h4 className="text-lg">Verifique los siguientes campos: </h4>
       {Object.keys(errorRecord).map(errorKey => (
         <div key={errorKey}>

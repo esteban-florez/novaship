@@ -11,8 +11,8 @@ type Props = React.PropsWithChildren<
   placeholder: string
   maxlength?: number
   minlength?: number
-  max?: number
-  min?: number
+  max?: number | string
+  min?: number | string
   innerIcon?: React.ReactElement
   type?: HTMLInputTypeAttribute
   step?: string

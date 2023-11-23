@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Recruitment" ALTER COLUMN "endsAt" DROP NOT NULL,
+ALTER COLUMN "startsAt" DROP NOT NULL;

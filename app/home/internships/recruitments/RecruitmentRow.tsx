@@ -5,6 +5,7 @@ import { type RecruitmentWithRelations } from '@/lib/types'
 import Link from 'next/link'
 import StatusDot from './StatusDot'
 import UpdateRecruitmentStatus from './UpdateRecruitmentStatus'
+import AcceptRecruitmentModal from '@/components/internships/AcceptRecruitmentModal'
 
 type Props = React.PropsWithChildren<{
   recruitment: RecruitmentWithRelations
@@ -18,8 +19,6 @@ export default async function RecruitmentRow({ recruitment }: Props) {
 
   const current = type === 'INSTITUTE' ? 'PERSON' : type
   const recruitmentType = interested === current ? 'Enviada' : 'Recibida'
-
-  const statuses = ['ACCEPTED', 'REJECTED'] as const
 
   return (
     <tr>
@@ -66,13 +65,20 @@ export default async function RecruitmentRow({ recruitment }: Props) {
         {recruitmentType === 'Recibida' && recruitment.status === 'PENDING'
           ? (
             <div className="flex gap-1">
-              {statuses.map(status => (
-                <UpdateRecruitmentStatus
-                  key={status}
-                  recruitmentId={id}
-                  status={status}
-                />
-              ))}
+              {type === 'COMPANY'
+                ? (
+                  <AcceptRecruitmentModal recruitmentId={recruitment.id} />
+                  )
+                : (
+                  <UpdateRecruitmentStatus
+                    recruitmentId={id}
+                    status="ACCEPTED"
+                  />
+                  )}
+              <UpdateRecruitmentStatus
+                recruitmentId={id}
+                status="REJECTED"
+              />
             </div>
             )
           : (
