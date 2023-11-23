@@ -28,17 +28,6 @@ interface FilterQueries {
 export default async function TeamsPage({ searchParams }: SearchParamsProps) {
   const { id } = await auth.user()
 
-  console.log(
-    await prisma.leader.findFirst({
-      where: {
-        personId: id,
-      },
-      select: {
-        team: true,
-      },
-    })
-  )
-
   // DRY Pagination
   const filter = searchParams.filter ?? 'all'
   const pageNumber = +(searchParams.page ?? 1)

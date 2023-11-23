@@ -1,5 +1,8 @@
+import BarGraphic from '@/components/graphics/BarGraphic'
+import StatisticsGraphSection from '@/components/home/StatisticsGraphSection'
 import { months as translation } from '@/lib/translations'
 import { type Progress } from '@prisma/client'
+import { type ChartData } from 'chart.js'
 
 type Props = React.PropsWithChildren<{
   progresses: Progress[] | undefined
@@ -14,7 +17,9 @@ const getKey = (date: Date) => {
 export default async function HoursByMonthChart({ progresses }: Props) {
   if (progresses === undefined) return
 
-  const completed = progresses.filter(progress => progress.status === 'ACCEPTED')
+  const completed = progresses.filter(
+    (progress) => progress.status === 'ACCEPTED'
+  )
 
   const now = new Date()
 
@@ -27,7 +32,7 @@ export default async function HoursByMonthChart({ progresses }: Props) {
     now.setMonth(now.getMonth() - 1)
   }
 
-  completed.forEach(progress => {
+  completed.forEach((progress) => {
     // TODO -> cambiar por endsAt
     const { endsAt, hours } = progress
 
@@ -38,12 +43,27 @@ export default async function HoursByMonthChart({ progresses }: Props) {
     countByMonth[key] += hours
   })
 
-  // Aqui tienes un objeto que tiene como keys cada uno de los últimos 6 meses, y como valor de dicha key la cantidad de horas completadas en ese mes.
+  const months = Object.keys(countByMonth)
+    .map((m) => m.slice(0, 3))
+    .reverse()
+  const hours = Object.values(countByMonth).reverse()
 
-  // Ej. ENE-2023: 14
-  console.log({ countByMonth })
+  const data: ChartData<'bar'> = {
+    labels: months,
+    datasets: [
+      {
+        label: 'Horas',
+        data: hours,
+      },
+    ],
+  }
 
   return (
-    <p>Gráfica de Horas Completadas por mes</p>
+    <StatisticsGraphSection options={{ height: 'h-60' }}>
+      <BarGraphic
+        title="Horas completadas por mes"
+        data={data}
+      />
+    </StatisticsGraphSection>
   )
 }
