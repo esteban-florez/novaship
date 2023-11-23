@@ -26,8 +26,6 @@ export default function UpdateProgress({ maxHours, recruitmentId }: Props) {
     onSuccessRedirect: closeModal,
   })
 
-  console.log(errors)
-
   function closeModal() {
     if (ref.current === null) return
     ref.current.click()
@@ -36,7 +34,7 @@ export default function UpdateProgress({ maxHours, recruitmentId }: Props) {
   return (
     <Modal
       id="updateHoursModal"
-      className="btn btn-primary"
+      className="btn btn-primary mr-3"
       icon={<PlusIcon className="w-5 h-5" />}
       title="Registrar progreso"
       labelRef={ref}
