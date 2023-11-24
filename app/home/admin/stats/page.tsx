@@ -13,6 +13,7 @@ import { PDFProvider } from './PDFProvider'
 import DownloadButton from './DownloadButton'
 import PageTitle from '@/components/PageTitle'
 import WrapperPDF from './WrapperPDF'
+import { getStatuses } from '@/lib/data-fetching/home/institute'
 
 export const metadata: Metadata = {
   title: 'Estadísticas',
@@ -23,6 +24,7 @@ export default async function StatsPage() {
   const companies = await prisma.company.count()
   const institutes = await prisma.institute.count()
   const offers = await prisma.offer.findMany()
+  const allInternships = await getInternships()
   const internships = await getInternships({
     where: {
       status: {
@@ -91,6 +93,8 @@ export default async function StatsPage() {
     if (t.status === 'DONE') tasksGraphData.done += 1
   })
 
+  const { accepted, completed, inProgress } = getStatuses(allInternships)
+
   const tasksData: ChartData<'pie'> = {
     labels: ['Pendiente', 'Progreso', 'Revisión', 'Terminadas'],
     datasets: [
@@ -144,11 +148,25 @@ export default async function StatsPage() {
     ],
   }
 
+  const internshipsStagesGraph: ChartData<'pie'> = {
+    labels: ['Aceptadas', 'Completadas', 'En progreso'],
+    datasets: [
+      {
+        data: [accepted, completed, inProgress],
+      },
+    ],
+  }
+
   const showTasksGraph = !checkEmpty(Object.values(tasksGraphData))
   const showUsersGraph = !checkEmpty([persons, companies, institutes])
   const showOffersGraph = !checkEmpty(Object.values(offersGraphData))
   const showMembershipsGraph = !checkEmpty(membersRegistered)
-  const showInternshipsGraph = !checkEmpty([5, 9])
+  const showInternshipsGraph = !checkEmpty([hoursRequired, hoursCompleted])
+  const showInternshipsStagesGraph = !checkEmpty([
+    accepted,
+    completed,
+    inProgress,
+  ])
 
   return (
     <PDFProvider>
@@ -157,7 +175,14 @@ export default async function StatsPage() {
       </PageTitle>
       <WrapperPDF>
         <section className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {checkEmpty([showTasksGraph, showUsersGraph, showOffersGraph]) && (
+          {checkEmpty([
+            showTasksGraph,
+            showUsersGraph,
+            showOffersGraph,
+            showMembershipsGraph,
+            showInternshipsGraph,
+            showInternshipsStagesGraph,
+          ]) && (
             <div className="col-span-2">
               <EmptyContent title="No hay gráficas a mostrar." />
             </div>
@@ -165,7 +190,7 @@ export default async function StatsPage() {
           {showTasksGraph && (
             <div className="col-span-1">
               <StatisticsGraphSection
-                options={{ height: 'h-60', shadow: true, center: true }}
+                options={{ height: 'h-96', shadow: true, center: true }}
               >
                 <PieGraphic
                   title="Tareas de proyectos"
@@ -177,7 +202,7 @@ export default async function StatsPage() {
           {showUsersGraph && (
             <div className="col-span-1">
               <StatisticsGraphSection
-                options={{ height: 'h-60', shadow: true, center: true }}
+                options={{ height: 'h-96', shadow: true, center: true }}
               >
                 <PieGraphic
                   title="Usuarios registrados"
@@ -189,7 +214,7 @@ export default async function StatsPage() {
           {showOffersGraph && (
             <div className="col-span-1">
               <StatisticsGraphSection
-                options={{ height: 'h-60', shadow: true, center: true }}
+                options={{ height: 'h-96', shadow: true, center: true }}
               >
                 <PieGraphic
                   title="Ofertas laborales"
@@ -198,8 +223,18 @@ export default async function StatsPage() {
               </StatisticsGraphSection>
             </div>
           )}
-        </section>
-        <section className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {showInternshipsStagesGraph && (
+            <div className="col-span-1">
+              <StatisticsGraphSection
+                options={{ height: 'h-96', shadow: true, center: true }}
+              >
+                <PieGraphic
+                  title="Progreso de pasantías"
+                  data={internshipsStagesGraph}
+                />
+              </StatisticsGraphSection>
+            </div>
+          )}
           {showMembershipsGraph && (
             <div className="col-span-1">
               <StatisticsGraphSection
