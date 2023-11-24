@@ -16,6 +16,7 @@ export default async function institute() {
     const name = institutes.names[position]
     const description = institutes.descriptions[position]
     const email = `i${i}@institute.dev`
+    const isUnverified = unverifiedProbability.random() === 5 && i !== 1
 
     const authUser = await lucia.createUser({
       primaryKey: {
@@ -40,7 +41,7 @@ export default async function institute() {
             id: authUser.id,
           },
         },
-        verifiedAt: unverifiedProbability.random() === 5 ? null : new Date(),
+        verifiedAt: isUnverified ? null : new Date(),
         location: {
           connect: locations.random().first(),
         },
