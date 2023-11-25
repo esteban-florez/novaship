@@ -32,12 +32,10 @@
 - Perfil y perfiles.
 - Corregir tags #FIX.
 - Cambiar GoBackBtn por Links en forms.
-- Postulaciones en Projects/id.
-- Acciones de tareas como miembro.
+- Validar en las rutas de proyecto que el usuario sea lider, miembro o usuario con permisos para registrar.
 
 # Future
 
-- Rediseñar projects/id, projects/id/tasks
 - Reemplazar react-chartjs-2 por recharts o tremor
 
 # Graficas
@@ -45,3 +43,20 @@
 - Admin
   - Migrar minicards a tabla (?)
   - Mostrar grafico de barras (registro por meses) del card seleccionado, como modal o pagina independiente (?)
+
+# Revisar
+project group
+- Redirige si es empresa y no tiene equipos
+- (P) Registrar tarea
+- (P) Ver tarea
+- (P) Actualizar tarea
+- (P) Borrar tarea
+- (P) Registrar revision
+- (P) Actualizar revision
+- (P) Borrar revision
+- (P) Registrar subtarea
+- (P) Actualizar subtarea
+- (P) Borrar subtarea
+- (P) Registrar revision subtarea
+- (P) Actualizar revision subtarea
+- (P) Borrar revision subtarea

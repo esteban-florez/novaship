@@ -2,6 +2,15 @@ import prisma from '@/prisma/client'
 import { type Prisma } from '@prisma/client'
 import { cache } from 'react'
 
+export const getInvitationToTeam = cache(async ({ userId, teamId }: { userId: string, teamId: string }) => {
+  return await prisma.invitation.findFirst({
+    where: {
+      personId: userId,
+      teamId,
+    },
+  })
+})
+
 export const getInvitations = cache(async ({ where, skip, take }: QueryConfig<Prisma.InvitationWhereInput>) => {
   return await prisma.invitation.findMany({
     where: {
@@ -11,6 +20,11 @@ export const getInvitations = cache(async ({ where, skip, take }: QueryConfig<Pr
       id: true,
       status: true,
       updatedAt: true,
+      person: {
+        select: {
+          name: true,
+        },
+      },
       team: {
         select: {
           id: true,

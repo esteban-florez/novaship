@@ -1,3 +1,10 @@
+export const STAGE_STATUS = {
+  PENDING: 'text-secondary',
+  DONE: 'text-success',
+  REVIEW: 'text-warning',
+  PROGRESS: 'text-primary',
+}
+
 export const STAGE_COLORS = {
   PENDING: 'text-neutral-400',
   REJECTED: 'text-error',

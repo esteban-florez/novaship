@@ -51,7 +51,7 @@ export async function PUT(
     if (revision.task != null) {
       return NextResponse.redirect(
         url(
-          `/home/projects/${revision.task?.projectId}/tasks/${revision.task?.id}?alert=task_revision_updated`
+          `/home/projects/${revision.task?.projectId}/tasks?alert=task_revision_updated`
         )
       )
     }
@@ -59,7 +59,7 @@ export async function PUT(
     if (revision.subtask != null) {
       return NextResponse.redirect(
         url(
-          `/home/projects/${revision.subtask.task?.projectId}/tasks/${revision.subtask.task?.id}?alert=subtask_revision_updated`
+          `/home/projects/${revision.subtask.task?.projectId}/tasks?alert=subtask_revision_updated`
         )
       )
     }
@@ -111,7 +111,7 @@ export async function DELETE(
     if (revision.task != null) {
       return NextResponse.redirect(
         url(
-          `/home/projects/${revision.task?.projectId}/tasks/${revision.task.id}?alert=task_revision_deleted`
+          `/home/projects/${revision.task?.projectId}/tasks?alert=task_revision_deleted`
         )
       )
     }
@@ -119,7 +119,7 @@ export async function DELETE(
     if (revision.subtask != null) {
       return NextResponse.redirect(
         url(
-          `/home/projects/${revision.subtask.task?.projectId}/tasks/${revision.subtask.task?.id}?alert=subtask_revision_deleted`
+          `/home/projects/${revision.subtask.task?.projectId}/tasks?alert=subtask_revision_deleted`
         )
       )
     }

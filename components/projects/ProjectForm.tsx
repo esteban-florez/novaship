@@ -37,6 +37,8 @@ export default function ProjectForm({
   project,
   userType,
 }: Props) {
+  const backUrl =
+    method === 'POST' ? '/home/projects' : `/home/projects/${project?.id ?? ''}`
   const projectCategories = project?.categories.map((category) => category.id)
   let initialTeamwork = userType === 'COMPANY' ? 'group' : 'single'
   if (method === 'PUT') {
@@ -187,6 +189,7 @@ export default function ProjectForm({
           </section>
           <FormButtons
             label={method === 'PUT' ? 'Actualizar' : 'Registrar'}
+            url={backUrl}
             disableSubmit={teamwork === null || loading}
           />
         </form>

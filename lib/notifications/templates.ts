@@ -73,6 +73,12 @@ export const templates: NotificationsRecord = {
     href: `/home/offers/${offerId}`,
   }),
 
+  'invitation-asked': ({ user, team, teamId }) => ({
+    title: 'Te ha enviado una solicitud.',
+    content: `${user} desea formar parte de tu grupo ${team}.`,
+    href: `/home/teams/${teamId}`,
+  }),
+
   'invitation-sent': ({ user, team }) => ({
     title: 'Te han enviado una solicitud.',
     content: `${user} te ha invitado a formar parte de su grupo ${team}.`,

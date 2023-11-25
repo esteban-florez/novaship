@@ -118,6 +118,8 @@ export default async function HomePage() {
               <StatisticsGraphSection
                 options={{
                   center: true,
+                  border: true,
+                  shadow: true,
                 }}
               >
                 <PieGraphic
@@ -132,6 +134,8 @@ export default async function HomePage() {
               <StatisticsGraphSection
                 options={{
                   center: true,
+                  border: true,
+                  shadow: true,
                 }}
               >
                 <PieGraphic
@@ -146,6 +150,8 @@ export default async function HomePage() {
               <StatisticsGraphSection
                 options={{
                   height: 'h-96',
+                  border: true,
+                  shadow: true,
                 }}
               >
                 <BarGraphic
@@ -327,6 +333,8 @@ export default async function HomePage() {
               <StatisticsGraphSection
                 options={{
                   center: true,
+                  border: true,
+                  shadow: true,
                 }}
               >
                 <PieGraphic
@@ -341,6 +349,8 @@ export default async function HomePage() {
               <StatisticsGraphSection
                 options={{
                   height: 'h-96',
+                  border: true,
+                  shadow: true,
                 }}
               >
                 <BarGraphic
@@ -459,6 +469,8 @@ export default async function HomePage() {
               <StatisticsGraphSection
                 options={{
                   center: true,
+                  border: true,
+                  shadow: true,
                 }}
               >
                 <PieGraphic
@@ -473,6 +485,8 @@ export default async function HomePage() {
               <StatisticsGraphSection
                 options={{
                   center: true,
+                  border: true,
+                  shadow: true,
                 }}
               >
                 <PieGraphic
@@ -487,6 +501,8 @@ export default async function HomePage() {
               <StatisticsGraphSection
                 options={{
                   height: 'h-96',
+                  border: true,
+                  shadow: true,
                 }}
               >
                 <BarGraphic

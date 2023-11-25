@@ -109,6 +109,10 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'El equipo de trabajo ha sido actualizado con éxito.',
   },
+  invitation_sent: {
+    type: 'success',
+    message: 'La solicitud fue enviada con éxito.',
+  },
   invitation_accepted: {
     type: 'success',
     message: 'La invitación fue aceptada con éxito.',
@@ -179,6 +183,6 @@ export const alerts: AlertList = {
   },
   redirected: {
     type: 'info',
-    message: 'Pa fuera, pala calle.',
+    message: 'Ha sido redirigido.',
   },
 }

@@ -57,7 +57,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       })
     }
 
-    return NextResponse.redirect(url(`/home/projects/${subtask.task.projectId}/tasks/${subtask.taskId}?alert=subtask_updated`))
+    return NextResponse.redirect(url(`/home/projects/${subtask.task.projectId}/tasks?alert=subtask_updated`))
   } catch (error) {
     handleError(error, data)
   }
@@ -77,7 +77,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       notFound()
     }
 
-    return NextResponse.redirect(url(`/home/projects/${subtask?.task.projectId}/tasks/${subtask.task.id}?alert=subtask_deleted`))
+    return NextResponse.redirect(url(`/home/projects/${subtask?.task.projectId}/tasks?alert=subtask_deleted`))
   } catch (error) {
     return handleError(error)
   }

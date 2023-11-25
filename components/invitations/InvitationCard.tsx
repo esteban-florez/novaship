@@ -3,15 +3,16 @@
 import useSubmit from '@/lib/hooks/useSubmit'
 import { type InvitationData } from '@/lib/types'
 import { format } from '@/lib/utils/date'
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { type Status } from '@prisma/client'
-import Link from 'next/link'
 import { useState } from 'react'
 
 interface Props {
   invitation: InvitationData
+  side: 'user' | 'owner'
 }
 
-export default function InvitationCard({ invitation }: Props) {
+export default function InvitationCard({ invitation, side }: Props) {
   const [status, setStatus] = useState<Status>('PENDING')
   const { handleSubmit, serverErrors, alert, loading } = useSubmit({
     method: 'PUT',
@@ -26,19 +27,20 @@ export default function InvitationCard({ invitation }: Props) {
       {serverErrors}
       <div className="card card-compact bg-base-100 rounded-lg shadow-lg">
         <div className="p-4">
-          <p>
-            Te han invitado a unirte al grupo{' '}
-            <span className="font-semibold">{invitation.team.name}</span>
-          </p>
+          {side === 'user'
+            ? (
+              <p>
+                Te han invitado a unirte al grupo{' '}
+                <span className="font-semibold">{invitation.team.name}</span>
+              </p>
+              )
+            : (
+              <p>{invitation.person.name} solicita ser parte del grupo</p>
+              )}
           <div className="mt-1 mb-3 flex flex-col justify-between items-center">
-            <Link
-              href={`/home/teams/${invitation.team.id}`}
-              className="text-sm font-semibold text-primary underline transition-all"
-            >
-              Ver equipo
-            </Link>
             <small className="text-neutral-600">
-              Invitado el {format(invitation.updatedAt)}
+              {side === 'user' ? 'Invitado el' : 'Solicitud enviada el'}{' '}
+              {format(invitation.updatedAt)}
             </small>
           </div>
           <form
@@ -54,6 +56,7 @@ export default function InvitationCard({ invitation }: Props) {
                 setStatus('ACCEPTED')
               }}
             >
+              <CheckIcon className="w-5 h-5" />
               Aceptar
             </button>
             <button
@@ -63,6 +66,7 @@ export default function InvitationCard({ invitation }: Props) {
                 setStatus('REJECTED')
               }}
             >
+              <XMarkIcon className="w-5 h-5" />
               Rechazar
             </button>
           </form>

@@ -4,6 +4,7 @@ import { cache } from 'react'
 
 const query = {
   include: {
+    person: true,
     revisions: true,
     participations: {
       include: {

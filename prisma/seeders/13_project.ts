@@ -11,6 +11,7 @@ export default async function project() {
   const categories = await prisma.category.findMany({ select: { id: true } })
   const teams = collect(await prisma.team.findMany({ select: { id: true } }))
   const persons = collect(await prisma.person.findMany({ select: { id: true } }))
+  const images = collect(['1.jpeg', '2.jpg', '3.jpg'])
 
   for (let i = 0; i < MAX; i++) {
     const rnd = coinflip()
@@ -24,6 +25,7 @@ export default async function project() {
         teamId: rnd ? teams.random().first().id : null,
         personId: !rnd ? persons.random().first().id : null,
         code,
+        image: '/project' + images.random().first(),
         categories: {
           connect: collect(categories).random(5).all(),
         },
