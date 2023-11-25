@@ -4,7 +4,11 @@ import { getProject } from '@/lib/data-fetching/project'
 import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Filters from './Filters'
-import { getProjectLeader, getTaskStatus } from '@/lib/utils/tables'
+import {
+  getProjectLeader,
+  getTaskStatus,
+  getTeamwork,
+} from '@/lib/utils/tables'
 import { includesValue } from '@/lib/utils/text'
 import { Suspense } from 'react'
 import Link from 'next/link'
@@ -17,7 +21,7 @@ import Forms from './Forms'
 import SubtaskComponent from './SubtaskComponent'
 import { taskStatuses } from '@/lib/translations'
 import { type TaskStatus } from '@prisma/client'
-import { STAGE_STATUS } from '@/lib/shared/stage-colors'
+import { STAGE_BADGES } from '@/lib/shared/stage-colors'
 
 export const metadata: Metadata = {
   title: 'Tareas de proyecto',
@@ -28,7 +32,7 @@ export default async function TasksProjectPage({
   searchParams,
   params: { id },
 }: SearchParamsWithIdProps) {
-  const { id: userId, type } = await auth.user()
+  const { id: userId } = await auth.user()
   const project = await getProject({ id })
   if (project == null) {
     notFound()
@@ -47,6 +51,7 @@ export default async function TasksProjectPage({
     comment: leader.id === userId,
   }
 
+  const teamwork = getTeamwork(project)
   const url = `/home/projects/${id}/tasks`
   const taskId = String(searchParams.id ?? '')
   const subtaskId = String(searchParams.subtaskId ?? '')
@@ -54,6 +59,7 @@ export default async function TasksProjectPage({
   const action = String(searchParams.action ?? '')
   const search = String(searchParams.search ?? '')
   const filter = String(searchParams.filtered ?? '')
+  const hasTasks = project.tasks.length > 0
   const tasks = project.tasks.filter((t) => {
     const matchStatus = getTaskStatus(t) === filter.toUpperCase()
     const matchSearch = includesValue([t.title, t.description], search)
@@ -64,6 +70,17 @@ export default async function TasksProjectPage({
 
   const showContentEmpty =
     [taskId, revisionId].every((i) => i === '') && action === ''
+  const showRevision = taskId !== '' && revisionId !== '' && action === ''
+  const showSubtask =
+    taskId !== '' &&
+    subtaskId !== '' &&
+    revisionId === '' &&
+    (action === '' || action === 'show')
+  const showTask =
+    taskId !== '' &&
+    subtaskId === '' &&
+    revisionId === '' &&
+    (action === '' || action === 'show')
 
   return (
     <>
@@ -83,37 +100,37 @@ export default async function TasksProjectPage({
                           key={t.id}
                           href={{
                             pathname: url,
-                            query: { id: t.id, action: 'show' },
+                            query: { id: t.id, action: 'show', filtered: filter },
                           }}
                         >
                           <div
                             className={clsx(
-                              'group p-4 text-sm hover:bg-primary delay-75 duration-75 transition-colors ease-in-out cursor-pointer',
+                              'group p-4 text-sm hover:bg-primary delay-75 duration-75 transition-colors ease-in-out',
                               taskId === t.id && 'bg-primary'
                             )}
                           >
                             <h6
                               className={clsx(
-                                '-mb-1 group-hover:text-white line-clamp-1',
-                                taskId === t.id && 'font-bold text-white',
-                                taskId !== t.id && 'font-semibold'
+                                '-mb-1 group-hover:text-white font-semibold line-clamp-1',
+                                taskId === t.id && 'text-white font-bold'
                               )}
                             >
                               {t.title}
                             </h6>
                             <small
                               className={clsx(
-                                'font-bold group-hover:text-white',
-                                taskId === t.id && 'text-white',
-                                STAGE_STATUS[status]
+                                'badge badge-sm badge-outline group-hover:bg-white',
+                                taskId === t.id && 'bg-white',
+                                STAGE_BADGES[status]
                               )}
                             >
-                              ({taskStatuses[status]})
+                              {taskStatuses[status]}
                             </small>
                             <p
                               className={clsx(
-                                'group-hover:text-neutral-200 line-clamp-2 leading-none',
-                                taskId === t.id && 'text-neutral-200'
+                                'mt-1 group-hover:text-neutral-200 line-clamp-2 leading-none',
+                                taskId === t.id && 'font-semibold text-neutral-200',
+                                taskId !== t.id && 'text-neutral-600'
                               )}
                             >
                               {t.description}
@@ -135,7 +152,7 @@ export default async function TasksProjectPage({
                   pathname: url,
                   query: { action: 'create' },
                 }}
-                className="sticky absolute left-0 bottom-0 right-0"
+                className="sticky left-0 bottom-0 right-0"
               >
                 <button className="mt-2 btn btn-primary btn-block">
                   <PlusIcon className="w-5 h-5" />
@@ -151,7 +168,15 @@ export default async function TasksProjectPage({
               <div className="h-[80vh]">
                 {showContentEmpty && (
                   <div className="h-[80vh] w-auto my-auto p-4 card bg-white rounded-md border border-zinc-300 flex items-center justify-center">
-                    <EmptyContent title="Selecciona una tarea" />
+                    <EmptyContent
+                      title={
+                        hasTasks
+                          ? 'Selecciona alguna tarea'
+                          : 'Registremos una nueva tarea'
+                      }
+                    >
+                      El estado del proyecto depende de las tareas y subtareas
+                    </EmptyContent>
                   </div>
                 )}
                 <Forms
@@ -160,36 +185,36 @@ export default async function TasksProjectPage({
                   taskId={taskId}
                   subtaskId={subtaskId}
                   revisionId={revisionId}
-                  type={type}
-                  userId={userId}
+                  teamwork={teamwork}
+                  leader={leader.id === userId}
+                  filter={filter}
                 />
-                {taskId !== '' && revisionId !== '' && action === '' && (
+                {showRevision && (
                   <RevisionComponent
                     id={revisionId}
                     pathname={url}
+                    filter={filter}
+                    leader={leader.id === userId}
                   />
                 )}
-                {taskId !== '' &&
-                  subtaskId !== '' &&
-                  revisionId === '' &&
-                  (action === '' || action === 'show') && (
-                    <SubtaskComponent
-                      id={subtaskId}
-                      userId={userId}
-                      leaderId={leader.id}
-                      pathname={url}
-                      permissions={subtaskPermissions}
-                    />
+                {showSubtask && (
+                  <SubtaskComponent
+                    id={subtaskId}
+                    userId={userId}
+                    leaderId={leader.id}
+                    pathname={url}
+                    permissions={subtaskPermissions}
+                    filter={filter}
+                  />
                 )}
-                {taskId !== '' &&
-                  subtaskId === '' &&
-                  revisionId === '' &&
-                  (action === '' || action === 'show') && (
-                    <TaskComponent
-                      id={taskId}
-                      pathname={url}
-                      permissions={taskPermissions}
-                    />
+                {showTask && (
+                  <TaskComponent
+                    id={taskId}
+                    pathname={url}
+                    permissions={taskPermissions}
+                    filter={filter}
+                    userId={userId}
+                  />
                 )}
               </div>
             </Suspense>

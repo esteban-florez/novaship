@@ -12,6 +12,7 @@ interface Props extends FormProps {
   revision?: RevisionComponentProps
   taskId?: string
   subtaskId?: string
+  filter: string
 }
 
 export default function RevisionForm({
@@ -20,8 +21,15 @@ export default function RevisionForm({
   revision,
   taskId,
   subtaskId,
+  filter,
 }: Props) {
   const pathname = usePathname()
+  const query =
+    filter !== ''
+      ? { id: taskId, subtaskId, filtered: filter }
+      : taskId != null
+        ? { id: taskId }
+        : null
 
   const {
     handleSubmit,
@@ -36,6 +44,7 @@ export default function RevisionForm({
     append: {
       taskId,
       subtaskId,
+      filter,
     },
   })
 
@@ -66,6 +75,7 @@ export default function RevisionForm({
         link={{
           href: {
             pathname,
+            query,
           },
         }}
         label={method === 'PUT' ? 'Actualizar' : 'Registrar'}

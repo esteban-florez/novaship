@@ -16,8 +16,11 @@ interface Props {
     isOwner: boolean
     isMember: boolean
   }
-  teamId: string
   canApply: boolean
+  team: {
+    id: string
+    name: string
+  } | null
 }
 
 export default function ProjectDetails({
@@ -26,13 +29,14 @@ export default function ProjectDetails({
   description,
   categories,
   isPrivate,
-  teamId,
   userData,
   canApply,
+  team,
 }: Props) {
+  const userInTeam = userData.isMember || userData.isOwner
   const { alert, serverErrors, loading, handleSubmit } = useSubmit({
     append: {
-      teamId,
+      teamId: team?.id,
       projectId: id,
     },
   })
@@ -78,9 +82,26 @@ export default function ProjectDetails({
               )
             })}
           </div>
+          {team != null
+            ? (
+              <Link href={`/home/teams/${team.id}`}>
+                <p className="font-bold text-primary">
+                  {userInTeam
+                    ? `Su equipo asignado (${team.name})`
+                    : `Equipo encargado (${team.name})`}
+                </p>
+              </Link>
+              )
+            : (
+              <p className="font-bold text-primary">
+                {userInTeam
+                  ? 'Usted lleva este proyecto solo'
+                  : 'Este proyecto es un proyecto personal'}
+              </p>
+              )}
           <p className="line-clamp-6 py-3">{description}</p>
           <div className="mx-auto flex w-full flex-col sm:justify-end gap-3 sm:mx-0 sm:w-auto sm:flex-row sm:gap-1 sm:text-sm lg:gap-2">
-            {canApply && (
+            {team != null && canApply && (
               <form
                 action="/api/invitations"
                 method="POST"

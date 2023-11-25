@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation'
 import { deleteSubtask, getMySubtask } from '@/lib/data-fetching/subtask'
 import collect from '@/lib/utils/collection'
 
+// #SCHEMA
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
@@ -57,7 +58,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       })
     }
 
-    return NextResponse.redirect(url(`/home/projects/${subtask.task.projectId}/tasks?alert=subtask_updated`))
+    return NextResponse.redirect(url(`/home/projects/${subtask.task.projectId}/tasks?id=${subtask.taskId}&filtered=${data.filter as string}&alert=subtask_updated`))
   } catch (error) {
     handleError(error, data)
   }
@@ -77,7 +78,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       notFound()
     }
 
-    return NextResponse.redirect(url(`/home/projects/${subtask?.task.projectId}/tasks?alert=subtask_deleted`))
+    return NextResponse.redirect(url(`/home/projects/${subtask?.task.projectId}/tasks?id=${subtask.taskId}&alert=subtask_deleted`))
   } catch (error) {
     return handleError(error)
   }

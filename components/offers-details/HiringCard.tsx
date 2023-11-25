@@ -17,6 +17,7 @@ interface Props {
   person?: {
     id: string
     name: string
+    email: string
     skills: OptionSkill[]
   }
   readOnly: boolean
@@ -85,7 +86,9 @@ export default function HiringCard({ offer, hiring, person, readOnly }: Props) {
       <>
         <button className="btn btn-primary">Aceptar</button>
         <button
-          onClick={() => { setStatus('REJECTED') }}
+          onClick={() => {
+            setStatus('REJECTED')
+          }}
           className="btn btn-error"
         >
           Rechazar
@@ -122,6 +125,9 @@ export default function HiringCard({ offer, hiring, person, readOnly }: Props) {
     return (
       <div className="bg-neutral-100 border rounded-md p-4 flex flex-col">
         <h6 className="font-bold text-center text-xl">{username}</h6>
+        <p className="font-semibold text-neutral-600 text-center">
+          {person?.email}
+        </p>
         <RadarGraphic
           data={data}
           options={options}

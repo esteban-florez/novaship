@@ -25,6 +25,7 @@ interface Props extends FormProps {
     person: Person
   }
   >
+  filter: string
 }
 
 export default function SubtaskForm({
@@ -34,8 +35,15 @@ export default function SubtaskForm({
   subtask,
   memberships,
   person,
+  filter,
 }: Props) {
   const pathname = usePathname()
+  const query =
+    filter !== ''
+      ? { id: taskId, filtered: filter }
+      : subtask != null
+        ? { id: taskId, subtaskId: subtask.id }
+        : null
   const selectedMembers = subtask?.subparticipations.map(
     (subparticipation) => subparticipation.personId
   )
@@ -61,6 +69,7 @@ export default function SubtaskForm({
     method,
     append: {
       taskId,
+      filter,
     },
   })
 
@@ -111,7 +120,7 @@ export default function SubtaskForm({
             />
           )}
         </FormSection>
-        {(selectedMembers != null || memberships != null) && (
+        {memberships != null && (
           <FormSection
             title="Participantes"
             description="Designe a las personas que completerán la subtarea."
@@ -136,6 +145,7 @@ export default function SubtaskForm({
           link={{
             href: {
               pathname,
+              query,
             },
           }}
         />

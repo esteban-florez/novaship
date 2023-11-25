@@ -31,6 +31,12 @@ export function getHiringStatusFromId(hirings: HiringWithPersonSkills[], id: str
   return hirings.find((hiring) => hiring.personId === id)?.status ?? 'PENDING'
 }
 
+export function getTeamwork(project: ProjectsFull) {
+  return project.teamId != null
+    ? 'team'
+    : 'solo'
+}
+
 export function belongsToTeam(team: TeamWithMembers, userId: string): boolean {
   if (team !== null) {
     return team.memberships.find(member => member.person?.id === userId) != null
