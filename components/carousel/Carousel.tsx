@@ -13,6 +13,7 @@ interface Props {
     title: string
     description: string
     link: string
+    image: string
   }>
 }
 
@@ -30,11 +31,21 @@ export default function Carousel({ items }: Props) {
           key={item.title}
           className="flex w-full grow-0 select-none flex-col"
         >
-          <img
-            src="/card.webp"
-            alt="Imagen de fondo carrusel"
-            className="absolute right-0 top-0 h-full w-full object-cover"
-          />
+          {'link' in item
+            ? (
+              <img
+                src={item.image}
+                alt="Imagen de fondo carrusel"
+                className="absolute right-0 top-0 h-full w-full object-cover"
+              />
+              )
+            : (
+              <img
+                src="/card.webp"
+                alt="Imagen de fondo carrusel"
+                className="absolute right-0 top-0 h-full w-full object-cover"
+              />
+              )}
           <div className="h-72 backdrop-blur-sm backdrop-brightness-50">
             {'company' in item && (
               <Content
