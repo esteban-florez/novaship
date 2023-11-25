@@ -53,6 +53,7 @@ export default async function OfferPage({
   const skills = collect(offer.skills).ids()
   const suggestedUsers = await getSuggestedUsers({ offerId: id, skills })
   const offerData = { id, skills: offer.skills }
+  const hirings = offer.hiring.length
 
   const tabCount = () => {
     if (filter === 'accepted') {
@@ -176,6 +177,7 @@ export default async function OfferPage({
             job={offer.job.title}
             interested={interested}
             hiringId={hiringId}
+            hirings={hirings}
           />
         </div>
         <div className="col-span-7 lg:col-span-5">

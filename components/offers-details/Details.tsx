@@ -27,6 +27,7 @@ interface Props {
   job: string
   interested: Interested
   hiringId: string
+  hirings: number
 }
 
 export default function Details({
@@ -43,6 +44,7 @@ export default function Details({
   job,
   interested,
   hiringId,
+  hirings,
 }: Props) {
   const [status, setStatus] = useState<Status>('ACCEPTED')
   const expires = getExpiresAtDate(expiresAt)
@@ -117,6 +119,18 @@ export default function Details({
               <span className="font-bold">{job}</span>
             </small>
           </div>
+          {hirings > 0
+            ? (
+              <p className="font-semibold text-neutral-600">
+                Hay {hirings} persona{hirings > 1 ? 's' : ''} que ha
+                {hirings > 1 ? 'n' : ''} aplicado a esta oferta
+              </p>
+              )
+            : (
+              <p className="font-semibold text-neutral-600">
+                No hay postulantes para esta oferta
+              </p>
+              )}
           <p className="line-clamp-6 py-3">{description}</p>
           <div className="mx-auto flex w-full flex-col justify-between gap-3 sm:mx-0 sm:w-auto sm:flex-row sm:gap-1 sm:text-sm lg:gap-2">
             <div className="flex flex-col gap-3 sm:flex-row">
