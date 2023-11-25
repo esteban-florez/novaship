@@ -2,7 +2,6 @@ import InfoUser from '@/components/offers-details/InfoUser'
 import { getTeam } from '@/lib/data-fetching/teams'
 import { getMember } from '@/lib/utils/tables'
 import { type Company, type Person, type Location } from '@prisma/client'
-import TeamsTitle from '@/components/teams/TeamsTitle'
 import clsx from 'clsx'
 import EmptyContent from '@/components/EmptyContent'
 import { type Metadata } from 'next'
@@ -10,6 +9,8 @@ import { notFound } from 'next/navigation'
 import prisma from '@/prisma/client'
 import ThreeGrid from '@/components/ThreeGrid'
 import { auth } from '@/lib/auth/pages'
+import PageTitle from '@/components/PageTitle'
+import InvitationCard from '@/components/invitations/InvitationCard'
 
 export const metadata: Metadata = {
   title: 'Miembros del equipo',
@@ -22,6 +23,28 @@ export default async function TeamMembershipsPage({
   const team = await getTeam(id)
   const { memberships } = team
   const leader = team.leader.company ?? team.leader.person
+  const invitations = await prisma.invitation.findMany({
+    where: {
+      teamId: id,
+      status: 'PENDING',
+    },
+    select: {
+      id: true,
+      status: true,
+      updatedAt: true,
+      person: {
+        select: {
+          name: true,
+        },
+      },
+      team: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  })
 
   if (leader === null) {
     notFound()
@@ -37,11 +60,33 @@ export default async function TeamMembershipsPage({
 
   return (
     <>
-      <TeamsTitle
+      <PageTitle
         title="Miembros del equipo"
-        team={team}
+        subtitle="Aquí podrás ver toda la plantilla del equipo"
+        breadcrumbs={team.name}
       />
+      {leader.id === userId && invitations.length > 0 && (
+        <ThreeGrid>
+          <h6 className="col-span-full text-xl font-semibold text-neutral-600">
+            Solicitudes
+          </h6>
+          {invitations.map((i) => {
+            return (
+              <InvitationCard
+                key={i.id}
+                invitation={i}
+                side="owner"
+              />
+            )
+          })}
+        </ThreeGrid>
+      )}
       <ThreeGrid>
+        {leader.id === userId && (
+          <h6 className="col-span-full text-xl font-semibold text-neutral-600">
+            Plantilla
+          </h6>
+        )}
         {memberships.length > 0
           ? (
             <>
@@ -57,7 +102,7 @@ export default async function TeamMembershipsPage({
                 <InfoUser
                   image={leader.image}
                   verification={false}
-                  owner={leader.name}
+                  owner={userId === leader.id ? 'Tú' : leader.name}
                   description={leader.description}
                   location={location.title}
                 />

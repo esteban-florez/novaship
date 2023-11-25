@@ -54,7 +54,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       })
     }
 
-    return NextResponse.redirect(url(`/home/projects/${task.projectId}?alert=task_updated`))
+    return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks?alert=task_updated`))
   } catch (error) {
     return handleError(error, data)
   }
@@ -71,7 +71,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
 
     await deleteTask({ id, userId })
 
-    return NextResponse.redirect(url(`/home/projects/${task.projectId}?alert=task_deleted`))
+    return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks?alert=task_deleted`))
   } catch (error) {
     return handleError(error)
   }

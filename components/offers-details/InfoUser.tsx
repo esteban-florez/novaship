@@ -1,5 +1,6 @@
 import { CheckBadgeIcon } from '@heroicons/react/24/outline'
 import AvatarIcon from '../AvatarIcon'
+import clsx from 'clsx'
 
 interface Props {
   owner: string
@@ -24,7 +25,14 @@ export default function InfoUser({
           className="h-10 w-10 bg-black text-white"
         />
         <div className="mb-2 flex flex-col">
-          <p className="text-lg font-semibold">{owner}</p>
+          <p
+            className={clsx(
+              'text-lg font-semibold',
+              owner === 'Tú' && 'text-primary'
+            )}
+          >
+            {owner}
+          </p>
           <small className="-my-1 font-semibold text-neutral-600">
             {location}
           </small>

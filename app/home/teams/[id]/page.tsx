@@ -2,7 +2,7 @@ import { type Metadata } from 'next'
 import prisma from '@/prisma/client'
 import InfoUser from '@/components/offers-details/InfoUser'
 import AvatarIcon from '@/components/AvatarIcon'
-import { getMember } from '@/lib/utils/tables'
+import { getMember, getTeamLeader } from '@/lib/utils/tables'
 import Link from 'next/link'
 import { type Grade, type Person } from '@prisma/client'
 // import { BriefcaseIcon } from "@heroicons/react/24/outline"
@@ -11,7 +11,6 @@ import InlineList from '@/components/InlineList'
 import Collapse from '@/components/Collapse'
 import AvatarInfo from '@/components/offers-details/AvatarInfo'
 import PageTitle from '@/components/PageTitle'
-import { notFound } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
 import clsx from 'clsx'
 import { PencilIcon } from '@heroicons/react/24/outline'
@@ -23,6 +22,14 @@ export const metadata: Metadata = {
 export default async function TeamPage({ params: { id } }: PageContext) {
   const { id: userId } = await auth.user()
   const team = await getTeam(id)
+  const leader = getTeamLeader(team)
+  const leaderExtended = team.leader.company ?? team.leader.person
+  const invitations = await prisma.invitation.count({
+    where: {
+      teamId: id,
+      status: 'PENDING',
+    },
+  })
 
   const { categories, memberships, projects } = team
   // TODO -> algoritmo de proyecto destacado
@@ -31,15 +38,8 @@ export default async function TeamPage({ params: { id } }: PageContext) {
   )
   const featuredProject = publicProjects[0]
 
-  // TODO -> getTeamLeader function update
-  const leaderMembership = team.leader.company ?? team.leader.person
-
-  if (leaderMembership === null) {
-    notFound()
-  }
-
   const location = await prisma.location.findUniqueOrThrow({
-    where: { id: leaderMembership.locationId },
+    where: { id: leaderExtended?.locationId },
   })
 
   return (
@@ -54,7 +54,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
           <div className="w-full rounded-md bg-white p-4 shadow-md">
             <div className="mb-1 flex flex-col sm:flex-row justify-between">
               <h1 className="text-2xl font-bold">{team.name}</h1>
-              {leaderMembership.id === userId && (
+              {leader.id === userId && (
                 <Link
                   href={`/home/teams/${id}/update`}
                   className="btn btn-primary"
@@ -77,16 +77,16 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             <Collapse
               title={
                 <AvatarInfo
-                  owner={leaderMembership.name}
+                  owner={leader.name}
                   location={location.title}
                 />
               }
             >
               <InfoUser
-                image={leaderMembership.image}
+                image={leader.image}
                 verification={false}
-                owner={leaderMembership.name}
-                description={leaderMembership.description}
+                owner={leader.name}
+                description={leaderExtended?.description}
                 location={location.title}
               />
             </Collapse>
@@ -143,11 +143,9 @@ export default async function TeamPage({ params: { id } }: PageContext) {
             </p>
             <InfoUser
               verification={false}
-              image={leaderMembership.image}
-              owner={
-                leaderMembership.id === userId ? 'Tú' : leaderMembership.name
-              }
-              description={leaderMembership.description}
+              image={leader.image}
+              owner={leader.id === userId ? 'Tú' : leader.name}
+              description={leaderExtended?.description}
               location={location.title}
             />
           </div>
@@ -199,6 +197,13 @@ export default async function TeamPage({ params: { id } }: PageContext) {
                   </Link>
                 )
               })}
+              {leader.id === userId && invitations > 0 && (
+                <Link href={`/home/teams/${team.id}/memberships`}>
+                  <p className="p-4 rounded-md border-2 border-zinc-300 font-semibold text-neutral-600 hover:text-primary">
+                    Tienes solicitudes de miembros
+                  </p>
+                </Link>
+              )}
             </ul>
           </div>
         </div>

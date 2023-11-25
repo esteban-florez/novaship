@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.redirect(
         url(
-          `home/projects/${task.projectId}/tasks/${task.id}?alert=task_revision_created`
+          `home/projects/${task.projectId}/tasks?alert=task_revision_created`
         )
       )
     }
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.redirect(
         url(
-          `home/projects/${subtask.task.projectId}/tasks/${subtask.task.id}?alert=subtask_revision_created`
+          `home/projects/${subtask.task.projectId}/tasks?alert=subtask_revision_created`
         )
       )
     }

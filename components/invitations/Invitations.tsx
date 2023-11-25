@@ -35,7 +35,10 @@ export default function Invitations({ invitations, type, search }: Props) {
         >
           <div className="rounded-xl border border-solid border-zinc-300 bg-white shadow">
             {type === 'invitation' && (
-              <InvitationCard invitation={invitation} />
+              <InvitationCard
+                invitation={invitation}
+                side="user"
+              />
             )}
             {type === 'data' && <InfoCard invitation={invitation} />}
           </div>

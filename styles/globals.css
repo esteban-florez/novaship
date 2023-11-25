@@ -6,9 +6,9 @@
   @apply normal-case;
 }
 
-.btn:not(.btn-square, .btn-sm) {
+/* .btn:not(.btn-square, .btn-sm) {
   @apply px-6 py-2.5 h-auto min-h-fit rounded-md;
-}
+} */
 
 .btn-success,
 .btn-error,
@@ -22,7 +22,7 @@
 }
 
 .btn-circle {
-  @apply p-1;
+  @apply p-1 min-h-fit min-w-fit;
 }
 
 .flex-center {

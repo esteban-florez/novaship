@@ -31,6 +31,7 @@ import {
   type Grade,
   type Internship,
   type Progress,
+  type Subparticipation,
 } from '@prisma/client'
 import { type days } from './translations'
 
@@ -150,6 +151,9 @@ interface InvitationData {
   id: string
   status: Status
   updatedAt: Date
+  person: {
+    name: string
+  }
   team: {
     id: string
     name: string
@@ -193,6 +197,64 @@ interface MembershipsFull extends Membership {
 // ----------------------------------------------------------------------
 // --------------------------- Projects ---------------------------------
 // ----------------------------------------------------------------------
+interface Permissions {
+  delete: boolean
+  create: boolean
+  edit: boolean
+  comment: boolean
+}
+
+type RevisionComponentProps = Revision & {
+  task: Task & {
+    person: Person
+  } | null
+  subtask: Subtask & {
+    task: Task & {
+      person: Person
+    }
+  } | null
+}
+
+type RevisionWithRelationsip = Revision & {
+  task: TasksWithRelationship
+  subtask: SubtaskWithRelationShip
+}
+
+type SubtasksWithRelation = Subtask & {
+  task: Task & {
+    project: Project
+    person: Person
+  }
+  revisions: Revision[]
+  subparticipations: Array<Subparticipation & {
+    person: Person
+  }>
+}
+
+type SubtaskWithRelationShip = Subtask & {
+  task: TasksWithRelationship
+  revisions: Revision[]
+  subparticipations: Array<Subparticipation & {
+    person: Person
+  }>
+}
+
+type TasksWithRelationship = Task & {
+  person: Peron
+  subtasks: Array<
+  Subtask & {
+    revisions: Revision[]
+    subparticipations: Array<Subparticipation & {
+      person: Person
+    }>
+  }
+  >
+  revisions: Revision[]
+  participations: Array<Participation & {
+    person: Person
+  }>
+}
+
 type ProjectMembership = Membership & {
   person: {
     id: string

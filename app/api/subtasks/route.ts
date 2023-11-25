@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks/${task.id}?alert=subtask_created`))
+    return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks?alert=subtask_created`))
   } catch (error) {
     handleError(error, data)
   }

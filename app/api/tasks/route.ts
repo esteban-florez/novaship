@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     const { responsable, members, ...rest } = parsed
 
     if (members != null && responsable != null) {
-      const task = await prisma.task.create({
+      await prisma.task.create({
         data: {
           ...rest,
           participations: {
@@ -42,10 +42,10 @@ export async function POST(request: NextRequest) {
         },
       })
 
-      return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks/${task.id}?alert=task_created`))
+      return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks?alert=task_created`))
     }
 
-    const task = await prisma.task.create({
+    await prisma.task.create({
       data: {
         ...rest,
         projectId: parsed.projectId,
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks/${task.id}?alert=task_created`))
+    return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks?alert=task_created`))
   } catch (error) {
     handleError(error, data)
   }

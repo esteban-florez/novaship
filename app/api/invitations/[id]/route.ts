@@ -14,13 +14,14 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
     const parsed = schema.parse(data)
     const { id: userId, name, type } = await auth.user(request)
 
-    if (type !== 'PERSON') {
+    if (type !== 'PERSON' && type !== 'COMPANY') {
       notFound()
     }
 
     const invitation = await prisma.invitation.findFirstOrThrow({
       where: { id },
       select: {
+        personId: true,
         team: {
           select: {
             id: true,
@@ -36,25 +37,43 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
-    const authUser = await prisma.authUser.findFirstOrThrow({
-      where: {
-        OR: [
-          {
-            person: {
-              id: invitation.team.leader.personId ?? '',
-            },
+    let authUser = {
+      id: '',
+    }
+    if (type === 'COMPANY') {
+      authUser = await prisma.authUser.findFirstOrThrow({
+        where: {
+          person: {
+            id: invitation.personId,
           },
-          {
-            company: {
-              id: invitation.team.leader.companyId ?? '',
+        },
+        select: {
+          id: true,
+        },
+      })
+    }
+
+    if (type === 'PERSON') {
+      authUser = await prisma.authUser.findFirstOrThrow({
+        where: {
+          OR: [
+            {
+              person: {
+                id: invitation.team.leader.personId ?? '',
+              },
             },
-          },
-        ],
-      },
-      select: {
-        id: true,
-      },
-    })
+            {
+              company: {
+                id: invitation.team.leader.companyId ?? '',
+              },
+            },
+          ],
+        },
+        select: {
+          id: true,
+        },
+      })
+    }
 
     if (parsed.status === 'PENDING') {
       notFound()
@@ -84,7 +103,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       await prisma.membership.create({
         data: {
           invitationId: id,
-          personId: userId,
+          personId: type === 'COMPANY' ? invitation.personId : userId,
           teamId: invitation.team.id,
         },
       })

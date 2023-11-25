@@ -1,6 +1,6 @@
-import { type Visibility, type Team, type Person, type Leader, type Company, type Membership, type Resets, type AuthUser, type Admin, type Institute, type Status, type Interested } from '@prisma/client'
+import { type Visibility, type Team, type Person, type Leader, type Company, type Membership, type Resets, type AuthUser, type Admin, type Institute, type Status, type Interested, type TaskStatus } from '@prisma/client'
 import { DBError } from '../errors/reference'
-import { type UserWithType, type ProjectsFull, type InternshipWithRelations, type MembershipsFull, type VacantWithRelations, type HiringWithPersonSkills } from '../types'
+import { type UserWithType, type ProjectsFull, type InternshipWithRelations, type MembershipsFull, type VacantWithRelations, type HiringWithPersonSkills, type TasksWithRelationship } from '../types'
 
 type TeamWithRelations = Team & {
   leader: Leader & {
@@ -194,4 +194,44 @@ export function recruitmentCompletedHours(recruitment: WithProgress) {
 
 export function getRemainingHours(internship: InternshipWithRelations) {
   return internship.hours - getCompletedHours(internship)
+}
+
+export function getTaskStatus(task: TasksWithRelationship) {
+  if (task.status != null) return task.status.toUpperCase()
+
+  interface Statuses {
+    pending: number
+    done: number
+    review: number
+    progress: number
+  }
+  const status = { pending: 0, done: 0, review: 0, progress: 0 }
+  task.subtasks.forEach(s => {
+    if (s.status === 'DONE') status.done += 1
+    if (s.status === 'PENDING') status.pending += 1
+    if (s.status === 'REVIEW') status.review += 1
+    if (s.status === 'PROGRESS') status.progress += 1
+  })
+
+  const higherValue = Object.keys(status).reduce((a, b) => status[a as keyof Statuses] > status[b as keyof Statuses] ? a : b)
+
+  return higherValue.toUpperCase() as TaskStatus
+}
+
+export function getTasksStatuses(tasks: TasksWithRelationship[]) {
+  interface Statuses {
+    pending: TasksWithRelationship[]
+    done: TasksWithRelationship[]
+    review: TasksWithRelationship[]
+    progress: TasksWithRelationship[]
+  }
+  const filters: Statuses = { pending: [], done: [], review: [], progress: [] }
+
+  tasks.forEach(t => {
+    const status = (getTaskStatus(t) as TaskStatus).toLowerCase()
+
+    filters[status as keyof Statuses].push(t)
+  })
+
+  return filters
 }

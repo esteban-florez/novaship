@@ -2,7 +2,7 @@ import { XMarkIcon } from '@heroicons/react/24/solid'
 
 interface Props {
   id: string
-  text: 'Cancelar' | 'Aceptar' | 'Cerrar'
+  text: 'Cancelar' | 'Aceptar' | 'Cerrar' | string
 }
 
 export default function CloseModalButton({ id, text }: Props) {

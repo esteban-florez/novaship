@@ -1,7 +1,6 @@
 import prisma from '@/prisma/client'
 import { type Prisma } from '@prisma/client'
 import { cache } from 'react'
-import { type ProjectsFull } from '../types'
 
 // TODO -> optimize query
 const query = {
@@ -25,13 +24,23 @@ const query = {
     categories: true,
     tasks: {
       include: {
+        person: true,
         subtasks: {
           include: {
+            subparticipations: {
+              include: {
+                person: true,
+              },
+            },
             revisions: true,
           },
         },
         revisions: true,
-        participations: true,
+        participations: {
+          include: {
+            person: true,
+          },
+        },
       },
     },
     files: true,
@@ -43,6 +52,37 @@ export const getProject = cache(async ({ id, where }: { id: string, where?: Pris
     where: {
       id,
       ...where,
+    },
+    ...query,
+  })
+})
+
+export const getMemberProject = cache(async ({ id, userId }: { id: string, userId: string }) => {
+  return await prisma.project.findFirst({
+    where: {
+      id,
+      OR: [
+        { personId: userId },
+        {
+          team: {
+            leader: {
+              OR: [
+                { personId: userId },
+                { companyId: userId },
+              ],
+            },
+          },
+        },
+        {
+          team: {
+            memberships: {
+              some: {
+                personId: userId,
+              },
+            },
+          },
+        },
+      ],
     },
     ...query,
   })
@@ -79,7 +119,6 @@ export const deleteProject = async ({ id, where }: { id: string, where: Prisma.P
   })
 }
 
-// TODO -> check ts error, remove as ProjectsFull
 export const getProjects = cache(async ({ where, skip, take }: QueryConfig<Prisma.ProjectWhereInput>) => {
   return await prisma.project.findMany({
     where,
@@ -89,5 +128,5 @@ export const getProjects = cache(async ({ where, skip, take }: QueryConfig<Prism
     orderBy: {
       title: 'asc',
     },
-  }) as ProjectsFull[]
+  })
 })
