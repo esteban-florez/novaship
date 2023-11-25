@@ -4,7 +4,7 @@ import { type MutableRefObject, createContext } from 'react'
 import { type Options, usePDF } from 'react-to-pdf'
 
 interface PDFContextInterface {
-  targetRef: MutableRefObject<any>
+  targetRef: MutableRefObject<HTMLElement>
   toPDF: (options?: Options | undefined) => void
 }
 
