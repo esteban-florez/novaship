@@ -26,7 +26,6 @@
 - PDF header, footer, styles, template en general.
 
 # Imagenes
-- Proyectos
 - Ofertas
 - Carrusel
 
