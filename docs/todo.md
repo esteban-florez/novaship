@@ -25,10 +25,6 @@
 - Project image.
 - PDF header, footer, styles, template en general.
 
-# Imagenes
-- Ofertas
-- Carrusel
-
 # Pending
 - Drawer.
 - Filtros para estadisticas.
@@ -48,8 +44,8 @@
   - Migrar minicards a tabla (?)
   - Mostrar grafico de barras (registro por meses) del card seleccionado, como modal o pagina independiente (?)
 
-
-Grupal
+# Revisar
+project group
 - Redirige si es empresa y no tiene equipos
 - (P) Registrar tarea
 - (P) Ver tarea
