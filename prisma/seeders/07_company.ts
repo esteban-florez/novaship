@@ -29,7 +29,7 @@ export default async function company() {
 
     await prisma.company.create({
       data: {
-        name,
+        name: i === 1 ? 'Enterprise' : name,
         email,
         image: '/company' + images.random().first(),
         rif: numbers().rif(),

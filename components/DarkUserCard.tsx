@@ -1,6 +1,5 @@
 import { type UserType } from '@prisma/client'
 import AvatarIcon from './AvatarIcon'
-import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   user: {
@@ -11,12 +10,12 @@ type Props = React.PropsWithChildren<{
   type: UserType
 }>
 
-export default function DarkUserCard({ user: { id, image, name }, type }: Props) {
+export default function DarkUserCard({ user: { image, name }, type }: Props) {
   if (type === 'ADMIN') {
     return
   }
 
-  const segment = type === 'COMPANY' ? 'companies' : type.toLowerCase() + 's'
+  // const segment = type === 'COMPANY' ? 'companies' : type.toLowerCase() + 's'
 
   return (
     <div className="flex gap-2 items-center bg-neutral text-white p-2 rounded-lg shadow-md">
@@ -25,12 +24,12 @@ export default function DarkUserCard({ user: { id, image, name }, type }: Props)
         <h3 className="font-semibold line-clamp-1">
           {name}
         </h3>
-        <Link
+        <span
           className="underline -mt-1"
-          href={`/home/${segment}/${id}`}
+          // href={`/home/${segment}/${id}`}
         >
           Ver perfil
-        </Link>
+        </span>
       </div>
     </div>
   )

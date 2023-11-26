@@ -26,14 +26,16 @@ export default async function RecruitmentRow({ recruitment }: Props) {
         {type === 'PERSON'
           ? (
             <UserCard
-              href={`/home/companies/${company.id}`}
+              // TODO -> profile link
+              // href={`/home/companies/${company.id}`}
               user={company}
               sm
             />
             )
           : (
             <UserCard
-              href={`/home/persons/${person.id}`}
+              // TODO -> profile link
+              // href={`/home/persons/${person.id}`}
               user={person}
               sm
             />

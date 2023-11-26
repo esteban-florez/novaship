@@ -17,4 +17,5 @@ export const schema = object({
   teamId: string(messages.string)
     .cuid(messages.cuid)
     .optional(),
+  image: defaults.client.image,
 })

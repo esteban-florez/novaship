@@ -1,6 +1,5 @@
 import AvatarIcon from '@/components/AvatarIcon'
 import { ListBulletIcon } from '@heroicons/react/24/outline'
-import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   person: {
@@ -25,12 +24,13 @@ export default function PersonData({ person }: Props) {
           </p>
         </div>
       </div>
-      <Link
+      <button
         className="btn btn-square btn-secondary"
-        href={`/home/persons/${person.id}`}
+        // TODO -> profile link
+        // href={`/home/persons/${person.id}`}
       >
         <ListBulletIcon className="h-5 w-5" />
-      </Link>
+      </button>
     </div>
   )
 }

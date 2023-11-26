@@ -18,6 +18,7 @@ interface Props {
   }
   teamId: string
   canApply: boolean
+  image: string | null
 }
 
 export default function ProjectDetails({
@@ -29,6 +30,7 @@ export default function ProjectDetails({
   teamId,
   userData,
   canApply,
+  image,
 }: Props) {
   const { alert, serverErrors, loading, handleSubmit } = useSubmit({
     append: {
@@ -44,8 +46,9 @@ export default function ProjectDetails({
       <div className="card sm:rounded-xl bg-white shadow-lg lg:flex-row">
         <div className="relative flex lg:basis-2/6">
           <img
-            src="/card.webp"
-            alt="Imagen de fondo carrusel"
+            // TODO -> Ver que hacer cuando el proyecto no tiene imagen
+            src={image ?? '/project1.jpg'}
+            alt="Imagen del proyecto"
             className="h-32 w-full sm:rounded-t-lg object-cover md:h-44 lg:h-full lg:rounded-l-lg"
           />
           <img

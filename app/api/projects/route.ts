@@ -1,17 +1,19 @@
 import { handleError } from '@/lib/errors/api'
 import { auth } from '@/lib/auth/api'
-import { schema } from '@/lib/validation/schemas/project'
+import { schema } from '@/lib/validation/schemas/server/project'
 import prisma from '@/prisma/client'
 import { type NextRequest, NextResponse } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { randomCode } from '@/lib/utils/code'
+import { storeFile } from '@/lib/storage/storeFile'
 
 export async function POST(request: NextRequest) {
   let data
   try {
     let projectId
-    data = await request.json()
+    const formData = await request.formData()
+    data = Object.fromEntries(formData.entries())
     const parsed = schema.parse(data)
     const { id, type } = await auth.user(request)
 
@@ -20,19 +22,18 @@ export async function POST(request: NextRequest) {
     }
 
     const code = randomCode('project')
-    const parsedWithCode = { ...parsed, code }
 
-    // const projectImagePath = parsed.image !== undefined
-    //   ? await storeFile(parsed.image)
-    //   : null
+    const projectImagePath = parsed.image !== undefined
+      ? await storeFile(parsed.image)
+      : null
 
-    // const parsedWithImage = {...parsed, image: projectImagePath}
+    const parsedAndFields = { ...parsed, code, image: projectImagePath }
 
     if (type === 'PERSON') {
       if (parsed.teamId == null) {
         ({ id: projectId } = await prisma.project.create({
           data: {
-            ...parsedWithCode,
+            ...parsedAndFields,
             personId: id,
             categories: {
               connect: parsed.categories.map(category => {
@@ -46,7 +47,7 @@ export async function POST(request: NextRequest) {
       } else {
         ({ id: projectId } = await prisma.project.create({
           data: {
-            ...parsedWithCode,
+            ...parsedAndFields,
             categories: {
               connect: parsed.categories.map(category => {
                 return {
@@ -62,7 +63,7 @@ export async function POST(request: NextRequest) {
     if (type === 'COMPANY') {
       ({ id: projectId } = await prisma.project.create({
         data: {
-          ...parsedWithCode,
+          ...parsedAndFields,
           categories: {
             connect: parsed.categories.map(category => {
               return {
