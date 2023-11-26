@@ -45,7 +45,7 @@ export default async function person() {
         email,
         phone: numbers().phone(),
         description: descriptions.random().first(),
-        ci: numbers().ci(),
+        ci: i !== 1 ? numbers().ci() : '123123',
         birth,
         image: '/person' + images.random().first(),
         employable: numbers(1, 2).random() === 1,

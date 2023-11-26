@@ -4,6 +4,7 @@ import { type MutableRefObject, createContext } from 'react'
 import { type Options, usePDF } from 'react-to-pdf'
 
 interface PDFContextInterface {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   targetRef: MutableRefObject<any>
   toPDF: (options?: Options | undefined) => void
 }

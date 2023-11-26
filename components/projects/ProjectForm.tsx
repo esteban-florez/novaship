@@ -57,6 +57,7 @@ export default function ProjectForm({
   } = useSubmit({
     schema,
     method,
+    asFormData: true,
   })
 
   return (

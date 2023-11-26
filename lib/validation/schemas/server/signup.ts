@@ -3,7 +3,7 @@ import { defaults } from '../defaults'
 import { base as clientBase } from '../signup/base'
 import { schema as clientPerson } from '../signup/person'
 import { schema as clientNonPerson } from '../signup/non-person'
-import { uniqueEmail } from './server-refinements'
+import { elementsPreprocess, uniqueEmail } from './server-refinements'
 import messages from '../../messages'
 import { UserType } from '@prisma/client'
 
@@ -38,9 +38,3 @@ export const nonPerson = nonPersonBase.merge(
     certification: defaults.server.image,
   })
 ).omit(omittedKeys)
-
-function elementsPreprocess(elements: unknown) {
-  if (typeof elements === 'string') {
-    return elements.split(',')
-  }
-}

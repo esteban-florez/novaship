@@ -7,7 +7,6 @@ import { getInternship } from '@/lib/data-fetching/internships'
 import { notFound } from 'next/navigation'
 import prisma from '@/prisma/client'
 import { AcademicCapIcon, CalendarDaysIcon, ClockIcon, EnvelopeIcon, IdentificationIcon, InformationCircleIcon, ListBulletIcon, PhoneIcon, UserCircleIcon } from '@heroicons/react/24/outline'
-import Link from 'next/link'
 import IconData from '@/components/IconData'
 import { age } from '@/lib/utils/date'
 import { genders } from '@/lib/translations'
@@ -76,7 +75,8 @@ export default async function RecruitDetailsPage({ params: { id } }: PageContext
           <UserCard
             user={person}
             subtitle={person.location.title}
-            href={`/home/persons/${person.id}`}
+            // TODO -> profile link
+            // href={`/home/persons/${person.id}`}
           />
           <p className="py-2">{person.description}</p>
           <p className="font-bold mb-2">Habilidades:</p>
@@ -86,10 +86,14 @@ export default async function RecruitDetailsPage({ params: { id } }: PageContext
               vacants={vacants}
               internshipId={internship.id}
             />
-            <Link href={`/home/persons/${person.id}`} className="btn btn-secondary">
+            <button
+              // TODO -> profile link
+              //  href={`/home/persons/${person.id}`}
+              className="btn btn-secondary"
+            >
               <ListBulletIcon className="w-5 h-5" />
               Ver perfil
-            </Link>
+            </button>
           </div>
           <div className="divider divider-vertical my-1" />
           <p className="font-bold mb-2">Institución:</p>

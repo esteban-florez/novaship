@@ -19,7 +19,8 @@ export default function InstituteCard({ institute }: Props) {
       </h3>
       <div className="mt-2" />
       <UserCard
-        href={`/home/institutes/${institute.id}`}
+        // TODO -> profile link
+        // href={`/home/institutes/${institute.id}`}
         user={institute}
         subtitle={institute.location.title}
       />

@@ -17,11 +17,11 @@ interface Props {
     isMember: boolean
   }
   canApply: boolean
+  image: string | null
   team: {
     id: string
     name: string
   } | null
-  image: string | null
 }
 
 export default function ProjectDetails({

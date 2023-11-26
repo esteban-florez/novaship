@@ -1,5 +1,4 @@
 import { format } from '@/lib/utils/date'
-import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   grade?: {
@@ -65,12 +64,13 @@ export default function InternshipData({ grade, internship, institute, recruitme
         <p>
           Universidad:{' '}
           <span className="font-bold">
-            <Link
+            <span
               className="underline text-secondary"
-              href={`/home/profile/${institute.id}`}
+              // TODO -> profile link
+              // href={`/home/profile/${institute.id}`}
             >
               {institute.name}
-            </Link>
+            </span>
           </span>
         </p>
       )}

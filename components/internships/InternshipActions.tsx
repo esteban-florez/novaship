@@ -13,10 +13,11 @@ type Props = React.PropsWithChildren<{
   internship: InternshipWithRelations
   stage: Stage
   className?: string
+  minDate: Date | null
 }>
 
 export default function InternshipActions({
-  internship, userType, stage, className = '',
+  internship, userType, stage, className = '', minDate,
 }: Props) {
   const pending = stage === 'PENDING'
   const accepted = stage === 'ACCEPTED'
@@ -96,6 +97,7 @@ export default function InternshipActions({
         )}
         {progress && recruitment !== undefined && (
           <UpdateProgress
+            minDate={minDate}
             maxHours={maxHours}
             recruitmentId={recruitment.id}
           />

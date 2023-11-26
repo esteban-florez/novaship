@@ -1,6 +1,5 @@
 import InfoUser from '@/components/offers-details/InfoUser'
 import { type Location, type Person } from '@prisma/client'
-import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   person: Person & {
@@ -27,9 +26,13 @@ export default function PersonCard({ person, page }: Props) {
         location={person.location.title}
         verification={false}
       />
-      <Link className="btn btn-secondary" href={`/home/persons/${person.id}`}>
+      <button
+        className="btn btn-secondary"
+        // TODO -> profile link
+        // href={`/home/persons/${person.id}`}
+      >
         Ver perfil
-      </Link>
+      </button>
     </div>
   )
 }

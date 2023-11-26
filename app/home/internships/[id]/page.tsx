@@ -83,6 +83,7 @@ export default async function InternshipDetailsPage({
                 />
                 <InternshipActions
                   className="lg:flex-row"
+                  minDate={recruitment?.startsAt ?? null}
                   internship={internship}
                   stage={stage}
                   userType={type}
@@ -97,6 +98,7 @@ export default async function InternshipDetailsPage({
                 <InternshipData internship={internship} recruitment={recruitment} />
                 <InternshipActions
                   className="lg:flex-row"
+                  minDate={recruitment?.startsAt ?? null}
                   internship={internship}
                   stage={stage}
                   userType={type}
@@ -147,7 +149,8 @@ export default async function InternshipDetailsPage({
                       </h3>
                       <div className="bg-neutral-100 p-4 pt-2 rounded-lg mt-4">
                         <UserCard
-                          href={`/home/companies/${company.id}`}
+                          // TODO -> profile link
+                          // href={`/home/companies/${company.id}`}
                           subtitle={company.location.title}
                           user={company}
                         />

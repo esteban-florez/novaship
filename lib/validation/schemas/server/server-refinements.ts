@@ -10,3 +10,9 @@ export const uniqueEmail = async (input: string) => {
     return email !== input
   })
 }
+
+export function elementsPreprocess(elements: unknown) {
+  if (typeof elements === 'string') {
+    return elements.split(',')
+  }
+}

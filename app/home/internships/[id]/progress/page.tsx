@@ -70,6 +70,7 @@ export default async function InternshipProgressPage({
       >
         {type === 'COMPANY' && (
           <UpdateProgress
+            minDate={recruitment.startsAt}
             recruitmentId={recruitment.id}
             maxHours={maxHours}
           />

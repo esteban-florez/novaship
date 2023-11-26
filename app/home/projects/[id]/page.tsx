@@ -118,8 +118,8 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
               title={project.title}
               categories={categories}
               description={project.description}
-              canApply={invitation == null && !isOwner && !isMember}
               image={project.image}
+              canApply={invitation == null && !isOwner && !isMember}
             />
           </div>
           {isOwner && (

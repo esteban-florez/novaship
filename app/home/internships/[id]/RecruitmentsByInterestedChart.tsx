@@ -42,6 +42,8 @@ export default async function RecruitmentsByInterestedChart({
     ],
   }
 
+  if (sentCount === 0 && receivedCount === 0) return null
+
   return (
     <StatisticsGraphSection options={{ border: false, center: true }}>
       <PieGraphic
