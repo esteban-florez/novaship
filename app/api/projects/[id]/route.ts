@@ -1,4 +1,4 @@
-import { schema } from '@/lib/validation/schemas/project'
+import { schema } from '@/lib/validation/schemas/server/project'
 import { auth } from '@/lib/auth/api'
 import { handleError } from '@/lib/errors/api'
 import prisma from '@/prisma/client'
@@ -7,11 +7,13 @@ import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import collect from '@/lib/utils/collection'
 import { deleteProject, getMyProject } from '@/lib/data-fetching/project'
+import { storeFile } from '@/lib/storage/storeFile'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
-    data = await request.json()
+    const formData = await request.formData()
+    data = Object.fromEntries(formData.entries())
     const parsed = schema.parse(data)
     const { id: userId, type } = await auth.user(request)
 
@@ -19,6 +21,10 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
     if (project === null) {
       notFound()
     }
+
+    const projectImagePath = parsed.image !== undefined
+      ? await storeFile(parsed.image)
+      : null
 
     const projectCategories = collect(project.categories).ids()
     const newCategories = collect(parsed.categories).deleteDuplicatesFrom(projectCategories)
@@ -28,19 +34,14 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
         const updateParsed = { personId: null, ...parsed }
         const { teamId, ...rest } = updateParsed
         const parsedData = project.teamId !== parsed.teamId ? { teamId: project.teamId ?? teamId, ...rest } : updateParsed
+        const parsedAndFields = { ...parsedData, image: projectImagePath }
 
         await prisma.project.update({
           where: { id },
           data: {
-            ...parsedData,
+            ...parsedAndFields,
             categories: {
               set: parsed.categories.map(id => ({ id })),
-              // deleteMany: {
-              //   id: {
-              //     notIn: parsed.categories,
-              //   },
-              // },
-              // connect: newCategories.map(id => ({ id })),
             },
           },
         })
@@ -50,10 +51,12 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
         return NextResponse.redirect(url(`home/projects/${project.id}?alert=${alert}`))
       } else {
+        const parsedAndFields = { ...parsed, image: projectImagePath }
+
         await prisma.project.update({
           where: { id },
           data: {
-            ...parsed,
+            ...parsedAndFields,
             categories: {
               deleteMany: {
                 id: {
@@ -70,11 +73,12 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
     if (type === 'COMPANY') {
       const { teamId, ...rest } = parsed
       const parsedData = project.teamId !== parsed.teamId ? rest : parsed
+      const parsedAndFields = { ...parsedData, image: projectImagePath }
 
       await prisma.project.update({
         where: { id },
         data: {
-          ...parsedData,
+          ...parsedAndFields,
           categories: {
             deleteMany: {
               id: {
