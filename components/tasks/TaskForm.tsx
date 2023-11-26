@@ -25,6 +25,7 @@ interface Props extends FormProps {
     person: Person
   }
   >
+  filter: string
 }
 
 // NOTE -> se debe añadir el responsable a la lista de miembros seleccionados
@@ -35,8 +36,15 @@ export default function TaskForm({
   person,
   task,
   memberships,
+  filter,
 }: Props) {
   const pathname = usePathname()
+  const query =
+    filter !== ''
+      ? { id: task?.id, filtered: filter }
+      : task != null
+        ? { id: task.id }
+        : null
   const taskLeader = task?.personId
   const selectedMembers = task?.participations.map(
     (participation) => participation.personId
@@ -62,6 +70,7 @@ export default function TaskForm({
     append: {
       projectId,
       taskId: task?.id,
+      filter,
     },
   })
 
@@ -95,22 +104,20 @@ export default function TaskForm({
           errors={errors}
           maxlength={255}
         />
-        {task?.subtasks.length === 0 && (
-          <Select
-            name="status"
-            label="Estado"
-            defaultValue={task?.status ?? undefined}
-            register={register}
-            errors={errors}
-            options={{
-              type: 'enum',
-              translation: taskStatuses,
-              data: TaskStatus,
-            }}
-          />
-        )}
+        <Select
+          name="status"
+          label="Estado"
+          defaultValue={task?.status ?? undefined}
+          register={register}
+          errors={errors}
+          options={{
+            type: 'enum',
+            translation: taskStatuses,
+            data: TaskStatus,
+          }}
+        />
       </FormSection>
-      {(selectedMembers != null || memberships != null) && (
+      {memberships != null && (
         <FormSection
           title="Participantes"
           description="Designe a las personas que completerán la tarea."
@@ -145,6 +152,7 @@ export default function TaskForm({
         link={{
           href: {
             pathname,
+            query,
           },
         }}
         label={method === 'PUT' ? 'Actualizar' : 'Registrar'}

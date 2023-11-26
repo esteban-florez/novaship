@@ -1,3 +1,10 @@
+export const STAGE_BADGES = {
+  PENDING: 'badge-secondary',
+  DONE: 'badge-success',
+  REVIEW: 'badge-warning',
+  PROGRESS: 'badge-primary',
+}
+
 export const STAGE_STATUS = {
   PENDING: 'text-secondary',
   DONE: 'text-success',

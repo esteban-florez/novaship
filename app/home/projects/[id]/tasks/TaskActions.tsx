@@ -19,9 +19,10 @@ interface Props {
     edit: boolean
     comment: boolean
   }
+  filter: string
 }
 
-export default function TaskActions({ id, title, permissions }: Props) {
+export default function TaskActions({ id, title, permissions, filter }: Props) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -29,7 +30,7 @@ export default function TaskActions({ id, title, permissions }: Props) {
     <div className="flex flex-wrap">
       {permissions.delete && (
         <div
-          className="z-10 tooltip tooltip-right sm:tooltip-bottom"
+          className="z-[9999px] tooltip tooltip-right sm:tooltip-bottom"
           data-tip="Borrar tarea"
         >
           <DeleteModal
@@ -41,13 +42,17 @@ export default function TaskActions({ id, title, permissions }: Props) {
       )}
       {permissions.create && (
         <div
-          className="z-10 tooltip tooltip-bottom"
+          className="z-[9999px] tooltip tooltip-bottom"
           data-tip="Añadir subtarea"
         >
           <Link
             href={{
               pathname,
-              query: { id: searchParams.get('id'), action: 'subtask' },
+              query: {
+                id: searchParams.get('id'),
+                action: 'subtask',
+                filtered: filter,
+              },
             }}
           >
             <button className="btn btn-circle btn-ghost">
@@ -58,13 +63,17 @@ export default function TaskActions({ id, title, permissions }: Props) {
       )}
       {permissions.edit && (
         <div
-          className="z-10 tooltip tooltip-bottom"
+          className="z-[9999px] tooltip tooltip-bottom"
           data-tip="Editar tarea"
         >
           <Link
             href={{
               pathname,
-              query: { id: searchParams.get('id'), action: 'update' },
+              query: {
+                id: searchParams.get('id'),
+                action: 'update',
+                filtered: filter,
+              },
             }}
           >
             <button className="btn btn-circle btn-ghost">
@@ -75,13 +84,17 @@ export default function TaskActions({ id, title, permissions }: Props) {
       )}
       {permissions.comment && (
         <div
-          className="z-10 tooltip tooltip-bottom"
+          className="z-[9999px] tooltip tooltip-bottom"
           data-tip="Añadir revision"
         >
           <Link
             href={{
               pathname,
-              query: { id: searchParams.get('id'), action: 'revision' },
+              query: {
+                id: searchParams.get('id'),
+                action: 'revision',
+                filtered: filter,
+              },
             }}
           >
             <button className="btn btn-circle btn-ghost">
@@ -91,12 +104,13 @@ export default function TaskActions({ id, title, permissions }: Props) {
         </div>
       )}
       <div
-        className="z-10 tooltip tooltip-left sm:tooltip-bottom"
+        className="z-[9999px] tooltip tooltip-left"
         data-tip="Quitar tarea"
       >
         <Link
           href={{
             pathname,
+            query: { filtered: filter },
           }}
         >
           <button className="btn btn-circle btn-ghost">

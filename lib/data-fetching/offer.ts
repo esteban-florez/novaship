@@ -111,7 +111,7 @@ export const getOffers = cache(
         hiring: true,
       },
       orderBy: {
-        title: 'asc',
+        createdAt: 'asc',
       },
     })
   }

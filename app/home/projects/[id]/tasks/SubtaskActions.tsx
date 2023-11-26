@@ -14,9 +14,15 @@ interface Props {
   id: string
   title: string
   permissions: Omit<Permissions, 'create'>
+  filter: string
 }
 
-export default function SubtaskActions({ id, title, permissions }: Props) {
+export default function SubtaskActions({
+  id,
+  title,
+  permissions,
+  filter,
+}: Props) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -46,6 +52,7 @@ export default function SubtaskActions({ id, title, permissions }: Props) {
                 id: searchParams.get('id'),
                 subtaskId: searchParams.get('subtaskId'),
                 action: 'update',
+                filtered: filter,
               },
             }}
           >
@@ -66,6 +73,7 @@ export default function SubtaskActions({ id, title, permissions }: Props) {
               query: {
                 subtaskId: searchParams.get('subtaskId'),
                 action: 'revision',
+                filtered: filter,
               },
             }}
           >
@@ -77,11 +85,12 @@ export default function SubtaskActions({ id, title, permissions }: Props) {
       )}
       <div
         className="z-[9999px] tooltip tooltip-left"
-        data-tip="Quitar tarea"
+        data-tip="Quitar subtarea"
       >
         <Link
           href={{
             pathname,
+            query: { id: searchParams.get('id'), filtered: filter },
           }}
         >
           <button className="btn btn-circle btn-ghost">

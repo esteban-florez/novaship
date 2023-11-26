@@ -6,7 +6,6 @@ import { getMembersByProject } from '@/lib/data-fetching/members'
 import { getRevision } from '@/lib/data-fetching/revision'
 import { getSubtask } from '@/lib/data-fetching/subtask'
 import { getTask } from '@/lib/data-fetching/task'
-import { type UserType } from '@prisma/client'
 
 interface Props {
   taskId: string
@@ -14,8 +13,9 @@ interface Props {
   revisionId: string
   subtaskId: string
   action: string
-  type: UserType
-  userId: string
+  teamwork: 'solo' | 'team'
+  leader: boolean
+  filter: string
 }
 
 export default async function Forms({
@@ -24,13 +24,29 @@ export default async function Forms({
   revisionId,
   subtaskId,
   action,
-}: // type,
-// userId,
-Props) {
+  teamwork,
+  leader,
+  filter,
+}: Props) {
   if (action === '') return null
 
   // Subtasks
   if (taskId !== '' && action === 'subtask') {
+    if (teamwork === 'solo') {
+      return (
+        <FormLayout
+          title="Información de la subtarea"
+          className="m-0 p-0 max-h-[80vh] scrollbar"
+        >
+          <SubtaskForm
+            action="/api/subtasks"
+            method="POST"
+            taskId={taskId}
+            filter={filter}
+          />
+        </FormLayout>
+      )
+    }
     const members = await getMembersByProject({ id: projectId })
 
     return (
@@ -43,6 +59,7 @@ Props) {
           method="POST"
           taskId={taskId}
           memberships={members}
+          filter={filter}
         />
       </FormLayout>
     )
@@ -50,10 +67,27 @@ Props) {
 
   // Subtasks id
   if (taskId !== '' && subtaskId !== '' && action === 'update') {
-    const members = await getMembersByProject({ id: projectId })
     const subtask = await getSubtask({ id: subtaskId })
     if (subtask == null) return null
 
+    if (teamwork === 'solo') {
+      return (
+        <FormLayout
+          title="Información de la subtarea"
+          className="m-0 p-0 max-h-[80vh] scrollbar"
+        >
+          <SubtaskForm
+            action={`/api/subtasks/${subtask.id}`}
+            method="PUT"
+            taskId={taskId}
+            subtask={subtask}
+            filter={filter}
+          />
+        </FormLayout>
+      )
+    }
+
+    const members = await getMembersByProject({ id: projectId })
     return (
       <FormLayout
         title="Información de la subtarea"
@@ -65,6 +99,7 @@ Props) {
           taskId={taskId}
           subtask={subtask}
           memberships={members}
+          filter={filter}
         />
       </FormLayout>
     )
@@ -81,6 +116,7 @@ Props) {
           action="/api/revisions"
           method="POST"
           subtaskId={subtaskId}
+          filter={filter}
         />
       </FormLayout>
     )
@@ -101,6 +137,7 @@ Props) {
           method="PUT"
           subtaskId={subtaskId}
           revision={revision}
+          filter={filter}
         />
       </FormLayout>
     )
@@ -108,8 +145,23 @@ Props) {
 
   // Tasks
   if (action === 'create' && taskId === '' && revisionId === '') {
-    const members = await getMembersByProject({ id: projectId })
+    if (teamwork === 'solo') {
+      return (
+        <FormLayout
+          title="Información de la tarea"
+          className="m-0 p-0 max-h-[80vh] scrollbar"
+        >
+          <TaskForm
+            action="/api/tasks"
+            method="POST"
+            projectId={projectId}
+            filter={filter}
+          />
+        </FormLayout>
+      )
+    }
 
+    const members = await getMembersByProject({ id: projectId })
     return (
       <FormLayout
         title="Información de la tarea"
@@ -120,6 +172,7 @@ Props) {
           method="POST"
           projectId={projectId}
           memberships={members}
+          filter={filter}
         />
       </FormLayout>
     )
@@ -127,10 +180,27 @@ Props) {
 
   // TasksId
   if (taskId !== '' && revisionId === '' && action === 'update') {
-    const members = await getMembersByProject({ id: projectId })
     const task = await getTask({ id: taskId })
     if (task == null) return null
 
+    if (teamwork === 'solo') {
+      return (
+        <FormLayout
+          title="Información de la tarea"
+          className="m-0 p-0 max-h-[80vh] scrollbar"
+        >
+          <TaskForm
+            action={`/api/tasks/${task.id}`}
+            method="PUT"
+            projectId={projectId}
+            filter={filter}
+            task={task}
+          />
+        </FormLayout>
+      )
+    }
+
+    const members = await getMembersByProject({ id: projectId })
     return (
       <FormLayout
         title="Información de la tarea"
@@ -142,6 +212,7 @@ Props) {
           projectId={projectId}
           task={task}
           memberships={members}
+          filter={filter}
         />
       </FormLayout>
     )
@@ -158,6 +229,7 @@ Props) {
           action="/api/revisions"
           method="POST"
           taskId={taskId}
+          filter={filter}
         />
       </FormLayout>
     )
@@ -178,6 +250,7 @@ Props) {
           method="PUT"
           taskId={taskId}
           revision={revision}
+          filter={filter}
         />
       </FormLayout>
     )

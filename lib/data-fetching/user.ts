@@ -34,6 +34,7 @@ export const getSuggestedUsers = cache(async ({ offerId, skills }: { offerId: st
     select: {
       id: true,
       name: true,
+      email: true,
       skills: {
         select: {
           id: true,

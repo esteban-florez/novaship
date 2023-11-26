@@ -53,6 +53,13 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
     isOwner,
     isMember,
   }
+  const team =
+    project.team != null
+      ? {
+          id: project.team?.id,
+          name: project.team?.name,
+        }
+      : null
 
   const tasks = await getTasks({ where: { projectId: id } })
   const tasksStatus = getTasksStatuses(tasks)
@@ -105,14 +112,14 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
           <div className="col-span-full">
             <ProjectDetails
               id={project.id}
-              teamId={teamId}
+              team={team}
               isPrivate={project.visibility === 'PRIVATE'}
               userData={userData}
               title={project.title}
               categories={categories}
               description={project.description}
-              canApply={invitation == null}
               image={project.image}
+              canApply={invitation == null && !isOwner && !isMember}
             />
           </div>
           {isOwner && (
@@ -198,7 +205,9 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
                     ? 'Registra algunas tareas'
                     : 'Aún no han añadido tareas'
                 }
-                />
+                >
+                  Gestione el desarrollo de su proyecto con algunas tareas.
+                </EmptyContent>
               </div>
               )}
         </div>

@@ -24,6 +24,37 @@ const query = {
   },
 }
 
+export const getTaskWhereImIn = cache(async ({ id, userId }: { id: string, userId: string }) => {
+  return await prisma.task.findFirst({
+    where: {
+      id,
+      project: {
+        OR: [
+          { personId: userId },
+          {
+            team: {
+              leader: {
+                OR: [
+                  { personId: userId },
+                  { companyId: userId },
+                ],
+              },
+            },
+          },
+          {
+            team: {
+              memberships: {
+                some: { personId: userId },
+              },
+            },
+          },
+        ],
+      },
+    },
+    ...query,
+  })
+})
+
 export const getMyTask = cache(async ({ id, userId }: { id: string, userId: string }) => {
   return await prisma.task.findFirst({
     where: {
