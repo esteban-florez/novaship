@@ -11,6 +11,7 @@ interface Props {
     id: string
     title: string
   }>
+  image?: string | null
   description: string
   owner?: string
   location?: string
@@ -34,6 +35,7 @@ export default function Card({
   offerLimit,
   expiresAt,
   code,
+  image,
 }: Props) {
   const expiresAtMessage = () => {
     if (expiresAt != null) {
@@ -55,18 +57,20 @@ export default function Card({
 
   return (
     <div>
-      <div className="relative">
-        <img
-          src="/card.webp"
-          alt="Imagen de fondo carrusel"
-          className="h-28 w-full rounded-t-xl object-cover"
-        />
-        <img
-          src="/onda-horizontal.webp"
-          alt="Onda-horizontal"
-          className="absolute bottom-0 w-full"
-        />
-      </div>
+      {image != null && (
+        <div className="relative">
+          <img
+            src={image}
+            alt="Imagen de fondo carrusel"
+            className="h-28 w-full rounded-t-xl object-cover"
+          />
+          <img
+            src="/onda-horizontal.webp"
+            alt="Onda-horizontal"
+            className="absolute bottom-0 w-full"
+          />
+        </div>
+      )}
       <div className="card card-compact bg-base-100 rounded-lg shadow-lg">
         <div className="flex flex-col gap-3 p-4 pt-1">
           {/* Ofertas */}
@@ -79,9 +83,7 @@ export default function Card({
                     <p>{expiresAtMessage()}</p>
                   </div>
                 )}
-                {offerLimit != null && (
-                  <p>{quotasLimit}</p>
-                )}
+                {offerLimit != null && <p>{quotasLimit}</p>}
               </div>
             )}
             <h3 className="line-clamp-1 text-lg font-bold sm:text-xl">

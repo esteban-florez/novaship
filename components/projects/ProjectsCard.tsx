@@ -40,6 +40,7 @@ export default function Projects({ search, projects }: Props) {
                   description={project.description}
                   link={`/home/projects/${project.id}`}
                   code={project.code}
+                  image={project.image}
                 />
               </div>
             </div>

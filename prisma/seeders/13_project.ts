@@ -11,7 +11,7 @@ export default async function project() {
   const categories = await prisma.category.findMany({ select: { id: true } })
   const teams = collect(await prisma.team.findMany({ select: { id: true } }))
   const persons = collect(await prisma.person.findMany({ select: { id: true } }))
-  const images = collect(['1.jpeg', '2.jpg', '3.jpg'])
+  const images = collect(['1.jpg', '2.jpg', '3.jpg'])
 
   for (let i = 0; i < MAX; i++) {
     const rnd = coinflip()

@@ -21,6 +21,7 @@ interface Props {
     id: string
     name: string
   } | null
+  image: string | null
 }
 
 export default function ProjectDetails({
@@ -32,6 +33,7 @@ export default function ProjectDetails({
   userData,
   canApply,
   team,
+  image,
 }: Props) {
   const userInTeam = userData.isMember || userData.isOwner
   const { alert, serverErrors, loading, handleSubmit } = useSubmit({
@@ -48,7 +50,7 @@ export default function ProjectDetails({
       <div className="card sm:rounded-xl bg-white shadow-lg lg:flex-row">
         <div className="relative flex lg:basis-2/6">
           <img
-            src="/card.webp"
+            src={image ?? '/card.webp'}
             alt="Imagen de fondo carrusel"
             className="h-32 w-full sm:rounded-t-lg object-cover md:h-44 lg:h-full lg:rounded-l-lg"
           />
