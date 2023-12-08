@@ -1,6 +1,11 @@
 'use client'
 
-import { type Team, type Person, type Category, type Membership } from '@prisma/client'
+import {
+  type Team,
+  type Person,
+  type Category,
+  type Membership,
+} from '@prisma/client'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { schema } from '@/lib/validation/schemas/team'
 import FormSection from '../forms/FormSection'
@@ -50,7 +55,7 @@ export default function TeamForm({
       {serverErrors}
       <FormSection
         title="Datos básicos"
-        description="Ingresa aquí en nombre de tu equipo, una descripción de sus actividades, y las categorías laborales a las que pertenecen."
+        description="Ingrese aquí en nombre de tu equipo, una descripción de sus actividades, y las categorías laborales a las que pertenecen."
       >
         <Input
           name="name"

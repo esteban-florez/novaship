@@ -1,10 +1,5 @@
 # Correcciones de proyecto (para el 20-12)
-- Renombrar "registro" -> "postulacion" (notificacion aceptar pasantia)
-- Renombrar "ingresa" -> "ingrese" (tooltip, registrar cupo)
-- Añadir areas de conocimiento desde el registro
 - Estandarizar el estilo de las paginas
-- Renombrar estados en proyectos (Esteban ponlos)
-- Utilizar terminologia
 - Cambiar interfaces (Myriam se quiere fumar una bien potente de aqui a enero)
 - Concluir procesos (¿Añadir todo lo que se quitó a cada uno?)
 
@@ -35,6 +30,7 @@
 - Project image.
 - PDF header, footer, styles, template en general.
 - Tooltip helper.
+- Añadir areas de conocimiento desde el registro
 
 # Pending
 - Drawer.

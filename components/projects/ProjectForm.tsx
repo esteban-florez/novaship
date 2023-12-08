@@ -64,7 +64,7 @@ export default function ProjectForm({
     <>
       <PageTitle
         title="Registrar nuevo proyecto"
-        subtitle="Rellena los datos para crear un nuevo proyecto o actualizar uno existente."
+        subtitle="Rellene los datos para crear un nuevo proyecto o actualizar uno existente."
         breadcrumbs={project?.title}
       />
       <FormLayout title="Información de proyecto">

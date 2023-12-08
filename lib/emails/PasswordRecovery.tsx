@@ -40,7 +40,10 @@ export const PasswordRecovery = ({
           <Section style={logo}>
             <Row>
               <Column>
-                <Img width={70} src={`${baseUrl}/logo.ico`} />
+                <Img
+                  width={70}
+                  src={`${baseUrl}/logo.ico`}
+                />
               </Column>
               <Column>
                 <Text style={title}>Novaship</Text>
@@ -57,17 +60,25 @@ export const PasswordRecovery = ({
           <Section style={content}>
             <Text style={paragraph}>Hola {username},</Text>
             <Text style={paragraph}>
-              Hemos recibido una solicitud de recuperación de contraseña para tu cuenta de Novaship el{' '}
-              {formattedDate}. Si fuiste tú, puedes ingresar una nueva contraseña aquí:
+              Hemos recibido una solicitud de recuperación de contraseña para su
+              cuenta de Novaship el {formattedDate}. Si fuiste tú, puedes
+              ingresar una nueva contraseña aquí:
             </Text>
-            <Button style={button} pX={16} pY={16} href={`${baseUrl}/auth/password-recovery?resetId=${resetId}`}>
+            <Button
+              style={button}
+              pX={16}
+              pY={16}
+              href={`${baseUrl}/auth/password-recovery?resetId=${resetId}`}
+            >
               Recuperar contraseña
             </Button>
             <Text style={paragraph}>
-              Si no quieres cambiar tu contraseña o no realizaste esta solicitud, simplemente ignora y elimina este mensaje.
+              Si no quieres cambiar tu contraseña o no realizaste esta
+              solicitud, simplemente ignora y elimina este mensaje.
             </Text>
             <Text style={paragraph}>
-              Para mantener tu cuenta segura, por favor no reenvíes este correo a nadie.
+              Para mantener tu cuenta segura, por favor no reenvíes este correo
+              a nadie.
             </Text>
             <Text style={paragraph}>
               Gracias,
@@ -79,7 +90,8 @@ export const PasswordRecovery = ({
 
         <Section style={footer}>
           <Text style={{ textAlign: 'center', color: '#706a7b' }}>
-            © {new Date().getFullYear()} Novaship, Todos los derechos reservados <br />
+            © {new Date().getFullYear()} Novaship, Todos los derechos reservados{' '}
+            <br />
             Santa Cruz de Aragua, Venezuela
           </Text>
         </Section>

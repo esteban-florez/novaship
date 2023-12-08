@@ -59,7 +59,7 @@ export default function BasicData({ userType, locations }: Props) {
         sobre <span className="text-secondary">ti</span>!
       </h2>
       <p>
-        Ingresa los datos básicos para personalizar tu experiencia en la
+        Ingrese los datos básicos para personalizar tu experiencia en la
         aplicación.
       </p>
       <section className="mx-auto w-full pt-4">
