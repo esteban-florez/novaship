@@ -31,11 +31,10 @@
 - PDF header, footer, styles, template en general.
 - Tooltip helper.
 - Añadir areas de conocimiento desde el registro
+- Encontrar alguna manera de ocultar el drawer en desktop (?).
 
 # Pending
-- Drawer.
 - Filtros para estadisticas.
-- Pagina dashboard.
 - Perfil y perfiles.
 - Corregir tags #FIX.
 - Cambiar GoBackBtn por Links en forms.
@@ -61,3 +60,4 @@
 - projects/id/tasks -> al registrar una tarea en grupo se quita la query de filtered.
 - projects/id/tasks -> al borrar la revision de la subtarea redirigir a la subtarea.
 - projects/id/tasks -> al borrar la revision de la tarea redirigir a la tarea.
+- home -> carousel btn fuera de lugar.
