@@ -35,6 +35,8 @@ export default function TeamForm({
   persons,
   categories,
 }: Props) {
+  const backUrl =
+    method === 'POST' ? '/home/teams' : `/home/teams/${team?.id ?? ''}`
   const {
     register,
     formState: { errors },
@@ -111,7 +113,8 @@ export default function TeamForm({
       </FormSection>
       <FormButtons
         disableSubmit={loading}
-        label={method === 'PUT' ? 'Actualizar' : 'Registrar'}
+        method={method}
+        link={backUrl}
       />
     </form>
   )

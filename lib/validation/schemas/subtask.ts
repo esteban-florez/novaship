@@ -17,4 +17,6 @@ export const schema = object({
   members: array(string(), messages.array)
     .nonempty(messages.nonempty)
     .optional(),
+  filter: string(messages.string)
+    .optional(),
 })

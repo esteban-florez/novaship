@@ -35,10 +35,6 @@
 # Pending
 - Filtros para estadisticas.
 - Perfil y perfiles.
-- Corregir tags #FIX.
-- Cambiar GoBackBtn por Links en forms.
-- Validar en las rutas de proyecto que el usuario sea lider, miembro o usuario con permisos para registrar.
-- Añadir filter a los schema en los tags #SCHEMA
 
 # Future
 
@@ -54,9 +50,3 @@
 - teams/id -> al actualizar un equipo quitar los usuarios que tengan invitaciones.
 - teams/id -> corregir los miembros (parece que se buguea y registra al lider como miembro).
 - teams/id (notification) -> corregir el de arriba (se envia al lider del equipo la invitacion que se hizo a otros miembros).
-- projects/id -> cambiar el texto "su equipo asignado" cuando el usuario sea miembro.
-- projects/id/tasks -> falta el boton de cerrar si no es miembro y ve una revision de subtarea.
-- projects/id/tasks -> al registrar una tarea en grupo se quita la query de filtered.
-- projects/id/tasks -> al borrar la revision de la subtarea redirigir a la subtarea.
-- projects/id/tasks -> al borrar la revision de la tarea redirigir a la tarea.
-- home -> carousel btn fuera de lugar.

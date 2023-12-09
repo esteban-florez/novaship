@@ -8,7 +8,6 @@ import { getMyTask } from '@/lib/data-fetching/task'
 import { notFound } from 'next/navigation'
 import { getMySubtask } from '@/lib/data-fetching/subtask'
 
-// #SCHEMA
 export async function POST(request: NextRequest) {
   let data
   try {
@@ -31,7 +30,7 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.redirect(
         url(
-          `home/projects/${task.projectId}/tasks?id=${task.id}&filtered=${data.filter as string}&alert=task_revision_created`
+          `home/projects/${task.projectId}/tasks?id=${task.id}&filtered=${parsed.filter as string}&alert=task_revision_created`
         )
       )
     }
@@ -51,7 +50,7 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.redirect(
         url(
-          `home/projects/${subtask.task.projectId}/tasks?id=${subtask.task.id}&subtaskId=${subtask.id}&filtered=${data.filter as string}&alert=subtask_revision_created`
+          `home/projects/${subtask.task.projectId}/tasks?id=${subtask.task.id}&subtaskId=${subtask.id}&filtered=${parsed.filter as string}&alert=subtask_revision_created`
         )
       )
     }

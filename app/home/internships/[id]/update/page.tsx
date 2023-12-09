@@ -21,12 +21,16 @@ export async function generateMetadata({ params: { id } }: PageContext) {
   }
 }
 
-export default async function UpdateInternshipPage({ params: { id } }: PageContext) {
+export default async function UpdateInternshipPage({
+  params: { id },
+}: PageContext) {
   const { id: userId } = await auth.user()
   const internship = await getInternship(id)
-  if (internship === null ||
+  if (
+    internship === null ||
     internship.instituteId !== userId ||
-    internship.status !== 'PENDING') {
+    internship.status !== 'PENDING'
+  ) {
     notFound()
   }
 
@@ -47,9 +51,13 @@ export default async function UpdateInternshipPage({ params: { id } }: PageConte
             grades={grades}
             categories={categories}
             internship={internship}
+            url="/home/internships"
           />
         </InternshipFormLayout>
-        <PersonCard person={person} page="update" />
+        <PersonCard
+          person={person}
+          page="update"
+        />
       </section>
     </>
   )

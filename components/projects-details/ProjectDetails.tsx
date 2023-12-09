@@ -88,9 +88,7 @@ export default function ProjectDetails({
             ? (
               <Link href={`/home/teams/${team.id}`}>
                 <p className="font-bold text-primary">
-                  {userInTeam
-                    ? `Su equipo asignado (${team.name})`
-                    : `Equipo encargado (${team.name})`}
+                  Equipo encargado ({team.name})
                 </p>
               </Link>
               )

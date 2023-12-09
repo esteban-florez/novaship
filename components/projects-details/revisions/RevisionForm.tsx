@@ -78,7 +78,7 @@ export default function RevisionForm({
             query,
           },
         }}
-        label={method === 'PUT' ? 'Actualizar' : 'Registrar'}
+        method={method}
       />
     </form>
   )

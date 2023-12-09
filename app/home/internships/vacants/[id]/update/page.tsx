@@ -10,7 +10,9 @@ export const metadata = {
   title: 'Editar cupo',
 }
 
-export default async function UpdateVacantPage({ params: { id } }: PageContext) {
+export default async function UpdateVacantPage({
+  params: { id },
+}: PageContext) {
   const { id: userId } = await auth.user()
   const vacant = await getVacant(id)
 
@@ -29,13 +31,17 @@ export default async function UpdateVacantPage({ params: { id } }: PageContext) 
         title="Publicar cupos"
         subtitle="Registra un nuevo cupo para pasantes en tu empresa."
       />
-      <FormLayout title="Registrar nuevo cupo" all>
+      <FormLayout
+        title="Registrar nuevo cupo"
+        all
+      >
         <VacantForm
           categories={categories}
           locations={locations}
           grades={grades}
           skills={skills}
           vacant={vacant}
+          url={`/home/internships/vacants/${id}`}
         />
       </FormLayout>
     </>

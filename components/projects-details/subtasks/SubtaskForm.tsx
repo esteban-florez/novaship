@@ -141,7 +141,7 @@ export default function SubtaskForm({
         )}
         <FormButtons
           disableSubmit={loading}
-          label={method === 'PUT' ? 'Actualizar' : 'Registrar'}
+          method={method}
           link={{
             href: {
               pathname,

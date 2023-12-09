@@ -28,13 +28,17 @@ export default async function CreateVacantPage() {
         title="Publicar cupos"
         subtitle="Registra un nuevo cupo para pasantes en tu empresa."
       />
-      <FormLayout title="Registrar nuevo cupo" all>
+      <FormLayout
+        title="Registrar nuevo cupo"
+        all
+      >
         <VacantForm
           categories={categories}
           locations={locations}
           grades={grades}
           skills={skills}
           jobs={jobs}
+          url="/home/internships/vacants"
         />
       </FormLayout>
     </>

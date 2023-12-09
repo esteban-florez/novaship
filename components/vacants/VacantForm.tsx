@@ -28,6 +28,7 @@ type Props = React.PropsWithChildren<{
   locations: Location[]
   jobs?: Job[]
   vacant?: VacantWithRelations
+  url: string
 }>
 
 export default function VacantForm({
@@ -37,6 +38,7 @@ export default function VacantForm({
   locations,
   skills,
   vacant,
+  url,
 }: Props) {
   const isCreate = vacant === undefined
   const {
@@ -170,7 +172,11 @@ export default function VacantForm({
           }}
         />
       </FormSection>
-      <FormButtons disableSubmit={loading} />
+      <FormButtons
+        link={url}
+        method={isCreate ? 'POST' : 'PUT'}
+        disableSubmit={loading}
+      />
     </form>
   )
 }

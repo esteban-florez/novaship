@@ -155,7 +155,7 @@ export default function TaskForm({
             query,
           },
         }}
-        label={method === 'PUT' ? 'Actualizar' : 'Registrar'}
+        method={method}
       />
     </form>
   )

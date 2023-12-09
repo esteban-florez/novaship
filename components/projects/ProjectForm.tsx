@@ -189,8 +189,8 @@ export default function ProjectForm({
             </FormSection>
           </section>
           <FormButtons
-            label={method === 'PUT' ? 'Actualizar' : 'Registrar'}
-            url={backUrl}
+            method={method}
+            link={backUrl}
             disableSubmit={teamwork === null || loading}
           />
         </form>

@@ -5,7 +5,6 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 
-// #SCHEMA
 export async function PUT(
   request: NextRequest,
   { params: { id } }: PageContext
@@ -52,7 +51,7 @@ export async function PUT(
     if (revision.task != null) {
       return NextResponse.redirect(
         url(
-          `/home/projects/${revision.task?.projectId}/tasks?id=${revision.task.id}&filtered=${data.filter as string}&alert=task_revision_updated`
+          `/home/projects/${revision.task?.projectId}/tasks?id=${revision.task.id}&filtered=${parsed.filter as string}&alert=task_revision_updated`
         )
       )
     }
@@ -60,7 +59,7 @@ export async function PUT(
     if (revision.subtask != null) {
       return NextResponse.redirect(
         url(
-          `/home/projects/${revision.subtask.task?.projectId}/tasks?id=${revision.subtask.task.id}&subtaskId=${revision.subtask.id}&filtered=${data.filter as string}&alert=subtask_revision_updated`
+          `/home/projects/${revision.subtask.task?.projectId}/tasks?id=${revision.subtask.task.id}&subtaskId=${revision.subtask.id}&filtered=${parsed.filter as string}&alert=subtask_revision_updated`
         )
       )
     }
@@ -109,10 +108,13 @@ export async function DELETE(
       where: { id },
     })
 
+    const projectId = revision.task?.projectId ?? revision?.subtask?.task?.projectId as string
+    const taskId = revision.task?.id ?? revision?.subtask?.task?.id as string
+
     if (revision.task != null) {
       return NextResponse.redirect(
         url(
-          `/home/projects/${revision.task?.projectId}/tasks?alert=task_revision_deleted`
+          `/home/projects/${projectId}/tasks?id=${taskId}&alert=task_revision_deleted`
         )
       )
     }
@@ -120,7 +122,7 @@ export async function DELETE(
     if (revision.subtask != null) {
       return NextResponse.redirect(
         url(
-          `/home/projects/${revision.subtask.task?.projectId}/tasks?alert=subtask_revision_deleted`
+          `/home/projects/${projectId}/tasks?id=${taskId}&subtaskId=${revision.subtask.id}&alert=subtask_revision_deleted`
         )
       )
     }

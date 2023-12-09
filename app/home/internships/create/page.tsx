@@ -11,7 +11,9 @@ export const metadata = {
   title: 'Inscribir pasante',
 }
 
-export default async function CreateInternshipPage({ searchParams }: SearchParamsProps) {
+export default async function CreateInternshipPage({
+  searchParams,
+}: SearchParamsProps) {
   const { type } = await auth.user()
   if (type !== 'INSTITUTE') {
     notFound()
@@ -44,9 +46,13 @@ export default async function CreateInternshipPage({ searchParams }: SearchParam
             categories={categories}
             grades={grades}
             personId={person.id}
+            url="/home/internships"
           />
         </InternshipFormLayout>
-        <PersonCard person={person} page="create" />
+        <PersonCard
+          person={person}
+          page="create"
+        />
       </section>
     </>
   )
