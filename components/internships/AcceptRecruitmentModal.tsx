@@ -13,26 +13,46 @@ type Props = React.PropsWithChildren<{
 
 export default function AcceptRecruitmentModal({ recruitmentId }: Props) {
   const {
-    register, formState: { errors },
-    alert, serverErrors, handleSubmit,
+    register,
+    formState: { errors },
+    alert,
+    serverErrors,
+    handleSubmit,
   } = useSubmit({ method: 'PATCH', schema, append: { status: 'ACCEPTED' } })
 
   console.log(errors)
 
   return (
-    <Modal className="btn btn-success btn-sm" title="Aceptar" id="acceptRecruitmentModal">
+    <Modal
+      className="btn btn-primary btn-sm"
+      title="Aceptar"
+      id="acceptRecruitmentModal"
+    >
       <h3 className="font-bold tracking-tighter text-2xl">
         Aceptar solicitud de pasantía
       </h3>
-      <form action={`/api/recruitments/${recruitmentId}`} method="POST" onSubmit={handleSubmit}>
+      <form
+        action={`/api/recruitments/${recruitmentId}`}
+        method="POST"
+        onSubmit={handleSubmit}
+      >
         {alert}
         {serverErrors}
         <div className="p-2">
-          <DatesInputs errors={errors} register={register} />
+          <DatesInputs
+            errors={errors}
+            register={register}
+          />
         </div>
         <div className="flex gap-2 mt-2">
-          <CloseModalButton id="acceptRecruitmentModal" text="Cancelar" />
-          <button type="submit" className="btn btn-primary">
+          <CloseModalButton
+            id="acceptRecruitmentModal"
+            text="Cancelar"
+          />
+          <button
+            type="submit"
+            className="btn btn-primary"
+          >
             <CheckIcon className="h-4 w-4" />
             Aceptar
           </button>

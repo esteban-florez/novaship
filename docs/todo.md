@@ -1,5 +1,4 @@
 # Correcciones de proyecto (para el 20-12)
-- Estandarizar el estilo de las paginas
 - Cambiar interfaces (Myriam se quiere fumar una bien potente de aqui a enero)
 - Concluir procesos (¿Añadir todo lo que se quitó a cada uno?)
 
