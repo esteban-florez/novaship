@@ -31,7 +31,6 @@
 - Añadir areas de conocimiento desde el registro
 - Encontrar alguna manera de ocultar el drawer en desktop (?).
 - Mostrar solo las invitaciones que sean del lado de los usuarios en Team/id/members.
-- Añadir tag de miembros o lider en card de Teams.
 - Remover texto "solicitud aceptada" en Teams/id.
 - Buscar directamente en la db en los search inputs.
 - Cambiar Interested en Invitation por PERSON | LEADER.

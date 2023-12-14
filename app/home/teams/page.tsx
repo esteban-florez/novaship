@@ -127,6 +127,7 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
           TEAMS_TAB_TRANSLATION[filter as TeamsTab]
         }`}
         teams={teams}
+        userId={id}
       >
         {links.map((link) => {
           return (
