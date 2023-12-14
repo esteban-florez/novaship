@@ -24,9 +24,7 @@ interface FilterQueries {
 }
 
 // #FIX -> se pueden hacer múltiples postulaciones (duplicado)
-export default async function InvitationsPage({
-  searchParams,
-}: SearchParamsProps) {
+export default async function InvitationsPage({ searchParams }: SearchParamsProps) {
   const filter = searchParams.filter ?? 'pending'
   const pageNumber = +(searchParams.page ?? 1)
 
@@ -124,9 +122,7 @@ export default async function InvitationsPage({
     <>
       <PageTitle />
       <PageContent
-        dropdownLabel={`Filtrado por - ${
-          INVITATIONS_TAB_TRANSLATION[filter as InvitationsTab]
-        }`}
+        dropdownLabel={`Filtrado por - ${INVITATIONS_TAB_TRANSLATION[filter as InvitationsTab]}`}
         invitations={invitations}
         type={filter === 'pending' ? 'invitation' : 'data'}
       >
@@ -138,12 +134,7 @@ export default async function InvitationsPage({
                 pathname: '/home/invitations',
                 query: { filter: link.query },
               }}
-              className={clsx(
-                'btn',
-                link.title === filter
-                  ? 'btn-primary hover:btn-ghost'
-                  : 'hover:btn-primary'
-              )}
+              className={clsx('btn', link.title === filter ? 'btn-primary hover:btn-ghost' : 'hover:btn-primary')}
             >
               {link.icon}
               {link.content}

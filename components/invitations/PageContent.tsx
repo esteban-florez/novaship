@@ -11,12 +11,7 @@ type Props = React.PropsWithChildren<{
   type: 'data' | 'invitation'
 }>
 
-export default function PageContent({
-  invitations,
-  type,
-  dropdownLabel,
-  children,
-}: Props) {
+export default function PageContent({ invitations, type, dropdownLabel, children }: Props) {
   const [search, setSearch] = useState('')
 
   return (
@@ -32,6 +27,7 @@ export default function PageContent({
         invitations={invitations}
         search={search}
         type={type}
+        side="owner"
       />
     </>
   )

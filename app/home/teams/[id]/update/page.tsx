@@ -36,9 +36,30 @@ export default async function UpdateTeamPage({ params: { id } }: PageContext) {
   const categories = await prisma.category.findMany()
   const persons = await prisma.person.findMany({
     where: {
-      NOT: {
-        id: userId,
-      },
+      AND: [
+        {
+          id: {
+            not: userId,
+          },
+        },
+        {
+          memberships: {
+            some: {
+              teamId: {
+                not: team.id,
+              },
+            },
+          },
+        },
+        {
+          invitations: {
+            none: {
+              id: undefined,
+              teamId: team.id,
+            },
+          },
+        },
+      ],
     },
   })
 

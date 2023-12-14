@@ -1,6 +1,28 @@
-import { type Visibility, type Team, type Person, type Leader, type Company, type Membership, type Resets, type AuthUser, type Admin, type Institute, type Status, type Interested, type TaskStatus } from '@prisma/client'
+import {
+  type Visibility,
+  type Team,
+  type Person,
+  type Leader,
+  type Company,
+  type Membership,
+  type Resets,
+  type AuthUser,
+  type Admin,
+  type Institute,
+  type Status,
+  type Interested,
+  type TaskStatus,
+} from '@prisma/client'
 import { DBError } from '../errors/reference'
-import { type UserWithType, type ProjectsFull, type InternshipWithRelations, type MembershipsFull, type VacantWithRelations, type HiringWithPersonSkills, type TasksWithRelationship } from '../types'
+import {
+  type UserWithType,
+  type ProjectsFull,
+  type InternshipWithRelations,
+  type MembershipsFull,
+  type VacantWithRelations,
+  type HiringWithPersonSkills,
+  type TasksWithRelationship,
+} from '../types'
 
 type TeamWithRelations = Team & {
   leader: Leader & {
@@ -9,21 +31,25 @@ type TeamWithRelations = Team & {
   }
 }
 
-type TeamWithMembers = (Team & {
-  leader: Leader & {
-    person: Person | null
-    company: Company | null
-  }
-  memberships: Array<Membership & {
-    person: Person | null
-  }>
-}) | null
+type TeamWithMembers =
+  | (Team & {
+    leader: Leader & {
+      person: Person | null
+      company: Company | null
+    }
+    memberships: Array<
+    Membership & {
+      person: Person | null
+    }
+    >
+  })
+  | null
 
 export function getHiringData(hirings: HiringWithPersonSkills[], id: string) {
   const status = getHiringStatusFromId(hirings, id)
   const hasApplied = hirings.some((hiring) => hiring.personId === id)
   const interested: Interested = hirings.find((hiring) => hiring.personId === id)?.interested
-  const hiringId = hirings.find(hiring => hiring.personId === id)?.id ?? ''
+  const hiringId = hirings.find((hiring) => hiring.personId === id)?.id ?? ''
   return { status, hasApplied, interested, hiringId }
 }
 
@@ -32,14 +58,12 @@ export function getHiringStatusFromId(hirings: HiringWithPersonSkills[], id: str
 }
 
 export function getTeamwork(project: ProjectsFull) {
-  return project.teamId != null
-    ? 'team'
-    : 'solo'
+  return project.teamId != null ? 'team' : 'solo'
 }
 
 export function belongsToTeam(team: TeamWithMembers, userId: string): boolean {
   if (team !== null) {
-    return team.memberships.find(member => member.person?.id === userId) != null
+    return team.memberships.find((member) => member.person?.id === userId) != null
   }
 
   return false
@@ -71,7 +95,9 @@ export function getProjectLeader(project: ProjectsFull): UserWithType {
 
 export function getTeamLeader(team: TeamWithRelations): UserWithType {
   if (team !== null) {
-    const { leader: { person, company } } = team
+    const {
+      leader: { person, company },
+    } = team
     if (person !== null) {
       return { ...person, type: 'PERSON' }
     } else if (company !== null) {
@@ -82,10 +108,14 @@ export function getTeamLeader(team: TeamWithRelations): UserWithType {
   throw new DBError('DBError: Invalid Team without leader.')
 }
 
-export function getPublicProjects<T>(projects: Array<T & {
-  visibility: Visibility
-}>) {
-  return projects.filter(project => project.visibility === 'PUBLIC')
+export function getPublicProjects<T>(
+  projects: Array<
+  T & {
+    visibility: Visibility
+  }
+  >
+) {
+  return projects.filter((project) => project.visibility === 'PUBLIC')
 }
 
 export function getInternshipStage(internship: InternshipWithRelations): Stage {
@@ -110,7 +140,7 @@ export function getInternshipStage(internship: InternshipWithRelations): Stage {
 }
 
 export function getAcceptedRecruitment(internship: InternshipWithRelations) {
-  return internship.recruitments.find(recruitment => recruitment.status === 'ACCEPTED')
+  return internship.recruitments.find((recruitment) => recruitment.status === 'ACCEPTED')
 }
 
 export function getInternshipCompany(internship: InternshipWithRelations) {
@@ -163,7 +193,7 @@ export function getAcceptedRecruitments(vacant: WithRecruitments) {
 }
 
 export function validVacants(vacants: VacantWithRelations[]) {
-  return vacants.filter(vacant => {
+  return vacants.filter((vacant) => {
     return !vacantIsExpired(vacant) && !vacantIsFull(vacant)
   })
 }
@@ -176,14 +206,15 @@ interface WithProgress {
 }
 
 interface WithHours {
-  recruitments: Array<WithProgress & {
+  recruitments: Array<
+  WithProgress & {
     status: Status
-  }>
+  }
+  >
 }
 
 export function getCompletedHours(internship: WithHours) {
-  const recruitment = internship.recruitments
-    .find(recruitment => recruitment.status === 'ACCEPTED')
+  const recruitment = internship.recruitments.find((recruitment) => recruitment.status === 'ACCEPTED')
 
   if (recruitment === undefined) {
     return 0
@@ -194,7 +225,7 @@ export function getCompletedHours(internship: WithHours) {
 
 export function recruitmentCompletedHours(recruitment: WithProgress) {
   return recruitment.progresses
-    .filter(progress => progress.status === 'ACCEPTED')
+    .filter((progress) => progress.status === 'ACCEPTED')
     .reduce((sum, progress) => sum + progress.hours, 0)
 }
 
@@ -212,14 +243,16 @@ export function getTaskStatus(task: TasksWithRelationship) {
     progress: number
   }
   const status = { pending: 0, done: 0, review: 0, progress: 0 }
-  task.subtasks.forEach(s => {
+  task.subtasks.forEach((s) => {
     if (s.status === 'DONE') status.done += 1
     if (s.status === 'PENDING') status.pending += 1
     if (s.status === 'REVIEW') status.review += 1
     if (s.status === 'PROGRESS') status.progress += 1
   })
 
-  const higherValue = Object.keys(status).reduce((a, b) => status[a as keyof Statuses] > status[b as keyof Statuses] ? a : b)
+  const higherValue = Object.keys(status).reduce((a, b) =>
+    status[a as keyof Statuses] > status[b as keyof Statuses] ? a : b
+  )
 
   return higherValue.toUpperCase() as TaskStatus
 }
@@ -233,7 +266,7 @@ export function getTasksStatuses(tasks: TasksWithRelationship[]) {
   }
   const filters: Statuses = { pending: [], done: [], review: [], progress: [] }
 
-  tasks.forEach(t => {
+  tasks.forEach((t) => {
     const status = (getTaskStatus(t) as TaskStatus).toLowerCase()
 
     filters[status as keyof Statuses].push(t)

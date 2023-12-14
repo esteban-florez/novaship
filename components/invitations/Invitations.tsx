@@ -8,9 +8,10 @@ interface Props {
   search: string
   invitations: InvitationData[]
   type: 'invitation' | 'data'
+  side: 'user' | 'owner'
 }
 
-export default function Invitations({ invitations, type, search }: Props) {
+export default function Invitations({ invitations, type, search, side }: Props) {
   if (invitations.length === 0) {
     return (
       <EmptyContent
@@ -22,9 +23,7 @@ export default function Invitations({ invitations, type, search }: Props) {
     )
   }
 
-  const filtered = invitations.filter(
-    (invitation) => search === '' || includesValue(invitation.team.name, search)
-  )
+  const filtered = invitations.filter((invitation) => search === '' || includesValue(invitation.team.name, search))
 
   return (
     <section className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg p-4 pt-1 md:columns-2 lg:columns-3 xl:rounded-tl-none">
@@ -37,7 +36,7 @@ export default function Invitations({ invitations, type, search }: Props) {
             {type === 'invitation' && (
               <InvitationCard
                 invitation={invitation}
-                side="user"
+                side={side}
               />
             )}
             {type === 'data' && <InfoCard invitation={invitation} />}

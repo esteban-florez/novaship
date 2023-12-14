@@ -1,4 +1,5 @@
 # Correcciones de proyecto (para el 20-12)
+
 - Cambiar interfaces (Myriam se quiere fumar una bien potente de aqui a enero)
 - Concluir procesos (¿Añadir todo lo que se quitó a cada uno?)
 
@@ -18,9 +19,7 @@
 - Signup con Google.
 - Mecanismo para destacar ofertas y equipo mediante suscripción.
 - Mantener los filtros al usar la api.
-- Validación: no puede aplicarse a un proyecto que sea personal.
 - Hacer un nuevo componente modal.
-- Revisar las dimensiones del logo en responsive.
 - Logs middleware y model.
 - Middleware para notificaciones.
 - Loading para pages/id.
@@ -31,8 +30,10 @@
 - Tooltip helper.
 - Añadir areas de conocimiento desde el registro
 - Encontrar alguna manera de ocultar el drawer en desktop (?).
+- Mostrar solo las invitaciones que sean del lado de los usuarios en Team/id/members .
 
 # Pending
+
 - Filtros para estadisticas.
 - Perfil y perfiles.
 
@@ -45,8 +46,3 @@
 - Admin
   - Migrar minicards a tabla (?)
   - Mostrar grafico de barras (registro por meses) del card seleccionado, como modal o pagina independiente (?)
-
-# Fix
-- teams/id -> al actualizar un equipo quitar los usuarios que tengan invitaciones.
-- teams/id -> corregir los miembros (parece que se buguea y registra al lider como miembro).
-- teams/id (notification) -> corregir el de arriba (se envia al lider del equipo la invitacion que se hizo a otros miembros).

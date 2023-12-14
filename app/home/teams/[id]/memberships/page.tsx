@@ -16,9 +16,7 @@ export const metadata: Metadata = {
   title: 'Miembros del equipo',
 }
 
-export default async function TeamMembershipsPage({
-  params: { id },
-}: PageContext) {
+export default async function TeamMembershipsPage({ params: { id } }: PageContext) {
   const { id: userId } = await auth.user()
   const team = await getTeam(id)
   const { memberships } = team
@@ -34,6 +32,7 @@ export default async function TeamMembershipsPage({
       updatedAt: true,
       person: {
         select: {
+          id: true,
           name: true,
         },
       },
@@ -67,9 +66,7 @@ export default async function TeamMembershipsPage({
       />
       {leader.id === userId && invitations.length > 0 && (
         <ThreeGrid>
-          <h6 className="col-span-full text-xl font-semibold text-neutral-600">
-            Solicitudes
-          </h6>
+          <h6 className="col-span-full text-xl font-semibold text-neutral-600">Solicitudes</h6>
           {invitations.map((i) => {
             return (
               <InvitationCard
@@ -82,11 +79,7 @@ export default async function TeamMembershipsPage({
         </ThreeGrid>
       )}
       <ThreeGrid>
-        {leader.id === userId && (
-          <h6 className="col-span-full text-xl font-semibold text-neutral-600">
-            Plantilla
-          </h6>
-        )}
+        {leader.id === userId && <h6 className="col-span-full text-xl font-semibold text-neutral-600">Plantilla</h6>}
         {memberships.length > 0
           ? (
             <>
@@ -95,9 +88,7 @@ export default async function TeamMembershipsPage({
                 className={clsx('card card-body bg-white shadow')}
               >
                 <div className="absolute right-0 top-0 flex w-full justify-center rounded-t-lg bg-primary">
-                  <p className="text-center font-semibold uppercase text-white">
-                    Líder de equipo
-                  </p>
+                  <p className="text-center font-semibold uppercase text-white">Líder de equipo</p>
                 </div>
                 <InfoUser
                   image={leader.image}
@@ -131,9 +122,7 @@ export default async function TeamMembershipsPage({
             )
           : (
             <div className="col-span-full">
-              <EmptyContent title="¡Nada que mostrar!">
-                Este equipo no ha creado ningún proyecto aún.
-              </EmptyContent>
+              <EmptyContent title="¡Nada que mostrar!">Este equipo no ha creado ningún proyecto aún.</EmptyContent>
             </div>
             )}
       </ThreeGrid>

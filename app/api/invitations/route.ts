@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     data = await request.json()
     const parsed = object({
       teamId: defaults.id,
-      projectId: defaults.id,
+      projectId: defaults.id.optional(),
     }).parse(data)
     const { id: userId, name, type } = await auth.user(request)
 
@@ -73,6 +73,10 @@ export async function POST(request: NextRequest) {
       team: team.name,
       teamId: team.id,
     })
+
+    if (projectId == null) {
+      return NextResponse.redirect(url(`/home/teams/${parsed.teamId}?alert=invitation_sent`))
+    }
 
     return NextResponse.redirect(url(`/home/projects/${projectId}?alert=invitation_sent`))
   } catch (error) {

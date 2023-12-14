@@ -1,8 +1,4 @@
-import {
-  type UseFormRegisterReturn,
-  type FieldErrors,
-  type RegisterOptions,
-} from 'react-hook-form'
+import { type UseFormRegisterReturn, type FieldErrors, type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
 import {
   type Person,
@@ -85,14 +81,16 @@ interface InternshipSimple {
 }
 
 type InternshipWithRelations = Internship & {
-  recruitments: Array<Recruitment & {
+  recruitments: Array<
+  Recruitment & {
     vacant: Vacant & {
       company: Company & {
         location: Location
       }
     }
     progresses: Progress[]
-  }>
+  }
+  >
   categories: Category[]
   institute: Institute
   person: Person & {
@@ -132,9 +130,11 @@ interface TeamsFull extends Team {
     person: Person
     company: Company
   }
-  projects: Array<Project & {
+  projects: Array<
+  Project & {
     categories: Category[]
-  }>
+  }
+  >
   contracts: Contract[]
   invitations: Invitation[]
   memberships: Array<
@@ -152,6 +152,7 @@ interface InvitationData {
   status: Status
   updatedAt: Date
   person: {
+    id: string
     name: string
   }
   team: {
@@ -205,14 +206,18 @@ interface Permissions {
 }
 
 type RevisionComponentProps = Revision & {
-  task: Task & {
+  task:
+  | (Task & {
     person: Person
-  } | null
-  subtask: Subtask & {
+  })
+  | null
+  subtask:
+  | (Subtask & {
     task: Task & {
       person: Person
     }
-  } | null
+  })
+  | null
 }
 
 type RevisionWithRelationsip = Revision & {
@@ -226,17 +231,21 @@ type SubtasksWithRelation = Subtask & {
     person: Person
   }
   revisions: Revision[]
-  subparticipations: Array<Subparticipation & {
+  subparticipations: Array<
+  Subparticipation & {
     person: Person
-  }>
+  }
+  >
 }
 
 type SubtaskWithRelationShip = Subtask & {
   task: TasksWithRelationship
   revisions: Revision[]
-  subparticipations: Array<Subparticipation & {
+  subparticipations: Array<
+  Subparticipation & {
     person: Person
-  }>
+  }
+  >
 }
 
 type TasksWithRelationship = Task & {
@@ -244,15 +253,19 @@ type TasksWithRelationship = Task & {
   subtasks: Array<
   Subtask & {
     revisions: Revision[]
-    subparticipations: Array<Subparticipation & {
+    subparticipations: Array<
+    Subparticipation & {
       person: Person
-    }>
+    }
+    >
   }
   >
   revisions: Revision[]
-  participations: Array<Participation & {
+  participations: Array<
+  Participation & {
     person: Person
-  }>
+  }
+  >
 }
 
 type ProjectMembership = Membership & {

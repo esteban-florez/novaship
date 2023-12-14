@@ -18,6 +18,7 @@ export default function InvitationCard({ invitation, side }: Props) {
     method: 'PUT',
     append: {
       status,
+      userId: invitation.person.id,
     },
   })
 
@@ -30,8 +31,7 @@ export default function InvitationCard({ invitation, side }: Props) {
           {side === 'user'
             ? (
               <p>
-                Te han invitado a unirte al grupo{' '}
-                <span className="font-semibold">{invitation.team.name}</span>
+                Te han invitado a unirte al grupo <span className="font-semibold">{invitation.team.name}</span>
               </p>
               )
             : (
@@ -39,8 +39,7 @@ export default function InvitationCard({ invitation, side }: Props) {
               )}
           <div className="mt-1 mb-3 flex flex-col justify-between items-center">
             <small className="text-neutral-600">
-              {side === 'user' ? 'Invitado el' : 'Solicitud enviada el'}{' '}
-              {format(invitation.updatedAt)}
+              {side === 'user' ? 'Invitado el' : 'Solicitud enviada el'} {format(invitation.updatedAt)}
             </small>
           </div>
           <form
