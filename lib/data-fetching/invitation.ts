@@ -19,6 +19,7 @@ export const getInvitations = cache(async ({ where, skip, take }: QueryConfig<Pr
     select: {
       id: true,
       status: true,
+      interested: true,
       updatedAt: true,
       person: {
         select: {

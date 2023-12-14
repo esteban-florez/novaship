@@ -6,6 +6,7 @@ import { getExpirationDate } from '@/lib/utils/date'
 async function createMembership(userId: string, teamId: string) {
   return await prisma.invitation.create({
     data: {
+      interested: 'PERSON',
       personId: userId,
       teamId,
       membership: {

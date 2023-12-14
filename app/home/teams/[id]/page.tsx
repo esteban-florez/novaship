@@ -30,6 +30,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
     where: {
       teamId: id,
       status: 'PENDING',
+      interested: 'PERSON',
       personId: {
         not: userId,
       },

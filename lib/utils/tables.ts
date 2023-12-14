@@ -93,7 +93,14 @@ export function getProjectLeader(project: ProjectsFull): UserWithType {
   throw new DBError('DBError: Invalid Project without leader.')
 }
 
-export function getTeamLeader(team: TeamWithRelations): UserWithType {
+interface TeamSimple extends Team {
+  leader: {
+    person: Person | null
+    company: Company | null
+  }
+}
+
+export function getTeamLeader(team: TeamWithRelations | TeamSimple): UserWithType {
   if (team !== null) {
     const {
       leader: { person, company },

@@ -30,7 +30,12 @@
 - Tooltip helper.
 - Añadir areas de conocimiento desde el registro
 - Encontrar alguna manera de ocultar el drawer en desktop (?).
-- Mostrar solo las invitaciones que sean del lado de los usuarios en Team/id/members .
+- Mostrar solo las invitaciones que sean del lado de los usuarios en Team/id/members.
+- Añadir tag de miembros o lider en card de Teams.
+- Remover texto "solicitud aceptada" en Teams/id.
+- Buscar directamente en la db en los search inputs.
+- Cambiar Interested en Invitation por PERSON | LEADER.
+- Pasar los cards de invitaciones a una tabla en Teams/id/memberships.
 
 # Pending
 
@@ -46,3 +51,12 @@
 - Admin
   - Migrar minicards a tabla (?)
   - Mostrar grafico de barras (registro por meses) del card seleccionado, como modal o pagina independiente (?)
+
+# TAGS
+
+- TODO.
+- DRY.
+- INFO.
+- #FIX.
+- PENDING.
+- TEMPORAL.

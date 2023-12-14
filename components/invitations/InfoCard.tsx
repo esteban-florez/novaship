@@ -1,29 +1,48 @@
+import { statuses } from '@/lib/translations'
 import { type InvitationData } from '@/lib/types'
 import { format } from '@/lib/utils/date'
+import { type Status } from '@prisma/client'
 import Link from 'next/link'
 
 interface Props {
   invitation: InvitationData
+  side: 'RECEIVED' | 'SENT'
 }
 
-export default function InfoCard({ invitation }: Props) {
+export default function InfoCard({ invitation, side }: Props) {
+  const status =
+    invitation.status === 'PENDING'
+      ? 'recibido'
+      : statuses[invitation.status as Status].toLocaleLowerCase()
+
   return (
-    <div className="card card-compact bg-base-100 rounded-lg shadow-lg">
+    <div className="card card-compact bg-base-100 rounded-lg shadow-lg border border-zinc-300">
       <div className="p-4">
-        <p className="text-neutral-600">
-          Has {invitation.status === 'ACCEPTED' ? 'aceptado' : 'rechazado'} la
-          invitación al grupo
-          <Link
-            href={`/home/teams/${invitation.team.id}`}
-            className="ms-1"
-          >
-            <span className="text-primary font-semibold">
-              {invitation.team.name}
-            </span>
-          </Link>
-        </p>
+        {side === 'SENT'
+          ? (
+            <p>
+              El usuario{' '}
+              <span className="text-semibold">{invitation.person.name}</span> ha{' '}
+              {status} la invitación
+            </p>
+            )
+          : (
+            <p className="text-neutral-600">
+              Has {invitation.status === 'ACCEPTED' ? 'aceptado' : 'rechazado'} la
+              invitación al grupo
+              <Link
+                href={`/home/teams/${invitation.team.id}`}
+                className="ms-1"
+              >
+                <span className="text-primary font-semibold">
+                  {invitation.team.name}
+                </span>
+              </Link>
+            </p>
+            )}
         <small className="font-semibold text-neutral-600">
-          Invitado el {format(invitation.updatedAt)}
+          {side === 'RECEIVED' ? 'Recibido' : 'Enviado'} el{' '}
+          {format(invitation.updatedAt)}
         </small>
       </div>
     </div>
