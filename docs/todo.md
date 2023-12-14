@@ -35,7 +35,6 @@
 - Remover texto "solicitud aceptada" en Teams/id.
 - Buscar directamente en la db en los search inputs.
 - Cambiar Interested en Invitation por PERSON | LEADER.
-- Pasar los cards de invitaciones a una tabla en Teams/id/memberships.
 
 # Pending
 

@@ -1,8 +1,8 @@
 import { type InvitationData } from '@/lib/types'
 import EmptyContent from '../EmptyContent'
-import InvitationCard from './InvitationCard'
 import InfoCard from './InfoCard'
 import { includesValue } from '@/lib/utils/text'
+import InvitationCard from './InvitationCard'
 
 interface Props {
   search: string
@@ -11,7 +11,12 @@ interface Props {
   side: 'user' | 'owner'
 }
 
-export default function Invitations({ invitations, type, search, side }: Props) {
+export default function Invitations({
+  invitations,
+  type,
+  search,
+  side,
+}: Props) {
   if (invitations.length === 0) {
     return (
       <EmptyContent
@@ -23,7 +28,9 @@ export default function Invitations({ invitations, type, search, side }: Props) 
     )
   }
 
-  const filtered = invitations.filter((invitation) => search === '' || includesValue(invitation.team.name, search))
+  const filtered = invitations.filter(
+    (invitation) => search === '' || includesValue(invitation.team.name, search)
+  )
 
   return (
     <section className="mx-auto mb-4 w-full columns-1 gap-4 rounded-lg p-4 pt-1 md:columns-2 lg:columns-3 xl:rounded-tl-none">
@@ -39,7 +46,12 @@ export default function Invitations({ invitations, type, search, side }: Props) 
                 side={side}
               />
             )}
-            {type === 'data' && <InfoCard invitation={invitation} />}
+            {type === 'data' && (
+              <InfoCard
+                invitation={invitation}
+                side={invitation.interested === 'COMPANY' ? 'SENT' : 'RECEIVED'}
+              />
+            )}
           </div>
         </div>
       ))}

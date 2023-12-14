@@ -10,9 +10,8 @@ import prisma from '@/prisma/client'
 import ThreeGrid from '@/components/ThreeGrid'
 import { auth } from '@/lib/auth/pages'
 import PageTitle from '@/components/PageTitle'
-import InvitationCard from '@/components/invitations/InvitationCard'
 import { getInvitations } from '@/lib/data-fetching/invitation'
-import InfoCard from '@/components/invitations/InfoCard'
+import InvitationsTable from './InvitationsTable'
 
 export const metadata: Metadata = {
   title: 'Miembros del equipo',
@@ -31,10 +30,6 @@ export default async function TeamMembershipsPage({
       status: 'PENDING',
     },
   })
-  const sentInvitations = invitations.filter((i) => i.interested === 'COMPANY')
-  const receivedInvitations = invitations.filter(
-    (i) => i.interested === 'PERSON'
-  )
 
   if (leader === null) {
     notFound()
@@ -55,37 +50,13 @@ export default async function TeamMembershipsPage({
         subtitle="Aquí podrás ver toda la plantilla del equipo"
         breadcrumbs={team.name}
       />
-      {leader.id === userId && sentInvitations.length > 0 && (
-        <ThreeGrid>
-          <h6 className="col-span-full text-xl font-semibold text-neutral-600">
-            Solicitudes enviadas
-          </h6>
-          {sentInvitations.map((i) => {
-            return (
-              <InfoCard
-                key={i.id}
-                invitation={i}
-                side="SENT"
-              />
-            )
-          })}
-        </ThreeGrid>
-      )}
-      {leader.id === userId && receivedInvitations.length > 0 && (
-        <ThreeGrid>
-          <h6 className="col-span-full text-xl font-semibold text-neutral-600">
-            Solicitudes recibidas
-          </h6>
-          {receivedInvitations.map((i) => {
-            return (
-              <InvitationCard
-                key={i.id}
-                invitation={i}
-                side="owner"
-              />
-            )
-          })}
-        </ThreeGrid>
+      {leader.id === userId && invitations.length > 0 && (
+        <div className="sm:m-8 overflow-x-auto rounded-lg bg-white p-2 border border-zinc-300">
+          <h2 className="mb-2 text-center text-xl font-semibold">
+            Solicitudes
+          </h2>
+          <InvitationsTable invitations={invitations} />
+        </div>
       )}
       <ThreeGrid>
         {memberships.length > 0

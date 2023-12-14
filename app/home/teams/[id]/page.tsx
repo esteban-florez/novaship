@@ -65,7 +65,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
       } else {
         return (
           <p className="font-semibold text-neutral-600">
-            Su solicitud {userInvitation?.status === 'PENDING' ? 'está' : 'fue'}{' '}
+            Solicitud{' '}
             {statuses[userInvitation?.status ?? 'PENDING'].toLowerCase()}
           </p>
         )

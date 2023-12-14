@@ -28,6 +28,7 @@ import {
   type Internship,
   type Progress,
   type Subparticipation,
+  type Interested,
 } from '@prisma/client'
 import { type days } from './translations'
 
@@ -147,10 +148,15 @@ interface TeamsFull extends Team {
   >
 }
 
+type InvitationSimple = Pick<Invitation & {
+  person: Pick<Person, 'id' | 'name'>
+}, 'id' | 'status' | 'interested' | 'person'>
+
 interface InvitationData {
   id: string
   status: Status
   updatedAt: Date
+  interested: Interested
   person: {
     id: string
     name: string

@@ -28,16 +28,10 @@ export default function InvitationCard({ invitation, side }: Props) {
       {serverErrors}
       <div className="card card-compact bg-base-100 rounded-lg shadow-lg">
         <div className="p-4">
-          {side === 'user'
-            ? (
-              <p>
-                Te han invitado a unirte al grupo{' '}
-                <span className="font-semibold">{invitation.team.name}</span>
-              </p>
-              )
-            : (
-              <p>{invitation.person.name} solicita ser parte del grupo</p>
-              )}
+          <p>
+            Te han invitado a unirte al grupo{' '}
+            <span className="font-semibold">{invitation.team.name}</span>
+          </p>
           <div className="mt-1 mb-3">
             <small className="text-neutral-600">
               {side === 'user' ? 'Invitado el' : 'Solicitud enviada el'}{' '}
