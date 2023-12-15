@@ -303,3 +303,17 @@ export function getProjectResponsable(project: ProjectsFull, userId: string) {
 
   return responsable
 }
+
+export function getTaskPermissions(leaderId: string, userId: string) {
+  return {
+    delete: leaderId === userId,
+    edit: leaderId === userId,
+    comment: leaderId === userId,
+    create: leaderId === userId,
+  }
+}
+
+export function getSubtaskPermissions(leaderId: string, userId: string) {
+  const { create, ...rest } = getTaskPermissions(leaderId, userId)
+  return rest
+}

@@ -6,6 +6,8 @@ import { notFound } from 'next/navigation'
 import Filters from './Filters'
 import {
   getProjectLeader,
+  getSubtaskPermissions,
+  getTaskPermissions,
   getTaskStatus,
   getTeamwork,
 } from '@/lib/utils/tables'
@@ -13,15 +15,13 @@ import { includesValue } from '@/lib/utils/text'
 import { Suspense } from 'react'
 import Link from 'next/link'
 import { PlusIcon } from '@heroicons/react/24/outline'
-import clsx from 'clsx'
 import TaskComponent from './TaskComponent'
 import EmptyContent from '@/components/EmptyContent'
 import RevisionComponent from './RevisionComponent'
 import Forms from './Forms'
 import SubtaskComponent from './SubtaskComponent'
-import { taskStatuses } from '@/lib/translations'
 import { type TaskStatus } from '@prisma/client'
-import { STAGE_BADGES } from '@/lib/shared/stage-colors'
+import TaskItem from './TaskItem'
 
 export const metadata: Metadata = {
   title: 'Tareas de proyecto',
@@ -40,17 +40,8 @@ export default async function TasksProjectPage({
   }
 
   const leader = getProjectLeader(project)
-  const taskPermissions = {
-    delete: leader.id === userId,
-    edit: leader.id === userId,
-    comment: leader.id === userId,
-    create: leader.id === userId,
-  }
-  const subtaskPermissions = {
-    delete: leader.id === userId,
-    edit: leader.id === userId,
-    comment: leader.id === userId,
-  }
+  const taskPermissions = getTaskPermissions(leader.id, userId)
+  const subtaskPermissions = getSubtaskPermissions(leader.id, userId)
 
   const teamwork = getTeamwork(project)
   const url = `/home/projects/${id}/tasks`
@@ -97,47 +88,16 @@ export default async function TasksProjectPage({
                       const status = getTaskStatus(t) as TaskStatus
 
                       return (
-                        <Link
+                        <TaskItem
                           key={t.id}
-                          href={{
-                            pathname: url,
-                            query: { id: t.id, action: 'show', filtered: filter },
-                          }}
-                        >
-                          <div
-                            className={clsx(
-                              'group p-4 text-sm hover:bg-primary delay-75 duration-75 transition-colors ease-in-out',
-                              taskId === t.id && 'bg-primary'
-                            )}
-                          >
-                            <h6
-                              className={clsx(
-                                '-mb-1 group-hover:text-white font-semibold line-clamp-1',
-                                taskId === t.id && 'text-white font-bold'
-                              )}
-                            >
-                              {t.title}
-                            </h6>
-                            <small
-                              className={clsx(
-                                'badge badge-sm badge-outline group-hover:bg-white',
-                                taskId === t.id && 'bg-white',
-                                STAGE_BADGES[status]
-                              )}
-                            >
-                              {taskStatuses[status]}
-                            </small>
-                            <p
-                              className={clsx(
-                                'mt-1 group-hover:text-neutral-200 line-clamp-2 leading-none',
-                                taskId === t.id && 'font-semibold text-neutral-200',
-                                taskId !== t.id && 'text-neutral-600'
-                              )}
-                            >
-                              {t.description}
-                            </p>
-                          </div>
-                        </Link>
+                          taskId={t.id}
+                          title={t.title}
+                          description={t.description}
+                          status={status}
+                          match={t.id === taskId}
+                          filter={filter}
+                          url={url}
+                        />
                       )
                     })
                   )
