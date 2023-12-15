@@ -12,6 +12,7 @@ import { auth } from '@/lib/auth/pages'
 import PageTitle from '@/components/PageTitle'
 import { getInvitations } from '@/lib/data-fetching/invitation'
 import InvitationsTable from './InvitationsTable'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata: Metadata = {
   title: 'Miembros del equipo',
@@ -47,7 +48,7 @@ export default async function TeamMembershipsPage({
     <>
       <PageTitle
         title="Miembros del equipo"
-        subtitle="Aquí podrás ver toda la plantilla del equipo"
+        subtitle={tooltip.team_id_members}
         breadcrumbs={team.name}
       />
       {leader.id === userId && invitations.length > 0 && (

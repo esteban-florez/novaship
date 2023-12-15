@@ -9,13 +9,15 @@ import { type Prisma } from '@prisma/client'
 import { getSearchAndFilter } from '@/lib/utils/search-params'
 import Link from 'next/link'
 import { PlusIcon } from '@heroicons/react/24/outline'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata = {
   title: 'Mis pasantías',
 }
 
 export default async function MyInternshipsPage({
-  searchParams, params: { id: urlId },
+  searchParams,
+  params: { id: urlId },
 }: PageContext & SearchParamsProps) {
   const { id: userId, type, name } = await auth.user()
   const allowed = ['COMPANY', 'INSTITUTE']
@@ -49,26 +51,30 @@ export default async function MyInternshipsPage({
     },
     gradeId: filter,
     instituteId: type === 'INSTITUTE' ? userId : undefined,
-    recruitments: type === 'COMPANY'
-      ? {
-          some: {
-            status: 'ACCEPTED',
-            vacant: {
-              companyId: userId,
+    recruitments:
+      type === 'COMPANY'
+        ? {
+            some: {
+              status: 'ACCEPTED',
+              vacant: {
+                companyId: userId,
+              },
             },
-          },
-        }
-      : undefined,
+          }
+        : undefined,
   }
 
   return (
     <>
       <PageTitle
         title="Mis pasantes"
-        subtitle={`Aqui puedes ver todos los pasantes de tu ${translation[type]}.`}
+        subtitle={`${tooltip.internships} ${translation[type]}.`}
         breadcrumbs={name}
       >
-        <Link className="btn btn-primary" href={addAction.url}>
+        <Link
+          className="btn btn-primary"
+          href={addAction.url}
+        >
           <PlusIcon className="h-5 w-5" />
           {addAction.text}
         </Link>

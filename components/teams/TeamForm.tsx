@@ -14,6 +14,7 @@ import Textarea from '../forms/inputs/Textarea'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
 import { type OptionCategory } from '@/lib/types'
 import FormButtons from '../forms/FormButtons'
+import { tooltip } from '@/lib/tooltip'
 
 interface Props extends FormProps {
   team?: Team & {
@@ -57,7 +58,7 @@ export default function TeamForm({
       {serverErrors}
       <FormSection
         title="Datos básicos"
-        description="Ingrese aquí en nombre de tu equipo, una descripción de sus actividades, y las categorías laborales a las que pertenecen."
+        description={tooltip.team_form_basic_data}
       >
         <Input
           name="name"
@@ -93,7 +94,7 @@ export default function TeamForm({
       </FormSection>
       <FormSection
         title="Miembros del equipo"
-        description="Desde aquí puedes buscar mediante el correo eléctronico a las personas que quieras invitar a formar parte del equipo."
+        description={tooltip.team_form_members}
       >
         {/* TODO -> crear hacer mejores estilos para este select, hacer que las opciones muestren email, imagen y nombre. E igualmente la lista de seleccionados debe ser un collapse. */}
         <SelectMultiple

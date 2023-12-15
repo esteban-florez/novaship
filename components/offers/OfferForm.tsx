@@ -22,6 +22,7 @@ import {
   type OptionLocation,
   type OptionSkill,
 } from '@/lib/types'
+import { tooltip } from '@/lib/tooltip'
 
 interface Props extends FormProps {
   skills: OptionSkill[]
@@ -78,7 +79,7 @@ export default function OfferForm({
         >
           <FormSection
             title="Datos básicos"
-            description="El nombre de la oferta, su descripción, categoría y salario serán visibles para los posibles candidatos."
+            description={tooltip.offer_form_basic_data}
           >
             <Input
               name="title"
@@ -136,7 +137,7 @@ export default function OfferForm({
           </FormSection>
           <FormSection
             title="Destrezas requeridas"
-            description="Selecciona las habilidades necesarias para desempeñar el trabajo. Selecciona también las categorías"
+            description={tooltip.offer_form_skills_categories}
           >
             <SelectMultiple
               name="categories"
@@ -167,7 +168,7 @@ export default function OfferForm({
           </FormSection>
           <FormSection
             title="Horario de trabajo"
-            description="Especifica los detalles del horario de trabajo así como la modalidad."
+            description={tooltip.offer_form_schedule}
           >
             <Select
               name="schedule"
@@ -208,7 +209,7 @@ export default function OfferForm({
           </FormSection>
           <FormSection
             title="Limites de la oferta"
-            description="Decide el número máximo de aspirantes que pueden postularse a la oferta, así como su fecha de expiración."
+            description={tooltip.offer_form_limit}
           >
             <Input
               type="number"

@@ -15,6 +15,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { type TeamsFull, type TeamsTab } from '@/lib/types'
 import { type Prisma } from '@prisma/client'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata: Metadata = {
   title: 'Equipos de trabajo',
@@ -113,7 +114,7 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
     <>
       <PageTitle
         title="Equipos de trabajo"
-        subtitle="Descubre diferentes equipos de trabajo, y los proyectos públicos creados dentro de la aplicación."
+        subtitle={tooltip.team}
       >
         <Link href="/home/teams/create">
           <button className="btn-primary btn hover:border-primary hover:bg-white hover:text-neutral-600">

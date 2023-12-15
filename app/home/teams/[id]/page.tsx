@@ -77,11 +77,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
 
   return (
     <>
-      <PageTitle
-        title="Equipo de trabajo"
-        subtitle="Encuentra toda la información disponible del equipo seleccionado"
-        breadcrumbs={team.name}
-      />
+      <PageTitle breadcrumbs={team.name} />
       <section className="flex flex-wrap items-start gap-4 p-4 lg:flex-nowrap">
         <div className="flex w-full flex-col gap-3 lg:w-2/3">
           <div className="w-full rounded-md bg-white p-4 shadow-md">

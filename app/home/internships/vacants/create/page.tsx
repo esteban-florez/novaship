@@ -4,6 +4,7 @@ import VacantForm from '@/components/vacants/VacantForm'
 import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/pages'
 import { notFound } from 'next/navigation'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata = {
   title: 'Publicar cupos',
@@ -26,7 +27,7 @@ export default async function CreateVacantPage() {
     <>
       <PageTitle
         title="Publicar cupos"
-        subtitle="Registra un nuevo cupo para pasantes en tu empresa."
+        subtitle={tooltip.internship_vacant_create}
       />
       <FormLayout
         title="Registrar nuevo cupo"

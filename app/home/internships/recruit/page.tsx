@@ -7,6 +7,7 @@ import RecruitableCard from './RecruitableCard'
 import FilterBar from '@/components/FilterBar'
 import { getSearchAndFilter } from '@/lib/utils/search-params'
 import prisma from '@/prisma/client'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata = {
   title: 'Reclutar pasantes',
@@ -55,7 +56,7 @@ export default async function RecruitPage({ searchParams }: SearchParamsProps) {
     <>
       <PageTitle
         title="Reclutar pasantes"
-        subtitle="Aquí puedes ver los pasantes disponibles, y enviarles solicitud de reclutamiento."
+        subtitle={tooltip.internship_recruitment}
       />
       <FilterBar
         filterOptions={grades}

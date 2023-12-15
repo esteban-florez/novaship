@@ -20,6 +20,7 @@ import {
   type Job,
   type Location,
 } from '@prisma/client'
+import { tooltip } from '@/lib/tooltip'
 
 type Props = React.PropsWithChildren<{
   categories: Category[]
@@ -71,7 +72,7 @@ export default function VacantForm({
       {serverErrors}
       <FormSection
         title="Datos básicos"
-        description="Escribe una descripción, y selecciona el puesto de trabajo, las carreras relacionadas y habilidades requeridas."
+        description={tooltip.internship_vacant_form_basic_data}
       >
         {isCreate && jobs !== undefined && (
           <Select
@@ -115,7 +116,7 @@ export default function VacantForm({
       </FormSection>
       <FormSection
         title="Configuración del cupo"
-        description="Ingrese el límite de pasantes para este cupo, y la fecha de expiración del mismo."
+        description={tooltip.internship_vacant_form_quota}
       >
         <Input
           name="limit"
@@ -145,7 +146,7 @@ export default function VacantForm({
       </FormSection>
       <FormSection
         title="Datos adicionales"
-        description="Selecciona la ubicación para este cupo, y las categorías relacionadas."
+        description={tooltip.internship_vacant_form_aditional_data}
       >
         <Select
           name="locationId"

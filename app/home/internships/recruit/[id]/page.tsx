@@ -6,7 +6,17 @@ import { auth } from '@/lib/auth/pages'
 import { getInternship } from '@/lib/data-fetching/internships'
 import { notFound } from 'next/navigation'
 import prisma from '@/prisma/client'
-import { AcademicCapIcon, CalendarDaysIcon, ClockIcon, EnvelopeIcon, IdentificationIcon, InformationCircleIcon, ListBulletIcon, PhoneIcon, UserCircleIcon } from '@heroicons/react/24/outline'
+import {
+  AcademicCapIcon,
+  CalendarDaysIcon,
+  ClockIcon,
+  EnvelopeIcon,
+  IdentificationIcon,
+  InformationCircleIcon,
+  ListBulletIcon,
+  PhoneIcon,
+  UserCircleIcon,
+} from '@heroicons/react/24/outline'
 import IconData from '@/components/IconData'
 import { age } from '@/lib/utils/date'
 import { genders } from '@/lib/translations'
@@ -18,6 +28,7 @@ import BadgeList from '@/components/BadgeList'
 import { validVacants } from '@/lib/utils/tables'
 import { getVacants } from '@/lib/data-fetching/vacants'
 import DarkUserCard from '@/components/DarkUserCard'
+import { tooltip } from '@/lib/tooltip'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -33,11 +44,15 @@ export async function generateMetadata({ params: { id } }: PageContext) {
   }
 }
 
-export default async function RecruitDetailsPage({ params: { id } }: PageContext) {
+export default async function RecruitDetailsPage({
+  params: { id },
+}: PageContext) {
   const { id: userId, type } = await auth.user()
   const internship = await getInternship(id)
 
-  if (type !== 'COMPANY' || internship === null ||
+  if (
+    type !== 'COMPANY' ||
+    internship === null ||
     !canCreateRecruitment(userId, internship)
   ) {
     notFound()
@@ -67,7 +82,8 @@ export default async function RecruitDetailsPage({ params: { id } }: PageContext
     <>
       <PageTitle
         title="Reclutar pasante"
-        subtitle="En esta página puedes ver todos los detalles de la pasantía y del pasante antes de reclutarlo." breadcrumbs={`${person.name} - ${grade.title}`}
+        subtitle={tooltip.internship_recruitment_id}
+        breadcrumbs={`${person.name} - ${grade.title}`}
       />
       <TwoColumnsLayout>
         <Column>
@@ -97,7 +113,10 @@ export default async function RecruitDetailsPage({ params: { id } }: PageContext
           </div>
           <div className="divider divider-vertical my-1" />
           <p className="font-bold mb-2">Institución:</p>
-          <DarkUserCard type="INSTITUTE" user={institute} />
+          <DarkUserCard
+            type="INSTITUTE"
+            user={institute}
+          />
         </Column>
         <Column>
           <Container title="Datos personales:">
@@ -147,7 +166,8 @@ export default async function RecruitDetailsPage({ params: { id } }: PageContext
           <div className="mt-4" />
           <div className="alert">
             <InformationCircleIcon className="h-5 w-5" />
-            Tras enviar tu solicitud, deberás esperar a que el estudiante la acepte para iniciar la pasantía.
+            Tras enviar tu solicitud, deberás esperar a que el estudiante la
+            acepte para iniciar la pasantía.
           </div>
         </Column>
       </TwoColumnsLayout>

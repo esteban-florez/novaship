@@ -6,12 +6,18 @@ import getPaginationProps from '@/lib/utils/pagination'
 import { getProjects } from '@/lib/data-fetching/project'
 import { getPersonRelatedIds } from '@/lib/data-fetching/user'
 import { type ProjectsFull, type ProjectsTab } from '@/lib/types'
-import { GlobeAltIcon, ListBulletIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
+import {
+  GlobeAltIcon,
+  ListBulletIcon,
+  PlusIcon,
+  StarIcon,
+} from '@heroicons/react/24/outline'
 import PageTitle from '@/components/PageTitle'
 import Link from 'next/link'
 import Pagination from '@/components/Pagination'
 import clsx from 'clsx'
 import { type Prisma } from '@prisma/client'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata: Metadata = {
   title: 'Proyectos',
@@ -23,7 +29,9 @@ interface FilterQueries {
   all: Prisma.ProjectWhereInput
 }
 
-export default async function ProjectsPage({ searchParams }: SearchParamsProps) {
+export default async function ProjectsPage({
+  searchParams,
+}: SearchParamsProps) {
   const { id } = await auth.user()
   const { categories } = await getPersonRelatedIds({ id })
 
@@ -76,10 +84,7 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
             OR: [
               {
                 leader: {
-                  OR: [
-                    { personId: id },
-                    { companyId: id },
-                  ],
+                  OR: [{ personId: id }, { companyId: id }],
                 },
               },
               {
@@ -106,10 +111,7 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
                 NOT: [
                   {
                     leader: {
-                      OR: [
-                        { personId: id },
-                        { companyId: id },
-                      ],
+                      OR: [{ personId: id }, { companyId: id }],
                     },
                   },
                   {
@@ -125,13 +127,22 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
       ],
     },
   }
-  const totalRecords = await prisma.project.count({ where: FILTER_QUERIES[filter as keyof FilterQueries] })
-  const { nextPage, skip, take } = getPaginationProps({ pageNumber, totalRecords })
+  const totalRecords = await prisma.project.count({
+    where: FILTER_QUERIES[filter as keyof FilterQueries],
+  })
+  const { nextPage, skip, take } = getPaginationProps({
+    pageNumber,
+    totalRecords,
+  })
 
   let projects: ProjectsFull[] = []
 
   if (filter === 'suggested') {
-    projects = await getProjects({ where: FILTER_QUERIES.suggested, take, skip })
+    projects = await getProjects({
+      where: FILTER_QUERIES.suggested,
+      take,
+      skip,
+    })
   }
 
   if (filter === 'personal') {
@@ -147,28 +158,32 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
     suggested: 'Sugeridos',
     personal: 'Mis proyectos',
   }
-  const links = [{
-    title: 'all',
-    content: 'Todos',
-    icon: <GlobeAltIcon className="h-5 w-5" />,
-    query: 'all',
-  }, {
-    title: 'personal',
-    content: 'Mis proyectos',
-    icon: <ListBulletIcon className="h-5 w-5" />,
-    query: 'personal',
-  }, {
-    title: 'suggested',
-    content: 'Sugeridos',
-    icon: <StarIcon className="h-5 w-5" />,
-    query: 'suggested',
-  }]
+  const links = [
+    {
+      title: 'all',
+      content: 'Todos',
+      icon: <GlobeAltIcon className="h-5 w-5" />,
+      query: 'all',
+    },
+    {
+      title: 'personal',
+      content: 'Mis proyectos',
+      icon: <ListBulletIcon className="h-5 w-5" />,
+      query: 'personal',
+    },
+    {
+      title: 'suggested',
+      content: 'Sugeridos',
+      icon: <StarIcon className="h-5 w-5" />,
+      query: 'suggested',
+    },
+  ]
 
   return (
     <>
       <PageTitle
         title="Proyectos"
-        subtitle="Descubre los proyectos que rondan la web."
+        subtitle={tooltip.project}
       >
         <Link href="/home/projects/create">
           <button className="btn btn-primary">
@@ -177,7 +192,12 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
           </button>
         </Link>
       </PageTitle>
-      <PageContent dropdownLabel={`Categorías - ${PROJECTS_TAB_TRANSLATION[filter as ProjectsTab]}`} projects={projects}>
+      <PageContent
+        dropdownLabel={`Categorías - ${
+          PROJECTS_TAB_TRANSLATION[filter as ProjectsTab]
+        }`}
+        projects={projects}
+      >
         {links.map((link) => {
           return (
             <Link
@@ -186,7 +206,12 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
                 pathname: '/home/projects',
                 query: { filter: link.query },
               }}
-              className={clsx('btn', link.title === filter ? 'btn-primary hover:btn-ghost' : 'hover:btn-primary')}
+              className={clsx(
+                'btn',
+                link.title === filter
+                  ? 'btn-primary hover:btn-ghost'
+                  : 'hover:btn-primary'
+              )}
             >
               {link.icon}
               {link.content}
@@ -194,9 +219,7 @@ export default async function ProjectsPage({ searchParams }: SearchParamsProps) 
           )
         })}
       </PageContent>
-      <Pagination
-        nextPage={nextPage}
-      />
+      <Pagination nextPage={nextPage} />
     </>
   )
 }

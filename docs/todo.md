@@ -27,13 +27,13 @@
 - Refactor card.
 - Project image.
 - PDF header, footer, styles, template en general.
-- Tooltip helper.
 - Añadir areas de conocimiento desde el registro
 - Encontrar alguna manera de ocultar el drawer en desktop (?).
-- Mostrar solo las invitaciones que sean del lado de los usuarios en Team/id/members.
-- Remover texto "solicitud aceptada" en Teams/id.
 - Buscar directamente en la db en los search inputs.
 - Cambiar Interested en Invitation por PERSON | LEADER.
+- Tag "lider" o "miembro" en cards de Projects.
+- Remover todos los elementos dentro del ProjectForm y solo dejar el form.
+- Projects/id/tasks content column Loading.
 
 # Pending
 

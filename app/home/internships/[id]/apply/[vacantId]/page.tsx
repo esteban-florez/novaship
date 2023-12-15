@@ -13,6 +13,7 @@ import prisma from '@/prisma/client'
 import TitleContent from '../TitleContent'
 import Link from 'next/link'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { tooltip } from '@/lib/tooltip'
 
 export async function generateMetadata({ params: { vacantId } }: Context) {
   const vacant = await getVacant(vacantId)
@@ -36,10 +37,7 @@ interface Context {
 }
 
 export default async function VacantDetailsPage({
-  params: {
-    id: internshipId,
-    vacantId,
-  },
+  params: { id: internshipId, vacantId },
 }: Context) {
   const { type } = await auth.user()
 
@@ -54,8 +52,12 @@ export default async function VacantDetailsPage({
   const vacant = await getVacant(vacantId)
   const allowed = ['PERSON', 'INSTITUTE']
 
-  if (internship === null || vacant === null || !allowed.includes(type) ||
-    vacantIsFull(vacant) || vacantIsExpired(vacant)
+  if (
+    internship === null ||
+    vacant === null ||
+    !allowed.includes(type) ||
+    vacantIsFull(vacant) ||
+    vacantIsExpired(vacant)
   ) {
     notFound()
   }
@@ -67,7 +69,7 @@ export default async function VacantDetailsPage({
     <>
       <PageTitle
         title="Detalle del cupo"
-        subtitle="Aquí puedes ver todos los datos del cupo, y puedes enviar una solicitud de pasantía."
+        subtitle={tooltip.internship_apply_vacant_id}
         breadcrumbs={`${job.title} - ${company.name}`}
       >
         <TitleContent
@@ -88,14 +90,20 @@ export default async function VacantDetailsPage({
               <ArrowLeftIcon className="h-5 w-5" />
               Volver
             </Link>
-            <ApplyButton internshipId={internshipId} vacantId={vacantId} />
+            <ApplyButton
+              internshipId={internshipId}
+              vacantId={vacantId}
+            />
           </div>
         </Column>
         <Column>
           <SkillsGrades vacant={vacant} />
           <div className="mt-4" />
           <p className="font-bold mb-2">Empresa del cupo</p>
-          <DarkUserCard user={company} type="COMPANY" />
+          <DarkUserCard
+            user={company}
+            type="COMPANY"
+          />
         </Column>
       </TwoColumnsLayout>
     </>

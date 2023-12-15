@@ -80,7 +80,7 @@ export default function Card({
           {/* Ofertas */}
           <div className="border-b border-neutral-400 pb-2">
             {(expiresAt != null || offerLimit != null) && (
-              <div className="flex justify-between items-center gap-1 text-xs text-neutral-600 font-semibold">
+              <div className="mb-2 flex justify-between items-center gap-1 text-xs text-neutral-600 font-semibold">
                 {expiresAt != null && (
                   <div className="inline-flex">
                     <FireIcon className="h-4 w-4" />
