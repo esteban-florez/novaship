@@ -1,8 +1,3 @@
-# Correcciones de proyecto (para el 20-12)
-
-- Cambiar interfaces (Myriam se quiere fumar una bien potente de aqui a enero)
-- Concluir procesos (¿Añadir todo lo que se quitó a cada uno?)
-
 # To-Do
 
 - Bug de overflow en mobile, espacio en blanco a la derecha.
@@ -46,7 +41,6 @@
 # Graficas
 
 - Admin
-  - Migrar minicards a tabla (?)
   - Mostrar grafico de barras (registro por meses) del card seleccionado, como modal o pagina independiente (?)
 
 # TAGS
