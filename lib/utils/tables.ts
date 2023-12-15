@@ -48,7 +48,7 @@ type TeamWithMembers =
 export function getHiringData(hirings: HiringWithPersonSkills[], id: string) {
   const status = getHiringStatusFromId(hirings, id)
   const hasApplied = hirings.some((hiring) => hiring.personId === id)
-  const interested: Interested = hirings.find((hiring) => hiring.personId === id)?.interested
+  const interested: Interested = hirings.find((hiring) => hiring.personId === id)?.interested as Interested
   const hiringId = hirings.find((hiring) => hiring.personId === id)?.id ?? ''
   return { status, hasApplied, interested, hiringId }
 }
@@ -280,4 +280,26 @@ export function getTasksStatuses(tasks: TasksWithRelationship[]) {
   })
 
   return filters
+}
+
+export function getProjectResponsable(project: ProjectsFull, userId: string) {
+  let responsable = ''
+
+  if (project.team != null) {
+    const leader = getTeamLeader(project.team)
+    const member = belongsToTeam(project.team, userId)
+
+    if (member) {
+      responsable = 'Miembro de equipo'
+      return responsable
+    }
+
+    project.personId === userId || leader.id === userId
+      ? (responsable = 'Líder de equipo')
+      : (responsable = leader.name)
+  }
+
+  if (project.person != null && project.personId !== userId) { responsable = project.person.name }
+
+  return responsable
 }

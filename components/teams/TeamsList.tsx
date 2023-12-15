@@ -36,7 +36,7 @@ export default function TeamsList({ userId, search, teams }: Props) {
                   description={team.description}
                   link={`/home/teams/${team.id}`}
                   code={team.code}
-                  teamwork={teamwork}
+                  tag={teamwork}
                 />
               </div>
             </div>

@@ -197,6 +197,7 @@ export default async function ProjectsPage({
           PROJECTS_TAB_TRANSLATION[filter as ProjectsTab]
         }`}
         projects={projects}
+        userId={id}
       >
         {links.map((link) => {
           return (

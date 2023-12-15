@@ -20,7 +20,7 @@ interface Props {
   offerLimit?: number
   expiresAt?: number
   code?: string
-  teamwork?: string
+  tag?: string
 }
 
 const stackOrder = ['z-40', 'z-30', 'z-20']
@@ -37,7 +37,7 @@ export default function Card({
   expiresAt,
   code,
   image,
-  teamwork,
+  tag,
 }: Props) {
   const expiresAtMessage = () => {
     if (expiresAt != null) {
@@ -93,17 +93,15 @@ export default function Card({
             <h3 className="line-clamp-1 text-lg font-bold sm:text-xl">
               {title}
             </h3>
-            {(code != null || teamwork != null) && (
+            {(code != null || tag != null) && (
               <div className="flex justify-between">
                 {code != null && (
                   <small className="font-semibold text-neutral-600">
                     ({code})
                   </small>
                 )}
-                {teamwork != null && (
-                  <small className="font-semibold text-secondary">
-                    {teamwork}
-                  </small>
+                {tag != null && (
+                  <small className="font-semibold text-secondary">{tag}</small>
                 )}
               </div>
             )}

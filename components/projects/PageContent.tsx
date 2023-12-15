@@ -8,19 +8,30 @@ import PageNav from '../PageNav'
 type Props = React.PropsWithChildren<{
   projects: ProjectsFull[]
   dropdownLabel: string
+  userId: string
 }>
 
-export default function PageContent({ projects, dropdownLabel, children }: Props) {
+export default function PageContent({
+  userId,
+  projects,
+  dropdownLabel,
+  children,
+}: Props) {
   const [search, setSearch] = useState('')
 
   return (
     <>
-      <PageNav dropdownLabel={dropdownLabel} search={search} onSearch={setSearch}>
+      <PageNav
+        dropdownLabel={dropdownLabel}
+        search={search}
+        onSearch={setSearch}
+      >
         {children}
       </PageNav>
       <ProjectsCard
         search={search}
         projects={projects}
+        userId={userId}
       />
     </>
   )

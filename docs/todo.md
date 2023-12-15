@@ -31,7 +31,6 @@
 - Encontrar alguna manera de ocultar el drawer en desktop (?).
 - Buscar directamente en la db en los search inputs.
 - Cambiar Interested en Invitation por PERSON | LEADER.
-- Tag "lider" o "miembro" en cards de Projects.
 - Remover todos los elementos dentro del ProjectForm y solo dejar el form.
 - Projects/id/tasks content column Loading.
 
