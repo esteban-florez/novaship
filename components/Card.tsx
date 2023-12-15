@@ -74,7 +74,9 @@ export default function Card({
         </div>
       )}
       <div className="card card-compact bg-base-100 rounded-lg shadow-lg">
-        <div className="flex flex-col gap-3 p-4 pt-1">
+        <div
+          className={clsx('flex flex-col gap-3 p-4', image != null && 'pt-1')}
+        >
           {/* Ofertas */}
           <div className="border-b border-neutral-400 pb-2">
             {(expiresAt != null || offerLimit != null) && (
