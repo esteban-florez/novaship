@@ -40,6 +40,8 @@ model Person {
   leaderships       Leader[]
   participations    Participation[]
   subparticipations Subparticipation[]
+  contracts         Contract[]
+  messages          Message[]
   tasks             Task[]
   // Log               Log[]
   createdAt         DateTime           @default(now())
@@ -63,6 +65,7 @@ model Company {
   offers        Offer[]
   vacants       Vacant[]
   leaderships   Leader[]
+  messages      Message[]
   // Log           Log[]
   verifiedAt    DateTime?
   createdAt     DateTime  @default(now())
@@ -106,6 +109,8 @@ model Team {
   invitations   Invitation[]
   memberships   Membership[]
   categories    Category[]
+  contracts     Contract[]
+  messages      Message[]
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   // deletedAt   DateTime?
@@ -149,6 +154,47 @@ model Membership {
   // deletedAt      DateTime?
 }
 
+model Contract {
+  id          String     @id @default(cuid())
+  title       String
+  description String     @db.Text
+  state       State      @default(REQUESTED)
+  price       Float?
+  project     Project?   @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  projectId   String?    @unique
+  team        Team       @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  teamId      String
+  person      Person     @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  personId    String
+  features    Feature[]
+  questions   Question[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  // deletedAt   DateTime?
+}
+
+model Feature {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  contract    Contract @relation(fields: [contractId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  contractId  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  // deletedAt   DateTime?
+}
+
+model Question {
+  id         String   @id @default(cuid())
+  content    String   @db.Text
+  answer     String?  @db.Text
+  contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  contractId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  // deletedAt  DateTime?
+}
+
 // ----------------------------------------------------------------------
 // ------------------------- Project models -----------------------------
 // ----------------------------------------------------------------------
@@ -167,6 +213,8 @@ model Project {
   categories  Category[]
   tasks       Task[]
   files       File[]
+  contracts   Contract?
+  messages    Message[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   // deletedAt   DateTime?
@@ -183,6 +231,7 @@ model Task {
   personId       String
   subtasks       Subtask[]
   participations Participation[]
+  messages       Message[]
   revisions      Revision[]
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
@@ -277,16 +326,29 @@ model Offer {
 }
 
 model Hiring {
-  id         String     @id @default(cuid())
-  status     Status     @default(PENDING)
+  id         String      @id @default(cuid())
+  status     Status      @default(PENDING)
   interested Interested
-  offer      Offer      @relation(fields: [offerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  offer      Offer       @relation(fields: [offerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   offerId    String
-  person     Person     @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  person     Person      @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   personId   String
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  interviews Interview[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
   // deletedAt  DateTime?
+}
+
+model Interview {
+  id        String   @id @default(cuid())
+  date      DateTime
+  link      String
+  platform  Platform
+  hiring    Hiring   @relation(fields: [hiringId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  hiringId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // deletedAt DateTime?
 }
 
 // ----------------------------------------------------------------------
@@ -381,6 +443,24 @@ model Experience {
 // ----------------------------------------------------------------------
 // --------------------------- Misc models ------------------------------
 // ----------------------------------------------------------------------
+model Message {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  person    Person?  @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  personId  String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  companyId String?
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  teamId    String
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  projectId String?
+  task      Task?    @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  taskId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // deletedAt    DateTime?
+}
+
 model Notification {
   id         String   @id @default(cuid())
   type       String
@@ -575,6 +655,20 @@ enum Interested {
 enum Gender {
   MALE
   FEMALE
+}
+
+enum Platform {
+  MEET
+  ZOOM
+}
+
+enum State {
+  REQUESTED
+  REJECTED
+  PLANNING
+  PRICING
+  CONFIRMED
+  CANCELED
 }
 
 // enum EventStatus {

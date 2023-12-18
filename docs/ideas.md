@@ -5,7 +5,7 @@
 - Mostrar un popup al hacer hover en los avatares de los miembros en /projects.
 - Fechas de entrega en tareas y subtareas.
 - Cambiar las respuestas de redirección (NextResponse.redirect y redirect) en los Route Handlers, por respuestas "200 OK". Y en su lugar retornar la URL a redirigir en el body, y redirigir con router.push().
-- Actualización de campos individuales en el perfil. 
+- Actualización de campos individuales en el perfil.
 - Actualizar la versión de Next.js.
 - Mostrar contenido al hacer scroll.
 - Higher order components.
