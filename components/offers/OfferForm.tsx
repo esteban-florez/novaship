@@ -11,32 +11,57 @@ import useSubmit from '@/lib/hooks/useSubmit'
 import { schema } from '@/lib/validation/schemas/offer'
 import { modes, schedules } from '@/lib/translations'
 import SelectMultiple from '../forms/inputs/select-multiple/SelectMultiple'
-import { EXPIRATION_DATES, getExpirationId } from '@/lib/validation/expiration-dates'
-import { type OptionCategory, type OptionCompany, type OptionJob, type OptionLocation, type OptionSkill } from '@/lib/types'
+import {
+  EXPIRATION_DATES,
+  getExpirationId,
+} from '@/lib/validation/expiration-dates'
+import {
+  type OptionCategory,
+  type OptionCompany,
+  type OptionJob,
+  type OptionLocation,
+  type OptionSkill,
+} from '@/lib/types'
+import { tooltip } from '@/lib/tooltip'
 
 interface Props extends FormProps {
   skills: OptionSkill[]
   categories: OptionCategory[]
   locations: OptionLocation[]
   jobs: OptionJob[]
-  offer?: (Offer & {
+  offer?: Offer & {
     company: OptionCompany
     skills: OptionSkill[]
     categories: OptionCategory[]
-  })
+  }
 }
 
-export default function OfferForm({ offer, skills, categories, jobs, locations, action, method }: Props) {
-  const offerSkills = offer?.skills.map(skill => skill.id)
-  const offerCategories = offer?.categories.map(category => category.id)
+export default function OfferForm({
+  offer,
+  skills,
+  categories,
+  jobs,
+  locations,
+  action,
+  method,
+}: Props) {
+  const backUrl =
+    method === 'POST' ? '/home/offers' : `/home/offers/${offer?.id ?? ''}`
+  const offerSkills = offer?.skills.map((skill) => skill.id)
+  const offerCategories = offer?.categories.map((category) => category.id)
 
-  const offerExpiresAt = offer?.expiresAt != null
-    ? getExpirationId(offer.createdAt, offer.expiresAt)
-    : undefined
+  const offerExpiresAt =
+    offer?.expiresAt != null
+      ? getExpirationId(offer.createdAt, offer.expiresAt)
+      : undefined
 
   const {
-    handleSubmit, alert, serverErrors,
-    register, formState: { errors }, control,
+    handleSubmit,
+    alert,
+    serverErrors,
+    register,
+    formState: { errors },
+    control,
   } = useSubmit({
     schema,
     method,
@@ -47,8 +72,15 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
       <FormLayout title="Información de la oferta">
         {alert}
         {serverErrors}
-        <form method="POST" action={action} onSubmit={handleSubmit}>
-          <FormSection title="Datos básicos" description="El nombre de la oferta, su descripción, categoría y salario serán visibles para los posibles candidatos.">
+        <form
+          method="POST"
+          action={action}
+          onSubmit={handleSubmit}
+        >
+          <FormSection
+            title="Datos básicos"
+            description={tooltip.offer_form_basic_data}
+          >
             <Input
               name="title"
               placeholder="Ej. Desarrollador Web Front-End"
@@ -105,7 +137,7 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
           </FormSection>
           <FormSection
             title="Destrezas requeridas"
-            description="Selecciona las habilidades necesarias para desempeñar el trabajo. Selecciona también las categorías"
+            description={tooltip.offer_form_skills_categories}
           >
             <SelectMultiple
               name="categories"
@@ -134,7 +166,10 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
               }}
             />
           </FormSection>
-          <FormSection title="Horario de trabajo" description="Especifica los detalles del horario de trabajo así como la modalidad.">
+          <FormSection
+            title="Horario de trabajo"
+            description={tooltip.offer_form_schedule}
+          >
             <Select
               name="schedule"
               label="Horario"
@@ -172,7 +207,10 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
               }}
             />
           </FormSection>
-          <FormSection title="Limites de la oferta" description="Decide el número máximo de aspirantes que pueden postularse a la oferta, así como su fecha de expiración.">
+          <FormSection
+            title="Limites de la oferta"
+            description={tooltip.offer_form_limit}
+          >
             <Input
               type="number"
               name="limit"
@@ -199,7 +237,10 @@ export default function OfferForm({ offer, skills, categories, jobs, locations, 
               }}
             />
           </FormSection>
-          <FormButtons />
+          <FormButtons
+            link={backUrl}
+            method={method}
+          />
         </form>
       </FormLayout>
     </>

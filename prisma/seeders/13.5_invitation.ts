@@ -1,7 +1,7 @@
 import collect from '@/lib/utils/collection'
 import prisma from '../client'
 import numbers from '@/lib/utils/number'
-import { Status } from '@prisma/client'
+import { Interested, Status } from '@prisma/client'
 
 export default async function invitation() {
   const teams = await prisma.team.findMany({ select: { id: true } })
@@ -15,10 +15,13 @@ export default async function invitation() {
     const invitationsPerTeam = []
 
     for (let i = 0; i < invitationCount; i++) {
+      const interested = collect(Object.values(Interested)).random().first()
+
       invitationsPerTeam.push({
         personId: persons.random().first().id,
         teamId: team.id,
         status: i === 0 ? Status.ACCEPTED : status,
+        interested,
       })
     }
 

@@ -2,6 +2,7 @@ import PageTitle from '@/components/PageTitle'
 import FormLayout from '@/components/forms/FormLayout'
 import TeamForm from '@/components/teams/TeamForm'
 import { auth } from '@/lib/auth/pages'
+import { tooltip } from '@/lib/tooltip'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -36,9 +37,30 @@ export default async function UpdateTeamPage({ params: { id } }: PageContext) {
   const categories = await prisma.category.findMany()
   const persons = await prisma.person.findMany({
     where: {
-      NOT: {
-        id: userId,
-      },
+      AND: [
+        {
+          id: {
+            not: userId,
+          },
+        },
+        {
+          memberships: {
+            some: {
+              teamId: {
+                not: team.id,
+              },
+            },
+          },
+        },
+        {
+          invitations: {
+            none: {
+              id: undefined,
+              teamId: team.id,
+            },
+          },
+        },
+      ],
     },
   })
 
@@ -46,7 +68,7 @@ export default async function UpdateTeamPage({ params: { id } }: PageContext) {
     <>
       <PageTitle
         title="Actualizar equipo"
-        subtitle="Modifique la información que haya cambiado o desee complementar."
+        subtitle={tooltip.team_update}
         breadcrumbs={team.name}
       />
       <FormLayout

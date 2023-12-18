@@ -9,13 +9,13 @@ export const templates: NotificationsRecord = {
 
   'internship-accepted': ({ grade, internshipId, student }) => ({
     title: 'Registro de pasante ha sido aceptado.',
-    content: `${student} ha aceptado tu registro de pasante para la carrera de ${grade}.`,
+    content: `${student} ha aceptado tu postulación de pasante para la carrera de ${grade}.`,
     href: `/home/internships/${internshipId}`,
   }),
 
   'internship-rejected': ({ grade, internshipId, student }) => ({
     title: 'Registro de pasante ha sido rechazado.',
-    content: `${student} ha rechazado tu registro de pasante para la carrera de ${grade}.`,
+    content: `${student} ha rechazado tu postulación de pasante para la carrera de ${grade}.`,
     href: `/home/internships/${internshipId}`,
   }),
 

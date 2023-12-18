@@ -7,6 +7,8 @@ import { notFound } from 'next/navigation'
 import { notify } from '@/lib/notifications/notify'
 import { object } from 'zod'
 import { defaults } from '@/lib/validation/schemas/defaults'
+import { getTeamLeader } from '@/lib/utils/tables'
+import { Interested } from '@prisma/client'
 
 export async function POST(request: NextRequest) {
   let data
@@ -14,7 +16,7 @@ export async function POST(request: NextRequest) {
     data = await request.json()
     const parsed = object({
       teamId: defaults.id,
-      projectId: defaults.id,
+      projectId: defaults.id.optional(),
     }).parse(data)
     const { id: userId, name, type } = await auth.user(request)
 
@@ -24,13 +26,11 @@ export async function POST(request: NextRequest) {
 
     const team = await prisma.team.findFirst({
       where: { id: parsed.teamId },
-      select: {
-        id: true,
-        name: true,
+      include: {
         leader: {
-          select: {
-            companyId: true,
-            personId: true,
+          include: {
+            company: true,
+            person: true,
           },
         },
       },
@@ -40,11 +40,15 @@ export async function POST(request: NextRequest) {
       notFound()
     }
 
+    const leader = getTeamLeader(team)
+    const interested = leader.id === userId ? Interested.COMPANY : Interested.PERSON
+
     const { projectId, ...rest } = parsed
     await prisma.invitation.create({
       data: {
         ...rest,
         personId: userId,
+        interested,
       },
     })
 
@@ -73,6 +77,10 @@ export async function POST(request: NextRequest) {
       team: team.name,
       teamId: team.id,
     })
+
+    if (projectId == null) {
+      return NextResponse.redirect(url(`/home/teams/${parsed.teamId}?alert=invitation_sent`))
+    }
 
     return NextResponse.redirect(url(`/home/projects/${projectId}?alert=invitation_sent`))
   } catch (error) {

@@ -20,6 +20,7 @@ interface Props {
   offerLimit?: number
   expiresAt?: number
   code?: string
+  tag?: string
 }
 
 const stackOrder = ['z-40', 'z-30', 'z-20']
@@ -36,6 +37,7 @@ export default function Card({
   expiresAt,
   code,
   image,
+  tag,
 }: Props) {
   const expiresAtMessage = () => {
     if (expiresAt != null) {
@@ -72,11 +74,13 @@ export default function Card({
         </div>
       )}
       <div className="card card-compact bg-base-100 rounded-lg shadow-lg">
-        <div className="flex flex-col gap-3 p-4 pt-1">
+        <div
+          className={clsx('flex flex-col gap-3 p-4', image != null && 'pt-1')}
+        >
           {/* Ofertas */}
           <div className="border-b border-neutral-400 pb-2">
             {(expiresAt != null || offerLimit != null) && (
-              <div className="flex justify-between items-center gap-1 text-xs text-neutral-600 font-semibold">
+              <div className="mb-2 flex justify-between items-center gap-1 text-xs text-neutral-600 font-semibold">
                 {expiresAt != null && (
                   <div className="inline-flex">
                     <FireIcon className="h-4 w-4" />
@@ -89,8 +93,17 @@ export default function Card({
             <h3 className="line-clamp-1 text-lg font-bold sm:text-xl">
               {title}
             </h3>
-            {code != null && (
-              <small className="font-semibold text-neutral-600">({code})</small>
+            {(code != null || tag != null) && (
+              <div className="flex justify-between">
+                {code != null && (
+                  <small className="font-semibold text-neutral-600">
+                    ({code})
+                  </small>
+                )}
+                {tag != null && (
+                  <small className="font-semibold text-secondary">{tag}</small>
+                )}
+              </div>
             )}
             {categories !== undefined && categories?.length > 0 && (
               <InlineList

@@ -2,7 +2,8 @@ import PageTitle from '@/components/PageTitle'
 import Pagination from '@/components/Pagination'
 import PageContent from '@/components/invitations/PageContent'
 import { auth } from '@/lib/auth/pages'
-import { getInvitations } from '@/lib/data-fetching/invitation'
+import { getTeamInvitations } from '@/lib/data-fetching/invitation'
+import { tooltip } from '@/lib/tooltip'
 import { type InvitationData, type InvitationsTab } from '@/lib/types'
 import getPaginationProps from '@/lib/utils/pagination'
 import prisma from '@/prisma/client'
@@ -71,7 +72,7 @@ export default async function InvitationsPage({
   let invitations: InvitationData[] = []
 
   if (filter === 'pending') {
-    invitations = await getInvitations({
+    invitations = await getTeamInvitations({
       where: FILTER_QUERIES.pending,
       take,
       skip,
@@ -79,7 +80,7 @@ export default async function InvitationsPage({
   }
 
   if (filter === 'rejected') {
-    invitations = await getInvitations({
+    invitations = await getTeamInvitations({
       where: FILTER_QUERIES.rejected,
       take,
       skip,
@@ -87,7 +88,7 @@ export default async function InvitationsPage({
   }
 
   if (filter === 'accepted') {
-    invitations = await getInvitations({
+    invitations = await getTeamInvitations({
       where: FILTER_QUERIES.accepted,
       take,
       skip,
@@ -99,6 +100,7 @@ export default async function InvitationsPage({
     accepted: 'Aceptadas',
     rejected: 'Rechazadas',
   }
+
   const links = [
     {
       title: 'pending',
@@ -122,7 +124,10 @@ export default async function InvitationsPage({
 
   return (
     <>
-      <PageTitle />
+      <PageTitle
+        title="Invitaciones"
+        subtitle={tooltip.invitation}
+      />
       <PageContent
         dropdownLabel={`Filtrado por - ${
           INVITATIONS_TAB_TRANSLATION[filter as InvitationsTab]

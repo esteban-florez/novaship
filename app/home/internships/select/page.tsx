@@ -9,8 +9,11 @@ import Pagination from '@/components/Pagination'
 import EmptyContent from '@/components/EmptyContent'
 import PersonsList from './PersonsList'
 import { param } from '@/lib/utils/search-params'
+import { tooltip } from '@/lib/tooltip'
 
-export default async function SelectInternPage({ searchParams }: SearchParamsProps) {
+export default async function SelectInternPage({
+  searchParams,
+}: SearchParamsProps) {
   const { type } = await auth.user()
   if (type !== 'INSTITUTE') {
     notFound()
@@ -28,7 +31,9 @@ export default async function SelectInternPage({ searchParams }: SearchParamsPro
   const totalRecords = await prisma.person.count({ where })
 
   const { nextPage, skip, take } = getPaginationProps({
-    totalRecords, searchParams, pageSize: 10,
+    totalRecords,
+    searchParams,
+    pageSize: 10,
   })
 
   const persons = await prisma.person.findMany({
@@ -47,7 +52,7 @@ export default async function SelectInternPage({ searchParams }: SearchParamsPro
     <>
       <PageTitle
         title="Inscribir pasante"
-        subtitle="Registra un nuevo estudiante como pasante de tu institución."
+        subtitle={tooltip.internship_select}
       />
       <section className="flex flex-col gap-2 py-1">
         <div className="bg-white p-2 md:px-4 lg:flex lg:gap-2">
@@ -66,9 +71,7 @@ export default async function SelectInternPage({ searchParams }: SearchParamsPro
               <EmptyContent title="No hemos encontrado resultados..." />
               )}
         </div>
-        <Pagination
-          nextPage={nextPage}
-        />
+        <Pagination nextPage={nextPage} />
       </section>
     </>
   )

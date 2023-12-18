@@ -12,7 +12,7 @@ const actions = {
   accept: {
     icon: CheckIcon,
     status: 'ACCEPTED',
-    color: 'btn-success',
+    color: 'btn-primary',
     text: 'Aceptar',
   },
   reject: {
@@ -31,10 +31,18 @@ export default function UpdateStatus({ internshipId, action }: Props) {
   })
 
   return (
-    <form method="POST" action={`/api/internships/${internshipId}/status`} onSubmit={handleSubmit}>
+    <form
+      method="POST"
+      action={`/api/internships/${internshipId}/status`}
+      onSubmit={handleSubmit}
+    >
       {alert}
       {serverErrors}
-      <button type="submit" className={clsx('btn', color)} disabled={loading}>
+      <button
+        type="submit"
+        className={clsx('btn', color)}
+        disabled={loading}
+      >
         <Icon className="h-5 w-5" />
         {text}
       </button>

@@ -20,6 +20,7 @@ import HoursByMonthChart from './HoursByMonthChart'
 import BarGraphSkeleton from '@/components/loaders/BarGraphSkeleton'
 import SkeletonTest from '@/components/loaders/SkeletonTest'
 import PieGraphSkeleton from '@/components/loaders/PieGraphSkeleton'
+import { tooltip } from '@/lib/tooltip'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -62,11 +63,85 @@ export default async function InternshipDetailsPage({
     (recruitment) => recruitment.status === 'ACCEPTED'
   )
 
+  const renderedContent = () => {
+    if (company === null) {
+      return (
+        <div className="flex flex-col -space-x-2">
+          <Suspense
+            fallback={
+              <SkeletonTest>
+                <PieGraphSkeleton />
+              </SkeletonTest>
+            }
+          >
+            <AvailableVacantsChart internship={internship} />
+          </Suspense>
+          <Suspense
+            fallback={
+              <SkeletonTest>
+                <PieGraphSkeleton />
+              </SkeletonTest>
+            }
+          >
+            <RecruitmentsByInterestedChart
+              recruitments={recruitments}
+              userType={type}
+            />
+          </Suspense>
+        </div>
+      )
+    }
+
+    if (type !== 'COMPANY') {
+      return (
+        <>
+          <h3 className="font-bold tracking-tighter text-2xl">
+            Empresa de la pasantía
+          </h3>
+          <div className="bg-neutral-100 p-4 pt-2 rounded-lg mt-4">
+            <UserCard
+              // TODO -> profile link
+              // href={`/home/companies/${company.id}`}
+              subtitle={company.location.title}
+              user={company}
+            />
+            <p className="mt-2">{company.description}</p>
+          </div>
+        </>
+      )
+    }
+
+    return (
+      <>
+        <Suspense
+          fallback={
+            <SkeletonTest>
+              <BarGraphSkeleton />
+            </SkeletonTest>
+          }
+        >
+          <HoursByMonthChart progresses={recruitment?.progresses} />
+        </Suspense>
+        <div className="divider divider-vertical" />
+        <h3 className="font-bold tracking-tighter text-2xl">
+          Horas completadas
+        </h3>
+        <CompletedHoursText userType={type} />
+        <div className="bg-neutral-100 p-4 rounded-lg mt-2">
+          <InternshipProgress
+            internship={internship}
+            stage={stage}
+          />
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <PageTitle
         title="Detalle de pasantía"
-        subtitle="Aquí puedes ver todos los datos de la pasantía."
+        subtitle={tooltip.internship_id}
         breadcrumbs={`${person.name} - ${grade.title}`}
       />
       <TwoColumnsLayout>
@@ -95,7 +170,10 @@ export default async function InternshipDetailsPage({
                 <h3 className="text-3xl font-bold text-primary tracking-tighter -mb-2">
                   {grade.title}
                 </h3>
-                <InternshipData internship={internship} recruitment={recruitment} />
+                <InternshipData
+                  internship={internship}
+                  recruitment={recruitment}
+                />
                 <InternshipActions
                   className="lg:flex-row"
                   minDate={recruitment?.startsAt ?? null}
@@ -110,79 +188,7 @@ export default async function InternshipDetailsPage({
           <div className="divider divider-vertical" />
           <InternshipStage stage={stage} />
         </Column>
-        <Column>
-          {company === null
-            ? (
-              <>
-                <div className="flex flex-col -space-x-2">
-                  <Suspense
-                    fallback={
-                      <SkeletonTest>
-                        <PieGraphSkeleton />
-                      </SkeletonTest>
-                  }
-                  >
-                    <AvailableVacantsChart internship={internship} />
-                  </Suspense>
-                  <Suspense
-                    fallback={
-                      <SkeletonTest>
-                        <PieGraphSkeleton />
-                      </SkeletonTest>
-                  }
-                  >
-                    <RecruitmentsByInterestedChart
-                      recruitments={recruitments}
-                      userType={type}
-                    />
-                  </Suspense>
-                </div>
-              </>
-              )
-            : (
-              <>
-                {type !== 'COMPANY'
-                  ? (
-                    <>
-                      <h3 className="font-bold tracking-tighter text-2xl">
-                        Empresa de la pasantía
-                      </h3>
-                      <div className="bg-neutral-100 p-4 pt-2 rounded-lg mt-4">
-                        <UserCard
-                          // TODO -> profile link
-                          // href={`/home/companies/${company.id}`}
-                          subtitle={company.location.title}
-                          user={company}
-                        />
-                        <p className="mt-2">{company.description}</p>
-                      </div>
-                    </>
-                    )
-                  : (
-                    <Suspense
-                      fallback={
-                        <SkeletonTest>
-                          <BarGraphSkeleton />
-                        </SkeletonTest>
-                  }
-                    >
-                      <HoursByMonthChart progresses={recruitment?.progresses} />
-                    </Suspense>
-                    )}
-                <div className="divider divider-vertical" />
-                <h3 className="font-bold tracking-tighter text-2xl">
-                  Horas completadas
-                </h3>
-                <CompletedHoursText userType={type} />
-                <div className="bg-neutral-100 p-4 rounded-lg mt-2">
-                  <InternshipProgress
-                    internship={internship}
-                    stage={stage}
-                  />
-                </div>
-              </>
-              )}
-        </Column>
+        <Column>{renderedContent()}</Column>
       </TwoColumnsLayout>
     </>
   )

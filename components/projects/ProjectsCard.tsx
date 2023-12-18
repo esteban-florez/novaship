@@ -2,13 +2,15 @@ import { type ProjectsFull } from '@/lib/types'
 import EmptyContent from '../EmptyContent'
 import Card from '../Card'
 import { includesValue } from '@/lib/utils/text'
+import { getProjectResponsable } from '@/lib/utils/tables'
 
 interface Props {
+  userId: string
   search: string
   projects: ProjectsFull[]
 }
 
-export default function Projects({ search, projects }: Props) {
+export default function Projects({ userId, search, projects }: Props) {
   if (projects.length === 0) {
     return (
       <EmptyContent
@@ -28,6 +30,8 @@ export default function Projects({ search, projects }: Props) {
           includesValue(project.title, search) ||
           includesValue(project.description, search)
         ) {
+          const responsable = getProjectResponsable(project, userId)
+
           return (
             <div
               key={project.id}
@@ -41,6 +45,7 @@ export default function Projects({ search, projects }: Props) {
                   link={`/home/projects/${project.id}`}
                   code={project.code}
                   image={project.image}
+                  tag={responsable}
                 />
               </div>
             </div>

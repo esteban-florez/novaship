@@ -12,6 +12,7 @@ import { type Membership, type Person, TaskStatus } from '@prisma/client'
 import { usePathname } from 'next/navigation'
 import { taskStatuses } from '@/lib/translations'
 import { type TasksWithRelationship } from '@/lib/types'
+import { tooltip } from '@/lib/tooltip'
 
 interface Props extends FormProps {
   projectId: string
@@ -84,7 +85,7 @@ export default function TaskForm({
       {alert}
       <FormSection
         title="Detalles"
-        description="Asigne una tarea y una descripción de la misma para avanzar en el proyecto."
+        description={tooltip.task_form_basic_data}
       >
         <Input
           name="title"
@@ -120,7 +121,7 @@ export default function TaskForm({
       {memberships != null && (
         <FormSection
           title="Participantes"
-          description="Designe a las personas que completerán la tarea."
+          description={tooltip.task_form_members}
         >
           <Select
             name="responsable"
@@ -155,7 +156,7 @@ export default function TaskForm({
             query,
           },
         }}
-        label={method === 'PUT' ? 'Actualizar' : 'Registrar'}
+        method={method}
       />
     </form>
   )

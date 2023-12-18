@@ -88,9 +88,7 @@ export default function ProjectDetails({
             ? (
               <Link href={`/home/teams/${team.id}`}>
                 <p className="font-bold text-primary">
-                  {userInTeam
-                    ? `Su equipo asignado (${team.name})`
-                    : `Equipo encargado (${team.name})`}
+                  Equipo encargado ({team.name})
                 </p>
               </Link>
               )
@@ -98,7 +96,7 @@ export default function ProjectDetails({
               <p className="font-bold text-primary">
                 {userInTeam
                   ? 'Usted lleva este proyecto solo'
-                  : 'Este proyecto es un proyecto personal'}
+                  : 'Este proyecto es personal'}
               </p>
               )}
           <p className="line-clamp-6 py-3">{description}</p>

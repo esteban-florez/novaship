@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation'
 import prisma from '@/prisma/client'
 import { getSearchAndFilter } from '@/lib/utils/search-params'
 import { type Metadata } from 'next'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata: Metadata = {
   title: 'Mis pasantías',
@@ -27,7 +28,7 @@ export default async function MyInternshipsPage({
     <>
       <PageTitle
         title="Mis pasantías"
-        subtitle="Aqui puedes ver todas tus pasantías."
+        subtitle={tooltip.internship}
         breadcrumbs={name}
       />
       <FilterBar

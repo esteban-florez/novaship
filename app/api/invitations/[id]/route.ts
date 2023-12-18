@@ -12,7 +12,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id: userId, name, type } = await auth.user(request)
+    const { name, type } = await auth.user(request)
 
     if (type !== 'PERSON' && type !== 'COMPANY') {
       notFound()
@@ -37,43 +37,25 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
-    let authUser = {
-      id: '',
-    }
-    if (type === 'COMPANY') {
-      authUser = await prisma.authUser.findFirstOrThrow({
-        where: {
-          person: {
-            id: invitation.personId,
+    const authUser = await prisma.authUser.findFirstOrThrow({
+      where: {
+        OR: [
+          {
+            person: {
+              id: invitation.team.leader.personId ?? '',
+            },
           },
-        },
-        select: {
-          id: true,
-        },
-      })
-    }
-
-    if (type === 'PERSON') {
-      authUser = await prisma.authUser.findFirstOrThrow({
-        where: {
-          OR: [
-            {
-              person: {
-                id: invitation.team.leader.personId ?? '',
-              },
+          {
+            company: {
+              id: invitation.team.leader.companyId ?? '',
             },
-            {
-              company: {
-                id: invitation.team.leader.companyId ?? '',
-              },
-            },
-          ],
-        },
-        select: {
-          id: true,
-        },
-      })
-    }
+          },
+        ],
+      },
+      select: {
+        id: true,
+      },
+    })
 
     if (parsed.status === 'PENDING') {
       notFound()
@@ -86,12 +68,11 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
-    const notification = parsed.status === 'ACCEPTED'
-      ? 'invitation-accepted'
-      : 'invitation-rejected'
-    const redirect = parsed.status === 'ACCEPTED'
-      ? `/home/teams/${invitation.team.id}?alert=invitation_accepted`
-      : '/home/invitations?alert=invitation_rejected'
+    const notification = parsed.status === 'ACCEPTED' ? 'invitation-accepted' : 'invitation-rejected'
+    const redirect =
+      parsed.status === 'ACCEPTED'
+        ? `/home/teams/${invitation.team.id}?alert=invitation_accepted`
+        : '/home/invitations?alert=invitation_rejected'
 
     await notify(notification, authUser.id, {
       user: name,
@@ -103,7 +84,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       await prisma.membership.create({
         data: {
           invitationId: id,
-          personId: type === 'COMPANY' ? invitation.personId : userId,
+          personId: invitation.personId,
           teamId: invitation.team.id,
         },
       })

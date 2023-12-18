@@ -14,6 +14,7 @@ import { PlusIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import FilterBar from '@/components/FilterBar'
 import { type Prisma } from '@prisma/client'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata = {
   title: 'Reclutar pasantes',
@@ -39,7 +40,10 @@ export default async function VacantsPage({
 
   const totalRecords = await prisma.vacant.count({ where })
 
-  const { nextPage, skip, take } = getPaginationProps({ totalRecords, searchParams })
+  const { nextPage, skip, take } = getPaginationProps({
+    totalRecords,
+    searchParams,
+  })
 
   const vacants = await getVacants({ where, skip, take })
   const skills = await prisma.skill.findMany()
@@ -48,20 +52,29 @@ export default async function VacantsPage({
     <>
       <PageTitle
         title="Cupos publicados"
-        subtitle="Aquí puedes ver todos los cupos para pasantes que has publicado."
+        subtitle={tooltip.internship_company_vacants}
         breadcrumbs={name}
       >
-        <Link href="/home/internships/vacants/create" className="btn btn-primary">
+        <Link
+          href="/home/internships/vacants/create"
+          className="btn btn-primary"
+        >
           <PlusIcon className="h-5 w-5" />
           Añadir cupo
         </Link>
       </PageTitle>
-      <FilterBar filterLabel="habilidades" filterOptions={skills} />
+      <FilterBar
+        filterLabel="habilidades"
+        filterOptions={skills}
+      />
       {vacants.length > 0
         ? (
           <ThreeGrid>
-            {vacants.map(vacant => (
-              <VacantCard key={vacant.id} vacant={vacant} />
+            {vacants.map((vacant) => (
+              <VacantCard
+                key={vacant.id}
+                vacant={vacant}
+              />
             ))}
           </ThreeGrid>
           )
@@ -74,9 +87,7 @@ export default async function VacantsPage({
             }}
           />
           )}
-      <Pagination
-        nextPage={nextPage}
-      />
+      <Pagination nextPage={nextPage} />
     </>
   )
 }

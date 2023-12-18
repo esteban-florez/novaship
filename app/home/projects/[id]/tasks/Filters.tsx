@@ -9,7 +9,9 @@ type Status = 'pending' | 'done' | 'progress' | 'review' | ''
 
 export default function Filters() {
   const [inputFocus, setInputFocus] = useState(false)
-  const inputRef = useClickOutside<HTMLInputElement>(() => { setInputFocus(false) })
+  const inputRef = useClickOutside<HTMLInputElement>(() => {
+    setInputFocus(false)
+  })
   const [search, setSearch] = useState('')
   const router = useRouter()
   const pathname = usePathname()
@@ -61,7 +63,7 @@ export default function Filters() {
 
   return (
     <>
-      <div className="absolute sticky left-0 top-0 right-0">
+      <div className="sticky left-0 top-0 right-0">
         <div className="bg-white rounded-md border border-zinc-300">
           <div className="w-full">
             <input
@@ -71,7 +73,9 @@ export default function Filters() {
               placeholder="Buscar..."
               value={search}
               onInput={handleSearch}
-              onClick={() => { setInputFocus(true) }}
+              onClick={() => {
+                setInputFocus(true)
+              }}
             />
           </div>
           <div className="-mt-3 p-2 px-4 border-t border-zinc-300">
@@ -92,7 +96,9 @@ export default function Filters() {
               Filtrar por estado
             </h6>
             <span
-              onClick={() => { handleFilterOption('pending') }}
+              onClick={() => {
+                handleFilterOption('pending')
+              }}
               className="cursor-pointer inline-flex items-center gap-1"
             >
               <span
@@ -104,7 +110,9 @@ export default function Filters() {
               <small>Por empezar</small>
             </span>
             <span
-              onClick={() => { handleFilterOption('done') }}
+              onClick={() => {
+                handleFilterOption('done')
+              }}
               className="cursor-pointer inline-flex items-center gap-1"
             >
               <span
@@ -116,7 +124,9 @@ export default function Filters() {
               <small>Completadas</small>
             </span>
             <span
-              onClick={() => { handleFilterOption('progress') }}
+              onClick={() => {
+                handleFilterOption('progress')
+              }}
               className="cursor-pointer inline-flex items-center gap-1"
             >
               <span
@@ -128,7 +138,9 @@ export default function Filters() {
               <small>En progreso</small>
             </span>
             <span
-              onClick={() => { handleFilterOption('review') }}
+              onClick={() => {
+                handleFilterOption('review')
+              }}
               className="cursor-pointer inline-flex items-center gap-1"
             >
               <span
@@ -140,7 +152,9 @@ export default function Filters() {
               <small>En revisión</small>
             </span>
             <span
-              onClick={() => { handleFilterOption('') }}
+              onClick={() => {
+                handleFilterOption('')
+              }}
               className="cursor-pointer inline-flex items-center gap-1"
             >
               <span

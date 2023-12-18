@@ -5,12 +5,15 @@ import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/pages'
 import { getVacant } from '@/lib/data-fetching/vacants'
 import { notFound } from 'next/navigation'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata = {
   title: 'Editar cupo',
 }
 
-export default async function UpdateVacantPage({ params: { id } }: PageContext) {
+export default async function UpdateVacantPage({
+  params: { id },
+}: PageContext) {
   const { id: userId } = await auth.user()
   const vacant = await getVacant(id)
 
@@ -27,15 +30,19 @@ export default async function UpdateVacantPage({ params: { id } }: PageContext) 
     <>
       <PageTitle
         title="Publicar cupos"
-        subtitle="Registra un nuevo cupo para pasantes en tu empresa."
+        subtitle={tooltip.internship_vacant_update}
       />
-      <FormLayout title="Registrar nuevo cupo" all>
+      <FormLayout
+        title="Registrar nuevo cupo"
+        all
+      >
         <VacantForm
           categories={categories}
           locations={locations}
           grades={grades}
           skills={skills}
           vacant={vacant}
+          url={`/home/internships/vacants/${id}`}
         />
       </FormLayout>
     </>

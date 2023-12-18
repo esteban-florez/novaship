@@ -21,6 +21,7 @@ import { useState } from 'react'
 import { UserIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import ImageInput from '../forms/inputs/ImageInput'
 import { visibilities } from '@/lib/translations'
+import { tooltip } from '@/lib/tooltip'
 
 interface Props extends FormProps {
   categories: OptionCategory[]
@@ -64,7 +65,7 @@ export default function ProjectForm({
     <>
       <PageTitle
         title="Registrar nuevo proyecto"
-        subtitle="Rellena los datos para crear un nuevo proyecto o actualizar uno existente."
+        subtitle={tooltip.project_create}
         breadcrumbs={project?.title}
       />
       <FormLayout title="Información de proyecto">
@@ -78,7 +79,7 @@ export default function ProjectForm({
           <section className="flex flex-col w-full gap-x-3 p-4">
             <FormSection
               title="Detalles"
-              description="Asigne un título, descripción y categorias que expliquen de que trata el proyecto para tener una mejor idea del mismo."
+              description={tooltip.project_form_basic_data}
             >
               <Input
                 name="title"
@@ -126,7 +127,7 @@ export default function ProjectForm({
             </FormSection>
             <FormSection
               title="Equipos de trabajo"
-              description="Seleccione como desea trabajar en este proyecto."
+              description={tooltip.project_form_teamwork}
             >
               {!(userType === 'COMPANY' || initialTeamwork === 'group') && (
                 <div className="mt-4 flex w-full flex-col justify-between gap-3 sm:flex-row">
@@ -177,7 +178,7 @@ export default function ProjectForm({
             </FormSection>
             <FormSection
               title="Imagen del proyecto"
-              description="Sube una foto que represente la esencia de tu proyecto"
+              description={tooltip.project_form_image}
             >
               <ImageInput
                 name="image"
@@ -189,8 +190,8 @@ export default function ProjectForm({
             </FormSection>
           </section>
           <FormButtons
-            label={method === 'PUT' ? 'Actualizar' : 'Registrar'}
-            url={backUrl}
+            method={method}
+            link={backUrl}
             disableSubmit={teamwork === null || loading}
           />
         </form>

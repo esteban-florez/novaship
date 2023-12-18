@@ -3,17 +3,28 @@ import PageTitle from '@/components/PageTitle'
 import Pagination from '@/components/Pagination'
 import { auth } from '@/lib/auth/pages'
 import { getNotifications } from '@/lib/notifications/get'
+import { tooltip } from '@/lib/tooltip'
 import { diffForHumans } from '@/lib/utils/date'
 import getPaginationProps from '@/lib/utils/pagination'
 import prisma from '@/prisma/client'
+import { type Metadata } from 'next'
 import Link from 'next/link'
 
-export default async function NotificationsPage({ searchParams }: SearchParamsProps) {
+export const metadata: Metadata = {
+  title: 'Notificaciones',
+}
+
+export default async function NotificationsPage({
+  searchParams,
+}: SearchParamsProps) {
   const { authUserId } = await auth.user()
 
-  const totalRecords = await prisma.notification.count({ where: { authUserId } })
+  const totalRecords = await prisma.notification.count({
+    where: { authUserId },
+  })
   const { nextPage, skip, take } = getPaginationProps({
-    totalRecords, searchParams,
+    totalRecords,
+    searchParams,
   })
 
   const notifs = await getNotifications(authUserId, take, skip)
@@ -22,13 +33,16 @@ export default async function NotificationsPage({ searchParams }: SearchParamsPr
     <>
       <PageTitle
         title="Notificaciones"
-        subtitle="Aquí puedes ver el historial de todas tus notificaciones."
+        subtitle={tooltip.notification}
       />
       {notifs.length > 0
         ? (
           <section className="mx-auto grid lg:grid-cols-2 p-4 gap-4">
-            {notifs.map(notif => (
-              <article key={notif.id} className="bg-white p-4 rounded-lg shadow-md">
+            {notifs.map((notif) => (
+              <article
+                key={notif.id}
+                className="bg-white p-4 rounded-lg shadow-md"
+              >
                 <h3 className="font-bold text-2xl text-primary tracking-tighter">
                   {notif.display.title}
                 </h3>
@@ -37,8 +51,10 @@ export default async function NotificationsPage({ searchParams }: SearchParamsPr
                 </p>
                 <p>{notif.display.content}</p>
                 <Link
-                  className="btn btn-primary mt-2" href={notif.display.href}
-                >Ver más
+                  className="btn btn-primary mt-2"
+                  href={notif.display.href}
+                >
+                  Ver más
                 </Link>
               </article>
             ))}
@@ -46,9 +62,7 @@ export default async function NotificationsPage({ searchParams }: SearchParamsPr
           )
         : (
           <div className="pt-20">
-            <EmptyContent
-              title="No tienes notificaciones."
-            />
+            <EmptyContent title="No tienes notificaciones." />
           </div>
           )}
       <Pagination nextPage={nextPage} />

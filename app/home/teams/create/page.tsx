@@ -2,6 +2,7 @@ import PageTitle from '@/components/PageTitle'
 import FormLayout from '@/components/forms/FormLayout'
 import TeamForm from '@/components/teams/TeamForm'
 import { auth } from '@/lib/auth/pages'
+import { tooltip } from '@/lib/tooltip'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 
@@ -28,7 +29,7 @@ export default async function CreateTeamPage() {
     <>
       <PageTitle
         title="Registrar nuevo equipo"
-        subtitle="Rellena los datos para crear un nuevo equipo, e invita a los demás usuarios a formar parte de él."
+        subtitle={tooltip.team_create}
       />
       <FormLayout title="Información del equipo">
         <TeamForm

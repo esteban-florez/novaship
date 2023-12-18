@@ -14,6 +14,7 @@ import Pagination from '@/components/Pagination'
 import Progress from './Progress'
 import { PDFProvider } from './PDFProvider'
 import DownloadButton from './DownloadButton'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata = {
   title: 'Historial de progreso',
@@ -48,7 +49,11 @@ export default async function InternshipProgressPage({
 
   const totalRecords = await prisma.progress.count({ where })
 
-  const { nextPage, skip, take } = getPaginationProps({ totalRecords, searchParams, pageSize: 4 })
+  const { nextPage, skip, take } = getPaginationProps({
+    totalRecords,
+    searchParams,
+    pageSize: 4,
+  })
 
   const progresses = await prisma.progress.findMany({
     where,
@@ -65,7 +70,7 @@ export default async function InternshipProgressPage({
     <PDFProvider>
       <PageTitle
         title="Historial de progreso"
-        subtitle="Aquí puedes ver el historial de actualizaciones de progreso de la pasantía."
+        subtitle={tooltip.internship_progress}
         breadcrumbs={`${person.name} - ${grade.title}`}
       >
         {type === 'COMPANY' && (
@@ -81,8 +86,12 @@ export default async function InternshipProgressPage({
         <div className="w-2/3">
           <ProgressHistory>
             <ol className="relative border-s space-y-8">
-              {progresses.map(progress => (
-                <Progress key={progress.id} progress={progress} withActions={type === 'COMPANY'} />
+              {progresses.map((progress) => (
+                <Progress
+                  key={progress.id}
+                  progress={progress}
+                  withActions={type === 'COMPANY'}
+                />
               ))}
             </ol>
           </ProgressHistory>
@@ -90,7 +99,10 @@ export default async function InternshipProgressPage({
         <div className="w-1/3">
           {type !== 'PERSON'
             ? (
-              <InternshipCard internship={internship} withProgressBar />
+              <InternshipCard
+                internship={internship}
+                withProgressBar
+              />
               )
             : (
               <PersonInternshipCard internship={internship} />

@@ -14,9 +14,7 @@
 - Signup con Google.
 - Mecanismo para destacar ofertas y equipo mediante suscripción.
 - Mantener los filtros al usar la api.
-- Validación: no puede aplicarse a un proyecto que sea personal.
 - Hacer un nuevo componente modal.
-- Revisar las dimensiones del logo en responsive.
 - Logs middleware y model.
 - Middleware para notificaciones.
 - Loading para pages/id.
@@ -24,16 +22,17 @@
 - Refactor card.
 - Project image.
 - PDF header, footer, styles, template en general.
+- Añadir areas de conocimiento desde el registro
+- Encontrar alguna manera de ocultar el drawer en desktop (?).
+- Buscar directamente en la db en los search inputs.
+- Cambiar Interested en Invitation por PERSON | LEADER.
+- Remover todos los elementos dentro del ProjectForm y solo dejar el form.
+- Projects/id/tasks content column Loading.
 
 # Pending
-- Drawer.
+
 - Filtros para estadisticas.
-- Pagina dashboard.
 - Perfil y perfiles.
-- Corregir tags #FIX.
-- Cambiar GoBackBtn por Links en forms.
-- Validar en las rutas de proyecto que el usuario sea lider, miembro o usuario con permisos para registrar.
-- Añadir filter a los schema en los tags #SCHEMA
 
 # Future
 
@@ -42,5 +41,13 @@
 # Graficas
 
 - Admin
-  - Migrar minicards a tabla (?)
   - Mostrar grafico de barras (registro por meses) del card seleccionado, como modal o pagina independiente (?)
+
+# TAGS
+
+- TODO.
+- DRY.
+- INFO.
+- #FIX.
+- PENDING.
+- TEMPORAL.

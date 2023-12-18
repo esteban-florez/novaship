@@ -13,6 +13,7 @@ import Pagination from '@/components/Pagination'
 import EmptyContent from '@/components/EmptyContent'
 import VacantCard from '@/components/vacants/VacantCard'
 import TitleContent from './TitleContent'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata = {
   title: 'Buscar cupos',
@@ -60,7 +61,7 @@ export default async function RecruitPage({
     <>
       <PageTitle
         title="Buscar cupos"
-        subtitle="Selecciona una de tus pasantías en curso, y busca un cupo para tu carrera disponible en una empresa."
+        subtitle={tooltip.internship_apply_id}
         breadcrumbs={`${grade.title} - ${person.name}`}
       >
         <TitleContent
@@ -77,7 +78,7 @@ export default async function RecruitPage({
       {vacants.length > 0
         ? (
           <div className="grid gap-4 p-4 lg:grid-cols-2">
-            {vacants.map(vacant => (
+            {vacants.map((vacant) => (
               <VacantCard
                 internshipId={internship.id}
                 key={vacant.id}
@@ -89,12 +90,11 @@ export default async function RecruitPage({
           )
         : (
           <EmptyContent>
-            No hemos encontrado ningún cupo de pasantía para la carrera que buscas.
+            No hemos encontrado ningún cupo de pasantía para la carrera que
+            buscas.
           </EmptyContent>
           )}
-      <Pagination
-        nextPage={nextPage}
-      />
+      <Pagination nextPage={nextPage} />
     </>
   )
 }

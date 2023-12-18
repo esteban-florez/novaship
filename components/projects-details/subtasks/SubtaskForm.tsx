@@ -12,6 +12,7 @@ import SelectMultiple from '@/components/forms/inputs/select-multiple/SelectMult
 import FormButtons from '@/components/forms/FormButtons'
 import { usePathname } from 'next/navigation'
 import { type SubtasksWithRelation } from '@/lib/types'
+import { tooltip } from '@/lib/tooltip'
 
 interface Props extends FormProps {
   taskId: string
@@ -84,7 +85,7 @@ export default function SubtaskForm({
       >
         <FormSection
           title={method === 'PUT' ? 'Actualizar subtarea' : 'Nueva subtarea'}
-          description="Describa la subtarea u objetivo para la tarea."
+          description={tooltip.subtask_form_basic_data}
           tooltipOrientation="tooltip-bottom"
         >
           <Input
@@ -123,7 +124,7 @@ export default function SubtaskForm({
         {memberships != null && (
           <FormSection
             title="Participantes"
-            description="Designe a las personas que completerán la subtarea."
+            description={tooltip.subtask_form_members}
           >
             <SelectMultiple
               name="members"
@@ -141,7 +142,7 @@ export default function SubtaskForm({
         )}
         <FormButtons
           disableSubmit={loading}
-          label={method === 'PUT' ? 'Actualizar' : 'Registrar'}
+          method={method}
           link={{
             href: {
               pathname,
