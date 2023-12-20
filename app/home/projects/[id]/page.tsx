@@ -21,6 +21,7 @@ import { PlusIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import EmptyContent from '@/components/EmptyContent'
 import { getInvitationToTeam } from '@/lib/data-fetching/invitation'
+import { taskStatuses } from '@/lib/translations'
 
 export const metadata: Metadata = {
   title: 'Detalles de proyecto',
@@ -76,7 +77,7 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
   })
 
   const tasksProgressData: ChartData<'pie'> = {
-    labels: ['Por empezar', 'Completadas', 'En revisión', 'En progreso'],
+    labels: Object.values(taskStatuses),
     datasets: [
       {
         label: 'Porcentaje',
@@ -138,7 +139,7 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
                 {!checkEmpty(tasksStatus.pending) && (
                   <div className="col-span-full sm:col-span-1">
                     <TaskContainer
-                      title="Pendientes"
+                      title="Por hacer"
                       tasks={tasksStatus.pending}
                       filter="pending"
                       url={`/home/projects/${id}/tasks`}
@@ -158,7 +159,7 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
                 {!checkEmpty(tasksStatus.done) && (
                   <div className="col-span-full sm:col-span-1">
                     <TaskContainer
-                      title="Completas"
+                      title="Hecho"
                       tasks={tasksStatus.done}
                       filter="done"
                       url={`/home/projects/${id}/tasks`}

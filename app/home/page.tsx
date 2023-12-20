@@ -29,6 +29,7 @@ import {
 } from '@/lib/data-fetching/home/user'
 import { getNotifications } from '@/lib/notifications/get'
 import getQuickAccessItems from '@/lib/quickAcessItems'
+import { taskStatuses } from '@/lib/translations'
 import { getAllMonths } from '@/lib/utils/date'
 import { growthComparedLastMonth } from '@/lib/utils/graph'
 import { checkEmpty } from '@/lib/utils/verify'
@@ -85,7 +86,7 @@ export default async function HomePage() {
     }
 
     const projectsData: ChartData<'pie'> = {
-      labels: ['En progreso', 'Completadas', 'Revisión', 'Por empezar'],
+      labels: Object.values(taskStatuses),
       datasets: [
         {
           label: 'Tareas',
