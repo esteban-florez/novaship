@@ -177,6 +177,14 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'Has actualizado el estado de la actividad con éxito.',
   },
+  profile_updated: {
+    type: 'success',
+    message: 'Su perfil ha sido actualizado con éxito',
+  },
+  profile_error: {
+    type: 'error',
+    message: 'Hubo un error al intentar actualizar su perfil',
+  },
   bad_creds: {
     type: 'error',
     message: 'Credenciales inválidas.',

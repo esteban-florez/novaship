@@ -37,10 +37,10 @@ export function getExpiresAtDate(date: Date | null) {
   return today.getDate()
 }
 
-export function format(date: Date, weekday = false) {
+export function format(date: Date, shortMonth = false, weekday = false) {
   return date.toLocaleDateString('es', {
     year: 'numeric',
-    month: 'long',
+    month: shortMonth ? 'short' : 'long',
     day: 'numeric',
     weekday: weekday ? 'short' : undefined,
   })

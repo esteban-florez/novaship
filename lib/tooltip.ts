@@ -60,4 +60,8 @@ export const tooltip: Tooltip = {
 
   // Misc
   notification: 'Aquí puede ver el historial de todas sus notificaciones',
+
+  // Profile
+  profile_person_basic_data: 'Rellene los campos con su información personal',
+  profile_person_job_data: 'Indique sus habilidades, destrezas y experiencia laboral',
 }

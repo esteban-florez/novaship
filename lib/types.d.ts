@@ -49,14 +49,19 @@ type SelectableSkill = Selectable<OptionSkill>
 type SelectablePerson = Selectable<OptionPerson>
 type SelectableOption = OptionCategory | OptionSkill | OptionPerson
 
+interface ModelData {
+  id: string
+  title: string
+}
+
 // ----------------------------------------------------------------------
 // --------------------------- Home ------------------------------
 // ----------------------------------------------------------------------
-type QuickAccessProps = Array<{
+interface QuickAccessProps {
   icon: React.ReactElement
   title: string
   href: string
-}>
+}
 
 interface NotificationProps {
   id: string

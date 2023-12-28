@@ -28,6 +28,8 @@
 - Cambiar Interested en Invitation por PERSON | LEADER.
 - Remover todos los elementos dentro del ProjectForm y solo dejar el form.
 - Projects/id/tasks content column Loading.
+- EmptyContent helper.
+- Cambiar terminologia en los placeholders (/register por los momentos).
 
 # Pending
 
@@ -51,3 +53,7 @@
 - #FIX.
 - PENDING.
 - TEMPORAL.
+
+# Current
+
+- No carga todos los proyectos en el perfil.

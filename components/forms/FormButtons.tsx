@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function FormButtons({ method, disableSubmit, link }: Props) {
-  const label = method === 'POST' ? 'Aceptar' : 'Registrar'
+  const label = method === 'PUT' ? 'Aceptar' : 'Registrar'
   return (
     <div className="flex justify-between gap-x-2 border-t pt-4">
       {typeof link === 'string' && (
