@@ -17,14 +17,14 @@ import {
 } from '@heroicons/react/24/outline'
 import { type Person } from '@prisma/client'
 import AvatarIcon from '../AvatarIcon'
-import { phone as phoneFormat, ci as ciFormat } from '@/lib/utils/text'
 import { type ModelData } from '@/lib/types'
 import ProjectCard from './ProjectCard'
 import ExperienceCard from './ExperienceCard'
 import JobCard from './JobCard'
 import EmptyContent from '../EmptyContent'
 import Link from 'next/link'
-import { format } from '@/lib/utils/date'
+import { format as textFormat } from '@/lib/utils/text'
+import { format as dateFormat } from '@/lib/utils/date'
 
 interface Props {
   person: Person & {
@@ -211,7 +211,7 @@ export default function PersonProfile({ person }: Props) {
           </li>
           <li className="flex items-center gap-2">
             <IdentificationIcon className="h-5 w-5" />
-            <p>{ciFormat(ci)}</p>
+            <p>{textFormat(ci, 'ci')}</p>
           </li>
           <li className="flex items-center gap-2">
             <EnvelopeIcon className="h-5 w-5" />
@@ -223,11 +223,11 @@ export default function PersonProfile({ person }: Props) {
           </li>
           <li className="flex items-center gap-2">
             <PhoneIcon className="h-5 w-5" />
-            <p>{phoneFormat(phone)}</p>
+            <p>{textFormat(phone, 'phone')}</p>
           </li>
           <li className="flex items-center gap-2">
             <CakeIcon className="h-5 w-5" />
-            <p>{format({ date: birth })}</p>
+            <p>{dateFormat({ date: birth })}</p>
           </li>
         </ul>
       </div>

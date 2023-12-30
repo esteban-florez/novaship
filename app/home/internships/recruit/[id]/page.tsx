@@ -20,7 +20,7 @@ import {
 import IconData from '@/components/IconData'
 import { age } from '@/lib/utils/date'
 import { genders } from '@/lib/translations'
-import { ci, phone } from '@/lib/utils/text'
+import { format } from '@/lib/utils/text'
 import Container from '@/components/Container'
 import RecruitButton from '../RecruitButton'
 import { canCreateRecruitment } from '@/lib/auth/permissions'
@@ -128,7 +128,7 @@ export default async function RecruitDetailsPage({
               />
               <IconData
                 label="Cédula:"
-                data={ci(person.ci)}
+                data={format(person.ci, 'ci')}
                 icon={IdentificationIcon}
               />
               <IconData
@@ -138,7 +138,7 @@ export default async function RecruitDetailsPage({
               />
               <IconData
                 label="Teléfono:"
-                data={phone(person.phone)}
+                data={format(person.phone, 'phone')}
                 icon={PhoneIcon}
               />
               <IconData

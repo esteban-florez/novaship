@@ -25,7 +25,6 @@ class Numbers<T extends number> {
     }
   }
 
-  // PENDING -> revisar
   /**
    * Returns a random phone number with format (0000) 000 00 00
    * @returns string

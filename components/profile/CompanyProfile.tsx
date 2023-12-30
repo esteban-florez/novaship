@@ -10,8 +10,8 @@ import {
 } from '@heroicons/react/24/outline'
 import { type Company } from '@prisma/client'
 import AvatarIcon from '../AvatarIcon'
-import { phone as phoneFormat, ci as ciFormat } from '@/lib/utils/text'
 import Link from 'next/link'
+import { format } from '@/lib/utils/text'
 
 interface Props {
   company: Company & {
@@ -74,7 +74,7 @@ export default function CompanyProfile({ company }: Props) {
         <ul className="sm:ms-8 line-clamp-2 flex flex-col gap-4 text-neutral-600 leading-none">
           <li className="flex items-center gap-2">
             <IdentificationIcon className="h-5 w-5" />
-            <p>{ciFormat(rif)}</p>
+            <p>{format(rif, 'ci')}</p>
           </li>
           <li className="flex items-center gap-2">
             <EnvelopeIcon className="h-5 w-5" />
@@ -86,7 +86,7 @@ export default function CompanyProfile({ company }: Props) {
           </li>
           <li className="flex items-center gap-2">
             <PhoneIcon className="h-5 w-5" />
-            <p>{phoneFormat(phone)}</p>
+            <p>{format(phone, 'phone')}</p>
           </li>
         </ul>
       </div>

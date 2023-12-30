@@ -11,8 +11,8 @@ import {
   PencilIcon,
   PhoneIcon,
 } from '@heroicons/react/24/outline'
-import { ci as ciFormat, phone as phoneFormat } from '@/lib/utils/text'
-import { format } from '@/lib/utils/date'
+import { format as dateFormat } from '@/lib/utils/date'
+import { format as textFormat } from '@/lib/utils/text'
 
 interface Props {
   institute: Institute & {
@@ -36,7 +36,7 @@ export default function InstituteProfile({ institute }: Props) {
   } = institute
 
   const verified =
-    verifiedAt != null ? format({ date: verifiedAt }) : 'No verificado'
+    verifiedAt != null ? dateFormat({ date: verifiedAt }) : 'No verificado'
 
   return (
     <div className="grid grid-cols-10 gap-4 mt-4 sm:mt-0 sm:px-8 sm:py-4">
@@ -83,7 +83,7 @@ export default function InstituteProfile({ institute }: Props) {
         <ul className="sm:ms-8 line-clamp-2 flex flex-col gap-4 text-neutral-600 leading-none">
           <li className="flex items-center gap-2">
             <IdentificationIcon className="h-5 w-5" />
-            <p>{ciFormat(rif)}</p>
+            <p>{textFormat(rif, 'ci')}</p>
           </li>
           <li className="flex items-center gap-2">
             <EnvelopeIcon className="h-5 w-5" />
@@ -95,7 +95,7 @@ export default function InstituteProfile({ institute }: Props) {
           </li>
           <li className="flex items-center gap-2">
             <PhoneIcon className="h-5 w-5" />
-            <p>{phoneFormat(phone)}</p>
+            <p>{textFormat(phone, 'phone')}</p>
           </li>
         </ul>
       </div>
