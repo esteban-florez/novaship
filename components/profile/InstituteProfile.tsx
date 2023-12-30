@@ -35,7 +35,8 @@ export default function InstituteProfile({ institute }: Props) {
     certification,
   } = institute
 
-  const verified = verifiedAt != null ? format(verifiedAt) : 'No verificado'
+  const verified =
+    verifiedAt != null ? format({ date: verifiedAt }) : 'No verificado'
 
   return (
     <div className="grid grid-cols-10 gap-4 mt-4 sm:mt-0 sm:px-8 sm:py-4">

@@ -16,7 +16,7 @@ export default function WrapperPDF({ children }: Props) {
     >
       <div className="flex ms-4 mt-4 sm:mt-0 mb-4 items-center">
         <h2 className="text-2xl font-bold tracking-tighter">
-          Estadísticas del sistema ({format(new Date())})
+          Estadísticas del sistema ({format({ date: new Date() })})
         </h2>
       </div>
       {children}

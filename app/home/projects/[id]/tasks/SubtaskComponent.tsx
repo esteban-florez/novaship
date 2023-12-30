@@ -70,7 +70,7 @@ export default async function SubtaskComponent({
       )}
       <h3 className="text-4xl font-bold text-primary">{subtask.title}</h3>
       <small className="font-semibold text-neutral-600">
-        {format(subtask.createdAt)}
+        {format({ date: subtask.createdAt })}
       </small>
       <p className="mt-2 text-neutral-600 leading-normal">
         {subtask.description}
@@ -96,7 +96,7 @@ export default async function SubtaskComponent({
                     {r.content}
                     <span className="mx-2">•</span>
                     <small className="font-semibold">
-                      {format(r.updatedAt)}
+                      {format({ date: r.updatedAt })}
                     </small>
                   </p>
                 </Link>

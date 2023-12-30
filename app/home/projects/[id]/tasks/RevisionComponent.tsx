@@ -133,7 +133,7 @@ export default async function RevisionComponent({
       </h6>
       <p className="mt-1 text-neutral-600 leading-normal">{revision.content}</p>
       <small className="font-semibold text-neutral-600">
-        {format(revision.createdAt)}
+        {format({ date: revision.createdAt })}
       </small>
     </div>
   )

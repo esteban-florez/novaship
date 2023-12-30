@@ -227,7 +227,7 @@ export default function PersonProfile({ person }: Props) {
           </li>
           <li className="flex items-center gap-2">
             <CakeIcon className="h-5 w-5" />
-            <p>{format(birth)}</p>
+            <p>{format({ date: birth })}</p>
           </li>
         </ul>
       </div>

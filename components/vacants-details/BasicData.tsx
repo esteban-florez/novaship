@@ -24,12 +24,12 @@ export default function BasicData({ vacant }: Props) {
       <div className="flex justify-between gap-3 p-3">
         <IconData
           label="Fecha de publicación"
-          data={format(createdAt)}
+          data={format({ date: createdAt })}
           icon={CalendarIcon}
         />
         <IconData
           label="Fecha de expiración"
-          data={format(expiresAt)}
+          data={format({ date: expiresAt })}
           icon={ClockIcon}
         />
       </div>

@@ -51,7 +51,7 @@ export default function VacantCard({
           />
           <IconData
             label="Fecha de expiración"
-            data={format(expiresAt)}
+            data={format({ date: expiresAt })}
             icon={CalendarDaysIcon}
           />
         </div>

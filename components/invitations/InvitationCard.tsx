@@ -35,7 +35,7 @@ export default function InvitationCard({ invitation, side }: Props) {
           <div className="mt-1 mb-3">
             <small className="text-neutral-600">
               {side === 'user' ? 'Invitado el' : 'Solicitud enviada el'}{' '}
-              {format(invitation.updatedAt)}
+              {format({ date: invitation.updatedAt })}
             </small>
           </div>
           <form

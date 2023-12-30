@@ -29,8 +29,8 @@ const messages = {
   maxNumber: (num: number) => m(`La cantidad máxima es ${num}`),
   minArray: (num: number) => m(`La cantidad mínima es ${num}`),
   maxArray: (num: number) => m(`La cantidad máxima es ${num}`),
-  minDate: (date: Date) => m(`La fecha mínima es ${format(date)}.`),
-  maxDate: (date: Date) => m(`La fecha máxima es ${format(date)}.`),
+  minDate: (date: Date) => m(`La fecha mínima es ${format({ date })}.`),
+  maxDate: (date: Date) => m(`La fecha máxima es ${format({ date })}.`),
 }
 
 export default messages

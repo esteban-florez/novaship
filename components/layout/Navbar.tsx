@@ -4,11 +4,14 @@ import Link from 'next/link'
 import NotificationDropdown from './NotificationDropdown'
 import { Bars3Icon } from '@heroicons/react/24/outline'
 
-// ¿Como se manejarán las notificaciones?
-// con volante, como un CARRO BRUUUUMMMMMMMMM
-// nah mentira, con Server Sent Events B)
+// TODO -> Server Sent Events
 export default function Navbar() {
-  const date = format(new Date(), true)
+  const date = format({
+    date: new Date(),
+    config: {
+      weekday: true,
+    },
+  })
 
   return (
     <nav className="max-h-4 navbar relative border-b bg-white shadow-md">

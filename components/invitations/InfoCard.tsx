@@ -42,7 +42,7 @@ export default function InfoCard({ invitation, side }: Props) {
             )}
         <small className="font-semibold text-neutral-600">
           {side === 'RECEIVED' ? 'Recibido' : 'Enviado'} el{' '}
-          {format(invitation.updatedAt)}
+          {format({ date: invitation.updatedAt })}
         </small>
       </div>
     </div>

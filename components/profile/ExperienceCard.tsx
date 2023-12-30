@@ -20,9 +20,13 @@ export default function ExperienceCard({ experience }: Props) {
       <h6 className="font-semibold">{name}</h6>
       <span className="badge  badge-secondary">{job.title}</span>
       <div className="badge badge-ghost inline-flex gap-3 text-neutral-600">
-        <span>{format(from, true)}</span>
+        <span>{format({ date: from, config: { weekday: true } })}</span>
         <span>•</span>
-        <span>{to != null ? format(to, true) : 'Actualidad'}</span>
+        <span>
+          {to != null
+            ? format({ date: to, config: { weekday: true } })
+            : 'Actualidad'}
+        </span>
       </div>
       <p className="mt-3 text-sm text-neutral-600">{description}</p>
     </div>
