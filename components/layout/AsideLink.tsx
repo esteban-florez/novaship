@@ -1,26 +1,25 @@
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useState } from 'react'
 
 type Props = React.PropsWithChildren<{
   link: SidebarLinkWithSubmenu
-  active: boolean
+  onClick: (link: string) => void
+  openDropdown: string | null
 }>
 
-// TODO -> añadir transicion al abrir dropdown
-export default function AsideLink({ link, active }: Props) {
-  const [openDropdown, setOpenDropdown] = useState(false)
-  // link.visible ??= true
-
+export default function AsideLink({ link, onClick, openDropdown }: Props) {
   return (
     <li className="rounded-l-xl font-bold even:sm:my-2">
       {link.submenu === undefined && link.visible === true && (
         <Link
           href={link.href}
+          onClick={() => {
+            onClick(link.href)
+          }}
           className={clsx({
             'rounded-r-none px-6 py-4 gap-4': true,
-            'bg-base-300 hover:bg-primary': active,
+            'bg-base-300 hover:bg-primary': openDropdown === link.href,
           })}
         >
           {link.icon}
@@ -31,11 +30,12 @@ export default function AsideLink({ link, active }: Props) {
         <>
           <div
             onClick={() => {
-              setOpenDropdown(!openDropdown)
+              onClick(link.href)
             }}
-            className={`rounded-r-none px-6 py-4 'mx-auto' ${
-              active ? 'active hover:active' : ''
-            }`}
+            className={clsx({
+              'rounded-r-none px-6 py-4': true,
+              'bg-base-300': openDropdown === link.href,
+            })}
           >
             {link.icon}
             <span>{link.title}</span>
@@ -44,8 +44,8 @@ export default function AsideLink({ link, active }: Props) {
           <ul
             className={clsx({
               'transition-all delay-75 duration-75': true,
-              hidden: !openDropdown,
-              'gap-y-4': openDropdown,
+              'hidden h-0': openDropdown !== link.href,
+              'gap-y-4 h-auto': openDropdown === link.href,
             })}
           >
             {link.submenu
@@ -61,7 +61,9 @@ export default function AsideLink({ link, active }: Props) {
                   <Link
                     href={item.href}
                     className={`rounded-r-none ${
-                      active ? ' pointer-events-auto cursor-pointer' : ''
+                      openDropdown === link.href
+                        ? ' pointer-events-auto cursor-pointer'
+                        : ''
                     }`}
                   >
                     {item.icon}

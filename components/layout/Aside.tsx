@@ -4,21 +4,25 @@ import { usePathname } from 'next/navigation'
 import AsideLink from './AsideLink'
 import { Bars3Icon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import { useState } from 'react'
 
 type Props = React.PropsWithChildren<{
   links: SidebarLinkWithSubmenu[]
 }>
 
-// TODO -> solo mantener 1 submenu abierto
-// TODO -> corregir el link activo
 export default function Aside({ links }: Props) {
   const pathname = usePathname()
+  const [openDropdown, setOpenDropdown] = useState<null | string>(null)
 
-  // TODO -> this.
-  // TODO -> migrar a una funcion para obtener el current link.
-  const handleActivelink = (link: string) => {
-    const [, , path] = link.split('/')
+  const handleActivelinkPath = (link: string) => {
+    const [, , path] = link.split('?')[0].split('/')
     return link === pathname || (pathname.includes(path) && path !== '')
+  }
+
+  const handleToggleAndActive = (link: string) => {
+    const isActive = handleActivelinkPath(link)
+    setOpenDropdown((prev) => (prev === link ? null : link))
+    return isActive
   }
 
   return (
@@ -55,7 +59,8 @@ export default function Aside({ links }: Props) {
             <AsideLink
               key={link.href}
               link={link}
-              active={handleActivelink(link.href)}
+              onClick={handleToggleAndActive}
+              openDropdown={openDropdown}
             />
           ))}
       </ul>

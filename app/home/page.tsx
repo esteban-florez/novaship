@@ -1,6 +1,5 @@
 import BarGraphic from '@/components/graphics/BarGraphic'
 import PieGraphic from '@/components/graphics/PieGraphic'
-import GrowthIcon from '@/components/home/GrowthIcon'
 import HomeCarousel from '@/components/home/HomeCarousel'
 import MiniCard from '@/components/home/MiniCard'
 import NotificationsSection from '@/components/home/NotificationsSection'
@@ -283,9 +282,7 @@ export default async function HomePage() {
                 title={cards[i]}
                 count={graph.total}
                 percentage={graph.percentage}
-              >
-                <GrowthIcon comparision={graph.comparision} />
-              </MiniCard>
+              />
             )
           })}
           <MiniCard

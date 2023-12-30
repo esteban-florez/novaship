@@ -6,8 +6,6 @@
 - Banner recordatorio de completar perfil.
 - Componente Ads y ubicarlos en el layout.
 - Crear input tipo file y limitar las extensiones.
-- deletedAt middleware.
-- ExpiresAt handler.
 - Mostrar errores de validación del Servidor con modal.
 - Llevarte a donde cometiste el error en signup.
 - Añadir backups.
