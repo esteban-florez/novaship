@@ -64,4 +64,5 @@ export const tooltip: Tooltip = {
   // Profile
   profile_person_basic_data: 'Rellene los campos con su información personal',
   profile_person_job_data: 'Indique sus habilidades, destrezas y experiencia laboral',
+  profile_company_basic_data: 'Rellene los campos con su información personal',
 }

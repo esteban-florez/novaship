@@ -146,3 +146,53 @@ export const getUserProfileData = cache(async ({ id }: { id: string }) => {
     },
   })
 })
+
+export const getUserProfileDataUpdate = cache(async ({ id }: { id: string }) => {
+  return await prisma.person.findUniqueOrThrow({
+    where: { id },
+    include: {
+      categories: {
+        select: {
+          id: true,
+        },
+      },
+      grades: {
+        select: {
+          id: true,
+        },
+      },
+      skills: {
+        select: {
+          id: true,
+        },
+      },
+      experiences: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          from: true,
+          to: true,
+          job: {
+            select: {
+              title: true,
+            },
+          },
+        },
+      },
+    },
+  })
+})
+
+export const getCompanyProfileData = cache(async ({ id }: { id: string }) => {
+  return await prisma.company.findUniqueOrThrow({
+    where: { id },
+    include: {
+      location: {
+        select: {
+          title: true,
+        },
+      },
+    },
+  })
+})
