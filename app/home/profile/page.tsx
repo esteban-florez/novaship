@@ -7,6 +7,8 @@ import {
   getUserProfileData,
 } from '@/lib/data-fetching/profile'
 import CompanyProfile from '@/components/profile/CompanyProfile'
+import prisma from '@/prisma/client'
+import InstituteProfile from '@/components/profile/InstituteProfile'
 
 export const metadata: Metadata = {
   title: 'Mi perfil',
@@ -25,6 +27,21 @@ export default async function ProfilePage() {
     const company = await getCompanyProfileData({ id })
 
     return <CompanyProfile company={company} />
+  }
+
+  if (type === 'INSTITUTE') {
+    const institute = await prisma.institute.findUniqueOrThrow({
+      where: { id },
+      include: {
+        location: {
+          select: {
+            title: true,
+          },
+        },
+      },
+    })
+
+    return <InstituteProfile institute={institute} />
   }
 
   redirect('home?alert=redirected')

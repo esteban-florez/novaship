@@ -1,4 +1,5 @@
 import CompanyForm from '@/components/profile/forms/CompanyForm'
+import InstituteForm from '@/components/profile/forms/InstituteForm'
 import PersonForm from '@/components/profile/forms/PersonForm'
 import { auth } from '@/lib/auth/pages'
 import { getUserProfileDataUpdate } from '@/lib/data-fetching/profile'
@@ -63,6 +64,19 @@ export default async function UpdateProfilePage() {
     return (
       <CompanyForm
         company={company}
+        locations={locations}
+      />
+    )
+  }
+
+  if (type === 'INSTITUTE') {
+    const institute = await prisma.institute.findUniqueOrThrow({
+      where: { id },
+    })
+
+    return (
+      <InstituteForm
+        institute={institute}
         locations={locations}
       />
     )
