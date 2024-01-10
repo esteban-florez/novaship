@@ -92,7 +92,7 @@ export default function Details({
           />
         </div>
         <div className="flex w-full flex-col rounded-t-none p-4 xl:rounded-l-none">
-          <h3 className="w-5/6 text-xl font-bold sm:text-2xl">{title}</h3>
+          <h3 className="text-xl font-bold sm:text-2xl">{title}</h3>
           <div className="mb-2 flex flex-wrap gap-1 text-base font-semibold text-neutral-600">
             {categories.map((category) => {
               return (
@@ -105,7 +105,8 @@ export default function Details({
               )
             })}
           </div>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="divider my-1 -mt-2" />
+          <div className="flex flex-col sm:flex-row gap-4 mb-1">
             <small className="flex gap-1 items-center">
               <MapPinIcon className="w-5 h-5 text-primary" />
               <span className="font-bold">{location}</span>

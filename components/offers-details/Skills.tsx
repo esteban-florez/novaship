@@ -24,14 +24,14 @@ export default function Skills({
     }
 
     if (skills.includes(id)) {
-      return <CheckCircleIcon className="h-5 w-5 text-primary" />
+      return <CheckCircleIcon className="h-5 w-5 text-success" />
     }
 
-    return <XCircleIcon className="h-5 w-5 text-neutral-600" />
+    return <XCircleIcon className="h-5 w-5 text-error" />
   }
 
   return (
-    <ul className="mt-2 flex flex-col sm:flex-row gap-4">
+    <ul className="mt-2 flex flex-col gap-4">
       {skills.map((skill) => {
         return (
           <div

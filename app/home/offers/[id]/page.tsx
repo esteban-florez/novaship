@@ -199,6 +199,7 @@ export default async function OfferPage({
             <h6 className="text-lg font-bold md:text-2xl">
               Habilidades requeridas
             </h6>
+            <div className="divider my-0" />
             <Skills
               companyId={offer.companyId}
               userId={userId}
