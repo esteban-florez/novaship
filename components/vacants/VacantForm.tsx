@@ -13,7 +13,14 @@ import { type VacantWithRelations } from '@/lib/types'
 import collect from '@/lib/utils/collection'
 import { schema as update } from '@/lib/validation/schemas/vacants/update'
 import { schema as create } from '@/lib/validation/schemas/vacants/create'
-import { type Skill, type Category, type Grade, type Job, type Location } from '@prisma/client'
+import {
+  type Skill,
+  type Category,
+  type Grade,
+  type Job,
+  type Location,
+} from '@prisma/client'
+import { tooltip } from '@/lib/tooltip'
 
 type Props = React.PropsWithChildren<{
   categories: Category[]
@@ -22,15 +29,27 @@ type Props = React.PropsWithChildren<{
   locations: Location[]
   jobs?: Job[]
   vacant?: VacantWithRelations
+  url: string
 }>
 
 export default function VacantForm({
-  categories, grades, jobs, locations, skills, vacant,
+  categories,
+  grades,
+  jobs,
+  locations,
+  skills,
+  vacant,
+  url,
 }: Props) {
   const isCreate = vacant === undefined
   const {
-    register, formState: { errors }, loading,
-    control, alert, serverErrors, handleSubmit,
+    register,
+    formState: { errors },
+    loading,
+    control,
+    alert,
+    serverErrors,
+    handleSubmit,
   } = useSubmit({
     schema: isCreate ? create : update,
     method: isCreate ? 'POST' : 'PATCH',
@@ -41,15 +60,20 @@ export default function VacantForm({
     title: translation[duration],
   }))
 
-  const action = isCreate
-    ? '/api/vacants'
-    : `/api/vacants/${vacant?.id}`
+  const action = isCreate ? '/api/vacants' : `/api/vacants/${vacant?.id}`
 
   return (
-    <form method="POST" action={action} onSubmit={handleSubmit}>
+    <form
+      method="POST"
+      action={action}
+      onSubmit={handleSubmit}
+    >
       {alert}
       {serverErrors}
-      <FormSection title="Datos básicos" description="Escribe una descripción, y selecciona el puesto de trabajo, las carreras relacionadas y habilidades requeridas.">
+      <FormSection
+        title="Datos básicos"
+        description={tooltip.internship_vacant_form_basic_data}
+      >
         {isCreate && jobs !== undefined && (
           <Select
             name="jobId"
@@ -90,7 +114,10 @@ export default function VacantForm({
           }}
         />
       </FormSection>
-      <FormSection title="Configuración del cupo" description="Ingresa el límite de pasantes para este cupo, y la fecha de expiración del mismo.">
+      <FormSection
+        title="Configuración del cupo"
+        description={tooltip.internship_vacant_form_quota}
+      >
         <Input
           name="limit"
           label="Límite de pasantes (máx. 20)"
@@ -117,7 +144,10 @@ export default function VacantForm({
           />
         )}
       </FormSection>
-      <FormSection title="Datos adicionales" description="Selecciona la ubicación para este cupo, y las categorías relacionadas.">
+      <FormSection
+        title="Datos adicionales"
+        description={tooltip.internship_vacant_form_aditional_data}
+      >
         <Select
           name="locationId"
           label="Ubicación"
@@ -143,7 +173,11 @@ export default function VacantForm({
           }}
         />
       </FormSection>
-      <FormButtons disableSubmit={loading} />
+      <FormButtons
+        link={url}
+        method={isCreate ? 'POST' : 'PUT'}
+        disableSubmit={loading}
+      />
     </form>
   )
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import MiniCard from '../MiniCard'
-import GrowthIcon from '../GrowthIcon'
 
 interface Props {
   graphs: Array<{
@@ -26,7 +25,7 @@ export default function GraphsSection({ graphs, data }: Props) {
             count={i < 2 ? data[i].total : count}
             percentage={i < 2 ? data[i].percentage : undefined}
           >
-            {i < 2 ? <GrowthIcon comparision={data[i].comparision} /> : icon}
+            {i > 1 ? icon : null}
           </MiniCard>
         )
       })}

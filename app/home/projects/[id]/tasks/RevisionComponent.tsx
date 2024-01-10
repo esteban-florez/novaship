@@ -11,7 +11,6 @@ interface Props {
   leader: boolean
 }
 
-// TODO -> redirigir a la subtarea seleccionada al cerrar
 export default async function RevisionComponent({
   id,
   pathname,
@@ -28,7 +27,9 @@ export default async function RevisionComponent({
   const subtaskId = revision.subtaskId
   let query: Record<string, string> | null = null
   if (filter === '') query = null
-  if (subtaskId != null && taskId != null) { query = { id: taskId, subtask: subtaskId, filtered: filter } }
+  if (subtaskId != null && taskId != null) {
+    query = { id: taskId, subtask: subtaskId, filtered: filter }
+  }
   if (taskId != null) query = { id: taskId, filtered: filter }
 
   return (
@@ -38,58 +39,77 @@ export default async function RevisionComponent({
           <h6 className="text-xl font-bold line-clamp-1">{responsable}</h6>
           <span className="font-semibold text-neutral-600">(Responsable)</span>
         </div>
-        {leader && (
-          <div className="flex flex-wrap">
-            <div
-              className="z-[9999px] tooltip tooltip-right sm:tooltip-bottom"
-              data-tip="Editar revisión"
-            >
-              <DeleteModal
-                action={`/api/revisions/${id}`}
-                title={revision.content}
-                className="btn btn-circle btn-ghost"
-              />
+        {leader
+          ? (
+            <div className="flex flex-wrap">
+              <div
+                className="z-[9999px] tooltip tooltip-right sm:tooltip-bottom"
+                data-tip="Editar revisión"
+              >
+                <DeleteModal
+                  action={`/api/revisions/${id}`}
+                  title={revision.content}
+                  className="btn btn-circle btn-ghost"
+                />
+              </div>
+              <div
+                className="z-[9999px] tooltip tooltip-bottom"
+                data-tip="Editar revisión"
+              >
+                {subtaskId != null
+                  ? (
+                    <Link
+                      href={{
+                        pathname,
+                        query: {
+                          subtaskId,
+                          revisionId: revision.id,
+                          action: 'update',
+                          filtered: filter,
+                        },
+                      }}
+                    >
+                      <button className="btn btn-circle btn-ghost">
+                        <PencilIcon className="w-4 h-4" />
+                      </button>
+                    </Link>
+                    )
+                  : (
+                    <Link
+                      href={{
+                        pathname,
+                        query: {
+                          id: taskId,
+                          revisionId: revision.id,
+                          action: 'update',
+                          filtered: filter,
+                        },
+                      }}
+                    >
+                      <button className="btn btn-circle btn-ghost">
+                        <PencilIcon className="w-4 h-4" />
+                      </button>
+                    </Link>
+                    )}
+              </div>
+              <div
+                className="z-[9999px] tooltip tooltip-left"
+                data-tip="Quitar revisión"
+              >
+                <Link
+                  href={{
+                    pathname,
+                    query,
+                  }}
+                >
+                  <button className="btn btn-circle btn-ghost">
+                    <XMarkIcon className="w-4 h-4" />
+                  </button>
+                </Link>
+              </div>
             </div>
-            <div
-              className="z-[9999px] tooltip tooltip-bottom"
-              data-tip="Editar revisión"
-            >
-              {subtaskId != null
-                ? (
-                  <Link
-                    href={{
-                      pathname,
-                      query: {
-                        subtaskId,
-                        revisionId: revision.id,
-                        action: 'update',
-                        filtered: filter,
-                      },
-                    }}
-                  >
-                    <button className="btn btn-circle btn-ghost">
-                      <PencilIcon className="w-4 h-4" />
-                    </button>
-                  </Link>
-                  )
-                : (
-                  <Link
-                    href={{
-                      pathname,
-                      query: {
-                        id: taskId,
-                        revisionId: revision.id,
-                        action: 'update',
-                        filtered: filter,
-                      },
-                    }}
-                  >
-                    <button className="btn btn-circle btn-ghost">
-                      <PencilIcon className="w-4 h-4" />
-                    </button>
-                  </Link>
-                  )}
-            </div>
+            )
+          : (
             <div
               className="z-[9999px] tooltip tooltip-left"
               data-tip="Quitar revisión"
@@ -105,8 +125,7 @@ export default async function RevisionComponent({
                 </button>
               </Link>
             </div>
-          </div>
-        )}
+            )}
       </div>
       <h3 className="text-4xl font-bold text-primary">{title}</h3>
       <h6 className="mt-2 text-lg text-neutral-600 font-semibold text-center">
@@ -114,7 +133,7 @@ export default async function RevisionComponent({
       </h6>
       <p className="mt-1 text-neutral-600 leading-normal">{revision.content}</p>
       <small className="font-semibold text-neutral-600">
-        {format(revision.createdAt)}
+        {format({ date: revision.createdAt })}
       </small>
     </div>
   )

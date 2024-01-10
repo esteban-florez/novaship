@@ -7,7 +7,6 @@ import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { getTaskWhereImIn } from '@/lib/data-fetching/task'
 
-// #SCHEMA
 export async function POST(request: NextRequest) {
   let data
   try {
@@ -61,7 +60,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks?id=${task.id}&filtered=${data.filter as string}&alert=subtask_created`))
+    return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks?id=${task.id}&filtered=${parsed.filter as string}&alert=subtask_created`))
   } catch (error) {
     handleError(error, data)
   }

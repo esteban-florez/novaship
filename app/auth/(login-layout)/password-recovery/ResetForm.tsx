@@ -21,7 +21,7 @@ export default function ResetForm({ resetId }: Props) {
       <Input
         name="password"
         label="Nueva contraseña"
-        placeholder="Escribe tu nueva contraseña..."
+        placeholder="Ingrese su nueva contraseña..."
         type="password"
         register={register}
         errors={errors}
@@ -30,7 +30,7 @@ export default function ResetForm({ resetId }: Props) {
       <Input
         name="confirmation"
         label="Confirmar nueva contraseña"
-        placeholder="Vuelve a escribir tu nueva contraseña..."
+        placeholder="Vuelva a ingresar su nueva contraseña..."
         type="password"
         register={register}
         errors={errors}

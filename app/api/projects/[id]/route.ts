@@ -46,7 +46,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
           },
         })
 
-        // TODO -> revisar mejor cual alert se muestra en que situación.
         const alert = project.teamId === null ? 'project_updated' : 'project_team_unalterable'
 
         return NextResponse.redirect(url(`home/projects/${project.id}?alert=${alert}`))
@@ -97,7 +96,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
   }
 }
 
-// TODO -> test
 export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
     const { id: userId } = await auth.user(request)

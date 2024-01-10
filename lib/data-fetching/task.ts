@@ -59,21 +59,26 @@ export const getMyTask = cache(async ({ id, userId }: { id: string, userId: stri
   return await prisma.task.findFirst({
     where: {
       id,
-      project: {
-        OR: [
-          { personId: userId },
-          {
-            team: {
-              leader: {
-                OR: [
-                  { personId: userId },
-                  { companyId: userId },
-                ],
+      OR: [
+        {
+          project: {
+            OR: [
+              { personId: userId },
+              {
+                team: {
+                  leader: {
+                    OR: [
+                      { personId: userId },
+                      { companyId: userId },
+                    ],
+                  },
+                },
               },
-            },
+            ],
           },
-        ],
-      },
+        },
+        { personId: userId },
+      ],
     },
     ...query,
   })

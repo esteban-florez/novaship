@@ -1,8 +1,15 @@
 import IconData from '@/components/IconData'
 import { type VacantWithRelations } from '@/lib/types'
 import { format } from '@/lib/utils/date'
-import { getAcceptedRecruitments, getVacantExpiration } from '@/lib/utils/tables'
-import { CalendarDaysIcon, ClipboardDocumentListIcon, ListBulletIcon } from '@heroicons/react/24/outline'
+import {
+  getAcceptedRecruitments,
+  getVacantExpiration,
+} from '@/lib/utils/tables'
+import {
+  CalendarDaysIcon,
+  ClipboardDocumentListIcon,
+  ListBulletIcon,
+} from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import BadgeList from '../BadgeList'
 import ApplyButton from './ApplyButton'
@@ -13,7 +20,11 @@ type Props = React.PropsWithChildren<{
   internshipId?: string
 }>
 
-export default function VacantCard({ vacant, withGrades = false, internshipId }: Props) {
+export default function VacantCard({
+  vacant,
+  withGrades = false,
+  internshipId,
+}: Props) {
   const { description, job, limit, id, companyId, grades } = vacant
 
   const expiresAt = getVacantExpiration(vacant)
@@ -30,12 +41,8 @@ export default function VacantCard({ vacant, withGrades = false, internshipId }:
         <h3 className="font-bold text-primary text-2xl line-clamp-1 tracking-tighter">
           {job.title}
         </h3>
-        {withGrades && (
-          <BadgeList items={grades} />
-        )}
-        <p className="line-clamp-2">
-          {description}
-        </p>
+        {withGrades && <BadgeList items={grades} />}
+        <p className="line-clamp-2">{description}</p>
         <div className="flex gap-2 flex-col">
           <IconData
             label="Cupos disponibles"
@@ -44,7 +51,7 @@ export default function VacantCard({ vacant, withGrades = false, internshipId }:
           />
           <IconData
             label="Fecha de expiración"
-            data={format(expiresAt)}
+            data={format({ date: expiresAt })}
             icon={CalendarDaysIcon}
           />
         </div>
@@ -55,7 +62,10 @@ export default function VacantCard({ vacant, withGrades = false, internshipId }:
               vacantId={vacant.id}
             />
           )}
-          <Link className="btn btn-secondary" href={details}>
+          <Link
+            className="btn btn-secondary btn-block"
+            href={details}
+          >
             <ListBulletIcon className="h-5 w-5" />
             Detalles
           </Link>

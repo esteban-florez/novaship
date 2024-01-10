@@ -79,10 +79,10 @@ export const actions = {
 } as const
 
 export const taskStatuses = {
-  PENDING: 'Por empezar',
+  PENDING: 'Por hacer',
   PROGRESS: 'En progreso',
   REVIEW: 'En revisión',
-  DONE: 'Terminada',
+  DONE: 'Hecho',
 }
 
 export const expirations = {

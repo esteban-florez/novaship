@@ -9,15 +9,13 @@ import { type UserType, type Prisma, type Interested } from '@prisma/client'
 import { notFound } from 'next/navigation'
 import RecruitmentsTable from './RecruitmentsTable'
 import FilterBar from '@/components/FilterBar'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata = {
   title: 'Solicitudes de pasantía',
 }
 
-function getInterestedFilter(
-  option: string | undefined,
-  type: UserType
-) {
+function getInterestedFilter(option: string | undefined, type: UserType) {
   if (option === undefined) return
 
   const filters: Rec = {
@@ -28,7 +26,9 @@ function getInterestedFilter(
   return filters[option]
 }
 
-export default async function RecruitmentsPage({ searchParams }: SearchParamsProps) {
+export default async function RecruitmentsPage({
+  searchParams,
+}: SearchParamsProps) {
   const { id, type } = await auth.user()
   if (type === 'ADMIN') notFound()
 
@@ -54,7 +54,9 @@ export default async function RecruitmentsPage({ searchParams }: SearchParamsPro
   const totalRecords = await prisma.recruitment.count({ where })
 
   const { nextPage, skip, take } = getPaginationProps({
-    totalRecords, searchParams, pageSize: 10,
+    totalRecords,
+    searchParams,
+    pageSize: 10,
   })
 
   const recruitments = await getRecruitments({ where, skip, take })
@@ -68,9 +70,13 @@ export default async function RecruitmentsPage({ searchParams }: SearchParamsPro
     <>
       <PageTitle
         title="Solicitudes de pasantía"
-        subtitle="Aquí puedes ver las solicitudes de pasantía que has enviado y recibido."
+        subtitle={tooltip.internship_recruitment}
       />
-      <FilterBar searchLabel="nombre" filterLabel="tipo" filterOptions={options} />
+      <FilterBar
+        searchLabel="nombre"
+        filterLabel="tipo"
+        filterOptions={options}
+      />
       <RecruitmentsTable recruitments={recruitments} />
       <Pagination nextPage={nextPage} />
     </>

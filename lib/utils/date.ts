@@ -37,10 +37,20 @@ export function getExpiresAtDate(date: Date | null) {
   return today.getDate()
 }
 
-export function format(date: Date, weekday = false) {
+interface FormatProps {
+  date: Date
+  config?: {
+    shortMonth?: boolean
+    weekday?: boolean
+  }
+}
+
+export function format({ date, config = {} }: FormatProps) {
+  const { shortMonth = false, weekday = false } = config
+
   return date.toLocaleDateString('es', {
     year: 'numeric',
-    month: 'long',
+    month: shortMonth ? 'short' : 'long',
     day: 'numeric',
     weekday: weekday ? 'short' : undefined,
   })

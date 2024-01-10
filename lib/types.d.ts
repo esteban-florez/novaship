@@ -1,8 +1,4 @@
-import {
-  type UseFormRegisterReturn,
-  type FieldErrors,
-  type RegisterOptions,
-} from 'react-hook-form'
+import { type UseFormRegisterReturn, type FieldErrors, type RegisterOptions } from 'react-hook-form'
 import { type ERRORS } from './errors/reference'
 import {
   type Person,
@@ -32,6 +28,7 @@ import {
   type Internship,
   type Progress,
   type Subparticipation,
+  type Interested,
 } from '@prisma/client'
 import { type days } from './translations'
 
@@ -52,14 +49,19 @@ type SelectableSkill = Selectable<OptionSkill>
 type SelectablePerson = Selectable<OptionPerson>
 type SelectableOption = OptionCategory | OptionSkill | OptionPerson
 
+interface ModelData {
+  id: string
+  title: string
+}
+
 // ----------------------------------------------------------------------
 // --------------------------- Home ------------------------------
 // ----------------------------------------------------------------------
-type QuickAccessProps = Array<{
+interface QuickAccessProps {
   icon: React.ReactElement
   title: string
   href: string
-}>
+}
 
 interface NotificationProps {
   id: string
@@ -85,14 +87,16 @@ interface InternshipSimple {
 }
 
 type InternshipWithRelations = Internship & {
-  recruitments: Array<Recruitment & {
+  recruitments: Array<
+  Recruitment & {
     vacant: Vacant & {
       company: Company & {
         location: Location
       }
     }
     progresses: Progress[]
-  }>
+  }
+  >
   categories: Category[]
   institute: Institute
   person: Person & {
@@ -132,9 +136,11 @@ interface TeamsFull extends Team {
     person: Person
     company: Company
   }
-  projects: Array<Project & {
+  projects: Array<
+  Project & {
     categories: Category[]
-  }>
+  }
+  >
   contracts: Contract[]
   invitations: Invitation[]
   memberships: Array<
@@ -147,11 +153,17 @@ interface TeamsFull extends Team {
   >
 }
 
+type InvitationSimple = Pick<Invitation & {
+  person: Pick<Person, 'id' | 'name'>
+}, 'id' | 'status' | 'interested' | 'person'>
+
 interface InvitationData {
   id: string
   status: Status
   updatedAt: Date
+  interested: Interested
   person: {
+    id: string
     name: string
   }
   team: {
@@ -205,14 +217,18 @@ interface Permissions {
 }
 
 type RevisionComponentProps = Revision & {
-  task: Task & {
+  task:
+  | (Task & {
     person: Person
-  } | null
-  subtask: Subtask & {
+  })
+  | null
+  subtask:
+  | (Subtask & {
     task: Task & {
       person: Person
     }
-  } | null
+  })
+  | null
 }
 
 type RevisionWithRelationsip = Revision & {
@@ -226,17 +242,21 @@ type SubtasksWithRelation = Subtask & {
     person: Person
   }
   revisions: Revision[]
-  subparticipations: Array<Subparticipation & {
+  subparticipations: Array<
+  Subparticipation & {
     person: Person
-  }>
+  }
+  >
 }
 
 type SubtaskWithRelationShip = Subtask & {
   task: TasksWithRelationship
   revisions: Revision[]
-  subparticipations: Array<Subparticipation & {
+  subparticipations: Array<
+  Subparticipation & {
     person: Person
-  }>
+  }
+  >
 }
 
 type TasksWithRelationship = Task & {
@@ -244,15 +264,19 @@ type TasksWithRelationship = Task & {
   subtasks: Array<
   Subtask & {
     revisions: Revision[]
-    subparticipations: Array<Subparticipation & {
+    subparticipations: Array<
+    Subparticipation & {
       person: Person
-    }>
+    }
+    >
   }
   >
   revisions: Revision[]
-  participations: Array<Participation & {
+  participations: Array<
+  Participation & {
     person: Person
-  }>
+  }
+  >
 }
 
 type ProjectMembership = Membership & {

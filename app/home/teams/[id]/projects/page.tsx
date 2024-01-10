@@ -2,6 +2,7 @@ import Card from '@/components/Card'
 import EmptyContent from '@/components/EmptyContent'
 import PageTitle from '@/components/PageTitle'
 import { getTeam } from '@/lib/data-fetching/teams'
+import { tooltip } from '@/lib/tooltip'
 import { getPublicProjects } from '@/lib/utils/tables'
 import { type Metadata } from 'next'
 
@@ -21,7 +22,7 @@ export default async function TeamProjectsPage({
     <>
       <PageTitle
         title="Miembros del equipo"
-        subtitle="Aquí podrás ver toda la plantilla del equipo"
+        subtitle={tooltip.team_id_projects}
         breadcrumbs={team.name}
       />
       {projects.length > 0

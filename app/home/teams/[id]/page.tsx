@@ -14,6 +14,8 @@ import PageTitle from '@/components/PageTitle'
 import { auth } from '@/lib/auth/pages'
 import clsx from 'clsx'
 import { PencilIcon } from '@heroicons/react/24/outline'
+import JoinTeamButton from './JoinTeamButton'
+import { statuses } from '@/lib/translations'
 
 export const metadata: Metadata = {
   title: 'Equipo de trabajo',
@@ -28,6 +30,17 @@ export default async function TeamPage({ params: { id } }: PageContext) {
     where: {
       teamId: id,
       status: 'PENDING',
+      interested: 'PERSON',
+      personId: {
+        not: userId,
+      },
+    },
+  })
+
+  const userInvitation = await prisma.invitation.findFirst({
+    where: {
+      teamId: id,
+      personId: userId,
     },
   })
 
@@ -42,18 +55,35 @@ export default async function TeamPage({ params: { id } }: PageContext) {
     where: { id: leaderExtended?.locationId },
   })
 
+  const renderJoinTeamButton = () => {
+    const leader = getTeamLeader(team)
+    const invitation = userInvitation
+
+    if (leader.id !== userId) {
+      if (invitation == null) {
+        return <JoinTeamButton teamId={team.id} />
+      } else {
+        return (
+          <p className="font-semibold text-neutral-600">
+            Solicitud{' '}
+            {statuses[userInvitation?.status ?? 'PENDING'].toLowerCase()}
+          </p>
+        )
+      }
+    }
+
+    return null
+  }
+
   return (
     <>
-      <PageTitle
-        title="Equipo de trabajo"
-        subtitle="Encuentra toda la información disponible del equipo seleccionado"
-        breadcrumbs={team.name}
-      />
+      <PageTitle breadcrumbs={team.name} />
       <section className="flex flex-wrap items-start gap-4 p-4 lg:flex-nowrap">
         <div className="flex w-full flex-col gap-3 lg:w-2/3">
           <div className="w-full rounded-md bg-white p-4 shadow-md">
             <div className="mb-1 flex flex-col sm:flex-row justify-between">
               <h1 className="text-2xl font-bold">{team.name}</h1>
+              {renderJoinTeamButton()}
               {leader.id === userId && (
                 <Link
                   href={`/home/teams/${id}/update`}
@@ -200,7 +230,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
               {leader.id === userId && invitations > 0 && (
                 <Link href={`/home/teams/${team.id}/memberships`}>
                   <p className="p-4 rounded-md border-2 border-zinc-300 font-semibold text-neutral-600 hover:text-primary">
-                    Tienes solicitudes de miembros
+                    Hay solicitudes pendientes
                   </p>
                 </Link>
               )}

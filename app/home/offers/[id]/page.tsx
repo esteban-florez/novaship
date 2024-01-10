@@ -157,10 +157,7 @@ export default async function OfferPage({
 
   return (
     <>
-      <PageTitle
-        title="Ofertas laboral"
-        breadcrumbs={offer.title}
-      />
+      <PageTitle breadcrumbs={offer.title} />
       <section className="grid grid-cols-7 gap-4 mt-2 sm:mt-0 sm:p-4">
         <div className="col-span-7">
           <Details

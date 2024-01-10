@@ -79,7 +79,7 @@ export default async function TaskComponent({
         <p className={clsx('badge badge-outline', STAGE_BADGES[status])}>
           {taskStatuses[status]}
         </p>
-        <p>{format(task.createdAt)}</p>
+        <p>{format({ date: task.createdAt })}</p>
       </div>
       <p className="mt-2 text-neutral-600 leading-normal">
         {task?.description}
@@ -103,7 +103,7 @@ export default async function TaskComponent({
                     </p>
                     <span className="hidden sm:block mx-2">•</span>
                     <small className="font-semibold">
-                      {format(r.updatedAt)}
+                      {format({ date: r.updatedAt })}
                     </small>
                   </div>
                 </Link>
@@ -164,7 +164,7 @@ export default async function TaskComponent({
                             )}
                       </div>
                       <small className="font-semibold">
-                        {format(s.updatedAt)}
+                        {format({ date: s.updatedAt })}
                       </small>
                     </div>
                   </div>

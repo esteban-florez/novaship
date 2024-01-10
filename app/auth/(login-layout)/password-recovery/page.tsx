@@ -5,7 +5,9 @@ import { notFound } from 'next/navigation'
 import { getResetEmail } from '@/lib/utils/tables'
 import { getReset } from '@/lib/data-fetching/resets'
 
-export default async function PasswordRecoveryPage({ searchParams }: SearchParamsProps) {
+export default async function PasswordRecoveryPage({
+  searchParams,
+}: SearchParamsProps) {
   const resetId = param(searchParams.resetId)
 
   if (resetId === undefined) {
@@ -25,9 +27,13 @@ export default async function PasswordRecoveryPage({ searchParams }: SearchParam
   return (
     <>
       <h2 className="text-center text-2xl font-bold sm:text-3xl md:text-4xl">
-        <span className="text-primary">Recuperación</span> de <span className="text-secondary">contraseña</span>
+        <span className="text-primary">Recuperación</span> de{' '}
+        <span className="text-secondary">contraseña</span>
       </h2>
-      <p className="text-center">Ingresa una nueva contraseña para tu cuenta con el correo <b>{email}</b>. Asegúrate ingresar una contraseña segura.</p>
+      <p className="text-center">
+        Ingrese una nueva contraseña para tu cuenta con el correo <b>{email}</b>
+        . Asegúrate ingresar una contraseña segura.
+      </p>
       <ResetForm resetId={reset.id} />
       <div className="divider divider-vertical mt-5" />
       <Link

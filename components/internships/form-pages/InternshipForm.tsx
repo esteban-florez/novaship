@@ -15,13 +15,25 @@ type Props = React.PropsWithChildren<{
   grades: Grade[]
   internship?: InternshipWithRelations
   personId?: string
+  url: string
 }>
 
-export default function InternshipForm({ categories, grades, personId, internship }: Props) {
+export default function InternshipForm({
+  categories,
+  grades,
+  personId,
+  internship,
+  url,
+}: Props) {
   const isCreate = personId !== undefined
   const {
-    register, formState: { errors }, loading,
-    control, alert, serverErrors, handleSubmit,
+    register,
+    formState: { errors },
+    loading,
+    control,
+    alert,
+    serverErrors,
+    handleSubmit,
   } = useSubmit({
     schema,
     method: isCreate ? 'POST' : 'PUT',
@@ -37,7 +49,11 @@ export default function InternshipForm({ categories, grades, personId, internshi
     : `/api/internships/${internship?.id ?? ''}`
 
   return (
-    <form method="POST" action={action} onSubmit={handleSubmit}>
+    <form
+      method="POST"
+      action={action}
+      onSubmit={handleSubmit}
+    >
       {alert}
       {serverErrors}
       <Select
@@ -69,7 +85,11 @@ export default function InternshipForm({ categories, grades, personId, internshi
           data: categories,
         }}
       />
-      <FormButtons disableSubmit={loading} />
+      <FormButtons
+        link={url}
+        method={isCreate ? 'POST' : 'PUT'}
+        disableSubmit={loading}
+      />
     </form>
   )
 }

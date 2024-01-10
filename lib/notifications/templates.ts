@@ -2,20 +2,20 @@ import { type NotificationsRecord } from '../types'
 
 export const templates: NotificationsRecord = {
   'internship-created': ({ internshipId, institute }) => ({
-    title: 'Has sido registrado como pasante.',
-    content: `La institución "${institute}" te ha registrado como pasante.`,
+    title: 'Has sido postulado como pasante.',
+    content: `La institución "${institute}" te ha postulado como pasante.`,
     href: `/home/internships/${internshipId}`,
   }),
 
   'internship-accepted': ({ grade, internshipId, student }) => ({
-    title: 'Registro de pasante ha sido aceptado.',
-    content: `${student} ha aceptado tu registro de pasante para la carrera de ${grade}.`,
+    title: 'La postulación de pasante ha sido aceptado.',
+    content: `${student} ha aceptado tu postulación de pasante para la carrera de ${grade}.`,
     href: `/home/internships/${internshipId}`,
   }),
 
   'internship-rejected': ({ grade, internshipId, student }) => ({
-    title: 'Registro de pasante ha sido rechazado.',
-    content: `${student} ha rechazado tu registro de pasante para la carrera de ${grade}.`,
+    title: 'La postulación de pasante ha sido rechazado.',
+    content: `${student} ha rechazado tu postulación de pasante para la carrera de ${grade}.`,
     href: `/home/internships/${internshipId}`,
   }),
 

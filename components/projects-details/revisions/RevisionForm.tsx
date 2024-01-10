@@ -4,6 +4,7 @@ import FormButtons from '@/components/forms/FormButtons'
 import FormSection from '@/components/forms/FormSection'
 import Textarea from '@/components/forms/inputs/Textarea'
 import useSubmit from '@/lib/hooks/useSubmit'
+import { tooltip } from '@/lib/tooltip'
 import { type RevisionComponentProps } from '@/lib/types'
 import { schema } from '@/lib/validation/schemas/revision'
 import { usePathname } from 'next/navigation'
@@ -58,7 +59,7 @@ export default function RevisionForm({
       {alert}
       <FormSection
         title="Mensaje de revisión"
-        description="Detalle el resultado de la revisión de la tarea."
+        description={tooltip.revision_form_data}
       >
         <Textarea
           name="content"
@@ -78,7 +79,7 @@ export default function RevisionForm({
             query,
           },
         }}
-        label={method === 'PUT' ? 'Actualizar' : 'Registrar'}
+        method={method}
       />
     </form>
   )

@@ -16,19 +16,23 @@ export function includesValue(strOrArr: string | string[], searchValue: string) 
   }
 }
 
-export function phone(phone: string) {
-  return `${phone.slice(0, 4)}-${phone.slice(4)}`
-}
-
-export function ci(ci: string) {
-  const result: string[] = []
-  const reversed = ci.split('').reverse()
-
-  while (reversed.length >= 3) {
-    const taken = reversed.splice(0, 3)
-    result.push(...taken, '.')
+export function format(value: string, type: 'ci' | 'phone') {
+  if (type === 'phone') {
+    return `${value.slice(0, 4)}-${value.slice(4)}`
   }
-  result.pop()
 
-  return `V-${result.reverse().join('')}`
+  if (type === 'ci') {
+    const result: string[] = []
+    const reversed = value.split('').reverse()
+
+    while (reversed.length >= 3) {
+      const taken = reversed.splice(0, 3)
+      result.push(...taken, '.')
+    }
+    result.pop()
+
+    return `V-${result.reverse().join('')}`
+  }
+
+  throw new Error('Type must be defined')
 }

@@ -24,12 +24,24 @@ export default async function MainLayout({
   }
 
   return (
-    <div className="flex min-h-full relative bg-base-200">
-      <Aside links={links} />
-      <div className="relative w-full flex-col sm:static">
+    <div className="drawer lg:drawer-open bg-base-200">
+      <input
+        id="aside"
+        type="checkbox"
+        className="drawer-toggle"
+      />
+      <div className="drawer-content">
         <Navbar />
         <main className="pb-32 sm:pb-20">{children}</main>
         <Footer />
+      </div>
+      <div className="drawer-side z-50">
+        <label
+          htmlFor="aside"
+          aria-label="Close sidebar"
+          className="drawer-overlay"
+        />
+        <Aside links={links} />
       </div>
     </div>
   )

@@ -12,4 +12,6 @@ export const schema = object({
   subtaskId: string(messages.string)
     .cuid(messages.cuid)
     .optional(),
+  filter: string(messages.string)
+    .optional(),
 })

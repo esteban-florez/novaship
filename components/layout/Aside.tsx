@@ -1,90 +1,55 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { Bars3Icon } from '@heroicons/react/24/outline'
 import AsideLink from './AsideLink'
-import { useEffect, useState } from 'react'
-import clsx from 'clsx'
+import { Bars3Icon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
+import { useState } from 'react'
 
 type Props = React.PropsWithChildren<{
   links: SidebarLinkWithSubmenu[]
 }>
 
-// TODO -> solo mantener 1 submenu abierto
-// TODO -> arreglar la transicion de la imagen cuando el aside esta oculto
-// TODO -> corregir el link activo
 export default function Aside({ links }: Props) {
-  const [active, setActive] = useState(true)
   const pathname = usePathname()
+  const [openDropdown, setOpenDropdown] = useState<null | string>(null)
 
-  useEffect(() => {
-    setActive(window.innerWidth > 768)
-  }, [])
-
-  useEffect(() => {
-    const toggleOnResize = () => {
-      if (window.innerWidth > 767) {
-        setActive(true)
-      } else {
-        setActive(false)
-      }
-    }
-
-    window.addEventListener('resize', toggleOnResize)
-
-    return () => {
-      window.removeEventListener('resize', toggleOnResize)
-    }
-  }, [])
-
-  const handleClick = () => {
-    setActive(window.innerWidth > 768)
-  }
-
-  const handleActivelink = (link: string) => {
-    const [, , path] = link.split('/')
+  const handleActivelinkPath = (link: string) => {
+    const [, , path] = link.split('?')[0].split('/')
     return link === pathname || (pathname.includes(path) && path !== '')
   }
 
+  const handleToggleAndActive = (link: string) => {
+    const isActive = handleActivelinkPath(link)
+    setOpenDropdown((prev) => (prev === link ? null : link))
+    return isActive
+  }
+
   return (
-    <aside
-      className={clsx(
-        'top-0 z-[100] h-screen flex-col flex-nowrap bg-white shadow-lg transition-all delay-150 duration-300 ease-out sm:sticky sm:flex',
-        {
-          'fixed w-screen sm:w-[17.8rem]': active,
-          'w-0 sm:w-32': !active,
-        }
-      )}
-    >
-      <div
-        className={clsx(
-          'pt-2 pb-0 text-center sm:ms-0 sm:gap-x-2',
-          !active && 'ms-6'
-        )}
-      >
-        <button
-          className={clsx(
-            'btn-ghost btn mx-auto sm:ms-0 sm:mt-0',
-            !active && '-ms-10'
-          )}
-          onClick={() => {
-            setActive(!active)
-          }}
+    <aside className="w-screen sm:w-60 min-h-screen bg-white shadow-lg">
+      <div className="flex items-center pt-2 pb-0 text-center sm:ms-0 sm:gap-x-2">
+        <label
+          htmlFor="aside"
+          aria-label="Close sidebar"
+          className="ms-2 sm:hidden btn-ghost btn drawer-button"
         >
-          <Bars3Icon className="h-6 w-6 sm:h-7 sm:w-7 text-black" />
-        </button>
-        <img
-          src="/logo.ico"
-          alt="logo."
-          className={clsx('mx-auto w-28', !active && 'hidden sm:block')}
-        />
+          <Bars3Icon className="h-6 w-6" />
+        </label>
+        <Link
+          href="/home"
+          className="w-full flex items-center justify-between me-4 sm:w-auto sm:mx-auto"
+        >
+          <p className="sm:hidden mb-0.5 text-3xl font-bold text-primary">
+            Novaship
+          </p>
+          <img
+            src="/logo.ico"
+            alt="logo."
+            className="w-12"
+          />
+        </Link>
       </div>
-      <ul
-        className={clsx(
-          'menu h-full flex-nowrap gap-2 py-2 pl-4 pr-0 shadow scrollbar',
-          !active && 'hidden sm:block'
-        )}
-      >
+      <ul className="menu flex-nowrap gap-2 py-2 pl-4 pr-0 scrollbar">
         {links
           .filter((link) => {
             link.visible ??= true
@@ -94,11 +59,8 @@ export default function Aside({ links }: Props) {
             <AsideLink
               key={link.href}
               link={link}
-              active={handleActivelink(link.href)}
-              iconOnly={active}
-              onClick={() => {
-                handleClick()
-              }}
+              onClick={handleToggleAndActive}
+              openDropdown={openDropdown}
             />
           ))}
       </ul>

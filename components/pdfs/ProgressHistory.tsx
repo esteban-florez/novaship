@@ -62,28 +62,29 @@ export const ProgressHistoryPDF = ({ progresses, recruitment }: Props) => {
         <View style={styles.header}>
           <Text>Novaship</Text>
         </View>
-        {progresses.map(progress => {
+        {progresses.map((progress) => {
           const s = progress.hours > 1 ? 's' : ''
 
           return (
-            <View key={progress.id} style={styles.section}>
+            <View
+              key={progress.id}
+              style={styles.section}
+            >
               <View style={styles.sectionHead}>
                 <Text style={styles.title}>
-                  {progress.title}{' '} - {progress.hours} hora{s}
+                  {progress.title} - {progress.hours} hora{s}
                 </Text>
                 <Text style={styles.status}>
                   {progressStatuses[progress.status]}
                 </Text>
               </View>
               <Text style={styles.time}>
-                Fecha de inicio: {format(progress.startsAt)}
+                Fecha de inicio: {format({ date: progress.startsAt })}
               </Text>
               <Text style={styles.time}>
-                Fecha de finalización: {format(progress.endsAt)}
+                Fecha de finalización: {format({ date: progress.endsAt })}
               </Text>
-              <Text style={styles.description}>
-                {progress.description}
-              </Text>
+              <Text style={styles.description}>{progress.description}</Text>
             </View>
           )
         })}

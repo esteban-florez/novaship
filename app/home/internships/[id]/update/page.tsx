@@ -6,6 +6,7 @@ import { getInternship } from '@/lib/data-fetching/internships'
 import { notFound } from 'next/navigation'
 import InternshipForm from '../../../../../components/internships/form-pages/InternshipForm'
 import prisma from '@/prisma/client'
+import { tooltip } from '@/lib/tooltip'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -21,12 +22,16 @@ export async function generateMetadata({ params: { id } }: PageContext) {
   }
 }
 
-export default async function UpdateInternshipPage({ params: { id } }: PageContext) {
+export default async function UpdateInternshipPage({
+  params: { id },
+}: PageContext) {
   const { id: userId } = await auth.user()
   const internship = await getInternship(id)
-  if (internship === null ||
+  if (
+    internship === null ||
     internship.instituteId !== userId ||
-    internship.status !== 'PENDING') {
+    internship.status !== 'PENDING'
+  ) {
     notFound()
   }
 
@@ -38,7 +43,7 @@ export default async function UpdateInternshipPage({ params: { id } }: PageConte
     <>
       <PageTitle
         title="Actualizar pasantía"
-        subtitle="Actualiza los datos de la pasantía antes de que sea aceptada por el estudiante."
+        subtitle={tooltip.internship_update}
         breadcrumbs={`${person.name} - ${grade.title}`}
       />
       <section className="flex flex-col gap-2 p-4 lg:flex-row lg:items-start">
@@ -47,9 +52,13 @@ export default async function UpdateInternshipPage({ params: { id } }: PageConte
             grades={grades}
             categories={categories}
             internship={internship}
+            url="/home/internships"
           />
         </InternshipFormLayout>
-        <PersonCard person={person} page="update" />
+        <PersonCard
+          person={person}
+          page="update"
+        />
       </section>
     </>
   )

@@ -1,11 +1,17 @@
 import { type InternshipWithRelations } from '@/lib/types'
 import AvatarIcon from '@/components/AvatarIcon'
-import { AcademicCapIcon, IdentificationIcon, InformationCircleIcon, ListBulletIcon, PresentationChartBarIcon } from '@heroicons/react/24/outline'
+import {
+  AcademicCapIcon,
+  IdentificationIcon,
+  InformationCircleIcon,
+  ListBulletIcon,
+  PresentationChartBarIcon,
+} from '@heroicons/react/24/outline'
 import { getInternshipStage } from '@/lib/utils/tables'
 import { stages } from '@/lib/translations'
 import Link from 'next/link'
 import IconData from '../IconData'
-import { ci } from '@/lib/utils/text'
+import { format } from '@/lib/utils/text'
 import InternshipProgress from './InternshipProgress'
 
 type Props = React.PropsWithChildren<{
@@ -13,7 +19,10 @@ type Props = React.PropsWithChildren<{
   withProgressBar?: boolean
 }>
 
-export default function InternshipCard({ internship, withProgressBar = false }: Props) {
+export default function InternshipCard({
+  internship,
+  withProgressBar = false,
+}: Props) {
   const { person, grade } = internship
   const isAccepted = internship.status !== 'ACCEPTED'
   const stage = getInternshipStage(internship)
@@ -22,7 +31,7 @@ export default function InternshipCard({ internship, withProgressBar = false }: 
     {
       Icon: IdentificationIcon,
       label: 'Nro de cédula:',
-      value: ci(person.ci),
+      value: format(person.ci, 'ci'),
     },
     {
       Icon: AcademicCapIcon,
@@ -37,7 +46,10 @@ export default function InternshipCard({ internship, withProgressBar = false }: 
   ]
 
   return (
-    <div key={person.id} className="card bg-white shadow break-inside-avoid">
+    <div
+      key={person.id}
+      className="card bg-white shadow break-inside-avoid"
+    >
       <div className="card-body">
         <div className="flex items-center gap-2">
           <AvatarIcon image={person.image} />
@@ -52,12 +64,20 @@ export default function InternshipCard({ internship, withProgressBar = false }: 
         </div>
         <ul className="space-y-1 py-3">
           {data.map(({ Icon, value, label }) => (
-            <IconData key={label} icon={Icon} label={label} data={value} />
+            <IconData
+              key={label}
+              icon={Icon}
+              label={label}
+              data={value}
+            />
           ))}
         </ul>
         {withProgressBar && (
           <>
-            <InternshipProgress internship={internship} stage={stage} />
+            <InternshipProgress
+              internship={internship}
+              stage={stage}
+            />
             <div className="mt-2" />
           </>
         )}

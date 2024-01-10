@@ -36,7 +36,7 @@ export default function NotificationsSection({ notifications }: Props) {
               )
             : (
               <div className="col-span-full">
-                <EmptyContent title="No tienes notificaciones." />
+                <EmptyContent title="No tiene notificaciones." />
               </div>
               )}
         </div>

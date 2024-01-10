@@ -19,6 +19,7 @@ import {
 import Carousel from '@/components/carousel/Carousel'
 import clsx from 'clsx'
 import { type OffersFull, type OffersTab } from '@/lib/types'
+import { tooltip } from '@/lib/tooltip'
 
 export const metadata: Metadata = {
   title: 'Ofertas',
@@ -166,7 +167,7 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
     <>
       <PageTitle
         title="Ofertas laborales"
-        subtitle="Encuentra ofertas que se adapten a tus habilidades y experiencias."
+        subtitle={tooltip.offer}
       >
         {type === 'COMPANY' && (
           <Link href="/home/offers/create">

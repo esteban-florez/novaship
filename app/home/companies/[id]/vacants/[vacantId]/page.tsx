@@ -9,6 +9,7 @@ import { MagnifyingGlassIcon, PencilIcon } from '@heroicons/react/24/outline'
 import VacantStatus from './VacantStatus'
 import BasicData from '@/components/vacants-details/BasicData'
 import SkillsGrades from '@/components/vacants-details/SkillsGrades'
+import { tooltip } from '@/lib/tooltip'
 
 export async function generateMetadata({ params: { vacantId } }: Context) {
   const vacant = await getVacant(vacantId)
@@ -30,7 +31,9 @@ interface Context {
   }
 }
 
-export default async function VacantDetailsPage({ params: { vacantId } }: Context) {
+export default async function VacantDetailsPage({
+  params: { vacantId },
+}: Context) {
   const { id: userId, type } = await auth.user()
   const vacant = await getVacant(vacantId)
 
@@ -48,7 +51,7 @@ export default async function VacantDetailsPage({ params: { vacantId } }: Contex
     <>
       <PageTitle
         title="Detalle del cupo"
-        subtitle="Aquí puedes ver todos los datos del cupo, así como editarlo."
+        subtitle={tooltip.internship_vacant_id}
         breadcrumbs={`${job.title} - ${company.name}`}
       />
       <TwoColumnsLayout>

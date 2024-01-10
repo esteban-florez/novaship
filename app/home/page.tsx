@@ -1,10 +1,9 @@
 import BarGraphic from '@/components/graphics/BarGraphic'
 import PieGraphic from '@/components/graphics/PieGraphic'
-import GrowthIcon from '@/components/home/GrowthIcon'
 import HomeCarousel from '@/components/home/HomeCarousel'
 import MiniCard from '@/components/home/MiniCard'
 import NotificationsSection from '@/components/home/NotificationsSection'
-import QuickAccess from '@/components/home/QuickAccess'
+import QuickAccessItem from '@/components/home/QuickAccessItem'
 import StatisticsGraphSection from '@/components/home/StatisticsGraphSection'
 import ExpiringOffersSection from '@/components/home/company/ExpiringOffersSection'
 import GraphsSection from '@/components/home/institute/GraphsSection'
@@ -29,6 +28,7 @@ import {
 } from '@/lib/data-fetching/home/user'
 import { getNotifications } from '@/lib/notifications/get'
 import getQuickAccessItems from '@/lib/quickAcessItems'
+import { taskStatuses } from '@/lib/translations'
 import { getAllMonths } from '@/lib/utils/date'
 import { growthComparedLastMonth } from '@/lib/utils/graph'
 import { checkEmpty } from '@/lib/utils/verify'
@@ -85,7 +85,7 @@ export default async function HomePage() {
     }
 
     const projectsData: ChartData<'pie'> = {
-      labels: ['En progreso', 'Completadas', 'Revisión', 'Por empezar'],
+      labels: Object.values(taskStatuses),
       datasets: [
         {
           label: 'Tareas',
@@ -104,7 +104,16 @@ export default async function HomePage() {
     return (
       <>
         <HomeCarousel />
-        <QuickAccess items={quickAccessItems} />
+        <section className="p-4 shadow-lg flex flex-wrap gap-2">
+          {quickAccessItems.map((item) => {
+            return (
+              <QuickAccessItem
+                key={item.href}
+                item={item}
+              />
+            )
+          })}
+        </section>
         <NotificationsSection
           notifications={notifications.map(({ display, id, createdAt }) => ({
             ...display,
@@ -255,7 +264,16 @@ export default async function HomePage() {
     return (
       <>
         <HomeCarousel />
-        <QuickAccess items={quickAccessItems} />
+        <section className="p-4 shadow-lg flex flex-wrap gap-2">
+          {quickAccessItems.map((item) => {
+            return (
+              <QuickAccessItem
+                key={item.href}
+                item={item}
+              />
+            )
+          })}
+        </section>
         <section className="px-4 pt-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
           {result.map((graph, i) => {
             return (
@@ -264,9 +282,7 @@ export default async function HomePage() {
                 title={cards[i]}
                 count={graph.total}
                 percentage={graph.percentage}
-              >
-                <GrowthIcon comparision={graph.comparision} />
-              </MiniCard>
+              />
             )
           })}
           <MiniCard
@@ -318,7 +334,16 @@ export default async function HomePage() {
     return (
       <>
         <HomeCarousel />
-        <QuickAccess items={quickAccessItems} />
+        <section className="p-4 shadow-lg flex flex-wrap gap-2">
+          {quickAccessItems.map((item) => {
+            return (
+              <QuickAccessItem
+                key={item.href}
+                item={item}
+              />
+            )
+          })}
+        </section>
         <NotificationsSection
           notifications={notifications.map(({ display, id, createdAt }) => ({
             ...display,
@@ -451,7 +476,16 @@ export default async function HomePage() {
 
     return (
       <>
-        <QuickAccess items={quickAccessItems} />
+        <section className="p-4 shadow-lg flex flex-wrap gap-2">
+          {quickAccessItems.map((item) => {
+            return (
+              <QuickAccessItem
+                key={item.href}
+                item={item}
+              />
+            )
+          })}
+        </section>
         <GraphsSection
           graphs={graphs}
           data={result}

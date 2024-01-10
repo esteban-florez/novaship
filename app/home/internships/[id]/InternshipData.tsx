@@ -18,15 +18,18 @@ type Props = React.PropsWithChildren<{
   }
 }>
 
-export default function InternshipData({ grade, internship, institute, recruitment }: Props) {
+export default function InternshipData({
+  grade,
+  internship,
+  institute,
+  recruitment,
+}: Props) {
   return (
     <div className="mt-4">
       {grade !== undefined && (
         <p>
           Carrera de la pasantía:
-          <span className="font-bold">
-            {' ' + grade.title}
-          </span>
+          <span className="font-bold">{' ' + grade.title}</span>
         </p>
       )}
       {recruitment === undefined
@@ -34,7 +37,7 @@ export default function InternshipData({ grade, internship, institute, recruitme
           <p>
             Fecha:
             <span className="font-bold">
-              {' ' + format(internship.createdAt)}
+              {' ' + format({ date: internship.createdAt })}
             </span>
           </p>
           )
@@ -43,22 +46,20 @@ export default function InternshipData({ grade, internship, institute, recruitme
             <p>
               Fecha de inicio:
               <span className="font-bold">
-                {' ' + format(recruitment.startsAt as Date)}
+                {' ' + format({ date: recruitment.startsAt as Date })}
               </span>
             </p>
             <p>
               Fecha de finalización:
               <span className="font-bold">
-                {' ' + format(recruitment.endsAt as Date)}
+                {' ' + format({ date: recruitment.endsAt as Date })}
               </span>
             </p>
           </>
           )}
       <p>
         Horas totales:
-        <span className="font-bold">
-          {` ${internship.hours} horas`}
-        </span>
+        <span className="font-bold">{` ${internship.hours} horas`}</span>
       </p>
       {institute !== undefined && (
         <p>

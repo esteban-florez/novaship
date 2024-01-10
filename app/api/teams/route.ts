@@ -5,6 +5,7 @@ import { randomCode } from '@/lib/utils/code'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/team'
 import prisma from '@/prisma/client'
+import { Interested } from '@prisma/client'
 import { notFound } from 'next/navigation'
 import { NextResponse, type NextRequest } from 'next/server'
 
@@ -27,7 +28,7 @@ export async function POST(request: NextRequest) {
     const code = randomCode('team')
     const parsedWithCode = { ...parsed, code }
     const { membersIds, ...rest } = parsedWithCode
-    const invitations = membersIds.map(personId => ({ personId }))
+    const invitations = membersIds.map(personId => ({ personId, interested: Interested.COMPANY }))
 
     const team = await prisma.team.create({
       data: {

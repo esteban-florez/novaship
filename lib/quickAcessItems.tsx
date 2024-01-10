@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function getQuickAccessItems({ userId, type }: Props) {
-  let items: QuickAccessProps = []
+  let items: QuickAccessProps[] = []
   if (type === 'PERSON') {
     items = [
       {
