@@ -41,6 +41,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
         return {
           personId: invitation,
           teamId: team.id,
+          interested: 'COMPANY',
         }
       }),
     })
