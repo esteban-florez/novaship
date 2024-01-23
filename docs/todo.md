@@ -55,3 +55,15 @@
 # Current
 
 - No carga todos los proyectos en el perfil.
+
+# Clase con Ana
+
+- Manual de usuario
+- Manual de implantación
+- Manual de instalación
+- Pruebas piloto con usuarios finales de ejemplo
+- Capacitacion a usuarios finales
+- Instalación del sistema
+- Memoria fotográfica de lo que hagamos
+- En el informe se da una breve descripción de la instalación del sistema. En el manual de instalación se pone detallado, con screenshots. (host, ip, domain, protocol, xddd)
+- Requerimientos mínimos para la instalación del sistema (el harshwguar y el sosguar).
