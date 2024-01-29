@@ -1,4 +1,5 @@
 import PageTitle from '@/components/PageTitle'
+import DownloadBackup from './DownloadBackup'
 
 export default function BackupsPage() {
   return (
@@ -11,7 +12,7 @@ export default function BackupsPage() {
             <b>Recomendación: </b>
             Después de descargar el respaldo, guárdelo en un sitio seguro en su computadora.
           </p>
-          <button className="btn btn-primary btn-block mt-4">Respaldar base de datos</button>
+          <DownloadBackup />
         </div>
         <div className="bg-white rounded-lg p-4 mx-auto shadow">
           <h3 className="font-bold tracking-tighter text-2xl text-center mb-0">Restauración de base de datos</h3>
