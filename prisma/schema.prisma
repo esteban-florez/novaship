@@ -557,7 +557,7 @@ model Admin {
   id         String   @id @default(cuid())
   name       String
   email      String   @unique
-  image      String
+  image      String?
   // Log        Log[]
   authUser   AuthUser @relation(fields: [authUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authUserId String   @unique

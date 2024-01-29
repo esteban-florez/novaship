@@ -34,6 +34,7 @@ export const routes: Rec = {
   apply: 'Buscar cupos',
   invitations: 'Invitaciones',
   stats: 'Estadísticas',
+  backups: 'Base de datos',
 }
 
 export const userTypes = {

@@ -13,6 +13,7 @@ import {
   InboxStackIcon,
   EnvelopeIcon,
   ChartPieIcon,
+  CircleStackIcon,
 } from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
@@ -188,6 +189,12 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/admin/stats',
       title: 'Estadísticas',
       icon: <ChartPieIcon className="h-6 w-6" />,
+      visible: admin,
+    },
+    {
+      href: '/home/admin/backups',
+      title: 'Base de datos',
+      icon: <CircleStackIcon className="h-6 w-6" />,
       visible: admin,
     },
   ]
