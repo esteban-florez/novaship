@@ -8,7 +8,7 @@ import { notify } from '@/lib/notifications/notify'
 import { object } from 'zod'
 import { defaults } from '@/lib/validation/schemas/defaults'
 import { getTeamLeader } from '@/lib/utils/tables'
-import { Interested } from '@prisma/client'
+import { type Interested } from '@prisma/client'
 
 export async function POST(request: NextRequest) {
   let data
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     }
 
     const leader = getTeamLeader(team)
-    const interested = leader.id === userId ? Interested.COMPANY : Interested.PERSON
+    const interested: Interested = leader.id === userId ? 'COMPANY' : 'PERSON'
 
     const { projectId, ...rest } = parsed
     await prisma.invitation.create({
