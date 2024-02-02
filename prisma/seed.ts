@@ -4,12 +4,12 @@ import path from 'path'
 import { pathToFileURL } from 'url'
 
 export const seederQueries = {
-  persons: 30,
-  companies: 15,
-  institute: 15,
-  internships: 20,
-  hirings: 15,
-  interviews: 15,
+  persons: 1,
+  companies: 1,
+  institute: 1,
+  internships: 1,
+  hirings: 1,
+  interviews: 1,
 }
 
 async function seed() {

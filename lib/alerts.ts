@@ -193,4 +193,12 @@ export const alerts: AlertList = {
     type: 'info',
     message: 'Ha sido redirigido.',
   },
+  backup_failed: {
+    type: 'error',
+    message: 'La restauracioń ha fallado, verifique el archivo de respaldo e intente de nuevo.',
+  },
+  backup_success: {
+    type: 'success',
+    message: 'Se ha restaurado la base de datos con éxito.',
+  },
 }

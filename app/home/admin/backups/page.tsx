@@ -1,5 +1,6 @@
 import PageTitle from '@/components/PageTitle'
 import DownloadBackup from './DownloadBackup'
+import UploadBackup from './UploadBackup'
 
 export default function BackupsPage() {
   return (
@@ -15,12 +16,14 @@ export default function BackupsPage() {
           <DownloadBackup />
         </div>
         <div className="bg-white rounded-lg p-4 mx-auto shadow">
-          <h3 className="font-bold tracking-tighter text-2xl text-center mb-0">Restauración de base de datos</h3>
+          <h3 className="font-bold tracking-tighter text-2xl text-center mb-0">
+            Restauración de base de datos
+          </h3>
           <p className="alert bg-red-100 text-red-600 border border-red-500 text-base max-w-sm mx-auto mt-2 block">
             <b>Atención: </b>
             Se perderán todos los cambios realizados a la base de datos desde la fecha del respaldo subido.
           </p>
-          <button className="btn btn-error btn-block mt-4">Restaurar base de datos</button>
+          <UploadBackup />
         </div>
       </section>
     </>
