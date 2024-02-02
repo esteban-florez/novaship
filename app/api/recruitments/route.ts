@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth/api'
 import { canCreateRecruitment } from '@/lib/auth/permissions'
 import { getInternship } from '@/lib/data-fetching/internships'
+import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
 import { notify } from '@/lib/notifications/notify'
 import { url } from '@/lib/utils/url'
@@ -63,6 +64,13 @@ export async function POST(request: NextRequest) {
       const { internship } = recruitment
       const { person: { authUserId }, grade } = internship
 
+      await logEvent({
+        title: 'Reclutamiento',
+        description: `El reclutamiento "${recruitment.vacant.description}" ha sido registrado`,
+        status: 'Success',
+        authUserId,
+      })
+
       const notification = {
         grade: grade.title,
         company: name,
@@ -94,6 +102,13 @@ export async function POST(request: NextRequest) {
     const recruitment = await checkAndCreate(parsed, companyId, internshipId)
     const { internship: { person }, vacant: { job } } = recruitment
 
+    await logEvent({
+      title: 'Reclutamiento',
+      description: `El reclutamiento "${recruitment.vacant.description}" ha sido registrado`,
+      status: 'Success',
+      authUserId,
+    })
+
     const notification = {
       job: job.title,
       student: person.name,
@@ -103,6 +118,13 @@ export async function POST(request: NextRequest) {
 
     return redirect
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Reclutamiento',
+      description: 'El reclutamiento no pudo ser registrado',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }

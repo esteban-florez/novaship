@@ -1,4 +1,4 @@
-import { handleRequest } from '@/lib/auth/api'
+import { auth, handleRequest } from '@/lib/auth/api'
 import lucia from '@/lib/auth/lucia'
 import sendRecoveryEmail from '@/lib/emails/sendRecoveryEmail'
 import { handleError } from '@/lib/errors/api'
@@ -7,6 +7,7 @@ import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/login'
 import prisma from '@/prisma/client'
 import { NextResponse, type NextRequest } from 'next/server'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function POST(request: NextRequest) {
   // DRY 10
@@ -41,6 +42,14 @@ export async function POST(request: NextRequest) {
     const session = await lucia.createSession(key.userId)
     authRequest.setSession(session)
 
+    const { authUserId, name } = await auth.user(request)
+    await logEvent({
+      title: 'Inicio de sesión',
+      description: `El usuario "${name}" ha iniciado sesión`,
+      status: 'Success',
+      authUserId,
+    })
+
     return redirectToHome
   } catch (error) {
     const { message } = error as { message: string }
@@ -59,12 +68,26 @@ export async function POST(request: NextRequest) {
         },
       })
 
+      const { authUserId, name } = await auth.user(request)
+      await logEvent({
+        title: 'Inicio de sesión',
+        description: `El usuario "${name}" no pudo iniciar sesión`,
+        status: 'Error',
+        authUserId,
+      })
+
       if (failed === 3) {
         const { resetId, username } = await createPasswordReset(userId)
         await sendRecoveryEmail(emailFailed, resetId, username)
       }
 
       if (failed >= 3) {
+        await logEvent({
+          title: 'Inicio de sesión',
+          description: `El usuario "${name}" ha sido bloqueado por tener demasiados intentos fallidos`,
+          status: 'Warning',
+          authUserId,
+        })
         return NextResponse.redirect(url('/auth/login?modal=blocked'))
       }
 

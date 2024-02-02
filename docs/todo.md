@@ -1,5 +1,7 @@
 # To-Do
 
+- Perfil de administrador pendiente.
+- Chequear el perfil de los usuarios.
 - Bug de overflow en mobile, espacio en blanco a la derecha.
 - Validación de todos los campos únicos.
 - Guiar al usuario por la aplicación.

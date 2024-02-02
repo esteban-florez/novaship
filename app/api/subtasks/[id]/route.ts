@@ -7,6 +7,7 @@ import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { deleteSubtask, getMySubtask } from '@/lib/data-fetching/subtask'
 import collect from '@/lib/utils/collection'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -57,8 +58,22 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       })
     }
 
+    await logEvent({
+      title: 'Subtarea',
+      description: `La subtarea "${parsed.title}" ha sido actualizada`,
+      status: 'Success',
+      authUserId: userId,
+    })
+
     return NextResponse.redirect(url(`/home/projects/${subtask.task.projectId}/tasks?id=${subtask.taskId}&filtered=${parsed.filter as string}&alert=subtask_updated`))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Subtarea',
+      description: 'La subtarea no pudo ser actualizada',
+      status: 'Error',
+      authUserId,
+    })
     handleError(error, data)
   }
 }
@@ -77,8 +92,22 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       notFound()
     }
 
+    await logEvent({
+      title: 'Subtarea',
+      description: `La subtarea "${subtask.title}" ha sido eliminada`,
+      status: 'Warning',
+      authUserId: userId,
+    })
+
     return NextResponse.redirect(url(`/home/projects/${subtask?.task.projectId}/tasks?id=${subtask.taskId}&alert=subtask_deleted`))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Subtarea',
+      description: 'La subtarea no pudo ser eliminada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error)
   }
 }

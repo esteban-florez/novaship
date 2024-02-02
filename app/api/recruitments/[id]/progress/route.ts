@@ -7,12 +7,13 @@ import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { recruitmentCompletedHours } from '@/lib/utils/tables'
 import { notify } from '@/lib/notifications/notify'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function POST(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
     data = await request.json()
-    const { name, type } = await auth.user(request)
+    const { name, type, authUserId } = await auth.user(request)
 
     const recruitment = await prisma.recruitment.findUnique({
       where: { id },
@@ -52,6 +53,13 @@ export async function POST(request: NextRequest, { params: { id } }: PageContext
       },
     })
 
+    await logEvent({
+      title: 'Progreso',
+      description: 'El progreso ha sido registrado',
+      status: 'Success',
+      authUserId,
+    })
+
     const { internship: { person, institute, grade } } = recruitment
 
     const receivers = [person.authUserId, institute.authUserId]
@@ -76,6 +84,13 @@ export async function POST(request: NextRequest, { params: { id } }: PageContext
       url(`home/internships/${recruitment.id}/progress?alert=progress_created`)
     )
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Progreso',
+      description: 'El progreso no pudo ser registrado',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }

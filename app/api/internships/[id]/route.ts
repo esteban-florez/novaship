@@ -1,4 +1,5 @@
 import { auth } from '@/lib/auth/api'
+import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/internships/create'
@@ -35,10 +36,24 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
+    await logEvent({
+      title: 'Pasantía',
+      description: 'La pasantía ha sido actualizada',
+      status: 'Error',
+      authUserId: userId,
+    })
+
     return NextResponse.redirect(
       url(`home/internships/${id}?alert=internship_updated`)
     )
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Pasantía',
+      description: 'La pasantía no pudo ser actualizada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }
@@ -58,10 +73,24 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
 
     await prisma.internship.delete(query)
 
+    await logEvent({
+      title: 'Pasantía',
+      description: 'La pasantía ha sido eliminada',
+      status: 'Warning',
+      authUserId: userId,
+    })
+
     return NextResponse.redirect(
       url(`home/institutes/${userId}/internships?alert=internship_deleted`)
     )
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Pasantía',
+      description: 'La pasantía no pudo ser eliminada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error)
   }
 }

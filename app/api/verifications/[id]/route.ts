@@ -1,4 +1,5 @@
 import { auth } from '@/lib/auth/api'
+import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
 import { defaults } from '@/lib/validation/schemas/defaults'
 import prisma from '@/prisma/client'
@@ -22,7 +23,6 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
 
     const { type } = await request.json()
     const parsed = schema.parse({ type, id })
-
     const query = {
       where: { id },
       data: { verifiedAt: new Date() },
@@ -34,8 +34,24 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
       await prisma.institute.update(query)
     }
 
+    const userType = parsed.type === 'COMPANY' ? 'empresa' : 'institución'
+    await logEvent({
+      title: 'Verificación',
+      description: `La ${userType} ha sido verificada`,
+      status: 'Success',
+      authUserId: user.authUserId,
+    })
+
     return redirect('/home/admin/verifications?alert=verified_user')
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Verificación',
+      description: 'La empresa o institución no pudo ser verificada',
+      status: 'Error',
+      authUserId,
+    })
+
     return handleError(error)
   }
 }

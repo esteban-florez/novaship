@@ -6,6 +6,7 @@ import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { connect } from '@/lib/utils/queries'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -30,10 +31,24 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    await logEvent({
+      title: 'Vacante',
+      description: `La vacante "${parsed.description}" ha sido registrada`,
+      status: 'Success',
+      authUserId: userId,
+    })
+
     return NextResponse.redirect(
       url(`home/companies/${userId}/vacants/${id}?alert=vacant_created`)
     )
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Vacante',
+      description: 'La vacante no pudo ser registrada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }

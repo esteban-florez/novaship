@@ -6,6 +6,7 @@ import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { getTaskWhereImIn } from '@/lib/data-fetching/task'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -51,6 +52,13 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    await logEvent({
+      title: 'Subtarea',
+      description: `La subtarea "${parsed.title}" ha sido registrada`,
+      status: 'Success',
+      authUserId: userId,
+    })
+
     await prisma.task.update({
       where: {
         id: parsed.taskId,
@@ -62,6 +70,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks?id=${task.id}&filtered=${parsed.filter as string}&alert=subtask_created`))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Subtarea',
+      description: 'La subtarea no pudo ser registrada',
+      status: 'Error',
+      authUserId,
+    })
     handleError(error, data)
   }
 }

@@ -14,6 +14,7 @@ import {
   EnvelopeIcon,
   ChartPieIcon,
   CircleStackIcon,
+  Square3Stack3DIcon,
 } from '@heroicons/react/24/outline'
 
 export function sidebarLinks(user: UserWithType) {
@@ -195,6 +196,12 @@ export function sidebarLinks(user: UserWithType) {
       href: '/home/admin/backups',
       title: 'Base de datos',
       icon: <CircleStackIcon className="h-6 w-6" />,
+      visible: admin,
+    },
+    {
+      href: '/home/admin/logs',
+      title: 'Bitácora',
+      icon: <Square3Stack3DIcon className="h-6 w-6" />,
       visible: admin,
     },
   ]

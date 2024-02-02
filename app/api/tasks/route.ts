@@ -6,6 +6,7 @@ import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { getMyProject } from '@/lib/data-fetching/project'
 import prisma from '@/prisma/client'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -42,6 +43,13 @@ export async function POST(request: NextRequest) {
         },
       })
 
+      await logEvent({
+        title: 'Tarea',
+        description: `La tarea "${parsed.title}" ha sido registrada`,
+        status: 'Success',
+        authUserId: userId,
+      })
+
       return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks?id=${task.id}&alert=task_created`))
     }
 
@@ -54,8 +62,22 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    await logEvent({
+      title: 'Tarea',
+      description: `La tarea "${parsed.title}" ha sido registrada`,
+      status: 'Success',
+      authUserId: userId,
+    })
+
     return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks?id=${task.id}&alert=task_created`))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Tarea',
+      description: 'La tarea no pudo ser registrada',
+      status: 'Error',
+      authUserId,
+    })
     handleError(error, data)
   }
 }

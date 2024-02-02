@@ -1,4 +1,5 @@
 import { auth } from '@/lib/auth/api'
+import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
 import { notify } from '@/lib/notifications/notify'
 import { randomCode } from '@/lib/utils/code'
@@ -60,6 +61,13 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    await logEvent({
+      title: 'Equipo',
+      description: `El equipo "${parsed.name}" ha sido registrado`,
+      status: 'Success',
+      authUserId: id,
+    })
+
     for (const authUser of authUsers) {
       await notify('invitation-sent', authUser.id, {
         user: name,
@@ -69,6 +77,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.redirect(url(`/home/teams/${team.id}?alert=team_created`))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Equipo',
+      description: 'El equipo no pudo ser registrado',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }

@@ -5,6 +5,7 @@ import { url } from '@/lib/utils/url'
 import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/api'
 import { getExpirationDate } from '@/lib/validation/expiration-dates'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -32,12 +33,26 @@ export async function POST(request: NextRequest) {
         },
       })
 
+      await logEvent({
+        title: 'Oferta',
+        description: `La oferta "${parsed.title}" ha sido registrada`,
+        status: 'Success',
+        authUserId: id,
+      })
+
       return NextResponse.redirect(url(`/home/offers/${offerId}?alert=offer_created`))
     }
 
     // TODO -> revisar que alerta colocar.
     return NextResponse.redirect(url('/home/offers'))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Oferta',
+      description: 'La oferta no pudo ser registrada',
+      status: 'Error',
+      authUserId,
+    })
     handleError(error, data)
   }
 }

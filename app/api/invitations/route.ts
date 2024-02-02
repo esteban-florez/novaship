@@ -9,6 +9,7 @@ import { object } from 'zod'
 import { defaults } from '@/lib/validation/schemas/defaults'
 import { getTeamLeader } from '@/lib/utils/tables'
 import { type Interested } from '@prisma/client'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -78,12 +79,26 @@ export async function POST(request: NextRequest) {
       teamId: team.id,
     })
 
+    await logEvent({
+      title: 'Invitación',
+      description: `La invitación al equipo "${team.name}" ha sido registrada`,
+      status: 'Success',
+      authUserId: userId,
+    })
+
     if (projectId == null) {
       return NextResponse.redirect(url(`/home/teams/${parsed.teamId}?alert=invitation_sent`))
     }
 
     return NextResponse.redirect(url(`/home/projects/${projectId}?alert=invitation_sent`))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Invitación',
+      description: 'La invitación no pudo ser registrada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }

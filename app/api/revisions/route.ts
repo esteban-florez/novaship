@@ -7,6 +7,7 @@ import { url } from '@/lib/utils/url'
 import { getMyTask } from '@/lib/data-fetching/task'
 import { notFound } from 'next/navigation'
 import { getMySubtask } from '@/lib/data-fetching/subtask'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -26,6 +27,13 @@ export async function POST(request: NextRequest) {
           ...parsed,
           taskId: task?.id,
         },
+      })
+
+      await logEvent({
+        title: 'Revisión',
+        description: `La revisión "${parsed.content}" ha sido registrada`,
+        status: 'Success',
+        authUserId: id,
       })
 
       return NextResponse.redirect(
@@ -48,6 +56,13 @@ export async function POST(request: NextRequest) {
         },
       })
 
+      await logEvent({
+        title: 'Revisión',
+        description: `La revisión "${parsed.content}" ha sido registrada`,
+        status: 'Success',
+        authUserId: id,
+      })
+
       return NextResponse.redirect(
         url(
           `home/projects/${subtask.task.projectId}/tasks?id=${subtask.task.id}&subtaskId=${subtask.id}&filtered=${parsed.filter as string}&alert=subtask_revision_created`
@@ -57,6 +72,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.redirect(url('home/projects'))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Revisión',
+      description: 'La revisión no pudo ser registrada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }

@@ -6,6 +6,7 @@ import { auth } from '@/lib/auth/api'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { notify } from '@/lib/notifications/notify'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -21,6 +22,13 @@ export async function POST(request: NextRequest) {
           personId: userId,
           offerId: parsed.offerId,
         },
+      })
+
+      await logEvent({
+        title: 'Postulación',
+        description: 'La postulación ha sido registrada',
+        status: 'Success',
+        authUserId: userId,
       })
 
       return NextResponse.redirect(url(`/home/offers/${parsed.offerId}?alert=offer_applied`))
@@ -56,11 +64,25 @@ export async function POST(request: NextRequest) {
         offerId: parsed.offerId,
       })
 
+      await logEvent({
+        title: 'Postulación',
+        description: 'La postulación ha sido registrada',
+        status: 'Success',
+        authUserId: userId,
+      })
+
       return NextResponse.redirect(url(`/home/offers/${parsed.offerId}?alert=offer_user_postulation`))
     }
 
     notFound()
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Postulación',
+      description: 'La postulación no pudo ser registrada',
+      status: 'Error',
+      authUserId,
+    })
     handleError(error, data)
   }
 }

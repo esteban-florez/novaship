@@ -7,19 +7,20 @@ import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import collect from '@/lib/utils/collection'
 import { getExpirationDate } from '@/lib/validation/expiration-dates'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const activeUser = await auth.user(request)
+    const { authUserId } = await auth.user(request)
 
     const offer = await prisma.offer.findFirst({
       where: {
         AND: [
           { id },
-          { companyId: activeUser.id },
+          { companyId: authUserId },
         ],
       },
       include: {
@@ -65,21 +66,35 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
+    await logEvent({
+      title: 'Oferta',
+      description: `La oferta "${parsed.title}" ha sido actualizada`,
+      status: 'Success',
+      authUserId,
+    })
+
     return NextResponse.redirect(url(`/home/offers/${id}?alert=offer_updated`))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Oferta',
+      description: 'La oferta no pudo ser actualizada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }
 
 export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
-    const activeUser = await auth.user(request)
+    const { authUserId } = await auth.user(request)
 
     const offer = await prisma.offer.findFirst({
       where: {
         AND: [
           { id },
-          { companyId: activeUser.id },
+          { companyId: authUserId },
         ],
       },
     })
@@ -92,8 +107,22 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       where: { id },
     })
 
+    await logEvent({
+      title: 'Oferta',
+      description: `La oferta "${offer.title}" ha sido eliminada`,
+      status: 'Success',
+      authUserId,
+    })
+
     return NextResponse.redirect(url('/home/offers?alert=offer_deleted'))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Oferta',
+      description: 'La oferta no pudo ser eliminada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error)
   }
 }

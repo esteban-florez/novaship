@@ -7,6 +7,7 @@ import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { randomCode } from '@/lib/utils/code'
 import { storeFile } from '@/lib/storage/storeFile'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -75,12 +76,26 @@ export async function POST(request: NextRequest) {
       }))
     }
 
+    await logEvent({
+      title: 'Proyecto',
+      description: `El proyecto "${parsed.title}" ha sido registrado`,
+      status: 'Success',
+      authUserId: id,
+    })
+
     if (projectId != null) {
       return NextResponse.redirect(url(`home/projects/${projectId}?alert=project_created`))
     }
 
     return NextResponse.redirect(url('home/projects'))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Proyecto',
+      description: 'El proyecto no pudo ser registrado',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }

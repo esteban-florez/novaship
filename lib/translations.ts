@@ -35,6 +35,7 @@ export const routes: Rec = {
   invitations: 'Invitaciones',
   stats: 'Estadísticas',
   backups: 'Base de datos',
+  logs: 'Registros',
 }
 
 export const userTypes = {

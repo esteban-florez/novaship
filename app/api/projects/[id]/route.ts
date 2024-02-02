@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation'
 import collect from '@/lib/utils/collection'
 import { deleteProject, getMyProject } from '@/lib/data-fetching/project'
 import { storeFile } from '@/lib/storage/storeFile'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -90,8 +91,22 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       })
     }
 
+    await logEvent({
+      title: 'Proyecto',
+      description: `El proyecto "${parsed.title}" ha sido registrado`,
+      status: 'Success',
+      authUserId: userId,
+    })
+
     return NextResponse.redirect(url(`home/projects/${project.id}?alert=project_updated`))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Proyecto',
+      description: 'El proyecto no pudo ser actualizado',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }
@@ -99,6 +114,10 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
     const { id: userId } = await auth.user(request)
+    const project = await prisma.project.findFirst({
+      where: { id },
+      select: { title: true },
+    })
 
     // DRY My records
     await deleteProject({
@@ -120,8 +139,22 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       },
     })
 
+    await logEvent({
+      title: 'Proyecto',
+      description: `El proyecto "${project?.title ?? ''}" ha sido eliminado`,
+      status: 'Warning',
+      authUserId: userId,
+    })
+
     return NextResponse.redirect(url('/home/projects?alert=project_deleted'))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Proyecto',
+      description: 'El proyecto no pudo ser eliminado',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error)
   }
 }

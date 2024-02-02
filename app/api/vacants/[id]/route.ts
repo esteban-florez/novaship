@@ -1,4 +1,5 @@
 import { auth } from '@/lib/auth/api'
+import logEvent from '@/lib/data-fetching/log'
 import { getVacant } from '@/lib/data-fetching/vacants'
 import { handleError } from '@/lib/errors/api'
 import { set } from '@/lib/utils/queries'
@@ -33,10 +34,24 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
       },
     })
 
+    await logEvent({
+      title: 'Vacante',
+      description: `La vacante "${parsed.description}" ha sido actualizada`,
+      status: 'Success',
+      authUserId: userId,
+    })
+
     return NextResponse.redirect(
       url(`home/companies/${userId}/vacants/${id}?alert=vacant_updated`)
     )
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Vacante',
+      description: 'La vacante no pudo ser actualizada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }

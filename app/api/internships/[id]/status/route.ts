@@ -6,6 +6,7 @@ import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { NextResponse, type NextRequest } from 'next/server'
 import { notify } from '@/lib/notifications/notify'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function PATCH(
   request: NextRequest, { params: { id } }: PageContext
@@ -47,6 +48,13 @@ export async function PATCH(
     if (parsed.status === 'REJECTED') {
       await notify('internship-rejected', receiver, notificationData)
 
+      await logEvent({
+        title: 'Pasantía',
+        description: 'La pasantía ha sido actualizada',
+        status: 'Success',
+        authUserId: personId,
+      })
+
       return NextResponse.redirect(
         url(`home/persons/${personId}/internships?alert=internship_rejected`)
       )
@@ -54,10 +62,24 @@ export async function PATCH(
 
     await notify('internship-accepted', receiver, notificationData)
 
+    await logEvent({
+      title: 'Pasantía',
+      description: 'La pasantía ha sido actualizada',
+      status: 'Success',
+      authUserId: personId,
+    })
+
     return NextResponse.redirect(url(
       `home/internships/${id}?alert=internship_accepted`
     ))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Pasantía',
+      description: 'La pasantía no pudo ser actualizada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error)
   }
 }

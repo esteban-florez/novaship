@@ -551,6 +551,7 @@ model AuthUser {
   updatedAt     DateTime       @updatedAt
   notifications Notification[]
   resets        Resets[]
+  logs          Log[]
 }
 
 model Admin {
@@ -594,23 +595,15 @@ model Resets {
 // ----------------------------------------------------------------------
 // --------------------------- Log Events ------------------------------
 // ----------------------------------------------------------------------
-// model Log {
-//   id          String      @id @default(cuid())
-//   title       String
-//   description String?
-//   action      Action?
-//   responsable Responsable
-//   status      EventStatus
-//   person      Person?     @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-//   personId    String?
-//   company     Company?    @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-//   companyId   String?
-//   institute   Institute?  @relation(fields: [instituteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-//   instituteId String?
-//   admin       Admin?      @relation(fields: [adminId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-//   adminId     String?
-//   createdAt   DateTime    @default(now())
-// }
+model Log {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  status      String
+  authUser    AuthUser? @relation(fields: [authUserId], references: [id])
+  authUserId  String?
+  createdAt   DateTime  @default(now())
+}
 
 enum Visibility {
   PUBLIC
@@ -671,23 +664,3 @@ enum State {
   CONFIRMED
   CANCELED
 }
-
-// enum EventStatus {
-//   SUCCESS
-//   WARNING
-//   ERROR
-//   INFO
-// }
-
-// enum Responsable {
-//   USER
-//   SYSTEM
-// }
-
-// enum Action {
-//   CREATE
-//   DELETE
-//   UPDATE
-//   ERROR
-//   BACKUP
-// }

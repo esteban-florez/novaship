@@ -1,4 +1,5 @@
 import { auth } from '@/lib/auth/api'
+import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
 import { notify } from '@/lib/notifications/notify'
 import { defaults } from '@/lib/validation/schemas/defaults'
@@ -36,6 +37,13 @@ export async function POST(request: NextRequest) {
 
     const { authUserId } = await prisma.person.findUniqueOrThrow({ where: { id: personId } })
 
+    await logEvent({
+      title: 'Pasantía',
+      description: 'La pasantía ha sido registrada',
+      status: 'Success',
+      authUserId: id,
+    })
+
     await notify('internship-created', authUserId, {
       institute: name,
       internshipId,
@@ -43,6 +51,13 @@ export async function POST(request: NextRequest) {
 
     return redirect(`/home/internships/${internshipId}?alert=internship_created`)
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Pasantía',
+      description: 'La pasantía no pudo ser registrada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }

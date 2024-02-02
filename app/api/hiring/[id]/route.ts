@@ -9,6 +9,7 @@ import messages from '@/lib/validation/messages'
 import { Status } from '@prisma/client'
 import { defaults } from '@/lib/validation/schemas/defaults'
 import { notify } from '@/lib/notifications/notify'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -63,6 +64,13 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
         user: name,
         title: hiring.offer.title,
         offerId: hiring.offer.id,
+      })
+
+      await logEvent({
+        title: 'Postulación',
+        description: 'La postulación ha sido actualizada',
+        status: 'Success',
+        authUserId: userId,
       })
 
       return NextResponse.redirect(url(`/home/offers/${parsed.offerId}?alert=${parsed.status === 'ACCEPTED' ? 'hiring_success' : 'hiring_rejected'}`))
@@ -122,6 +130,13 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
         },
       })
 
+      await logEvent({
+        title: 'Postulación',
+        description: 'La postulación ha sido actualizada',
+        status: 'Success',
+        authUserId: userId,
+      })
+
       await notify(parsed.status === 'ACCEPTED' ? 'hiring-accepted' : 'hiring-declined', authUser.id, {
         user: name,
         title: company.offers[0].title,
@@ -133,6 +148,13 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     notFound()
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Postulación',
+      description: 'La postulación no pudo ser actualizada',
+      status: 'Error',
+      authUserId,
+    })
     handleError(error, data)
   }
 }

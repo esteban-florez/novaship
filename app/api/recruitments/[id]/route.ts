@@ -7,12 +7,13 @@ import { url } from '@/lib/utils/url'
 import { NextResponse, type NextRequest } from 'next/server'
 import { notify } from '@/lib/notifications/notify'
 import { type Company, type Grade, type Vacant } from '@prisma/client'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function PATCH(
   request: NextRequest, { params: { id } }: PageContext
 ) {
   try {
-    const { type } = await auth.user(request)
+    const { type, authUserId } = await auth.user(request)
 
     const data = await request.json()
     const { status } = statusSchema.parse(data)
@@ -50,6 +51,13 @@ export async function PATCH(
           },
         },
       },
+    })
+
+    await logEvent({
+      title: 'Reclutamiento',
+      description: `El reclutamiento "${vacant.description}" ha sido actualizado`,
+      status: 'Success',
+      authUserId,
     })
 
     const { person, grade } = internship
@@ -108,6 +116,13 @@ export async function PATCH(
       `home/internships/${internship.id}?alert=recruitment_accepted`
     ))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Reclutamiento',
+      description: 'El reclutamiento no pudo ser actualizado',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error)
   }
 }

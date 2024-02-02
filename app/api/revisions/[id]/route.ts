@@ -4,6 +4,8 @@ import prisma from '@/prisma/client'
 import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
+import { auth } from '@/lib/auth/api'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function PUT(
   request: NextRequest,
@@ -13,6 +15,10 @@ export async function PUT(
   try {
     data = await request.json()
     const parsed = schema.parse(data)
+    const { authUserId } = await auth.user(request)
+    if (authUserId == null) {
+      notFound()
+    }
 
     const revision = await prisma.revision.findFirst({
       where: { id },
@@ -48,6 +54,13 @@ export async function PUT(
       where: { id },
     })
 
+    await logEvent({
+      title: 'Revisión',
+      description: `La revisión "${parsed.content}" ha sido actualizada`,
+      status: 'Success',
+      authUserId,
+    })
+
     if (revision.task != null) {
       return NextResponse.redirect(
         url(
@@ -66,6 +79,13 @@ export async function PUT(
 
     return NextResponse.redirect(url('/home/projects'))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Revisión',
+      description: 'La revisión no pudo ser actualizada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }
@@ -75,11 +95,17 @@ export async function DELETE(
   { params: { id } }: PageContext
 ) {
   try {
+    const { authUserId } = await auth.user(request)
+    if (authUserId == null) {
+      notFound()
+    }
+
     const revision = await prisma.revision.findFirst({
       where: {
         id,
       },
       select: {
+        content: true,
         subtask: {
           select: {
             id: true,
@@ -108,6 +134,13 @@ export async function DELETE(
       where: { id },
     })
 
+    await logEvent({
+      title: 'Revisión',
+      description: `La revisión "${revision.content}" ha sido eliminada`,
+      status: 'Warning',
+      authUserId,
+    })
+
     const projectId = revision.task?.projectId ?? revision?.subtask?.task?.projectId as string
     const taskId = revision.task?.id ?? revision?.subtask?.task?.id as string
 
@@ -129,6 +162,13 @@ export async function DELETE(
 
     return NextResponse.redirect(url('/home/projects'))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Revisión',
+      description: 'La revisión no pudo ser eliminada',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error)
   }
 }

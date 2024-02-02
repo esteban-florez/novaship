@@ -1,4 +1,5 @@
 import { auth } from '@/lib/auth/api'
+import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/status'
@@ -37,10 +38,24 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
 
     const { recruitmentId } = progress
 
+    await logEvent({
+      title: 'Progreso',
+      description: 'El progreso ha sido actualizado',
+      status: 'Success',
+      authUserId: userId,
+    })
+
     return NextResponse.redirect(
       url(`home/internships/${recruitmentId}/progress?alert=progress_updated`)
     )
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Progreso',
+      description: 'El progreso no pudo ser actualizado',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }

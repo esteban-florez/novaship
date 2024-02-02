@@ -1,4 +1,4 @@
-import { handleRequest } from '@/lib/auth/api'
+import { auth, handleRequest } from '@/lib/auth/api'
 import { handleError } from '@/lib/errors/api'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/reset'
@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation'
 import lucia from '@/lib/auth/lucia'
 import { getResetEmail } from '@/lib/utils/tables'
 import prisma from '@/prisma/client'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -52,8 +53,23 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    const { name } = await auth.user(request)
+    await logEvent({
+      title: 'Recuperación de contraseña',
+      description: `El usuario "${name}" ha recuperado su contraseña`,
+      status: 'Success',
+      authUserId,
+    })
+
     return NextResponse.redirect(url('/auth/login?modal=changedpass'))
   } catch (error) {
+    const { authUserId, name } = await auth.user(request)
+    await logEvent({
+      title: 'Recuperación de contraseña',
+      description: `El usuario "${name}" no pudo recuperar su contraseña`,
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }

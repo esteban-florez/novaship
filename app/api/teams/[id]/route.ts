@@ -7,6 +7,7 @@ import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { getMyTeam } from '@/lib/data-fetching/teams'
 import { notify } from '@/lib/notifications/notify'
+import logEvent from '@/lib/data-fetching/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -59,6 +60,13 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
+    await logEvent({
+      title: 'Equipo',
+      description: `El equipo "${parsed.name}" ha sido actualizado`,
+      status: 'Success',
+      authUserId: userId,
+    })
+
     for (const authUser of authUsers) {
       await notify('invitation-sent', authUser.id, {
         user: name,
@@ -68,6 +76,13 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     return NextResponse.redirect(url(`/home/teams/${id}?alert=team_updated`))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Equipo',
+      description: 'El equipo no pudo ser actualizado',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }
@@ -85,8 +100,22 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       where: { id },
     })
 
+    await logEvent({
+      title: 'Equipo',
+      description: `El equipo "${team.name}" ha sido eliminado`,
+      status: 'Warning',
+      authUserId: userId,
+    })
+
     return NextResponse.redirect(url('/home/teams'))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Equipo',
+      description: 'El equipo no pudo ser eliminado',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error)
   }
 }

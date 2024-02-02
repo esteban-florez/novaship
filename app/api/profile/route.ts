@@ -6,6 +6,7 @@ import prisma from '@/prisma/client'
 import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
+import logEvent from '@/lib/data-fetching/log'
 
 // TODO -> cambiar el schema para aceptar los 3 usuarios
 export async function PUT(request: NextRequest) {
@@ -67,8 +68,22 @@ export async function PUT(request: NextRequest) {
       })
     }
 
+    await logEvent({
+      title: 'Usuario',
+      description: 'El usuario ha sido actualizado',
+      status: 'Success',
+      authUserId: id,
+    })
+
     return NextResponse.redirect(url('/home/profile?alert=profile_updated'))
   } catch (error) {
+    const { authUserId } = await auth.user(request)
+    await logEvent({
+      title: 'Usuario',
+      description: 'El usuario no pudo ser actualizado',
+      status: 'Error',
+      authUserId,
+    })
     return handleError(error, data)
   }
 }
