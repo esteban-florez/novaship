@@ -14,7 +14,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id: userId } = await auth.user(request)
+    const { id: userId, authUserId } = await auth.user(request)
 
     const task = await getMyTask({ id, userId })
     if (task == null) {
@@ -59,7 +59,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       title: 'Tarea',
       description: `La tarea "${parsed.title}" ha sido actualizada`,
       status: 'Success',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks?alert=task_updated`))
@@ -70,7 +70,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
 export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
-    const { id: userId } = await auth.user(request)
+    const { id: userId, authUserId } = await auth.user(request)
 
     const task = await getMyTask({ id, userId })
     if (task == null) {
@@ -83,7 +83,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       title: 'Tarea',
       description: `La tarea "${task.title}" ha sido eliminada`,
       status: 'Warning',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks?alert=task_deleted`))

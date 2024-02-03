@@ -12,7 +12,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function PATCH(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
-    const { id: userId } = await auth.user(request)
+    const { id: userId, authUserId } = await auth.user(request)
 
     const vacant = await getVacant(id)
 
@@ -38,7 +38,7 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
       title: 'Vacante',
       description: `La vacante "${parsed.description}" ha sido actualizada`,
       status: 'Success',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(

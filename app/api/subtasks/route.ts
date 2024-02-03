@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id: userId } = await auth.user(request)
+    const { id: userId, authUserId } = await auth.user(request)
 
     if (parsed.taskId == null) {
       notFound()
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       title: 'Subtarea',
       description: `La subtarea "${parsed.title}" ha sido registrada`,
       status: 'Success',
-      authUserId: userId,
+      authUserId,
     })
 
     await prisma.task.update({

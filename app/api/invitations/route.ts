@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       teamId: defaults.id,
       projectId: defaults.id.optional(),
     }).parse(data)
-    const { id: userId, name, type } = await auth.user(request)
+    const { id: userId, name, type, authUserId } = await auth.user(request)
 
     if (type !== 'PERSON') {
       notFound()
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
       title: 'Invitación',
       description: `La invitación al equipo "${team.name}" ha sido registrada`,
       status: 'Success',
-      authUserId: userId,
+      authUserId,
     })
 
     if (projectId == null) {

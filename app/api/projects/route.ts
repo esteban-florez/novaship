@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData()
     data = Object.fromEntries(formData.entries())
     const parsed = schema.parse(data)
-    const { id, type } = await auth.user(request)
+    const { id, type, authUserId } = await auth.user(request)
 
     if (type === 'INSTITUTE') {
       notFound()
@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
       title: 'Proyecto',
       description: `El proyecto "${parsed.title}" ha sido registrado`,
       status: 'Success',
-      authUserId: id,
+      authUserId,
     })
 
     if (projectId != null) {

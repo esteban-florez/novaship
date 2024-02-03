@@ -14,7 +14,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id: userId } = await auth.user(request)
+    const { id: userId, authUserId } = await auth.user(request)
 
     const subtask = await getMySubtask({ id, userId })
     if (subtask == null) {
@@ -62,7 +62,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       title: 'Subtarea',
       description: `La subtarea "${parsed.title}" ha sido actualizada`,
       status: 'Success',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(url(`/home/projects/${subtask.task.projectId}/tasks?id=${subtask.taskId}&filtered=${parsed.filter as string}&alert=subtask_updated`))
@@ -73,7 +73,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
 export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
-    const { id: userId } = await auth.user(request)
+    const { id: userId, authUserId } = await auth.user(request)
     const subtask = await getMySubtask({ id, userId })
     const deletedSubtask = await deleteSubtask({ id, userId })
 
@@ -89,7 +89,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       title: 'Subtarea',
       description: `La subtarea "${subtask.title}" ha sido eliminada`,
       status: 'Warning',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(url(`/home/projects/${subtask?.task.projectId}/tasks?id=${subtask.taskId}&alert=subtask_deleted`))

@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     data = await request.json()
     const parsed = schema.parse(data)
     const { categories, skills, grades, duration } = parsed
-    const { id: userId, type } = await auth.user(request)
+    const { id: userId, type, authUserId } = await auth.user(request)
 
     if (type !== 'COMPANY') {
       notFound()
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       title: 'Vacante',
       description: `La vacante "${parsed.description}" ha sido registrada`,
       status: 'Success',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(

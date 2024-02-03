@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id, type } = await auth.user(request)
+    const { id, type, authUserId } = await auth.user(request)
 
     if (type === 'COMPANY') {
       const { id: offerId } = await prisma.offer.create({
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
         title: 'Oferta',
         description: `La oferta "${parsed.title}" ha sido registrada`,
         status: 'Success',
-        authUserId: id,
+        authUserId,
       })
 
       return NextResponse.redirect(url(`/home/offers/${offerId}?alert=offer_created`))

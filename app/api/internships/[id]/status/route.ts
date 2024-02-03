@@ -12,7 +12,7 @@ export async function PATCH(
   request: NextRequest, { params: { id } }: PageContext
 ) {
   try {
-    const { id: personId } = await auth.user(request)
+    const { id: personId, authUserId } = await auth.user(request)
 
     const where = { id }
 
@@ -52,7 +52,7 @@ export async function PATCH(
         title: 'Pasantía',
         description: 'La pasantía ha sido actualizada',
         status: 'Success',
-        authUserId: personId,
+        authUserId,
       })
 
       return NextResponse.redirect(
@@ -66,7 +66,7 @@ export async function PATCH(
       title: 'Pasantía',
       description: 'La pasantía ha sido actualizada',
       status: 'Success',
-      authUserId: personId,
+      authUserId,
     })
 
     return NextResponse.redirect(url(

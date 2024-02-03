@@ -4,10 +4,12 @@ import {
   BriefcaseIcon,
   ChartPieIcon,
   CheckBadgeIcon,
+  CircleStackIcon,
   ClipboardDocumentListIcon,
   EnvelopeIcon,
   InboxStackIcon,
   PlusIcon,
+  Square3Stack3DIcon,
   TicketIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline'
@@ -61,6 +63,16 @@ export default function getQuickAccessItems({ userId, type }: Props) {
         title: 'Estadísticas',
         href: '/home/admin/stats',
         icon: <ChartPieIcon className="h-4 w-4" />,
+      },
+      {
+        title: 'Base de datos',
+        href: '/home/admin/backups',
+        icon: <CircleStackIcon className="h-4 w-4" />,
+      },
+      {
+        title: 'Bitácora',
+        href: '/home/admin/logs',
+        icon: <Square3Stack3DIcon className="h-4 w-4" />,
       },
     ]
   }

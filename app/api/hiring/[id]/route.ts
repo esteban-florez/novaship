@@ -70,7 +70,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
         title: 'Postulación',
         description: 'La postulación ha sido actualizada',
         status: 'Success',
-        authUserId: userId,
+        authUserId,
       })
 
       return NextResponse.redirect(url(`/home/offers/${parsed.offerId}?alert=${parsed.status === 'ACCEPTED' ? 'hiring_success' : 'hiring_rejected'}`))
@@ -134,7 +134,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
         title: 'Postulación',
         description: 'La postulación ha sido actualizada',
         status: 'Success',
-        authUserId: userId,
+        authUserId,
       })
 
       await notify(parsed.status === 'ACCEPTED' ? 'hiring-accepted' : 'hiring-declined', authUser.id, {

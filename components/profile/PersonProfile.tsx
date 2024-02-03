@@ -9,7 +9,7 @@ import {
   ClipboardDocumentListIcon,
   InformationCircleIcon,
   BuildingOffice2Icon,
-  CalendarDaysIcon,
+  // CalendarDaysIcon,
   DocumentMagnifyingGlassIcon,
   AcademicCapIcon,
   IdentificationIcon,
@@ -91,32 +91,32 @@ export default function PersonProfile({ person }: Props) {
     birth,
   } = person
 
-  const scheduleHours = [
-    '01:00 AM',
-    '02:00 AM',
-    '03:00 AM',
-    '04:00 AM',
-    '05:00 AM',
-    '06:00 AM',
-    '07:00 AM',
-    '08:00 AM',
-    '09:00 AM',
-    '10:00 AM',
-    '11:00 AM',
-    '12:00 PM',
-    '1:00 PM',
-    '2:00 PM',
-    '3:00 PM',
-    '4:00 PM',
-    '5:00 PM',
-    '6:00 PM',
-    '7:00 PM',
-    '8:00 PM',
-    '9:00 PM',
-    '10:00 PM',
-    '11:00 PM',
-    '12:00 AM',
-  ]
+  // const scheduleHours = [
+  //   '01:00 AM',
+  //   '02:00 AM',
+  //   '03:00 AM',
+  //   '04:00 AM',
+  //   '05:00 AM',
+  //   '06:00 AM',
+  //   '07:00 AM',
+  //   '08:00 AM',
+  //   '09:00 AM',
+  //   '10:00 AM',
+  //   '11:00 AM',
+  //   '12:00 PM',
+  //   '1:00 PM',
+  //   '2:00 PM',
+  //   '3:00 PM',
+  //   '4:00 PM',
+  //   '5:00 PM',
+  //   '6:00 PM',
+  //   '7:00 PM',
+  //   '8:00 PM',
+  //   '9:00 PM',
+  //   '10:00 PM',
+  //   '11:00 PM',
+  //   '12:00 AM',
+  // ]
 
   return (
     <div className="grid grid-cols-10 gap-4 mt-4 sm:mt-0 sm:px-8 sm:py-4">
@@ -231,7 +231,7 @@ export default function PersonProfile({ person }: Props) {
           </li>
         </ul>
       </div>
-      <div className="col-span-full card gap-3 bg-white p-4 shadow-md border border-zinc-300 text-sm">
+      {/* <div className="col-span-full card gap-3 bg-white p-4 shadow-md border border-zinc-300 text-sm">
         <div className="flex items-center gap-3 mb-2">
           <CalendarDaysIcon className="h-6 w-6 text-neutral-700" />
           <h4 className="text-xl font-bold">Horario</h4>
@@ -268,7 +268,7 @@ export default function PersonProfile({ person }: Props) {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
       <div className="col-span-full">
         <div className="flex flex-col gap-3">
           <div className="gap-3 flex flex-col p-4">

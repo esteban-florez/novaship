@@ -14,7 +14,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id: userId, name } = await auth.user(request)
+    const { id: userId, name, authUserId } = await auth.user(request)
 
     const team = await getMyTeam({ userId })
     if (team == null) {
@@ -64,7 +64,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       title: 'Equipo',
       description: `El equipo "${parsed.name}" ha sido actualizado`,
       status: 'Success',
-      authUserId: userId,
+      authUserId,
     })
 
     for (const authUser of authUsers) {
@@ -82,7 +82,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
 export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
-    const { id: userId } = await auth.user(request)
+    const { id: userId, authUserId } = await auth.user(request)
     const team = await getMyTeam({ userId })
 
     if (team == null) {
@@ -97,7 +97,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       title: 'Equipo',
       description: `El equipo "${team.name}" ha sido eliminado`,
       status: 'Warning',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(url('/home/teams'))

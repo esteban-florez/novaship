@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id: userId, name, type } = await auth.user(request)
+    const { id: userId, name, type, authUserId } = await auth.user(request)
 
     if (type === 'PERSON' && parsed.offerId != null) {
       await prisma.hiring.create({
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
         title: 'Postulación',
         description: 'La postulación ha sido registrada',
         status: 'Success',
-        authUserId: userId,
+        authUserId,
       })
 
       return NextResponse.redirect(url(`/home/offers/${parsed.offerId}?alert=offer_user_postulation`))

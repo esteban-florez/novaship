@@ -16,7 +16,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
     const formData = await request.formData()
     data = Object.fromEntries(formData.entries())
     const parsed = schema.parse(data)
-    const { id: userId, type } = await auth.user(request)
+    const { id: userId, type, authUserId } = await auth.user(request)
 
     const project = await getMyProject({ id, userId })
     if (project === null) {
@@ -95,7 +95,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       title: 'Proyecto',
       description: `El proyecto "${parsed.title}" ha sido registrado`,
       status: 'Success',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(url(`home/projects/${project.id}?alert=project_updated`))
@@ -106,7 +106,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
 export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
-    const { id: userId } = await auth.user(request)
+    const { id: userId, authUserId } = await auth.user(request)
     const project = await prisma.project.findFirst({
       where: { id },
       select: { title: true },
@@ -136,7 +136,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       title: 'Proyecto',
       description: `El proyecto "${project?.title ?? ''}" ha sido eliminado`,
       status: 'Warning',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(url('/home/projects?alert=project_deleted'))

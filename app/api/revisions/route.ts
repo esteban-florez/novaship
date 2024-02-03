@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id } = await auth.user(request)
+    const { id, authUserId } = await auth.user(request)
 
     if (parsed.taskId != null) {
       const task = await getMyTask({ id: parsed.taskId, userId: id })
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         title: 'Revisión',
         description: `La revisión "${parsed.content}" ha sido registrada`,
         status: 'Success',
-        authUserId: id,
+        authUserId,
       })
 
       return NextResponse.redirect(
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
         title: 'Revisión',
         description: `La revisión "${parsed.content}" ha sido registrada`,
         status: 'Success',
-        authUserId: id,
+        authUserId,
       })
 
       return NextResponse.redirect(

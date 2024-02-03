@@ -10,7 +10,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function PATCH(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
-    const { id: userId } = await auth.user(request)
+    const { id: userId, authUserId } = await auth.user(request)
 
     const progress = await prisma.progress.findUnique({
       where: { id },
@@ -42,7 +42,7 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
       title: 'Progreso',
       description: 'El progreso ha sido actualizado',
       status: 'Success',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(

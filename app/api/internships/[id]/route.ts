@@ -10,7 +10,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
-    const { id: userId } = await auth.user(request)
+    const { id: userId, authUserId } = await auth.user(request)
 
     const query = { where: { id } }
     const internship = await prisma.internship.findUnique(query)
@@ -40,7 +40,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       title: 'Pasantía',
       description: 'La pasantía ha sido actualizada',
       status: 'Error',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(
@@ -53,7 +53,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
 export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
-    const { id: userId } = await auth.user(request)
+    const { id: userId, authUserId } = await auth.user(request)
 
     const query = { where: { id } }
     const internship = await prisma.internship.findUnique(query)
@@ -70,7 +70,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       title: 'Pasantía',
       description: 'La pasantía ha sido eliminada',
       status: 'Warning',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(

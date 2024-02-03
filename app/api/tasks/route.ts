@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id: userId } = await auth.user(request)
+    const { id: userId, authUserId } = await auth.user(request)
 
     if (parsed.projectId == null) {
       notFound()
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
       title: 'Tarea',
       description: `La tarea "${parsed.title}" ha sido registrada`,
       status: 'Success',
-      authUserId: userId,
+      authUserId,
     })
 
     return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks?id=${task.id}&alert=task_created`))

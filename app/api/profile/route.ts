@@ -12,7 +12,7 @@ import logEvent from '@/lib/data-fetching/log'
 export async function PUT(request: NextRequest) {
   let data
   try {
-    const { id, type } = await auth.user(request)
+    const { id, type, authUserId } = await auth.user(request)
     data = await request.json()
 
     if (type === 'PERSON') {
@@ -72,7 +72,7 @@ export async function PUT(request: NextRequest) {
       title: 'Usuario',
       description: 'El usuario ha sido actualizado',
       status: 'Success',
-      authUserId: id,
+      authUserId,
     })
 
     return NextResponse.redirect(url('/home/profile?alert=profile_updated'))

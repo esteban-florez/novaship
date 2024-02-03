@@ -13,7 +13,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function POST(request: NextRequest) {
   let data
   try {
-    const { id, name, type } = await auth.user(request)
+    const { id, name, type, authUserId } = await auth.user(request)
 
     if (type === 'INSTITUTE') {
       notFound()
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
       title: 'Equipo',
       description: `El equipo "${parsed.name}" ha sido registrado`,
       status: 'Success',
-      authUserId: id,
+      authUserId,
     })
 
     for (const authUser of authUsers) {

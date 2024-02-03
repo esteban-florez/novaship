@@ -9,9 +9,15 @@ interface Props {
   username: string
   email: string
   image: string | null
+  show: boolean
 }
 
-export default function ProfileDropdownMenu({ username, email, image }: Props) {
+export default function ProfileDropdownMenu({
+  username,
+  email,
+  image,
+  show = false,
+}: Props) {
   const { alert, handleSubmit } = useSubmit({ method: 'DELETE' })
 
   return (
@@ -26,13 +32,15 @@ export default function ProfileDropdownMenu({ username, email, image }: Props) {
           </div>
         </span>
         <div className="divider my-0" />
-        <Link
-          href="/home/profile"
-          className="flex items-center gap-1 rounded-md px-3 py-1 font-semibold hover:bg-neutral-200 hover:text-primary"
-        >
-          <EyeIcon className="h-5 w-5" />
-          Ver perfil
-        </Link>
+        {show && (
+          <Link
+            href="/home/profile"
+            className="flex items-center gap-1 rounded-md px-3 py-1 font-semibold hover:bg-neutral-200 hover:text-primary"
+          >
+            <EyeIcon className="h-5 w-5" />
+            Ver perfil
+          </Link>
+        )}
         <form
           action="/api/auth/signout"
           method="DELETE"

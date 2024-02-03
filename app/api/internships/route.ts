@@ -11,7 +11,7 @@ import { type NextRequest } from 'next/server'
 export async function POST(request: NextRequest) {
   let data
   try {
-    const { id, type, name } = await auth.user(request)
+    const { id, type, name, authUserId: authId } = await auth.user(request)
     if (type !== 'INSTITUTE') {
       notFound()
     }
@@ -35,14 +35,13 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    const { authUserId } = await prisma.person.findUniqueOrThrow({ where: { id: personId } })
-
     await logEvent({
       title: 'Pasantía',
       description: 'La pasantía ha sido registrada',
       status: 'Success',
-      authUserId: id,
+      authUserId: authId,
     })
+    const { authUserId } = await prisma.person.findUniqueOrThrow({ where: { id: personId } })
 
     await notify('internship-created', authUserId, {
       institute: name,
