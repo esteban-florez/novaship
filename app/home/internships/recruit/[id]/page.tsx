@@ -29,6 +29,7 @@ import { validVacants } from '@/lib/utils/tables'
 import { getVacants } from '@/lib/data-fetching/vacants'
 import DarkUserCard from '@/components/DarkUserCard'
 import { tooltip } from '@/lib/tooltip'
+import Link from 'next/link'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -91,8 +92,6 @@ export default async function RecruitDetailsPage({
           <UserCard
             user={person}
             subtitle={person.location.title}
-            // TODO -> profile link
-            // href={`/home/persons/${person.id}`}
           />
           <p className="py-2">{person.description}</p>
           <p className="font-bold mb-2">Habilidades:</p>
@@ -102,14 +101,13 @@ export default async function RecruitDetailsPage({
               vacants={vacants}
               internshipId={internship.id}
             />
-            <button
-              // TODO -> profile link
-              //  href={`/home/persons/${person.id}`}
+            <Link
+              href={`/home/person/${person.id}`}
               className="btn btn-secondary"
             >
               <ListBulletIcon className="w-5 h-5" />
               Ver perfil
-            </button>
+            </Link>
           </div>
           <div className="divider divider-vertical my-1" />
           <p className="font-bold mb-2">Institución:</p>

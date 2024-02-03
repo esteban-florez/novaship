@@ -100,8 +100,6 @@ export default async function InternshipDetailsPage({
           </h3>
           <div className="bg-neutral-100 p-4 pt-2 rounded-lg mt-4">
             <UserCard
-              // TODO -> profile link
-              // href={`/home/companies/${company.id}`}
               subtitle={company.location.title}
               user={company}
             />

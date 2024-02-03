@@ -30,13 +30,12 @@ export default function PersonsList({ persons }: Props) {
         >
           Inscribir
         </Link>
-        <button
+        <Link
+          href={`/home/person/${person.id}`}
           className="btn btn-secondary"
-          // TODO -> profile link
-          // href={`/home/persons/${person.id}`}
         >
           Perfil
-        </button>
+        </Link>
       </div>
     </div>
   ))

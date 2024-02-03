@@ -1,5 +1,4 @@
 import {
-  PencilIcon,
   MapPinIcon,
   PhoneIcon,
   DocumentTextIcon,
@@ -8,21 +7,20 @@ import {
   IdentificationIcon,
   DocumentIcon,
 } from '@heroicons/react/24/outline'
-import { type Company } from '@prisma/client'
-import AvatarIcon from '../AvatarIcon'
-import Link from 'next/link'
 import { format } from '@/lib/utils/text'
 import { format as dateFormat } from '@/lib/utils/date'
+import { getCompanyProfileData } from '@/lib/data-fetching/profile'
+import AvatarIcon from '@/components/AvatarIcon'
+import { type Metadata } from 'next'
 
-interface Props {
-  company: Company & {
-    location: {
-      title: string
-    }
-  }
+export const metadata: Metadata = {
+  title: 'Perfil de empresa',
 }
 
-export default function CompanyProfile({ company }: Props) {
+export default async function ProfileCompanyId({
+  params: { id },
+}: PageContext) {
+  const company = await getCompanyProfileData({ id })
   const {
     name,
     description,
@@ -57,12 +55,6 @@ export default function CompanyProfile({ company }: Props) {
                 </p>
               </div>
             </div>
-            <Link href="/home/profile/update">
-              <button className="btn btn-block sm:w-auto btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary">
-                <PencilIcon className="h-5 w-5" />
-                Editar perfil
-              </button>
-            </Link>
           </div>
         </div>
       </div>

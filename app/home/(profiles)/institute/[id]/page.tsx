@@ -1,39 +1,47 @@
 import {
-  PencilIcon,
-  MapPinIcon,
-  PhoneIcon,
+  DocumentIcon,
   DocumentTextIcon,
   EnvelopeIcon,
-  InformationCircleIcon,
   IdentificationIcon,
-  DocumentIcon,
+  InformationCircleIcon,
+  MapPinIcon,
+  PhoneIcon,
 } from '@heroicons/react/24/outline'
-import { type Company } from '@prisma/client'
-import AvatarIcon from '../AvatarIcon'
-import Link from 'next/link'
-import { format } from '@/lib/utils/text'
 import { format as dateFormat } from '@/lib/utils/date'
+import { format as textFormat } from '@/lib/utils/text'
+import prisma from '@/prisma/client'
+import AvatarIcon from '@/components/AvatarIcon'
+import { type Metadata } from 'next'
 
-interface Props {
-  company: Company & {
-    location: {
-      title: string
-    }
-  }
+export const metadata: Metadata = {
+  title: 'Perfil de institución',
 }
 
-export default function CompanyProfile({ company }: Props) {
+export default async function ProfileInstituteId({
+  params: { id },
+}: PageContext) {
+  const institute = await prisma.institute.findUniqueOrThrow({
+    where: { id },
+    include: {
+      location: {
+        select: {
+          title: true,
+        },
+      },
+    },
+  })
+
   const {
     name,
-    description,
     email,
-    phone,
     image,
     location,
-    certification,
+    phone,
     rif,
     verifiedAt,
-  } = company
+    description,
+    certification,
+  } = institute
 
   const verified =
     verifiedAt != null ? dateFormat({ date: verifiedAt }) : 'No verificado'
@@ -57,12 +65,6 @@ export default function CompanyProfile({ company }: Props) {
                 </p>
               </div>
             </div>
-            <Link href="/home/profile/update">
-              <button className="btn btn-block sm:w-auto btn-primary hover:bg-white hover:text-neutral-600 hover:border-primary">
-                <PencilIcon className="h-5 w-5" />
-                Editar perfil
-              </button>
-            </Link>
           </div>
         </div>
       </div>
@@ -83,7 +85,7 @@ export default function CompanyProfile({ company }: Props) {
         <ul className="sm:ms-8 line-clamp-2 flex flex-col gap-4 text-neutral-600 leading-none">
           <li className="flex items-center gap-2">
             <IdentificationIcon className="h-5 w-5" />
-            <p>{format(rif, 'ci')}</p>
+            <p>{textFormat(rif, 'ci')}</p>
           </li>
           <li className="flex items-center gap-2">
             <EnvelopeIcon className="h-5 w-5" />
@@ -95,7 +97,7 @@ export default function CompanyProfile({ company }: Props) {
           </li>
           <li className="flex items-center gap-2">
             <PhoneIcon className="h-5 w-5" />
-            <p>{format(phone, 'phone')}</p>
+            <p>{textFormat(phone, 'phone')}</p>
           </li>
         </ul>
       </div>

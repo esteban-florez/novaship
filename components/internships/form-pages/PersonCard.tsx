@@ -1,5 +1,7 @@
 import InfoUser from '@/components/offers-details/InfoUser'
+import { EyeIcon } from '@heroicons/react/24/outline'
 import { type Location, type Person } from '@prisma/client'
+import Link from 'next/link'
 
 type Props = React.PropsWithChildren<{
   person: Person & {
@@ -26,13 +28,13 @@ export default function PersonCard({ person, page }: Props) {
         location={person.location.title}
         verification={false}
       />
-      <button
+      <Link
+        href={`/home/person/${person.id}`}
         className="btn btn-secondary"
-        // TODO -> profile link
-        // href={`/home/persons/${person.id}`}
       >
+        <EyeIcon className="w-5 h-5" />
         Ver perfil
-      </button>
+      </Link>
     </div>
   )
 }

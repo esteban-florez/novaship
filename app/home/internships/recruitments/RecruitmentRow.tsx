@@ -26,24 +26,18 @@ export default async function RecruitmentRow({ recruitment }: Props) {
         {type === 'PERSON'
           ? (
             <UserCard
-              // TODO -> profile link
-              // href={`/home/companies/${company.id}`}
               user={company}
               sm
             />
             )
           : (
             <UserCard
-              // TODO -> profile link
-              // href={`/home/persons/${person.id}`}
               user={person}
               sm
             />
             )}
       </td>
-      <td>
-        {grade.title}
-      </td>
+      <td>{grade.title}</td>
       <td>
         <Link
           className="underline text-secondary font-semibold"
@@ -55,14 +49,10 @@ export default async function RecruitmentRow({ recruitment }: Props) {
       <td>
         <div className="flex items-center gap-2">
           <StatusDot status={status} />
-          <span>
-            {translation[status]}
-          </span>
+          <span>{translation[status]}</span>
         </div>
       </td>
-      <td>
-        {recruitmentType}
-      </td>
+      <td>{recruitmentType}</td>
       <td>
         {recruitmentType === 'Recibida' && recruitment.status === 'PENDING'
           ? (

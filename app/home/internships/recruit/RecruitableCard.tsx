@@ -28,8 +28,6 @@ export default async function RecruitableCard({ internship }: Props) {
       <div className="card-body">
         <div className="mt-2" />
         <UserCard
-          // TODO -> profile link
-          // href={`/home/persons/${person.id}`}
           user={person}
           subtitle={person.location.title}
         />
