@@ -68,26 +68,12 @@ export async function POST(request: NextRequest) {
         },
       })
 
-      const { authUserId, name } = await auth.user(request)
-      await logEvent({
-        title: 'Inicio de sesión',
-        description: `El usuario "${name}" no pudo iniciar sesión`,
-        status: 'Error',
-        authUserId,
-      })
-
       if (failed === 3) {
         const { resetId, username } = await createPasswordReset(userId)
         await sendRecoveryEmail(emailFailed, resetId, username)
       }
 
       if (failed >= 3) {
-        await logEvent({
-          title: 'Inicio de sesión',
-          description: `El usuario "${name}" ha sido bloqueado por tener demasiados intentos fallidos`,
-          status: 'Warning',
-          authUserId,
-        })
         return NextResponse.redirect(url('/auth/login?modal=blocked'))
       }
 

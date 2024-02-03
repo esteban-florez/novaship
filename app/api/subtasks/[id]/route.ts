@@ -67,13 +67,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     return NextResponse.redirect(url(`/home/projects/${subtask.task.projectId}/tasks?id=${subtask.taskId}&filtered=${parsed.filter as string}&alert=subtask_updated`))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Subtarea',
-      description: 'La subtarea no pudo ser actualizada',
-      status: 'Error',
-      authUserId,
-    })
     handleError(error, data)
   }
 }
@@ -101,13 +94,6 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
 
     return NextResponse.redirect(url(`/home/projects/${subtask?.task.projectId}/tasks?id=${subtask.taskId}&alert=subtask_deleted`))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Subtarea',
-      description: 'La subtarea no pudo ser eliminada',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error)
   }
 }

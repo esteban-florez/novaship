@@ -148,13 +148,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     notFound()
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Postulación',
-      description: 'La postulación no pudo ser actualizada',
-      status: 'Error',
-      authUserId,
-    })
     handleError(error, data)
   }
 }

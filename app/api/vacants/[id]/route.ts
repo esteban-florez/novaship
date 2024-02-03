@@ -45,13 +45,6 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
       url(`home/companies/${userId}/vacants/${id}?alert=vacant_updated`)
     )
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Vacante',
-      description: 'La vacante no pudo ser actualizada',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }

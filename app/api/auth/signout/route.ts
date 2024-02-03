@@ -28,13 +28,6 @@ export async function DELETE(request: NextRequest) {
     return redirectToLogin
   } catch (error) {
     console.log(error)
-    const { authUserId, name } = await auth.user(request)
-    await logEvent({
-      title: 'Cierre de sesión',
-      description: `El usuario "${name}" no pudo cerrar sesión`,
-      status: 'Error',
-      authUserId,
-    })
     return NextResponse.json(null, {
       status: 400,
     })

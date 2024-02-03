@@ -76,13 +76,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     return NextResponse.redirect(url(`/home/teams/${id}?alert=team_updated`))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Equipo',
-      description: 'El equipo no pudo ser actualizado',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }
@@ -109,13 +102,6 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
 
     return NextResponse.redirect(url('/home/teams'))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Equipo',
-      description: 'El equipo no pudo ser eliminado',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error)
   }
 }

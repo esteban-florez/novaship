@@ -92,13 +92,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.redirect(url(`/home/projects/${projectId}?alert=invitation_sent`))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Invitación',
-      description: 'La invitación no pudo ser registrada',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }

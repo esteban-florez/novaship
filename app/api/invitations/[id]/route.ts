@@ -100,13 +100,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     return NextResponse.redirect(url(redirect))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Invitación',
-      description: 'La invitación no pudo ser actualizada',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }

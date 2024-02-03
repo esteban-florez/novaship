@@ -116,13 +116,6 @@ export async function PATCH(
       `home/internships/${internship.id}?alert=recruitment_accepted`
     ))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Reclutamiento',
-      description: 'El reclutamiento no pudo ser actualizado',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error)
   }
 }

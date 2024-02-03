@@ -39,13 +39,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.redirect(url('/auth/login?modal=forgot'))
   } catch (error) {
     const { message } = error as { message: string }
-    const { authUserId, name } = await auth.user(request)
-    await logEvent({
-      title: 'Recuperación de contraseña',
-      description: `El usuario "${name}" no pudo recuperar su contraseña`,
-      status: 'Error',
-      authUserId,
-    })
 
     if (message === 'AUTH_INVALID_KEY_ID') {
       return NextResponse.redirect(url('/auth/forgot-password?modal=notvalid'))

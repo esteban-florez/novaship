@@ -91,14 +91,6 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Registro',
-      description: `El usuario "${parsed.name}" ha sido registrado`,
-      status: 'Success',
-      authUserId,
-    })
-
     return NextResponse.redirect(url('/auth/login?modal=registered'))
   } catch (error) {
     console.log(error)

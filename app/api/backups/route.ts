@@ -30,13 +30,6 @@ export async function GET(request: NextRequest) {
 
     return new Response(content)
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Respaldo',
-      description: 'El respaldo de la base de datos no pudo ser registrado',
-      status: 'Error',
-      authUserId,
-    })
     handleError(error)
   }
 }
@@ -70,13 +63,6 @@ export async function POST(request: NextRequest) {
 
     return new Response()
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Respaldo',
-      description: 'El respaldo de la base de datos no pudo ser cargado',
-      status: 'Error',
-      authUserId,
-    })
     return NextResponse.error()
   }
 }

@@ -75,13 +75,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     return NextResponse.redirect(url(`/home/offers/${id}?alert=offer_updated`))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Oferta',
-      description: 'La oferta no pudo ser actualizada',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }
@@ -116,13 +109,6 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
 
     return NextResponse.redirect(url('/home/offers?alert=offer_deleted'))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Oferta',
-      description: 'La oferta no pudo ser eliminada',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error)
   }
 }

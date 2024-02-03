@@ -42,13 +42,6 @@ export async function POST(request: NextRequest) {
       url(`home/companies/${userId}/vacants/${id}?alert=vacant_created`)
     )
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Vacante',
-      description: 'La vacante no pudo ser registrada',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }

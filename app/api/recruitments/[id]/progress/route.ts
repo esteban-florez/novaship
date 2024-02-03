@@ -84,13 +84,6 @@ export async function POST(request: NextRequest, { params: { id } }: PageContext
       url(`home/internships/${recruitment.id}/progress?alert=progress_created`)
     )
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Progreso',
-      description: 'El progreso no pudo ser registrado',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }

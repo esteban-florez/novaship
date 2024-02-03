@@ -43,16 +43,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.redirect(url(`/home/offers/${offerId}?alert=offer_created`))
     }
 
-    // TODO -> revisar que alerta colocar.
-    return NextResponse.redirect(url('/home/offers'))
+    return NextResponse.redirect(url('/home/offers?alert=offer_unavailable'))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Oferta',
-      description: 'La oferta no pudo ser registrada',
-      status: 'Error',
-      authUserId,
-    })
     handleError(error, data)
   }
 }

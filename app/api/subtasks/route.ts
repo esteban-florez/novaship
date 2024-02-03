@@ -70,13 +70,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks?id=${task.id}&filtered=${parsed.filter as string}&alert=subtask_created`))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Subtarea',
-      description: 'La subtarea no pudo ser registrada',
-      status: 'Error',
-      authUserId,
-    })
     handleError(error, data)
   }
 }

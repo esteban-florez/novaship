@@ -73,6 +73,10 @@ export const alerts: AlertList = {
     type: 'success',
     message: 'La subtarea ha sido actualizada con éxito.',
   },
+  offer_unavailable: {
+    type: 'warning',
+    message: 'No puede registrar ofertas.',
+  },
   offer_created: {
     type: 'success',
     message: 'La oferta fue registrada con éxito.',

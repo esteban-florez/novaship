@@ -100,13 +100,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     return NextResponse.redirect(url(`home/projects/${project.id}?alert=project_updated`))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Proyecto',
-      description: 'El proyecto no pudo ser actualizado',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }
@@ -148,13 +141,6 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
 
     return NextResponse.redirect(url('/home/projects?alert=project_deleted'))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Proyecto',
-      description: 'El proyecto no pudo ser eliminado',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error)
   }
 }

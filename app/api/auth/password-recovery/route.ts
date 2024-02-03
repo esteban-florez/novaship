@@ -63,13 +63,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.redirect(url('/auth/login?modal=changedpass'))
   } catch (error) {
-    const { authUserId, name } = await auth.user(request)
-    await logEvent({
-      title: 'Recuperación de contraseña',
-      description: `El usuario "${name}" no pudo recuperar su contraseña`,
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }

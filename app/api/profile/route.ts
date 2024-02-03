@@ -77,13 +77,6 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.redirect(url('/home/profile?alert=profile_updated'))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Usuario',
-      description: 'El usuario no pudo ser actualizado',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }

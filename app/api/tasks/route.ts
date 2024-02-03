@@ -71,13 +71,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks?id=${task.id}&alert=task_created`))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Tarea',
-      description: 'La tarea no pudo ser registrada',
-      status: 'Error',
-      authUserId,
-    })
     handleError(error, data)
   }
 }

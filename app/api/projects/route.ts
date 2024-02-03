@@ -89,13 +89,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.redirect(url('home/projects'))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Proyecto',
-      description: 'El proyecto no pudo ser registrado',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }

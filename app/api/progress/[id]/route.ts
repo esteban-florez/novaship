@@ -49,13 +49,6 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
       url(`home/internships/${recruitmentId}/progress?alert=progress_updated`)
     )
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Progreso',
-      description: 'El progreso no pudo ser actualizado',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }

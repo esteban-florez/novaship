@@ -76,13 +76,6 @@ export async function POST(request: NextRequest) {
 
     notFound()
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Postulación',
-      description: 'La postulación no pudo ser registrada',
-      status: 'Error',
-      authUserId,
-    })
     handleError(error, data)
   }
 }

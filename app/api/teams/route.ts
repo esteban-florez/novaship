@@ -77,13 +77,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.redirect(url(`/home/teams/${team.id}?alert=team_created`))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Equipo',
-      description: 'El equipo no pudo ser registrado',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }

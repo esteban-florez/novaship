@@ -47,13 +47,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       url(`home/internships/${id}?alert=internship_updated`)
     )
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Pasantía',
-      description: 'La pasantía no pudo ser actualizada',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }
@@ -84,13 +77,6 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       url(`home/institutes/${userId}/internships?alert=internship_deleted`)
     )
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Pasantía',
-      description: 'La pasantía no pudo ser eliminada',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error)
   }
 }

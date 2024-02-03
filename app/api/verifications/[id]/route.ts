@@ -44,14 +44,6 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
 
     return redirect('/home/admin/verifications?alert=verified_user')
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Verificación',
-      description: 'La empresa o institución no pudo ser verificada',
-      status: 'Error',
-      authUserId,
-    })
-
     return handleError(error)
   }
 }

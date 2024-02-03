@@ -51,13 +51,6 @@ export async function POST(request: NextRequest) {
 
     return redirect(`/home/internships/${internshipId}?alert=internship_created`)
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Pasantía',
-      description: 'La pasantía no pudo ser registrada',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error, data)
   }
 }

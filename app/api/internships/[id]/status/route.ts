@@ -73,13 +73,6 @@ export async function PATCH(
       `home/internships/${id}?alert=internship_accepted`
     ))
   } catch (error) {
-    const { authUserId } = await auth.user(request)
-    await logEvent({
-      title: 'Pasantía',
-      description: 'La pasantía no pudo ser actualizada',
-      status: 'Error',
-      authUserId,
-    })
     return handleError(error)
   }
 }
