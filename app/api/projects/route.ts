@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation'
 import { randomCode } from '@/lib/utils/code'
 import { storeFile } from '@/lib/storage/storeFile'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -76,10 +77,11 @@ export async function POST(request: NextRequest) {
       }))
     }
 
+    const { project_create: { message, model, status } } = logs
     await logEvent({
-      title: 'Proyecto',
-      description: `El proyecto "${parsed.title}" ha sido registrado`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

@@ -6,6 +6,7 @@ import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { auth } from '@/lib/auth/api'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function PUT(
   request: NextRequest,
@@ -54,10 +55,11 @@ export async function PUT(
       where: { id },
     })
 
+    const { revision_update: { message, model, status } } = logs
     await logEvent({
-      title: 'Revisión',
-      description: `La revisión "${parsed.content}" ha sido actualizada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 
@@ -127,10 +129,11 @@ export async function DELETE(
       where: { id },
     })
 
+    const { revision_delete: { message, model, status } } = logs
     await logEvent({
-      title: 'Revisión',
-      description: `La revisión "${revision.content}" ha sido eliminada`,
-      status: 'Warning',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

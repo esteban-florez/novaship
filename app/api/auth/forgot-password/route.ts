@@ -7,6 +7,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import createPasswordReset from '@/lib/auth/createPasswordReset'
 import sendRecoveryEmail from '@/lib/emails/sendRecoveryEmail'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -28,11 +29,12 @@ export async function POST(request: NextRequest) {
 
     await sendRecoveryEmail(email, resetId, username)
 
-    const { authUserId, name } = await auth.user(request)
+    const { authUserId } = await auth.user(request)
+    const { forget_password: { message, model, status } } = logs
     await logEvent({
-      title: 'Recuperación de contraseña',
-      description: `La contraseña del usuario "${name}" ha sido recuperada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

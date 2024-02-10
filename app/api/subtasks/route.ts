@@ -7,6 +7,7 @@ import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { getTaskWhereImIn } from '@/lib/data-fetching/task'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -52,10 +53,11 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    const { subtask_create: { message, model, status } } = logs
     await logEvent({
-      title: 'Subtarea',
-      description: `La subtarea "${parsed.title}" ha sido registrada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

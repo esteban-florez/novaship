@@ -8,6 +8,7 @@ import { getMyTask } from '@/lib/data-fetching/task'
 import { notFound } from 'next/navigation'
 import { getMySubtask } from '@/lib/data-fetching/subtask'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -29,10 +30,11 @@ export async function POST(request: NextRequest) {
         },
       })
 
+      const { revision_create: { message, model, status } } = logs
       await logEvent({
-        title: 'Revisión',
-        description: `La revisión "${parsed.content}" ha sido registrada`,
-        status: 'Success',
+        action: message,
+        model,
+        status,
         authUserId,
       })
 
@@ -56,10 +58,11 @@ export async function POST(request: NextRequest) {
         },
       })
 
+      const { revision_create: { message, model, status } } = logs
       await logEvent({
-        title: 'Revisión',
-        description: `La revisión "${parsed.content}" ha sido registrada`,
-        status: 'Success',
+        action: message,
+        model,
+        status,
         authUserId,
       })
 

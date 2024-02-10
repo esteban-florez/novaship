@@ -7,6 +7,7 @@ import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { notify } from '@/lib/notifications/notify'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -24,11 +25,12 @@ export async function POST(request: NextRequest) {
         },
       })
 
+      const { hiring_create_person: { message, model, status } } = logs
       await logEvent({
-        title: 'Postulación',
-        description: 'La postulación ha sido registrada',
-        status: 'Success',
-        authUserId: userId,
+        action: message,
+        model,
+        status,
+        authUserId,
       })
 
       return NextResponse.redirect(url(`/home/offers/${parsed.offerId}?alert=offer_applied`))
@@ -64,10 +66,11 @@ export async function POST(request: NextRequest) {
         offerId: parsed.offerId,
       })
 
+      const { hiring_create_company: { message, model, status } } = logs
       await logEvent({
-        title: 'Postulación',
-        description: 'La postulación ha sido registrada',
-        status: 'Success',
+        action: message,
+        model,
+        status,
         authUserId,
       })
 

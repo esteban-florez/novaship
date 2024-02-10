@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth/api'
 import logEvent from '@/lib/data-fetching/log'
 import { getVacant } from '@/lib/data-fetching/vacants'
 import { handleError } from '@/lib/errors/api'
+import { logs } from '@/lib/log'
 import { set } from '@/lib/utils/queries'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/vacants/update'
@@ -34,10 +35,11 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
       },
     })
 
+    const { vacant_update: { message, model, status } } = logs
     await logEvent({
-      title: 'Vacante',
-      description: `La vacante "${parsed.description}" ha sido actualizada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

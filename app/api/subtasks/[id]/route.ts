@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation'
 import { deleteSubtask, getMySubtask } from '@/lib/data-fetching/subtask'
 import collect from '@/lib/utils/collection'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -58,10 +59,11 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       })
     }
 
+    const { subtask_update: { message, model, status } } = logs
     await logEvent({
-      title: 'Subtarea',
-      description: `La subtarea "${parsed.title}" ha sido actualizada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 
@@ -85,10 +87,11 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       notFound()
     }
 
+    const { subtask_delete: { message, model, status } } = logs
     await logEvent({
-      title: 'Subtarea',
-      description: `La subtarea "${subtask.title}" ha sido eliminada`,
-      status: 'Warning',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

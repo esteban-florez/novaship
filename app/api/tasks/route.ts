@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation'
 import { getMyProject } from '@/lib/data-fetching/project'
 import prisma from '@/prisma/client'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -43,10 +44,11 @@ export async function POST(request: NextRequest) {
         },
       })
 
+      const { task_create: { message, model, status } } = logs
       await logEvent({
-        title: 'Tarea',
-        description: `La tarea "${parsed.title}" ha sido registrada`,
-        status: 'Success',
+        action: message,
+        model,
+        status,
         authUserId: userId,
       })
 
@@ -62,10 +64,11 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    const { task_create: { message, model, status } } = logs
     await logEvent({
-      title: 'Tarea',
-      description: `La tarea "${parsed.title}" ha sido registrada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

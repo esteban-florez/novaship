@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation'
 import { getMyTeam } from '@/lib/data-fetching/teams'
 import { notify } from '@/lib/notifications/notify'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -60,10 +61,11 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
+    const { team_update: { message, model, status } } = logs
     await logEvent({
-      title: 'Equipo',
-      description: `El equipo "${parsed.name}" ha sido actualizado`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 
@@ -93,10 +95,11 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       where: { id },
     })
 
+    const { team_delete: { message, model, status } } = logs
     await logEvent({
-      title: 'Equipo',
-      description: `El equipo "${team.name}" ha sido eliminado`,
-      status: 'Warning',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

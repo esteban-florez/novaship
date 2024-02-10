@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth/api'
 import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
+import { logs } from '@/lib/log'
 import { defaults } from '@/lib/validation/schemas/defaults'
 import prisma from '@/prisma/client'
 import { UserType } from '@prisma/client'
@@ -34,11 +35,11 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
       await prisma.institute.update(query)
     }
 
-    const userType = parsed.type === 'COMPANY' ? 'empresa' : 'institución'
+    const { verification: { message, model, status } } = logs
     await logEvent({
-      title: 'Verificación',
-      description: `La ${userType} ha sido verificada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId: user.authUserId,
     })
 

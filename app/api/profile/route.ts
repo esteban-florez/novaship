@@ -7,6 +7,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 // TODO -> cambiar el schema para aceptar los 3 usuarios
 export async function PUT(request: NextRequest) {
@@ -68,10 +69,11 @@ export async function PUT(request: NextRequest) {
       })
     }
 
+    const { profile: { message, model, status } } = logs
     await logEvent({
-      title: 'Usuario',
-      description: 'El usuario ha sido actualizado',
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation'
 import { NextResponse, type NextRequest } from 'next/server'
 import { notify } from '@/lib/notifications/notify'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function PATCH(
   request: NextRequest, { params: { id } }: PageContext
@@ -48,10 +49,11 @@ export async function PATCH(
     if (parsed.status === 'REJECTED') {
       await notify('internship-rejected', receiver, notificationData)
 
+      const { internship_status_update: { message, model, status } } = logs
       await logEvent({
-        title: 'Pasantía',
-        description: 'La pasantía ha sido actualizada',
-        status: 'Success',
+        action: message,
+        model,
+        status,
         authUserId,
       })
 
@@ -62,10 +64,11 @@ export async function PATCH(
 
     await notify('internship-accepted', receiver, notificationData)
 
+    const { internship_status_update: { message, model, status } } = logs
     await logEvent({
-      title: 'Pasantía',
-      description: 'La pasantía ha sido actualizada',
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

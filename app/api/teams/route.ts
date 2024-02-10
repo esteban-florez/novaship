@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth/api'
 import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
+import { logs } from '@/lib/log'
 import { notify } from '@/lib/notifications/notify'
 import { randomCode } from '@/lib/utils/code'
 import { url } from '@/lib/utils/url'
@@ -61,10 +62,11 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    const { team_create: { message, model, status } } = logs
     await logEvent({
-      title: 'Equipo',
-      description: `El equipo "${parsed.name}" ha sido registrado`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

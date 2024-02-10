@@ -596,13 +596,13 @@ model Resets {
 // --------------------------- Log Events ------------------------------
 // ----------------------------------------------------------------------
 model Log {
-  id          String    @id @default(cuid())
-  title       String
-  description String?
-  status      String
-  authUser    AuthUser? @relation(fields: [authUserId], references: [id])
-  authUserId  String?
-  createdAt   DateTime  @default(now())
+  id         String    @id @default(cuid())
+  model      String
+  action     String
+  status     String
+  authUser   AuthUser? @relation(fields: [authUserId], references: [id])
+  authUserId String?
+  createdAt  DateTime  @default(now())
 }
 
 enum Visibility {

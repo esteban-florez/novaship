@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth/api'
 import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
+import { logs } from '@/lib/log'
 import { notify } from '@/lib/notifications/notify'
 import { defaults } from '@/lib/validation/schemas/defaults'
 import { schema } from '@/lib/validation/schemas/internships/create'
@@ -35,10 +36,11 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    const { internship_create: { message, model, status } } = logs
     await logEvent({
-      title: 'Pasantía',
-      description: 'La pasantía ha sido registrada',
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId: authId,
     })
     const { authUserId } = await prisma.person.findUniqueOrThrow({ where: { id: personId } })

@@ -7,6 +7,7 @@ import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { notify } from '@/lib/notifications/notify'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -91,10 +92,11 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       })
     }
 
+    const { invitation_update: { message, model, status } } = logs
     await logEvent({
-      title: 'Invitación',
-      description: `La invitación "${invitation.team.name}" ha sido actualizada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

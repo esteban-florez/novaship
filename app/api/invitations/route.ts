@@ -10,6 +10,7 @@ import { defaults } from '@/lib/validation/schemas/defaults'
 import { getTeamLeader } from '@/lib/utils/tables'
 import { type Interested } from '@prisma/client'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -79,10 +80,11 @@ export async function POST(request: NextRequest) {
       teamId: team.id,
     })
 
+    const { invitation_create: { message, model, status } } = logs
     await logEvent({
-      title: 'Invitación',
-      description: `La invitación al equipo "${team.name}" ha sido registrada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

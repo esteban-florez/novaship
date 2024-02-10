@@ -7,6 +7,7 @@ import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { connect } from '@/lib/utils/queries'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -31,10 +32,11 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    const { vacant_create: { message, model, status } } = logs
     await logEvent({
-      title: 'Vacante',
-      description: `La vacante "${parsed.description}" ha sido registrada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

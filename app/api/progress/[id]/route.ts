@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth/api'
 import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
+import { logs } from '@/lib/log'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/status'
 import prisma from '@/prisma/client'
@@ -38,10 +39,11 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
 
     const { recruitmentId } = progress
 
+    const { progress_update: { message, model, status: logStatus } } = logs
     await logEvent({
-      title: 'Progreso',
-      description: 'El progreso ha sido actualizado',
-      status: 'Success',
+      action: message,
+      model,
+      status: logStatus,
       authUserId,
     })
 

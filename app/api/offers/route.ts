@@ -6,6 +6,7 @@ import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/api'
 import { getExpirationDate } from '@/lib/validation/expiration-dates'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -33,10 +34,11 @@ export async function POST(request: NextRequest) {
         },
       })
 
+      const { offer_create: { message, model, status } } = logs
       await logEvent({
-        title: 'Oferta',
-        description: `La oferta "${parsed.title}" ha sido registrada`,
-        status: 'Success',
+        action: message,
+        model,
+        status,
         authUserId,
       })
 

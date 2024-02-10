@@ -1,7 +1,9 @@
+import EmptyContent from '@/components/EmptyContent'
+import FilterBar from '@/components/FilterBar'
 import PageTitle from '@/components/PageTitle'
 import Pagination from '@/components/Pagination'
-import { type LogStatus } from '@/lib/data-fetching/log'
-import { format } from '@/lib/utils/date'
+import { type Model, type LogStatus, logModels } from '@/lib/data-fetching/log'
+import { models } from '@/lib/translations'
 import getPaginationProps from '@/lib/utils/pagination'
 import prisma from '@/prisma/client'
 import {
@@ -16,8 +18,12 @@ export const metadata: Metadata = {
   title: 'Bitácora',
 }
 
-export default async function LogPage({ searchParams }: SearchParamsProps) {
-  const pageNumber = +(searchParams.page ?? 1)
+export default async function LogPage({
+  searchParams: { page, filtered, search },
+}: SearchParamsProps) {
+  const searchFilter = (Array.isArray(search) ? search[0] : search) ?? ''
+  const modelFilter = Array.isArray(filtered) ? filtered[0] : filtered
+  const pageNumber = +(Array.isArray(page) ? page[0] : page ?? 1)
   const totalRecords = await prisma.log.count()
   const { nextPage, skip, take } = getPaginationProps({
     pageNumber,
@@ -25,10 +31,98 @@ export default async function LogPage({ searchParams }: SearchParamsProps) {
   })
 
   const logs = await prisma.log.findMany({
+    where: {
+      OR: [
+        {
+          model: {
+            contains: modelFilter,
+            mode: 'insensitive',
+          },
+        },
+        {
+          authUser: {
+            OR: [
+              {
+                admin: {
+                  OR: [
+                    {
+                      name: {
+                        contains: searchFilter,
+                        mode: 'insensitive',
+                      },
+                    },
+                    {
+                      email: {
+                        contains: searchFilter,
+                        mode: 'insensitive',
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                company: {
+                  OR: [
+                    {
+                      name: {
+                        contains: searchFilter,
+                        mode: 'insensitive',
+                      },
+                    },
+                    {
+                      email: {
+                        contains: searchFilter,
+                        mode: 'insensitive',
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                person: {
+                  OR: [
+                    {
+                      name: {
+                        contains: searchFilter,
+                        mode: 'insensitive',
+                      },
+                    },
+                    {
+                      email: {
+                        contains: searchFilter,
+                        mode: 'insensitive',
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                institute: {
+                  OR: [
+                    {
+                      name: {
+                        contains: searchFilter,
+                        mode: 'insensitive',
+                      },
+                    },
+                    {
+                      email: {
+                        contains: searchFilter,
+                        mode: 'insensitive',
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
     select: {
       id: true,
-      title: true,
-      description: true,
+      action: true,
+      model: true,
       status: true,
       createdAt: true,
       authUser: {
@@ -36,21 +130,25 @@ export default async function LogPage({ searchParams }: SearchParamsProps) {
           admin: {
             select: {
               name: true,
+              email: true,
             },
           },
           company: {
             select: {
               name: true,
+              email: true,
             },
           },
           person: {
             select: {
               name: true,
+              email: true,
             },
           },
           institute: {
             select: {
               name: true,
+              email: true,
             },
           },
         },
@@ -67,46 +165,81 @@ export default async function LogPage({ searchParams }: SearchParamsProps) {
     Error: <XCircleIcon className="w-5 h-5 fill-error" />,
   }
 
+  const logOptions = logModels
+    .map((l) => ({
+      id: l,
+      name: models[l],
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
   return (
     <>
       <PageTitle
         title="Bitácora"
         subtitle="Listado de todas las acciones registradas en la aplicación"
       />
+
+      <FilterBar
+        filterLabel="Módulo"
+        filterOptions={logOptions}
+        searchLabel="Correo"
+      />
+
       <section className="my-5 sm:mx-5 card bg-white">
         <div className="overflow-x-auto">
-          <table className="table">
+          <table className="table table-sm">
             <thead>
               <tr>
                 <th>Estado</th>
-                <th>Título</th>
-                <th>Descripción</th>
+                <th>Módulo</th>
+                <th>Nombre</th>
+                <th>Correo</th>
                 <th>Fecha</th>
+                <th>Hora</th>
+                <th>Acción</th>
               </tr>
             </thead>
             <tbody>
               {logs.map((l) => {
+                const user =
+                  l.authUser?.admin ??
+                  l.authUser?.person ??
+                  l.authUser?.company ??
+                  l.authUser?.institute
+
                 return (
                   <tr
                     key={l.id}
-                    className="hover"
+                    className="hover select-none"
                   >
                     <th>
                       <p className="ms-2">{logStatus[l.status as LogStatus]}</p>
                     </th>
-                    <td>{l.title}</td>
-                    <td>{l.description}</td>
+                    <td>{models[l.model as Model]}</td>
+                    <td>{user?.name}</td>
+                    <td>{user?.email}</td>
                     <td>
-                      {format({
-                        date: l.createdAt,
-                        config: { shortMonth: true },
-                      })}
+                      {new Intl.DateTimeFormat('es', {
+                        dateStyle: 'short',
+                      }).format(l.createdAt)}
                     </td>
+                    <td>
+                      {new Intl.DateTimeFormat('es', {
+                        timeStyle: 'medium',
+                        hourCycle: 'h12',
+                      }).format(l.createdAt)}
+                    </td>
+                    <td>{l.action}</td>
                   </tr>
                 )
               })}
             </tbody>
           </table>
+          {logs.length === 0 && (
+            <EmptyContent title="Módulo vacío">
+              No hay registros en el módulo seleccionado.
+            </EmptyContent>
+          )}
         </div>
       </section>
       <Pagination nextPage={nextPage} />

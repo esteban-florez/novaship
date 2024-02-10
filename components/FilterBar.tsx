@@ -8,23 +8,32 @@ import { useState } from 'react'
 type Props = React.PropsWithChildren<{
   searchLabel?: string
   filterLabel: string
-  filterOptions: Array<{
+  filterOptions: Array<
+  | {
     id: string
     title: string
-  } | {
+  }
+  | {
     id: string
     name: string
-  }>
+  }
+  >
 }>
 
-export default function FilterBar({ filterLabel, filterOptions, searchLabel }: Props) {
+export default function FilterBar({
+  filterLabel,
+  filterOptions,
+  searchLabel,
+}: Props) {
   const [filter, setFilter] = useState('')
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
   function updateParams(key: string, value: string) {
-    const newParams = new URLSearchParams(searchParams as unknown as URLSearchParams)
+    const newParams = new URLSearchParams(
+      searchParams as unknown as URLSearchParams
+    )
 
     if (value === '') {
       newParams.delete(key)
@@ -100,7 +109,7 @@ export default function FilterBar({ filterLabel, filterOptions, searchLabel }: P
         </div>
         {filter !== '' && (
           <button
-            className="btn btn-error mt-5"
+            className="btn btn-error mt-1.5"
             type="button"
             onClick={handleFilterReset}
           >

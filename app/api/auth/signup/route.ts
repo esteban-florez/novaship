@@ -8,6 +8,7 @@ import prisma from '@/prisma/client'
 import { type z } from 'zod'
 import { storeFile } from '@/lib/storage/storeFile'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 type PersonData = z.infer<typeof person>
 type NonPersonData = z.infer<typeof nonPerson>
@@ -68,10 +69,11 @@ export async function POST(request: NextRequest) {
       authRequest.setSession(session)
 
       const { authUserId } = await auth.user(request)
+      const { signup: { message, model, status } } = logs
       await logEvent({
-        title: 'Registro',
-        description: `El usuario "${parsed.name}" ha sido registrado`,
-        status: 'Success',
+        action: message,
+        model,
+        status,
         authUserId,
       })
 

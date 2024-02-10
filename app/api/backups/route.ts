@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import { NextResponse, type NextRequest } from 'next/server'
 import { TABLES } from './tables'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function GET(request: NextRequest) {
   try {
@@ -21,10 +22,11 @@ export async function GET(request: NextRequest) {
 
     await rm('public/backup.sql')
 
+    const { backup_db: { message, model, status } } = logs
     await logEvent({
-      title: 'Respaldo',
-      description: 'El respaldo de la base de datos ha sido registrado',
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 
@@ -54,10 +56,11 @@ export async function POST(request: NextRequest) {
 
     await rm('public/received.sql')
 
+    const { restore_db: { message, model, status } } = logs
     await logEvent({
-      title: 'Respaldo',
-      description: 'El respaldo de la base de datos ha sido cargado',
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

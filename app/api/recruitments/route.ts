@@ -3,6 +3,7 @@ import { canCreateRecruitment } from '@/lib/auth/permissions'
 import { getInternship } from '@/lib/data-fetching/internships'
 import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
+import { logs } from '@/lib/log'
 import { notify } from '@/lib/notifications/notify'
 import { url } from '@/lib/utils/url'
 import { schema as byCompany } from '@/lib/validation/schemas/recruitments/company'
@@ -64,10 +65,11 @@ export async function POST(request: NextRequest) {
       const { internship } = recruitment
       const { person: { authUserId }, grade } = internship
 
+      const { recruitment_create: { message, model, status } } = logs
       await logEvent({
-        title: 'Reclutamiento',
-        description: `El reclutamiento "${recruitment.vacant.description}" ha sido registrado`,
-        status: 'Success',
+        action: message,
+        model,
+        status,
         authUserId,
       })
 
@@ -102,10 +104,11 @@ export async function POST(request: NextRequest) {
     const recruitment = await checkAndCreate(parsed, companyId, internshipId)
     const { internship: { person }, vacant: { job } } = recruitment
 
+    const { recruitment_create: { message, model, status } } = logs
     await logEvent({
-      title: 'Reclutamiento',
-      description: `El reclutamiento "${recruitment.vacant.description}" ha sido registrado`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

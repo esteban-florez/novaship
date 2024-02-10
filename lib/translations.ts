@@ -144,3 +144,28 @@ export const months: Rec = {
   10: 'NOV',
   11: 'DIC',
 }
+
+export const models = {
+  Hiring: 'Contratación',
+  Vacant: 'Vacante',
+  Project: 'Proyecto',
+  Team: 'Equipo',
+  Offer: 'Oferta',
+  Task: 'Tarea',
+  Subtask: 'Subtarea',
+  Revision: 'Revisión',
+  Internship: 'Pasantía',
+  Invitation: 'Invitación',
+  Recruitment: 'Reclutamiento',
+  Progress: 'Progreso',
+  Log: 'Bitácora',
+  Auth: 'Autenticación',
+  Login: 'Inicio de sesión',
+  Logout: 'Cierre de sesión',
+  Register: 'Registro de ususario',
+  Backup: 'Base de datos',
+  PasswordRecovery: 'Recuperación de contraseña',
+  PasswordForget: 'Olvidé mi contraseña',
+  Verify: 'Verificaciones',
+  Profile: 'Perfil',
+} as const

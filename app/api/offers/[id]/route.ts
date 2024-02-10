@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation'
 import collect from '@/lib/utils/collection'
 import { getExpirationDate } from '@/lib/validation/expiration-dates'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -66,10 +67,11 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
+    const { offer_update: { message, model, status } } = logs
     await logEvent({
-      title: 'Oferta',
-      description: `La oferta "${parsed.title}" ha sido actualizada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 
@@ -100,10 +102,11 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       where: { id },
     })
 
+    const { offer_delete: { message, model, status } } = logs
     await logEvent({
-      title: 'Oferta',
-      description: `La oferta "${offer.title}" ha sido eliminada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

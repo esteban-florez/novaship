@@ -8,6 +8,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { notify } from '@/lib/notifications/notify'
 import { type Company, type Grade, type Vacant } from '@prisma/client'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function PATCH(
   request: NextRequest, { params: { id } }: PageContext
@@ -53,10 +54,11 @@ export async function PATCH(
       },
     })
 
+    const { recruitment_update: { message, model, status: logStatus } } = logs
     await logEvent({
-      title: 'Reclutamiento',
-      description: `El reclutamiento "${vacant.description}" ha sido actualizado`,
-      status: 'Success',
+      action: message,
+      model,
+      status: logStatus,
       authUserId,
     })
 

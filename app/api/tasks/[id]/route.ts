@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation'
 import { deleteTask, getMyTask } from '@/lib/data-fetching/task'
 import collect from '@/lib/utils/collection'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -55,10 +56,11 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       })
     }
 
+    const { task_update: { message, model, status } } = logs
     await logEvent({
-      title: 'Tarea',
-      description: `La tarea "${parsed.title}" ha sido actualizada`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 
@@ -79,10 +81,11 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
 
     await deleteTask({ id, userId })
 
+    const { task_delete: { message, model, status } } = logs
     await logEvent({
-      title: 'Tarea',
-      description: `La tarea "${task.title}" ha sido eliminada`,
-      status: 'Warning',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

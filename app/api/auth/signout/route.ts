@@ -1,6 +1,7 @@
 import { auth, handleRequest } from '@/lib/auth/api'
 import lucia from '@/lib/auth/lucia'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 import { url } from '@/lib/utils/url'
 import { NextResponse, type NextRequest } from 'next/server'
 
@@ -14,11 +15,12 @@ export async function DELETE(request: NextRequest) {
       return redirectToLogin
     }
 
-    const { authUserId, name } = await auth.user(request)
+    const { authUserId } = await auth.user(request)
+    const { logout: { message, model, status } } = logs
     await logEvent({
-      title: 'Cierre de sesión',
-      description: `El usuario "${name}" ha cerrado sesión`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

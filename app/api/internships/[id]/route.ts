@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth/api'
 import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
+import { logs } from '@/lib/log'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/internships/create'
 import prisma from '@/prisma/client'
@@ -36,10 +37,11 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
+    const { internship_update: { message, model, status } } = logs
     await logEvent({
-      title: 'Pasantía',
-      description: 'La pasantía ha sido actualizada',
-      status: 'Error',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 
@@ -66,10 +68,11 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
 
     await prisma.internship.delete(query)
 
+    const { internship_delete: { message, model, status } } = logs
     await logEvent({
-      title: 'Pasantía',
-      description: 'La pasantía ha sido eliminada',
-      status: 'Warning',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

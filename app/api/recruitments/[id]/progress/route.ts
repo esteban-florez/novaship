@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation'
 import { recruitmentCompletedHours } from '@/lib/utils/tables'
 import { notify } from '@/lib/notifications/notify'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -53,10 +54,11 @@ export async function POST(request: NextRequest, { params: { id } }: PageContext
       },
     })
 
+    const { progress_create: { message, model, status } } = logs
     await logEvent({
-      title: 'Progreso',
-      description: 'El progreso ha sido registrado',
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

@@ -9,6 +9,7 @@ import collect from '@/lib/utils/collection'
 import { deleteProject, getMyProject } from '@/lib/data-fetching/project'
 import { storeFile } from '@/lib/storage/storeFile'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -91,10 +92,11 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       })
     }
 
+    const { project_update: { message, model, status } } = logs
     await logEvent({
-      title: 'Proyecto',
-      description: `El proyecto "${parsed.title}" ha sido registrado`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 
@@ -111,6 +113,10 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       where: { id },
       select: { title: true },
     })
+
+    if (project == null) {
+      notFound()
+    }
 
     // DRY My records
     await deleteProject({
@@ -132,10 +138,11 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
       },
     })
 
+    const { project_update: { message, model, status } } = logs
     await logEvent({
-      title: 'Proyecto',
-      description: `El proyecto "${project?.title ?? ''}" ha sido eliminado`,
-      status: 'Warning',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

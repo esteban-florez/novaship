@@ -8,6 +8,7 @@ import { schema } from '@/lib/validation/schemas/login'
 import prisma from '@/prisma/client'
 import { NextResponse, type NextRequest } from 'next/server'
 import logEvent from '@/lib/data-fetching/log'
+import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   // DRY 10
@@ -42,11 +43,12 @@ export async function POST(request: NextRequest) {
     const session = await lucia.createSession(key.userId)
     authRequest.setSession(session)
 
-    const { authUserId, name } = await auth.user(request)
+    const { authUserId } = await auth.user(request)
+    const { login: { message, model, status } } = logs
     await logEvent({
-      title: 'Inicio de sesión',
-      description: `El usuario "${name}" ha iniciado sesión`,
-      status: 'Success',
+      action: message,
+      model,
+      status,
       authUserId,
     })
 

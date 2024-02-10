@@ -1,19 +1,44 @@
 import prisma from '@/prisma/client'
 
+export const logModels = [
+  'Hiring',
+  'Vacant',
+  'Project',
+  'Team',
+  'Offer',
+  'Auth',
+  'Login',
+  'Logout',
+  'Register',
+  'Backup',
+  'PasswordRecovery',
+  'PasswordForget',
+  'Verify',
+  'Profile',
+  'Task',
+  'Subtask',
+  'Revision',
+  'Internship',
+  'Invitation',
+  'Recruitment',
+  'Progress',
+] as const
+
 export type LogStatus = 'Success' | 'Error' | 'Warning' | 'Info'
+export type Model = typeof logModels[number]
 
 interface Props {
-  title: string
-  description?: string
+  action: string
   status: LogStatus
   authUserId: string
+  model: Model
 }
 
-export default async function logEvent({ title, status, description, authUserId }: Props) {
+export default async function logEvent({ action, status, model, authUserId }: Props) {
   return await prisma.log.create({
     data: {
-      title,
-      description,
+      action,
+      model,
       status,
       authUserId,
     },
