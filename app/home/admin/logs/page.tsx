@@ -2,6 +2,7 @@ import EmptyContent from '@/components/EmptyContent'
 import FilterBar from '@/components/FilterBar'
 import PageTitle from '@/components/PageTitle'
 import Pagination from '@/components/Pagination'
+import { auth } from '@/lib/auth/pages'
 import { type Model, type LogStatus, logModels } from '@/lib/data-fetching/log'
 import { models } from '@/lib/translations'
 import getPaginationProps from '@/lib/utils/pagination'
@@ -13,6 +14,7 @@ import {
   XCircleIcon,
 } from '@heroicons/react/24/solid'
 import { type Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Bitácora',
@@ -21,10 +23,19 @@ export const metadata: Metadata = {
 export default async function LogPage({
   searchParams: { page, filtered, search },
 }: SearchParamsProps) {
+  const { authUserId } = await auth.user()
+  if (authUserId == null) {
+    notFound()
+  }
+
   const searchFilter = (Array.isArray(search) ? search[0] : search) ?? ''
-  const modelFilter = Array.isArray(filtered) ? filtered[0] : filtered
+  const modelFilter = (Array.isArray(filtered) ? filtered[0] : filtered) ?? ''
   const pageNumber = +(Array.isArray(page) ? page[0] : page ?? 1)
-  const totalRecords = await prisma.log.count()
+  const totalRecords = await prisma.log.count({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
   const { nextPage, skip, take } = getPaginationProps({
     pageNumber,
     totalRecords,
@@ -44,74 +55,34 @@ export default async function LogPage({
             OR: [
               {
                 admin: {
-                  OR: [
-                    {
-                      name: {
-                        contains: searchFilter,
-                        mode: 'insensitive',
-                      },
-                    },
-                    {
-                      email: {
-                        contains: searchFilter,
-                        mode: 'insensitive',
-                      },
-                    },
-                  ],
+                  email: {
+                    contains: searchFilter,
+                    mode: 'insensitive',
+                  },
                 },
               },
               {
                 company: {
-                  OR: [
-                    {
-                      name: {
-                        contains: searchFilter,
-                        mode: 'insensitive',
-                      },
-                    },
-                    {
-                      email: {
-                        contains: searchFilter,
-                        mode: 'insensitive',
-                      },
-                    },
-                  ],
+                  email: {
+                    contains: searchFilter,
+                    mode: 'insensitive',
+                  },
                 },
               },
               {
                 person: {
-                  OR: [
-                    {
-                      name: {
-                        contains: searchFilter,
-                        mode: 'insensitive',
-                      },
-                    },
-                    {
-                      email: {
-                        contains: searchFilter,
-                        mode: 'insensitive',
-                      },
-                    },
-                  ],
+                  email: {
+                    contains: searchFilter,
+                    mode: 'insensitive',
+                  },
                 },
               },
               {
                 institute: {
-                  OR: [
-                    {
-                      name: {
-                        contains: searchFilter,
-                        mode: 'insensitive',
-                      },
-                    },
-                    {
-                      email: {
-                        contains: searchFilter,
-                        mode: 'insensitive',
-                      },
-                    },
-                  ],
+                  email: {
+                    contains: searchFilter,
+                    mode: 'insensitive',
+                  },
                 },
               },
             ],
@@ -156,6 +127,9 @@ export default async function LogPage({
     },
     skip,
     take,
+    orderBy: {
+      createdAt: 'desc',
+    },
   })
 
   const logStatus = {

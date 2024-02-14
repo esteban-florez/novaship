@@ -25,6 +25,7 @@ export default async function VacantsPage({
   searchParams,
 }: SearchParamsProps & PageContext) {
   const { id: userId, type, name } = await auth.user()
+
   if (type !== 'COMPANY' || userId !== id) notFound()
 
   const { filter } = getSearchAndFilter(searchParams)

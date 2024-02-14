@@ -9,6 +9,7 @@ const routes = {
 
 export default async function Page() {
   const { id, type } = await auth.user()
+
   if (type === 'ADMIN') notFound()
 
   redirect(`/home/${routes[type]}/${id}/internships`)

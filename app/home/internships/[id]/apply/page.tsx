@@ -24,7 +24,6 @@ export default async function RecruitPage({
   params: { id },
 }: PageContext & SearchParamsProps) {
   const { id: userId, type } = await auth.user()
-
   const internship = await getInternship(id)
   if (internship === null) notFound()
 

@@ -1,17 +1,24 @@
 import PageTitle from '@/components/PageTitle'
 import VerifyButton from '@/components/admin/VerifyButton'
 import Modal from '@/components/modal/Modal'
+import { auth } from '@/lib/auth/pages'
 import { userTypes } from '@/lib/translations'
 import prisma from '@/prisma/client'
 import { type UserType } from '@prisma/client'
 import { type Metadata } from 'next'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Verificaciones',
 }
 
 export default async function VerificationsPage(ctx: SearchParamsProps) {
+  const { authUserId } = await auth.user()
+  if (authUserId == null) {
+    notFound()
+  }
+
   const { selected } = ctx.searchParams
   const selectedId = Array.isArray(selected) ? selected[0] : selected
 

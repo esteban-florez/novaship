@@ -35,6 +35,7 @@ export default async function VacantDetailsPage({
   params: { vacantId },
 }: Context) {
   const { id: userId, type } = await auth.user()
+
   const vacant = await getVacant(vacantId)
 
   if (vacant === null || type !== 'COMPANY') {

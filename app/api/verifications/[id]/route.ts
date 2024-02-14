@@ -35,9 +35,9 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
       await prisma.institute.update(query)
     }
 
-    const { verification: { message, model, status } } = logs
+    const { verification_company: { message, model, status }, verification_institute: { message: instituteMessage } } = logs
     await logEvent({
-      action: message,
+      action: parsed.type === 'COMPANY' ? message : instituteMessage,
       model,
       status,
       authUserId: user.authUserId,

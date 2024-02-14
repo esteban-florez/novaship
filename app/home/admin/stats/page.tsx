@@ -14,12 +14,19 @@ import DownloadButton from './DownloadButton'
 import PageTitle from '@/components/PageTitle'
 import WrapperPDF from './WrapperPDF'
 import { getStatuses } from '@/lib/data-fetching/home/institute'
+import { auth } from '@/lib/auth/pages'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Estadísticas',
 }
 
 export default async function StatsPage() {
+  const { type } = await auth.user()
+  if (type !== 'ADMIN') {
+    notFound()
+  }
+
   const persons = await prisma.person.count()
   const companies = await prisma.company.count()
   const institutes = await prisma.institute.count()

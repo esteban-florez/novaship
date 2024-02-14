@@ -40,7 +40,6 @@ export default async function VacantDetailsPage({
   params: { id: internshipId, vacantId },
 }: Context) {
   const { type } = await auth.user()
-
   const internship = await prisma.internship.findUnique({
     where: { id: internshipId },
     include: {

@@ -26,7 +26,6 @@ export default async function InternshipProgressPage({
 }: PageContext & SearchParamsProps) {
   // DRY 1823
   const { id: userId, type } = await auth.user()
-
   const recruitment = await getRecruitment(id)
   if (recruitment === null) notFound()
 

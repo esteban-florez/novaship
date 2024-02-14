@@ -30,6 +30,7 @@ export default async function RecruitmentsPage({
   searchParams,
 }: SearchParamsProps) {
   const { id, type } = await auth.user()
+
   if (type === 'ADMIN') notFound()
 
   const { filter, search } = getSearchAndFilter(searchParams)
