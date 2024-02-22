@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 
 export default async function ProjectPage({ params: { id } }: PageContext) {
   const { id: userId } = await auth.user()
+
   const user =
     (await prisma.person.findFirst({ where: { id: userId } })) ??
     (await prisma.company.findFirst({ where: { id: userId } }))

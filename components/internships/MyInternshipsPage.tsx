@@ -20,6 +20,7 @@ export default async function MyInternshipsPage({
   params: { id: urlId },
 }: PageContext & SearchParamsProps) {
   const { id: userId, type, name } = await auth.user()
+
   const allowed = ['COMPANY', 'INSTITUTE']
   if (!allowed.includes(type) || userId !== urlId) notFound()
 

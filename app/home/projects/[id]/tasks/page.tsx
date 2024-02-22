@@ -34,6 +34,7 @@ export default async function TasksProjectPage({
   params: { id },
 }: SearchParamsWithIdProps) {
   const { id: userId } = await auth.user()
+
   const project = await getProject({ id })
   if (project == null) {
     notFound()

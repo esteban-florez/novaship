@@ -18,6 +18,7 @@ import Pagination from '@/components/Pagination'
 import clsx from 'clsx'
 import { type Prisma } from '@prisma/client'
 import { tooltip } from '@/lib/tooltip'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Proyectos',
@@ -32,7 +33,11 @@ interface FilterQueries {
 export default async function ProjectsPage({
   searchParams,
 }: SearchParamsProps) {
-  const { id } = await auth.user()
+  const { id, type } = await auth.user()
+  if (type === 'INSTITUTE' || type === 'ADMIN') {
+    notFound()
+  }
+
   const { categories } = await getPersonRelatedIds({ id })
 
   // DRY Pagination

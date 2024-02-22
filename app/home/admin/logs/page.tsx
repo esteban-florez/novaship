@@ -13,6 +13,7 @@ import {
   InformationCircleIcon,
   XCircleIcon,
 } from '@heroicons/react/24/solid'
+import { type Prisma } from '@prisma/client'
 import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -28,10 +29,102 @@ export default async function LogPage({
     notFound()
   }
 
-  const searchFilter = (Array.isArray(search) ? search[0] : search) ?? ''
+  const searchFilter = (
+    (Array.isArray(search) ? search[0] : search) ?? ''
+  ).replace('%40', '@')
   const modelFilter = (Array.isArray(filtered) ? filtered[0] : filtered) ?? ''
   const pageNumber = +(Array.isArray(page) ? page[0] : page ?? 1)
+
+  const whereCondition: Prisma.LogWhereInput = {
+    OR: [
+      {
+        model: {
+          contains: modelFilter,
+        },
+      },
+      {
+        authUser: {
+          OR: [
+            {
+              admin: {
+                OR: [
+                  {
+                    name: {
+                      contains: searchFilter,
+                      mode: 'insensitive',
+                    },
+                  },
+                  {
+                    email: {
+                      contains: searchFilter,
+                      mode: 'insensitive',
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              company: {
+                OR: [
+                  {
+                    name: {
+                      contains: searchFilter,
+                      mode: 'insensitive',
+                    },
+                  },
+                  {
+                    email: {
+                      contains: searchFilter,
+                      mode: 'insensitive',
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              person: {
+                OR: [
+                  {
+                    name: {
+                      contains: searchFilter,
+                      mode: 'insensitive',
+                    },
+                  },
+                  {
+                    email: {
+                      contains: searchFilter,
+                      mode: 'insensitive',
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              institute: {
+                OR: [
+                  {
+                    name: {
+                      contains: searchFilter,
+                      mode: 'insensitive',
+                    },
+                  },
+                  {
+                    email: {
+                      contains: searchFilter,
+                      mode: 'insensitive',
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  }
+
   const totalRecords = await prisma.log.count({
+    where: whereCondition,
     orderBy: {
       createdAt: 'desc',
     },
@@ -42,54 +135,7 @@ export default async function LogPage({
   })
 
   const logs = await prisma.log.findMany({
-    where: {
-      OR: [
-        {
-          model: {
-            contains: modelFilter,
-            mode: 'insensitive',
-          },
-        },
-        {
-          authUser: {
-            OR: [
-              {
-                admin: {
-                  email: {
-                    contains: searchFilter,
-                    mode: 'insensitive',
-                  },
-                },
-              },
-              {
-                company: {
-                  email: {
-                    contains: searchFilter,
-                    mode: 'insensitive',
-                  },
-                },
-              },
-              {
-                person: {
-                  email: {
-                    contains: searchFilter,
-                    mode: 'insensitive',
-                  },
-                },
-              },
-              {
-                institute: {
-                  email: {
-                    contains: searchFilter,
-                    mode: 'insensitive',
-                  },
-                },
-              },
-            ],
-          },
-        },
-      ],
-    },
+    where: whereCondition,
     select: {
       id: true,
       action: true,
@@ -216,7 +262,11 @@ export default async function LogPage({
           )}
         </div>
       </section>
-      <Pagination nextPage={nextPage} />
+      <Pagination
+        nextPage={nextPage}
+        filterParam="filtered"
+        filterSearch={modelFilter}
+      />
     </>
   )
 }

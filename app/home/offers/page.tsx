@@ -20,6 +20,7 @@ import Carousel from '@/components/carousel/Carousel'
 import clsx from 'clsx'
 import { type OffersFull, type OffersTab } from '@/lib/types'
 import { tooltip } from '@/lib/tooltip'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Ofertas',
@@ -34,6 +35,10 @@ interface FilterQueries {
 
 export default async function OffersPage({ searchParams }: SearchParamsProps) {
   const { id, type } = await auth.user()
+  if (type === 'ADMIN' || type === 'INSTITUTE') {
+    notFound()
+  }
+
   const { jobs, categories, skills } = await getPersonRelatedIds({ id })
 
   // DRY Pagination

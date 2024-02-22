@@ -5,13 +5,17 @@ import { auth } from '@/lib/auth/pages'
 import { tooltip } from '@/lib/tooltip'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Registrar equipo',
 }
 
 export default async function CreateTeamPage() {
-  const { id: userId } = await auth.user()
+  const { id: userId, type } = await auth.user()
+  if (type === 'ADMIN' || type === 'INSTITUTE') {
+    notFound()
+  }
 
   const persons = await prisma.person.findMany({
     where: {

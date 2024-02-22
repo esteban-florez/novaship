@@ -3,7 +3,7 @@ import { auth } from '@/lib/auth/pages'
 import { getMyTeams } from '@/lib/data-fetching/teams'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Registrar proyecto',
@@ -11,6 +11,9 @@ export const metadata: Metadata = {
 
 export default async function CreateProjectPage() {
   const { id: userId, type } = await auth.user()
+  if (type === 'ADMIN' || type === 'INSTITUTE') {
+    notFound()
+  }
 
   const categories = await prisma.category.findMany({
     select: { id: true, title: true },

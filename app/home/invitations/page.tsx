@@ -28,10 +28,10 @@ interface FilterQueries {
 export default async function InvitationsPage({
   searchParams,
 }: SearchParamsProps) {
+  const { id: userId, type } = await auth.user()
+
   const filter = searchParams.filter ?? 'pending'
   const pageNumber = +(searchParams.page ?? 1)
-
-  const { id: userId, type } = await auth.user()
 
   if (type !== 'PERSON') {
     notFound()

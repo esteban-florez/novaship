@@ -34,7 +34,11 @@ export default async function OfferPage({
   params: { id },
   searchParams,
 }: SearchParamsWithIdProps) {
-  const { id: userId } = await auth.user()
+  const { id: userId, type } = await auth.user()
+  if (type === 'ADMIN' || type === 'INSTITUTE') {
+    notFound()
+  }
+
   const offer = await getOffer({ id })
 
   if (offer === null) {

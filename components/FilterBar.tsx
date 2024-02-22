@@ -101,7 +101,8 @@ export default function FilterBar({
               type: 'rows',
               data: filterOptions,
             }}
-            value={filter}
+            defaultValue={filter}
+            // value={filter}
             noDefault
           >
             <option value="">Todas</option>

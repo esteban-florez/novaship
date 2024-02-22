@@ -14,7 +14,6 @@ export default async function UpdateProjectPage({
   params: { id },
 }: PageContext) {
   const { id: userId, type } = await auth.user()
-
   if (id === null) {
     notFound()
   }

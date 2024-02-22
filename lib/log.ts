@@ -33,8 +33,13 @@ export const logs = {
     model: 'Register',
     status: 'Success',
   },
-  verification: {
-    message: 'Verificar usuario',
+  verification_company: {
+    message: 'Verificó a la empresa',
+    model: 'Verify',
+    status: 'Success',
+  },
+  verification_institute: {
+    message: 'Verificó a la institución',
     model: 'Verify',
     status: 'Success',
   },

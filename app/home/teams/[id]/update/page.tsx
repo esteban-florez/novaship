@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 
 export default async function UpdateTeamPage({ params: { id } }: PageContext) {
   const { id: userId } = await auth.user()
+
   const team = await prisma.team.findFirst({
     where: {
       id,

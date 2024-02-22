@@ -10,6 +10,7 @@ type Props = React.PropsWithChildren<{
 
 export default function InternshipCard({ internship }: Props) {
   const { institute, grade } = internship
+
   const stage = getInternshipStage(internship)
 
   return (

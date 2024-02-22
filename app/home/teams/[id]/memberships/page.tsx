@@ -22,6 +22,7 @@ export default async function TeamMembershipsPage({
   params: { id },
 }: PageContext) {
   const { id: userId } = await auth.user()
+
   const team = await getTeam(id)
   const { memberships } = team
   const leader = team.leader.company ?? team.leader.person

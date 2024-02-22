@@ -4,16 +4,35 @@ import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 interface Props {
   nextPage: boolean
+  filterParam?: string
+  filterSearch?: string
 }
 
-export default function Pagination({ nextPage }: Props) {
+export default function Pagination({
+  nextPage,
+  filterParam,
+  filterSearch,
+}: Props) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const search = searchParams.get('filter')
+  const search =
+    filterParam != null
+      ? searchParams.get(filterParam)
+      : searchParams.get('filter')
   const pageNumber = Number(searchParams.get('page') ?? 1)
-  const filterQuery = search === '' ? 'all' : search
+  const filterQuery =
+    filterSearch != null ? filterSearch : search === '' ? 'all' : search
   const prevNumber = pageNumber > 1 ? pageNumber - 1 : 0
   const nextNumber = pageNumber + 1
+
+  const filterQueryOption =
+    filterParam != null
+      ? {
+          [filterParam]: filterQuery,
+        }
+      : {
+          filter: filterQuery,
+        }
 
   if (nextPage || pageNumber > 1) {
     return (
@@ -31,7 +50,7 @@ export default function Pagination({ nextPage }: Props) {
             <Link
               href={{
                 pathname,
-                query: { filter: filterQuery, page: prevNumber },
+                query: { ...filterQueryOption, page: prevNumber },
               }}
               className="join-item btn bg-white"
             >
@@ -45,7 +64,7 @@ export default function Pagination({ nextPage }: Props) {
             <Link
               href={{
                 pathname,
-                query: { filter: filterQuery, page: nextNumber },
+                query: { ...filterQueryOption, page: nextNumber },
               }}
               className="join-item btn bg-white"
             >

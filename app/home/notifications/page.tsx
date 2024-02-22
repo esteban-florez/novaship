@@ -9,6 +9,7 @@ import getPaginationProps from '@/lib/utils/pagination'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Notificaciones',
@@ -18,6 +19,9 @@ export default async function NotificationsPage({
   searchParams,
 }: SearchParamsProps) {
   const { authUserId } = await auth.user()
+  if (authUserId == null) {
+    notFound()
+  }
 
   const totalRecords = await prisma.notification.count({
     where: { authUserId },

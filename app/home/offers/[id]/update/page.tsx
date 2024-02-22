@@ -10,7 +10,11 @@ export const metadata: Metadata = {
 }
 
 export default async function UpdateOfferPage({ params: { id } }: PageContext) {
-  const { id: userId } = await auth.user()
+  const { id: userId, type } = await auth.user()
+  if (type !== 'COMPANY') {
+    notFound()
+  }
+
   const offer = await getMyOffer({ id, userId })
 
   if (offer === null) {
@@ -19,7 +23,9 @@ export default async function UpdateOfferPage({ params: { id } }: PageContext) {
 
   const locations = await prisma.location.findMany()
   const skills = await prisma.skill.findMany({ orderBy: { title: 'asc' } })
-  const categories = await prisma.category.findMany({ orderBy: { title: 'asc' } })
+  const categories = await prisma.category.findMany({
+    orderBy: { title: 'asc' },
+  })
   const jobs = await prisma.job.findMany({ orderBy: { title: 'asc' } })
 
   return (

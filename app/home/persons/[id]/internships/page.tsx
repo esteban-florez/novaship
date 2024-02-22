@@ -18,6 +18,7 @@ export default async function MyInternshipsPage({
   searchParams,
 }: PageContext & SearchParamsProps) {
   const { id: userId, type, name } = await auth.user()
+
   if (type !== 'PERSON' && userId !== personId) notFound()
 
   const grades = await prisma.grade.findMany()

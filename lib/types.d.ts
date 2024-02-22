@@ -31,6 +31,7 @@ import {
   type Interested,
 } from '@prisma/client'
 import { type days } from './translations'
+import { type Model } from './data-fetching/log'
 
 type Selectable<T> = T & {
   selected: boolean
@@ -52,6 +53,23 @@ type SelectableOption = OptionCategory | OptionSkill | OptionPerson
 interface ModelData {
   id: string
   title: string
+}
+
+// ----------------------------------------------------------------------
+// --------------------------- Aside ------------------------------
+// ----------------------------------------------------------------------
+interface SidebarLink {
+  href: string
+  title: string
+  icon: JSX.Element
+  visible?: boolean
+  model: Model
+}
+
+type SidebarLinkWithSubmenu = SidebarLink & {
+  submenu?: Array<SidebarLink & {
+    model: Model
+  }>
 }
 
 // ----------------------------------------------------------------------

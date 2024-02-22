@@ -50,6 +50,7 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const { id: userId, authUserId, type } = await auth.user()
+
   const quickAccessItems = getQuickAccessItems({ userId, type })
   const notifications = await getNotifications(authUserId, 3)
 

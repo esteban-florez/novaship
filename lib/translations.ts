@@ -168,4 +168,10 @@ export const models = {
   PasswordForget: 'Olvidé mi contraseña',
   Verify: 'Verificaciones',
   Profile: 'Perfil',
+  Home: 'Inicio',
+  Stats: 'Estadísticas',
+  Notification: 'Notificaciones',
+  CompanyProfile: 'Perfil de empresa',
+  InstituteProfile: 'Perfil de institución',
+  PersonProfile: 'Perfil de usuario',
 } as const
