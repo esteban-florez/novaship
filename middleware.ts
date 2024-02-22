@@ -208,7 +208,6 @@ export async function middleware(request: NextRequest) {
     session: request.cookies.get('auth_session')?.value ?? '',
   }
 
-  console.log(currentPath)
   await fetch(url('/api/log'), {
     body: JSON.stringify(data),
     method: 'POST',

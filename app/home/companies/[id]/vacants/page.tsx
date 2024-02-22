@@ -41,7 +41,13 @@ export default async function VacantsPage({
 
   const totalRecords = await prisma.vacant.count({ where })
 
-  const { nextPage, skip, take } = getPaginationProps({
+  const {
+    nextPage,
+    skip,
+    take,
+    page: pageNumber,
+    totalPages,
+  } = getPaginationProps({
     totalRecords,
     searchParams,
   })
@@ -88,7 +94,12 @@ export default async function VacantsPage({
             }}
           />
           )}
-      <Pagination nextPage={nextPage} />
+      <Pagination
+        currentPage={pageNumber}
+        nextPage={nextPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+      />
     </>
   )
 }

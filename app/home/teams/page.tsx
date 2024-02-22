@@ -1,21 +1,16 @@
 import { type Metadata } from 'next'
 import prisma from '@/prisma/client'
-import PageContent from '@/components/teams/PageContent'
 import { auth } from '@/lib/auth/pages'
 import getPaginationProps from '@/lib/utils/pagination'
 import { getTeams } from '@/lib/data-fetching/teams'
 import Pagination from '@/components/Pagination'
 import Link from 'next/link'
-import clsx from 'clsx'
 import PageTitle from '@/components/PageTitle'
-import {
-  BriefcaseIcon,
-  ListBulletIcon,
-  PlusIcon,
-} from '@heroicons/react/24/outline'
-import { type TeamsFull, type TeamsTab } from '@/lib/types'
+import { PlusIcon } from '@heroicons/react/24/outline'
 import { type Prisma } from '@prisma/client'
 import { tooltip } from '@/lib/tooltip'
+import TeamsList from '@/components/teams/TeamsList'
+import FilterBar from '@/components/FilterBar'
 
 export const metadata: Metadata = {
   title: 'Equipos de trabajo',
@@ -26,15 +21,22 @@ interface FilterQueries {
   personal: Prisma.TeamWhereInput
 }
 
-export default async function TeamsPage({ searchParams }: SearchParamsProps) {
+export default async function TeamsPage({
+  searchParams: { filtered, page, search },
+}: SearchParamsProps) {
   const { id } = await auth.user()
 
   // DRY Pagination
-  const filter = searchParams.filter ?? 'all'
-  const pageNumber = +(searchParams.page ?? 1)
+  const filterParam = filtered ?? 'all'
+  const pageNumber = +(page ?? 1)
+  const searchParam = Array.isArray(search) ? search[0] : search
 
   const FILTER_QUERIES: FilterQueries = {
     personal: {
+      name: {
+        contains: searchParam,
+        mode: 'insensitive',
+      },
       OR: [
         {
           leader: {
@@ -54,6 +56,10 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
       ],
     },
     all: {
+      name: {
+        contains: searchParam,
+        mode: 'insensitive',
+      },
       OR: [
         {
           leader: {
@@ -74,39 +80,26 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
     },
   }
   const totalRecords = await prisma.team.count({
-    where: FILTER_QUERIES[filter as keyof FilterQueries],
+    where: FILTER_QUERIES[filterParam as keyof FilterQueries],
   })
-  const { nextPage, skip, take } = getPaginationProps({
+  const { nextPage, skip, take, totalPages } = getPaginationProps({
     pageNumber,
     totalRecords,
   })
 
-  let teams: TeamsFull[] = []
-
-  if (filter === 'all') {
-    teams = await getTeams({ where: FILTER_QUERIES.all, take, skip })
-  }
-
-  if (filter === 'personal') {
-    teams = await getTeams({ where: FILTER_QUERIES.personal, take, skip })
-  }
-
-  const TEAMS_TAB_TRANSLATION = {
-    all: 'Todos',
-    personal: 'Mis equipos',
-  }
-  const links = [
+  const teams = await getTeams({
+    where: FILTER_QUERIES[filterParam as keyof FilterQueries],
+    take,
+    skip,
+  })
+  const options = [
     {
-      title: 'all',
-      content: 'Todos',
-      icon: <ListBulletIcon className="h-5 w-5" />,
-      query: 'all',
+      id: 'all',
+      name: 'Todos',
     },
     {
-      title: 'personal',
-      content: 'Mis Equipos',
-      icon: <BriefcaseIcon className="h-5 w-5" />,
-      query: 'personal',
+      id: 'personal',
+      name: 'Mis equipos',
     },
   ]
 
@@ -123,35 +116,25 @@ export default async function TeamsPage({ searchParams }: SearchParamsProps) {
           </button>
         </Link>
       </PageTitle>
-      <PageContent
-        dropdownLabel={`Categorías - ${
-          TEAMS_TAB_TRANSLATION[filter as TeamsTab]
-        }`}
+      <FilterBar
+        searchLabel="Nombre"
+        filterLabel="Categorías"
+        filterOptions={options}
+      />
+      <TeamsList
         teams={teams}
         userId={id}
-      >
-        {links.map((link) => {
-          return (
-            <Link
-              key={link.title}
-              href={{
-                pathname: '/home/teams',
-                query: { filter: link.query },
-              }}
-              className={clsx(
-                'btn',
-                link.title === filter
-                  ? 'btn-primary hover:btn-ghost'
-                  : 'hover:btn-primary'
-              )}
-            >
-              {link.icon}
-              {link.content}
-            </Link>
-          )
-        })}
-      </PageContent>
-      <Pagination nextPage={nextPage} />
+      />
+      <Pagination
+        currentPage={pageNumber}
+        nextPage={nextPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+        queryParams={{
+          filtered: filterParam,
+          search,
+        }}
+      />
     </>
   )
 }

@@ -10,6 +10,11 @@ import EmptyContent from '@/components/EmptyContent'
 import PersonsList from './PersonsList'
 import { param } from '@/lib/utils/search-params'
 import { tooltip } from '@/lib/tooltip'
+import { type Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Incribir pasante',
+}
 
 export default async function SelectInternPage({
   searchParams,
@@ -30,7 +35,13 @@ export default async function SelectInternPage({
 
   const totalRecords = await prisma.person.count({ where })
 
-  const { nextPage, skip, take } = getPaginationProps({
+  const {
+    nextPage,
+    skip,
+    take,
+    page: pageNumber,
+    totalPages,
+  } = getPaginationProps({
     totalRecords,
     searchParams,
     pageSize: 10,
@@ -71,7 +82,12 @@ export default async function SelectInternPage({
               <EmptyContent title="No hemos encontrado resultados..." />
               )}
         </div>
-        <Pagination nextPage={nextPage} />
+        <Pagination
+          currentPage={pageNumber}
+          nextPage={nextPage}
+          totalPages={totalPages}
+          totalRecords={totalRecords}
+        />
       </section>
     </>
   )

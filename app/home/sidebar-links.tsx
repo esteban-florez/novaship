@@ -87,16 +87,16 @@ export function sidebarLinks(user: UserWithType) {
     },
     {
       href: person
-        ? '/home/offers?filter=suggested'
-        : '/home/offers?filter=all',
+        ? '/home/offers?filtered=suggested'
+        : '/home/offers?filtered=all',
       title: 'Ofertas',
       icon: <BriefcaseIcon className="h-6 w-6" />,
       visible: !institute && !admin,
       submenu: [
         {
           href: person
-            ? '/home/offers?filter=suggested'
-            : '/home/offers?filter=all',
+            ? '/home/offers?filtered=suggested'
+            : '/home/offers?filtered=all',
           title: 'Lista de ofertas',
           icon: <GlobeAltIcon className="h-6 w-6" />,
         },
@@ -107,13 +107,13 @@ export function sidebarLinks(user: UserWithType) {
           visible: company,
         },
         {
-          href: '/home/offers?filter=personal',
+          href: '/home/offers?filtered=personal',
           title: 'Mis ofertas',
           icon: <StarIcon className="h-6 w-6" />,
           visible: company,
         },
         {
-          href: '/home/offers?filter=applied',
+          href: '/home/offers?filtered=applied',
           title: 'Postulaciones',
           icon: <StarIcon className="h-6 w-6" />,
           visible: person,
@@ -121,15 +121,15 @@ export function sidebarLinks(user: UserWithType) {
       ],
     },
     {
-      href: '/home/projects?filter=suggested',
+      href: '/home/projects?filtered=suggested',
       title: 'Proyectos',
       icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
       visible: !institute && !admin,
       submenu: [
         {
           href: company
-            ? '/home/projects?filter=all'
-            : '/home/projects?filter=suggested',
+            ? '/home/projects?filtered=all'
+            : '/home/projects?filtered=suggested',
           title: 'Lista de proyectos',
           icon: <GlobeAltIcon className="h-6 w-6" />,
         },
@@ -139,20 +139,20 @@ export function sidebarLinks(user: UserWithType) {
           icon: <PlusIcon className="h-6 w-6" />,
         },
         {
-          href: '/home/projects?filter=personal',
+          href: '/home/projects?filtered=personal',
           title: 'Mis proyectos',
           icon: <StarIcon className="h-6 w-6" />,
         },
       ],
     },
     {
-      href: '/home/teams?filter=all',
+      href: '/home/teams?filtered=all',
       title: 'Equipos',
       icon: <UserGroupIcon className="h-6 w-6" />,
       visible: !institute && !admin,
       submenu: [
         {
-          href: '/home/teams?filter=all',
+          href: '/home/teams?filtered=all',
           title: 'Lista de equipos',
           icon: <GlobeAltIcon className="h-6 w-6" />,
         },
@@ -168,13 +168,13 @@ export function sidebarLinks(user: UserWithType) {
           icon: <PlusIcon className="h-6 w-6" />,
         },
         {
-          href: '/home/teams?filter=personal',
+          href: '/home/teams?filtered=personal',
           title: 'Mis equipos',
           icon: <StarIcon className="h-6 w-6" />,
         },
         // TODO -> añadir funcionalidad
         // {
-        //   href: '/home/projects?filter=personal',
+        //   href: '/home/projects?filtered=personal',
         //   title: 'Postulaciones',
         //   icon: <ListBulletIcon className="h-6 w-6" />,
         // },

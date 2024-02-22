@@ -26,7 +26,13 @@ export default async function NotificationsPage({
   const totalRecords = await prisma.notification.count({
     where: { authUserId },
   })
-  const { nextPage, skip, take } = getPaginationProps({
+  const {
+    nextPage,
+    skip,
+    take,
+    totalPages,
+    page: pageNumber,
+  } = getPaginationProps({
     totalRecords,
     searchParams,
   })
@@ -69,7 +75,12 @@ export default async function NotificationsPage({
             <EmptyContent title="No tienes notificaciones." />
           </div>
           )}
-      <Pagination nextPage={nextPage} />
+      <Pagination
+        currentPage={pageNumber}
+        nextPage={nextPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+      />
     </>
   )
 }

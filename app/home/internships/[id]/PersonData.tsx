@@ -28,7 +28,7 @@ export default function PersonData({ person }: Props) {
       </div>
       <Link
         href={`/home/person/${person.id}`}
-        className="btn btn-square btn-secondary"
+        className="btn btn-secondary"
       >
         <ListBulletIcon className="h-5 w-5" />
         Ver perfil

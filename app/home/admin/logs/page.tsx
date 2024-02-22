@@ -29,17 +29,18 @@ export default async function LogPage({
     notFound()
   }
 
-  const searchFilter = (
-    (Array.isArray(search) ? search[0] : search) ?? ''
-  ).replace('%40', '@')
-  const modelFilter = (Array.isArray(filtered) ? filtered[0] : filtered) ?? ''
+  const searchFilter = (Array.isArray(search) ? search[0] : search)?.replace(
+    '%40',
+    '@'
+  )
+  const modelFilter = Array.isArray(filtered) ? filtered[0] : filtered
   const pageNumber = +(Array.isArray(page) ? page[0] : page ?? 1)
 
   const whereCondition: Prisma.LogWhereInput = {
-    OR: [
+    AND: [
       {
         model: {
-          contains: modelFilter,
+          equals: modelFilter,
         },
       },
       {
@@ -47,74 +48,34 @@ export default async function LogPage({
           OR: [
             {
               admin: {
-                OR: [
-                  {
-                    name: {
-                      contains: searchFilter,
-                      mode: 'insensitive',
-                    },
-                  },
-                  {
-                    email: {
-                      contains: searchFilter,
-                      mode: 'insensitive',
-                    },
-                  },
-                ],
+                email: {
+                  contains: searchFilter,
+                  mode: 'insensitive',
+                },
               },
             },
             {
               company: {
-                OR: [
-                  {
-                    name: {
-                      contains: searchFilter,
-                      mode: 'insensitive',
-                    },
-                  },
-                  {
-                    email: {
-                      contains: searchFilter,
-                      mode: 'insensitive',
-                    },
-                  },
-                ],
+                email: {
+                  contains: searchFilter,
+                  mode: 'insensitive',
+                },
               },
             },
             {
               person: {
-                OR: [
-                  {
-                    name: {
-                      contains: searchFilter,
-                      mode: 'insensitive',
-                    },
-                  },
-                  {
-                    email: {
-                      contains: searchFilter,
-                      mode: 'insensitive',
-                    },
-                  },
-                ],
+                email: {
+                  contains: searchFilter,
+                  mode: 'insensitive',
+                },
               },
             },
             {
               institute: {
-                OR: [
-                  {
-                    name: {
-                      contains: searchFilter,
-                      mode: 'insensitive',
-                    },
-                  },
-                  {
-                    email: {
-                      contains: searchFilter,
-                      mode: 'insensitive',
-                    },
-                  },
-                ],
+                email: {
+                  contains: searchFilter,
+                  mode: 'insensitive',
+                },
               },
             },
           ],
@@ -129,7 +90,7 @@ export default async function LogPage({
       createdAt: 'desc',
     },
   })
-  const { nextPage, skip, take } = getPaginationProps({
+  const { nextPage, skip, take, totalPages } = getPaginationProps({
     pageNumber,
     totalRecords,
   })
@@ -263,9 +224,14 @@ export default async function LogPage({
         </div>
       </section>
       <Pagination
+        currentPage={pageNumber}
         nextPage={nextPage}
-        filterParam="filtered"
-        filterSearch={modelFilter}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+        queryParams={{
+          filtered: modelFilter,
+          search: searchFilter,
+        }}
       />
     </>
   )

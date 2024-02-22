@@ -54,7 +54,7 @@ export default async function InvitationsPage({
   const totalRecords = await prisma.invitation.count({
     where: FILTER_QUERIES[filter as keyof FilterQueries],
   })
-  const { nextPage, skip, take } = getPaginationProps({
+  const { nextPage, skip, take, totalPages } = getPaginationProps({
     pageNumber,
     totalRecords,
   })
@@ -156,7 +156,12 @@ export default async function InvitationsPage({
           )
         })}
       </PageContent>
-      <Pagination nextPage={nextPage} />
+      <Pagination
+        currentPage={pageNumber}
+        nextPage={nextPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+      />
     </>
   )
 }

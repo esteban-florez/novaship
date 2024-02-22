@@ -27,5 +27,5 @@ export default function getPaginationProps({
   const skip = (page - 1) * pageSize
   const take = pageSize
 
-  return { nextPage, skip, take }
+  return { nextPage, skip, take, totalPages, page }
 }

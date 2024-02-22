@@ -1,7 +1,6 @@
 import { type Metadata } from 'next'
 import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/pages'
-import PageContent from '@/components/offers/PageContent'
 import { getOffers } from '@/lib/data-fetching/offer'
 import getPaginationProps from '@/lib/utils/pagination'
 import { getPersonRelatedIds } from '@/lib/data-fetching/user'
@@ -9,18 +8,12 @@ import { type Prisma } from '@prisma/client'
 import Pagination from '@/components/Pagination'
 import PageTitle from '@/components/PageTitle'
 import Link from 'next/link'
-import {
-  BookmarkIcon,
-  BriefcaseIcon,
-  LightBulbIcon,
-  ListBulletIcon,
-  PlusIcon,
-} from '@heroicons/react/24/outline'
+import { PlusIcon } from '@heroicons/react/24/outline'
 import Carousel from '@/components/carousel/Carousel'
-import clsx from 'clsx'
-import { type OffersFull, type OffersTab } from '@/lib/types'
 import { tooltip } from '@/lib/tooltip'
 import { notFound } from 'next/navigation'
+import FilterBar from '@/components/FilterBar'
+import OffersList from '@/components/offers/OffersList'
 
 export const metadata: Metadata = {
   title: 'Ofertas',
@@ -33,7 +26,9 @@ interface FilterQueries {
   suggested: Prisma.OfferWhereInput
 }
 
-export default async function OffersPage({ searchParams }: SearchParamsProps) {
+export default async function OffersPage({
+  searchParams: { filtered, page, search },
+}: SearchParamsProps) {
   const { id, type } = await auth.user()
   if (type === 'ADMIN' || type === 'INSTITUTE') {
     notFound()
@@ -42,9 +37,10 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
   const { jobs, categories, skills } = await getPersonRelatedIds({ id })
 
   // DRY Pagination
-  const filter =
-    type === 'COMPANY' ? 'personal' : searchParams.filter ?? 'suggested'
-  const pageNumber = +(searchParams.page ?? 1)
+  const filterParam = type === 'COMPANY' ? 'personal' : filtered ?? 'suggested'
+  const pageNumber = +(page ?? 1)
+  const searchParam = Array.isArray(search) ? search[0] : search
+
   const FILTER_QUERIES: FilterQueries = {
     suggested: {
       expiresAt: {
@@ -61,6 +57,34 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
         },
       },
       OR: [
+        {
+          title: {
+            contains: searchParam,
+            mode: 'insensitive',
+          },
+        },
+        {
+          description: {
+            contains: searchParam,
+            mode: 'insensitive',
+          },
+        },
+        {
+          company: {
+            name: {
+              contains: searchParam,
+              mode: 'insensitive',
+            },
+          },
+        },
+        {
+          location: {
+            title: {
+              contains: searchParam,
+              mode: 'insensitive',
+            },
+          },
+        },
         {
           categories: {
             some: {
@@ -82,9 +106,103 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
         },
       ],
     },
-    personal: { companyId: id },
-    applied: { hiring: { some: { personId: id } } },
+    personal: {
+      OR: [
+        {
+          title: {
+            contains: searchParam,
+            mode: 'insensitive',
+          },
+        },
+        {
+          description: {
+            contains: searchParam,
+            mode: 'insensitive',
+          },
+        },
+        {
+          company: {
+            name: {
+              contains: searchParam,
+              mode: 'insensitive',
+            },
+          },
+        },
+        {
+          location: {
+            title: {
+              contains: searchParam,
+              mode: 'insensitive',
+            },
+          },
+        },
+      ],
+      companyId: id,
+    },
+    applied: {
+      OR: [
+        {
+          title: {
+            contains: searchParam,
+            mode: 'insensitive',
+          },
+        },
+        {
+          description: {
+            contains: searchParam,
+            mode: 'insensitive',
+          },
+        },
+        {
+          company: {
+            name: {
+              contains: searchParam,
+              mode: 'insensitive',
+            },
+          },
+        },
+        {
+          location: {
+            title: {
+              contains: searchParam,
+              mode: 'insensitive',
+            },
+          },
+        },
+      ],
+      hiring: { some: { personId: id } },
+    },
     all: {
+      OR: [
+        {
+          title: {
+            contains: searchParam,
+            mode: 'insensitive',
+          },
+        },
+        {
+          description: {
+            contains: searchParam,
+            mode: 'insensitive',
+          },
+        },
+        {
+          company: {
+            name: {
+              contains: searchParam,
+              mode: 'insensitive',
+            },
+          },
+        },
+        {
+          location: {
+            title: {
+              contains: searchParam,
+              mode: 'insensitive',
+            },
+          },
+        },
+      ],
       NOT: {
         hiring: {
           some: {
@@ -96,77 +214,45 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
     },
   }
   const totalRecords = await prisma.offer.count({
-    where: FILTER_QUERIES[filter as keyof FilterQueries],
+    where: FILTER_QUERIES[filterParam as keyof FilterQueries],
   })
-  const { nextPage, skip, take } = getPaginationProps({
+  const { nextPage, skip, take, totalPages } = getPaginationProps({
     pageNumber,
     totalRecords,
   })
 
-  let offers: OffersFull[] = []
+  const offers = await getOffers({
+    where: FILTER_QUERIES[filterParam as keyof FilterQueries],
+    take,
+    skip,
+  })
   const carouselOffers = await getOffers({
     where: { companyId: { not: id } },
     skip: 0,
     take: 5,
   })
 
-  if (filter === 'suggested') {
-    offers = await getOffers({ where: FILTER_QUERIES.suggested, take, skip })
-  }
-
-  if (filter === 'personal') {
-    offers = await getOffers({ where: FILTER_QUERIES.personal, take, skip })
-  }
-
-  if (filter === 'applied') {
-    offers = await getOffers({
-      where: FILTER_QUERIES.applied,
-      skip,
-      take,
-    })
-  }
-
-  if (filter === 'all') {
-    offers = await getOffers({ where: FILTER_QUERIES.all, skip, take })
-  }
-
-  const OFFERS_TAB_TRANSLATION = {
-    all: 'Todas',
-    suggested: 'Ofertas sugeridas',
-    personal: 'Mis ofertas',
-    applied: 'Ofertas aplicadas',
-  }
-
-  const links = [
+  const options = [
     {
-      title: 'all',
-      content: 'Todas',
-      icon: <ListBulletIcon className="h-5 w-5" />,
-      query: 'all',
-      condition: true,
+      id: 'all',
+      name: 'Todas',
     },
     {
-      title: 'personal',
-      content: 'Mis ofertas',
-      icon: <BriefcaseIcon className="h-5 w-5" />,
-      query: 'personal',
-      condition: type === 'COMPANY',
+      id: 'suggested',
+      name: 'Sugeridas',
     },
     {
-      title: 'applied',
-      content: 'Ofertas aplicadas',
-      icon: <BookmarkIcon className="h-5 w-5" />,
-      query: 'applied',
-      condition: type === 'PERSON',
-    },
-    {
-      title: 'suggested',
-      content: 'Ofertas sugeridas',
-      icon: <LightBulbIcon className="h-5 w-5" />,
-      query: 'suggested',
-      condition: type === 'PERSON',
+      id: 'applied',
+      name: 'Aplicadas',
     },
   ]
+
+  if (type === 'COMPANY') {
+    options.push({
+      id: 'personal',
+      name: 'Mis ofertas',
+    })
+  }
 
   return (
     <>
@@ -183,39 +269,23 @@ export default async function OffersPage({ searchParams }: SearchParamsProps) {
           </Link>
         )}
       </PageTitle>
+      <FilterBar
+        searchLabel="Nombre"
+        filterLabel="Categorías"
+        filterOptions={options}
+      />
       <Carousel items={carouselOffers} />
-      <PageContent
-        dropdownLabel={`Categorías - ${
-          OFFERS_TAB_TRANSLATION[filter as OffersTab]
-        }`}
-        offers={offers}
-      >
-        {links.map((link) => {
-          if (link.condition) {
-            return (
-              <Link
-                key={link.title}
-                href={{
-                  pathname: '/home/offers',
-                  query: { filter: link.query },
-                }}
-                className={clsx(
-                  'btn',
-                  link.title === filter
-                    ? 'btn-primary hover:btn-ghost'
-                    : 'hover:btn-primary'
-                )}
-              >
-                {link.icon}
-                {link.content}
-              </Link>
-            )
-          }
-
-          return null
-        })}
-      </PageContent>
-      <Pagination nextPage={nextPage} />
+      <OffersList offers={offers} />
+      <Pagination
+        currentPage={pageNumber}
+        nextPage={nextPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+        queryParams={{
+          filtered: filterParam,
+          search,
+        }}
+      />
     </>
   )
 }

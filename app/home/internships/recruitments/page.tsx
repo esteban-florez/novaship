@@ -54,7 +54,13 @@ export default async function RecruitmentsPage({
 
   const totalRecords = await prisma.recruitment.count({ where })
 
-  const { nextPage, skip, take } = getPaginationProps({
+  const {
+    nextPage,
+    skip,
+    take,
+    page: pageNumber,
+    totalPages,
+  } = getPaginationProps({
     totalRecords,
     searchParams,
     pageSize: 10,
@@ -79,7 +85,13 @@ export default async function RecruitmentsPage({
         filterOptions={options}
       />
       <RecruitmentsTable recruitments={recruitments} />
-      <Pagination nextPage={nextPage} />
+      <Pagination
+        currentPage={pageNumber}
+        nextPage={nextPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+        pageSize={10}
+      />
     </>
   )
 }

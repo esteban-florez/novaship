@@ -21,13 +21,19 @@ type Props = React.PropsWithChildren<{
 }>
 
 export default async function InternshipList({
-  where, searchParams, component, emptyButton,
+  where,
+  searchParams,
+  component,
+  emptyButton,
 }: Props) {
   const Component = component
   const pageNumber = +(param(searchParams.page) ?? 1)
   const totalRecords = await prisma.internship.count({ where })
 
-  const { nextPage, skip, take } = getPaginationProps({ totalRecords, pageNumber })
+  const { nextPage, skip, take, totalPages } = getPaginationProps({
+    totalRecords,
+    pageNumber,
+  })
 
   const internships = await getInternships({ where, skip, take })
 
@@ -36,7 +42,7 @@ export default async function InternshipList({
       {internships.length > 0
         ? (
           <ThreeGrid>
-            {internships.map(internship => (
+            {internships.map((internship) => (
               <Component
                 key={internship.id}
                 internship={internship}
@@ -46,14 +52,15 @@ export default async function InternshipList({
           )
         : (
           <div className="pt-10">
-            <EmptyContent
-              button={emptyButton}
-            />
+            <EmptyContent button={emptyButton} />
           </div>
           )}
       {internships.length > 0 && (
         <Pagination
+          currentPage={pageNumber}
           nextPage={nextPage}
+          totalPages={totalPages}
+          totalRecords={totalRecords}
         />
       )}
     </>

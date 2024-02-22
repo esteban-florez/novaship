@@ -48,7 +48,13 @@ export default async function InternshipProgressPage({
 
   const totalRecords = await prisma.progress.count({ where })
 
-  const { nextPage, skip, take } = getPaginationProps({
+  const {
+    nextPage,
+    skip,
+    take,
+    totalPages,
+    page: pageNumber,
+  } = getPaginationProps({
     totalRecords,
     searchParams,
     pageSize: 4,
@@ -108,7 +114,12 @@ export default async function InternshipProgressPage({
               )}
         </div>
       </section>
-      <Pagination nextPage={nextPage} />
+      <Pagination
+        currentPage={pageNumber}
+        nextPage={nextPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+      />
     </PDFProvider>
   )
 }
