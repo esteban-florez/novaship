@@ -37,9 +37,10 @@ export default function Pagination({
   const pagesToHome = Array.from(
     { length: currentPage - 1 },
     (_, i) => currentPage - i - 1
-  )
-    .slice(0, 2)
-    .toReversed()
+  ).slice(0, 2)
+
+  pagesToHome.reverse()
+
   const pagesToLast = Array.from(
     { length: totalPages - currentPage - 1 },
     (_, i) => currentPage + i
