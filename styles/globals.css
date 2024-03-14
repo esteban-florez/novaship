@@ -81,10 +81,21 @@
   @apply justify-normal;
 }
 
+.schedule-table tr {
+  border-color: white;
+  border-width: 2px;
+}
+
 .schedule-table td {
-  border-left: 1px solid hsl(var(--b3));
-  border-right: 1px solid hsl(var(--b3));
+  border-left: 2px solid white;
+  border-right: 2px solid white;
   height: 2rem;
+}
+
+.schedule-table td:not(:empty),
+.schedule-table th {
+  pointer-events: none;
+  user-select: none;
 }
 
 .schedule-table .dummy-row td:not(.relative) {
