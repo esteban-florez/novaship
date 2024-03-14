@@ -26,8 +26,10 @@ export default function JobCard({ hiring }: Props) {
     <div className="p-4 rounded-xl border border-solid border-zinc-300 bg-white shadow">
       <h5 className="font-semibold">{title}</h5>
       <h6 className="text-sm font-semibold text-secondary">{company.name}</h6>
-      <span className="badge badge-secondary">{job.title}</span>
-      <ul className="inline-flex gap-2">
+      <span className="w-full badge badge-secondary text-center line-clamp-1">
+        {job.title}
+      </span>
+      <ul className="mt-3 inline-flex flex-wrap gap-x-2 gap-y-1">
         {categories.map((category) => {
           return (
             <li
