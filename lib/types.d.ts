@@ -30,7 +30,6 @@ import {
   type Subparticipation,
   type Interested,
 } from '@prisma/client'
-import { type days } from './translations'
 import { type Model } from './data-fetching/log'
 
 type Selectable<T> = T & {
@@ -371,8 +370,6 @@ interface ApiResponseBody {
   }
   data?: Record<string, unknown>
 }
-
-type Schedule = Record<keyof typeof days, number[]>
 
 type UserWithType =
   | (Person & { type: 'PERSON' })

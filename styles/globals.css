@@ -80,3 +80,19 @@
 .label {
   @apply justify-normal;
 }
+
+.schedule-table td {
+  border-left: 1px solid hsl(var(--b3));
+  border-right: 1px solid hsl(var(--b3));
+  height: 2rem;
+}
+
+.schedule-table .dummy-row td:not(.relative) {
+  height: 0.5rem;
+  padding: 0;
+}
+
+.schedule-table thead tr,
+.schedule-table .dummy-row td {
+  border: none;
+}

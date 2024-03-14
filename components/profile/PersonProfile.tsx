@@ -9,7 +9,6 @@ import {
   ClipboardDocumentListIcon,
   InformationCircleIcon,
   BuildingOffice2Icon,
-  // CalendarDaysIcon,
   DocumentMagnifyingGlassIcon,
   AcademicCapIcon,
   IdentificationIcon,
@@ -25,6 +24,7 @@ import EmptyContent from '../EmptyContent'
 import Link from 'next/link'
 import { format as textFormat } from '@/lib/utils/text'
 import { format as dateFormat } from '@/lib/utils/date'
+import Schedule from './Schedule'
 
 interface Props {
   person: Person & {
@@ -89,6 +89,7 @@ export default function PersonProfile({ person }: Props) {
     projects,
     location,
     birth,
+    schedule,
   } = person
 
   return (
@@ -204,6 +205,7 @@ export default function PersonProfile({ person }: Props) {
           </li>
         </ul>
       </div>
+      <Schedule schedule={schedule as boolean[][] | null} />
       <div className="col-span-full">
         <div className="flex flex-col gap-3">
           <div className="gap-3 flex flex-col p-4">

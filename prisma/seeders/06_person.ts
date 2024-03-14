@@ -67,6 +67,21 @@ export default async function person() {
             id: authUser.id,
           },
         },
+        schedule: new Array(24).fill(null).map((_, hour) => {
+          const nineToFive = hour >= 9 && hour <= 17
+
+          return new Array(7).fill(null).map((_, day) => {
+            const isSaturday = day === 5
+
+            if (isSaturday) {
+              const sevenToTwelve = hour >= 7 && hour <= 12
+              return sevenToTwelve
+            }
+
+            const sunday = day === 6
+            return !sunday && nineToFive
+          })
+        }),
       },
     })
   }
