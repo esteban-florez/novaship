@@ -93,7 +93,8 @@
 }
 
 .schedule-table td:not(:empty),
-.schedule-table th {
+.schedule-table th,
+.schedule-table .dummy-row td {
   pointer-events: none;
   user-select: none;
 }
