@@ -3,7 +3,7 @@ import { CalendarDaysIcon } from '@heroicons/react/24/outline'
 import Hour from './Hour'
 import DummyRow from './DummyRow'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSelection } from '@/lib/hooks/useSelection'
 
 const hours = [
@@ -27,18 +27,8 @@ export default function Schedule({ schedule: data }: Props) {
   const [intersected, setIntersected] = useState<string[]>([])
 
   const {
-    boxRef, down, move, selecting, up, menuOpen, areaRef, box,
+    boxRef, down, move, selecting, up, areaRef, box, cancel,
   } = useSelection({ clearIntersected, intersected })
-
-  useEffect(() => {
-    const listener = (e: Event) => { e.preventDefault() }
-
-    if (selecting || menuOpen) {
-      areaRef.current?.addEventListener('wheel', listener, { passive: false })
-    } else {
-      areaRef.current?.removeEventListener('wheel', listener)
-    }
-  }, [selecting, menuOpen, areaRef])
 
   function clearIntersected() {
     setIntersected([])
@@ -108,8 +98,7 @@ export default function Schedule({ schedule: data }: Props) {
       </div>
       {schedule !== null
         ? (
-          <div className="max-h-96 overflow-x-auto scrollbar relative border border-red-500" ref={areaRef}>
-            {box}
+          <div className="relative">
             <table className="table table-pin-rows table-pin-cols schedule-table">
               <thead>
                 <tr>
@@ -128,9 +117,10 @@ export default function Schedule({ schedule: data }: Props) {
                 onMouseDown={down}
                 onMouseMove={move}
                 onMouseUp={up}
-                onMouseLeave={up}
+                onMouseLeave={cancel}
+                ref={areaRef}
               >
-                <DummyRow />
+                {box}
                 {schedule.map((days, hourIndex) => {
                   const hour = hours[hourIndex]
                   return (
@@ -154,7 +144,7 @@ export default function Schedule({ schedule: data }: Props) {
                     </tr>
                   )
                 })}
-                <DummyRow withHour />
+                <DummyRow />
               </tbody>
             </table>
           </div>

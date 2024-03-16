@@ -35,7 +35,7 @@ export default async function MainLayout({
         <main className="pb-32 sm:pb-20">{children}</main>
         <Footer />
       </div>
-      <div className="drawer-side z-50">
+      <div className="drawer-side z-30">
         <label
           htmlFor="aside"
           aria-label="Close sidebar"

@@ -1,5 +1,6 @@
 import SelectionBox from '@/components/SelectionBox'
 import { useRef, useState } from 'react'
+import useClickOutside from './useClickOutside'
 
 declare global {
   // eslint-disable-next-line no-var
@@ -13,33 +14,35 @@ interface Coords {
   cuY: number
 }
 
-const getOffset = (ini: number, cu: number) => ini < cu ? ini : cu
+interface Size {
+  width: number
+  height: number
+}
 
-function getCoords(initial: [number, number], current: [number, number]) {
+interface Position {
+  top: number
+  left: number
+}
+
+function getCoords(initial: [number, number], current: [number, number]): Coords {
   const [inX, inY] = initial
   const [cuX, cuY] = current
 
   return { inX, inY, cuX, cuY }
 }
 
-function getSize(coords: Coords) {
+function getSize(coords: Coords): Size {
   const { cuX, cuY, inX, inY } = coords
   const width = Math.abs(inX - cuX)
   const height = Math.abs(inY - cuY)
   return { width, height }
 }
 
-function getStyles(coords: Coords) {
+function getPosition(coords: Coords): Position {
   const { cuX, cuY, inX, inY } = coords
-
-  const left = getOffset(inX, cuX)
-  const top = getOffset(inY, cuY)
-
-  const { width, height } = getSize(coords)
-
-  return {
-    width, height, left, top,
-  }
+  const left = Math.min(inX, cuX)
+  const top = Math.min(inY, cuY)
+  return { top, left }
 }
 
 interface Params {
@@ -48,21 +51,19 @@ interface Params {
 }
 
 export function useSelection({ intersected, clearIntersected }: Params) {
-  // TODO -> hacer algo con intersected y clearIntersected
-  console.log(intersected, clearIntersected)
-
   const [initialPoint, setInitialPoint] = useState<[number, number] | null>(null)
   const [currentPoint, setCurrentPoint] = useState<[number, number] | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const boxRef = useRef<HTMLDivElement>(null)
-  const areaRef = useRef<HTMLDivElement>(null)
+  const areaRef = useRef<HTMLTableSectionElement>(null)
+  const menuRef = useClickOutside<HTMLUListElement>(cancelSelection)
 
   const selecting = initialPoint !== null && currentPoint !== null
 
   const coordsFromEvent = (event: React.MouseEvent) => {
     if (areaRef.current === null) throw new Error('Error: areaRef is null')
 
-    const { top, left } = areaRef.current?.getBoundingClientRect()
+    const { top, left } = areaRef.current.getBoundingClientRect()
     const x = event.clientX - left
     const y = event.clientY - top
     return [x, y] as [number, number]
@@ -89,43 +90,69 @@ export function useSelection({ intersected, clearIntersected }: Params) {
 
   function endSelection() {
     if (!selecting) return
-    // setInitialPoint(null)
-    // setCurrentPoint(null)
-
     setMenuOpen(true)
-
-    // clearIntersected()
   }
 
-  let move
+  function cancelSelection(event?: React.MouseEvent) {
+    console.log(event)
+    if (!selecting || (event?.type === 'mouseleave' && event?.buttons === 0)) return
+    setInitialPoint(null)
+    setCurrentPoint(null)
+    clearIntersected()
+    setMenuOpen(false)
+  }
+
+  let coords, size, position
+  let move; let menuClass = 'dropdown-right'
   let styles = {
     display: 'none',
-    opacity: '1',
+    opacity: '.75',
   }
 
   if (selecting) {
-    const coords = getCoords(initialPoint, currentPoint)
+    coords = getCoords(initialPoint, currentPoint)
+    size = getSize(coords)
+    position = getPosition(coords)
 
     styles = {
       display: 'block',
       opacity: menuOpen ? '0' : styles.opacity,
-      ...getStyles(coords),
+      ...size,
+      ...position,
     }
 
     move = resizeSelection
+
+    if (menuRef.current !== null) {
+      const { bottom, left, top, right } = menuRef.current.getBoundingClientRect()
+
+      switch (true) {
+        case top < 80:
+          menuClass = 'dropdown-bottom'
+          break
+        case left < 250:
+          menuClass = 'dropdown-right'
+          break
+        case window.innerWidth - right < 250:
+          menuClass = 'dropdown-left'
+          break
+        case window.innerHeight - bottom < 80:
+          menuClass = 'dropdown-top'
+          break
+      }
+    }
   }
 
-  /* hacer alineamiento de la dropdown según donde esté, mediante la prop "menuClass", para que el dropdown no quede por fuera del area de selection */
-  const box = <SelectionBox menuClass="dropdown-left" menuOpen={menuOpen} refobj={boxRef} styles={styles} />
+  const box = <SelectionBox menuClass={menuClass} menuOpen={menuOpen} refobj={boxRef} styles={styles} menuRef={menuRef} onCancel={cancelSelection} />
 
   return {
     move,
     boxRef,
     selecting,
-    menuOpen,
     areaRef,
     box,
     down: initSelection,
     up: endSelection,
+    cancel: cancelSelection,
   }
 }

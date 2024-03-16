@@ -99,7 +99,8 @@
   user-select: none;
 }
 
-.schedule-table .dummy-row td:not(.relative) {
+.schedule-table .dummy-row td:not(.relative),
+.schedule-table .menu-row td {
   height: 0.5rem;
   padding: 0;
 }
@@ -107,4 +108,9 @@
 .schedule-table thead tr,
 .schedule-table .dummy-row td {
   border: none;
+}
+
+.schedule-table .menu-row td {
+  pointer-events: initial;
+  user-select: initial;
 }
