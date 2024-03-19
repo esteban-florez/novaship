@@ -5,6 +5,7 @@ import DummyRow from './DummyRow'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { useSelection } from '@/lib/hooks/useSelection'
+import useSubmit from '@/lib/hooks/useSubmit'
 
 const hours = [
   '12:00 AM', '01:00 AM', '02:00 AM', '03:00 AM', '04:00 AM', '05:00 AM', '06:00 AM',
@@ -26,6 +27,10 @@ export default function Schedule({ schedule: data }: Props) {
   const [schedule, setSchedule] = useState(data)
   const [changed, setChanged] = useState(false)
   const [intersected, setIntersected] = useState<string[]>([])
+
+  const { alert, handleSubmit, serverErrors, loading } = useSubmit({
+    append: { schedule }, onSuccess: () => { setChanged(false) },
+  })
 
   const clone = () => {
     if (schedule === null) {
@@ -93,26 +98,29 @@ export default function Schedule({ schedule: data }: Props) {
 
   return (
     <div className="col-span-full card gap-3 bg-white p-4 shadow-md border border-zinc-300 text-sm">
+      {alert} {serverErrors}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-3">
           <CalendarDaysIcon className="h-6 w-6 text-neutral-700 pointer-events-none select-none" />
           <div className="pointer-events-none select-none">
             <h4 className="text-xl font-bold">Horario de Disponibilidad Laboral</h4>
             {schedule !== null && (
-              <p className="-mt-1">
-                Haga click en una de las casillas para alternar entre <span className="bg-primary text-white p-1 rounded-xl font-bold">Disponible</span> y <span className="bg-base-300 border border-neutral p-1 rounded-xl font-bold">Ocupado</span>
+              <p className="-mt-1 max-w-lg">
+                Haga click en una de las casillas para alternar entre <span className="bg-primary text-white p-1 rounded-xl font-bold">Disponible</span> y <span className="bg-base-300 border border-neutral p-1 rounded-xl font-bold">Ocupado</span>. También puedes seleccionar manteniendo el click y arrastrando sobre las casillas.
               </p>
             )}
           </div>
         </div>
         {changed && (
           <div className="flex gap-2 items-center">
-            <button className="btn btn-sm btn-error" onClick={resetSchedule}>
+            <button className="btn btn-sm btn-error" onClick={resetSchedule} disabled={loading}>
               Deshacer cambios
             </button>
-            <button className="btn btn-sm btn-primary">
-              Guardar cambios
-            </button>
+            <form onSubmit={handleSubmit} action="/api/schedule" method="POST">
+              <button className="btn btn-sm btn-primary disabled:bg-primary disabled:brightness-50">
+                Guardar cambios
+              </button>
+            </form>
           </div>
         )}
       </div>
