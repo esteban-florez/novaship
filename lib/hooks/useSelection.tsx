@@ -46,11 +46,12 @@ function getPosition(coords: Coords): Position {
 }
 
 interface Params {
-  clearIntersected: () => void
   intersected: string[]
+  clearIntersected: () => void
+  markIntersected: (value: boolean) => void
 }
 
-export function useSelection({ intersected, clearIntersected }: Params) {
+export function useSelection({ intersected, clearIntersected, markIntersected }: Params) {
   const [initialPoint, setInitialPoint] = useState<[number, number] | null>(null)
   const [currentPoint, setCurrentPoint] = useState<[number, number] | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -89,12 +90,15 @@ export function useSelection({ intersected, clearIntersected }: Params) {
   }
 
   function endSelection() {
-    if (!selecting) return
+    if (intersected.length < 2) {
+      cancelSelection()
+      return
+    }
+
     setMenuOpen(true)
   }
 
   function cancelSelection(event?: React.MouseEvent) {
-    console.log(event)
     if (!selecting || (event?.type === 'mouseleave' && event?.buttons === 0)) return
     setInitialPoint(null)
     setCurrentPoint(null)
@@ -143,7 +147,7 @@ export function useSelection({ intersected, clearIntersected }: Params) {
     }
   }
 
-  const box = <SelectionBox menuClass={menuClass} menuOpen={menuOpen} refobj={boxRef} styles={styles} menuRef={menuRef} onCancel={cancelSelection} />
+  const box = <SelectionBox menuClass={menuClass} menuOpen={menuOpen} refobj={boxRef} styles={styles} menuRef={menuRef} onCancel={cancelSelection} onFreeClick={() => { markIntersected(true) }} onOcuppiedClick={() => { markIntersected(false) }} />
 
   return {
     move,

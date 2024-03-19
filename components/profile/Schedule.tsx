@@ -15,7 +15,8 @@ const hours = [
 
 const days = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom']
 
-const cellKey = (day: number, hour: number) => `${days[day]}-${hours[hour]}`
+const cellKey = (hour: number, day: number) => `${hour}-${day}`
+const cellIndexes = (key: string) => key.split('-').map(n => Number(n)) as [number, number]
 
 type Props = React.PropsWithChildren<{
   schedule: boolean[][] | null
@@ -26,18 +27,25 @@ export default function Schedule({ schedule: data }: Props) {
   const [changed, setChanged] = useState(false)
   const [intersected, setIntersected] = useState<string[]>([])
 
+  const clone = () => {
+    if (schedule === null) {
+      throw new Error('The schedule for this user is not defined.')
+    }
+
+    return structuredClone(schedule)
+  }
+
   const {
     boxRef, down, move, selecting, up, areaRef, box, cancel,
-  } = useSelection({ clearIntersected, intersected })
+  } = useSelection({ clearIntersected, intersected, markIntersected })
 
   function clearIntersected() {
     setIntersected([])
   }
 
-  function alternate(hourIndex: number, dayIndex: number) {
-    if (schedule === null) return
+  function handleCellClick(hourIndex: number, dayIndex: number) {
+    const newSchedule = clone()
 
-    const newSchedule = schedule.map(row => row.map(col => col))
     newSchedule[hourIndex][dayIndex] = !newSchedule[hourIndex][dayIndex]
 
     setSchedule(newSchedule)
@@ -47,6 +55,18 @@ export default function Schedule({ schedule: data }: Props) {
   function resetSchedule() {
     setSchedule(data)
     setChanged(false)
+  }
+
+  function markIntersected(value: boolean) {
+    const newSchedule = clone()
+
+    intersected.forEach(key => {
+      const [hourIndex, dayIndex] = cellIndexes(key)
+      newSchedule[hourIndex][dayIndex] = value
+    })
+
+    setSchedule(newSchedule)
+    setChanged(true)
   }
 
   function refHandler(td: HTMLTableCellElement | null, key: string) {
@@ -103,13 +123,7 @@ export default function Schedule({ schedule: data }: Props) {
               <thead>
                 <tr>
                   <th />
-                  <th>Lun</th>
-                  <th>Mar</th>
-                  <th>Mie</th>
-                  <th>Jue</th>
-                  <th>Vie</th>
-                  <th>Sab</th>
-                  <th>Dom</th>
+                  {days.map(day => <th key={day}>{day}</th>)}
                 </tr>
               </thead>
               <tbody
@@ -127,7 +141,7 @@ export default function Schedule({ schedule: data }: Props) {
                     <tr key={hour}>
                       <Hour>{hour}</Hour>
                       {days.map((scheduled, dayIndex) => {
-                        const key = cellKey(dayIndex, hourIndex)
+                        const key = cellKey(hourIndex, dayIndex)
                         const selected = intersected.includes(key)
                         return (
                           <td
@@ -135,7 +149,7 @@ export default function Schedule({ schedule: data }: Props) {
                               clsx('transition-all hover:brightness-75', scheduled ? 'bg-primary' : 'bg-base-300', selected && 'brightness-75')
                             }
                             key={key}
-                            onClick={() => { alternate(hourIndex, dayIndex) }}
+                            onClick={() => { handleCellClick(hourIndex, dayIndex) }}
                             ref={(td) => { refHandler(td, key) }}
                           />
                         )
