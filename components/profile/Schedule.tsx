@@ -21,15 +21,30 @@ const cellIndexes = (key: string) => key.split('-').map(n => Number(n)) as [numb
 
 type Props = React.PropsWithChildren<{
   schedule: boolean[][] | null
+  interactive?: boolean
 }>
 
-export default function Schedule({ schedule: data }: Props) {
+export default function Schedule({ schedule: data, interactive = false }: Props) {
   const [schedule, setSchedule] = useState(data)
   const [changed, setChanged] = useState(false)
   const [intersected, setIntersected] = useState<string[]>([])
 
+  function h<T>(handler: T) {
+    return interactive ? handler : undefined
+  }
+
+  async function updateFromServer() {
+    await fetch('/api/schedule')
+      .then(async response => await response.json())
+      .then(data => { setSchedule(data.schedule as boolean[][]) })
+  }
+
   const { alert, handleSubmit, serverErrors, loading } = useSubmit({
-    append: { schedule }, onSuccess: () => { setChanged(false) },
+    append: { schedule },
+    onSuccess: async () => {
+      await updateFromServer()
+      setChanged(false)
+    },
   })
 
   const clone = () => {
@@ -98,13 +113,16 @@ export default function Schedule({ schedule: data }: Props) {
 
   return (
     <div className="col-span-full card gap-3 bg-white p-4 shadow-md border border-zinc-300 text-sm">
-      {alert} {serverErrors}
+      {interactive && (
+        <form id="schedule-form" onSubmit={h(handleSubmit)} action="/api/schedule" method="POST" />
+      )}
+      {interactive && alert} {interactive && serverErrors}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-3">
           <CalendarDaysIcon className="h-6 w-6 text-neutral-700 pointer-events-none select-none" />
           <div className="pointer-events-none select-none">
             <h4 className="text-xl font-bold">Horario de Disponibilidad Laboral</h4>
-            {schedule !== null && (
+            {schedule !== null && interactive && (
               <p className="-mt-1 max-w-lg">
                 Haga click en una de las casillas para alternar entre <span className="bg-primary text-white p-1 rounded-xl font-bold">Disponible</span> y <span className="bg-base-300 border border-neutral p-1 rounded-xl font-bold">Ocupado</span>. También puedes seleccionar manteniendo el click y arrastrando sobre las casillas.
               </p>
@@ -113,14 +131,12 @@ export default function Schedule({ schedule: data }: Props) {
         </div>
         {changed && (
           <div className="flex gap-2 items-center">
-            <button className="btn btn-sm btn-error" onClick={resetSchedule} disabled={loading}>
+            <button type="button" className="btn btn-sm btn-error" onClick={h(resetSchedule)} disabled={loading}>
               Deshacer cambios
             </button>
-            <form onSubmit={handleSubmit} action="/api/schedule" method="POST">
-              <button className="btn btn-sm btn-primary disabled:bg-primary disabled:brightness-50">
-                Guardar cambios
-              </button>
-            </form>
+            <button type="submit" form="schedule-form" className="btn btn-sm btn-primary disabled:bg-primary disabled:brightness-50">
+              Guardar cambios
+            </button>
           </div>
         )}
       </div>
@@ -136,11 +152,11 @@ export default function Schedule({ schedule: data }: Props) {
               </thead>
               <tbody
                 className="border border-red-500 relative"
-                onMouseDown={down}
-                onMouseMove={move}
-                onMouseUp={up}
-                onMouseLeave={cancel}
-                ref={areaRef}
+                onMouseDown={h(down)}
+                onMouseMove={h(move)}
+                onMouseUp={h(up)}
+                onMouseLeave={h(cancel)}
+                ref={h(areaRef)}
               >
                 {box}
                 {schedule.map((days, hourIndex) => {
@@ -157,8 +173,8 @@ export default function Schedule({ schedule: data }: Props) {
                               clsx('transition-all hover:brightness-75', scheduled ? 'bg-primary' : 'bg-base-300', selected && 'brightness-75')
                             }
                             key={key}
-                            onClick={() => { handleCellClick(hourIndex, dayIndex) }}
-                            ref={(td) => { refHandler(td, key) }}
+                            onClick={h(() => { handleCellClick(hourIndex, dayIndex) })}
+                            ref={h((td) => { refHandler(td, key) })}
                           />
                         )
                       }
@@ -177,7 +193,7 @@ export default function Schedule({ schedule: data }: Props) {
               <h4 className="font-bold text-lg text-gray-400 mb-4">
                 Aún no has creado tu horario de disponibilidad.
               </h4>
-              <button className="btn btn-primary">
+              <button type="submit" className="btn btn-primary" form="schedule-form">
                 Crear horario
               </button>
             </div>

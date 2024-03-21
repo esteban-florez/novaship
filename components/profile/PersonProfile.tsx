@@ -205,7 +205,9 @@ export default function PersonProfile({ person }: Props) {
           </li>
         </ul>
       </div>
-      <Schedule schedule={schedule as boolean[][] | null} />
+      {employable && (
+        <Schedule schedule={schedule as boolean[][] | null} interactive />
+      )}
       <div className="col-span-full">
         <div className="flex flex-col gap-3">
           <div className="gap-3 flex flex-col p-4">

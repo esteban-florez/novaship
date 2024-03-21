@@ -22,6 +22,7 @@ import {
 import { format as textFormat } from '@/lib/utils/text'
 import { format as dateFormat } from '@/lib/utils/date'
 import { type Metadata } from 'next'
+import Schedule from '@/components/profile/Schedule'
 
 export const metadata: Metadata = {
   title: 'Perfil de usuario',
@@ -45,6 +46,7 @@ export default async function ProfileUserId({ params: { id } }: PageContext) {
     projects,
     location,
     birth,
+    schedule,
   } = user
 
   return (
@@ -120,6 +122,9 @@ export default async function ProfileUserId({ params: { id } }: PageContext) {
           </ul>
         </div>
       </div>
+      {employable && schedule !== null && (
+        <Schedule schedule={schedule as boolean[][]} />
+      )}
       <div className="col-span-full sm:col-span-5 card gap-3 bg-white p-4 shadow-md border border-zinc-300 text-sm">
         <div className="flex items-center gap-3 mb-2">
           <InformationCircleIcon className="h-6 w-6 text-neutral-700" />

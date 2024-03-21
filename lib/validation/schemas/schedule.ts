@@ -1,9 +1,11 @@
-import { boolean, object } from 'zod'
+import { boolean, nullable, object } from 'zod'
+
+const schedule = boolean()
+  .array()
+  .length(7)
+  .array()
+  .length(24)
 
 export const schema = object({
-  schedule: boolean()
-    .array()
-    .length(7)
-    .array()
-    .length(24),
+  schedule: nullable(schedule),
 })

@@ -5,19 +5,43 @@ import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 
+export async function GET(request: NextRequest) {
+  try {
+    const { id, type } = await auth.user(request)
+    if (type !== 'PERSON') notFound()
+
+    const { schedule } = await prisma.person.findUniqueOrThrow({
+      where: { id },
+    })
+
+    return NextResponse.json({ schedule })
+  } catch (error) {
+
+  }
+}
+
 export async function POST(request: NextRequest) {
   let data
   try {
     data = await request.json()
-    const { schedule } = schema.parse(data)
-    const { authUserId, type } = await auth.user(request)
+    const parsed = schema.parse(data)
+    const { id, type } = await auth.user(request)
 
     if (type !== 'PERSON') notFound()
 
-    console.log('act')
+    let schedule
+    if (parsed.schedule === null) {
+      schedule = new Array(24).fill(null).map(() => {
+        return new Array(7).fill(null).map(() => {
+          return false
+        })
+      })
+    } else {
+      schedule = parsed.schedule
+    }
 
     await prisma.person.update({
-      where: { authUserId },
+      where: { id },
       data: { schedule },
     })
 
