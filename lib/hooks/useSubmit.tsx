@@ -77,6 +77,7 @@ export default function useSubmit<Fields extends FieldValues>(options?: UseSubmi
       const body = await response.json() as ApiResponseBody
 
       if (response.ok) {
+        console.log('refreshing')
         router.refresh()
 
         if (onSuccess !== undefined) {

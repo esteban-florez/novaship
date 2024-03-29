@@ -81,13 +81,26 @@
   @apply justify-normal;
 }
 
+.schedule-table tr {
+  border-color: white;
+  border-width: 2px;
+}
+
 .schedule-table td {
-  border-left: 1px solid hsl(var(--b3));
-  border-right: 1px solid hsl(var(--b3));
+  border-left: 2px solid white;
+  border-right: 2px solid white;
   height: 2rem;
 }
 
-.schedule-table .dummy-row td:not(.relative) {
+.schedule-table td:not(:empty),
+.schedule-table th,
+.schedule-table .dummy-row td {
+  pointer-events: none;
+  user-select: none;
+}
+
+.schedule-table .dummy-row td:not(.relative),
+.schedule-table .menu-row td {
   height: 0.5rem;
   padding: 0;
 }
@@ -95,4 +108,9 @@
 .schedule-table thead tr,
 .schedule-table .dummy-row td {
   border: none;
+}
+
+.schedule-table .menu-row td {
+  pointer-events: initial;
+  user-select: initial;
 }

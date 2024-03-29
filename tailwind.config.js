@@ -6,7 +6,8 @@ module.exports = {
   content: [
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
-    "./lib/shared/stage-colors.ts"
+    "./lib/shared/stage-colors.ts",
+    "./lib/hooks/useSelection.tsx"
   ],
   theme: {
     extend: {
