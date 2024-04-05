@@ -22,6 +22,8 @@ import {
 import { format as textFormat } from '@/lib/utils/text'
 import { format as dateFormat } from '@/lib/utils/date'
 import { type Metadata } from 'next'
+import { auth } from '@/lib/auth/pages'
+import { redirect } from 'next/navigation'
 import Schedule from '@/components/profile/Schedule'
 
 export const metadata: Metadata = {
@@ -29,8 +31,12 @@ export const metadata: Metadata = {
 }
 
 export default async function ProfileUserId({ params: { id } }: PageContext) {
-  const user = await getUserProfileData({ id })
+  const { id: userId } = await auth.user()
+  if (userId === id) {
+    redirect('/home/profile')
+  }
 
+  const user = await getUserProfileData({ id })
   const {
     name,
     description,

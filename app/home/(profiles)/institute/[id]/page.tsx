@@ -12,6 +12,8 @@ import { format as textFormat } from '@/lib/utils/text'
 import prisma from '@/prisma/client'
 import AvatarIcon from '@/components/AvatarIcon'
 import { type Metadata } from 'next'
+import { redirect } from 'next/navigation'
+import { auth } from '@/lib/auth/pages'
 
 export const metadata: Metadata = {
   title: 'Perfil de institución',
@@ -20,6 +22,11 @@ export const metadata: Metadata = {
 export default async function ProfileInstituteId({
   params: { id },
 }: PageContext) {
+  const { id: userId } = await auth.user()
+  if (userId === id) {
+    redirect('/home/profile')
+  }
+
   const institute = await prisma.institute.findUniqueOrThrow({
     where: { id },
     include: {
