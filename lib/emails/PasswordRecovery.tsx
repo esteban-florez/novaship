@@ -66,8 +66,6 @@ export const PasswordRecovery = ({
             </Text>
             <Button
               style={button}
-              pX={16}
-              pY={16}
               href={`${baseUrl}/auth/password-recovery?resetId=${resetId}`}
             >
               Recuperar contraseña

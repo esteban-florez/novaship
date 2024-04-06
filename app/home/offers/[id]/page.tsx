@@ -179,6 +179,7 @@ export default async function OfferPage({
             interested={interested}
             hiringId={hiringId}
             hirings={hirings}
+            userType={type}
           />
         </div>
         <div className="col-span-7 lg:col-span-5">

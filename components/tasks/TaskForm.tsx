@@ -13,6 +13,7 @@ import { usePathname } from 'next/navigation'
 import { taskStatuses } from '@/lib/translations'
 import { type TasksWithRelationship } from '@/lib/types'
 import { tooltip } from '@/lib/tooltip'
+import { useState } from 'react'
 
 interface Props extends FormProps {
   projectId: string
@@ -39,6 +40,7 @@ export default function TaskForm({
   memberships,
   filter,
 }: Props) {
+  const [status, setStatus] = useState(task?.status ?? 'PENDING')
   const pathname = usePathname()
   const query =
     filter !== ''
@@ -105,12 +107,15 @@ export default function TaskForm({
           errors={errors}
           maxlength={255}
         />
+        {/* #TEMPORAL */}
         <Select
           name="status"
           label="Estado"
-          defaultValue={task?.status ?? undefined}
+          value={status}
+          // defaultValue={status}
           register={register}
           errors={errors}
+          onInput={(e) => { setStatus(e.currentTarget.value as TaskStatus) }}
           options={{
             type: 'enum',
             translation: taskStatuses,

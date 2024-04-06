@@ -44,7 +44,6 @@ export const auth = {
  * Nota: Usar solo dentro de "/app/home"
  */
 export async function session() {
-  // @ts-expect-error Lucia cookies
   const authRequest = lucia.handleRequest({ cookies })
   return await authRequest.validate()
 }

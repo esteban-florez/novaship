@@ -1,3 +1,11 @@
+# IMPORTANT
+
+- /persons/{id}/internships
+  - El breadcrumbs redirige a urls que no funcionan.
+- El <FilterBar /> no actualiza el default value.
+- /internships/{id}/apply, arreglar paginación
+- Los equipos tienen miembros duplicados.
+
 # To-Do
 
 - Arreglar paginacion.
@@ -20,6 +28,7 @@
 - Projects/id/tasks content column Loading.
 - EmptyContent helper.
 - Cambiar terminologia en los placeholders (/register por los momentos).
+
 
 # TAGS
 

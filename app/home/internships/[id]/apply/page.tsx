@@ -9,7 +9,6 @@ import { getInternship } from '@/lib/data-fetching/internships'
 import { getInternshipStage, validVacants } from '@/lib/utils/tables'
 import getPaginationProps from '@/lib/utils/pagination'
 import { getVacants } from '@/lib/data-fetching/vacants'
-import Pagination from '@/components/Pagination'
 import EmptyContent from '@/components/EmptyContent'
 import VacantCard from '@/components/vacants/VacantCard'
 import TitleContent from './TitleContent'
@@ -46,13 +45,7 @@ export default async function RecruitPage({
 
   const totalRecords = await prisma.vacant.count({ where })
 
-  const {
-    nextPage,
-    skip,
-    take,
-    page: pageNumber,
-    totalPages,
-  } = getPaginationProps({
+  const { skip, take } = getPaginationProps({
     pageSize: 5,
     totalRecords,
     searchParams,
@@ -99,12 +92,12 @@ export default async function RecruitPage({
             buscas.
           </EmptyContent>
           )}
-      <Pagination
+      {/* <Pagination
         currentPage={pageNumber}
         nextPage={nextPage}
         totalPages={totalPages}
         totalRecords={totalRecords}
-      />
+      /> */}
     </>
   )
 }

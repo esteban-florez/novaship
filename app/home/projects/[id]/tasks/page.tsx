@@ -142,6 +142,7 @@ export default async function TasksProjectPage({
                   </div>
                 )}
                 <Forms
+                  key={action}
                   action={action}
                   projectId={id}
                   taskId={taskId}

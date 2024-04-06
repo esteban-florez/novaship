@@ -5,11 +5,11 @@ import { pathToFileURL } from 'url'
 
 export const seederQueries = {
   persons: 10,
-  companies: 2,
-  institute: 2,
-  internships: 2,
-  hirings: 2,
-  interviews: 2,
+  companies: 10,
+  institute: 10,
+  internships: 10,
+  hirings: 10,
+  interviews: 10,
 }
 
 async function seed() {

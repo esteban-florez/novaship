@@ -3,7 +3,7 @@ import tasks from '@/prisma/data/tasks.json'
 import { TaskStatus } from '@prisma/client'
 import collect from '@/lib/utils/collection'
 import numbers from '@/lib/utils/number'
-import coinflip from '@/lib/utils/coinflip'
+import types from '@/lib/utils/types'
 
 export default async function task() {
   const MAX = tasks.titles.length
@@ -35,7 +35,7 @@ export default async function task() {
       projectTasks.push({
         title: tasks.titles[index],
         description: tasks.descriptions[index],
-        status: coinflip() ? TaskStatus.PENDING : null,
+        status: types(TaskStatus).random(),
         projectId: project.id,
         personId,
       })

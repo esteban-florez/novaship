@@ -102,6 +102,7 @@ export default async function InternshipDetailsPage({
             <UserCard
               subtitle={company.location.title}
               user={company}
+              link={`/home/company/${company.id}`}
             />
             <p className="mt-2">{company.description}</p>
           </div>

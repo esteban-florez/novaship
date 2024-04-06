@@ -27,24 +27,32 @@ export default async function RecruitmentRow({ recruitment }: Props) {
           ? (
             <UserCard
               user={company}
+              link={`/home/company/${company.id}`}
               sm
             />
             )
           : (
             <UserCard
               user={person}
+              link={`/home/person/${person.id}`}
               sm
             />
             )}
       </td>
       <td>{grade.title}</td>
       <td>
-        <Link
-          className="underline text-secondary font-semibold"
-          href={`/home/internships/vacants/${vacant.id}`}
-        >
-          {job.title}
-        </Link>
+        {type === 'COMPANY'
+          ? (
+            <Link
+              className="underline text-secondary font-semibold"
+              href={`/home/companies/${company.id}/vacants/${vacant.id}`}
+            >
+              {job.title}
+            </Link>
+            )
+          : (
+            <span className="font-semibold">{job.title}</span>
+            )}
       </td>
       <td>
         <div className="flex items-center gap-2">

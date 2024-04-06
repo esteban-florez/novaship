@@ -8,11 +8,12 @@ type Props = React.PropsWithChildren<{
     name: string
     image: string | null
   }
+  link: string
   subtitle?: string
   sm?: boolean
 }>
 
-export default function UserCard({ user, subtitle, sm = false }: Props) {
+export default function UserCard({ user, subtitle, sm = false, link }: Props) {
   return (
     <div className="flex gap-2 items-center rounded-lg">
       <AvatarIcon
@@ -21,7 +22,7 @@ export default function UserCard({ user, subtitle, sm = false }: Props) {
       />
       <div className="flex flex-col justify-center">
         <Link
-          href={`/home/person/${user.id}`}
+          href={link}
           className={clsx(
             'font-bold tracking-tight underline text-secondary',
             !sm && 'text-xl'

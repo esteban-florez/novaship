@@ -30,6 +30,7 @@ export default async function RecruitableCard({ internship }: Props) {
         <UserCard
           user={person}
           subtitle={person.location.title}
+          link={`/home/person/${person.id}`}
         />
         <IconData
           label="Carrera en curso:"

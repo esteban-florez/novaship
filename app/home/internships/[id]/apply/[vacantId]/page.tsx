@@ -102,6 +102,7 @@ export default async function VacantDetailsPage({
           <DarkUserCard
             user={company}
             type="COMPANY"
+            link={`/home/company/${company.id}`}
           />
         </Column>
       </TwoColumnsLayout>

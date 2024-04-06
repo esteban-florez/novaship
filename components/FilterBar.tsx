@@ -7,6 +7,7 @@ import { useState } from 'react'
 
 type Props = React.PropsWithChildren<{
   searchLabel?: string
+  selectedOption?: string
   filterLabel: string
   filterOptions: Array<
   | {
@@ -24,8 +25,9 @@ export default function FilterBar({
   filterLabel,
   filterOptions,
   searchLabel,
+  selectedOption,
 }: Props) {
-  const [filter, setFilter] = useState('')
+  const [filter, setFilter] = useState(selectedOption ?? '')
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -94,6 +96,7 @@ export default function FilterBar({
       <div className="flex items-center gap-2">
         <div>
           <p className="font-semibold text-sm">Filtrar por {filterLabel}: </p>
+          {/* #TEMPORAL */}
           <Select
             name="filtered"
             onInput={handleFilterSelect}
@@ -101,8 +104,8 @@ export default function FilterBar({
               type: 'rows',
               data: filterOptions,
             }}
-            defaultValue={filter}
-            // value={filter}
+            // defaultValue={filter}
+            value={filter}
             noDefault
           >
             <option value="">Todas</option>

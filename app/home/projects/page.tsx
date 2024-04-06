@@ -35,7 +35,7 @@ export default async function ProjectsPage({
   const { categories } = await getPersonRelatedIds({ id })
 
   // DRY Pagination
-  const filterParam = filtered ?? 'all'
+  const filterParam = Array.isArray(filtered) ? filtered[0] : filtered
   const pageNumber = +(page ?? 1)
   const searchParam = Array.isArray(search) ? search[0] : search
 
@@ -141,7 +141,10 @@ export default async function ProjectsPage({
     },
   }
   const totalRecords = await prisma.project.count({
-    where: FILTER_QUERIES[filterParam as keyof FilterQueries],
+    where:
+      FILTER_QUERIES[
+        filterParam === '' ? 'all' : (filterParam as keyof FilterQueries)
+      ],
   })
   const { nextPage, skip, take, totalPages } = getPaginationProps({
     pageNumber,
@@ -155,10 +158,6 @@ export default async function ProjectsPage({
   })
 
   const options = [
-    {
-      id: 'all',
-      name: 'Todos',
-    },
     {
       id: 'personal',
       name: 'Mis proyectos',
@@ -183,9 +182,11 @@ export default async function ProjectsPage({
         </Link>
       </PageTitle>
       <FilterBar
+        key={filterParam}
         searchLabel="Nombre"
         filterLabel="Categoría"
         filterOptions={options}
+        selectedOption={filterParam}
       />
       <ProjectsCard
         projects={projects}

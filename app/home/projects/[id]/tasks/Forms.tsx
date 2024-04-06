@@ -191,6 +191,7 @@ export default async function Forms({
           className="m-0 p-0 max-h-[80vh] scrollbar"
         >
           <TaskForm
+            key={task.id}
             action={`/api/tasks/${task.id}`}
             method="PUT"
             projectId={projectId}

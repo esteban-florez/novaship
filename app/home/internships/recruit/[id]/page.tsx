@@ -92,6 +92,7 @@ export default async function RecruitDetailsPage({
           <UserCard
             user={person}
             subtitle={person.location.title}
+            link={`/home/person/${person.id}`}
           />
           <p className="py-2">{person.description}</p>
           <p className="font-bold mb-2">Habilidades:</p>
@@ -114,6 +115,7 @@ export default async function RecruitDetailsPage({
           <DarkUserCard
             type="INSTITUTE"
             user={institute}
+            link={`/home/institute/${institute.id}`}
           />
         </Column>
         <Column>

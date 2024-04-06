@@ -37,7 +37,7 @@ export default async function OffersPage({
   const { jobs, categories, skills } = await getPersonRelatedIds({ id })
 
   // DRY Pagination
-  const filterParam = type === 'COMPANY' ? 'personal' : filtered ?? 'suggested'
+  const filterParam = Array.isArray(filtered) ? filtered[0] : filtered
   const pageNumber = +(page ?? 1)
   const searchParam = Array.isArray(search) ? search[0] : search
 
@@ -214,7 +214,10 @@ export default async function OffersPage({
     },
   }
   const totalRecords = await prisma.offer.count({
-    where: FILTER_QUERIES[filterParam as keyof FilterQueries],
+    where:
+      FILTER_QUERIES[
+        filterParam === '' ? 'all' : (filterParam as keyof FilterQueries)
+      ],
   })
   const { nextPage, skip, take, totalPages } = getPaginationProps({
     pageNumber,
@@ -234,10 +237,6 @@ export default async function OffersPage({
 
   const options = [
     {
-      id: 'all',
-      name: 'Todas',
-    },
-    {
       id: 'suggested',
       name: 'Sugeridas',
     },
@@ -248,6 +247,7 @@ export default async function OffersPage({
   ]
 
   if (type === 'COMPANY') {
+    options.splice(0, 3)
     options.push({
       id: 'personal',
       name: 'Mis ofertas',
@@ -270,9 +270,11 @@ export default async function OffersPage({
         )}
       </PageTitle>
       <FilterBar
+        key={filterParam}
         searchLabel="Nombre"
         filterLabel="Categorías"
         filterOptions={options}
+        selectedOption={filterParam}
       />
       <Carousel items={carouselOffers} />
       <OffersList offers={offers} />

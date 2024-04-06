@@ -21,6 +21,7 @@ export default function InstituteCard({ institute }: Props) {
       <UserCard
         user={institute}
         subtitle={institute.location.title}
+        link={`/home/institute/${institute.id}`}
       />
     </>
   )

@@ -9,7 +9,7 @@ import {
 } from '@heroicons/react/24/outline'
 import DeleteModal from '../projects/DeleteModal'
 import useSubmit from '@/lib/hooks/useSubmit'
-import { type Interested, type Status } from '@prisma/client'
+import { type UserType, type Interested, type Status } from '@prisma/client'
 import Link from 'next/link'
 import { getExpiresAtDate } from '@/lib/utils/date'
 import { useState } from 'react'
@@ -28,6 +28,7 @@ interface Props {
   interested: Interested
   hiringId: string
   hirings: number
+  userType: UserType
 }
 
 export default function Details({
@@ -45,6 +46,7 @@ export default function Details({
   interested,
   hiringId,
   hirings,
+  userType,
 }: Props) {
   const [status, setStatus] = useState<Status>('ACCEPTED')
   const expires = getExpiresAtDate(expiresAt)
@@ -136,7 +138,7 @@ export default function Details({
           <div className="mx-auto flex w-full flex-col justify-between gap-3 sm:mx-0 sm:w-auto sm:flex-row sm:gap-1 sm:text-sm lg:gap-2">
             <div className="flex flex-col gap-3 sm:flex-row">
               <div className="flex flex-col gap-3 sm:flex-row">
-                {interested === 'COMPANY' && (
+                {interested === 'COMPANY' && !userHasApplied && (
                   <div className="flex flex-col gap-4">
                     <p className="font-bold text-neutral-600">
                       ¿Deseas aceptar la oferta de trabajo?
@@ -160,12 +162,12 @@ export default function Details({
                     </form>
                   </div>
                 )}
-                {interested === 'PERSON' && userHasApplied && (
+                {userHasApplied && (
                   <span className="mx-auto font-semibold text-neutral-600 sm:mx-0 sm:me-4">
                     {statusMessages[hiringStatus]}
                   </span>
                 )}
-                {!isOwner && !userHasApplied && (
+                {!isOwner && userType === 'PERSON' && !userHasApplied && (
                   <form
                     action="/api/hiring"
                     method="POST"
