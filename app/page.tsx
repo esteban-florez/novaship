@@ -1,5 +1,5 @@
-import HeaderSection from '@/components/landing-page/HeaderSection'
 import { type Metadata } from 'next'
+import HeaderSection from '@/components/landing-page/HeaderSection'
 import FooterSection from '@/components/landing-page/FooterSection'
 import MiddleSection from '@/components/landing-page/MiddleSection'
 import Navbar from '@/components/landing-page/Navbar'
