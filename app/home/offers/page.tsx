@@ -63,28 +63,28 @@ export default async function OffersPage({
             mode: 'insensitive',
           },
         },
-        {
-          description: {
-            contains: searchParam,
-            mode: 'insensitive',
-          },
-        },
-        {
-          company: {
-            name: {
-              contains: searchParam,
-              mode: 'insensitive',
-            },
-          },
-        },
-        {
-          location: {
-            title: {
-              contains: searchParam,
-              mode: 'insensitive',
-            },
-          },
-        },
+        // {
+        //   description: {
+        //     contains: searchParam,
+        //     mode: 'insensitive',
+        //   },
+        // },
+        // {
+        //   company: {
+        //     name: {
+        //       contains: searchParam,
+        //       mode: 'insensitive',
+        //     },
+        //   },
+        // },
+        // {
+        //   location: {
+        //     title: {
+        //       contains: searchParam,
+        //       mode: 'insensitive',
+        //     },
+        //   },
+        // },
         {
           categories: {
             some: {
@@ -107,102 +107,102 @@ export default async function OffersPage({
       ],
     },
     personal: {
-      OR: [
-        {
-          title: {
-            contains: searchParam,
-            mode: 'insensitive',
-          },
-        },
-        {
-          description: {
-            contains: searchParam,
-            mode: 'insensitive',
-          },
-        },
-        {
-          company: {
-            name: {
-              contains: searchParam,
-              mode: 'insensitive',
-            },
-          },
-        },
-        {
-          location: {
-            title: {
-              contains: searchParam,
-              mode: 'insensitive',
-            },
-          },
-        },
-      ],
+      title: {
+        contains: searchParam,
+        mode: 'insensitive',
+      },
+      // OR: [
+      //   {
+      //   },
+      //   {
+      //     description: {
+      //       contains: searchParam,
+      //       mode: "insensitive",
+      //     },
+      //   },
+      //   {
+      //     company: {
+      //       name: {
+      //         contains: searchParam,
+      //         mode: "insensitive",
+      //       },
+      //     },
+      //   },
+      //   {
+      //     location: {
+      //       title: {
+      //         contains: searchParam,
+      //         mode: "insensitive",
+      //       },
+      //     },
+      //   },
+      // ],
       companyId: id,
     },
     applied: {
-      OR: [
-        {
-          title: {
-            contains: searchParam,
-            mode: 'insensitive',
-          },
-        },
-        {
-          description: {
-            contains: searchParam,
-            mode: 'insensitive',
-          },
-        },
-        {
-          company: {
-            name: {
-              contains: searchParam,
-              mode: 'insensitive',
-            },
-          },
-        },
-        {
-          location: {
-            title: {
-              contains: searchParam,
-              mode: 'insensitive',
-            },
-          },
-        },
-      ],
+      title: {
+        contains: searchParam,
+        mode: 'insensitive',
+      },
+      // OR: [
+      //   {
+      //   },
+      //   {
+      //     description: {
+      //       contains: searchParam,
+      //       mode: "insensitive",
+      //     },
+      //   },
+      //   {
+      //     company: {
+      //       name: {
+      //         contains: searchParam,
+      //         mode: "insensitive",
+      //       },
+      //     },
+      //   },
+      //   {
+      //     location: {
+      //       title: {
+      //         contains: searchParam,
+      //         mode: "insensitive",
+      //       },
+      //     },
+      //   },
+      // ],
       hiring: { some: { personId: id } },
     },
     all: {
-      OR: [
-        {
-          title: {
-            contains: searchParam,
-            mode: 'insensitive',
-          },
-        },
-        {
-          description: {
-            contains: searchParam,
-            mode: 'insensitive',
-          },
-        },
-        {
-          company: {
-            name: {
-              contains: searchParam,
-              mode: 'insensitive',
-            },
-          },
-        },
-        {
-          location: {
-            title: {
-              contains: searchParam,
-              mode: 'insensitive',
-            },
-          },
-        },
-      ],
+      title: {
+        contains: searchParam,
+        mode: 'insensitive',
+      },
+      // OR: [
+      //   {
+      //   },
+      //   {
+      //     description: {
+      //       contains: searchParam,
+      //       mode: "insensitive",
+      //     },
+      //   },
+      //   {
+      //     company: {
+      //       name: {
+      //         contains: searchParam,
+      //         mode: "insensitive",
+      //       },
+      //     },
+      //   },
+      //   {
+      //     location: {
+      //       title: {
+      //         contains: searchParam,
+      //         mode: "insensitive",
+      //       },
+      //     },
+      //   },
+      // ],
       NOT: {
         hiring: {
           some: {

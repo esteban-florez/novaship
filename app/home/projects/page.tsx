@@ -41,36 +41,79 @@ export default async function ProjectsPage({
 
   const FILTER_QUERIES: FilterQueries = {
     suggested: {
-      visibility: 'PUBLIC',
-      title: {
-        contains: searchParam,
-        mode: 'insensitive',
-      },
-      categories: {
-        some: {
-          id: { in: categories },
-        },
-      },
-      OR: [
-        { personId: { not: id } },
+      AND: [
         {
-          AND: [
-            { personId: null },
+          visibility: 'PUBLIC',
+        },
+        {
+          title: {
+            contains: searchParam,
+            mode: 'insensitive',
+          },
+        },
+        {
+          categories: {
+            some: {
+              id: { in: categories },
+            },
+          },
+        },
+        {
+          OR: [
+            { personId: { not: id } },
+            {
+              AND: [
+                { personId: null },
+                {
+                  team: {
+                    OR: [
+                      {
+                        leader: {
+                          OR: [
+                            { personId: { not: id } },
+                            { companyId: { not: id } },
+                          ],
+                        },
+                      },
+                      {
+                        memberships: {
+                          some: {
+                            personId: { not: id },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    personal: {
+      AND: [
+        {
+          title: {
+            contains: searchParam,
+            mode: 'insensitive',
+          },
+        },
+        {
+          OR: [
+            { personId: id },
             {
               team: {
                 OR: [
                   {
                     leader: {
-                      OR: [
-                        { personId: { not: id } },
-                        { companyId: { not: id } },
-                      ],
+                      OR: [{ personId: id }, { companyId: id }],
                     },
                   },
                   {
                     memberships: {
                       some: {
-                        personId: { not: id },
+                        personId: id,
                       },
                     },
                   },
@@ -81,59 +124,40 @@ export default async function ProjectsPage({
         },
       ],
     },
-    personal: {
-      title: {
-        contains: searchParam,
-        mode: 'insensitive',
-      },
-      OR: [
-        { personId: id },
+    all: {
+      AND: [
         {
-          team: {
-            OR: [
-              {
-                leader: {
-                  OR: [{ personId: id }, { companyId: id }],
-                },
-              },
-              {
-                memberships: {
-                  some: {
-                    personId: id,
-                  },
-                },
-              },
-            ],
+          title: {
+            contains: searchParam,
+            mode: 'insensitive',
           },
         },
-      ],
-    },
-    all: {
-      title: {
-        contains: searchParam,
-        mode: 'insensitive',
-      },
-      visibility: 'PUBLIC',
-      OR: [
-        { personId: { not: id } },
         {
-          AND: [
-            { personId: null },
+          visibility: 'PUBLIC',
+        },
+        {
+          OR: [
+            { personId: { not: id } },
             {
-              team: {
-                NOT: [
-                  {
-                    leader: {
-                      OR: [{ personId: id }, { companyId: id }],
-                    },
+              AND: [
+                { personId: null },
+                {
+                  team: {
+                    NOT: [
+                      {
+                        leader: {
+                          OR: [{ personId: id }, { companyId: id }],
+                        },
+                      },
+                      {
+                        memberships: {
+                          some: { personId: id },
+                        },
+                      },
+                    ],
                   },
-                  {
-                    memberships: {
-                      some: { personId: id },
-                    },
-                  },
-                ],
-              },
+                },
+              ],
             },
           ],
         },

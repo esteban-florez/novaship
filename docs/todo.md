@@ -5,6 +5,9 @@
 - El <FilterBar /> no actualiza el default value.
 - /internships/{id}/apply, arreglar paginación
 - Los equipos tienen miembros duplicados.
+- Filtrar todos los proyectos por search param no funciona.
+- Revisar filtros de ofertas.
+- Searchbar no funciona en "mis pasantias"
 
 # To-Do
 

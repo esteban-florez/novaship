@@ -8,7 +8,6 @@ import numbers from '@/lib/utils/number'
 export default async function subtask() {
   const MAX = subtasks.titles.length
   const tasks = collect(await prisma.task.findMany({
-    where: { status: null },
     select: { id: true },
   }))
 
