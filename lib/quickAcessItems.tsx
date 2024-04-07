@@ -31,12 +31,12 @@ export default function getQuickAccessItems({ userId, type }: Props) {
       },
       {
         title: 'Postulaciones',
-        href: '/home/offers?filter=applied',
+        href: '/home/offers?filtered=applied',
         icon: <BriefcaseIcon className="h-4 w-4" />,
       },
       {
         title: 'Mis proyectos',
-        href: '/home/projects?filter=personal',
+        href: '/home/projects?filtered=personal',
         icon: <ClipboardDocumentListIcon className="h-4 w-4" />,
       },
       {
@@ -46,7 +46,7 @@ export default function getQuickAccessItems({ userId, type }: Props) {
       },
       {
         title: 'Mis equipos',
-        href: '/home/teams?filter=personal',
+        href: '/home/teams?filtered=personal',
         icon: <UserGroupIcon className="h-4 w-4" />,
       },
     ]
@@ -91,17 +91,17 @@ export default function getQuickAccessItems({ userId, type }: Props) {
       },
       {
         title: 'Mis ofertas',
-        href: '/home/offers?filter=personal',
+        href: '/home/offers?filtered=personal',
         icon: <BriefcaseIcon className="h-4 w-4" />,
       },
       {
         title: 'Mis proyectos',
-        href: '/home/projects?filter=personal',
+        href: '/home/projects?filtered=personal',
         icon: <ClipboardDocumentListIcon className="h-4 w-4" />,
       },
       {
         title: 'Mis equipos',
-        href: '/home/teams?filter=personal',
+        href: '/home/teams?filtered=personal',
         icon: <UserGroupIcon className="h-4 w-4" />,
       },
     ]
