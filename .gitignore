@@ -46,3 +46,7 @@ public/usercontent
 
 # admins
 .react-email
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
