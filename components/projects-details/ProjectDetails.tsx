@@ -4,6 +4,7 @@ import { PencilIcon } from '@heroicons/react/24/outline'
 import DeleteModal from '../projects/DeleteModal'
 import Link from 'next/link'
 import useSubmit from '@/lib/hooks/useSubmit'
+import { imageValidator } from '@/lib/utils/image'
 
 interface Props {
   id: string
@@ -43,6 +44,8 @@ export default function ProjectDetails({
     },
   })
 
+  const validImage = imageValidator(image)
+
   return (
     <>
       {alert}
@@ -50,9 +53,9 @@ export default function ProjectDetails({
       <div className="card sm:rounded-xl bg-white shadow-lg lg:flex-row">
         <div className="relative flex lg:basis-2/6">
           <img
-            src={image ?? '/card.webp'}
+            src={image !== null ? validImage : '/card.webp'}
             alt="Imagen de fondo carrusel"
-            className="h-32 w-full sm:rounded-t-lg object-cover md:h-44 lg:h-full lg:rounded-l-lg"
+            className="w-full sm:rounded-t-lg max-h-52 lg:rounded-l-lg"
           />
           <img
             src="/onda-vertical.webp"

@@ -4,6 +4,7 @@ import InlineList from './InlineList'
 import { type ProjectMembership } from '@/lib/types'
 import Link from 'next/link'
 import { FireIcon } from '@heroicons/react/24/outline'
+import { imageValidator } from '@/lib/utils/image'
 
 interface Props {
   title: string
@@ -57,12 +58,14 @@ export default function Card({
       ? `Quedan ${offerLimit} cupos`
       : 'No hay cupos.'
 
+  const validImage = imageValidator(image)
+
   return (
     <div>
       {image != null && (
         <div className="relative">
           <img
-            src={image}
+            src={validImage}
             alt="Imagen de fondo carrusel"
             className="h-28 w-full rounded-t-xl object-cover"
           />
