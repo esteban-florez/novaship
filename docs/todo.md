@@ -29,6 +29,11 @@
 - EmptyContent helper.
 - Cambiar terminologia en los placeholders (/register por los momentos).
 
+# Errors
+
+- El landing no carga bien en build.
+- Al crear un proyecto se queda cargando infinitamente.
+
 # TAGS
 
 - TODO.

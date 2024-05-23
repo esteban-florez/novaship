@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       notFound()
     }
 
-    const { members, ...rest } = parsed
+    const { members, filter, ...rest } = parsed
     if (members != null) {
       await prisma.subtask.create({
         data: {
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks?id=${task.id}&filtered=${parsed.filter as string}&alert=subtask_created`))
+    return NextResponse.redirect(url(`/home/projects/${task.projectId}/tasks?id=${task.id}&filtered=${filter as string}&alert=subtask_created`))
   } catch (error) {
     handleError(error, data)
   }

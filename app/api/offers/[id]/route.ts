@@ -19,10 +19,10 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
     const offer = await prisma.offer.findFirst({
       where: {
-        AND: [
-          { id },
-          { companyId: authUserId },
-        ],
+        id,
+        company: {
+          authUserId,
+        },
       },
       include: {
         categories: true,
