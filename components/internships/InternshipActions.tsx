@@ -1,4 +1,9 @@
-import { BookmarkSquareIcon, ListBulletIcon, MagnifyingGlassIcon, PencilIcon } from '@heroicons/react/24/outline'
+import {
+  BookmarkSquareIcon,
+  ListBulletIcon,
+  MagnifyingGlassIcon,
+  PencilIcon,
+} from '@heroicons/react/24/outline'
 import { type UserType } from '@prisma/client'
 import Link from 'next/link'
 import DeleteModal from '../projects/DeleteModal'
@@ -17,7 +22,11 @@ type Props = React.PropsWithChildren<{
 }>
 
 export default function InternshipActions({
-  internship, userType, stage, className = '', minDate,
+  internship,
+  userType,
+  stage,
+  className = '',
+  minDate,
 }: Props) {
   const pending = stage === 'PENDING'
   const accepted = stage === 'ACCEPTED'
@@ -32,20 +41,25 @@ export default function InternshipActions({
   const apply = (isPerson || isInstitute) && accepted
   const _delete = isInstitute && (pending || stage === 'REJECTED')
   const recruit = isCompany && accepted
-  const progress = isCompany && (active)
+  const progress = isCompany && active
   const history = active || stage === 'COMPLETED'
-  console.log(history)
 
-  const conditions = [update, updateStatus, apply, _delete, recruit, progress, history]
+  const conditions = [
+    update,
+    updateStatus,
+    apply,
+    _delete,
+    recruit,
+    progress,
+    history,
+  ]
 
   const maxHours = getRemainingHours(internship)
   const recruitment = getAcceptedRecruitment(internship)
 
   return (
     <>
-      {conditions.some(condition => condition) && (
-        <div className="mt-4" />
-      )}
+      {conditions.some((condition) => condition) && <div className="mt-4" />}
       <div className={clsx('flex flex-col gap-2', className)}>
         {update && (
           <Link
@@ -56,15 +70,14 @@ export default function InternshipActions({
             Actualizar
           </Link>
         )}
-        {updateStatus && (
-          (['accept', 'reject'] as const).map(action => (
+        {updateStatus &&
+          (['accept', 'reject'] as const).map((action) => (
             <UpdateStatus
               key={action}
               action={action}
               internshipId={internship.id}
             />
-          ))
-        )}
+          ))}
         {apply && (
           <Link
             href={`/home/internships/${internship.id}/apply`}

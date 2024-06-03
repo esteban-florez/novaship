@@ -17,16 +17,18 @@ export async function POST(request: NextRequest) {
     const parsed = schema.parse(data)
     const { id, authUserId } = await auth.user(request)
 
-    if (parsed.taskId != null) {
-      const task = await getMyTask({ id: parsed.taskId, userId: id })
+    const { filter, content, subtaskId, taskId } = parsed
+
+    if (taskId != null) {
+      const task = await getMyTask({ id: taskId, userId: id })
       if (task == null) {
         notFound()
       }
 
       await prisma.revision.create({
         data: {
-          ...parsed,
-          taskId: task?.id,
+          content,
+          taskId,
         },
       })
 
@@ -40,21 +42,21 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.redirect(
         url(
-          `home/projects/${task.projectId}/tasks?id=${task.id}&filtered=${parsed.filter as string}&alert=task_revision_created`
+          `home/projects/${task.projectId}/tasks?id=${taskId}&filtered=${filter as string}&alert=task_revision_created`
         )
       )
     }
 
-    if (parsed.subtaskId != null) {
-      const subtask = await getMySubtask({ id: parsed.subtaskId, userId: id })
+    if (subtaskId != null) {
+      const subtask = await getMySubtask({ id: subtaskId, userId: id })
       if (subtask == null) {
         notFound()
       }
 
       await prisma.revision.create({
         data: {
-          ...parsed,
-          subtaskId: subtask?.id,
+          content,
+          subtaskId,
         },
       })
 
@@ -68,7 +70,7 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.redirect(
         url(
-          `home/projects/${subtask.task.projectId}/tasks?id=${subtask.task.id}&subtaskId=${subtask.id}&filtered=${parsed.filter as string}&alert=subtask_revision_created`
+          `home/projects/${subtask.task.projectId}/tasks?id=${subtask.task.id}&subtaskId=${subtask.id}&filtered=${filter as string}&alert=subtask_revision_created`
         )
       )
     }
