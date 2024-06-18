@@ -60,6 +60,7 @@ export default function VacantCard({
             <ApplyButton
               internshipId={internshipId}
               vacantId={vacant.id}
+              block
             />
           )}
           <Link
