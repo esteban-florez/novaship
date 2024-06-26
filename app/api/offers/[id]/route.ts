@@ -90,9 +90,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
         AND: [
           { id },
           {
-            company: {
-              authUserId,
-            },
+            company: { authUserId },
           },
         ],
       },
