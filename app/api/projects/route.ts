@@ -6,7 +6,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { randomCode } from '@/lib/utils/code'
-// import { storeFile } from '@/lib/storage/storeFile'
+import { storeFile } from '@/lib/storage/storeFile'
 import logEvent from '@/lib/data-fetching/log'
 import { logs } from '@/lib/log'
 
@@ -25,12 +25,11 @@ export async function POST(request: NextRequest) {
 
     const code = randomCode('project')
 
-    // const projectImagePath = parsed.image !== undefined
-    //   ? await storeFile(parsed.image)
-    //   : null
+    const projectImagePath = parsed.image !== undefined
+      ? await storeFile(parsed.image)
+      : null
 
-    // image: projectImagePath
-    const parsedAndFields = { ...parsed, code, image: undefined }
+    const parsedAndFields = { ...parsed, code, image: projectImagePath }
 
     if (type === 'PERSON') {
       if (parsed.teamId == null) {
