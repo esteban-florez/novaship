@@ -58,5 +58,6 @@ async function sessionOrThrow(request: NextRequest) {
  * Usar solo dentro de "/app/api".
  */
 export function handleRequest(request: NextRequest) {
+  // @ts-expect-error Lucia cookies
   return lucia.handleRequest({ cookies, request })
 }

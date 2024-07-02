@@ -44,6 +44,8 @@ export default function ProjectDetails({
     },
   })
 
+  console.log(image)
+
   const validImage = imageValidator(image)
 
   return (
