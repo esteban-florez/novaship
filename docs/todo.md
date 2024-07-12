@@ -28,6 +28,13 @@
 - Projects/id/tasks content column Loading.
 - EmptyContent helper.
 - Cambiar terminologia en los placeholders (/register por los momentos).
+- Tareas en grupo no registra miembros correctamente, se duplican cuando se seleccionan y hasta se manda solo 
+- Invitaciones de unirme a equipo se manda al usuario en vez del equipo
+- Reportes
+  - Culminacion de pasantia
+  - Culminacion de proyecto
+  - Aceptacion de oferta
+  - Participacion de grupo
 
 # Errors
 

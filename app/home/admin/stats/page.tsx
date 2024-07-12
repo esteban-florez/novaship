@@ -10,7 +10,6 @@ import prisma from '@/prisma/client'
 import { type ChartData } from 'chart.js'
 import { type Metadata } from 'next'
 import { PDFProvider } from './PDFProvider'
-import DownloadButton from './DownloadButton'
 import PageTitle from '@/components/PageTitle'
 import WrapperPDF from './WrapperPDF'
 import { getStatuses } from '@/lib/data-fetching/home/institute'
@@ -177,9 +176,7 @@ export default async function StatsPage() {
 
   return (
     <PDFProvider>
-      <PageTitle title="Estadísticas">
-        <DownloadButton />
-      </PageTitle>
+      <PageTitle title="Estadísticas" />
       <WrapperPDF>
         <section className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {checkEmpty([
