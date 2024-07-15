@@ -7,8 +7,9 @@ import {
   type ChartData,
 } from 'chart.js'
 import { Pie } from 'react-chartjs-2'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 
-Chart.register(...registerables)
+Chart.register(...registerables, ChartDataLabels)
 
 interface Props {
   title: string
@@ -20,6 +21,17 @@ export default function PieGraphic({ title, data }: Props) {
     responsive: true,
     maintainAspectRatio: true,
     plugins: {
+      datalabels: {
+        display: function (ctx) {
+          // @ts-expect-error Eto ta pendiente
+          return ctx.dataset.data[ctx.dataIndex] > 0
+        },
+        color: 'white',
+        backgroundColor: '#666',
+        font: {
+          weight: 'bolder',
+        },
+      },
       tooltip: {
         callbacks: {
           label(tooltipItem) {

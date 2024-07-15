@@ -11,6 +11,7 @@ import {
   type ChartData,
 } from 'chart.js'
 import { Radar } from 'react-chartjs-2'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 ChartJS.register(
   RadialLinearScale,
@@ -18,7 +19,8 @@ ChartJS.register(
   LineElement,
   Filler,
   Tooltip,
-  Legend
+  Legend,
+  ChartDataLabels
 )
 
 interface Props {
@@ -27,10 +29,27 @@ interface Props {
 }
 
 export default function RadarGraphic({ data, options }: Props) {
+  const defaultOptions: ChartOptions<'radar'> = {
+    ...options,
+    plugins: {
+      datalabels: {
+        display: function (ctx) {
+          // @ts-expect-error Eto ta pendiente
+          return ctx.dataset.data[ctx.dataIndex] > 0
+        },
+        color: 'white',
+        backgroundColor: '#666',
+        font: {
+          weight: 'bolder',
+        },
+      },
+    },
+  }
+
   return (
     <Radar
       data={data}
-      options={options}
+      options={defaultOptions}
     />
   )
 }
