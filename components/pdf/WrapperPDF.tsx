@@ -12,6 +12,7 @@ type Props = React.PropsWithChildren<{
   description?: string
   extraImage?: string
   descriptionPosition?: 'beforeTitle' | 'afterTitle'
+  render?: 'saving' | 'always'
   note?: string | React.ReactElement
 }>
 
@@ -21,6 +22,7 @@ export default function WrapperPDF({
   note,
   extraImage,
   descriptionPosition = 'afterTitle',
+  render = 'always',
   children,
 }: Props) {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
@@ -67,8 +69,9 @@ export default function WrapperPDF({
             />
             <div
               className={clsx(
-                'col-span-5 text-center',
-                extraImage != null && 'col-span-4'
+                'text-center',
+                extraImage != null && 'col-span-4',
+                extraImage == null && 'col-span-5'
               )}
             >
               <div className="flex flex-col">
@@ -110,25 +113,28 @@ export default function WrapperPDF({
             )}
           </>
         )}
-        {children}
+        {render === 'always' && children}
         {isGeneratingPDF && (
-          <div className="mt-6 flex flex-col gap-2">
-            <p>
-              <span className="font-bold">NOTA:</span> Registro que se expide a
-              los {date.getDate()} días del mes de{' '}
-              {date.toLocaleString('es', { month: 'long' })} del año{' '}
-              {date.getFullYear()} a través de la plataforma Novaship.
-            </p>
-            {typeof note === 'string'
-              ? (
-                <p>
-                  <span className="font-bold">NOTA</span> {note}
-                </p>
-                )
-              : (
-                  note
-                )}
-          </div>
+          <>
+            {render === 'saving' && children}
+            <div className="mt-6 flex flex-col gap-2">
+              <p>
+                <span className="font-bold">NOTA:</span> Registro que se expide
+                a los {date.getDate()} días del mes de{' '}
+                {date.toLocaleString('es', { month: 'long' })} del año{' '}
+                {date.getFullYear()} a través de la plataforma Novaship.
+              </p>
+              {typeof note === 'string'
+                ? (
+                  <p>
+                    <span className="font-bold">NOTA</span> {note}
+                  </p>
+                  )
+                : (
+                    note
+                  )}
+            </div>
+          </>
         )}
       </div>
     </div>

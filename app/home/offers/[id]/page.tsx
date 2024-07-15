@@ -24,6 +24,10 @@ import {
   HomeModernIcon,
 } from '@heroicons/react/24/outline'
 import EmptyContent from '@/components/EmptyContent'
+import prisma from '@/prisma/client'
+import { PDFProvider } from '@/components/pdf/PDFProvider'
+import WrapperPDF from '@/components/pdf/WrapperPDF'
+import { format } from '@/lib/utils/text'
 
 export const metadata: Metadata = {
   title: 'Ver oferta',
@@ -44,6 +48,15 @@ export default async function OfferPage({
   if (offer === null) {
     notFound()
   }
+
+  const user = await prisma.person.findFirst({
+    where: { id: userId },
+    select: {
+      name: true,
+      image: true,
+      ci: true,
+    },
+  })
 
   const links = offerIdLinks
   const filter = searchParams.filter ?? 'pending'
@@ -182,6 +195,32 @@ export default async function OfferPage({
             userType={type}
           />
         </div>
+        {status === 'ACCEPTED' && type === 'PERSON' && (
+          <div className="col-span-full">
+            <PDFProvider documentTitle="Comprobante de oferta laboral">
+              <WrapperPDF
+                pageTitle="Comprobante de oferta laboral"
+                extraImage={offer.company.image ?? undefined}
+                render="saving"
+                description={`El presente documento valida la solicitud y aceptación de ${
+                  user?.name ?? ''
+                } de cédula de identidad ${format(
+                  user?.ci ?? '',
+                  'ci'
+                )} para la oferta laboral de "${
+                  offer.title
+                }", en la cual se da por ACEPTADA la solicitud y da constancia de la aceptación por parte de quien la publica, empresa "${
+                  offer.company.name
+                }"`}
+              >
+                <div className="pt-16 mt-16 mx-auto w-fit flex flex-col gap-2">
+                  <div className="px-8 border-t-2 border-black" />
+                  <p className="mx-auto px-8">{offer.company.name}</p>
+                </div>
+              </WrapperPDF>
+            </PDFProvider>
+          </div>
+        )}
         <div className="col-span-7 lg:col-span-5">
           {/* TODO -> mejorar */}
           <div className="card flex-col sm:flex-row items-center rounded-xl bg-white shadow-lg">
