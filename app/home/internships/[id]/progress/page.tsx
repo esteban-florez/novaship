@@ -3,7 +3,7 @@ import UpdateProgress from '@/components/internships/actions/UpdateProgress'
 import { auth } from '@/lib/auth/pages'
 import { recruitmentCompletedHours } from '@/lib/utils/tables'
 import { notFound } from 'next/navigation'
-import ProgressHistory from './ProgressHistory'
+// import ProgressHistory from "./ProgressHistory"
 import InternshipCard from '@/components/internships/InternshipCard'
 import PersonInternshipCard from '@/app/home/persons/[id]/internships/InternshipCard'
 import prisma from '@/prisma/client'
@@ -12,9 +12,12 @@ import { getInternship } from '@/lib/data-fetching/internships'
 import getPaginationProps from '@/lib/utils/pagination'
 import Pagination from '@/components/Pagination'
 import Progress from './Progress'
-import { PDFProvider } from './PDFProvider'
-import DownloadButton from './DownloadButton'
+// import { PDFProvider } from './PDFProvider'
+// import DownloadButton from './DownloadButton'
 import { tooltip } from '@/lib/tooltip'
+import { PDFProvider } from '@/components/pdf/PDFProvider'
+import WrapperPDF from '@/components/pdf/WrapperPDF'
+import { format } from '@/lib/utils/text'
 
 export const metadata = {
   title: 'Historial de progreso',
@@ -33,8 +36,8 @@ export default async function InternshipProgressPage({
   if (internship === null) notFound()
 
   const { vacant } = recruitment
-  const { person, grade, instituteId } = internship
-  const { companyId } = vacant
+  const { person, grade, hours, institute, instituteId } = internship
+  const { companyId, company } = vacant
 
   const ids = [companyId, instituteId, person.id]
 
@@ -71,8 +74,23 @@ export default async function InternshipProgressPage({
 
   const maxHours = internship.hours - recruitmentCompletedHours(recruitment)
 
+  const PDFDescription = `
+  El siguiente documento hace constancia de la participación del estudiante ${
+    person.name
+  }, cédula de identidad ${format(
+    person.ci,
+    'ci'
+  )}, el cual se encuentra cursando la carrera de "${
+    grade.title
+  }" y realizando actividades de pasantía en la empresa "${
+    company.name
+  }", actividades que a la fecha cumplen con ${recruitmentCompletedHours(
+    recruitment
+  )} de las ${hours} horas pautadas.
+  `
+
   return (
-    <PDFProvider>
+    <PDFProvider documentTitle={`Historial de progreso de ${person.name}`}>
       <PageTitle
         title="Historial de progreso"
         subtitle={tooltip.internship_progress}
@@ -85,21 +103,29 @@ export default async function InternshipProgressPage({
             maxHours={maxHours}
           />
         )}
-        <DownloadButton />
       </PageTitle>
       <section className="flex p-4 gap-4">
         <div className="w-2/3">
-          <ProgressHistory>
-            <ol className="relative border-s space-y-8">
-              {progresses.map((progress) => (
-                <Progress
-                  key={progress.id}
-                  progress={progress}
-                  withActions={type === 'COMPANY'}
-                />
-              ))}
-            </ol>
-          </ProgressHistory>
+          <WrapperPDF
+            pageTitle="Actividades de la pasantía"
+            description={PDFDescription}
+            extraImage={institute.image ?? undefined}
+            descriptionPosition="beforeTitle"
+          >
+            <div className="bg-white px-8 py-4 rounded-lg shadow">
+              <ol className="relative border-s space-y-8">
+                {progresses.map((progress) => (
+                  <Progress
+                    key={progress.id}
+                    progress={progress}
+                    withActions={type === 'COMPANY'}
+                  />
+                ))}
+              </ol>
+            </div>
+          </WrapperPDF>
+          {/* <ProgressHistory>
+          </ProgressHistory> */}
         </div>
         <div className="w-1/3">
           {type !== 'PERSON'
