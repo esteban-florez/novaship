@@ -16,13 +16,15 @@ import clsx from 'clsx'
 import { PencilIcon } from '@heroicons/react/24/outline'
 import JoinTeamButton from './JoinTeamButton'
 import { statuses } from '@/lib/translations'
+import { PDFProvider } from '@/components/pdf/PDFProvider'
+import WrapperPDF from '@/components/pdf/WrapperPDF'
 
 export const metadata: Metadata = {
   title: 'Equipo de trabajo',
 }
 
 export default async function TeamPage({ params: { id } }: PageContext) {
-  const { id: userId } = await auth.user()
+  const { id: userId, type, name } = await auth.user()
   const team = await getTeam(id)
   const leader = getTeamLeader(team)
   const leaderExtended = team.leader.company ?? team.leader.person
@@ -78,6 +80,21 @@ export default async function TeamPage({ params: { id } }: PageContext) {
   return (
     <>
       <PageTitle breadcrumbs={team.name} />
+      {type === 'PERSON' && leader.id !== userId && (
+        <div className="p-4 w-full">
+          <PDFProvider documentTitle="Equipo de trabajo">
+            <WrapperPDF
+              pageTitle="Equipo de trabajo"
+              description={`El presente documento valida la participación de ${name} como miembro activo en el grupo de nombre "${
+                team.name
+              }" dirigido por ${
+                team.leader.company !== null ? ' la empresa ' : ''
+              }${team.leader.company?.name ?? team.leader.person?.name ?? ''}`}
+              render="saving"
+            />
+          </PDFProvider>
+        </div>
+      )}
       <section className="flex flex-wrap items-start gap-4 p-4 lg:flex-nowrap">
         <div className="flex w-full flex-col gap-3 lg:w-2/3">
           <div className="w-full rounded-md bg-white p-4 shadow-md">

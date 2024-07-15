@@ -33,7 +33,6 @@
 - Reportes
   - Culminacion de pasantia
   - Culminacion de proyecto
-  - Participacion de grupo
 
 # Errors
 
