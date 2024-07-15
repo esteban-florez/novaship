@@ -3,18 +3,20 @@ import BarGraphic from '@/components/graphics/BarGraphic'
 import PieGraphic from '@/components/graphics/PieGraphic'
 import StatisticsGraphSection from '@/components/home/StatisticsGraphSection'
 import { getInternships } from '@/lib/data-fetching/internships'
-import { getAllMonths } from '@/lib/utils/date'
+import { format, getAllMonths } from '@/lib/utils/date'
 import { getCompletedHours } from '@/lib/utils/tables'
 import { checkEmpty } from '@/lib/utils/verify'
 import prisma from '@/prisma/client'
 import { type ChartData } from 'chart.js'
 import { type Metadata } from 'next'
-import { PDFProvider } from './PDFProvider'
+// import { PDFProvider } from './PDFProvider'
 import PageTitle from '@/components/PageTitle'
-import WrapperPDF from './WrapperPDF'
+// import WrapperPDF from './WrapperPDF'
 import { getStatuses } from '@/lib/data-fetching/home/institute'
 import { auth } from '@/lib/auth/pages'
 import { notFound } from 'next/navigation'
+import { PDFProvider } from '@/components/pdf/PDFProvider'
+import WrapperPDF from '@/components/pdf/WrapperPDF'
 
 export const metadata: Metadata = {
   title: 'Estadísticas',
@@ -175,9 +177,11 @@ export default async function StatsPage() {
   ])
 
   return (
-    <PDFProvider>
+    <PDFProvider documentTitle="Estadísticas del sistema">
       <PageTitle title="Estadísticas" />
-      <WrapperPDF>
+      <WrapperPDF
+        pageTitle={`Estadísticas del sistema (${format({ date: new Date() })})`}
+      >
         <section className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {checkEmpty([
             showTasksGraph,
