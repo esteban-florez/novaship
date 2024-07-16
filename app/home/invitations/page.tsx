@@ -41,14 +41,17 @@ export default async function InvitationsPage({
     pending: {
       personId: userId,
       status: 'PENDING',
+      interested: 'COMPANY',
     },
     accepted: {
       personId: userId,
       status: 'ACCEPTED',
+      interested: 'COMPANY',
     },
     rejected: {
       personId: userId,
       status: 'REJECTED',
+      interested: 'COMPANY',
     },
   }
   const totalRecords = await prisma.invitation.count({
@@ -60,13 +63,13 @@ export default async function InvitationsPage({
   })
 
   const pendingCount = await prisma.invitation.count({
-    where: { personId: userId, status: 'PENDING' },
+    where: { personId: userId, status: 'PENDING', interested: 'COMPANY' },
   })
   const acceptedCount = await prisma.invitation.count({
-    where: { personId: userId, status: 'ACCEPTED' },
+    where: { personId: userId, status: 'ACCEPTED', interested: 'COMPANY' },
   })
   const rejectedCount = await prisma.invitation.count({
-    where: { personId: userId, status: 'REJECTED' },
+    where: { personId: userId, status: 'REJECTED', interested: 'COMPANY' },
   })
 
   let invitations: InvitationData[] = []

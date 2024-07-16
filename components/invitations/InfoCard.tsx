@@ -21,9 +21,9 @@ export default function InfoCard({ invitation, side }: Props) {
         {side === 'SENT'
           ? (
             <p>
-              El usuario{' '}
-              <span className="text-semibold">{invitation.person.name}</span> ha{' '}
-              {status} la invitación
+              La invitación al equipo{' '}
+              <span className="font-bold">{invitation.team.name}</span> ha sido{' '}
+              {status}
             </p>
             )
           : (

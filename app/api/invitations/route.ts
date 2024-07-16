@@ -80,7 +80,9 @@ export async function POST(request: NextRequest) {
       teamId: team.id,
     })
 
-    const { invitation_create: { message, model, status } } = logs
+    const {
+      invitation_create: { message, model, status },
+    } = logs
     await logEvent({
       action: message,
       model,
@@ -89,10 +91,14 @@ export async function POST(request: NextRequest) {
     })
 
     if (projectId == null) {
-      return NextResponse.redirect(url(`/home/teams/${parsed.teamId}?alert=invitation_sent`))
+      return NextResponse.redirect(
+        url(`/home/teams/${parsed.teamId}?alert=invitation_sent`)
+      )
     }
 
-    return NextResponse.redirect(url(`/home/projects/${projectId}?alert=invitation_sent`))
+    return NextResponse.redirect(
+      url(`/home/projects/${projectId}?alert=invitation_sent`)
+    )
   } catch (error) {
     return handleError(error, data)
   }

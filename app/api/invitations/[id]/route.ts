@@ -9,7 +9,10 @@ import { notify } from '@/lib/notifications/notify'
 import logEvent from '@/lib/data-fetching/log'
 import { logs } from '@/lib/log'
 
-export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
+export async function PUT(
+  request: NextRequest,
+  { params: { id } }: PageContext
+) {
   let data
   try {
     data = await request.json()
@@ -70,17 +73,31 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
-    const notification = parsed.status === 'ACCEPTED' ? 'invitation-accepted' : 'invitation-rejected'
+    const notification =
+      parsed.status === 'ACCEPTED'
+        ? 'invitation-accepted'
+        : 'invitation-rejected'
     const redirect =
       parsed.status === 'ACCEPTED'
         ? `/home/teams/${invitation.team.id}?alert=invitation_accepted`
         : '/home/invitations?alert=invitation_rejected'
 
-    await notify(notification, authUser.id, {
-      user: name,
-      team: invitation.team.name,
-      teamId: invitation.team.id,
+    const userNotMember = await prisma.person.findFirst({
+      where: { id: invitation.personId },
+      select: {
+        authUserId: true,
+      },
     })
+
+    await notify(
+      notification,
+      type === 'PERSON' ? authUser.id : userNotMember?.authUserId ?? '',
+      {
+        user: name,
+        team: invitation.team.name,
+        teamId: invitation.team.id,
+      }
+    )
 
     if (parsed.status === 'ACCEPTED') {
       await prisma.membership.create({
@@ -92,7 +109,9 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       })
     }
 
-    const { invitation_update: { message, model, status } } = logs
+    const {
+      invitation_update: { message, model, status },
+    } = logs
     await logEvent({
       action: message,
       model,

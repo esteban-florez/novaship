@@ -77,10 +77,12 @@ export default async function TeamPage({ params: { id } }: PageContext) {
     return null
   }
 
+  const userBelongsToTeam = memberships.some((m) => m.personId === userId)
+
   return (
     <>
       <PageTitle breadcrumbs={team.name} />
-      {type === 'PERSON' && leader.id !== userId && (
+      {type === 'PERSON' && leader.id !== userId && userBelongsToTeam && (
         <div className="p-4 w-full">
           <PDFProvider documentTitle="Equipo de trabajo">
             <WrapperPDF
