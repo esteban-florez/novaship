@@ -21,6 +21,8 @@ import BarGraphSkeleton from '@/components/loaders/BarGraphSkeleton'
 import SkeletonTest from '@/components/loaders/SkeletonTest'
 import PieGraphSkeleton from '@/components/loaders/PieGraphSkeleton'
 import { tooltip } from '@/lib/tooltip'
+import WrapperPDF from '@/components/pdf/WrapperPDF'
+import { PDFProvider } from '@/components/pdf/PDFProvider'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -106,6 +108,14 @@ export default async function InternshipDetailsPage({
             />
             <p className="mt-2">{company.description}</p>
           </div>
+          <div className="divider divider-vertical" />
+          <CompletedHoursText userType={type} />
+          <div className="bg-neutral-100 p-4 rounded-lg mt-2">
+            <InternshipProgress
+              internship={internship}
+              stage={stage}
+            />
+          </div>
         </>
       )
     }
@@ -143,6 +153,23 @@ export default async function InternshipDetailsPage({
         subtitle={tooltip.internship_id}
         breadcrumbs={`${person.name} - ${grade.title}`}
       />
+      {stage === 'COMPLETED' && type !== 'COMPANY' && (
+        <div className="-mb-[2.5rem]">
+          <PDFProvider documentTitle="Certificado de Culminación de Pasantías">
+            <WrapperPDF
+              pageTitle="Certificado de Culminación de Pasantías"
+              extraImage={institute.image ?? undefined}
+              render="saving"
+              description={`Quien suscribe este certificado, ${institute.name}, acepta y valida la participación de ${person.name}, C.I. ${person.ci}, en la empresa ${company?.name} tras haber realizado actividades laborales con una duración de ${internship.hours} horas para optar por el título de ${internship.grade.title}. En mi rol de coordinador de pasantías o de la institución certifico la aprobación de este certificado a los ____ días del mes de ____________ del año ________`}
+            >
+              <div className="pt-16 mt-16 mx-auto w-fit flex flex-col gap-2">
+                <div className="px-8 border-t-2 border-black" />
+                <p className="mx-auto px-8">Coordinador</p>
+              </div>
+            </WrapperPDF>
+          </PDFProvider>
+        </div>
+      )}
       <TwoColumnsLayout>
         <Column>
           {type !== 'PERSON'

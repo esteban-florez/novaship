@@ -4,11 +4,14 @@ import useSubmit from '@/lib/hooks/useSubmit'
 import { type Fields, schema } from '@/lib/validation/schemas/login'
 import Input from '../forms/inputs/Input'
 import { useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 
 export default function LogInForm() {
+  const [isPasswordType, setIsPasswordType] = useState(true)
   const { alert, handleSubmit, register, formState: { errors }, serverErrors, setValue, getValues } = useSubmit<Fields>({ schema })
   const searchParams = useSearchParams().get('alert')
+  const Icon = isPasswordType ? EyeIcon : EyeSlashIcon
 
   useEffect(() => {
     if (searchParams === 'bad_creds') {
@@ -36,16 +39,21 @@ export default function LogInForm() {
         maxlength={40}
         isOptional
       />
-      <Input
-        type="password"
-        name="password"
-        label="Contraseña"
-        placeholder="Ingresa tu contraseña..."
-        register={register}
-        errors={errors}
-        maxlength={20}
-        isOptional
-      />
+      <div className="relative group">
+        <Input
+          type={isPasswordType ? 'password' : 'text'}
+          name="password"
+          label="Contraseña"
+          placeholder="Ingresa tu contraseña..."
+          register={register}
+          errors={errors}
+          maxlength={20}
+          isOptional
+        />
+        <button type="button" onClick={() => { setIsPasswordType(val => !val) }}>
+          <Icon className="h-5 w-5 absolute bottom-6 right-3 text-gray-600" />
+        </button>
+      </div>
       <div className="flex flex-col gap-2">
         <button type="submit" className="btn-primary btn btn-md mt-4 w-full md:w-auto">
           Iniciar sesión
