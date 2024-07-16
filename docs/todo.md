@@ -22,7 +22,6 @@
 - Mecanismo para destacar ofertas y equipo mediante suscripción.
 - Mantener los filtros al usar la api.
 - Loading para pages/id.
-- PDF header, footer, styles, template en general.
 - Buscar directamente en la db en los search inputs.
 - Cambiar Interested en Invitation por PERSON | LEADER.
 - Projects/id/tasks content column Loading.
@@ -30,9 +29,6 @@
 - Cambiar terminologia en los placeholders (/register por los momentos).
 - Tareas en grupo no registra miembros correctamente, se duplican cuando se seleccionan y hasta se manda solo 
 - Invitaciones de unirme a equipo se manda al usuario en vez del equipo
-- Reportes
-  - Culminacion de pasantia
-  - Culminacion de proyecto
 
 # Errors
 
