@@ -3,7 +3,6 @@ import UpdateProgress from '@/components/internships/actions/UpdateProgress'
 import { auth } from '@/lib/auth/pages'
 import { recruitmentCompletedHours } from '@/lib/utils/tables'
 import { notFound } from 'next/navigation'
-// import ProgressHistory from "./ProgressHistory"
 import InternshipCard from '@/components/internships/InternshipCard'
 import PersonInternshipCard from '@/app/home/persons/[id]/internships/InternshipCard'
 import prisma from '@/prisma/client'
@@ -12,8 +11,6 @@ import { getInternship } from '@/lib/data-fetching/internships'
 import getPaginationProps from '@/lib/utils/pagination'
 import Pagination from '@/components/Pagination'
 import Progress from './Progress'
-// import { PDFProvider } from './PDFProvider'
-// import DownloadButton from './DownloadButton'
 import { tooltip } from '@/lib/tooltip'
 import { PDFProvider } from '@/components/pdf/PDFProvider'
 import WrapperPDF from '@/components/pdf/WrapperPDF'
@@ -111,6 +108,8 @@ export default async function InternshipProgressPage({
             description={PDFDescription}
             extraImage={institute.image ?? undefined}
             descriptionPosition="beforeTitle"
+            sign
+            signResponsable={institute.name}
           >
             <div className="bg-white px-8 py-4 rounded-lg shadow">
               <ol className="relative border-s space-y-8">
@@ -124,8 +123,6 @@ export default async function InternshipProgressPage({
               </ol>
             </div>
           </WrapperPDF>
-          {/* <ProgressHistory>
-          </ProgressHistory> */}
         </div>
         <div className="w-1/3">
           {type !== 'PERSON'
