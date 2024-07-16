@@ -212,12 +212,9 @@ export default async function OfferPage({
                 }", en la cual se da por ACEPTADA la solicitud y da constancia de la aceptación por parte de quien la publica, empresa "${
                   offer.company.name
                 }"`}
-              >
-                <div className="pt-16 mt-16 mx-auto w-fit flex flex-col gap-2">
-                  <div className="px-8 border-t-2 border-black" />
-                  <p className="mx-auto px-8">{offer.company.name}</p>
-                </div>
-              </WrapperPDF>
+                sign
+                signResponsable={offer.company.name}
+              />
             </PDFProvider>
           </div>
         )}
