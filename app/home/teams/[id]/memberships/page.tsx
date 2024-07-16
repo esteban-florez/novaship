@@ -71,7 +71,10 @@ export default async function TeamMembershipsPage({
               )}
               <div
                 key={leader.id}
-                className={clsx('card card-body bg-white shadow')}
+                className={clsx(
+                  'card card-body bg-white shadow',
+                  userId === leader.id && 'border border-primary'
+                )}
               >
                 <div className="absolute right-0 top-0 flex w-full justify-center rounded-t-lg bg-primary">
                   <p className="text-center font-semibold uppercase text-white">
@@ -94,7 +97,10 @@ export default async function TeamMembershipsPage({
                 return (
                   <div
                     key={membership.id}
-                    className={clsx('card card-body bg-white shadow')}
+                    className={clsx(
+                      'card card-body bg-white shadow',
+                      userId === member.id && 'border border-primary'
+                    )}
                   >
                     <InfoUser
                       image={member.image}
