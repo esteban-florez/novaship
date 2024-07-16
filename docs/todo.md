@@ -24,10 +24,8 @@
 - Loading para pages/id.
 - Buscar directamente en la db en los search inputs.
 - Cambiar Interested en Invitation por PERSON | LEADER.
-- Projects/id/tasks content column Loading.
 - EmptyContent helper.
 - Cambiar terminologia en los placeholders (/register por los momentos).
-- Tareas en grupo no registra miembros correctamente, se duplican cuando se seleccionan y hasta se manda solo 
 
 # Errors
 
