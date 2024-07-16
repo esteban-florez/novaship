@@ -13,6 +13,8 @@ type Props = React.PropsWithChildren<{
   extraImage?: string
   descriptionPosition?: 'beforeTitle' | 'afterTitle'
   render?: 'saving' | 'always'
+  sign?: boolean
+  signResponsable?: string
   note?: string | React.ReactElement
 }>
 
@@ -23,6 +25,8 @@ export default function WrapperPDF({
   extraImage,
   descriptionPosition = 'afterTitle',
   render = 'always',
+  sign = false,
+  signResponsable,
   children,
 }: Props) {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
@@ -51,9 +55,7 @@ export default function WrapperPDF({
           </div>
         </div>
       )}
-      <div className="mt-4 me-4 flex justify-end">
-        <DownloadButton onClick={handleGeneratePDF} />
-      </div>
+      <DownloadButton onClick={handleGeneratePDF} />
       <div
         className="sm:px-8 sm:py-4"
         ref={targetRef}
@@ -118,6 +120,12 @@ export default function WrapperPDF({
           <>
             {render === 'saving' && children}
             <div className="mt-6 flex flex-col gap-2">
+              {sign && signResponsable != null && (
+                <div className="pt-16 mt-16 mx-auto w-fit flex flex-col gap-2">
+                  <div className="px-8 border-t-2 border-black" />
+                  <p className="mx-auto px-8">{signResponsable}</p>
+                </div>
+              )}
               <p>
                 <span className="font-bold">NOTA:</span> Registro que se expide
                 a los {date.getDate()} días del mes de{' '}
