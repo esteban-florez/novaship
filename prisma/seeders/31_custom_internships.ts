@@ -134,7 +134,7 @@ export default async function custom() {
     data: recruitments,
   })
 
-  // Systemas Active Internship
+  // Systems Active Internship
   const systemsGrade = await prisma.grade.findFirstOrThrow({
     where: { title: 'Ingeniería en Sistemas' },
   })
