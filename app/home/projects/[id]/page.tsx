@@ -22,19 +22,35 @@ import Link from 'next/link'
 import EmptyContent from '@/components/EmptyContent'
 import { getInvitationToTeam } from '@/lib/data-fetching/invitation'
 import { taskStatuses } from '@/lib/translations'
+import { PDFProvider } from '@/components/pdf/PDFProvider'
+import WrapperPDF from '@/components/pdf/WrapperPDF'
+import { format } from '@/lib/utils/text'
 
 export const metadata: Metadata = {
   title: 'Detalles de proyecto',
 }
 
 export default async function ProjectPage({ params: { id } }: PageContext) {
-  const { id: userId } = await auth.user()
+  const { id: userId, type } = await auth.user()
+  const user = await prisma.person.findFirst({
+    where: {
+      id: userId,
+    },
+    select: {
+      name: true,
+      ci: true,
+    },
+  })
 
-  const user =
-    (await prisma.person.findFirst({ where: { id: userId } })) ??
-    (await prisma.company.findFirst({ where: { id: userId } }))
+  const tasksDoneByUser = await prisma.task.count({
+    where: {
+      projectId: id,
+      personId: userId,
+      status: 'DONE',
+    },
+  })
 
-  if (id === null || user == null) {
+  if (id === null || type === 'INSTITUTE') {
     notFound()
   }
 
@@ -66,6 +82,8 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
   const tasks = await getTasks({ where: { projectId: id } })
   const tasksStatus = getTasksStatuses(tasks)
   const tasksStatusLength = Object.values(tasksStatus).map((t) => t.length)
+  const totalTasks = Object.values(tasksStatus).flat().length
+  const projectDone = tasksStatus.done.length === totalTasks
 
   const tasksByMonth: number[] = Array(12).fill(0)
   const months = Array.from(Array(12).keys())
@@ -106,6 +124,17 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
     tasksStatusLength,
   ])
 
+  const pdfMessage = `El presente documento hace constancia de la culminación exitosa del proyecto titulado "${
+    project.title
+  }", dirigido por ${
+    project.team?.leader.company !== null ? 'la empresa ' : ' '
+  }${leader.name}, del cual el usuario ${
+    user?.name ?? ''
+  } de cédula de identidad ${format(
+    user?.ci ?? '',
+    'ci'
+  )} tuvo una participación activa, llevando a cabo un total de ${tasksDoneByUser} de ${totalTasks} tareas realizadas a lo largo del desarrollo del mismo, contribuyendo con la realización de dicho proyecto bajo los distintos estándares y parámetros definidos por el líder del proyecto, adicionalmente se es anexado al perfil del usuario participante como parte del repertorio de proyectos en los cuales ha contribuido y formado parte.`
+
   return (
     <>
       <PageTitle breadcrumbs={project.title} />
@@ -124,16 +153,30 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
               canApply={invitation == null && !isOwner && !isMember}
             />
           </div>
-          {isOwner && (
-            <div className="col-span-full">
-              <Link href={`/home/projects/${id}/tasks?action=create`}>
-                <button className="btn btn-primary">
-                  <PlusIcon className="w-5 h-5" />
-                  Registrar tarea
-                </button>
-              </Link>
-            </div>
-          )}
+          {isOwner ||
+            (projectDone && (isMember || isOwner) && (
+              <div className="col-span-full">
+                <div className="flex justify-between">
+                  {isOwner && (
+                    <Link href={`/home/projects/${id}/tasks?action=create`}>
+                      <button className="btn btn-primary">
+                        <PlusIcon className="w-5 h-5" />
+                        Registrar tarea
+                      </button>
+                    </Link>
+                  )}
+                  {projectDone && (isMember || isOwner) && (
+                    <PDFProvider documentTitle="Comprobante de culminación de proyecto">
+                      <WrapperPDF
+                        pageTitle="Comprobante de culminación de proyecto"
+                        render="saving"
+                        description={pdfMessage}
+                      />
+                    </PDFProvider>
+                  )}
+                </div>
+              </div>
+            ))}
           {showEmptyContent
             ? (
               <>
