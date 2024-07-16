@@ -153,30 +153,29 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
               canApply={invitation == null && !isOwner && !isMember}
             />
           </div>
-          {isOwner ||
-            (projectDone && (isMember || isOwner) && (
-              <div className="col-span-full">
-                <div className="flex justify-between">
-                  {isOwner && (
-                    <Link href={`/home/projects/${id}/tasks?action=create`}>
-                      <button className="btn btn-primary">
-                        <PlusIcon className="w-5 h-5" />
-                        Registrar tarea
-                      </button>
-                    </Link>
-                  )}
-                  {projectDone && (isMember || isOwner) && (
-                    <PDFProvider documentTitle="Comprobante de culminación de proyecto">
-                      <WrapperPDF
-                        pageTitle="Comprobante de culminación de proyecto"
-                        render="saving"
-                        description={pdfMessage}
-                      />
-                    </PDFProvider>
-                  )}
-                </div>
+          {(isOwner || (projectDone && (isMember || isOwner))) && (
+            <div className="col-span-full">
+              <div className="flex justify-between">
+                {isOwner && (
+                  <Link href={`/home/projects/${id}/tasks?action=create`}>
+                    <button className="btn btn-primary">
+                      <PlusIcon className="w-5 h-5" />
+                      Registrar tarea
+                    </button>
+                  </Link>
+                )}
+                {projectDone && (isMember || isOwner) && (
+                  <PDFProvider documentTitle="Comprobante de culminación de proyecto">
+                    <WrapperPDF
+                      pageTitle="Comprobante de culminación de proyecto"
+                      render="saving"
+                      description={pdfMessage}
+                    />
+                  </PDFProvider>
+                )}
               </div>
-            ))}
+            </div>
+          )}
           {showEmptyContent
             ? (
               <>

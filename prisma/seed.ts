@@ -4,7 +4,7 @@ import path from 'path'
 import { pathToFileURL } from 'url'
 
 export const seederQueries = {
-  persons: 10,
+  persons: 20,
   companies: 10,
   institute: 10,
   internships: 10,

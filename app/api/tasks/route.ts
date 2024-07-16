@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
         data: {
           ...rest,
           participations: {
-            create: members?.map(member => {
+            create: members?.map((member) => {
               return {
                 personId: member,
               }
@@ -44,15 +44,21 @@ export async function POST(request: NextRequest) {
         },
       })
 
-      const { task_create: { message, model, status } } = logs
+      const {
+        task_create: { message, model, status },
+      } = logs
       await logEvent({
         action: message,
         model,
         status,
-        authUserId: userId,
+        authUserId,
       })
 
-      return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks?id=${task.id}&alert=task_created`))
+      return NextResponse.redirect(
+        url(
+          `/home/projects/${parsed.projectId}/tasks?id=${task.id}&alert=task_created`
+        )
+      )
     }
 
     const task = await prisma.task.create({
@@ -64,7 +70,9 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    const { task_create: { message, model, status } } = logs
+    const {
+      task_create: { message, model, status },
+    } = logs
     await logEvent({
       action: message,
       model,
@@ -72,7 +80,11 @@ export async function POST(request: NextRequest) {
       authUserId,
     })
 
-    return NextResponse.redirect(url(`/home/projects/${parsed.projectId}/tasks?id=${task.id}&alert=task_created`))
+    return NextResponse.redirect(
+      url(
+        `/home/projects/${parsed.projectId}/tasks?id=${task.id}&alert=task_created`
+      )
+    )
   } catch (error) {
     handleError(error, data)
   }

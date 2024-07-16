@@ -126,7 +126,33 @@ export default async function TasksProjectPage({
         </div>
         <div className="mt-6 sm:mt-0 sm:p-1 col-span-2">
           <div className="max-h-[80vh] rounded-md card">
-            <Suspense fallback={<div>Cargando...</div>}>
+            <Suspense
+              fallback={
+                <div className="w-full mt-2 sm:mx-auto sm:mt-0 sm:px-20 sm:py-10">
+                  {/* Form */}
+                  <div className="w-full flex flex-col bg-base-100 p-4 shadow-xl sm:rounded-lg gap-4">
+                    {/* Section */}
+                    <div className="mb-8 mt-4 flex flex-col gap-4 last:mb-4 lg:px-4">
+                      <div className="mb-2 h-8 w-3/6 rounded-md bg-neutral-500" />
+                      <div className="h-2 w-2/6 rounded-md bg-neutral-500" />
+                      <div className="h-8 w-full rounded-md bg-neutral-200" />
+                      <div className="mt-2 h-2 w-2/6 rounded-md bg-neutral-500" />
+                      <div className="h-24 w-full rounded-md bg-neutral-200" />
+                      <div className="mt-2 h-2 w-2/6 rounded-md bg-neutral-500" />
+                      <div className="h-8 w-full rounded-md bg-neutral-200" />
+                    </div>
+                    {/* Section */}
+                    <div className="mb-8 mt-4 flex flex-col gap-4 last:mb-4 lg:px-4">
+                      <div className="mb-2 h-8 w-3/6 rounded-md bg-neutral-500" />
+                      <div className="h-2 w-2/6 rounded-md bg-neutral-500" />
+                      <div className="h-8 w-full rounded-md bg-neutral-200" />
+                      <div className="mt-2 h-2 w-2/6 rounded-md bg-neutral-500" />
+                      <div className="h-8 w-full rounded-md bg-neutral-200" />
+                    </div>
+                  </div>
+                </div>
+              }
+            >
               <div className="h-[80vh]">
                 {showContentEmpty && (
                   <div className="h-[80vh] w-auto my-auto p-4 card bg-white rounded-md border border-zinc-300 flex items-center justify-center">
