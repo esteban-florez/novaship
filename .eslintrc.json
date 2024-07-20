@@ -35,7 +35,7 @@
       "named": "never",
       "asyncArrow": "always"
     }],
-    "@typescrit-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
     "react/jsx-curly-brace-presence": ["error", {
       "props": "never",
       "children": "never",
