@@ -56,10 +56,7 @@ export default function WrapperPDF({
         </div>
       )}
       <DownloadButton onClick={handleGeneratePDF} />
-      <div
-        className="sm:px-8 sm:py-4"
-        ref={targetRef}
-      >
+      <div className="sm:px-8 sm:py-4" ref={targetRef}>
         {isGeneratingPDF && (
           <section className="w-full bg-primary/10 mb-8 mx-auto grid grid-cols-6 items-center p-4">
             <Image
@@ -78,11 +75,11 @@ export default function WrapperPDF({
             >
               <div className="flex flex-col">
                 <p>República Bolivariana de Venezuela</p>
-                <p className="-mt-5">
+                <p className="-mt-4">
                   Ministerio del Poder Popular para la Educación Universitaria
                 </p>
-                <p className="-mt-5">La Victoria - Edo. Aragua</p>
-                <p className="-mt-5">NOVASHIP</p>
+                <p className="-mt-4">La Victoria - Edo. Aragua</p>
+                <p className="-mt-4">NOVASHIP</p>
               </div>
             </div>
             {extraImage != null && (
@@ -103,7 +100,7 @@ export default function WrapperPDF({
             )}
             {typeof pageTitle === 'string'
               ? (
-                <h2 className="mb-4 text-2xl text-center font-bold tracking-tighter">
+                <h2 className="mb-8 text-2xl text-center font-bold tracking-tighter">
                   {pageTitle}
                 </h2>
                 )
