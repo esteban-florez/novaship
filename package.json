@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint --fix",
     "prepare": "husky install",
-    "vercel-build": "prisma generate && prisma migrate deploy --force && prisma migrate reset && next build",
+    "vercel-build": "prisma generate && prisma migrate deploy && prisma migrate reset --force && next build",
     "mig": "prisma migrate reset",
     "mig:dev": "prisma migrate dev",
     "email": "email dev -d \"./lib/emails\" -p 4000"
