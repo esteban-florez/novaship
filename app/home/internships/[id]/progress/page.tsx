@@ -104,7 +104,7 @@ export default async function InternshipProgressPage({
             pageTitle="Actividades de la pasantía"
             header={<>
               <p className="font-bold text-lg leading-tight">{institute.name}</p>
-              <p className="font-bold text-lg -mt-4">J-{institute.rif}</p>
+              <p className="font-bold text-lg">J-{institute.rif}</p>
             </>}
             footer={`${institute.location.title} - ${institute.phone}`}
             description={PDFDescription}

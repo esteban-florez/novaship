@@ -89,7 +89,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
               header={
                 <>
                   <p className="font-bold text-lg leading-tight">Novaship</p>
-                  <p className="font-bold text-lg -mt-4">{team.name}</p>
+                  <p className="font-bold text-lg">{team.name}</p>
                 </>
               }
               footer={`${team.code} - ${team.createdAt.getFullYear()}`}

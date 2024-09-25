@@ -167,7 +167,7 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
                       pageTitle="Comprobante de culminación de proyecto"
                       header={<>
                         <p className="font-bold text-lg leading-tight">Novaship</p>
-                        <p className="font-bold text-lg -mt-4">{project.title}</p>
+                        <p className="font-bold text-lg">{project.title}</p>
                       </>}
                       footer={`${project.code} - ${project.createdAt.getFullYear()}`}
                       render="saving"

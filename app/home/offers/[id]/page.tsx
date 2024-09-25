@@ -212,7 +212,7 @@ export default async function OfferPage({
                 pageTitle="Comprobante de oferta laboral"
                 header={<>
                   <p className="font-bold text-lg leading-tight">{company.name}</p>
-                  <p className="font-bold text-lg -mt-4">J-{company.rif}</p>
+                  <p className="font-bold text-lg">J-{company.rif}</p>
                 </>}
                 footer={`${company.location.title} - ${company.phone}`}
                 extraImage={offer.company.image ?? undefined}

@@ -160,7 +160,7 @@ export default async function InternshipDetailsPage({
               pageTitle="Certificado de Culminación de Pasantías"
               header={<>
                 <p className="font-bold text-xl leading-tight">{institute.name}</p>
-                <p className="font-bold text-xl -mt-4">J-{institute.rif}</p>
+                <p className="font-bold text-xl">J-{institute.rif}</p>
               </>}
               footer={`${institute.location.title} - ${institute.phone}`}
               extraImage={institute.image ?? undefined}

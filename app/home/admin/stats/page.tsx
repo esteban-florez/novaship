@@ -183,7 +183,7 @@ export default async function StatsPage() {
         pageTitle={`Estadísticas del sistema (${format({ date: new Date() })})`}
         header={<>
           <p className="font-bold text-lg leading-tight">Novaship</p>
-          <p className="font-bold text-lg -mt-4">Estadísticas del sistema</p>
+          <p className="font-bold text-lg">Estadísticas del sistema</p>
         </>}
         footer="Novaship - Todos los derechos reservados"
       >

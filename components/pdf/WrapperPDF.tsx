@@ -129,7 +129,7 @@ export default function WrapperPDF({
               </p>
             </div>
             {isGeneratingPDF && <div className="mt-[16.5rem]" />}
-            <footer className="bg-primary text-white text-center w-full p-4">
+            <footer className="bg-primary text-white text-center w-full p-4 pb-6">
               <p>{footer}</p>
             </footer>
           </>
