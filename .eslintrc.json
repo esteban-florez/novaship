@@ -41,6 +41,7 @@
       "children": "never",
       "propElementValues": "always"
     }],
+    "react/jsx-closing-tag-location": "off",
     "@next/next/no-img-element": "off"
   },
   "ignorePatterns": ["next-env.d.ts", "tailwind.config.js", "lucia.d.ts"]
