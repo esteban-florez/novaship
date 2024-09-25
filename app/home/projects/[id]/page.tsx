@@ -124,16 +124,13 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
     tasksStatusLength,
   ])
 
-  const pdfMessage = `El presente documento hace constancia de la culminación exitosa del proyecto titulado "${
-    project.title
-  }", dirigido por ${
-    project.team?.leader.company !== null ? 'la empresa ' : ' '
-  }${leader.name}, del cual el usuario ${
-    user?.name ?? ''
-  } de cédula de identidad ${format(
-    user?.ci ?? '',
-    'ci'
-  )} tuvo una participación activa, llevando a cabo un total de ${tasksDoneByUser} de ${totalTasks} tareas realizadas a lo largo del desarrollo del mismo, contribuyendo con la realización de dicho proyecto bajo los distintos estándares y parámetros definidos por el líder del proyecto, adicionalmente se es anexado al perfil del usuario participante como parte del repertorio de proyectos en los cuales ha contribuido y formado parte.`
+  const pdfMessage = `El presente documento hace constancia de la culminación exitosa del proyecto titulado "${project.title
+    }", dirigido por ${project.team?.leader.company !== null ? 'la empresa ' : ' '
+    }${leader.name}, del cual el usuario ${user?.name ?? ''
+    } de cédula de identidad ${format(
+      user?.ci ?? '',
+      'ci'
+    )} tuvo una participación activa, llevando a cabo un total de ${tasksDoneByUser} de ${totalTasks} tareas realizadas a lo largo del desarrollo del mismo, contribuyendo con la realización de dicho proyecto bajo los distintos estándares y parámetros definidos por el líder del proyecto, adicionalmente se es anexado al perfil del usuario participante como parte del repertorio de proyectos en los cuales ha contribuido y formado parte.`
 
   return (
     <>
@@ -168,6 +165,11 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
                   <PDFProvider documentTitle="Comprobante de culminación de proyecto">
                     <WrapperPDF
                       pageTitle="Comprobante de culminación de proyecto"
+                      header={<>
+                        <p className="font-bold text-lg leading-tight">Novaship</p>
+                        <p className="font-bold text-lg -mt-4">{project.title}</p>
+                      </>}
+                      footer={`${project.code} - ${project.createdAt.getFullYear()}`}
                       render="saving"
                       description={pdfMessage}
                     />
@@ -245,10 +247,10 @@ export default async function ProjectPage({ params: { id } }: PageContext) {
               <div className="col-span-full py-8 card bg-white rounded-md border border-zinc-300">
                 <EmptyContent
                   title={
-                  isOwner
-                    ? 'Registra algunas tareas'
-                    : 'Aún no han añadido tareas'
-                }
+                    isOwner
+                      ? 'Registra algunas tareas'
+                      : 'Aún no han añadido tareas'
+                  }
                 >
                   Gestione el desarrollo de su proyecto con algunas tareas.
                 </EmptyContent>

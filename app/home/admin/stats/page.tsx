@@ -181,6 +181,11 @@ export default async function StatsPage() {
       <PageTitle title="Estadísticas" />
       <WrapperPDF
         pageTitle={`Estadísticas del sistema (${format({ date: new Date() })})`}
+        header={<>
+          <p className="font-bold text-lg leading-tight">Novaship</p>
+          <p className="font-bold text-lg -mt-4">Estadísticas del sistema</p>
+        </>}
+        footer="Novaship - Todos los derechos reservados"
       >
         <section className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {checkEmpty([

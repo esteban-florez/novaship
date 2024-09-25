@@ -86,12 +86,17 @@ export default async function TeamPage({ params: { id } }: PageContext) {
         <div className="p-4 w-full">
           <PDFProvider documentTitle="Equipo de trabajo">
             <WrapperPDF
+              header={
+                <>
+                  <p className="font-bold text-lg leading-tight">Novaship</p>
+                  <p className="font-bold text-lg -mt-4">{team.name}</p>
+                </>
+              }
+              footer={`${team.code} - ${team.createdAt.getFullYear()}`}
               pageTitle="Equipo de trabajo"
-              description={`El presente documento valida la participación de ${name} como miembro activo en el grupo de nombre "${
-                team.name
-              }" dirigido por ${
-                team.leader.company !== null ? ' la empresa ' : ''
-              }${team.leader.company?.name ?? team.leader.person?.name ?? ''}`}
+              description={`El presente documento valida la participación de ${name} como miembro activo en el grupo de nombre "${team.name
+                }" dirigido por ${team.leader.company !== null ? ' la empresa ' : ''
+                }${team.leader.company?.name ?? team.leader.person?.name ?? ''}`}
               render="saving"
             />
           </PDFProvider>
@@ -223,7 +228,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
                       'group flex items-center gap-1 rounded-lg border-2 p-2 transition-colors',
                       userId === member.id && 'border-primary',
                       userId !== member.id &&
-                        'border-neutral-300 hover:border-primary'
+                      'border-neutral-300 hover:border-primary'
                     )}
                     key={member.id}
                   >

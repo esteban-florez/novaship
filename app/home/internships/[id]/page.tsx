@@ -158,6 +158,11 @@ export default async function InternshipDetailsPage({
           <PDFProvider documentTitle="Certificado de Culminación de Pasantías">
             <WrapperPDF
               pageTitle="Certificado de Culminación de Pasantías"
+              header={<>
+                <p className="font-bold text-xl leading-tight">{institute.name}</p>
+                <p className="font-bold text-xl -mt-4">J-{institute.rif}</p>
+              </>}
+              footer={`${institute.location.title} - ${institute.phone}`}
               extraImage={institute.image ?? undefined}
               render="saving"
               description={`Quien suscribe este certificado, ${institute.name}, acepta y valida la participación de ${person.name}, C.I. ${person.ci}, en la empresa ${company?.name} tras haber realizado actividades laborales con una duración de ${internship.hours} horas para optar por el título de ${internship.grade.title}. En mi rol de coordinador de pasantías o de la institución certifico la aprobación de este certificado a los ____ días del mes de ____________ del año ________`}

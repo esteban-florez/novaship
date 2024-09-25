@@ -72,18 +72,15 @@ export default async function InternshipProgressPage({
   const maxHours = internship.hours - recruitmentCompletedHours(recruitment)
 
   const PDFDescription = `
-  El siguiente documento hace constancia de la participación del estudiante ${
-    person.name
-  }, cédula de identidad ${format(
-    person.ci,
-    'ci'
-  )}, el cual se encuentra cursando la carrera de "${
-    grade.title
-  }" y realizando actividades de pasantía en la empresa "${
-    company.name
-  }", actividades que a la fecha cumplen con ${recruitmentCompletedHours(
-    recruitment
-  )} de las ${hours} horas pautadas.
+  El siguiente documento hace constancia de la participación del estudiante ${person.name
+    }, cédula de identidad ${format(
+      person.ci,
+      'ci'
+    )}, el cual se encuentra cursando la carrera de "${grade.title
+    }" y realizando actividades de pasantía en la empresa "${company.name
+    }", actividades que a la fecha cumplen con ${recruitmentCompletedHours(
+      recruitment
+    )} de las ${hours} horas pautadas.
   `
 
   return (
@@ -105,11 +102,16 @@ export default async function InternshipProgressPage({
         <div className="w-2/3">
           <WrapperPDF
             pageTitle="Actividades de la pasantía"
+            header={<>
+              <p className="font-bold text-lg leading-tight">{institute.name}</p>
+              <p className="font-bold text-lg -mt-4">J-{institute.rif}</p>
+            </>}
+            footer={`${institute.location.title} - ${institute.phone}`}
             description={PDFDescription}
             extraImage={institute.image ?? undefined}
             descriptionPosition="beforeTitle"
-            sign
             signResponsable={institute.name}
+            sign
           >
             <div className="bg-white px-8 py-4 rounded-lg shadow">
               <ol className="relative border-s space-y-8">

@@ -49,6 +49,16 @@ export default async function OfferPage({
     notFound()
   }
 
+  const company = await prisma.company.findFirstOrThrow({
+    include: {
+      location: {
+        select: {
+          title: true,
+        },
+      },
+    },
+  })
+
   const user = await prisma.person.findFirst({
     where: { id: userId },
     select: {
@@ -200,18 +210,20 @@ export default async function OfferPage({
             <PDFProvider documentTitle="Comprobante de oferta laboral">
               <WrapperPDF
                 pageTitle="Comprobante de oferta laboral"
+                header={<>
+                  <p className="font-bold text-lg leading-tight">{company.name}</p>
+                  <p className="font-bold text-lg -mt-4">J-{company.rif}</p>
+                </>}
+                footer={`${company.location.title} - ${company.phone}`}
                 extraImage={offer.company.image ?? undefined}
                 render="saving"
-                description={`El presente documento valida la solicitud y aceptación de ${
-                  user?.name ?? ''
-                } de cédula de identidad ${format(
-                  user?.ci ?? '',
-                  'ci'
-                )} para la oferta laboral de "${
-                  offer.title
-                }", en la cual se da por ACEPTADA la solicitud y da constancia de la aceptación por parte de quien la publica, empresa "${
-                  offer.company.name
-                }"`}
+                description={`El presente documento valida la solicitud y aceptación de ${user?.name ?? ''
+                  } de cédula de identidad ${format(
+                    user?.ci ?? '',
+                    'ci'
+                  )} para la oferta laboral de "${offer.title
+                  }", en la cual se da por ACEPTADA la solicitud y da constancia de la aceptación por parte de quien la publica, empresa "${offer.company.name
+                  }"`}
                 sign
                 signResponsable={offer.company.name}
               />
@@ -262,11 +274,10 @@ export default async function OfferPage({
               <div className="flex flex-col sm:flex-row justify-between items-center">
                 <h4 className="font-bold mb-2 text-xl">Postulaciones</h4>
                 <Dropdown
-                  label={`Filtro - ${
-                    OFFER_ID_FILTERS_TAB[
-                      filter as keyof typeof OFFER_ID_FILTERS_TAB
+                  label={`Filtro - ${OFFER_ID_FILTERS_TAB[
+                    filter as keyof typeof OFFER_ID_FILTERS_TAB
                     ]
-                  } (${tabCount()})`}
+                    } (${tabCount()})`}
                 >
                   {links.map((link) => {
                     return (

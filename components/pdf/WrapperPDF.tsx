@@ -9,19 +9,21 @@ import clsx from 'clsx'
 
 type Props = React.PropsWithChildren<{
   pageTitle: string
+  header: React.ReactNode
+  footer: string
   description?: string
   extraImage?: string
   descriptionPosition?: 'beforeTitle' | 'afterTitle'
   render?: 'saving' | 'always'
   sign?: boolean
   signResponsable?: string
-  note?: string | React.ReactElement
 }>
 
 export default function WrapperPDF({
   pageTitle,
+  header,
+  footer,
   description,
-  note,
   extraImage,
   descriptionPosition = 'afterTitle',
   render = 'always',
@@ -56,7 +58,7 @@ export default function WrapperPDF({
         </div>
       )}
       <DownloadButton onClick={handleGeneratePDF} />
-      <div className="sm:px-8 sm:py-4" ref={targetRef}>
+      <div className="sm:px-8 sm:py-4" ref={targetRef} style={isGeneratingPDF ? { width: '800px' } : undefined}>
         {isGeneratingPDF && (
           <section className="w-full bg-primary/10 mb-8 mx-auto grid grid-cols-6 items-center p-4">
             <Image
@@ -73,13 +75,8 @@ export default function WrapperPDF({
                 extraImage == null && 'col-span-5'
               )}
             >
-              <div className="flex flex-col">
-                <p>República Bolivariana de Venezuela</p>
-                <p className="-mt-4">
-                  Ministerio del Poder Popular para la Educación Universitaria
-                </p>
-                <p className="-mt-4">La Victoria - Edo. Aragua</p>
-                <p className="-mt-4">NOVASHIP</p>
+              <div className="flex flex-col justify-center">
+                {header}
               </div>
             </div>
             {extraImage != null && (
@@ -93,6 +90,7 @@ export default function WrapperPDF({
             )}
           </section>
         )}
+        {isGeneratingPDF && <div className="mt-52" />}
         {isGeneratingPDF && (
           <>
             {descriptionPosition === 'beforeTitle' && description != null && (
@@ -100,7 +98,7 @@ export default function WrapperPDF({
             )}
             {typeof pageTitle === 'string'
               ? (
-                <h2 className="mb-8 text-2xl text-center font-bold tracking-tighter">
+                <h2 className="mb-8 text-center text-2xl font-bold tracking-tighter">
                   {pageTitle}
                 </h2>
                 )
@@ -129,16 +127,11 @@ export default function WrapperPDF({
                 {date.toLocaleString('es', { month: 'long' })} del año{' '}
                 {date.getFullYear()} a través de la plataforma Novaship.
               </p>
-              {typeof note === 'string'
-                ? (
-                  <p>
-                    <span className="font-bold">NOTA</span> {note}
-                  </p>
-                  )
-                : (
-                    note
-                  )}
             </div>
+            {isGeneratingPDF && <div className="mt-[16.5rem]" />}
+            <footer className="bg-primary text-white text-center w-full p-4">
+              <p>{footer}</p>
+            </footer>
           </>
         )}
       </div>
