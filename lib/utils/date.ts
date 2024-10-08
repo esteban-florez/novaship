@@ -5,23 +5,23 @@ export function getExpirationDate(days: number) {
   return DateTime.now().plus({ days }).toJSDate()
 }
 
-export function getAllMonths(format?: 'short' | 'long') {
-  const months = [
-    'Enero',
-    'Febrero',
-    'Marzo',
-    'Abril',
-    'Mayo',
-    'Junio',
-    'Julio',
-    'Agosto',
-    'Septiembre',
-    'Octubre',
-    'Noviembre',
-    'Diciembre',
-  ]
+export const months = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
+]
 
-  if (format === 'short') return months.map(month => month.slice(0, 3))
+export function getAllMonths(format?: 'short' | 'long') {
+  if (format === 'short') return months.map((month) => month.slice(0, 3))
 
   return months
 }
@@ -101,7 +101,7 @@ export function diffForHumans(date: Date) {
   value = Math.round(value)
 
   if (value > 1) {
-    unit = unit + 's' as Intl.RelativeTimeFormatUnit
+    unit = (unit + 's') as Intl.RelativeTimeFormatUnit
   }
 
   return intl.format(-value, unit)
