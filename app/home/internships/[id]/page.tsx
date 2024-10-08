@@ -23,6 +23,7 @@ import PieGraphSkeleton from '@/components/loaders/PieGraphSkeleton'
 import { tooltip } from '@/lib/tooltip'
 import WrapperPDF from '@/components/pdf/WrapperPDF'
 import { PDFProvider } from '@/components/pdf/PDFProvider'
+import { format } from '@/lib/utils/text'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -165,7 +166,7 @@ export default async function InternshipDetailsPage({
               footer={`${institute.location.title} - ${institute.phone}`}
               extraImage={institute.image ?? undefined}
               render="saving"
-              description={`Quien suscribe este certificado, ${institute.name}, acepta y valida la participación de ${person.name}, C.I. ${person.ci}, en la empresa ${company?.name} tras haber realizado actividades laborales con una duración de ${internship.hours} horas para optar por el título de ${internship.grade.title}. En mi rol de coordinador de pasantías o de la institución certifico la aprobación de este certificado a los ____ días del mes de ____________ del año ________`}
+              description={`Quien suscribe este certificado, ${institute.name}, acepta y valida la participación de ${person.name}, C.I. ${format(person.ci, 'ci')}, en la empresa ${company?.name} tras haber realizado actividades laborales con una duración de ${internship.hours} horas para optar por el título de ${internship.grade.title}. En mi rol de coordinador de pasantías o de la institución certifico la aprobación de este certificado a los ____ días del mes de ____________ del año ________`}
             >
               <div className="pt-16 mt-16 mx-auto w-fit flex flex-col gap-2">
                 <div className="px-8 border-t-2 border-black" />
