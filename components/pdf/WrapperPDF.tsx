@@ -17,6 +17,7 @@ type Props = React.PropsWithChildren<{
   render?: 'saving' | 'always'
   sign?: boolean
   signResponsable?: string
+  preview?: boolean
 }>
 
 export default function WrapperPDF({
@@ -30,6 +31,7 @@ export default function WrapperPDF({
   sign = false,
   signResponsable,
   children,
+  preview = false,
 }: Props) {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const { targetRef } = useContext(PDFContext)
@@ -58,8 +60,12 @@ export default function WrapperPDF({
         </div>
       )}
       <DownloadButton onClick={handleGeneratePDF} />
-      <div className="sm:px-8 sm:py-4" ref={targetRef} style={isGeneratingPDF ? { width: '800px' } : undefined}>
-        {isGeneratingPDF && (
+      <div
+        className="sm:px-8 sm:py-4"
+        ref={targetRef}
+        style={isGeneratingPDF || preview ? { width: '800px' } : undefined}
+      >
+        {(isGeneratingPDF || preview) && (
           <section className="w-full bg-primary/10 mb-8 mx-auto grid grid-cols-6 items-center p-4">
             <Image
               alt="Logo de Novaship"
@@ -75,9 +81,7 @@ export default function WrapperPDF({
                 extraImage == null && 'col-span-5'
               )}
             >
-              <div className="flex flex-col justify-center">
-                {header}
-              </div>
+              <div className="flex flex-col justify-center">{header}</div>
             </div>
             {extraImage != null && (
               <Image
@@ -90,8 +94,8 @@ export default function WrapperPDF({
             )}
           </section>
         )}
-        {isGeneratingPDF && <div className="mt-52" />}
-        {isGeneratingPDF && (
+        {isGeneratingPDF && !preview && <div className="mt-52" />}
+        {(isGeneratingPDF || preview) && (
           <>
             {descriptionPosition === 'beforeTitle' && description != null && (
               <p>{description}</p>
@@ -111,7 +115,7 @@ export default function WrapperPDF({
           </>
         )}
         {render === 'always' && children}
-        {isGeneratingPDF && (
+        {(isGeneratingPDF || preview) && (
           <>
             {render === 'saving' && children}
             <div className="mt-6 flex flex-col gap-2">
@@ -128,7 +132,7 @@ export default function WrapperPDF({
                 {date.getFullYear()} a través de la plataforma Novaship.
               </p>
             </div>
-            {isGeneratingPDF && <div className="mt-[16.5rem]" />}
+            {isGeneratingPDF && !preview && <div className="mt-[16.5rem]" />}
             <footer className="bg-primary text-white text-center w-full p-4 pb-6">
               <p>{footer}</p>
             </footer>

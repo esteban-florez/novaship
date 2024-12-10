@@ -1,3 +1,5 @@
+import clsx from 'clsx'
+
 type Props = React.PropsWithChildren<{
   id?: string
   icon?: React.ReactElement
@@ -5,6 +7,7 @@ type Props = React.PropsWithChildren<{
   className?: string
   forceOpen?: boolean
   labelRef?: React.MutableRefObject<HTMLInputElement | null>
+  modalClasses?: string
 }>
 
 // TEMPORAL -> cambiar los modales por este nuevo
@@ -16,6 +19,7 @@ export default function Modal({
   children,
   labelRef,
   forceOpen = false,
+  modalClasses,
 }: Props) {
   return (
     <>
@@ -49,7 +53,9 @@ export default function Modal({
           />
           )}
       <div className="modal p-0">
-        <div className="rounded-md modal-box p-0 scrollbar">
+        <div
+          className={clsx('rounded-md modal-box p-0 scrollbar', modalClasses)}
+        >
           <article className="p-4">{children}</article>
         </div>
       </div>

@@ -18,6 +18,7 @@ import JoinTeamButton from './JoinTeamButton'
 import { statuses } from '@/lib/translations'
 import { PDFProvider } from '@/components/pdf/PDFProvider'
 import WrapperPDF from '@/components/pdf/WrapperPDF'
+import PrevisualizeButton from '@/components/pdf/PrevisualizeButton'
 
 export const metadata: Metadata = {
   title: 'Equipo de trabajo',
@@ -84,22 +85,29 @@ export default async function TeamPage({ params: { id } }: PageContext) {
       <PageTitle breadcrumbs={team.name} />
       {type === 'PERSON' && leader.id !== userId && userBelongsToTeam && (
         <div className="p-4 w-full">
-          <PDFProvider documentTitle="Equipo de trabajo">
-            <WrapperPDF
-              header={
-                <>
-                  <p className="font-bold text-lg leading-tight">Novaship</p>
-                  <p className="font-bold text-lg">{team.name}</p>
-                </>
-              }
-              footer={`${team.code} - ${team.createdAt.getFullYear()}`}
-              pageTitle="Equipo de trabajo"
-              description={`El presente documento valida la participación de ${name} como miembro activo en el grupo de nombre "${team.name
-                }" dirigido por ${team.leader.company !== null ? ' la empresa ' : ''
-                }${team.leader.company?.name ?? team.leader.person?.name ?? ''}`}
-              render="saving"
-            />
-          </PDFProvider>
+          <PrevisualizeButton>
+            <PDFProvider documentTitle="Equipo de trabajo">
+              <WrapperPDF
+                preview
+                header={
+                  <>
+                    <p className="font-bold text-lg leading-tight">Novaship</p>
+                    <p className="font-bold text-lg">{team.name}</p>
+                  </>
+                }
+                footer={`${team.code} - ${team.createdAt.getFullYear()}`}
+                pageTitle="Equipo de trabajo"
+                description={`El presente documento valida la participación de ${name} como miembro activo en el grupo de nombre "${
+                  team.name
+                }" dirigido por ${
+                  team.leader.company !== null ? ' la empresa ' : ''
+                }${
+                  team.leader.company?.name ?? team.leader.person?.name ?? ''
+                }`}
+                render="saving"
+              />
+            </PDFProvider>
+          </PrevisualizeButton>
         </div>
       )}
       <section className="flex flex-wrap items-start gap-4 p-4 lg:flex-nowrap">
@@ -228,7 +236,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
                       'group flex items-center gap-1 rounded-lg border-2 p-2 transition-colors',
                       userId === member.id && 'border-primary',
                       userId !== member.id &&
-                      'border-neutral-300 hover:border-primary'
+                        'border-neutral-300 hover:border-primary'
                     )}
                     key={member.id}
                   >

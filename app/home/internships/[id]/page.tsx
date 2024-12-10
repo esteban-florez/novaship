@@ -25,6 +25,7 @@ import WrapperPDF from '@/components/pdf/WrapperPDF'
 import { PDFProvider } from '@/components/pdf/PDFProvider'
 import { format } from '@/lib/utils/text'
 import { months } from '@/lib/utils/date'
+import PrevisualizeButton from '@/components/pdf/PrevisualizeButton'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -156,25 +157,44 @@ export default async function InternshipDetailsPage({
         breadcrumbs={`${person.name} - ${grade.title}`}
       />
       {stage === 'COMPLETED' && type !== 'COMPANY' && (
-        <div className="-mb-[2.5rem]">
-          <PDFProvider documentTitle="Certificado de Culminación de Pasantías">
-            <WrapperPDF
-              pageTitle="Certificado de Culminación de Pasantías"
-              header={<>
-                <p className="font-bold text-xl leading-tight">{institute.name}</p>
-                <p className="font-bold text-xl">J-{institute.rif}</p>
-              </>}
-              footer={`${institute.location.title} - ${institute.phone}`}
-              extraImage={institute.image ?? undefined}
-              render="saving"
-              description={`Quien suscribe este certificado, ${institute.name}, acepta y valida la participación de ${person.name}, C.I. ${format(person.ci, 'ci')}, en la empresa ${company?.name} tras haber realizado actividades laborales con una duración de ${internship.hours} horas para optar por el título de ${internship.grade.title}. En mi rol de coordinador de pasantías o de la institución certifico la aprobación de este certificado a los ${internship.updatedAt.getUTCDate()} días del mes de ${Object.entries(months)[internship.updatedAt.getMonth()]} del año ${internship.updatedAt.getUTCFullYear()}`}
-            >
-              <div className="pt-16 mt-16 mx-auto w-fit flex flex-col gap-2">
-                <div className="px-8 border-t-2 border-black" />
-                <p className="mx-auto px-8">Coordinador</p>
-              </div>
-            </WrapperPDF>
-          </PDFProvider>
+        <div className="pl-4 pt-4">
+          <PrevisualizeButton>
+            <PDFProvider documentTitle="Certificado de Culminación de Pasantías">
+              <WrapperPDF
+                preview
+                pageTitle="Certificado de Culminación de Pasantías"
+                header={
+                  <>
+                    <p className="font-bold text-xl leading-tight">
+                      {institute.name}
+                    </p>
+                    <p className="font-bold text-xl">J-{institute.rif}</p>
+                  </>
+                }
+                footer={`${institute.location.title} - ${institute.phone}`}
+                extraImage={institute.image ?? undefined}
+                render="saving"
+                description={`Quien suscribe este certificado, ${
+                  institute.name
+                }, acepta y valida la participación de ${
+                  person.name
+                }, C.I. ${format(person.ci, 'ci')}, en la empresa ${
+                  company?.name
+                } tras haber realizado actividades laborales con una duración de ${
+                  internship.hours
+                } horas para optar por el título de ${
+                  internship.grade.title
+                }. En mi rol de coordinador de pasantías o de la institución certifico la aprobación de este certificado a los ${internship.updatedAt.getUTCDate()} días del mes de ${
+                  Object.entries(months)[internship.updatedAt.getMonth()]
+                } del año ${internship.updatedAt.getUTCFullYear()}`}
+              >
+                <div className="pt-16 mt-16 mx-auto w-fit flex flex-col gap-2">
+                  <div className="px-8 border-t-2 border-black" />
+                  <p className="mx-auto px-8">Coordinador</p>
+                </div>
+              </WrapperPDF>
+            </PDFProvider>
+          </PrevisualizeButton>
         </div>
       )}
       <TwoColumnsLayout>

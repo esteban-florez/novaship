@@ -28,6 +28,7 @@ import prisma from '@/prisma/client'
 import { PDFProvider } from '@/components/pdf/PDFProvider'
 import WrapperPDF from '@/components/pdf/WrapperPDF'
 import { format } from '@/lib/utils/text'
+import PrevisualizeButton from '@/components/pdf/PrevisualizeButton'
 
 export const metadata: Metadata = {
   title: 'Ver oferta',
@@ -207,27 +208,37 @@ export default async function OfferPage({
         </div>
         {status === 'ACCEPTED' && type === 'PERSON' && (
           <div className="col-span-full">
-            <PDFProvider documentTitle="Comprobante de oferta laboral">
-              <WrapperPDF
-                pageTitle="Comprobante de oferta laboral"
-                header={<>
-                  <p className="font-bold text-lg leading-tight">{company.name}</p>
-                  <p className="font-bold text-lg">J-{company.rif}</p>
-                </>}
-                footer={`${company.location.title} - ${company.phone}`}
-                extraImage={offer.company.image ?? undefined}
-                render="saving"
-                description={`El presente documento valida la solicitud y aceptación de ${user?.name ?? ''
+            <PrevisualizeButton>
+              <PDFProvider documentTitle="Comprobante de oferta laboral">
+                <WrapperPDF
+                  preview
+                  pageTitle="Comprobante de oferta laboral"
+                  header={
+                    <>
+                      <p className="font-bold text-lg leading-tight">
+                        {company.name}
+                      </p>
+                      <p className="font-bold text-lg">J-{company.rif}</p>
+                    </>
+                  }
+                  footer={`${company.location.title} - ${company.phone}`}
+                  extraImage={offer.company.image ?? undefined}
+                  render="saving"
+                  description={`El presente documento valida la solicitud y aceptación de ${
+                    user?.name ?? ''
                   } de cédula de identidad ${format(
                     user?.ci ?? '',
                     'ci'
-                  )} para la oferta laboral de "${offer.title
-                  }", en la cual se da por ACEPTADA la solicitud y da constancia de la aceptación por parte de quien la publica, empresa "${offer.company.name
+                  )} para la oferta laboral de "${
+                    offer.title
+                  }", en la cual se da por ACEPTADA la solicitud y da constancia de la aceptación por parte de quien la publica, empresa "${
+                    offer.company.name
                   }"`}
-                sign
-                signResponsable={offer.company.name}
-              />
-            </PDFProvider>
+                  sign
+                  signResponsable={offer.company.name}
+                />
+              </PDFProvider>
+            </PrevisualizeButton>
           </div>
         )}
         <div className="col-span-7 lg:col-span-5">
@@ -274,10 +285,11 @@ export default async function OfferPage({
               <div className="flex flex-col sm:flex-row justify-between items-center">
                 <h4 className="font-bold mb-2 text-xl">Postulaciones</h4>
                 <Dropdown
-                  label={`Filtro - ${OFFER_ID_FILTERS_TAB[
-                    filter as keyof typeof OFFER_ID_FILTERS_TAB
+                  label={`Filtro - ${
+                    OFFER_ID_FILTERS_TAB[
+                      filter as keyof typeof OFFER_ID_FILTERS_TAB
                     ]
-                    } (${tabCount()})`}
+                  } (${tabCount()})`}
                 >
                   {links.map((link) => {
                     return (
