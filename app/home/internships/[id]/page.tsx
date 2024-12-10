@@ -26,6 +26,8 @@ import { PDFProvider } from '@/components/pdf/PDFProvider'
 import { format } from '@/lib/utils/text'
 import { months } from '@/lib/utils/date'
 import PrevisualizeButton from '@/components/pdf/PrevisualizeButton'
+import QRCode from 'react-qr-code'
+import { url } from '@/lib/utils/url'
 
 export async function generateMetadata({ params: { id } }: PageContext) {
   const internship = await getInternship(id)
@@ -156,13 +158,34 @@ export default async function InternshipDetailsPage({
         subtitle={tooltip.internship_id}
         breadcrumbs={`${person.name} - ${grade.title}`}
       />
-      {stage === 'COMPLETED' && type !== 'COMPANY' && (
+      {true && (
         <div className="pl-4 pt-4">
           <PrevisualizeButton>
             <PDFProvider documentTitle="Certificado de Culminación de Pasantías">
               <WrapperPDF
                 preview
                 pageTitle="Certificado de Culminación de Pasantías"
+                qr={
+                  <div
+                    style={{
+                      height: 'auto',
+                      margin: '0 auto',
+                      maxWidth: 248,
+                      width: '100%',
+                    }}
+                  >
+                    <QRCode
+                      size={256}
+                      style={{
+                        height: 'auto',
+                        maxWidth: '100%',
+                        width: '100%',
+                      }}
+                      value={url(`/home/qrs/internship/${id}`).toString()}
+                      viewBox="0 0 256 256"
+                    />
+                  </div>
+                }
                 header={
                   <>
                     <p className="font-bold text-xl leading-tight">

@@ -19,6 +19,8 @@ import { statuses } from '@/lib/translations'
 import { PDFProvider } from '@/components/pdf/PDFProvider'
 import WrapperPDF from '@/components/pdf/WrapperPDF'
 import PrevisualizeButton from '@/components/pdf/PrevisualizeButton'
+import QRCode from 'react-qr-code'
+import { url } from '@/lib/utils/url'
 
 export const metadata: Metadata = {
   title: 'Equipo de trabajo',
@@ -105,6 +107,27 @@ export default async function TeamPage({ params: { id } }: PageContext) {
                   team.leader.company?.name ?? team.leader.person?.name ?? ''
                 }`}
                 render="saving"
+                qr={
+                  <div
+                    style={{
+                      height: 'auto',
+                      margin: '0 auto',
+                      maxWidth: 248,
+                      width: '100%',
+                    }}
+                  >
+                    <QRCode
+                      size={256}
+                      style={{
+                        height: 'auto',
+                        maxWidth: '100%',
+                        width: '100%',
+                      }}
+                      value={url(`/home/qrs/team/${id}`).toString()}
+                      viewBox="0 0 256 256"
+                    />
+                  </div>
+                }
               />
             </PDFProvider>
           </PrevisualizeButton>

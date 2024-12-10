@@ -18,6 +18,7 @@ type Props = React.PropsWithChildren<{
   sign?: boolean
   signResponsable?: string
   preview?: boolean
+  qr?: React.ReactNode
 }>
 
 export default function WrapperPDF({
@@ -32,6 +33,7 @@ export default function WrapperPDF({
   signResponsable,
   children,
   preview = false,
+  qr,
 }: Props) {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const { targetRef } = useContext(PDFContext)
@@ -133,9 +135,10 @@ export default function WrapperPDF({
               </p>
             </div>
             {isGeneratingPDF && !preview && <div className="mt-[16.5rem]" />}
-            <footer className="bg-primary text-white text-center w-full p-4 pb-6">
+            <footer className="bg-primary text-white text-center w-full p-4 pb-6 mb-8">
               <p>{footer}</p>
             </footer>
+            {qr}
           </>
         )}
       </div>
