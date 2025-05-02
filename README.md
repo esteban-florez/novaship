@@ -13,11 +13,6 @@ Novaship es una aplicación web para la gestión de pasantías, orfetas de traba
 
 ## Instalación local:
 
-- Clonar este repositorio.
-- Renombrar el archivo ".env.example" a ".env".
-- Configurar la conexión a la base de datos en el archivo ".env".
-- Ejecutar los siguientes comandos:
-
 1. Clonar el repositorio:
 
 ```bash
