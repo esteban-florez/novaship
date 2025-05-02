@@ -18,7 +18,7 @@ export default async function custom() {
 
   // First users
   const person = await prisma.person.findUniqueOrThrow({
-    where: { email: 'u1@user.dev' },
+    where: { email: 'usuario@test.com' },
   })
 
   const institute = await prisma.institute.findUniqueOrThrow({

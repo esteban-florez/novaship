@@ -25,7 +25,7 @@ export default async function person() {
     const name = names.random().first()
     const surname = surnames.random().first()
     const fullname = `${name} ${surname}`
-    const email = `u${i}@user.dev`
+    const email = i !== 1 ? `u${i}@user.dev` : 'usuario@test.com'
     const olderBy = olderRange.random()
     const birth = new Date(minimumBirth)
     birth.setFullYear(birth.getFullYear() - olderBy)
@@ -34,7 +34,7 @@ export default async function person() {
       primaryKey: {
         providerId: 'email',
         providerUserId: email,
-        password: 'Password_3',
+        password: i !== 1 ? 'Password_3' : 'test123',
       },
       attributes: { type: 'PERSON' },
     })

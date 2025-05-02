@@ -17,6 +17,7 @@ type Props = React.PropsWithChildren<
   type?: HTMLInputTypeAttribute
   step?: string
   val?: string
+  readonly?: boolean
   isOptional?: boolean
 } & SharedInputProps
 >
@@ -41,6 +42,7 @@ export default function Input({
   max,
   min,
   minlength,
+  readonly = false,
   isOptional = false,
 }: Props) {
   const { errorMessage, hasError, registerProps } = useInput({
@@ -71,6 +73,7 @@ export default function Input({
         maxLength={maxlength}
         max={max}
         min={min}
+        readOnly={readonly}
         minLength={minlength}
         className={clsx(
           'input input-md w-full border-neutral-300 bg-base-100 transition-all focus:outline-none focus:ring-2 focus:ring-primary mb-3',
