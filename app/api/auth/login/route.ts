@@ -14,7 +14,8 @@ export async function POST(request: NextRequest) {
   // DRY 10
   let emailFailed = ''
   try {
-    const redirectToHome = NextResponse.redirect(url('home'))
+    const redirectToHome = NextResponse.redirect(url('/home'))
+    console.log(redirectToHome)
     const authRequest = handleRequest(request)
 
     if (await authRequest.validate() !== null) {
@@ -22,6 +23,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await request.json()
+    console.log(data)
     const { email, password } = schema.parse(data)
     emailFailed = email
 

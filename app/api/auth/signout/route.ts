@@ -9,7 +9,7 @@ export async function DELETE(request: NextRequest) {
   try {
     const authRequest = handleRequest(request)
     const session = await authRequest.validate()
-    const redirectToLogin = NextResponse.redirect(url('auth/login'))
+    const redirectToLogin = NextResponse.redirect(url('/auth/login'))
 
     if (session === null) {
       return redirectToLogin

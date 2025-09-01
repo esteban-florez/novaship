@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     if (type === 'ADMIN') notFound()
 
     const redirect = NextResponse.redirect(
-      url('home/internships/recruitments?alert=recruitment_created')
+      url('/home/internships/recruitments?alert=recruitment_created')
     )
 
     if (type === 'COMPANY') {

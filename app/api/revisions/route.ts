@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    return NextResponse.redirect(url('home/projects'))
+    return NextResponse.redirect(url('/home/projects'))
   } catch (error) {
     return handleError(error, data)
   }

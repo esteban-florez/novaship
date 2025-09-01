@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
   let data
   try {
     // DRY 10
-    const redirectToHome = NextResponse.redirect(url('home'))
+    const redirectToHome = NextResponse.redirect(url('/home'))
     const authRequest = handleRequest(request)
 
     if (await authRequest.validate() !== null) {

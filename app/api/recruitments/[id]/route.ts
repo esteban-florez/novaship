@@ -78,7 +78,7 @@ export async function PATCH(
       await notify('recruitment-rejected', receiver, notificationData)
 
       return NextResponse.redirect(
-        url('home/internships/recruitments?alert=recruitment_rejected')
+        url('/home/internships/recruitments?alert=recruitment_rejected')
       )
     }
 
