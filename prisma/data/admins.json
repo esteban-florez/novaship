@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Jesús de Freitas",
+    "email": "admin1@correo.com",
+    "password": "Password.12",
+    "image": "icon.jpg"
+  },
+  {
+    "name": "Myriam Yaqueno",
+    "email": "admin2@correo.com",
+    "password": "Password.12",
+    "image": "icon.jpg"
+  },
+  {
+    "name": "Esteban Florez",
+    "email": "admin3@correo.com",
+    "password": "Password.12",
+    "image": "icon.jpg"
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "[prisma]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "Prisma.prisma",
+  },
+  "eslint.format.enable": true,
+  "editor.tabSize": 2,
+  "files.eol": "\n",
+  "eslint.run": "onSave",
+}

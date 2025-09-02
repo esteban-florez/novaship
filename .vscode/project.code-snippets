@@ -1,0 +1,46 @@
+{
+  "Write Props type": {
+    "prefix": "dp",
+    "body": "type Props = React.PropsWithChildren<{$0}>",
+    "description": "Define Props type with React.PropsWithChildren"
+  },
+  "Icon classname": {
+    "prefix": "ic",
+    "body": "className=\"h-5 w-5$0\" ",
+    "description": "Icon default className"
+  },
+  "Register prop for fields": {
+    "prefix": "rp",
+    "body": "name=\"$0\" register={register} errors={errors}",
+    "description": "Register prop for fields"
+  },
+  "Route Handler Template": {
+    "prefix": "rh",
+    "body": "import { type NextRequest } from 'next/server'\n\nexport async function $1(request: NextRequest) {\n\t$0\n}\n",
+    "description": "Write Route Handler template"
+  },
+  "React Component": {
+    "prefix": "rc",
+    "body": "export default function $1($2) {\n\t$0\n}\n"
+  },
+  "Props destructuring with Type": {
+    "prefix": "pt",
+    "body": "{ $0 }: Props"
+  },
+  "JSX Return parentheses": {
+    "prefix": "jr",
+    "body": "return (\n\t$0\n)"
+  },
+  "Use Submit hook": {
+    "prefix": "us",
+    "body": "const {\n\tregister, formState: { errors },\n\talert, serverErrors, handleSubmit,\n} = useSubmit({ schema })\n"
+  },
+  "Import schema": {
+    "prefix": "is",
+    "body": "import { schema } from '@/lib/validation/schemas/$0'"
+  },
+  "register and errors": {
+    "prefix": "r",
+    "body": "register={register} errors={errors}",
+  }
+}
