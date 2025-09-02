@@ -1,12 +1,13 @@
 import Link from 'next/link'
+import { url } from '@/lib/utils/url'
 
 export default function LoginLayout({
   children,
 }: { children: React.ReactNode }) {
   return (
     <>
-      <img src="/coso4.webp" alt="Imagen decorativa en esquinas" className="pointer-events-none absolute right-0 top-0 hidden h-full w-2/4 rotate-180 md:block" />
-      <img src="/coso3.webp" alt="Imagen decorativa en esquinas" className="pointer-events-none absolute left-0 top-0 block h-2/5 w-full md:hidden" />
+      <img src={url('/coso4.webp').pathname} alt="Imagen decorativa en esquinas" className="pointer-events-none absolute right-0 top-0 hidden h-full w-2/4 rotate-180 md:block" />
+      <img src={url('/coso3.webp').pathname} alt="Imagen decorativa en esquinas" className="pointer-events-none absolute left-0 top-0 block h-2/5 w-full md:hidden" />
       <div className="z-10 grid h-screen grid-cols-7 place-items-center">
         <section className="order-2 col-span-7 my-6 flex w-full flex-col p-6 md:order-1 md:col-span-5 md:mr-20 md:w-3/5 lg:w-3/6">
           {children}
@@ -21,7 +22,7 @@ export default function LoginLayout({
                 ¡Registrate!
               </Link>
             </div>
-            <img src="/undraw_appreciation.webp" alt="Imagen de trabajo remoto" className="z-50 order-1 grid h-24 w-36 place-items-end md:order-2 md:h-auto md:w-48" />
+            <img src={url('/undraw_appreciation.webp').pathname} alt="Imagen de trabajo remoto" className="z-50 order-1 grid h-24 w-36 place-items-end md:order-2 md:h-auto md:w-48" />
           </div>
           <Link href="/auth/signup" className="btn -mt-4 hidden bg-white md:flex md:text-base">
             ¡Registrate!

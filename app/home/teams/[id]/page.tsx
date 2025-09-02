@@ -211,7 +211,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
                 <div className="flex h-full flex-col items-center justify-center pt-4">
                   <img
                     className="w-48"
-                    src="/empty.webp"
+                    src={url('/empty.webp').pathname}
                     alt="Ilustración, dos personas sostienen una caja vacía."
                   />
                   <p className="mt-4 text-xl font-semibold text-neutral-500">

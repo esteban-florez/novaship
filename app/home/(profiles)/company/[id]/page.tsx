@@ -14,6 +14,7 @@ import AvatarIcon from '@/components/AvatarIcon'
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
+import { url } from '@/lib/utils/url'
 
 export const metadata: Metadata = {
   title: 'Perfil de empresa',
@@ -104,7 +105,7 @@ export default async function ProfileCompanyId({
           <h4 className="text-xl font-bold">RIF</h4>
         </div>
         <img
-          src={certification}
+          src={url(certification).pathname}
           alt="RIF"
         />
       </div>
