@@ -6,6 +6,7 @@ import { getUserProfileDataUpdate } from '@/lib/data-fetching/profile'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
+import { url } from '@/lib/utils/url'
 
 export const metadata: Metadata = {
   title: 'Actualizar perfil',
@@ -82,5 +83,5 @@ export default async function UpdateProfilePage() {
     )
   }
 
-  redirect('/home')
+  redirect(url('/home').pathname)
 }

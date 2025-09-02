@@ -43,7 +43,7 @@ export const PasswordRecovery = ({
               <Column>
                 <Img
                   width={70}
-                  src={url('logo.ico').pathname}
+                  src={url('/logo.ico').pathname}
                 />
               </Column>
               <Column>

@@ -72,7 +72,7 @@ export default function WrapperPDF({
           <section className="w-full bg-primary/10 mb-8 mx-auto grid grid-cols-6 items-center p-4">
             <Image
               alt="Logo de Novaship"
-              src="/novaship/logo.ico"
+              src={url('/logo.ico').pathname}
               className="mx-auto"
               width={200}
               height={200}

@@ -6,6 +6,7 @@ import { auth } from '@/lib/auth/pages'
 import { AuthenticationError } from '@/lib/errors/reference'
 import { sidebarLinks } from './sidebar-links'
 import Footer from '@/components/layout/Footer'
+import { url } from '@/lib/utils/url'
 
 export default async function MainLayout({
   children,
@@ -18,7 +19,7 @@ export default async function MainLayout({
     links = sidebarLinks(user)
   } catch (error) {
     if (error instanceof AuthenticationError) {
-      redirect('/auth/login')
+      redirect(url('/auth/login').pathname)
     }
     throw error
   }

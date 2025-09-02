@@ -9,6 +9,7 @@ import {
 import CompanyProfile from '@/components/profile/CompanyProfile'
 import prisma from '@/prisma/client'
 import InstituteProfile from '@/components/profile/InstituteProfile'
+import { url } from '@/lib/utils/url'
 
 export const metadata: Metadata = {
   title: 'Mi perfil',
@@ -44,5 +45,5 @@ export default async function ProfilePage() {
     return <InstituteProfile institute={institute} />
   }
 
-  redirect('home?alert=redirected')
+  redirect(url('home?alert=redirected').pathname)
 }

@@ -25,7 +25,7 @@ export default async function ProfileCompanyId({
 }: PageContext) {
   const { id: userId } = await auth.user()
   if (userId === id) {
-    redirect('/home/profile')
+    redirect(url('/home/profile').pathname)
   }
 
   const company = await getCompanyProfileData({ id })

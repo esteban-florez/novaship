@@ -44,8 +44,8 @@ export default function Aside({ links }: Props) {
             Novaship
           </p>
           <img
-            src={url('logo.ico').pathname}
-            alt="logo."
+            src={url('/logo.ico').pathname}
+            alt="Logo de Novaship"
             className="w-12"
           />
         </Link>
