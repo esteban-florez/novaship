@@ -1,4 +1,4 @@
-# IMPORTANT
+# To-Do
 
 - /persons/{id}/internships
   - El breadcrumbs redirige a urls que no funcionan.
@@ -8,9 +8,6 @@
 - Filtrar todos los proyectos por search param no funciona.
 - Revisar filtros de ofertas.
 - Searchbar no funciona en "mis pasantias"
-
-# To-Do
-
 - Arreglar paginacion.
 - /logs filter no funciona.
 - Guiar al usuario por la aplicación.
@@ -30,12 +27,3 @@
 # Errors
 
 - Al crear un proyecto se queda cargando infinitamente.
-
-# TAGS
-
-- TODO.
-- DRY.
-- INFO.
-- #FIX.
-- PENDING.
-- TEMPORAL.
