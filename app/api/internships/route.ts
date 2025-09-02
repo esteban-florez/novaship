@@ -8,7 +8,7 @@ import { schema } from '@/lib/validation/schemas/internships/create'
 import prisma from '@/prisma/client'
 import { notFound, redirect } from 'next/navigation'
 import { type NextRequest } from 'next/server'
-import { url } from '@/lib/utils/url'
+import { uri } from '@/lib/utils/url'
 
 export async function POST(request: NextRequest) {
   let data
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
       internshipId,
     })
 
-    return redirect(url(`/home/internships/${internshipId}?alert=internship_created`).pathname)
+    return redirect(uri(`/home/internships/${internshipId}?alert=internship_created`))
   } catch (error) {
     return handleError(error, data)
   }

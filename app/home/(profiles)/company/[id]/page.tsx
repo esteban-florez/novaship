@@ -14,7 +14,7 @@ import AvatarIcon from '@/components/AvatarIcon'
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth/pages'
-import { url } from '@/lib/utils/url'
+import { uri } from '@/lib/utils/url'
 
 export const metadata: Metadata = {
   title: 'Perfil de empresa',
@@ -25,7 +25,7 @@ export default async function ProfileCompanyId({
 }: PageContext) {
   const { id: userId } = await auth.user()
   if (userId === id) {
-    redirect(url('/home/profile').pathname)
+    redirect(uri('/home/profile'))
   }
 
   const company = await getCompanyProfileData({ id })
@@ -105,7 +105,7 @@ export default async function ProfileCompanyId({
           <h4 className="text-xl font-bold">RIF</h4>
         </div>
         <img
-          src={url(certification).pathname}
+          src={uri(certification)}
           alt="RIF"
         />
       </div>

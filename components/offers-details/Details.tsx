@@ -1,6 +1,6 @@
 'use client'
 
-import { url } from '@/lib/utils/url'
+import { uri } from '@/lib/utils/url'
 import {
   BriefcaseIcon,
   HashtagIcon,
@@ -79,17 +79,17 @@ export default function Details({
             <p className="text-sm font-semibold">{expiresAtDate}</p>
           </div>
           <img
-            src={url('/card.webp').pathname}
+            src={uri('/card.webp')}
             alt="Imagen de fondo carrusel"
             className="h-32 w-full select-none rounded-t-lg object-cover md:h-44 lg:h-auto lg:rounded-l-lg"
           />
           <img
-            src={url('/onda-vertical.webp').pathname}
+            src={uri('/onda-vertical.webp')}
             alt="Onda-vertical"
             className="absolute bottom-0 right-0 hidden h-full select-none lg:block"
           />
           <img
-            src={url('/onda-horizontal.webp').pathname}
+            src={uri('/onda-horizontal.webp')}
             alt="Onda-vertical"
             className="absolute bottom-0 block w-full select-none lg:hidden"
           />

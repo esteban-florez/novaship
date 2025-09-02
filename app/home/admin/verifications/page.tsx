@@ -3,7 +3,7 @@ import VerifyButton from '@/components/admin/VerifyButton'
 import Modal from '@/components/modal/Modal'
 import { auth } from '@/lib/auth/pages'
 import { userTypes } from '@/lib/translations'
-import { url } from '@/lib/utils/url'
+import { uri } from '@/lib/utils/url'
 import prisma from '@/prisma/client'
 import { type UserType } from '@prisma/client'
 import { type Metadata } from 'next'
@@ -106,7 +106,7 @@ export default async function VerificationsPage(ctx: SearchParamsProps) {
               </div>
               <img
                 className="mx-auto my-2 h-auto w-full"
-                src={url(selectedUser.certification).pathname}
+                src={uri(selectedUser.certification)}
                 alt="Rif del usuario"
               />
               <Link

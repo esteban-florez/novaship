@@ -1,5 +1,5 @@
 import SignUpForm from '@/components/signup/SignUpForm'
-import { url } from '@/lib/utils/url'
+import { uri } from '@/lib/utils/url'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import Link from 'next/link'
@@ -20,8 +20,8 @@ export default async function SignUpPage() {
 
   return (
     <>
-      <img src={url('/coso3.webp').pathname} alt="Imagen decorativa en esquinas" className="pointer-events-none fixed left-0 top-0 block h-1/4 w-full lg:hidden" />
-      <img src={url('/coso4.webp').pathname} alt="Imagen decorativa en esquinas" className="pointer-events-none fixed left-0 top-0 hidden h-full w-1/3 lg:block" />
+      <img src={uri('/coso3.webp')} alt="Imagen decorativa en esquinas" className="pointer-events-none fixed left-0 top-0 block h-1/4 w-full lg:hidden" />
+      <img src={uri('/coso4.webp')} alt="Imagen decorativa en esquinas" className="pointer-events-none fixed left-0 top-0 hidden h-full w-1/3 lg:block" />
       <section className="flex h-screen flex-col gap-6 lg:flex-row">
         <section className="z-10 flex flex-col justify-center lg:w-1/4 lg:p-4">
           <div className="rounded-b-2xl bg-white/10 p-3 shadow-lg backdrop-blur-sm md:p-6 lg:rounded-2xl">
@@ -34,7 +34,7 @@ export default async function SignUpPage() {
                   Inicia sesión
                 </Link>
               </div>
-              <img src={url('/undraw_summer.webp').pathname} alt="Imagen de trabajo remoto" className="z-50 grid h-auto w-24 place-items-end lg:w-48" />
+              <img src={uri('/undraw_summer.webp')} alt="Imagen de trabajo remoto" className="z-50 grid h-auto w-24 place-items-end lg:w-48" />
             </div>
             <Link href="/auth/login" className="btn -mt-1 hidden bg-white lg:flex lg:text-base">
               Inicia sesión

@@ -20,7 +20,7 @@ import { PDFProvider } from '@/components/pdf/PDFProvider'
 import WrapperPDF from '@/components/pdf/WrapperPDF'
 import PrevisualizeButton from '@/components/pdf/PrevisualizeButton'
 import QRCode from 'react-qr-code'
-import { url } from '@/lib/utils/url'
+import { url, uri } from '@/lib/utils/url'
 
 export const metadata: Metadata = {
   title: 'Equipo de trabajo',
@@ -211,7 +211,7 @@ export default async function TeamPage({ params: { id } }: PageContext) {
                 <div className="flex h-full flex-col items-center justify-center pt-4">
                   <img
                     className="w-48"
-                    src={url('/empty.webp').pathname}
+                    src={uri('/empty.webp')}
                     alt="Ilustración, dos personas sostienen una caja vacía."
                   />
                   <p className="mt-4 text-xl font-semibold text-neutral-500">

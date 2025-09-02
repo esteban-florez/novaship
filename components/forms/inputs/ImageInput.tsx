@@ -4,7 +4,7 @@ import { CloudArrowUpIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import InputError from '../InputError'
-import { url } from '@/lib/utils/url'
+import { uri } from '@/lib/utils/url'
 
 type Props = SharedInputProps & {
   preview?: boolean
@@ -43,7 +43,7 @@ export default function ImageInput({
         >
           {source !== null && (
             <img
-              src={url(source).pathname}
+              src={uri(source)}
               alt="Previsualización de imagen de perfil"
               className={clsx('z-10 h-full w-full object-cover', rounded && 'rounded-full')}
             />

@@ -13,7 +13,7 @@ import AvatarIcon from '../AvatarIcon'
 import Link from 'next/link'
 import { format } from '@/lib/utils/text'
 import { format as dateFormat } from '@/lib/utils/date'
-import { url } from '@/lib/utils/url'
+import { uri } from '@/lib/utils/url'
 
 interface Props {
   company: Company & {
@@ -106,7 +106,7 @@ export default function CompanyProfile({ company }: Props) {
           <h4 className="text-xl font-bold">RIF</h4>
         </div>
         <img
-          src={url(certification).pathname}
+          src={uri(certification)}
           alt="RIF"
         />
       </div>

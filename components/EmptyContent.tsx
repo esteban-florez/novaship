@@ -1,4 +1,4 @@
-import { url } from '@/lib/utils/url'
+import { uri } from '@/lib/utils/url'
 import clsx from 'clsx'
 import Link from 'next/link'
 
@@ -28,7 +28,7 @@ export default function EmptyContent({
       )}
     >
       <img
-        src={url('/empty.webp').pathname}
+        src={uri('/empty.webp')}
         alt="Imagen representando contenido vacío."
         className="mx-auto mt-5 w-40"
       />

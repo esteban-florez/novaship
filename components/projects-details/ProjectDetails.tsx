@@ -5,7 +5,7 @@ import DeleteModal from '../projects/DeleteModal'
 import Link from 'next/link'
 import useSubmit from '@/lib/hooks/useSubmit'
 import { imageValidator } from '@/lib/utils/image'
-import { url } from '@/lib/utils/url'
+import { uri } from '@/lib/utils/url'
 
 interface Props {
   id: string
@@ -56,17 +56,17 @@ export default function ProjectDetails({
       <div className="card sm:rounded-xl bg-white shadow-lg lg:flex-row">
         <div className="relative flex lg:basis-2/6">
           <img
-            src={url(image !== null ? validImage : '/card.webp').pathname}
+            src={uri(image !== null ? validImage : '/card.webp')}
             alt="Imagen de fondo carrusel"
             className="w-full sm:rounded-t-lg max-h-52 lg:rounded-l-lg"
           />
           <img
-            src={url('/onda-vertical.webp').pathname}
+            src={uri('/onda-vertical.webp')}
             alt="Onda-vertical"
             className="absolute bottom-0 right-0 hidden h-full lg:block"
           />
           <img
-            src={url('/onda-horizontal.webp').pathname}
+            src={uri('/onda-horizontal.webp')}
             alt="Onda-vertical"
             className="absolute bottom-0 block w-full lg:hidden"
           />

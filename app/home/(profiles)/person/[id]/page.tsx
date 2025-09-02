@@ -25,7 +25,7 @@ import { type Metadata } from 'next'
 import { auth } from '@/lib/auth/pages'
 import { redirect } from 'next/navigation'
 import Schedule from '@/components/profile/Schedule'
-import { url } from '@/lib/utils/url'
+import { uri } from '@/lib/utils/url'
 
 export const metadata: Metadata = {
   title: 'Perfil de usuario',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 export default async function ProfileUserId({ params: { id } }: PageContext) {
   const { id: userId } = await auth.user()
   if (userId === id) {
-    redirect(url('/home/profile').pathname)
+    redirect(uri('/home/profile'))
   }
 
   const user = await getUserProfileData({ id })

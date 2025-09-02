@@ -12,7 +12,7 @@ import {
   Button,
 } from '@react-email/components'
 import * as React from 'react'
-import { url } from '../utils/url'
+import { uri } from '../utils/url'
 
 interface Props {
   username: string
@@ -43,7 +43,7 @@ export const PasswordRecovery = ({
               <Column>
                 <Img
                   width={70}
-                  src={url('/logo.ico').pathname}
+                  src={uri('/logo.ico')}
                 />
               </Column>
               <Column>

@@ -8,7 +8,7 @@ import { UserType } from '@prisma/client'
 import { notFound, redirect } from 'next/navigation'
 import { type NextRequest } from 'next/server'
 import { z } from 'zod'
-import { url } from '@/lib/utils/url'
+import { uri } from '@/lib/utils/url'
 
 const schema = z.object({
   type: z.enum([UserType.INSTITUTE, UserType.COMPANY]),
@@ -44,7 +44,7 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
       authUserId: user.authUserId,
     })
 
-    return redirect(url('/home/admin/verifications?alert=verified_user').pathname)
+    return redirect(uri('/home/admin/verifications?alert=verified_user'))
   } catch (error) {
     return handleError(error)
   }
