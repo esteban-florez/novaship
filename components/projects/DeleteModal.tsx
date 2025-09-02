@@ -1,4 +1,5 @@
 'use client'
+import { url } from '@/lib/utils/url'
 
 import { TrashIcon } from '@heroicons/react/24/outline'
 import Modal from '../modal/Modal'
@@ -41,7 +42,7 @@ export default function DeleteModal({
           ¿Estás seguro de que deseas continuar?
         </h4>
         <img
-          src="/delete.webp"
+          src={url('/delete.webp').pathname}
           alt="Imagen de un registro siendo borrado"
           className="mx-auto w-60 p-4"
         />

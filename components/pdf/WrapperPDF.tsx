@@ -6,6 +6,7 @@ import { ArrowPathIcon } from '@heroicons/react/24/outline'
 import { PDFContext } from './PDFProvider'
 import DownloadButton from './DownloadButton'
 import clsx from 'clsx'
+import { url } from '@/lib/utils/url'
 
 type Props = React.PropsWithChildren<{
   pageTitle: string
@@ -71,7 +72,7 @@ export default function WrapperPDF({
           <section className="w-full bg-primary/10 mb-8 mx-auto grid grid-cols-6 items-center p-4">
             <Image
               alt="Logo de Novaship"
-              src="/logo.ico"
+              src="/novaship/logo.ico"
               className="mx-auto"
               width={200}
               height={200}
@@ -88,7 +89,7 @@ export default function WrapperPDF({
             {extraImage != null && (
               <Image
                 alt="Logo de institución"
-                src={extraImage}
+                src={url(extraImage).pathname}
                 className="mx-auto"
                 width={200}
                 height={200}

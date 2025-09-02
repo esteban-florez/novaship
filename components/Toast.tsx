@@ -58,7 +58,7 @@ export default function Toast({ type, message, onClose }: Props) {
           {message}
         </p>
         {type !== 'loading' && (
-          <button onClick={onClose}>
+          <button type="button" onClick={onClose}>
             <XMarkIcon className="h-6 w-6" />
           </button>
         )}

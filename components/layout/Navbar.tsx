@@ -1,18 +1,10 @@
 import ProfileDropdown from '@/components/layout/ProfileDropdown'
-import { format } from '@/lib/utils/date'
 import Link from 'next/link'
 import NotificationDropdown from './NotificationDropdown'
 import { Bars3Icon } from '@heroicons/react/24/outline'
 
 // TODO -> Server Sent Events
 export default function Navbar() {
-  const date = format({
-    date: new Date(),
-    config: {
-      weekday: true,
-    },
-  })
-
   return (
     <nav className="max-h-4 navbar relative border-b bg-white shadow-md">
       <div className="w-full text-sm navbar-start sm:text-base flex items-center">
@@ -30,7 +22,6 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="w-full text-sm navbar-end sm:text-base flex items-center">
-        <p className="hidden sm:inline sm:mr-2">{date}</p>
         <NotificationDropdown />
         <ProfileDropdown />
       </div>

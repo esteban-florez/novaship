@@ -5,6 +5,7 @@ import AsideLink from './AsideLink'
 import { Bars3Icon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { useState } from 'react'
+import { url } from '@/lib/utils/url'
 
 type Props = React.PropsWithChildren<{
   links: SidebarLinkWithSubmenu[]
@@ -43,7 +44,7 @@ export default function Aside({ links }: Props) {
             Novaship
           </p>
           <img
-            src="/logo.ico"
+            src={url('logo.ico').pathname}
             alt="logo."
             className="w-12"
           />

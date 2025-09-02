@@ -10,7 +10,8 @@ interface Props {
 
 // TODO -> mostrar
 export default function Breadcrumbs({ breadcrumbs = '' }: Props) {
-  const pathname = usePathname()
+  const base = process.env.NEXT_PUBLIC_BASE_PATH
+  const pathname = usePathname().replace(base ?? '', '')
   const segments = pathname.split('/').filter((segment) => segment !== '')
   const currentSegment = segments.at(-1)
 

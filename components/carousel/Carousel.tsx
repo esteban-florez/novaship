@@ -5,6 +5,7 @@ import { type OffersFull } from '@/lib/types'
 import Btn from './Btn'
 import Content from './Content'
 import Dots from './Dots'
+import { url } from '@/lib/utils/url'
 
 interface Props {
   items:
@@ -34,14 +35,14 @@ export default function Carousel({ items }: Props) {
           {'link' in item
             ? (
               <img
-                src={item.image}
+                src={url(item.image).pathname}
                 alt="Imagen de fondo carrusel"
                 className="absolute right-0 top-0 h-full w-full object-cover"
               />
               )
             : (
               <img
-                src="/card.webp"
+                src={url('/card.webp').pathname}
                 alt="Imagen de fondo carrusel"
                 className="absolute right-0 top-0 h-full w-full object-cover"
               />

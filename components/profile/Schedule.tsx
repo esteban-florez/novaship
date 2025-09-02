@@ -6,6 +6,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { useSelection } from '@/lib/hooks/useSelection'
 import useSubmit from '@/lib/hooks/useSubmit'
+import { url } from '@/lib/utils/url'
 
 const hours = [
   '12:00 AM', '01:00 AM', '02:00 AM', '03:00 AM', '04:00 AM', '05:00 AM', '06:00 AM',
@@ -34,7 +35,7 @@ export default function Schedule({ schedule: data, interactive = false }: Props)
   }
 
   async function updateFromServer() {
-    await fetch('/api/schedule')
+    await fetch(url('/api/schedule'))
       .then(async response => await response.json())
       .then(data => { setSchedule(data.schedule as boolean[][]) })
   }

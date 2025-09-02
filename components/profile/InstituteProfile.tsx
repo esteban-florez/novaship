@@ -13,6 +13,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { format as dateFormat } from '@/lib/utils/date'
 import { format as textFormat } from '@/lib/utils/text'
+import { url } from '@/lib/utils/url'
 
 interface Props {
   institute: Institute & {
@@ -105,7 +106,7 @@ export default function InstituteProfile({ institute }: Props) {
           <h4 className="text-xl font-bold">RIF</h4>
         </div>
         <img
-          src={certification}
+          src={url(certification).pathname}
           alt="RIF"
         />
       </div>

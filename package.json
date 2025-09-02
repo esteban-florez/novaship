@@ -1,9 +1,9 @@
 {
-  "name": "app-pasantias",
+  "name": "novaship",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix",
@@ -75,10 +75,5 @@
   },
   "ts-standard": {
     "project": "./tsconfig.json"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --cache --fix"
-    ]
   }
 }
