@@ -9,7 +9,7 @@ interface Adcred {
 }
 
 export default async function admins() {
-  if (process.env.ADCRED === undefined) {
+  if (process.env.ADCRED === undefined || process.env.ADCRED === '') {
     return
   }
 

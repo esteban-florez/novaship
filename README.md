@@ -22,7 +22,7 @@ git clone git@github.com:esteban-florez/novaship
 2. Configurar la base de datos en las variables de entorno (.env):
 
 ```
-BASE_URL='http://localhost:3000'
+NEXT_PUBLIC_BASE_URL='http://localhost:3000'
 POSTGRES_URL_NON_POOLING='postgresql://postgres:password@localhost:5432/novaship'
 POSTGRES_PRISMA_URL='postgresql://postgres:password@localhost:5432/novaship'
 STORAGE_METHOD='filesystem'
