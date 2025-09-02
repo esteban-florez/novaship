@@ -45,8 +45,6 @@ export default function ProjectDetails({
     },
   })
 
-  console.log(image)
-
   const validImage = imageValidator(image)
 
   return (
@@ -56,7 +54,7 @@ export default function ProjectDetails({
       <div className="card sm:rounded-xl bg-white shadow-lg lg:flex-row">
         <div className="relative flex lg:basis-2/6">
           <img
-            src={uri(image !== null ? validImage : '/card.webp')}
+            src={uri(validImage ?? '/card.webp')}
             alt="Imagen de fondo carrusel"
             className="w-full sm:rounded-t-lg max-h-52 lg:rounded-l-lg"
           />
