@@ -8,6 +8,7 @@ import { type FieldValues, useForm, type DefaultValues } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { any, type ZodType } from 'zod'
 import ServerErrors from '@/components/forms/ServerErrors'
+import { url } from '../utils/url'
 
 interface UseSubmitOptions<Fields> {
   schema?: ZodType
@@ -59,7 +60,13 @@ export default function useSubmit<Fields extends FieldValues>(options?: UseSubmi
       }
 
       const form = event?.target as HTMLFormElement
-      const response = await fetch(form.action, {
+      const action = form.getAttribute('action')
+
+      if (action === null) {
+        throw new Error('El formulario no tiene action')
+      }
+
+      const response = await fetch(url(action).href, {
         body: requestBody,
         method: method ?? form.method,
       })

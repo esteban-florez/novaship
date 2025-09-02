@@ -12,6 +12,7 @@ import {
   Button,
 } from '@react-email/components'
 import * as React from 'react'
+import { url } from '../utils/url'
 
 interface Props {
   username: string
@@ -19,7 +20,7 @@ interface Props {
   resetId: string
 }
 
-const baseUrl = process.env.BASE_URL ?? 'http://localhost:3000'
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'
 
 export const PasswordRecovery = ({
   username = 'Esteban Florez',
@@ -42,7 +43,7 @@ export const PasswordRecovery = ({
               <Column>
                 <Img
                   width={70}
-                  src={`${baseUrl}/logo.ico`}
+                  src={url('logo.ico').pathname}
                 />
               </Column>
               <Column>
