@@ -1,13 +1,14 @@
 'use client'
 
 import Modal from '@/components/modal/Modal'
+import { url } from '@/lib/utils/url'
 import { useState } from 'react'
 
 export default function LoginInfoModal() {
   const [open, setOpen] = useState(true)
 
   function close() {
-    void fetch('/api/login-info', {
+    void fetch(url('/api/login-info'), {
       method: 'POST',
     })
 

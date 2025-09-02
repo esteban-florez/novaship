@@ -5,6 +5,7 @@ import { type ProjectMembership } from '@/lib/types'
 import Link from 'next/link'
 import { FireIcon } from '@heroicons/react/24/outline'
 import { imageValidator } from '@/lib/utils/image'
+import { url } from '@/lib/utils/url'
 
 interface Props {
   title: string
@@ -65,12 +66,12 @@ export default function Card({
       {image != null && (
         <div className="relative">
           <img
-            src={validImage}
+            src={url(validImage ?? '/card.webp').pathname}
             alt="Imagen de fondo carrusel"
             className="h-28 w-full rounded-t-xl object-cover"
           />
           <img
-            src="/onda-horizontal.webp"
+            src={url('/onda-horizontal.webp').pathname}
             alt="Onda-horizontal"
             className="absolute bottom-0 w-full"
           />

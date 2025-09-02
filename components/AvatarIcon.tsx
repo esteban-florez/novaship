@@ -1,3 +1,4 @@
+import { url } from '@/lib/utils/url'
 import clsx from 'clsx'
 
 type Props = React.PropsWithChildren<{
@@ -16,7 +17,7 @@ export default function AvatarIcon({
   return (
     <div className={clsx('placeholder avatar', status !== null && 'relative')}>
       <div className={clsx('h-10 w-10 rounded-full', className)}>
-        <img src={image ?? '/icon.jpg'} alt="Foto de perfil" />
+        <img src={url(image ?? '/icon.jpg').pathname} alt="Foto de perfil" />
       </div>
       {showStatus && (
         <span className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-neutral">

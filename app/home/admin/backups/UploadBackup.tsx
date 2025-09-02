@@ -1,5 +1,6 @@
 'use client'
 import useAlert from '@/lib/hooks/useAlert'
+import { url } from '@/lib/utils/url'
 import { useRouter } from 'next/navigation'
 import React, { useRef } from 'react'
 
@@ -19,7 +20,7 @@ export default function UploadBackup() {
 
     if (file == null) return
 
-    const response = await fetch('/api/backups', {
+    const response = await fetch(url('/api/backups'), {
       method: 'POST',
       body: file,
     })

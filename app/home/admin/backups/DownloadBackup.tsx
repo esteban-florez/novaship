@@ -1,19 +1,21 @@
 'use client'
 
+import { url } from '@/lib/utils/url'
+
 export default function DownloadBackup() {
   async function download() {
-    const response = await fetch('/api/backups')
+    const response = await fetch(url('/api/backups'))
     const content = await response.text()
     const blob = new Blob([content])
 
-    const url = URL.createObjectURL(blob)
+    const blobUrl = URL.createObjectURL(blob)
     const a = document.createElement('a')
 
-    a.href = url
+    a.href = blobUrl
     a.download = 'Respaldo de Base de Datos - Novaship.sql'
     a.click()
 
-    URL.revokeObjectURL(url)
+    URL.revokeObjectURL(blobUrl)
   }
 
   return (
