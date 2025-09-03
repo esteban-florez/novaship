@@ -25,7 +25,7 @@ import { type Metadata } from 'next'
 import { auth } from '@/lib/auth/pages'
 import { redirect } from 'next/navigation'
 import Schedule from '@/components/profile/Schedule'
-import { uri } from '@/lib/utils/url'
+import { href } from '@/lib/utils/url'
 
 export const metadata: Metadata = {
   title: 'Perfil de usuario',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 export default async function ProfileUserId({ params: { id } }: PageContext) {
   const { id: userId } = await auth.user()
   if (userId === id) {
-    redirect(uri('/home/profile'))
+    redirect(href('/home/profile'))
   }
 
   const user = await getUserProfileData({ id })
@@ -194,7 +194,7 @@ export default async function ProfileUserId({ params: { id } }: PageContext) {
                     title="No se ha encontrado trabajos aplicados"
                     button={{
                       text: 'Buscar trabajo',
-                      url: '/home/offers',
+                      url: href('/home/offers'),
                     }}
                   >
                     No hemos encontrado aplicaciones suyas a ofertas laborales
@@ -237,7 +237,7 @@ export default async function ProfileUserId({ params: { id } }: PageContext) {
                     title="No se ha encontrado participación en proyectos"
                     button={{
                       text: 'Forme parte de uno',
-                      url: '/home/projects',
+                      url: href('/home/projects'),
                     }}
                   >
                     Actualmente no forma parte o dirige algún proyecto

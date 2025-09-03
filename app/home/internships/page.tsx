@@ -1,6 +1,6 @@
 import { auth } from '@/lib/auth/pages'
 import { notFound, redirect } from 'next/navigation'
-import { uri } from '@/lib/utils/url'
+import { href } from '@/lib/utils/url'
 
 const routes = {
   PERSON: 'persons',
@@ -13,5 +13,5 @@ export default async function Page() {
 
   if (type === 'ADMIN') notFound()
 
-  redirect(uri(`/home/${routes[type]}/${id}/internships`))
+  redirect(href(`/home/${routes[type]}/${id}/internships`))
 }

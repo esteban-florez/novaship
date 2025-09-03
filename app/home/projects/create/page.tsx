@@ -4,7 +4,7 @@ import { getMyTeams } from '@/lib/data-fetching/teams'
 import prisma from '@/prisma/client'
 import { type Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
-import { uri } from '@/lib/utils/url'
+import { href } from '@/lib/utils/url'
 
 export const metadata: Metadata = {
   title: 'Registrar proyecto',
@@ -22,7 +22,7 @@ export default async function CreateProjectPage() {
   const teams = await getMyTeams({ userId })
 
   if (type === 'COMPANY' && teams.length === 0) {
-    redirect(uri('/home/projects?alert=project_team_required'))
+    redirect(href('/home/projects?alert=project_team_required'))
   }
 
   return (
