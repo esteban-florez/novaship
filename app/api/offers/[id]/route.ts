@@ -7,8 +7,6 @@ import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import collect from '@/lib/utils/collection'
 import { getExpirationDate } from '@/lib/validation/expiration-dates'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -67,14 +65,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
-    const { offer_update: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
-
     return NextResponse.redirect(url(`/home/offers/${id}?alert=offer_updated`))
   } catch (error) {
     return handleError(error, data)
@@ -102,14 +92,6 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
 
     await prisma.offer.deleteMany({
       where: { id },
-    })
-
-    const { offer_delete: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
     })
 
     return NextResponse.redirect(url('/home/offers?alert=offer_deleted'))

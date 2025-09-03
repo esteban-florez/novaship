@@ -6,14 +6,12 @@ import prisma from '@/prisma/client'
 import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 // TODO -> cambiar el schema para aceptar los 3 usuarios
 export async function PUT(request: NextRequest) {
   let data
   try {
-    const { id, type, authUserId } = await auth.user(request)
+    const { id, type } = await auth.user(request)
     data = await request.json()
 
     if (type === 'PERSON') {
@@ -68,14 +66,6 @@ export async function PUT(request: NextRequest) {
         },
       })
     }
-
-    const { profile: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
 
     return NextResponse.redirect(url('/home/profile?alert=profile_updated'))
   } catch (error) {

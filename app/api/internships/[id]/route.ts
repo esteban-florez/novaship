@@ -1,7 +1,5 @@
 import { auth } from '@/lib/auth/api'
-import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
-import { logs } from '@/lib/log'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/internships/create'
 import prisma from '@/prisma/client'
@@ -11,7 +9,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
-    const { id: userId, authUserId } = await auth.user(request)
+    const { id: userId } = await auth.user(request)
 
     const query = { where: { id } }
     const internship = await prisma.internship.findUnique(query)
@@ -37,14 +35,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
-    const { internship_update: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
-
     return NextResponse.redirect(
       url(`home/internships/${id}?alert=internship_updated`)
     )
@@ -55,7 +45,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
 export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
-    const { id: userId, authUserId } = await auth.user(request)
+    const { id: userId } = await auth.user(request)
 
     const query = { where: { id } }
     const internship = await prisma.internship.findUnique(query)
@@ -67,14 +57,6 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
     }
 
     await prisma.internship.delete(query)
-
-    const { internship_delete: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
 
     return NextResponse.redirect(
       url(`home/institutes/${userId}/internships?alert=internship_deleted`)

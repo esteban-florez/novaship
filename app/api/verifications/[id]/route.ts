@@ -1,7 +1,5 @@
 import { auth } from '@/lib/auth/api'
-import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
-import { logs } from '@/lib/log'
 import { defaults } from '@/lib/validation/schemas/defaults'
 import prisma from '@/prisma/client'
 import { UserType } from '@prisma/client'
@@ -35,14 +33,6 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
     } else {
       await prisma.institute.update(query)
     }
-
-    const { verification_company: { message, model, status }, verification_institute: { message: instituteMessage } } = logs
-    await logEvent({
-      action: parsed.type === 'COMPANY' ? message : instituteMessage,
-      model,
-      status,
-      authUserId: user.authUserId,
-    })
 
     return redirect(uri('/home/admin/verifications?alert=verified_user'))
   } catch (error) {

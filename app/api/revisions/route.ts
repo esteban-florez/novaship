@@ -7,15 +7,13 @@ import { url } from '@/lib/utils/url'
 import { getMyTask } from '@/lib/data-fetching/task'
 import { notFound } from 'next/navigation'
 import { getMySubtask } from '@/lib/data-fetching/subtask'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id, authUserId } = await auth.user(request)
+    const { id } = await auth.user(request)
 
     const { filter, content, subtaskId, taskId } = parsed
 
@@ -30,14 +28,6 @@ export async function POST(request: NextRequest) {
           content,
           taskId,
         },
-      })
-
-      const { revision_create: { message, model, status } } = logs
-      await logEvent({
-        action: message,
-        model,
-        status,
-        authUserId,
       })
 
       return NextResponse.redirect(
@@ -58,14 +48,6 @@ export async function POST(request: NextRequest) {
           content,
           subtaskId,
         },
-      })
-
-      const { revision_create: { message, model, status } } = logs
-      await logEvent({
-        action: message,
-        model,
-        status,
-        authUserId,
       })
 
       return NextResponse.redirect(

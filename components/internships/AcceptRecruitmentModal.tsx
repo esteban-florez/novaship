@@ -20,8 +20,6 @@ export default function AcceptRecruitmentModal({ recruitmentId }: Props) {
     handleSubmit,
   } = useSubmit({ method: 'PATCH', schema, append: { status: 'ACCEPTED' } })
 
-  console.log(errors)
-
   return (
     <Modal
       className="btn btn-primary btn-sm"

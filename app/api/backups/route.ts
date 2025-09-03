@@ -5,12 +5,10 @@ import { readFile, rm, writeFile } from 'node:fs/promises'
 import { notFound } from 'next/navigation'
 import { NextResponse, type NextRequest } from 'next/server'
 import { TABLES } from './tables'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function GET(request: NextRequest) {
   try {
-    const { authUserId, type } = await auth.user(request)
+    const { type } = await auth.user(request)
 
     if (type !== 'ADMIN') {
       notFound()
@@ -22,14 +20,6 @@ export async function GET(request: NextRequest) {
 
     await rm('public/backup.sql')
 
-    const { backup_db: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
-
     return new Response(content)
   } catch (error) {
     handleError(error)
@@ -38,7 +28,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { authUserId, type } = await auth.user(request)
+    const { type } = await auth.user(request)
 
     if (type !== 'ADMIN') {
       notFound()
@@ -55,14 +45,6 @@ export async function POST(request: NextRequest) {
     execSync('psql --dbname=novaship --command="\\i public/received.sql"')
 
     await rm('public/received.sql')
-
-    const { restore_db: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
 
     return new Response()
   } catch (error) {

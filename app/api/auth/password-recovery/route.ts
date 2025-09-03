@@ -8,8 +8,6 @@ import { notFound } from 'next/navigation'
 import lucia from '@/lib/auth/lucia'
 import { getResetEmail } from '@/lib/utils/tables'
 import prisma from '@/prisma/client'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -52,14 +50,6 @@ export async function POST(request: NextRequest) {
       data: {
         failed: 0,
       },
-    })
-
-    const { password_recovery: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
     })
 
     return NextResponse.redirect(url('/auth/login?modal=changedpass'))

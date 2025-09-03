@@ -11,14 +11,12 @@ export default async function PasswordRecoveryPage({
   const resetId = param(searchParams.resetId)
 
   if (resetId === undefined) {
-    console.log('acaaaa')
     notFound()
   }
 
   const reset = await getReset(resetId)
 
   if (reset === null || reset.usedAt !== null) {
-    console.log('o acaaa')
     notFound()
   }
 

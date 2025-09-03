@@ -1,4 +1,4 @@
-import { auth, handleRequest } from '@/lib/auth/api'
+import { handleRequest } from '@/lib/auth/api'
 import lucia from '@/lib/auth/lucia'
 import { handleError } from '@/lib/errors/api'
 import { url } from '@/lib/utils/url'
@@ -6,8 +6,6 @@ import { schema } from '@/lib/validation/schemas/forgot'
 import { type NextRequest, NextResponse } from 'next/server'
 import createPasswordReset from '@/lib/auth/createPasswordReset'
 import sendRecoveryEmail from '@/lib/emails/sendRecoveryEmail'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -29,16 +27,7 @@ export async function POST(request: NextRequest) {
 
     await sendRecoveryEmail(email, resetId, username)
 
-    const { authUserId } = await auth.user(request)
-    const { forget_password: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
-
-    return NextResponse.redirect(url('/auth/login?modal=forgot'))
+    return NextResponse.redirect(url('/auth/in?modal=forgot'))
   } catch (error) {
     const { message } = error as { message: string }
 

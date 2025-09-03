@@ -26,8 +26,6 @@ export default function RecruitButton({ internshipId, vacants }: Props) {
     register, formState: { errors },
   } = useSubmit({ schema, append })
 
-  console.log(errors)
-
   const options = vacants.map(vacant => ({ id: vacant.id, title: vacant.job.title }))
 
   return (

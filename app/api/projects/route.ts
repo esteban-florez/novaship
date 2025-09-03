@@ -7,8 +7,6 @@ import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { randomCode } from '@/lib/utils/code'
 import { storeFile } from '@/lib/storage/storeFile'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -17,7 +15,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData()
     data = Object.fromEntries(formData.entries())
     const parsed = schema.parse(data)
-    const { id, type, authUserId } = await auth.user(request)
+    const { id, type } = await auth.user(request)
 
     if (type === 'INSTITUTE') {
       notFound()
@@ -76,14 +74,6 @@ export async function POST(request: NextRequest) {
         },
       }))
     }
-
-    const { project_create: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
 
     if (projectId != null) {
       return NextResponse.redirect(url(`home/projects/${projectId}?alert=project_created`))

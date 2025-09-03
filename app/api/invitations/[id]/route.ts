@@ -6,8 +6,6 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { notify } from '@/lib/notifications/notify'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function PUT(
   request: NextRequest,
@@ -17,7 +15,7 @@ export async function PUT(
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { name, type, authUserId } = await auth.user(request)
+    const { name, type } = await auth.user(request)
 
     if (type !== 'PERSON' && type !== 'COMPANY') {
       notFound()
@@ -108,16 +106,6 @@ export async function PUT(
         },
       })
     }
-
-    const {
-      invitation_update: { message, model, status },
-    } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
 
     return NextResponse.redirect(url(redirect))
   } catch (error) {

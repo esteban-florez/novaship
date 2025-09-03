@@ -7,15 +7,14 @@ import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { getMyTeam } from '@/lib/data-fetching/teams'
 import { notify } from '@/lib/notifications/notify'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
+import { type Interested } from '@prisma/client'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id: userId, name, authUserId } = await auth.user(request)
+    const { id: userId, name } = await auth.user(request)
 
     const team = await getMyTeam({ userId })
     if (team == null) {
@@ -43,7 +42,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
         return {
           personId: invitation,
           teamId: team.id,
-          interested: 'COMPANY',
+          interested: 'COMPANY' as Interested,
         }
       }),
     })
@@ -61,14 +60,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
       },
     })
 
-    const { team_update: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
-
     for (const authUser of authUsers) {
       await notify('invitation-sent', authUser.id, {
         user: name,
@@ -84,7 +75,7 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
 
 export async function DELETE(request: NextRequest, { params: { id } }: PageContext) {
   try {
-    const { id: userId, authUserId } = await auth.user(request)
+    const { id: userId } = await auth.user(request)
     const team = await getMyTeam({ userId })
 
     if (team == null) {
@@ -93,14 +84,6 @@ export async function DELETE(request: NextRequest, { params: { id } }: PageConte
 
     await prisma.team.delete({
       where: { id },
-    })
-
-    const { team_delete: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
     })
 
     return NextResponse.redirect(url('/home/teams'))

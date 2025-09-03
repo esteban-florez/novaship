@@ -7,14 +7,12 @@ import { url } from '@/lib/utils/url'
 import { NextResponse, type NextRequest } from 'next/server'
 import { notify } from '@/lib/notifications/notify'
 import { type Company, type Grade, type Vacant } from '@prisma/client'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function PATCH(
   request: NextRequest, { params: { id } }: PageContext
 ) {
   try {
-    const { type, authUserId } = await auth.user(request)
+    const { type } = await auth.user(request)
 
     const data = await request.json()
     const { status } = statusSchema.parse(data)
@@ -52,14 +50,6 @@ export async function PATCH(
           },
         },
       },
-    })
-
-    const { recruitment_update: { message, model, status: logStatus } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status: logStatus,
-      authUserId,
     })
 
     const { person, grade } = internship

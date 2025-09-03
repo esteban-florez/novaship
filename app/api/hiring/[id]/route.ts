@@ -9,8 +9,6 @@ import messages from '@/lib/validation/messages'
 import { Status } from '@prisma/client'
 import { defaults } from '@/lib/validation/schemas/defaults'
 import { notify } from '@/lib/notifications/notify'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function PUT(request: NextRequest, { params: { id } }: PageContext) {
   let data
@@ -65,14 +63,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
         user: name,
         title: hiring.offer.title,
         offerId: hiring.offer.id,
-      })
-
-      const { hiring_update: { message, model, status } } = logs
-      await logEvent({
-        action: message,
-        model,
-        status,
-        authUserId,
       })
 
       return NextResponse.redirect(url(`/home/offers/${parsed.offerId}?alert=${parsed.status === 'ACCEPTED' ? 'hiring_success' : 'hiring_rejected'}`))
@@ -130,14 +120,6 @@ export async function PUT(request: NextRequest, { params: { id } }: PageContext)
             id: hiring.personId,
           },
         },
-      })
-
-      const { hiring_update: { message, model, status } } = logs
-      await logEvent({
-        action: message,
-        model,
-        status,
-        authUserId,
       })
 
       await notify(parsed.status === 'ACCEPTED' ? 'hiring-accepted' : 'hiring-declined', authUser.id, {

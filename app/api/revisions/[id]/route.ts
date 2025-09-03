@@ -5,8 +5,6 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { auth } from '@/lib/auth/api'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function PUT(
   request: NextRequest,
@@ -53,14 +51,6 @@ export async function PUT(
         ...parsed,
       },
       where: { id },
-    })
-
-    const { revision_update: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
     })
 
     if (revision.task != null) {
@@ -127,14 +117,6 @@ export async function DELETE(
 
     await prisma.revision.delete({
       where: { id },
-    })
-
-    const { revision_delete: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
     })
 
     const projectId = revision.task?.projectId ?? revision?.subtask?.task?.projectId as string

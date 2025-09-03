@@ -6,15 +6,13 @@ import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { getMyProject } from '@/lib/data-fetching/project'
 import prisma from '@/prisma/client'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id: userId, authUserId } = await auth.user(request)
+    const { id: userId } = await auth.user(request)
 
     if (parsed.projectId == null) {
       notFound()
@@ -44,16 +42,6 @@ export async function POST(request: NextRequest) {
         },
       })
 
-      const {
-        task_create: { message, model, status },
-      } = logs
-      await logEvent({
-        action: message,
-        model,
-        status,
-        authUserId,
-      })
-
       return NextResponse.redirect(
         url(
           `/home/projects/${parsed.projectId}/tasks?id=${task.id}&alert=task_created`
@@ -68,16 +56,6 @@ export async function POST(request: NextRequest) {
         personId: userId,
         status: 'PENDING',
       },
-    })
-
-    const {
-      task_create: { message, model, status },
-    } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
     })
 
     return NextResponse.redirect(

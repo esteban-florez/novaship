@@ -1,9 +1,7 @@
 import { auth } from '@/lib/auth/api'
 import { canCreateRecruitment } from '@/lib/auth/permissions'
 import { getInternship } from '@/lib/data-fetching/internships'
-import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
-import { logs } from '@/lib/log'
 import { notify } from '@/lib/notifications/notify'
 import { url } from '@/lib/utils/url'
 import { schema as byCompany } from '@/lib/validation/schemas/recruitments/company'
@@ -65,14 +63,6 @@ export async function POST(request: NextRequest) {
       const { internship } = recruitment
       const { person: { authUserId }, grade } = internship
 
-      const { recruitment_create: { message, model, status } } = logs
-      await logEvent({
-        action: message,
-        model,
-        status,
-        authUserId,
-      })
-
       const notification = {
         grade: grade.title,
         company: name,
@@ -103,14 +93,6 @@ export async function POST(request: NextRequest) {
 
     const recruitment = await checkAndCreate(parsed, companyId, internshipId)
     const { internship: { person }, vacant: { job } } = recruitment
-
-    const { recruitment_create: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
 
     const notification = {
       job: job.title,

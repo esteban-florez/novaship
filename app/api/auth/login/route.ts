@@ -1,4 +1,4 @@
-import { auth, handleRequest } from '@/lib/auth/api'
+import { handleRequest } from '@/lib/auth/api'
 import lucia from '@/lib/auth/lucia'
 import sendRecoveryEmail from '@/lib/emails/sendRecoveryEmail'
 import { handleError } from '@/lib/errors/api'
@@ -7,15 +7,12 @@ import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/login'
 import prisma from '@/prisma/client'
 import { NextResponse, type NextRequest } from 'next/server'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   // DRY 10
   let emailFailed = ''
   try {
     const redirectToHome = NextResponse.redirect(url('/home'))
-    console.log(redirectToHome)
     const authRequest = handleRequest(request)
 
     if (await authRequest.validate() !== null) {
@@ -23,7 +20,6 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await request.json()
-    console.log(data)
     const { email, password } = schema.parse(data)
     emailFailed = email
 
@@ -44,15 +40,6 @@ export async function POST(request: NextRequest) {
 
     const session = await lucia.createSession(key.userId)
     authRequest.setSession(session)
-
-    const { authUserId } = await auth.user(request)
-    const { login: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
 
     return redirectToHome
   } catch (error) {

@@ -7,14 +7,12 @@ import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { recruitmentCompletedHours } from '@/lib/utils/tables'
 import { notify } from '@/lib/notifications/notify'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
     data = await request.json()
-    const { name, type, authUserId } = await auth.user(request)
+    const { name, type } = await auth.user(request)
 
     const recruitment = await prisma.recruitment.findUnique({
       where: { id },
@@ -52,14 +50,6 @@ export async function POST(request: NextRequest, { params: { id } }: PageContext
           },
         },
       },
-    })
-
-    const { progress_create: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
     })
 
     const { internship: { person, institute, grade } } = recruitment

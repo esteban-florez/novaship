@@ -6,15 +6,13 @@ import { auth } from '@/lib/auth/api'
 import { url } from '@/lib/utils/url'
 import { notFound } from 'next/navigation'
 import { notify } from '@/lib/notifications/notify'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id: userId, name, type, authUserId } = await auth.user(request)
+    const { id: userId, name, type } = await auth.user(request)
 
     if (type === 'PERSON' && parsed.offerId != null) {
       await prisma.hiring.create({
@@ -23,14 +21,6 @@ export async function POST(request: NextRequest) {
           personId: userId,
           offerId: parsed.offerId,
         },
-      })
-
-      const { hiring_create_person: { message, model, status } } = logs
-      await logEvent({
-        action: message,
-        model,
-        status,
-        authUserId,
       })
 
       return NextResponse.redirect(url(`/home/offers/${parsed.offerId}?alert=offer_applied`))
@@ -64,14 +54,6 @@ export async function POST(request: NextRequest) {
         company: name,
         title: offer.title,
         offerId: parsed.offerId,
-      })
-
-      const { hiring_create_company: { message, model, status } } = logs
-      await logEvent({
-        action: message,
-        model,
-        status,
-        authUserId,
       })
 
       return NextResponse.redirect(url(`/home/offers/${parsed.offerId}?alert=offer_user_postulation`))

@@ -6,8 +6,6 @@ import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { connect } from '@/lib/utils/queries'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -15,7 +13,7 @@ export async function POST(request: NextRequest) {
     data = await request.json()
     const parsed = schema.parse(data)
     const { categories, skills, grades, duration } = parsed
-    const { id: userId, type, authUserId } = await auth.user(request)
+    const { id: userId, type } = await auth.user(request)
 
     if (type !== 'COMPANY') {
       notFound()
@@ -30,14 +28,6 @@ export async function POST(request: NextRequest) {
         categories: connect(categories),
         skills: connect(skills),
       },
-    })
-
-    const { vacant_create: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
     })
 
     return NextResponse.redirect(

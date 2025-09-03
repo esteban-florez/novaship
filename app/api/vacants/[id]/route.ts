@@ -1,8 +1,6 @@
 import { auth } from '@/lib/auth/api'
-import logEvent from '@/lib/data-fetching/log'
 import { getVacant } from '@/lib/data-fetching/vacants'
 import { handleError } from '@/lib/errors/api'
-import { logs } from '@/lib/log'
 import { set } from '@/lib/utils/queries'
 import { url } from '@/lib/utils/url'
 import { schema } from '@/lib/validation/schemas/vacants/update'
@@ -13,7 +11,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function PATCH(request: NextRequest, { params: { id } }: PageContext) {
   let data
   try {
-    const { id: userId, authUserId } = await auth.user(request)
+    const { id: userId } = await auth.user(request)
 
     const vacant = await getVacant(id)
 
@@ -33,14 +31,6 @@ export async function PATCH(request: NextRequest, { params: { id } }: PageContex
         skills: set(skills),
         grades: set(grades),
       },
-    })
-
-    const { vacant_update: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
     })
 
     return NextResponse.redirect(

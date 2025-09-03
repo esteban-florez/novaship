@@ -6,15 +6,13 @@ import prisma from '@/prisma/client'
 import { auth } from '@/lib/auth/api'
 import { notFound } from 'next/navigation'
 import { getTaskWhereImIn } from '@/lib/data-fetching/task'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
   try {
     data = await request.json()
     const parsed = schema.parse(data)
-    const { id: userId, authUserId } = await auth.user(request)
+    const { id: userId } = await auth.user(request)
 
     if (parsed.taskId == null) {
       notFound()
@@ -52,14 +50,6 @@ export async function POST(request: NextRequest) {
         },
       })
     }
-
-    const { subtask_create: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
-    })
 
     await prisma.task.update({
       where: {

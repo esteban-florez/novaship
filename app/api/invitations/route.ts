@@ -9,8 +9,6 @@ import { object } from 'zod'
 import { defaults } from '@/lib/validation/schemas/defaults'
 import { getTeamLeader } from '@/lib/utils/tables'
 import { type Interested } from '@prisma/client'
-import logEvent from '@/lib/data-fetching/log'
-import { logs } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   let data
@@ -20,7 +18,7 @@ export async function POST(request: NextRequest) {
       teamId: defaults.id,
       projectId: defaults.id.optional(),
     }).parse(data)
-    const { id: userId, name, type, authUserId } = await auth.user(request)
+    const { id: userId, name, type } = await auth.user(request)
 
     if (type !== 'PERSON') {
       notFound()
@@ -78,16 +76,6 @@ export async function POST(request: NextRequest) {
       user: name,
       team: team.name,
       teamId: team.id,
-    })
-
-    const {
-      invitation_create: { message, model, status },
-    } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
     })
 
     if (projectId == null) {

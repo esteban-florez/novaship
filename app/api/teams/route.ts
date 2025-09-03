@@ -1,7 +1,5 @@
 import { auth } from '@/lib/auth/api'
-import logEvent from '@/lib/data-fetching/log'
 import { handleError } from '@/lib/errors/api'
-import { logs } from '@/lib/log'
 import { notify } from '@/lib/notifications/notify'
 import { randomCode } from '@/lib/utils/code'
 import { url } from '@/lib/utils/url'
@@ -14,7 +12,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function POST(request: NextRequest) {
   let data
   try {
-    const { id, name, type, authUserId } = await auth.user(request)
+    const { id, name, type } = await auth.user(request)
 
     if (type === 'INSTITUTE') {
       notFound()
@@ -60,14 +58,6 @@ export async function POST(request: NextRequest) {
       select: {
         id: true,
       },
-    })
-
-    const { team_create: { message, model, status } } = logs
-    await logEvent({
-      action: message,
-      model,
-      status,
-      authUserId,
     })
 
     for (const authUser of authUsers) {
